@@ -14,3 +14,15 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+# ZeroPanel基于SSPanel魔改
+## 新功能
+    1. 重构商品购买逻辑
+    2. 重构订单系统
+    3. 支持自定义货币单位
+    4. 大量系统设置数据库化
+## 安装教程
+    参考sspanel 安装教程
+
+## 交流
+    [https://t.me/zero_panel_group](https://t.me/zero_panel_group)
