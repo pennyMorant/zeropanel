@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2022-10-13 09:05:23
+-- 生成日期： 2022-10-17 07:50:36
 -- 服务器版本： 10.9.3-MariaDB
 -- PHP 版本： 8.1.11
 
@@ -259,7 +259,7 @@ CREATE TABLE `order` (
   `order_coupon` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) DEFAULT NULL COMMENT '订单金额',
   `credit_paid` int(11) DEFAULT NULL COMMENT '订单余额支付部分',
-  `order_status` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '订单状态',
+  `order_status` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '订单状态,pending-等待支付,paid-完成支付,invalid-订单失效',
   `created_time` int(11) DEFAULT NULL COMMENT '订单创建时间',
   `updated_time` int(11) DEFAULT NULL COMMENT '订单更新时间',
   `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
