@@ -25,5 +25,5 @@ Here are some ideas to get you started:
     参考sspanel 安装教程
 
 ## 交流
-    交流群：[https://t.me/zero_panel_group](https://t.me/zero_panel_group)
+    https://t.me/zero_panel_group
     欢迎各位大佬PR，以及参与测试提交问题
