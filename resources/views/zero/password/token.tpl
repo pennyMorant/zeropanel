@@ -1,168 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Reset Password - {$config["appName"]}</title>
-        <meta charset="UTF-8" />
-        <meta name="renderer" content="webkit" />
-        <meta name="description" content="Updates and statistics" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="format-detection" content="telephone=no,email=no" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <meta http-equiv="pragma" content="no-cache">
-        <meta http-equiv="expires" content="0">
-        <link href="/theme/zero/css/fonts.css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
-        <link href="/theme/zero/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-        <link href="/theme/zero/css/style.bundle.css" rel="stylesheet" type="text/css" />
-        <link href="/theme/zero/css/pages/auth/style-1.css" rel="stylesheet" type="text/css" />
-        <link href="/favicon.png" rel="shortcut icon">
-    </head>
-    <body id="kt_body" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
-        <div class="d-flex flex-column flex-root" style="background-image:url(https://acctcdn.msauth.net/images/2_vD0yppaJX3jBnfbHF1hqXQ2.svg)">
-            <div class="login login-1 login-signin-on d-flex flex-row-fluid" id="kt_login">
-                <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid p-7">
-                    <div class="login-form text-center text-dark bg-white p-7 position-relative overflow-hidden shadow">
-
-                        <div class="login-signin">
-                            <div class="mb-10">
-                                <h3>设置新密码</h3>
-                            </div>
-                            <form class="form" id="tokenform">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        
-                                        <input class="form-control h-auto text-dark opacity-70 bg-whiet rounded-pill border-0 py-4 px-8" type="password" placeholder="新密码" name="password" id="password" autocomplete="new-password" required />
-                                    </div>    
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input class="form-control h-auto text-dark opacity-70 bg-white rounded-pill border-0 py-4 px-8" type="password" placeholder="再次输入密码" name="repasswd" id="repasswd" autocomplete="new-password" required />
-                                    </div>    
-                                </div>
-                                <div class="form-group text-center mt-10" style="white-space:nowrap;">
-                                    <button type="submit" class="btn btn-pill btn-primary btn-shadow-hover btn-block font-weight-bolder px-15 py-3">确定更改密码</button>
-                                </div>
-                            </form>
-                            <div class="mt-10">
-                                <a href="/signin" class="text-dark-75 text-hover-dark opacity-75 hover-opacity-100 font-weight-bold"><strong>返回登录</strong></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="/theme/zero/plugins/global/plugins.bundle.js"></script>
-    </body>
+	<head>
+		<title>{$config['appName']} Reset Passwrod</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<link href="/favicon.png" rel="shortcut icon">
+		<link href="/theme/zero/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="/theme/zero/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body id="kt_body" class="app-blank app-blank bgi-size-cover bgi-position-center bgi-no-repeat">
+		<script>var defaultThemeMode = "system"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
+		<div class="d-flex flex-column flex-root" id="kt_app_root">
+			<style>body { background-image: url('/theme/zero/assets/media/auth/bg4.jpg'); } [data-theme="dark"] body { background-image: url('/theme/zero/assets/media/auth/bg4-dark.jpg'); }</style>
+			<div class="d-flex flex-column flex-column-fluid flex-lg-row">
+				<div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
+					<div class="d-flex flex-center flex-lg-start flex-column">
+						<a href="#" class="mb-7 fs-3hx fw-bold text-white">{$config['appName']}</a>						
+					</div>
+				</div>
+				<div class="d-flex flex-center w-lg-50 p-10">
+					<div class="card rounded-3 w-md-550px">
+						<div class="card-body p-10 p-lg-20">
+							<form class="form w-100" novalidate="novalidate" id="kt_new_password_form" data-kt-redirect-url="/auth/signin" action="#">
+								<div class="text-center mb-10">
+									<h1 class="text-dark fw-bolder mb-3">重置新密码</h1>
+									<div class="text-gray-500 fw-semibold fs-6">密码已经重置 ?
+									<a href="/auth/signin" class="link-primary fw-bold">登录</a></div>
+								</div>
+								<div class="fv-row mb-8" data-kt-password-meter="true">
+									<div class="mb-1">
+										<div class="position-relative mb-3">
+											<input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off" />
+											<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+												<i class="bi bi-eye-slash fs-2"></i>
+												<i class="bi bi-eye fs-2 d-none"></i>
+											</span>
+										</div>
+										<div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+										</div>
+									</div>
+									<div class="text-muted">使用 8 个或更多字符，并混合使用字母、数字和符号。</div>
+								</div>
+								<div class="fv-row mb-8">
+									<input type="password" placeholder="Repeat Password" name="confirm-password" autocomplete="off" class="form-control bg-transparent" />
+								</div>
+								<div class="d-grid mb-10">
+									<button type="button" id="kt_new_password_submit" class="btn btn-primary">
+										<span class="indicator-label">确定</span>
+										<span class="indicator-progress">请等待...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
+				<div class="app-container container-fluid d-flex flex-column flex-center py-3">
+					<div class="text-white order-2 order-md-1 text-center">
+						&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<span>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</span><a class="text-white" href="https://github.com/zeropanel/zeropanel">&nbsp;Powered By ZeroBoard</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
+		<script src="/js/signup.min.js"></script>		
+	</body>
 </html>
-        <script>
-        document.addEventListener('DOMContentLoaded', function(e) {
-            const token = document.getElementById('tokenform');
-            const submitButton = token.querySelector('[type="submit"]');
-            FormValidation.formValidation(
-			    token,
-			    {
-				    fields: {
-				        password: {
-						    validators: {
-							    notEmpty: {
-								    message: '密码必须填写'
-							    },
-								stringLength: {
-								    min: 8,
-									message: '密码至少八位'
-								},
-						    }
-					    },
-					    repasswd: {
-                            validators: {
-                                notEmpty: {
-                                    message: '密码必须填写'
-                                },
-								identical: {
-									compare: function() {
-										return token.querySelector('[name="password"]').value;
-									},
-									message: '密码不一致',
-								}
-                            }
-                        },
-                    },
-                    plugins: {
-                        trigger: new FormValidation.plugins.Trigger(),
-                        submitButton: new FormValidation.plugins.SubmitButton(),
-                        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(), // Uncomment this line to enable normal button submit after form validation
-					    bootstrap: new FormValidation.plugins.Bootstrap(),
-					    fieldStatus: new FormValidation.plugins.FieldStatus({
-                            onStatusChanged: function(areFieldsValid) {
-                                if (areFieldsValid) {
-                                   
-                                    submitButton.removeAttribute('disabled');
-                                    submitButton.classList.add('bg-blue');
-                                    submitButton.classList.add('white');
-                                } else {
-                                    submitButton.setAttribute('disabled', 'disabled');
-                                    submitButton.classList.remove('bg-blue');
-                                    submitButton.classList.remove('white');
-                                }
-                            }
-                        }),
-                        
-				    }
-			    }
-		    )
-		    .on('core.form.valid', function() {
-		            
-		            Swal.fire({
-                       title: "重置中...",
-                       text: "",
-                       timer: 5000,
-                       onOpen: function() {
-                           Swal.showLoading()
-                       }
-                    }).then(function(result) {
-                        if (result.dismiss === "timer") {
-                            console.log("I was closed by the timer")
-                        }
-                    });
-                    
-                    $.ajax({
-                        type: "POST",
-                        url: location.pathname,
-                        dataType: "json",
-                        data: {
-                           password: $("#password").val(),
-						   repasswd: $("#repasswd").val(),
-                        },
-                        success: function (data) {
-					        if (data.ret == 1) {
-					            Swal.fire({
-						            position: "center",
-							        icon: "success",
-							        title: data.msg,
-							        showConfirmButton: false,
-							        time: 1000
-						        });
-						      // window.location.assign('/user');
-						      window.setTimeout("location.href='/signin'", 1200);
-						    } else {
-						        Swal.fire({
-                                    title: data.msg,
-                                    text: "",
-                                    icon: "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "确定",
-                                    customClass: {
-                                    confirmButton: "btn btn-primary"
-                                    }
-                                });
-                            }
-                        },
-                        error: function (jqXHR) {
-					        Swal.fire("错误，请重试","", "error");
-                        }
-                    });
-            });
-        });
-    </script>
