@@ -50,7 +50,7 @@
 								</div>
 								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 									<div></div>
-									<a href="#" class="link-primary" data-kt-translate="sign-in-forgot-password">忘记密码 ?</a>
+									<a href="/password/reset" class="link-primary" data-kt-translate="sign-in-forgot-password">忘记密码 ?</a>
 								</div>
 								<div class="d-grid mb-10">
 									<button id="kt_sign_in_submit" class="btn btn-primary">

@@ -26,6 +26,17 @@ class PasswordController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
+    public function reset($request, $response, $args)
+    {
+        $this->view()->display('password/reset.tpl');
+        return $response;
+    }
+
+    /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
     public function handleReset($request, $response, $args)
     {
         $email = strtolower($request->getParam('email'));
