@@ -21,6 +21,8 @@ Here are some ideas to get you started:
     2. 重构订单系统
     3. 支持自定义货币单位
     4. 大量系统设置数据库化
+    5. 多语言功能
+    6. 夜间模式
 ## 演示网站
 http://zeroboard.top
 ## 安装教程（基于debian11）
