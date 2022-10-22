@@ -168,7 +168,7 @@ class AppURI
         $return = null;
         switch ($item['type']) {
             case 'ss':
-                $return = ($item['remark'] . ' = ss, ' . $item['address'] . ', ' . $item['port'] . ', ' . $item['method'] . ', ' . $item['passwd'] .  ', udp-relay=true');
+                $return = ($item['remark'] . ' = ss, ' . $item['address'] . ', ' . $item['port'] . ', encrypt-method=' . $item['method'] . ', ' . $item['passwd'] .  ', udp-relay=true');
                 break;
             case 'vmess':
                 if (!in_array($item['net'], ['ws', 'tcp'])) {
@@ -181,7 +181,7 @@ class AppURI
                 $ws = ($item['net'] == 'ws'
                     ? ', ws=true, ws-path=' . $item['path'] . ', ws-headers=host:' . $item['host']
                     : '');
-                $return = $item['remark'] . ' = vmess, ' . $item['add'] . ', ' . $item['port'] . ', username = ' . $item['id'] . $ws . $tls . $sni;
+                $return = $item['remark'] . ' = vmess, ' . $item['add'] . ', ' . $item['port'] . ', username= ' . $item['id'] . $ws . $tls . $sni;
                 break;
             case 'trojan':
                 $return = ($item['remark'] . ' = trojan, ' . $item['address'] . ', ' . $item['port'] . ', password= ' . $item['passwd']) . ', sni= ' . $item['host'];
