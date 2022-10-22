@@ -44,6 +44,6 @@ class TrafficLog extends Model
 
     public function logTime()
     {
-        return Tools::toDateTime($this->attributes['log_time']);
+        return Tools::toDateTime($this->attributes['datetime']);
     }
 }

@@ -167,7 +167,7 @@ class UserController extends BaseController
                 $traffic->node_id = $node_id;
                 $traffic->rate = $node->traffic_rate;
                 $traffic->traffic = Tools::flowAutoShow(($u + $d) * $node->traffic_rate);
-                $traffic->log_time = time();
+                $traffic->datetime = time();
                 $traffic->save();
             }
         }
