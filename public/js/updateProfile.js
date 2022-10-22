@@ -14,6 +14,23 @@ function getResult(titles, texts, icons) {
     });
 }
 
+//get load
+function getLoad() {
+    Swal.fire({
+        title: '',
+        text: '',
+        timer: 50000,
+        confirmButtonText: "",
+        didOpen: function() {
+            Swal.showLoading()
+        }
+    }).then(function(result){
+        if (result.dismiss == "timer") {
+            console.log("I was closed by the timer")
+        }
+    });
+}
+
 // Class definition
 var KTUsersUpdateName = function () {
     // Shared variables
@@ -682,6 +699,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
     nodeid = id;
     usersclass = userclass;
     nodesclass = nodeclass;
+    getLoad();
     if (usersclass >= nodesclass) {
 		$.ajax({
 			type: "GET",
