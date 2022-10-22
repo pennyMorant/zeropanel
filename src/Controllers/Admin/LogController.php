@@ -53,27 +53,30 @@ class LogController extends AdminController
      */
     public function ajax($request, $response, $args)
     {
-        $query = TrafficLog::getTableDataFromAdmin(
-            $request
-        );
-        $data = [];
-        foreach ($query['datas'] as $value) {
-            $tempdata                   = [];
-            $tempdata['id']             = $value->id;
-            $tempdata['user_id']        = $value->user_id;
-            $node                       = Node::where('id', $value->node_id)->first();
-            $tempdata['node_name']      = $node->name;
-            $tempdata['rate']           = $value->rate;
-            $tempdata['origin_traffic'] = Tools::flowAutoShow($value->u + $value->d);
-            $tempdata['traffic']        = $value->traffic;
-            $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
-            $data[] = $tempdata;
-        }
-        return $response->WithJson([
-            'draw'              => $request->getParam('draw'),
-            'recordsTotal'      => TrafficLog::count(),
-            'recordsFiltered'   => $query['count'],
-            'data'              => $data
-        ]);
+        $name = $args['name'];
+        switch ($name) {
+            case "traffic":
+                $query = TrafficLog::getTableDataFromAdmin($request);
+                $data = [];
+                foreach ($query['datas'] as $value) {
+                    $tempdata                   = [];
+                    $tempdata['id']             = $value->id;
+                    $tempdata['user_id']        = $value->user_id;
+                    $node                       = Node::where('id', $value->node_id)->first();
+                    $tempdata['node_name']      = $node->name;
+                    $tempdata['rate']           = $value->rate;
+                    $tempdata['origin_traffic'] = Tools::flowAutoShow($value->u + $value->d);
+                    $tempdata['traffic']        = $value->traffic;
+                    $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
+                    $data[] = $tempdata;
+                }
+                return $response->WithJson([
+                    'draw'              => $request->getParam('draw'),
+                    'recordsTotal'      => TrafficLog::count(),
+                    'recordsFiltered'   => $query['count'],
+                    'data'              => $data
+                ]);
+            }
+        
     }
 }
