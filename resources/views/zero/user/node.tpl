@@ -438,7 +438,8 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
-        <div class="modal fade" id="nodeinfo-v2ray-modal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
+		<!-- vmess modal -->
+        <div class="modal fade" id="zero_modal_vmess_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
@@ -446,38 +447,73 @@
 						<strong id="zero_modal_vmess_node_info_remark">节点名称</strong></h4>
                     </div>
                     <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
-                        <ul class="dashboard-tabs nav nav-pills row nav-primary row-paddingless m-0 p-0" role="tablist">
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 ml-1 mr-1 mb-0 cursor_onclick">
-                                <a class="nav-link border d-flex flex-grow-1 rounded flex-column align-items-center p-1 active"
-                                data-bs-toggle="pill" href="#tab-v2-modal-qrcode">
-                                    <span class="nav-text font-size-lg py-2 fw-bold text-center">{$trans->t('user.node.qrcode')}</span>
-                                </a>
-                            </li>
-                            <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 ml-1 mr-1 mb-0 cursor_onclick">
-                                <a class="nav-link border d-flex flex-grow-1 rounded flex-column align-items-center p-1"
-                                data-bs-toggle="pill" href="#tab-v2-modal-config">
-                                    <span class="nav-text font-size-lg py-2 fw-bold text-center">{$trans->t('user.node.config')}</span>
-                                </a>
-                            </li>
-                        </ul>
+						<nav class="nav nav-tabs flex-column flex-sm-row" role="tablist">
+							<button class="flex-sm-fill text-sm-center nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_vmess_qrcode">
+								{$trans->t('user.node.qrcode')}
+							</button>
+							<button class="flex-sm-fill text-sm-center nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_vmess_config">
+								{$trans->t('user.node.config')}
+							</button>
+                        </nav>
                         <div class="tab-content m-0 p-0">
-                            <div class="tab-pane fade active show" id="tab-v2-modal-qrcode">
-                                <a href="#">
+                            <div class="tab-pane fade active show" id="zero_modal_tab_vmess_qrcode">
+                                
                                     <div class="text-center pt-10" id="zero_modal_vmess_node_info_qrcode">
                                     </div>
-                                </a>
+                                
                             </div>
-                            <div class="tab-pane fade show" id="tab-v2-modal-config">
-                                <div class="pt-10 pl-10 ">
-                                    <p>{$trans->t('user.node.address')}: <code id="zero_modal_vmess_node_info_add"></code></p>
-                                    <p>{$trans->t('user.node.port')}: <code id="zero_modal_vmess_node_info_port"></code></p>
-                                    <p>{$trans->t('user.node.alter_id')}: <code id="zero_modal_vmess_node_info_aid"></code></p>
-                                    <p>{$trans->t('user.node.uuid')}: <code id="zero_modal_vmess_node_info_id"></code></p>
-                                    <p>{$trans->t('user.node.network')}: <code id="zero_modal_vmess_node_info_net"></code></p>
-                                    <p>{$trans->t('user.node.path')}: <code id="zero_modal_vmess_node_info_path"></code></p>
-                                    <p>{$trans->t('user.node.servicename')}: <code id="zero_modal_vmess_node_info_servicename"></code></p>
-                                    <p>{$trans->t('user.node.protocol')}: <code id="zero_modal_vmess_node_info_type"></code></p>
-                                    <p>{$trans->t('user.node.security')}: <code id="zero_modal_vmess_node_info_security"></code></p>
+                            <div class="tab-pane fade show" id="zero_modal_tab_vmess_config">
+								<div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('user.node.address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_add"></span></p>
+                                    <p>{$trans->t('user.node.port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_port"></span></p>
+                                    <p>{$trans->t('user.node.alter_id')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_aid"></span></p>
+                                    <p>{$trans->t('user.node.uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_id"></span></p>
+                                    <p>{$trans->t('user.node.network')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_net"></span></p>
+                                    <p>{$trans->t('user.node.path')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_path"></span></p>
+                                    <p>{$trans->t('user.node.servicename')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_servicename"></span></p>
+                                    <p>{$trans->t('user.node.protocol')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_type"></span></p>
+                                    <p>{$trans->t('user.node.security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_security"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('general.cancel')}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- ss modal -->
+		<div class="modal fade" id="zero_modal_shadowsocks_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content shadow-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+						<strong id="zero_modal_shadowsocks_node_info_remark">节点名称</strong></h4>
+                    </div>
+                    <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
+                        <nav class="nav nav-tabs flex-column flex-sm-row" role="tablist">
+							<button class="flex-sm-fill text-sm-center nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_shadowsocks_qrcode">
+								{$trans->t('user.node.qrcode')}
+							</button>
+							<button class="flex-sm-fill text-sm-center nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_shadowsocks_config">
+								{$trans->t('user.node.config')}
+							</button>
+                        </nav>
+                        <div class="tab-content m-0 p-0">
+                            <div class="tab-pane fade active show" id="zero_modal_tab_shadowsocks_qrcode">
+                                
+                                    <div class="text-center pt-10" id="zero_modal_shadowsocks_node_info_qrcode">
+                                    </div>
+                                
+                            </div>
+                            <div class="tab-pane fade show" id="zero_modal_tab_shadowsocks_config">
+                                <div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('user.node.address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_address"></span></p>
+                                    <p>{$trans->t('user.node.port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_port"></span></p>
+									<p>{$trans->t('user.node.encrypt')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_method"></span></p>
+                                    <p>{$trans->t('general.passwd')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_passwd"></span></p>
                                 </div>
                             </div>
                         </div>

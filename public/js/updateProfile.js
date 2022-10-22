@@ -710,7 +710,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 							text: content
 						});
 						Swal.close();
-						$("#nodeinfo-v2ray-modal").modal('show');
+						$("#zero_modal_vmess_node_info").modal('show');
 					} else if ( data.sort == 14) {
 						var content = data.url;
 						document.getElementById('zero_modal_trojan_node_info_remark').innerHTML = data.info.remark;
@@ -764,7 +764,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 							text: content
 						});
 						Swal.close();
-						$("#nodeinfo-ss-modal").modal('show');
+						$("#zero_modal_shadowsocks_node_info").modal('show');
 					}
 				} else {
 					getResult(data.msg, "", "error");
