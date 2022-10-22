@@ -50,7 +50,7 @@ class FinanceMail extends Command
             $text_html .= '<td>' . $code['number'] . '</td>';
             $text_html .= '<td>' . $code['userid'] . '</td>';
             $user = User::find($code['userid']);
-            $text_html .= '<td>' . $user->user_name . '</td>';
+            $text_html .= '<td>' . $user->name . '</td>';
             $text_html .= '<td>' . $code['usedatetime'] . '</td>';
             $text_html .= '</tr>';
             ++$income_order;

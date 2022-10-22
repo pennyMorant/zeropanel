@@ -44,35 +44,8 @@ class URL
         }
         // 等级筛选 end
 
-        // 节点订阅筛选(定制)
-        if (ZeroConfig::get('nodes_filter') === true && isset($rules['nodefilter'])) {
-            if ($rules['nodefilter']['mode']=='nodes_class') {
-                if ($rules['nodefilter']['nodes_class']['the']=='>='){
-                    $query->where('node_class', '>=', $rules['nodefilter']['nodes_class']['value']);
-                }
-                if ($rules['nodefilter']['nodes_class']['the']=='='){
-                    $query->whereIn('node_class', $rules['nodefilter']['nodes_class']['value']);
-                }
-            }
-            if ($rules['nodefilter']['mode']=='nodes_id' && isset($rules['nodefilter']['nodes_id']) && count($rules['nodefilter']['nodes_id']) > 0) {
-                $query->whereIn('id', $rules['nodefilter']['nodes_id']);
-            }
-            if ( isset($rules['nodefilter']['sort']) ) {
-                $query->orderBy($rules['nodefilter']['sort']['type'], $rules['nodefilter']['sort']['value']);
-            }
-        }
-
         $nodes = $query->where('type', '1')->orderBy('node_sort', 'desc')->orderBy('name')->get();
 
-        if (ZeroConfig::get('nodes_filter') === true && ZeroConfig::get('nodes_miniName') === true && $rules['nodefilter']['mininame'] === 1) {
-            $regex = ZeroConfig::get('nodes_regex');
-            foreach ($nodes as $node) {
-                preg_match($regex, $node->name, $matches);
-                if(isset($matches[0])) {
-                    $node->name = trim(trim($node->name, $matches[0]));
-                }
-            }
-        }
 
         return $nodes;
     }

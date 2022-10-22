@@ -84,10 +84,6 @@ class LinkController extends BaseController
 
         $opts = $request->getQueryParams();
 
-        // 订阅节点筛选(定制)
-        $nodeFilter = Zero::getNodeFilter($token);
-        if ($nodeFilter != null) $Rule['nodefilter'] = $nodeFilter;
-
         // 筛选节点部分
         $Rule['type'] = (isset($opts['type']) ? trim($opts['type']) : 'all');
 
@@ -298,7 +294,7 @@ class LinkController extends BaseController
     private static function Subscribe_log($user, $type, $ua)
     {
         $log = new UserSubscribeLog();
-        $log->user_name = $user->user_name;
+        $log->user_name = $user->name;
         $log->user_id = $user->id;
         $log->email = $user->email;
         $log->subscribe_type = $type;

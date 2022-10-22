@@ -33,7 +33,7 @@ class ExtMail extends Command
     public static function checkUserExpire()
     {
         echo '用户等级七天到期检测开始' . PHP_EOL;
-        $users = User::select(['class_expire', 'id', 'email', 'user_name'])
+        $users = User::select(['class_expire', 'id', 'email', 'name'])
             ->get();
         foreach ($users as $user) {
             $now = mktime(0,0,0,date('m'),date('d'),date('Y'));
