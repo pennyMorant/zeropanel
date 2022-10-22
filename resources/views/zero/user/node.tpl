@@ -447,11 +447,11 @@
 						<strong id="zero_modal_vmess_node_info_remark">节点名称</strong></h4>
                     </div>
                     <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
-						<nav class="nav nav-tabs flex-column flex-sm-row" role="tablist">
-							<button class="flex-sm-fill text-sm-center nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_vmess_qrcode">
+						<nav class="nav nav-tabs nav-justified" role="tablist">
+							<button class="nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_vmess_qrcode">
 								{$trans->t('user.node.qrcode')}
 							</button>
-							<button class="flex-sm-fill text-sm-center nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_vmess_config">
+							<button class="nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_vmess_config">
 								{$trans->t('user.node.config')}
 							</button>
                         </nav>
@@ -493,11 +493,11 @@
 						<strong id="zero_modal_shadowsocks_node_info_remark">节点名称</strong></h4>
                     </div>
                     <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
-                        <nav class="nav nav-tabs flex-column flex-sm-row" role="tablist">
-							<button class="flex-sm-fill text-sm-center nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_shadowsocks_qrcode">
+                        <nav class="nav nav-tabs nav-justified" role="tablist">
+							<button class="nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_shadowsocks_qrcode">
 								{$trans->t('user.node.qrcode')}
 							</button>
-							<button class="flex-sm-fill text-sm-center nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_shadowsocks_config">
+							<button class="nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_shadowsocks_config">
 								{$trans->t('user.node.config')}
 							</button>
                         </nav>
