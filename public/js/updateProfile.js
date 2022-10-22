@@ -767,11 +767,11 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						$("#nodeinfo-ss-modal").modal('show');
 					}
 				} else {
-					getresult(data.msg, "", "error");
+					getResult(data.msg, "", "error");
 				}
 			}
 		});
     } else {       
-        getresult("会员身份权限不足", "", "error");
+        getResult("会员身份权限不足", "", "error");
     }
 }
