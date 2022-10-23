@@ -190,7 +190,7 @@ class AppURI
         return $return;
     }
 
-    public static function getClashURI(array $item, bool $ssr_support = false)
+    public static function getClashURI(array $item)
     {
         $return = null;
         switch ($item['type']) {

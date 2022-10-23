@@ -502,49 +502,28 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card-body d-flex align-items-end pt-6">
-                                                        <div class="row align-items-center mx-0 w-100">
+                                                    <div class="card-body d-flex flex-column pt-6">
+                                                        <div class="row align-items-center mx-0 w-100 flex-column flex-sm-row">
                                                             <div class="col-5">
-                                                            <div class="d-flex me-7 me-xxl-10">
-                                                                <div id="zero_user_wallet_chart" class="max-auto" style="min-height: 150px;"></div>
-                                                            </div>
+																<div class="d-flex flex-column align-items-center me-7 me-xxl-10">
+																	<div id="zero_user_wallet_chart" class="max-auto" style="min-height: 150px;"></div>
+																</div>
                                                             </div>
                                                             <div class="col-7">
-                                                            <div class="d-flex flex-column content-justify-center flex-grow-1">
-                                                                
-                                                                <div class="d-flex fs-6 fw-semibold align-items-center">
-                                                                    
-                                                                    <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
-                                                                    
-                                                                    
-                                                                    <div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可使用金额</div>
-                                                                    
-                                                                    
-                                                                    <div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
-                                                                    
-                                                                    
-                                                                    <div class="ms-auto fw-bolder text-gray-700 text-end" id="user_balance">{trim($user->money)}</div>
-                                                                    
-                                                                </div>
-                                                                
-                                                                
-                                                                <div class="d-flex fs-6 fw-semibold align-items-center my-1">
-                                                                    
-                                                                    <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
-                                                                    
-                                                                    
-                                                                    <div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可提现佣金</div>
-                                                                    
-                                                                    
-                                                                    <div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
-                                                                    
-                                                                    
-                                                                    <div class="ms-auto fw-bolder text-gray-700 text-end" id="user_commission">{trim($user->commission)}</div>
-                                                                    
-                                                                </div>
-                                                                
-                                                                
-                                                            </div>
+																<div class="d-flex flex-column content-justify-center flex-grow-1">
+																	<div class="d-flex fs-6 fw-semibold align-items-center">
+																		<div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可使用金额</div>
+																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
+																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_balance">{trim($user->money)}</div>
+																	</div>
+																	<div class="d-flex fs-6 fw-semibold align-items-center my-1">
+																		<div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可提现佣金</div>
+																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
+																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_commission">{trim($user->commission)}</div>
+																	</div>
+																</div>
                                                             </div>
                                                         </div>
                                                     </div>
