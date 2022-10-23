@@ -409,7 +409,7 @@
                                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                             <div class="card-title">
                                                 <div class="fs-3 fw-bolder text-dark">
-												{$trans->t('card.use_record')}
+												{$trans->t('card.used_record')}
                                                 </div>
                                             </div>
                                         </div>
@@ -440,8 +440,7 @@
                                             
                                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_subscribe_log_table">
                                                 <thead>
-                                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                        
+                                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
                                                         <th>Type</th>
                                                         <th>IP</th>
                                                         <th>Address</th>

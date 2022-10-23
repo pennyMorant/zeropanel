@@ -253,10 +253,22 @@ var KTDatatablesSubscribeLogSide = function () {
             },
             columns: [
                 { data: 'subscribe_type' },
-                { data: 'ip' },
+                { data: 'request_ip' },
                 { data: 'location'},
                 { data: 'request_user_agent'},
                 { data: 'request_time' },
+            ],
+            columnDefs: [
+                {
+                    targets: 2,
+                    orderable: false,
+                },
+                {
+                    targets: 3,
+                    orderable: false
+                }
+                
+                
             ],
         });
 
