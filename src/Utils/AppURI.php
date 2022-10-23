@@ -168,7 +168,7 @@ class AppURI
         $return = null;
         switch ($item['type']) {
             case 'ss':
-                $return = ($item['remark'] . ' = ss, ' . $item['address'] . ', ' . $item['port'] . ', encrypt-method=' . $item['method'] . ', password=' . $item['passwd'] .  ', udp-relay=true');
+                $return = ($item['remark'] . ' = shadowsocks, ' . $item['address'] . ', ' . $item['port'] . ', encrypt-method=' . $item['method'] . ', password=' . $item['passwd'] .  ', udp-relay=true');
                 break;
             case 'vmess':
                 if (!in_array($item['net'], ['ws', 'tcp'])) {
