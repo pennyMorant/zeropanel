@@ -79,22 +79,7 @@ function change_language(lang_type) {
 }
 
 
-// check in
-function checkin() {
-    getLoad();
-    $.ajax({
-        type: "POST",
-        url: "/user/checkin",
-        dataType: "json",
-        success: function(data) {
-            var text1 = "获得流量 " + data.msg;
-            getresult("欢迎回来", text1, "success");
-            document.getElementById("traffic").innerHTML = data.traffic;
-            document.getElementById("unusedtraffic").innerHTML = data.trafficInfo['unUsedTraffic'];
-            document.getElementById("checkin-btn").innerHTML = '<button class="btn btn-outline-primary font-weight-bolder" disabled><i class="fas fa-location-arrow icon-nm"></i>明日再来</button>';
-        },
-    });   
-}
+
 
 
 //import

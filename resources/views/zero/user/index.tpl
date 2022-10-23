@@ -377,8 +377,8 @@
 													{if $config['enable_checkin'] == true}
 													<div class="card-toolbar">
 														{if $user->isAbleToCheckin()}
-															<div id="checkin-btn">
-																<button id="checkin" class="btn btn-primary fw-bolder btn-hover-rotate-start" onclick="checkin()">
+															<div id="checkin_button">
+																<button class="btn btn-primary fw-bolder btn-hover-rotate-start" onclick="checkIn()">
 																	<i class="fas fa-location-arrow icon-nm"></i>
 																		{$trans->t('user.dashboard.checkin')}
 																</button>

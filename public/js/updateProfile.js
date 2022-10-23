@@ -793,3 +793,19 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
         getResult("会员身份权限不足", "", "error");
     }
 }
+
+// check in
+function checkIn() {
+    getLoad();
+    $.ajax({
+        type: "POST",
+        url: "/user/checkin",
+        dataType: "json",
+        success: function(data) {
+            var text1 = "获得流量 " + data.msg;
+            getResult("欢迎回来", text1, "success");
+            document.getElementById("traffic").innerHTML = data.traffic;
+            document.getElementById("checkin_button").innerHTML = '<button class="btn btn-primary fw-bolder" disabled><i class="fas fa-location-arrow icon-nm"></i>明日再来</button>';
+        },
+    });   
+}
