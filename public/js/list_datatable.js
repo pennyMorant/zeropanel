@@ -11,7 +11,7 @@ var KTDatatablesOrderSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[4, 'desc']],
+            order: [[3, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -25,11 +25,11 @@ var KTDatatablesOrderSide = function () {
                 url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
             },
             columns: [
-                { data: 'no' },
                 { data: 'order_total' },
                 { data: 'order_status' },
                 { data: 'order_type' },
                 { data: 'created_time' },
+                { data: 'no' },
                 { data: null},
             ],
             
@@ -43,9 +43,8 @@ var KTDatatablesOrderSide = function () {
                     },
                 },
                 {
-                    targets: 2,
+                    targets: 1,
                     render: function (data, type, row) {
-                        var date = Date.now();
                         if (data == 'paid') {
                             return '<div class="badge font-weight-bold badge-light-success fs-6">支付成功</div>';
                         } else if (data == 'pending') {

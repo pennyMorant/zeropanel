@@ -395,11 +395,11 @@
                                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_order_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
-                                                        <th>订单号</th>
                                                         <th>金额</th>
                                                         <th>状态</th>
 														<th>订单类型</th>
                                                         <th>时间</th>
+														<th>订单号</th>
 														<th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -413,7 +413,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;2019 - <script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>
