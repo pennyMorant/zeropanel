@@ -23,7 +23,7 @@
 				<div class="d-flex flex-center w-lg-50 p-10">
 					<div class="card rounded-3 w-md-550px">
 						<div class="card-body p-10 p-lg-20">
-							<form class="form w-100" novalidate="novalidate" id="kt_passwrod_reset_form" action="#">
+							<form class="form w-100" novalidate="novalidate" id="kt_password_reset_form" action="#">
 								<div class="text-center mb-11">
 										<h1 class="text-dark fw-bolder mb-3">忘记密码</h1>
                                         <div class="text-gray-500 fw-semibold fs-6">输入账户邮箱重置您的密码</div>
@@ -58,6 +58,6 @@
 		</div>
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
-		<script src="/js/signup.min.js"></script>		
+		<script src="/js/password.js"></script>		
 	</body>
 </html>
