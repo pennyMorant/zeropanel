@@ -19,10 +19,10 @@ var KTSignupGeneral = function() {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "The value is not a valid email address"
+                                message: "请输入正确的邮箱"
                             },
                             notEmpty: {
-                                message: "请输出邮箱"
+                                message: "请输入邮箱"
                             }
                         }
                     },
@@ -42,7 +42,7 @@ var KTSignupGeneral = function() {
                     "confirm-password": {
                         validators: {
                             notEmpty: {
-                                message: "请再次输出密码"
+                                message: "请再次输入密码"
                             },
                             identical: {
                                 compare: function() {

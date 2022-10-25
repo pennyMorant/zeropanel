@@ -300,7 +300,11 @@ class AuthController extends BaseController
         } else {
             $geetest_html = null;
         }
-
+        if (Setting::obtain('reg_mode' == 'close')) {
+            $this->view()
+                ->display('auth/soon.tpl');
+            return $response;
+        }
         $this->view()
             ->assign('geetest_html', $geetest_html)
             ->assign('login_token', $login_token)
