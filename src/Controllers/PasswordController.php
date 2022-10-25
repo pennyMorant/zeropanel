@@ -81,9 +81,9 @@ class PasswordController extends BaseController
     {
         $tokenStr = $args['token'];
         $password = $request->getParam('password');
-        $repasswd = $request->getParam('repasswd');
+        $repassword = $request->getParam('repassword');
 
-        if ($password != $repasswd) {
+        if ($password != $repassword) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => I18n::get()->t('auth.notify.resetpasswd.error_passwd_not_same')

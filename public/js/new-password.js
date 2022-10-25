@@ -51,10 +51,11 @@ var KTAuthNewPassword = function () {
                         e.removeAttribute("data-kt-indicator"), e.disabled = !1, 
                         $.ajax({
                             type: "POST",
-                            url: "/password/token/",
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 password: $("#password").val(),
+                                repassword: $("#repassword").val()
                             },
                             success: function(data){
                                 if (data.ret == 1){
