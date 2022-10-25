@@ -106,25 +106,23 @@ class Job extends Command
         //auto reset
         echo '重置用户流量开始' . PHP_EOL;
         
-        $boughts = Order::where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
-        $bought_users = array();
-        foreach ($boughts as $bought) {
+        $orders = Order::where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
+        $order_users = array();
+        foreach ($orders as $order) {
             
-            $user = User::where('id', $bought->user_id)->first();
+            $user = User::where('id', $order->user_id)->first();
             if ($user == null) {
-                $bought->delete();
                 continue;
             }
-            $shop = Product::where('id', $bought->product_id)->first();
-            if ($shop == null) {
-                $bought->delete();
+            $product = Product::where('id', $order->product_id)->first();
+            if ($product == null) {
                 continue;
             }
-            if ($shop->reset() != 0 && $shop->reset_value() != 0 && $shop->reset_exp() != 0) {
-                $bought_users[] = $bought->user_id;
-                if ($user->class > 0 && (int)((time() - $bought->datetime) / 86400) % $shop->reset() == 0 && (int)((time() - $bought->datetime) / 86400) != 0) {
-                    echo('用户ID:' . $user->id . ' 根据套餐ID:' . $shop->id . ' 重置流量为' . $shop->reset_value() . 'GB' . PHP_EOL);
-                    $user->transfer_enable = Tools::toGB($shop->reset_value());
+            if ($product->reset() != 0 && $product->reset_value() != 0 && $product->reset_exp() != 0) {
+                $order_users[] = $order->user_id;
+                if ($user->class > 0 && (int)((time() - $order->paid_time) / 86400) % $product->reset() == 0 && (int)((time() - $order->paid_time) / 86400) != 0) {
+                    echo('用户ID:' . $user->id . ' 根据套餐ID:' . $product->id . ' 重置流量为' . $product->reset_value() . 'GB' . PHP_EOL);
+                    $user->transfer_enable = Tools::toGB($product->reset_value());
                     $user->u = 0;
                     $user->d = 0;
                     $user->last_day_t = 0;
@@ -133,7 +131,7 @@ class Job extends Command
                         Setting::obtain('website_general_name') . '-您的流量被重置了',
                         'news/warn.tpl',
                         [
-                            'text' => '您好，根据您所订购的订单 ID:' . $bought->id . '，流量已经被重置为' . $shop->reset_value() . 'GB'
+                            'text' => '您好，根据您所订购的订单 ID:' . $order->no . '，流量已经被重置为' . $product->reset_value() . 'GB'
                         ],
                         [],
                         $_ENV['email_queue']
@@ -143,12 +141,12 @@ class Job extends Command
             }
         }
     
-        User::chunkById(1000, function ($users) use ($bought_users) {
+        User::chunkById(1000, function ($users) use ($order_users) {
             foreach ($users as $user) {
                 /** @var User $user */
                 $user->last_day_t = ($user->u + $user->d);
                 $user->save();
-                if (in_array($user->id, $bought_users)) {
+                if (in_array($user->id, $order_users)) {
                     continue;
                 }
                 if (date('d') == Setting::obtain('user_general_free_user_reset_day')) {
