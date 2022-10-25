@@ -108,7 +108,7 @@ class UserController extends AdminController
         $pass                       = Tools::genRandomChar(16);
         $user                       = new User();
         $current_timestamp          = time();
-        $user->password                 = Hash::passwordHash($pass);
+        $user->password             = Hash::passwordHash($pass);
         $user->name                 = $email;
         $user->email                = $email;
         $user->passwd               = Tools::genRandomChar(16);
@@ -137,7 +137,6 @@ class UserController extends AdminController
             $res['ret']         = 1;
             $res['msg']         = '新用户注册成功 用户名: ' . $email . ' 随机初始密码: ' . $pass;
             $res['email_error'] = 'success';
-            $user->addMoneyLog($user->money);
             $subject            = Setting::obtain('website_general_name') . '-新用户注册通知';
             $to                 = $user->email;
             $text               = '您好，管理员已经为您生成账户，用户名: ' . $email . '，登录密码为：' . $pass . '，感谢您的支持。 ';
