@@ -1544,7 +1544,7 @@
         "item": "subscribe_log_save_days",
         "value": "7",
         "class": "subscribe_general",
-        "is_public": 0,
+        "is_public": 1,
         "type": "string",
         "default": "7",
         "mark": "订阅日志保留周期"

@@ -23,7 +23,7 @@ class SubscribeLogController extends AdminController
     {
         $table_config['total_column'] = array(
             'id'                  => 'ID',
-            'name'           => '用户名',
+            'user_name'                => '用户名',
             'user_id'             => '用户ID',
             'email'               => '用户邮箱',
             'subscribe_type'      => '类型',
@@ -32,7 +32,7 @@ class SubscribeLogController extends AdminController
             'request_time'        => '时间',
             'request_user_agent'  => 'User-Agent'
         );
-        $table_config['default_show_column'] = ['id', 'name', 'subscribe_type', 'request_ip', 'location', 'request_time'];
+        $table_config['default_show_column'] = array_keys($table_config['total_column']);
         $table_config['ajax_url'] = 'subscribe/ajax';
         $this->view()
             ->assign('table_config', $table_config)
@@ -70,7 +70,7 @@ class SubscribeLogController extends AdminController
             }
             $tempdata                       = [];
             $tempdata['id']                 = $value->id;
-            $tempdata['name']          = $value->name;
+            $tempdata['user_name']          = $value->user_name;
             $tempdata['user_id']            = $value->user_id;
             $tempdata['email']              = $value->email;
             $tempdata['subscribe_type']     = $value->subscribe_type;
