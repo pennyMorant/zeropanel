@@ -71,7 +71,7 @@ class Config
             'jump_delay'              => $_ENV['jump_delay'],
             //'enable_reg_im'           => $_ENV['enable_reg_im'],
             // tg
-            //'subscribe_log_save_days' => $public_configs['subscribe_log_save_days'],
+            'subscribe_log_save_days' => $public_configs['subscribe_log_save_days'],
             'enable_telegram_bot'     => $public_configs['enable_telegram_bot'],
             'telegram_bot_id'         => $public_configs['telegram_bot_id'],
 
