@@ -46,9 +46,12 @@ var KTAuthNewPassword = function () {
                     })
                 }
             }), e.addEventListener("click", (function (a) {
-                a.preventDefault(), r.revalidateField("password"), r.validate().then((function (r) {
+                a.preventDefault(), 
+                //r.revalidateField("password"), 
+                r.validate().then((function (r) {
                     "Valid" == r ? (e.setAttribute("data-kt-indicator", "on"), e.disabled = !0, setTimeout((function () {
-                        e.removeAttribute("data-kt-indicator"), e.disabled = !1, 
+                        e.removeAttribute("data-kt-indicator"), 
+                        e.disabled = !1, 
                         $.ajax({
                             type: "POST",
                             url: location.pathname,
@@ -87,7 +90,7 @@ var KTAuthNewPassword = function () {
                                 }
                             }
                         })                       
-                    }), 1500)) : Swal.fire({
+                    }), 2000)) : Swal.fire({
                         text: "Sorry, looks like there are some errors detected, please try again.",
                         icon: "error",
                         buttonsStyling: !1,
