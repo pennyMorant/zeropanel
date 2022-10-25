@@ -1,8 +1,6 @@
 "use strict";
 var KTAuthNewPassword = function () {
-    var t, e, r, o, a = function () {
-        return 100 === o.getScore()
-    };
+    var t, e, r, o, a;
     return {
         init: function () {
             t = document.querySelector("#kt_new_password_form"), 
@@ -51,9 +49,11 @@ var KTAuthNewPassword = function () {
                 }
             }), e.addEventListener("click", (function (a) {
                 a.preventDefault(), 
-                //r.revalidateField("password"), 
+                r.revalidateField("password"), 
                 r.validate().then((function (r) {
-                    "Valid" == r ? (e.setAttribute("data-kt-indicator", "on"), e.disabled = !0, setTimeout((function () {
+                    "Valid" == r ? (e.setAttribute("data-kt-indicator", "on"), 
+                    e.disabled = !0, 
+                    setTimeout((function () {
                         e.removeAttribute("data-kt-indicator"), 
                         e.disabled = !1, 
                         $.ajax({

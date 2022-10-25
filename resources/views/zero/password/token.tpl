@@ -47,7 +47,7 @@
 									<div class="text-muted">使用 8 个或更多字符，并混合使用字母、数字和符号。</div>
 								</div>
 								<div class="fv-row mb-8">
-									<input type="password" placeholder="Repeat Password" name="confirm-password" id="repassowrd" autocomplete="off" class="form-control bg-transparent" />
+									<input type="password" placeholder="Repeat Password" name="confirm-password" id="repassword" autocomplete="off" class="form-control bg-transparent" />
 								</div>
 								<div class="d-grid mb-10">
 									<button type="button" id="kt_new_password_submit" class="btn btn-primary">
