@@ -5,7 +5,10 @@ var KTAuthNewPassword = function () {
     };
     return {
         init: function () {
-            t = document.querySelector("#kt_new_password_form"), e = document.querySelector("#kt_new_password_submit"), o = KTPasswordMeter.getInstance(t.querySelector('[data-kt-password-meter="true"]')), r = FormValidation.formValidation(t, {
+            t = document.querySelector("#kt_new_password_form"), 
+            e = document.querySelector("#kt_new_password_submit"), 
+            o = KTPasswordMeter.getInstance(t.querySelector('[data-kt-password-meter="true"]')), 
+            r = FormValidation.formValidation(t, {
                 fields: {
                     password: {
                         validators: {
@@ -28,7 +31,8 @@ var KTAuthNewPassword = function () {
                             identical: {
                                 compare: function () {
                                     return t.querySelector('[name="password"]').value
-                                }, message: "两次密码输入不一致"
+                                }, 
+                                message: "两次密码输入不一致"
                             }
                         }
                     }
