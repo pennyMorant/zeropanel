@@ -8,17 +8,10 @@ var KTSignupGeneral = function() {
             r = KTPasswordMeter.getInstance(e.querySelector('[data-kt-password-meter="true"]')),
             a = FormValidation.formValidation(e, {
                 fields: {
-                    "first-name": {
+                    name: {
                         validators: {
                             notEmpty: {
-                                message: "First Name is required"
-                            }
-                        }
-                    },
-                    "last-name": {
-                        validators: {
-                            notEmpty: {
-                                message: "Last Name is required"
+                                message: "请输入用户名"
                             }
                         }
                     },
@@ -29,17 +22,17 @@ var KTSignupGeneral = function() {
                                 message: "The value is not a valid email address"
                             },
                             notEmpty: {
-                                message: "Email address is required"
+                                message: "请输出邮箱"
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: "The password is required"
+                                message: "请输入密码"
                             },
                             callback: {
-                                message: "Please enter valid password",
+                                message: "请输入有效的密码",
                                 callback: function(e) {
                                     if (e.value.length > 0) return s()
                                 }
@@ -49,13 +42,13 @@ var KTSignupGeneral = function() {
                     "confirm-password": {
                         validators: {
                             notEmpty: {
-                                message: "The password confirmation is required"
+                                message: "请再次输出密码"
                             },
                             identical: {
                                 compare: function() {
                                     return e.querySelector('[name="password"]').value
                                 },
-                                message: "The password and its confirm are not the same"
+                                message: "两次密码输入不一致"
                             }
                         }
                     }
@@ -98,7 +91,7 @@ var KTSignupGeneral = function() {
                                         text: "You have successfully signup",
                                         icon: "success",
                                         buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: "Ok",
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
@@ -115,7 +108,7 @@ var KTSignupGeneral = function() {
                                         text: data.msg,
                                         icon: "error",
                                         buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: "Ok",
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
@@ -124,10 +117,10 @@ var KTSignupGeneral = function() {
                             }
                         })
                     }), 1500)) : Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "抱歉，似乎检测到一些错误，请重试",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }

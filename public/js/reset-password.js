@@ -62,7 +62,7 @@ var KTAuthResetPassword = function () {
                             }
                         })
                     }), 2000)) : Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "抱歉，似乎检测到一些错误，请重试",
                         icon: "error",
                         buttonsStyling: !1,
                         confirmButtonText: "Ok, got it!",

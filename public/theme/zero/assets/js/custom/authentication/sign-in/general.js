@@ -12,17 +12,17 @@ var KTSigninGeneral = function() {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "The value is not a valid email address"
+                                message: "请输入正确的邮箱"
                             },
                             notEmpty: {
-                                message: "Email address is required"
+                                message: "请输入邮箱"
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: "The password is required"
+                                message: "请输入密码"
                             }
                         }
                     }
@@ -56,7 +56,7 @@ var KTSigninGeneral = function() {
                                         text: "You have successfully logged in!",
                                         icon: "success",
                                         buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: "Ok",
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
@@ -82,10 +82,10 @@ var KTSigninGeneral = function() {
                             }
                         })
                     }), 2e3)) : Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "抱歉，似乎检测到一些错误，请重试",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
