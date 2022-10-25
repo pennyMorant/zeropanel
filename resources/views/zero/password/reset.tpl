@@ -58,6 +58,6 @@
 		</div>
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
-		<script src="/js/password.js"></script>		
+		<script src="/js/reset-password.js"></script>		
 	</body>
 </html>
