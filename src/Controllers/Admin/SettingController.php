@@ -29,7 +29,7 @@ class SettingController extends AdminController
         
         foreach ($settings as $setting)
         {
-        	if ($setting->type == 'bool') {
+        	if ($setting->type === 'bool') {
                 $config[$setting->item] = (bool) $setting->value;
             } else if ($setting->type == 'array') {
                 $config[$setting->item] = $setting->value;
@@ -201,13 +201,11 @@ class SettingController extends AdminController
         {
             $setting = Setting::where('item', '=', $item)->first();
 
-            if ($setting->type == 'array') {
-                
-                $setting->value = $request->getParam($item);
+            if ($setting->type == 'array') {               
+                $setting->value = json_encode($request->getParam($item));
             } else {
                 $setting->value = $request->getParam($item);
             }
-
             if(!$setting->save()) {
                 return $response->withJson([
                     'ret' => 0,

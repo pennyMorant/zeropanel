@@ -452,16 +452,17 @@
                                                             </div>
                                                             <div class="d-flex justify-content-end">
                                                                 <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                                    <input class="form-check-input" {if $user->notify_type == 'telegram'}checked="checked"{/if} id="notify_telegram" type="checkbox" onclick="KTUsersEnableNotify('telegram')" >
+                                                                    <input class="form-check-input" {if $user->notify_type == 'telegram'}checked="checked"{/if} id="notify_telegram" type="checkbox" {if $user->telegram_id == null || $config['enable_telegram_bot'] == false} disabled {/if}  onclick="KTUsersEnableNotify('telegram')" />
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>                                                   
                                                 </div>
+												<!--
                                                 <div class="card-footer border-0 d-flex justify-content-center pt-0">
                                                     <button class="btn btn-sm btn-light-primary">Save changes</button>
                                                 </div>
-                                                
+                                                -->
                                             </div>
                                         </div>
                                         <div class="flex-lg-row-fluid ms-lg-15">

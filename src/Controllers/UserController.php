@@ -183,7 +183,7 @@ class UserController extends BaseController
         $user = $this->user;
         if ($type == 'telegram' && Setting::obtain('enable_telegram_bot') == false) {
             $res['ret'] = 0;
-            $res['msg'] = '修改失败，当前无法使用 Telegram 接收通知';
+            $res['msg'] = '系统未启用Telegram Bot';
             return $response->withJson($res);
         } else if ($type == 'telegram' && $user->telegram_id == null) {
             $res['ret'] = 0;

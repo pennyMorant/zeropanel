@@ -11,12 +11,11 @@ class Setting extends Model
     {
         $config = self::where('item', '=', $item)->first();
 
-        if ($config->type == 'bool') {
+        if ($config->type === 'bool') {
             return (bool) $config->value;
-        } elseif ($config->type == 'int') {
+        } elseif ($config->type === 'int') {
             return (int) $config->value;
         }
-
         return (string) $config->value;
     }
 
