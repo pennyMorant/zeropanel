@@ -71,6 +71,6 @@
 		</div>
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
-		<script src="/js/signup.min.js"></script>		
+		<script src="/js/new-password.js"></script>		
 	</body>
 </html>
