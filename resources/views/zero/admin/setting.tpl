@@ -1201,15 +1201,15 @@
                                     <div class="tab-pane fade active in" id="telegram_general">
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">Telegram 群组 ID</label>
-                                            <input class="form-control maxwidth-edit" value="{$settings['telegram_general_group_id']}" id="telegram_general_group_id">
+                                            <input class="form-control maxwidth-edit" value="{$settings['telegram_general_group_id']}" id="telegram_general_group_id" />
                                         </div>
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">Telegram 频道 ID</label>
-                                            <input class="form-control maxwidth-edit" value="{$settings['telegram_general_channel_id']}" id="telegram_general_channel_id">
+                                            <input class="form-control maxwidth-edit" value="{$settings['telegram_general_channel_id']}" id="telegram_general_channel_id" />
                                         </div>
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">管理员ID</label>
-                                            <input class="form-control maxwidth-edit" value={$settings['telegram_general_admin_id']} id="telegram_general_admin_id">
+                                                <input class="form-control maxwidth-edit" id="telegram_general_admin_id" {if $settings['telegram_general_admin_id'] == null} value="{$settings['telegram_general_admin_id']}" {else} value={$settings['telegram_general_admin_id']}{/if} />
                                         </div>
                                         <button id="submit_telegram_general" type="submit" class="btn btn-block btn-brand">提交</button>
                                     </div>
