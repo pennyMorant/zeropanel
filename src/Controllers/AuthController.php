@@ -300,7 +300,7 @@ class AuthController extends BaseController
         } else {
             $geetest_html = null;
         }
-        if (Setting::obtain('reg_mode' == 'close')) {
+        if (Setting::obtain('reg_mode')  == 'close') {
             $this->view()
                 ->display('auth/soon.tpl');
             return $response;
