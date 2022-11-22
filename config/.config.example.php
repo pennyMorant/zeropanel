@@ -11,7 +11,7 @@ $_ENV['debug'] = false;
 // db_socket 例：/var/run/mysqld/mysqld.sock（需使用绝对地址）
 $_ENV['db_driver'] = 'mysql';
 $_ENV['db_host'] = '';
-$_ENV['db_socket'] = '/tmp/mysql.sock';
+$_ENV['db_socket'] = '/run/mysqld/mysqld.sock';
 $_ENV['db_database'] = '';           //数据库名
 $_ENV['db_username'] = '';              //数据库用户名
 $_ENV['db_password'] = '';           //用户名对应的密码

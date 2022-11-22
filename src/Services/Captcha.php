@@ -34,7 +34,6 @@ class Captcha
     public static function verify($param): bool
     {
         $result = false;
-
         switch (Setting::obtain('captcha_provider'))
         {
             case 'recaptcha':
@@ -51,7 +50,6 @@ class Captcha
                 }
                 break;
         }
-
         return $result;
     }
 }

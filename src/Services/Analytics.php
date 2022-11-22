@@ -35,7 +35,6 @@ class Analytics
         return Tools::flowAutoShow($total);
     }
 
-
     public function getRawTodayTrafficUsage()
     {
         return User::sum('u') + User::sum('d') - User::sum('last_day_t');

@@ -1,10 +1,10 @@
 @font-face {
     font-family: "fonticon";
-    src: url("./fonticon.ttf?d63d4800091cd3eedf4d33622a251715") format("truetype"),
-url("./fonticon.woff?d63d4800091cd3eedf4d33622a251715") format("woff"),
-url("./fonticon.woff2?d63d4800091cd3eedf4d33622a251715") format("woff2"),
-url("./fonticon.eot?d63d4800091cd3eedf4d33622a251715#iefix") format("embedded-opentype"),
-url("./fonticon.svg?d63d4800091cd3eedf4d33622a251715#fonticon") format("svg");
+    src: url("./fonticon.ttf?8e8dbe1ea9ce4a70bc69a61ddae8f305") format("truetype"),
+url("./fonticon.woff?8e8dbe1ea9ce4a70bc69a61ddae8f305") format("woff"),
+url("./fonticon.woff2?8e8dbe1ea9ce4a70bc69a61ddae8f305") format("woff2"),
+url("./fonticon.eot?8e8dbe1ea9ce4a70bc69a61ddae8f305#iefix") format("embedded-opentype"),
+url("./fonticon.svg?8e8dbe1ea9ce4a70bc69a61ddae8f305#fonticon") format("svg");
 }
 
 i[class^="fonticon-"]:before, i[class*=" fonticon-"]:before {
@@ -269,4 +269,13 @@ i[class^="fonticon-"]:before, i[class*=" fonticon-"]:before {
 }
 .fonticon-web-design:before {
     content: "\f154";
+}
+.fonticon-sun-1:before {
+    content: "\f155";
+}
+.fonticon-sun-2:before {
+    content: "\f156";
+}
+.fonticon-messenger:before {
+    content: "\f157";
 }

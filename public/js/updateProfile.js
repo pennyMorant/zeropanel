@@ -699,8 +699,8 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
     nodeid = id;
     usersclass = userclass;
     nodesclass = nodeclass;
-    getLoad();
     if (usersclass >= nodesclass) {
+        getLoad();
 		$.ajax({
 			type: "GET",
 			url: "/user/nodeinfo/" + nodeid,
@@ -784,13 +784,13 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						Swal.close();
 						$("#zero_modal_shadowsocks_node_info").modal('show');
 					}
-				} else {
+				} else {                   
 					getResult(data.msg, "", "error");
 				}
 			}
 		});
-    } else {       
-        getResult("会员身份权限不足", "", "error");
+    } else {
+        getResult("权限不足", "", "error");
     }
 }
 
@@ -809,3 +809,44 @@ function checkIn() {
         },
     });   
 }
+
+//import sub url
+function oneclickImport(client, subLink) {
+    var sublink = {
+      surfboard: "surfboard:///install-config?url=" + encodeURIComponent(subLink),
+      quantumult: "quantumult://configuration?server=" + btoa(subLink).replace(/=/g, '') + "&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw",
+      shadowrocket: "shadowrocket://add/sub://" + btoa(subLink),
+      surge4: "surge3:///install-config?url=" + encodeURIComponent(subLink),
+      clash: "clash://install-config?url=" + encodeURIComponent(subLink),
+      sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
+      ssr: "sub://" + btoa(subLink)
+    }
+    Swal.fire({
+        title: "是否导入订阅链接",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "导入",
+        cancelButtonText: "取消",
+        focusClose: false,
+        focusConfirm: false,
+    }).then((result) => {
+        if (result.value) {
+        window.location.href = sublink[client];
+        }
+    });
+}
+
+var clipboard = new ClipboardJS('.copy-text');
+clipboard.on('success', function(e) {
+    getResult("复制成功", "", "success");
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});

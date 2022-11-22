@@ -254,26 +254,6 @@ return function (SlimApp $app) {
         $group->post('/api/analytics/income',     App\Controllers\AdminController::class . ':getIncome');
         $group->post('/api/analytics/new-users',  App\Controllers\AdminController::class . ':newUsers');
 
-        # Zero
-        // Help Mange
-        $group->group('/help', function (Group $group) {
-            $group->get('/document',             App\Controllers\Admin\HelpController::class . ':index');
-            $group->get('/document/create',      App\Controllers\Admin\HelpController::class . ':create');
-            $group->get('/document/gethelpclass',App\Controllers\Admin\HelpController::class . ':getHelpClass');
-            $group->get('/document/{id}/edit',   App\Controllers\Admin\HelpController::class . ':edit');
-            $group->put('/document/{id}',        App\Controllers\Admin\HelpController::class . ':update');
-            $group->delete('/document',          App\Controllers\Admin\HelpController::class . ':delete');
-            $group->post('/document',            App\Controllers\Admin\HelpController::class . ':add');
-            $group->post('/document/ajax',       App\Controllers\Admin\HelpController::class . ':ajax');
-
-            $group->get('/class',                App\Controllers\Admin\HelpController::class . ':class_index');
-            $group->get('/class/create',         App\Controllers\Admin\HelpController::class . ':class_create');
-            $group->get('/class/{id}/edit',      App\Controllers\Admin\HelpController::class . ':class_edit');
-            $group->put('/class/{id}',           App\Controllers\Admin\HelpController::class . ':class_update');
-            $group->delete('/class',             App\Controllers\Admin\HelpController::class . ':class_delete');
-            $group->post('/class',               App\Controllers\Admin\HelpController::class . ':class_add');
-            $group->post('/class/ajax',          App\Controllers\Admin\HelpController::class . ':class_ajax');
-        });
         // Agent
         $group->group('/agent', function (Group $group) {
             $group->get('/take_log',             App\Controllers\Admin\AgentController::class . ':takeLog');
