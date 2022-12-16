@@ -342,7 +342,6 @@
                     <ul class="menu-collapse collapse in" id="ui_menu_detect">
                         <li><a href="/admin/detect"><i class="icon icon-lg">account_balance</i>&nbsp;审计规则</a></li>
                         <li><a href="/admin/detect/log"><i class="icon icon-lg">assignment_late</i>&nbsp;审计记录</a></li>
-                        <li><a href="/admin/detect/ban"><i class="icon icon-lg">text_fields</i>&nbsp;审计封禁</a></li>
                     </ul>
 
 
