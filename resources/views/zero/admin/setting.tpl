@@ -750,10 +750,7 @@
                                                 <a data-toggle="tab" href="#verification_code_public_settings"><i class="icon icon-lg">settings</i>&nbsp;设置</a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="#recaptcha"><i class="icon icon-lg">face</i>&nbsp;reCAPTCHA</a>
-                                            </li>
-                                            <li>
-                                                <a data-toggle="tab" href="#geetest"><i class="icon icon-lg">extension</i>&nbsp;Geetest</a>
+                                                <a data-toggle="tab" href="#turnstile"><i class="icon icon-lg">face</i>&nbsp;Turnstile</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -763,8 +760,7 @@
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">验证码提供商</label>
                                             <select id="captcha_provider" class="form-control maxwidth-edit">
-                                                <option value="recaptcha" {if $settings['captcha_provider'] == "recaptcha"}selected{/if}>reCaptcha</option>
-                                                <option value="geetest" {if $settings['captcha_provider'] == "geetest"}selected{/if}>Geetest</option>
+                                                <option value="turnstile" {if $settings['captcha_provider'] == "turnstile"}selected{/if}>Turnstile</option>
                                             </select>
                                         </div>
                                         <!-- enable_reg_captcha -->
@@ -783,91 +779,23 @@
                                                 <option value="1" {if $settings['enable_login_captcha'] == true}selected{/if}>开启</option>
                                             </select>
                                         </div>
-                                        <!-- enable_checkin_captcha -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">签到验证码</label>
-                                            <select id="enable_checkin_captcha" class="form-control maxwidth-edit">
-                                                <option value="0" {if $settings['enable_checkin_captcha'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['enable_checkin_captcha'] == true}selected{/if}>开启</option>
-                                            </select>
-                                        </div>
 
                                         <button id="submit_verify_code" type="submit" class="btn btn-block btn-brand">提交</button>
                                     </div>
-                                    <div class="tab-pane fade" id="recaptcha">
-                                        <p class="form-control-guide"><i class="material-icons">info</i>在 <a href="https://www.google.com/recaptcha/admin/create" target="view_window">https://www.google.com/recaptcha/admin/create</a> 申请，选择【reCAPTCHA 第 2 版】的子选项【进行人机身份验证复选框】</p>
-                                        <!-- recaptcha_sitekey -->
+                                    <div class="tab-pane fade" id="turnstile">
+                                        <p class="form-control-guide"><i class="material-icons">info</i>在 <a href="https://www.google.com/turnstile/admin/create" target="view_window">https://www.google.com/turnstile/admin/create</a> 申请，选择【turnstile 第 2 版】的子选项【进行人机身份验证复选框】</p>
+                                        <!-- turnstile_sitekey -->
                                         <div class="form-group form-group-label">
-                                            <label class="floating-label">reCaptcha Site Key</label>
-                                            <input class="form-control maxwidth-edit" id="recaptcha_sitekey" value="{$settings['recaptcha_sitekey']}">
+                                            <label class="floating-label">Turnstile Site Key</label>
+                                            <input class="form-control maxwidth-edit" id="turnstile_sitekey" value="{$settings['turnstile_sitekey']}">
                                         </div>
-                                        <!-- recaptcha_secret -->
+                                        <!-- turnstile_secret -->
                                         <div class="form-group form-group-label">
-                                            <label class="floating-label">reCaptcha Secret</label>
-                                            <input class="form-control maxwidth-edit" id="recaptcha_secret" value="{$settings['recaptcha_secret']}">
-                                        </div>
-
-                                        <button id="submit_recaptcha" type="submit" class="btn btn-block btn-brand">提交</button>
-                                    </div>
-                                    <div class="tab-pane fade" id="geetest">
-                                        <p class="form-control-guide"><i class="material-icons">info</i>在 <a href="https://gtaccount.geetest.com/sensebot/overview" target="view_window">https://gtaccount.geetest.com/sensebot/overview</a> 申请</p>
-                                        <!-- geetest_id -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">Geetest ID</label>
-                                            <input class="form-control maxwidth-edit" id="geetest_id" value="{$settings['geetest_id']}">
-                                        </div>
-                                        <!-- geetest_key -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">Geetest Key</label>
-                                            <input class="form-control maxwidth-edit" id="geetest_key" value="{$settings['geetest_key']}">
+                                            <label class="floating-label">Turnstile Secret</label>
+                                            <input class="form-control maxwidth-edit" id="turnstile_secret" value="{$settings['turnstile_secret']}">
                                         </div>
 
-                                        <button id="submit_geetest" type="submit" class="btn btn-block btn-brand">提交</button>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="personalise_settings">
-                                    <nav class="tab-nav margin-top-no">
-                                        <ul class="nav nav-list">
-                                            <li class="active">
-                                                <a data-toggle="tab" href="#custom_background_image"><i class="icon icon-lg">image</i>&nbsp;背景图像</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-
-                                    <div class="tab-pane fade active in" id="custom_background_image">
-                                        <p class="form-control-guide"><i class="material-icons">info</i>默认背景图片地址：/theme/material/css/images/bg/amber.jpg <a href="/theme/material/css/images/bg/amber.jpg">预览</a></p>
-                                        <p class="form-control-guide"><i class="material-icons">info</i>自带背景图片一地址：/theme/material/css/images/bg/streak.jpg <a href="/theme/material/css/images/bg/streak.jpg">预览</a></p>
-                                        <p class="form-control-guide"><i class="material-icons">info</i>自带背景图片二地址：/theme/material/css/images/bg/geometry.jpg <a href="/theme/material/css/images/bg/geometry.jpg">预览</a></p>
-                                        <p class="form-control-guide"><i class="material-icons">info</i>如需自定义，图片地址可以指向 public 目录或图床图片地址</p>
-                                        <!-- user_center_bg -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">是否启用自定义用户中心背景图片</label>
-                                            <select id="user_center_bg" class="form-control maxwidth-edit">
-                                                <option value="0" {if $settings['user_center_bg'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['user_center_bg'] == true}selected{/if}>开启</option>
-                                            </select>
-                                        </div>
-                                        <!-- admin_center_bg -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">是否启用自定义管理中心背景图片</label>
-                                            <select id="admin_center_bg" class="form-control maxwidth-edit">
-                                                <option value="0" {if $settings['admin_center_bg'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['admin_center_bg'] == true}selected{/if}>开启</option>
-                                            </select>
-                                        </div>
-                                        <!-- user_center_bg_addr -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">用户中心背景图片地址</label>
-                                            <input class="form-control maxwidth-edit" id="user_center_bg_addr" value="{$settings['user_center_bg_addr']}">
-                                        </div>
-                                        <!-- admin_center_bg_addr -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">管理中心背景图片地址</label>
-                                            <input class="form-control maxwidth-edit" id="admin_center_bg_addr" value="{$settings['admin_center_bg_addr']}">
-                                        </div>
-
-                                        <button id="submit_custom_background_image" type="submit" class="btn btn-block btn-brand">提交</button>
+                                        <button id="submit_turnstile" type="submit" class="btn btn-block btn-brand">提交</button>
                                     </div>
                                 </div>
 
@@ -1816,44 +1744,15 @@
 
 <script>
     window.addEventListener('load', () => {
-        $$.getElementById('submit_geetest').addEventListener('click', () => {
+        $$.getElementById('submit_turnstile').addEventListener('click', () => {
             $.ajax({
                 type: "POST",
                 url: "/admin/setting",
                 dataType: "json",
                 data: {
-                    class: 'verify_code_geetest',
-                    geetest_id: $$getValue('geetest_id'),
-                    geetest_key: $$getValue('geetest_key')
-                },
-                success: data => {
-                    $("#result").modal();
-                    $$.getElementById('msg').innerHTML = data.msg;
-                    if (data.ret) {
-                        window.setTimeout("location.href='/admin/setting'", {$config['jump_delay']});
-                    }
-                },
-                error: jqXHR => {
-                    alert(`发生错误：${
-                            jqXHR.status
-                            }`);
-                }
-            })
-        })
-    })
-</script>
-
-<script>
-    window.addEventListener('load', () => {
-        $$.getElementById('submit_recaptcha').addEventListener('click', () => {
-            $.ajax({
-                type: "POST",
-                url: "/admin/setting",
-                dataType: "json",
-                data: {
-                    class: 'verify_code_recaptcha',
-                    recaptcha_sitekey: $$getValue('recaptcha_sitekey'),
-                    recaptcha_secret: $$getValue('recaptcha_secret')
+                    class: 'verify_code_turnstile',
+                    turnstile_sitekey: $$getValue('turnstile_sitekey'),
+                    turnstile_secret: $$getValue('turnstile_secret')
                 },
                 success: data => {
                     $("#result").modal();
@@ -2248,37 +2147,6 @@
                     class: 'paybeaver',
                     paybeaver_app_id: $$getValue('paybeaver_app_id'),
                     paybeaver_app_secret: $$getValue('paybeaver_app_secret')
-                },
-                success: data => {
-                    $("#result").modal();
-                    $$.getElementById('msg').innerHTML = data.msg;
-                    if (data.ret) {
-                        window.setTimeout("location.href='/admin/setting'", {$config['jump_delay']});
-                    }
-                },
-                error: jqXHR => {
-                    alert(`发生错误：${
-                            jqXHR.status
-                            }`);
-                }
-            })
-        })
-    })
-</script>
-
-<script>
-    window.addEventListener('load', () => {
-        $$.getElementById('submit_custom_background_image').addEventListener('click', () => {
-            $.ajax({
-                type: "POST",
-                url: "/admin/setting",
-                dataType: "json",
-                data: {
-                    class: 'background_image',
-                    user_center_bg: $$getValue('user_center_bg'),
-                    admin_center_bg: $$getValue('admin_center_bg'),
-                    user_center_bg_addr: $$getValue('user_center_bg_addr'),
-                    admin_center_bg_addr: $$getValue('admin_center_bg_addr')
                 },
                 success: data => {
                     $("#result").modal();

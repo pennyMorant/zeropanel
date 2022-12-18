@@ -332,11 +332,11 @@
     {
         "id": null,
         "item": "captcha_provider",
-        "value": "recaptcha",
+        "value": "turnstile",
         "class": "captcha",
         "is_public": 1,
         "type": "string",
-        "default": "recaptcha",
+        "default": "turnstile",
         "mark": "验证码提供商"
     },
     {
@@ -361,53 +361,23 @@
     },
     {
         "id": null,
-        "item": "enable_checkin_captcha",
-        "value": "0",
-        "class": "captcha",
-        "is_public": 1,
-        "type": "bool",
-        "default": "0",
-        "mark": "签到验证码"
-    },
-    {
-        "id": null,
-        "item": "recaptcha_sitekey",
+        "item": "turnstile_sitekey",
         "value": "",
-        "class": "recaptcha",
+        "class": "turnstile",
         "is_public": 0,
         "type": "string",
         "default": "",
-        "mark": "reCaptcha网站密钥"
+        "mark": "turnstile网站密钥"
     },
     {
         "id": null,
-        "item": "recaptcha_secret",
+        "item": "turnstile_secret",
         "value": "",
-        "class": "recaptcha",
+        "class": "turnstile",
         "is_public": 0,
         "type": "string",
         "default": "",
-        "mark": "reCaptcha密钥"
-    },
-    {
-        "id": null,
-        "item": "geetest_id",
-        "value": "",
-        "class": "geetest",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "极验id"
-    },
-    {
-        "id": null,
-        "item": "geetest_key",
-        "value": "",
-        "class": "geetest",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "极验密钥"
+        "mark": "turnstile密钥"
     },
     {
         "id": null,

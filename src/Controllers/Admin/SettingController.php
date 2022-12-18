@@ -128,8 +128,8 @@ class SettingController extends AdminController
             case 'verify_code':
                 $list = array('captcha_provider', 'enable_reg_captcha', 'enable_login_captcha', 'enable_checkin_captcha');
                 break;
-            case 'verify_code_recaptcha':
-                $list = array('recaptcha_sitekey', 'recaptcha_secret');
+            case 'verify_code_turnstile':
+                $list = array('turnstile_sitekey', 'turnstile_secret');
                 break;
             case 'verify_code_geetest':
                 $list = array('geetest_id', 'geetest_key');
