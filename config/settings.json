@@ -22,11 +22,11 @@
     {
         "id": null,
         "item": "website_general_landing_index",
-        "value": "index_blue",
+        "value": "index",
         "class": "website_general",
         "is_public": "0",
         "type": "string",
-        "default": "index_blue",
+        "default": "index",
         "mark": "网站着陆页"
     },
     {
