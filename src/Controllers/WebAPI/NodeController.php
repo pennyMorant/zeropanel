@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controllers\Mod_Mu;
+namespace App\Controllers\WebAPI;
 
 use App\Controllers\BaseController;
 use App\Models\{

@@ -8,7 +8,7 @@ use Slim\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class Mod_Mu
+class WebAPI
 {
     public function __invoke(Request $request, RequestHandler $handler)
     {

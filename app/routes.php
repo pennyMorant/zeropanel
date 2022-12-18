@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Controllers\ZeroController;
 use App\Controllers\HomeController;
 use Slim\App as SlimApp;
-use App\Middleware\{Guest, Admin, Auth, Mod_Mu};
+use App\Middleware\{Guest, Admin, Auth, WebAPI};
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (SlimApp $app) {
@@ -131,7 +131,6 @@ return function (SlimApp $app) {
         $group->post('/register',        App\Controllers\AuthController::class . ':registerHandle');
         $group->post('/send',            App\Controllers\AuthController::class . ':sendVerify');
         $group->get('/logout',           App\Controllers\AuthController::class . ':logout');
-        $group->get('/telegram_oauth',   App\Controllers\AuthController::class . ':telegram_oauth');
         $group->get('/login_getCaptcha', App\Controllers\AuthController::class . ':getCaptcha');
     })->add(new Guest());
 
@@ -262,27 +261,27 @@ return function (SlimApp $app) {
         });
     })->add(new Admin());
 
-    // mu
+    // webapi
     $app->group('/mod_mu', function (Group $group) {
-        $group->get('/nodes/{id}/info',      App\Controllers\Mod_Mu\NodeController::class . ':getInfo');
-        $group->get('/users',                App\Controllers\Mod_Mu\UserController::class . ':index');
-        $group->post('/users/traffic',       App\Controllers\Mod_Mu\UserController::class . ':addTraffic');
-        $group->post('/users/aliveip',       App\Controllers\Mod_Mu\UserController::class . ':addAliveIp');
-        $group->post('/users/detectlog',     App\Controllers\Mod_Mu\UserController::class . ':addDetectLog');
-        $group->post('/nodes/{id}/info',     App\Controllers\Mod_Mu\NodeController::class . ':info');
+        $group->get('/nodes/{id}/info',      App\Controllers\WebAPI\NodeController::class . ':getInfo');
+        $group->get('/users',                App\Controllers\WebAPI\UserController::class . ':index');
+        $group->post('/users/traffic',       App\Controllers\WebAPI\UserController::class . ':addTraffic');
+        $group->post('/users/aliveip',       App\Controllers\WebAPI\UserController::class . ':addAliveIp');
+        $group->post('/users/detectlog',     App\Controllers\WebAPI\UserController::class . ':addDetectLog');
+        $group->post('/nodes/{id}/info',     App\Controllers\WebAPI\NodeController::class . ':info');
 
-        $group->get('/nodes',                App\Controllers\Mod_Mu\NodeController::class . ':getAllInfo');
-        $group->post('/nodes/config',        App\Controllers\Mod_Mu\NodeController::class . ':getConfig');
+        $group->get('/nodes',                App\Controllers\WebAPI\NodeController::class . ':getAllInfo');
+        $group->post('/nodes/config',        App\Controllers\WebAPI\NodeController::class . ':getConfig');
 
-        $group->get('/func/detect_rules',    App\Controllers\Mod_Mu\FuncController::class . ':getDetectLogs');
-        $group->post('/func/block_ip',       App\Controllers\Mod_Mu\FuncController::class . ':addBlockIp');
-        $group->get('/func/block_ip',        App\Controllers\Mod_Mu\FuncController::class . ':getBlockIp');
-        $group->get('/func/unblock_ip',      App\Controllers\Mod_Mu\FuncController::class . ':getUnblockIp');
-        $group->get('/func/autoexec',        App\Controllers\Mod_Mu\FuncController::class . ':getAutoexec');
-        $group->post('/func/autoexec',       App\Controllers\Mod_Mu\FuncController::class . ':addAutoexec');
+        $group->get('/func/detect_rules',    App\Controllers\WebAPI\FuncController::class . ':getDetectLogs');
+        $group->post('/func/block_ip',       App\Controllers\WebAPI\FuncController::class . ':addBlockIp');
+        $group->get('/func/block_ip',        App\Controllers\WebAPI\FuncController::class . ':getBlockIp');
+        $group->get('/func/unblock_ip',      App\Controllers\WebAPI\FuncController::class . ':getUnblockIp');
+        $group->get('/func/autoexec',        App\Controllers\WebAPI\FuncController::class . ':getAutoexec');
+        $group->post('/func/autoexec',       App\Controllers\WebAPI\FuncController::class . ':addAutoexec');
 
-        $group->get('/func/ping',            App\Controllers\Mod_Mu\FuncController::class . ':ping');
-    })->add(new Mod_Mu());
+        $group->get('/func/ping',            App\Controllers\WebAPI\FuncController::class . ':ping');
+    })->add(new WebAPI());
 
     $app->group('/link', function (Group $group) {
         $group->get('/{token}',          App\Controllers\LinkController::class . ':GetContent');
