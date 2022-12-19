@@ -15,9 +15,6 @@ return function (SlimApp $app) {
     $app->get('/405',       App\Controllers\HomeController::class . ':page405');
     $app->get('/500',       App\Controllers\HomeController::class . ':page500');
 
-    // other
-    $app->get('/spay_back',             App\Services\Payment::class . ':notify');
-    $app->post('/spay_back',            App\Services\Payment::class . ':notify');
     $app->post('/notify',               App\Controllers\HomeController::class . ':notify');
 
     // Telegram
@@ -89,9 +86,6 @@ return function (SlimApp $app) {
         $group->get('/money',                    App\Controllers\ZeroController::class . ':getmoney');
         $group->get('/ajax_data/table/{name}',   App\Controllers\ZeroController::class . ':ajaxDatatable');
         $group->get('/ajax_data/chart/{name}',   App\Controllers\ZeroController::class . ':ajaxDataChart');
-        $group->get('/formcheck/{type}',         App\Controllers\ZeroController::class . ':formCheck');
-        $group->post('/setting/{page}',          App\Controllers\ZeroController::class . ':updateSetting');
-        $group->post('/account_check',           App\Controllers\ZeroController::class . ':AccountCheck');
         $group->delete('/ajax_data/delete',      App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
 
         // Agent

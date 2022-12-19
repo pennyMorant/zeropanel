@@ -62,7 +62,11 @@
                                 <div class="fv-row mb-10">
                                     <input class="form-control bg-transparent" type="text" placeholder="推广码 可留空" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
-
+								{if $config['enable_reg_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
+									<div class="fv-row mb-7">
+										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
+									</div>
+								{/if}
 								<div class="d-grid mb-10">
 									<button id="kt_sign_up_submit" class="btn btn-primary">
 										<span class="indicator-label" data-kt-translate="sign-up-submit">确定</span>
