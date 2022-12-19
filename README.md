@@ -38,7 +38,7 @@ http://zeroboard.top
     php composer.phar
     php composer.phar install
 #### 第三步
-    chmod -R 755${PWD}
+    chmod -R 755 ${PWD}
     chown -R www-data:www-data ${PWD}
 #### 第四步，创建数据库
     mysql -u root -p
