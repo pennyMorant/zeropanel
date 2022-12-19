@@ -312,8 +312,6 @@ class User extends Model
         $uid   = $this->id;
         $email = $this->email;
 
-        DetectBanLog::where('user_id', '=', $uid)->delete();
-        DetectLog::where('user_id', '=', $uid)->delete();
         EmailVerify::where('email', $email)->delete();
         InviteCode::where('user_id', '=', $uid)->delete();
         Ip::where('userid', '=', $uid)->delete();
@@ -385,58 +383,6 @@ class User extends Model
         $paid = $this->paidUserCount();
 
         return round($paid / $all * 100) . '%';
-    }
-
-    /**
-     * 获取用户被封禁的理由
-     */
-    public function disableReason(): string
-    {
-        $reason_id = DetectLog::where('user_id', $this->id)->orderBy('id', 'DESC')->first();
-        $reason    = DetectRule::find($reason_id->list_id);
-        if (is_null($reason)) {
-            return '特殊原因被禁用，了解详情请联系管理员';
-        }
-        return $reason->text;
-    }
-
-    /**
-     * 最后一次被封禁的时间
-     */
-    public function last_detect_ban_time(): string
-    {
-        return ($this->last_detect_ban_time == '1989-06-04 00:05:00' ? '未被封禁过' : $this->last_detect_ban_time);
-    }
-
-    /**
-     * 当前解封时间
-     */
-    public function relieve_time(): string
-    {
-        $logs = DetectBanLog::where('user_id', $this->id)->orderBy('id', 'desc')->first();
-        if ($this->enable == 0 && $logs != null) {
-            $time = ($logs->end_time + $logs->ban_time * 60);
-            return date('Y-m-d H:i:s', $time);
-        } else {
-            return '当前未被封禁';
-        }
-    }
-
-    /**
-     * 累计被封禁的次数
-     */
-    public function detect_ban_number(): int
-    {
-        return DetectBanLog::where('user_id', $this->id)->count();
-    }
-
-    /**
-     * 最后一次封禁的违规次数
-     */
-    public function user_detect_ban_number(): int
-    {
-        $logs = DetectBanLog::where('user_id', $this->id)->orderBy('id', 'desc')->first();
-        return $logs->detect_number;
     }
 
 

@@ -84,53 +84,6 @@ CREATE TABLE `coupon` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `detect_ban_log`
---
-
-CREATE TABLE `detect_ban_log` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
-  `user_id` bigint(20) UNSIGNED NOT NULL COMMENT '用户 ID',
-  `email` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户邮箱',
-  `detect_number` int(11) NOT NULL COMMENT '本次违规次数',
-  `ban_time` int(11) NOT NULL COMMENT '本次封禁时长',
-  `start_time` bigint(20) NOT NULL COMMENT '统计开始时间',
-  `end_time` bigint(20) NOT NULL COMMENT '统计结束时间',
-  `all_detect_number` int(11) NOT NULL COMMENT '累计违规次数'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='审计封禁日志';
-
--- --------------------------------------------------------
-
---
--- 表的结构 `detect_list`
---
-
-CREATE TABLE `detect_list` (
-  `id` bigint(20) NOT NULL,
-  `name` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `regex` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `detect_log`
---
-
-CREATE TABLE `detect_log` (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `list_id` bigint(20) NOT NULL,
-  `datetime` bigint(20) NOT NULL,
-  `node_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `email_queue`
 --
 
@@ -395,10 +348,6 @@ CREATE TABLE `user` (
   `current_product_id` int(11) DEFAULT NULL COMMENT '用户当前产品ID',
   `transfer_enable` bigint(20) NOT NULL COMMENT '总流量',
   `enable` tinyint(4) NOT NULL DEFAULT 1 COMMENT '是否启用',
-  `detect_ban` int(11) NOT NULL DEFAULT 0,
-  `last_detect_ban_time` datetime DEFAULT '1989-06-04 00:05:00' COMMENT '最后封禁时间',
-  `all_detect_number` int(11) NOT NULL DEFAULT 0 COMMENT '累计违规次数',
-  `last_check_in_time` int(11) NOT NULL DEFAULT 0 COMMENT '最后一次签到时间',
   `last_signin_time` datetime DEFAULT NULL COMMENT '最后登录时间',
   `reg_date` datetime NOT NULL COMMENT '注册日期',
   `money` decimal(12,2) NOT NULL COMMENT '金钱',
@@ -551,26 +500,6 @@ ALTER TABLE `config`
 --
 ALTER TABLE `coupon`
   ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `detect_ban_log`
---
-ALTER TABLE `detect_ban_log`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- 表的索引 `detect_list`
---
-ALTER TABLE `detect_list`
-  ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `detect_log`
---
-ALTER TABLE `detect_log`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `detect_log_ibfk_5` (`node_id`);
 
 --
 -- 表的索引 `email_queue`
@@ -734,24 +663,6 @@ ALTER TABLE `coupon`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `detect_ban_log`
---
-ALTER TABLE `detect_ban_log`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `detect_list`
---
-ALTER TABLE `detect_list`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `detect_log`
---
-ALTER TABLE `detect_log`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `email_queue`
 --
 ALTER TABLE `email_queue`
@@ -880,12 +791,6 @@ ALTER TABLE `user_traffic_log`
 --
 -- 限制导出的表
 --
-
---
--- 限制表 `detect_log`
---
-ALTER TABLE `detect_log`
-  ADD CONSTRAINT `detect_log_ibfk_5` FOREIGN KEY (`node_id`) REFERENCES `node` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- 限制表 `node_info`

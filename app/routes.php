@@ -185,17 +185,6 @@ return function (SlimApp $app) {
         $group->delete('/announcement',          App\Controllers\Admin\AnnController::class . ':delete');
         $group->post('/announcement/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
 
-        // Detect Mange
-        $group->get('/detect',                   App\Controllers\Admin\DetectController::class . ':index');
-        $group->get('/detect/create',            App\Controllers\Admin\DetectController::class . ':create');
-        $group->post('/detect',                  App\Controllers\Admin\DetectController::class . ':add');
-        $group->get('/detect/{id}/edit',         App\Controllers\Admin\DetectController::class . ':edit');
-        $group->put('/detect/{id}',              App\Controllers\Admin\DetectController::class . ':update');
-        $group->delete('/detect',                App\Controllers\Admin\DetectController::class . ':delete');
-        $group->get('/detect/log',               App\Controllers\Admin\DetectController::class . ':log');
-        $group->post('/detect/ajax',             App\Controllers\Admin\DetectController::class . ':ajaxRule');
-        $group->post('/detect/log/ajax',         App\Controllers\Admin\DetectController::class . ':ajaxLog');
-
         // IP Mange
         $group->get('/login',                    App\Controllers\Admin\IpController::class . ':index');
         $group->get('/alive',                    App\Controllers\Admin\IpController::class . ':alive');
@@ -229,13 +218,7 @@ return function (SlimApp $app) {
         // Subscribe Log Mange
         $group->get('/subscribe',                App\Controllers\Admin\SubscribeLogController::class . ':index');
         $group->post('/subscribe/ajax',          App\Controllers\Admin\SubscribeLogController::class . ':ajaxSubscribeLog');
-
-        // Detect Ban Mange
-        $group->get('/detect/ban',               App\Controllers\Admin\DetectBanLogController::class . ':index');
-        $group->post('/detect/ban/ajax',         App\Controllers\Admin\DetectBanLogController::class . ':ajaxLog');
-
-
-        
+       
         // 设置中心
         $group->get('/setting',                  App\Controllers\Admin\SettingController::class . ':index');
         $group->post('/setting',                 App\Controllers\Admin\SettingController::class . ':save');
@@ -260,19 +243,9 @@ return function (SlimApp $app) {
         $group->get('/users',                App\Controllers\WebAPI\UserController::class . ':index');
         $group->post('/users/traffic',       App\Controllers\WebAPI\UserController::class . ':addTraffic');
         $group->post('/users/aliveip',       App\Controllers\WebAPI\UserController::class . ':addAliveIp');
-        $group->post('/users/detectlog',     App\Controllers\WebAPI\UserController::class . ':addDetectLog');
         $group->post('/nodes/{id}/info',     App\Controllers\WebAPI\NodeController::class . ':info');
-
         $group->get('/nodes',                App\Controllers\WebAPI\NodeController::class . ':getAllInfo');
         $group->post('/nodes/config',        App\Controllers\WebAPI\NodeController::class . ':getConfig');
-
-        $group->get('/func/detect_rules',    App\Controllers\WebAPI\FuncController::class . ':getDetectLogs');
-        $group->post('/func/block_ip',       App\Controllers\WebAPI\FuncController::class . ':addBlockIp');
-        $group->get('/func/block_ip',        App\Controllers\WebAPI\FuncController::class . ':getBlockIp');
-        $group->get('/func/unblock_ip',      App\Controllers\WebAPI\FuncController::class . ':getUnblockIp');
-        $group->get('/func/autoexec',        App\Controllers\WebAPI\FuncController::class . ':getAutoexec');
-        $group->post('/func/autoexec',       App\Controllers\WebAPI\FuncController::class . ':addAutoexec');
-
         $group->get('/func/ping',            App\Controllers\WebAPI\FuncController::class . ':ping');
     })->add(new WebAPI());
 

@@ -10,14 +10,10 @@ use App\Models\Product;
 use App\Models\Token;
 use App\Models\Bought;
 use App\Models\Ticket;
-use App\Models\BlockIp;
 use App\Models\LoginIp;
-use App\Models\DetectLog;
-use App\Models\UnblockIp;
 use App\Models\TrafficLog;
 use App\Models\Disconnect;
 use App\Models\EmailVerify;
-use App\Models\DetectBanLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\PasswordReset;
@@ -82,7 +78,6 @@ class Job extends Command
         echo '清理数据库各表开始' . PHP_EOL;
         UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_save_days')))->delete();
         Token::where('expire_time', '<', time())->delete();
-        DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
         EmailVerify::where('expire_in', '<', time() - 86400 * 3)->delete();
         PasswordReset::where('expire_time', '<', time() - 86400 * 3)->delete();
         Ip::where('datetime', '<', time() - 300)->delete();
@@ -415,18 +410,6 @@ class Job extends Command
                 }
                 echo '用户订阅余量检测结束' . PHP_EOL;
             }
-
-            // 审计封禁解封
-            if ($user->enable == 0) {
-                $logs = DetectBanLog::where('user_id', $user->id)->orderBy('id', 'desc')->first();
-                if ($logs != null) {
-                    if (($logs->end_time + $logs->ban_time * 60) <= time()) {
-                        $user->enable = 1;
-                    }
-                }
-            }
-
-            $user->save();
         }
     }
 
