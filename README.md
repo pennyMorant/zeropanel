@@ -38,10 +38,12 @@ http://zeroboard.top
     php composer.phar
     php composer.phar install
 #### 第三步
-    chmod -R 755{PWD}
+    chmod -R 755${PWD}
     chown -R www-data:www-data ${PWD}
 #### 第四步，创建数据库
-    CREATE DATABASE zeropanel
+    mysql -u root -p
+    CREATE DATABASE zeropanel;
+    use zeropanel;
     CREATE USER 'zeropanel'@'localhost' IDENTIFIED BY 'shezhizijidemima';
     GRANT ALL PRIVILEGES ON *.* TO 'zeropanel'@'localhost';
     FLUSH PRIVILEGES;
@@ -53,7 +55,7 @@ http://zeroboard.top
     server {
         listen 80;
         listen [::]:80;
-        root /var/www/zeropanel/public
+        root /var/www/zeropanel/public;
         index index.php index.html;
         server_name 你的域名;
         location / {
