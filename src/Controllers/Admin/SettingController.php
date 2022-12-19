@@ -126,7 +126,7 @@ class SettingController extends AdminController
                 break;
             // 验证码
             case 'verify_code':
-                $list = array('captcha_provider', 'enable_reg_captcha', 'enable_login_captcha', 'enable_checkin_captcha');
+                $list = array('captcha_provider', 'enable_reg_captcha', 'enable_login_captcha');
                 break;
             case 'verify_code_turnstile':
                 $list = array('turnstile_sitekey', 'turnstile_secret');
@@ -144,8 +144,7 @@ class SettingController extends AdminController
                 break;
             case 'web_customer_service_system':
                 $list = array('live_chat', 'tawk_id', 'crisp_id', 'livechat_id', 'mylivechat_id');
-                break;
-            
+                break;          
             // 注册设置
             case 'register':
                 $list = array('reg_mode', 'reg_email_verify', 'email_verify_ttl', 'email_verify_ip_limit');
