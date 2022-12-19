@@ -1723,7 +1723,6 @@
                     captcha_provider: $$getValue('captcha_provider'),
                     enable_reg_captcha: $$getValue('enable_reg_captcha'),
                     enable_login_captcha: $$getValue('enable_login_captcha'),
-                    enable_checkin_captcha: $$getValue('enable_checkin_captcha')
                 },
                 success: data => {
                     $("#result").modal();
