@@ -501,11 +501,6 @@
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
-									<div class="alert bg-light-warning p-5 border border-warning">
-										<div class="d-flex flex-column">
-											<h5 class="text-h5 text-center text-warning">This ticket is closed. You may reply to this ticket to reopen it.</h5>
-										</div>
-									</div>
                                     <div class="card">
                                         <div class="card-body">
 											<div class="mb-9">

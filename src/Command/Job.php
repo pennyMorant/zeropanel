@@ -84,10 +84,6 @@ class Job extends Command
         TelegramSession::where('datetime', '<', time() - 900)->delete();
         LoginIp::where('datetime', '<', time() - 86400 * 7)->delete();
         IP::where('datetime', '<', time() - 86400 * 7)->delete();
-        //Order::where('datetime', '<', time() - 86400 * 90)->delete();
-        //Paytake::where('datetime', '<', time() - 86400 * 30)->delete();
-        //Payback::where('datetime', '<', time() - 86400 * 30)->delete();
-        //system('rm ' . BASE_PATH . '/storage/*.png', $ret);
         echo '清理数据库各表结束;' . PHP_EOL;
 
         // ------- 重置自增 ID
@@ -163,13 +159,6 @@ class Job extends Command
             }
         });
         echo '重置用户流量结束' . PHP_EOL;
-        /*
-        // ------- 更新 IP 库
-        echo '更新IP库开始' . PHP_EOL;
-        (new Tool($this->argv))->initQQWry();
-        echo '更新IP库结束' . PHP_EOL;
-        // ------- 更新 IP 库
-        */
          // ------- 发送每日系统运行报告
         if (Setting::obtain('enable_system_clean_database_report_telegram_notify') == true) {
             echo '每日数据库清理成功报告发送开始' . PHP_EOL;
@@ -182,7 +171,6 @@ class Job extends Command
             echo '每日数据库清理成功报告发送结束' . PHP_EOL;
         }
 
-        // $this->updatedownload();
         $this->ZeroTask();
 
 
