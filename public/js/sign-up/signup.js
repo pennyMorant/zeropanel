@@ -83,7 +83,8 @@ var KTSignupGeneral = function() {
                                 name: $("#name").val(),
                                 passwd: $("#passwd").val(),
                                 repasswd: $("#repasswd").val(),
-                                code: $("#code").val()
+                                code: $("#code").val(),
+                                turnstile: turnstile.getResponse(),
                             },
                             success: function (data) {
                                 if (data.ret == 1){

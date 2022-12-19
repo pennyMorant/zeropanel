@@ -48,7 +48,8 @@ var KTSigninGeneral = function() {
                             dataType: "json",
                             data: {
                                 email: $("#signin-email").val(),
-                                passwd: $("#signin-passwd").val()
+                                passwd: $("#signin-passwd").val(),
+                                turnstile: turnstile.getResponse(),
                             },
                             success: function(data){
                                 if(data.ret == 1){
