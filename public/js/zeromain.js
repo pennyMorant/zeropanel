@@ -48,11 +48,6 @@ function change_language(lang_type) {
 }
 
 
-
-
-
-
-
 // make qrcode
 (function(r) {
     r.fn.qrcode = function(h) {

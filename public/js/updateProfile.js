@@ -1,4 +1,9 @@
 //"use strict";
+//clipboard
+var clipboard = new ClipboardJS('.copy-text');
+clipboard.on('success', function(e) {
+    getResult("复制成功", "", "success");
+});
 
 // get result 
 function getResult(titles, texts, icons) {
@@ -836,17 +841,3 @@ function oneclickImport(client, subLink) {
     });
 }
 
-var clipboard = new ClipboardJS('.copy-text');
-clipboard.on('success', function(e) {
-    getResult("复制成功", "", "success");
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-
-    e.clearSelection();
-});
-
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
-});
