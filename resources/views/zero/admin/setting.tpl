@@ -110,9 +110,6 @@
                                                 <a data-toggle="tab" href="#user_general"><i class="icon icon-lg">settings</i>&nbsp;设置</a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" href="#user_checkin"><i class="icon icon-lg">done_outline</i>&nbsp;签到</a>
-                                            </li>
-                                            <li>
                                                 <a data-toggle="tab" href="#user_notify"><i class="icon icon-lg">campaign</i>&nbsp;通知</a>
                                             </li>
                                         </ul>
@@ -171,21 +168,6 @@
                                         </div>
                                         <button id="submit_user_general" type="submit" class="btn btn-brand btn-block">提交</button>
                                     </div> 
-                                    <div class="tab-pane fade" id="user_checkin">
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">签到功能</label>
-                                            <select class="form-control maxwidth-edit" id="enable_user_checkin">
-                                                <option value="0" {if $settings['enable_user_checkin'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['enable_user_checkin'] == true}selected{/if}>开启</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">签到获取流量值的范围(单位: MB)</label>
-                                            <input class="form-control maxwidth-edit" value="{$settings['user_checkin_get_traffic_value']}" id="user_checkin_get_traffic_value">
-                                            <p class="form-control-guide"><i class="material-icons">info</i>签到获取流量值的范围</p>
-                                        </div>
-                                        <button id="submit_user_checkin" type="submit" class="btn btn-brand btn-block">提交</button>
-                                    </div>
                                     <div class="tab-pane fade" id="user_notify">
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">流量不足提醒</label>
@@ -1453,36 +1435,6 @@
                     enable_change_username_user_general: $$getValue('enable_change_username_user_general'),
                     enable_change_email_user_general: $$getValue('enable_change_email_user_general'),
                     enable_delete_account_user_general: $$getValue('enable_delete_account_user_general')
-                },
-                success: data => {
-                    $("#result").modal();
-                    $$.getElementById('msg').innerHTML = data.msg;
-                    if (data.ret) {
-                        window.setTimeout("location.href='/admin/setting'", {$config['jump_delay']});
-                    }
-                },
-                error: jqXHR => {
-                    alert(`发生错误：${
-                            jqXHR.status
-                            }`);
-                }
-            })
-        })
-    })
-</script>
-
-<!-- 签到设置 -->
-<script>
-    window.addEventListener('load', () => {
-        $$.getElementById('submit_user_checkin').addEventListener('click', () => {
-            $.ajax({
-                type: "POST",
-                url: "/admin/setting",
-                dataType: "json",
-                data: {
-                    class: 'user_checkin',
-                    enable_user_checkin: $$getValue('enable_user_checkin'),
-                    user_checkin_get_traffic_value: $$getValue('user_checkin_get_traffic_value')
                 },
                 success: data => {
                     $("#result").modal();

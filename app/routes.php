@@ -25,7 +25,6 @@ return function (SlimApp $app) {
         $group->get('',                          App\Controllers\UserController::class . ':index');
         $group->get('/',                         App\Controllers\UserController::class . ':index');
 
-        $group->post('/checkin',                 App\Controllers\UserController::class . ':doCheckin');
         $group->post('/getusertrafficinfo',      App\Controllers\UserController::class . ':getUserTrafficUsage');
         $group->get('/tutorial',                 App\Controllers\UserController::class . ':tutorial');
         $group->get('/referral',                 App\Controllers\UserController::class . ':referral');

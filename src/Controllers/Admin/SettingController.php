@@ -68,9 +68,6 @@ class SettingController extends AdminController
             case 'user_general':
                 $list = array('user_general_free_user_reset_day', 'user_general_free_user_reset_traffic', 'user_general_class_expire_reset_traffic', 'enable_reset_traffic_when_purchase_user_general', 'enable_add_times_when_purchase_user_general', 'enable_change_username_user_general', 'enable_change_email_user_general', 'enable_delete_account_user_general');
                 break;
-            case 'user_checkin':
-                $list = array('enable_user_checkin', 'user_checkin_get_traffic_value');
-                break;
             case 'user_notify':
                 $list = array('enable_insufficient_traffic_user_notify');
                 break;

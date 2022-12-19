@@ -145,10 +145,6 @@
             "pending": "Pending"
         },
         "dashboard": {
-            "checkin": "Check-IN",
-            "disable_checkin": "The system does not turn on the check function",
-            "checked": "Checked",
-            "checked_result": "You got traffic",
             "sub": "Menber Info",
             "traffic": "Traffic Info",
             "sub_url": "Client URL",
@@ -374,10 +370,6 @@
                     "error_passwd": "Password Invalid",
                     "error_not_allowed": "Account deletion is not allowed",
                     "success": "Account has been removed from the system"
-                },
-                "checkin": {
-                    "error_not_allowed": "Check-in is not enabled",
-                    "error_expired": "Your account has expired and cannot use the Check-in"
                 }
             }
         },

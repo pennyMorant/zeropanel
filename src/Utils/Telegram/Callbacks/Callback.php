@@ -232,7 +232,6 @@ class Callback
 
     public static function getUserIndexKeyboard($user)
     {
-        $checkin = (!$user->isAbleToCheckin() ? '已签到' : '签到');
         $Keyboard = [
             [
                 [
@@ -252,12 +251,6 @@ class Callback
                 [
                     'text'          => '分享计划',
                     'callback_data' => 'user.invite'
-                ],
-            ],
-            [
-                [
-                    'text'          => $checkin,
-                    'callback_data' => 'user.checkin.' . $user->telegram_id
                 ],
             ],
         ];
@@ -313,17 +306,6 @@ class Callback
             case 'invite':
                 // 分享计划
                 $this->UserInvite();
-                break;
-            case 'checkin':
-                // 签到
-                if ($Operate[2] != $this->triggerUser['id']) {
-                    $this->answerCallbackQuery([
-                        'text'       => '您好，您无法操作他人的账户.',
-                        'show_alert' => true,
-                    ]);
-                    return;
-                }
-                $this->UserCheckin();
                 break;
             case 'center':
                 // 用户中心
@@ -1164,47 +1146,5 @@ class Callback
                 $sendMessage
             )
         );
-    }
-
-    /**
-     *
-     * 每日签到
-     *
-     */
-    public function UserCheckin()
-    {
-        $checkin = $this->User->checkin();
-        $this->answerCallbackQuery([
-            'text'       => $checkin['msg'],
-            'show_alert' => true,
-        ]);
-        // 回送信息
-        if ($this->ChatID > 0) {
-            $temp = self::getUserIndexKeyboard($this->User);
-        } else {
-            $temp['text']     = Reply::getUserTitle($this->User);
-            $temp['text']    .= PHP_EOL . PHP_EOL;
-            $temp['text']    .= Reply::getUserTrafficInfo($this->User);
-            $temp['text']    .= PHP_EOL;
-            $temp['text']    .= '流量重置时间：' . $this->User->productTrafficResetDate();
-            $temp['keyboard'] = [
-                [
-                    [
-                        'text'          => (!$this->User->isAbleToCheckin() ? '已签到' : '签到'),
-                        'callback_data' => 'user.checkin.' . $this->triggerUser['id']
-                    ]
-                ],
-            ];
-        }
-        $this->replyWithMessage([
-            'text'                => $temp['text'] . PHP_EOL . PHP_EOL . $checkin['msg'],
-            'reply_to_message_id' => $this->MessageID,
-            'parse_mode'          => 'Markdown',
-            'reply_markup'        => json_encode(
-                [
-                    'inline_keyboard' => $temp['keyboard'],
-                ]
-            ),
-        ]);
     }
 }

@@ -1,27 +1,8 @@
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">
-														
-															{$trans->t('user.dashboard.sub')}
-														
+													<div class="card-title text-dark fs-3 fw-bolder">														
+														{$trans->t('user.dashboard.sub')}
 													</div>
-													{if $config['enable_checkin'] == true}
-													<div class="card-toolbar">
-														{if $user->isAbleToCheckin()}
-															<div id="checkin-btn">
-																<button id="checkin" class="btn btn-primary fw-bolder btn-hover-rotate-start" onclick="checkin()">
-																	<i class="fas fa-location-arrow icon-nm"></i>
-																		{$trans->t('user.dashboard.checkin')}
-																</button>
-															</div>
-														{else}
-															<button class="btn btn-primary fw-bolder" disabled>
-																<i class="fas fa-location-arrow icon-nm"></i>
-																	{$trans->t('user.dashboard.checked')}
-															</button>
-														{/if}
-													</div>
-													{/if}
 												</div>     
 												<div class="card-body pt-0">
 													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">

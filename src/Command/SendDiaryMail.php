@@ -24,12 +24,10 @@ class SendDiaryMail extends Command
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = str_replace(
                     array(
-                        '%getTodayCheckinUser%',
                         '%lastday_total%',
                         '%getAliveNodes%'
                     ),
                     array(
-                        $sts->getTodayCheckinUser(),
                         Tools::flowAutoShow($sts->getRawTodayTrafficUsage()),
                         $sts->getAliveNodes(),
                     ),

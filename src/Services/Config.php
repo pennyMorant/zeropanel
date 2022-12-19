@@ -60,8 +60,6 @@ class Config
             'enable_sales_agent'      => $public_configs['enable_sales_agent'],
             'purchase_sales_agent_price' => $public_configs['purchase_sales_agent_price'],
             'sales_agent_commission_ratio'  => $public_configs['sales_agent_commission_ratio'],
-            // 签到
-            'enable_checkin'          => $public_configs['enable_user_checkin'],
             'jump_delay'              => $_ENV['jump_delay'],
             //'enable_reg_im'           => $_ENV['enable_reg_im'],
             // tg

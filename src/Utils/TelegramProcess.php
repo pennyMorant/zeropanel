@@ -60,22 +60,6 @@ class TelegramProcess
 今日之前已使用 ' . $user->LastusedTraffic() . ' ' . number_format($user->last_day_t / $user->transfer_enable * 100, 2) . '%
 未使用 ' . $user->unusedTraffic() . ' ' . number_format(($user->transfer_enable - ($user->u + $user->d)) / $user->transfer_enable * 100, 2) . '%';
                     break;
-                case 'checkin':
-                    if (Setting::obtain('enable_user_checkin') == false) {
-                        $reply['message'] = '目前站点没有启用签到功能。';
-                        break;
-                    }
-                    if (!$user->isAbleToCheckin()) {
-                        $reply['message'] = '您今天已经签过到了！';
-                        break;
-                    }
-                    $traffic_value = explode('-', Setting::obtain('user_checkin_get_traffic_value'));
-                    $traffic = random_int((int)$traffic_value[0], (int)$traffic_value[1]);
-                    $user->transfer_enable += Tools::toMB($traffic);
-                    $user->last_check_in_time = time();
-                    $user->save();
-                    $reply['message'] = '签到成功！获得了 ' . $traffic . ' MB 流量！';
-                    break;
                 case 'prpr':
                     $prpr = array('⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄', '(≧ ﹏ ≦)', '(*/ω＼*)', 'ヽ(*。>Д<)o゜', '(つ ﹏ ⊂)', '( >  < )');
                     $reply['message'] = $prpr[random_int(0, 5)];
@@ -119,7 +103,6 @@ class TelegramProcess
                     $reply['message'] = 'Pong!您的 ID 是 ' . $message->getChat()->getId() . '!';
                     break;
                 case 'traffic':
-                case 'checkin':
                 case 'prpr':
                 case 'rss':
                     $reply = self::needbind_method($bot, $message, $command, $user, $reply_to);
@@ -128,7 +111,6 @@ class TelegramProcess
                     $reply['message'] = '命令列表：
 						/ping  获取群组ID
 						/traffic 查询流量
-						/checkin 签到
 						/help 获取帮助信息
 						/rss 获取节点订阅';
                     if ($user == null) {
@@ -257,7 +239,6 @@ class TelegramProcess
                     $reply['message'] = 'Pong!这个群组的 ID 是 ' . $message->getChat()->getId() . '!';
                     break;
                 case 'traffic':
-                case 'checkin':
                 case 'prpr':
                     $reply = self::needbind_method($bot, $message, $command, $user, $reply_to);
                     break;
@@ -268,7 +249,6 @@ class TelegramProcess
                     $reply['message'] = '命令列表：
 						/ping  获取群组ID
 						/traffic 查询流量
-						/checkin 签到
 						/help 获取帮助信息
 						/rss 获取节点订阅	';
                     if ($user == null) {
@@ -300,7 +280,7 @@ class TelegramProcess
             // or initialize with botan.io tracker api key
             // $bot = new \TelegramBot\Api\Client('YOUR_BOT_API_TOKEN', 'YOUR_BOTAN_TRACKER_API_KEY');
 
-            $command_list = array('ping', 'traffic', 'help', 'prpr', 'checkin', 'rss');
+            $command_list = array('ping', 'traffic', 'help', 'prpr', 'rss');
             foreach ($command_list as $command) {
                 $bot->command($command, static function ($message) use ($bot, $command) {
                     TelegramProcess::telegram_process($bot, $message, $command);

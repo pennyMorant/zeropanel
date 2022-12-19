@@ -142,10 +142,6 @@
             "pending": "待处理"
         },
         "dashboard": {
-            "checkin": "每日签到",
-            "disable_checkin": "系统未开启签到功能",
-            "checked": "明日在来",
-            "checked_result": "您获得了流量",
             "sub": "订阅信息",
             "traffic": "流量信息",
             "sub_url": "订阅地址",
@@ -371,10 +367,6 @@
                     "error_passwd": "密码错误",
                     "error_not_allowed": "不允许删除账户",
                     "success": "账户已从系统中删除"
-                },
-                "checkin": {
-                    "error_not_allowed": "没有启用签到功能",
-                    "error_expired": "您的账户已过期, 无法使用签到功能"
                 }
             }
         },

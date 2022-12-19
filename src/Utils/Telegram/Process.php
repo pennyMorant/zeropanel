@@ -21,7 +21,6 @@ class Process
                     Commands\PingCommand::class,
                     Commands\StartCommand::class,
                     Commands\UnbindCommand::class,
-                    Commands\CheckinCommand::class,
                     Commands\SetuserCommand::class,
                 ]
             );

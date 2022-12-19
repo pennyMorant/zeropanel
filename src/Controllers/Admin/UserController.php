@@ -55,7 +55,6 @@ class UserController extends AdminController
             'last_use_time'          => '上次使用时间',
             'used_traffic'          => '已用流量/GB',
             'enable_traffic'        => '总流量/GB',
-            'last_checkin_time'     => '上次签到时间',
             'today_traffic'         => '今日流量',
             'enable'                => '是否启用',
             'reg_date'              => '注册时间',
@@ -366,7 +365,6 @@ class UserController extends AdminController
             $tempdata['last_use_time']          = $value->lastUseTime();
             $tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);
             $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable);
-            $tempdata['last_checkin_time']      = $value->lastCheckInTime();
             $tempdata['today_traffic']          = $value->TodayusedTraffic();
             $tempdata['enable']                 = $value->enable == 1 ? '可用' : '禁用';
             $tempdata['reg_date']               = $value->reg_date;

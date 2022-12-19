@@ -82,15 +82,6 @@ class User extends Model
     }
 
     /**
-     * 最后签到时间
-     */
-    public function lastCheckInTime(): string
-    {
-        return $this->last_check_in_time == 0 ? '从未签到' : Tools::toDateTime($this->last_check_in_time);
-    }
-
-
-    /**
      * 生成邀请码
      */
     public function addInviteCode(): string
@@ -228,14 +219,6 @@ class User extends Model
         $percent  = round($percent, 2);
         $percent *= 100;
         return $percent;
-    }
-
-    /*
-     * 是否可以签到
-     */
-    public function isAbleToCheckin(): bool
-    {
-        return date('Ymd') != date('Ymd', $this->last_check_in_time);
     }
 
     /*
@@ -454,34 +437,6 @@ class User extends Model
     {
         $logs = DetectBanLog::where('user_id', $this->id)->orderBy('id', 'desc')->first();
         return $logs->detect_number;
-    }
-
-    /**
-     * 签到
-     */
-    public function checkin(): array
-    {
-        $return = [
-            'ok' => true,
-            'msg' => ''
-        ];
-        $traffic_value = explode('-', Setting::obtain('user_checkin_get_traffic_value'));
-        if (!$this->isAbleToCheckin()) {
-            $return['ok'] = false;
-            $return['msg'] = '您今日已经签到过！';
-        } else if ($this->attributes['class'] === -1) {
-            $return['ok'] = false;
-            $return['msg'] = '您的账号还未激活！';
-        } else {            
-            $traffic = random_int((int)$traffic_value[0], (int)$traffic_value[1]);
-            $this->transfer_enable += Tools::toMB($traffic);
-            $this->last_check_in_time = time();
-            $this->save();
-           
-            $return['msg'] = $traffic . 'MB.';
-        }
-
-        return $return;
     }
 
 

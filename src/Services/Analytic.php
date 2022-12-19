@@ -12,11 +12,6 @@ class Analytic
         return User::all()->count();
     }
 
-    public function checkinUserCount()
-    {
-        return User::where('last_checkin_time', '>', 1)->count();
-    }
-
     public function activedUserCount()
     {
         return User::where('t', '>', 1)->count();

@@ -407,44 +407,6 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function doCheckIn($request, $response, $args)
-    {   
-        if (Setting::obtain('enable_user_checkin') == false) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.profile.notify.checkin.error_not_allowed');
-            return $response->withJson($res);
-        }
-
-        if (strtotime($this->user->expire_in) < time()) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.profile.notify.checkin.error_expired');
-            return $response->withJson($res);
-        }
-
-        $checkin = $this->user->checkin();
-        if ($checkin['ok'] === false) {
-            $res['ret'] = 0;
-            $res['msg'] = $checkin['msg'];
-            return $response->withJson($res);
-        }
-
-        $res['msg'] = $checkin['msg'];
-        $res['unflowtraffic'] = $this->user->transfer_enable;
-        $res['traffic'] = Tools::flowAutoShow($this->user->transfer_enable);
-        $res['trafficInfo'] = array(
-            'todayUsedTraffic' => $this->user->TodayusedTraffic(),
-            'lastUsedTraffic' => $this->user->LastusedTraffic(),
-            'unUsedTraffic' => $this->user->unusedTraffic(),
-        );
-        $res['ret'] = 1;
-        return $response->withJson($res);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function getUserTrafficUsage($request, $response, $args)
     {   
         $res['unflowtraffic'] = $this->user->transfer_enable;

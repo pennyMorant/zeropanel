@@ -13,16 +13,6 @@ class Analytics
         return User::count();
     }
 
-    public function getCheckinUser()
-    {
-        return User::where('last_check_in_time', '>', 0)->count();
-    }
-
-    public function getTodayCheckinUser()
-    {
-        return User::where('last_check_in_time', '>', strtotime('today'))->count();
-    }
-
     public function getTrafficUsage()
     {
         $total = User::sum('u') + User::sum('d');

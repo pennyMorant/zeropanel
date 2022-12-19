@@ -114,7 +114,6 @@ class MyCommand extends Command
                         'inline_keyboard' => [
                             [
                                 [
-                                    'text'          => (!$User->isAbleToCheckin() ? '已签到' : '签到'),
                                     'callback_data' => 'user.checkin.' . $SendUser['id']
                                 ]
                             ],

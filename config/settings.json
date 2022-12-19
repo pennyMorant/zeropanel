@@ -131,26 +131,6 @@
     },
     {
         "id": null,
-        "item": "enable_user_checkin",
-        "value": "1",
-        "class": "user_checkin",
-        "is_public": "1",
-        "type": "bool",
-        "default": "1",
-        "mark": "签到功能"
-    },
-    {
-        "id": null,
-        "item": "user_checkin_get_traffic_value",
-        "value": "1-2000",
-        "class": "user_checkin",
-        "is_public": "0",
-        "type": "string",
-        "default": "1-2000",
-        "mark": "签到获取流量值的范围"
-    },
-    {
-        "id": null,
         "item": "enable_insufficient_traffic_user_notify",
         "value": "0",
         "class": "user_notify",
@@ -1374,11 +1354,11 @@
     {
         "id": null,
         "item": "diy_system_report_telegram_notify_content",
-        "value": "今日签到人数: %getTodayCheckinUser%\n今日使用总流量: %lastday_total%\n今日在线节点: %getAliveNodes%\n晚安~",
+        "value": "今日使用总流量: %lastday_total%\n今日在线节点: %getAliveNodes%\n晚安~",
         "class": "telegram_notify_content",
         "is_public": 0,
         "type": "string",
-        "default": "今日签到人数: %getTodayCheckinUser%\n今日使用总流量: %lastday_total%\n今日在线节点: %getAliveNodes%\n晚安~",
+        "default": "今日使用总流量: %lastday_total%\n今日在线节点: %getAliveNodes%\n晚安~",
         "mark": "自定义推送系统每天的运行状况的内容"
     },
     {
