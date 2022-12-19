@@ -39,18 +39,26 @@ var KTSigninGeneral = function() {
             t.addEventListener("click", (function(n) {
                 n.preventDefault(),
                 i.validate().then((function(i) {
+                    if (document.getElementById('turnstile') != null) {
+                        var datas = {
+                            email: $("#signin-email").val(),
+                            passwd: $("#signin-passwd").val(),                               
+                            turnstile: turnstile.getResponse()
+                        };
+                    } else {
+                        datas = {
+                            email: $("#signin-email").val(),
+                            passwd: $("#signin-passwd").val()             
+                        };
+                    }
                     "Valid" == i ? (t.setAttribute("data-kt-indicator", "on"), t.disabled = !0, setTimeout((function() {
                         t.removeAttribute("data-kt-indicator"),
                         t.disabled = !1,
                         $.ajax({
                             type: 'POST',
                             url: "/auth/login",
-                            dataType: "json",
-                            data: {
-                                email: $("#signin-email").val(),
-                                passwd: $("#signin-passwd").val(),
-                                turnstile: turnstile.getResponse(),
-                            },
+                            dataType: "json",                           
+                            data: datas,
                             success: function(data){
                                 if(data.ret == 1){
                                     Swal.fire({

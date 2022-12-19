@@ -71,6 +71,24 @@ var KTSignupGeneral = function() {
                 s.preventDefault(),
                 //a.revalidateField("password"),
                 a.validate().then((function(a) {
+                    if (document.getElementById('turnstile') != null) {
+                        var datas = {
+                            email: $("#email").val(),
+                                name: $("#name").val(),
+                                passwd: $("#passwd").val(),
+                                repasswd: $("#repasswd").val(),
+                                code: $("#code").val(),
+                                turnstile: turnstile.getResponse()
+                        };
+                    } else {
+                        datas = {
+                            email: $("#email").val(),
+                                name: $("#name").val(),
+                                passwd: $("#passwd").val(),
+                                repasswd: $("#repasswd").val(),
+                                code: $("#code").val() 
+                        };
+                    }
                     "Valid" == a ? (t.setAttribute("data-kt-indicator", "on"), t.disabled = !0, setTimeout((function() {
                         t.removeAttribute("data-kt-indicator"),
                         t.disabled = !1,
@@ -78,14 +96,7 @@ var KTSignupGeneral = function() {
                             method: 'POST',
                             url: "/auth/register",
                             dataType: "json",
-                            data: {
-                                email: $("#email").val(),
-                                name: $("#name").val(),
-                                passwd: $("#passwd").val(),
-                                repasswd: $("#repasswd").val(),
-                                code: $("#code").val(),
-                                turnstile: turnstile.getResponse(),
-                            },
+                            data: datas,
                             success: function (data) {
                                 if (data.ret == 1){
                                     Swal.fire({
