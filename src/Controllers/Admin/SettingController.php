@@ -145,10 +145,7 @@ class SettingController extends AdminController
             case 'web_customer_service_system':
                 $list = array('live_chat', 'tawk_id', 'crisp_id', 'livechat_id', 'mylivechat_id');
                 break;
-            // 个性化
-            case 'background_image':
-                $list = array('user_center_bg', 'admin_center_bg', 'user_center_bg_addr', 'admin_center_bg_addr');
-                break;
+            
             // 注册设置
             case 'register':
                 $list = array('reg_mode', 'reg_email_verify', 'email_verify_ttl', 'email_verify_ip_limit');
