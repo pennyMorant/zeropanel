@@ -25,11 +25,6 @@ class Config
             // 充值
             'stripe_min_recharge'     => $public_configs['stripe_min_recharge'],
             'stripe_max_recharge'     => $public_configs['stripe_max_recharge'],
-            // 个性化
-            'user_center_bg'          => $public_configs['user_center_bg'],
-            'admin_center_bg'         => $public_configs['admin_center_bg'],
-            'user_center_bg_addr'     => $public_configs['user_center_bg_addr'],
-            'admin_center_bg_addr'    => $public_configs['admin_center_bg_addr'],
             // 客服系统
             'live_chat'               => $public_configs['live_chat'],
             'tawk_id'                 => $public_configs['tawk_id'],
@@ -45,7 +40,6 @@ class Config
             'captcha_provider'        => $public_configs['captcha_provider'],
             'enable_reg_captcha'      => $public_configs['enable_reg_captcha'],
             'enable_login_captcha'    => $public_configs['enable_login_captcha'],
-            'enable_checkin_captcha'  => $public_configs['enable_checkin_captcha'],
             // 注册
             'register_mode'           => $public_configs['reg_mode'],
             'enable_email_verify'     => $public_configs['reg_email_verify'],
