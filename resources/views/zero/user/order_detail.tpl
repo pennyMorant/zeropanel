@@ -405,8 +405,8 @@
                                                                     
                                                                     
                                                                     <div class="ms-5">
-                                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}账户充值{else}产品购买: {$order->product_name}{/if}</a>
-                                                                        <div class="fs-7 text-muted">订单发起时间: {date('Y-m-d h:i:s', $order->create_time)}</div>
+                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}账户充值{else}产品购买: {$order->product_name}{/if}</a>
+                                                                        <div class="fs-7 text-muted">发起时间: {date('Y-m-d h:i:s', $order->create_time)}</div>
                                                                     </div>
                                                                     
                                                                 </div>
