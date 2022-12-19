@@ -95,6 +95,7 @@
 		</div>
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
-		<script src="/js/signup.min.js"></script>		
+		<script src="/js/signup.min.js"></script>
+		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>	
 	</body>
 </html>
