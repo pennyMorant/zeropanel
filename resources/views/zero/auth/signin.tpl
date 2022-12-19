@@ -52,7 +52,7 @@
 									<div></div>
 									<a href="/password/reset" class="link-primary" data-kt-translate="sign-in-forgot-password">忘记密码 ?</a>
 								</div>
-								{if $config['enable_login_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
+								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
 										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>
@@ -86,6 +86,8 @@
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
 		<script src="/js/signin.min.js"></script>
-		<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+		{if $config['enable_signin_captcha'] === true && $config['captcha_provider'] === 'turnstile'}
+			<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+		{/if}
 	</body>
 </html>

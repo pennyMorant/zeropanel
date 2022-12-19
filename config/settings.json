@@ -341,7 +341,7 @@
     },
     {
         "id": null,
-        "item": "enable_reg_captcha",
+        "item": "enable_signup_captcha",
         "value": "0",
         "class": "captcha",
         "is_public": 1,
@@ -351,7 +351,7 @@
     },
     {
         "id": null,
-        "item": "enable_login_captcha",
+        "item": "enable_signin_captcha",
         "value": "0",
         "class": "captcha",
         "is_public": 1,

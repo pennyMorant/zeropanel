@@ -38,8 +38,8 @@ class Config
             'admin_contact3'          => $public_configs['admin_contact3'],
             // 验证码
             'captcha_provider'        => $public_configs['captcha_provider'],
-            'enable_reg_captcha'      => $public_configs['enable_reg_captcha'],
-            'enable_login_captcha'    => $public_configs['enable_login_captcha'],
+            'enable_signup_captcha'      => $public_configs['enable_signup_captcha'],
+            'enable_signin_captcha'    => $public_configs['enable_signin_captcha'],
             // 注册
             'register_mode'           => $public_configs['reg_mode'],
             'enable_email_verify'     => $public_configs['reg_email_verify'],

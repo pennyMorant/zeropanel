@@ -763,20 +763,20 @@
                                                 <option value="turnstile" {if $settings['captcha_provider'] == "turnstile"}selected{/if}>Turnstile</option>
                                             </select>
                                         </div>
-                                        <!-- enable_reg_captcha -->
+                                        <!-- enable_signup_captcha -->
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">注册验证码</label>
-                                            <select id="enable_reg_captcha" class="form-control maxwidth-edit">
-                                                <option value="0" {if $settings['enable_reg_captcha'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['enable_reg_captcha'] == true}selected{/if}>开启</option>
+                                            <select id="enable_signup_captcha" class="form-control maxwidth-edit">
+                                                <option value="0" {if $settings['enable_signup_captcha'] == false}selected{/if}>关闭</option>
+                                                <option value="1" {if $settings['enable_signup_captcha'] == true}selected{/if}>开启</option>
                                             </select>
                                         </div>
-                                        <!-- enable_login_captcha -->
+                                        <!-- enable_signin_captcha -->
                                         <div class="form-group form-group-label">
                                             <label class="floating-label">登录验证码</label>
-                                            <select id="enable_login_captcha" class="form-control maxwidth-edit">
-                                                <option value="0" {if $settings['enable_login_captcha'] == false}selected{/if}>关闭</option>
-                                                <option value="1" {if $settings['enable_login_captcha'] == true}selected{/if}>开启</option>
+                                            <select id="enable_signin_captcha" class="form-control maxwidth-edit">
+                                                <option value="0" {if $settings['enable_signin_captcha'] == false}selected{/if}>关闭</option>
+                                                <option value="1" {if $settings['enable_signin_captcha'] == true}selected{/if}>开启</option>
                                             </select>
                                         </div>
 
@@ -1721,8 +1721,8 @@
                 data: {
                     class: 'verify_code',
                     captcha_provider: $$getValue('captcha_provider'),
-                    enable_reg_captcha: $$getValue('enable_reg_captcha'),
-                    enable_login_captcha: $$getValue('enable_login_captcha'),
+                    enable_signup_captcha: $$getValue('enable_signup_captcha'),
+                    enable_signin_captcha: $$getValue('enable_signin_captcha'),
                 },
                 success: data => {
                     $("#result").modal();

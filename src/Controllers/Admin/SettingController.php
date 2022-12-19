@@ -126,7 +126,7 @@ class SettingController extends AdminController
                 break;
             // 验证码
             case 'verify_code':
-                $list = array('captcha_provider', 'enable_reg_captcha', 'enable_login_captcha');
+                $list = array('captcha_provider', 'enable_signup_captcha', 'enable_signin_captcha');
                 break;
             case 'verify_code_turnstile':
                 $list = array('turnstile_sitekey', 'turnstile_secret');

@@ -43,7 +43,7 @@ class AuthController extends BaseController
     {
         $captcha = [];
 
-        if (Setting::obtain('enable_login_captcha') === true) {
+        if (Setting::obtain('enable_signin_captcha') === true) {
             $captcha = Captcha::generate();
         }
 
@@ -83,7 +83,7 @@ class AuthController extends BaseController
         $rememberMe = $request->getParam('remember_me');
 
         $trans = I18n::get();
-        if (Setting::obtain('enable_login_captcha') == true) {
+        if (Setting::obtain('enable_signin_captcha') == true) {
             $ret = Captcha::verify($request->getParams());
             if (!$ret) {
                 return $response->withJson([
@@ -228,7 +228,7 @@ class AuthController extends BaseController
     {
         $captcha = [];
 
-        if (Setting::obtain('enable_reg_captcha') === true) {
+        if (Setting::obtain('enable_signup_captcha') === true) {
             $captcha = Captcha::generate();
         }
 
@@ -381,7 +381,7 @@ class AuthController extends BaseController
             return $response->withJson($res);
         }
 
-        if (Setting::obtain('enable_reg_captcha') == true) {
+        if (Setting::obtain('enable_signup_captcha') == true) {
             $ret = Captcha::verify($request->getParams());
             if (!$ret) {
                 return $response->withJson([
