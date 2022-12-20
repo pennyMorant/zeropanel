@@ -389,7 +389,7 @@
 																	<div class="w-100 rounded-3 bg-light bg-opacity-75 px-10 py-5 d-flex flex-wrap">                                                      
                                                                         <div class="d-flex flex-column flex-grow-1">
                                                                             <img alt="image" class="rounded-circle" width="35"
-                                                                                src="/theme/zero/assets/media/flag/1x1/{$server['flags']}.svg">
+                                                                                src="/theme/zero/assets/media/flag/1x1/{$server['flag']}.svg">
                                                                         </div>
                                                                         <div class="fw-bold fs-5">
                                                                             {$server['name']}

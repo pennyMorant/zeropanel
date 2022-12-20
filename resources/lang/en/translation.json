@@ -277,6 +277,7 @@
             "uuid": "UUID",
             "network": "Network",
             "path": "Path",
+            "host": "Host",
             "servicename": "gRPC ServiceName",
             "protocol": "Protocol",
             "security": "Security",

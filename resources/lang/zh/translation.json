@@ -275,6 +275,7 @@
             "uuid": "UUID",
             "network": "传输协议",
             "path": "路径",
+            "host": "Host",
             "servicename": "gRPC 服务名称",
             "protocol": "协议",
             "security": "传输层加密",
