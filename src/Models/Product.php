@@ -97,12 +97,6 @@ class Product extends Model
                 $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
             }
 
-            if (time() > strtotime($user->expire_in)) {
-                $user->expire_in = date('Y-m-d H:i:s', time() + $this->account_validity_period * 86400);
-            } else {
-                $user->expire_in = date('Y-m-d H:i:s', strtotime($user->expire_in) + $this->account_validity_period * 86400);
-            }
-
             if (Setting::obtain('enable_add_times_when_purchase_user_general') == true) {
                 if ($user->class == $this->class) {
                     $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $this->class_validity_period * 86400);

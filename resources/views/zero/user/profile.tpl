@@ -631,11 +631,7 @@
                                                                         <td>{$user->reg_date}</td>
                                                                         
 																	</tr>
-                                                                    <tr>
-                                                                        <td>账户过期时间</td>
-                                                                        <td>{$user->expire_in}</td>
-                                                                        
-																	</tr>
+                                                                    
                                                                     <tr>
                                                                         <td>权限过期时间</td>
                                                                         <td>{$user->class_expire}</td>

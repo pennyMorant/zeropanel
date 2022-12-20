@@ -361,7 +361,7 @@ class Agent extends \App\Controllers\BaseController
         $newuser->class                = $configs['sign_up_for_class'];
         $newuser->node_connector       = $configs['connection_device_limit'];
         $newuser->node_speedlimit      = $configs['connection_rate_limit'];
-        $newuser->expire_in            = date('Y-m-d H:i:s', time() + $configs['sign_up_for_free_time'] * 86400);
+
         $newuser->reg_date             = date('Y-m-d H:i:s');
         $newuser->reg_ip               = $_SERVER['REMOTE_ADDR'];
         $newuser->theme                = $_ENV['theme'];

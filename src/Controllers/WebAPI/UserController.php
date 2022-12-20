@@ -72,7 +72,7 @@ class UserController extends BaseController
                     }
                 )->orwhere('is_admin', 1);
             }
-        )->where('enable', 1)->where('expire_in', '>', date('Y-m-d H:i:s'))->get();
+        )->where('enable', 1)->get();
 
         $users = array();
 

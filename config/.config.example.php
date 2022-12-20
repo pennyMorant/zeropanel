@@ -60,7 +60,7 @@ $_ENV['remark_user_option_obfs_param'] = ['混参', '混淆参数'];         //�
 $_ENV['remark_user_option_node_group'] = ['用户组', '用户分组'];       //用户搜索字段 node_group 的别名，可多个，格式为 PHP 数组
 $_ENV['remark_user_option_class'] = ['等级'];                     //用户搜索字段 class 的别名，可多个，格式为 PHP 数组
 $_ENV['remark_user_option_class_expire'] = ['等级过期时间'];             //用户搜索字段 class_expire 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_expire_in'] = ['账号过期时间'];             //用户搜索字段 expire_in 的别名，可多个，格式为 PHP 数组
+
 $_ENV['remark_user_option_node_speedlimit'] = ['限速'];                    //用户搜索字段 node_speedlimit 的别名，可多个，格式为 PHP 数组
 $_ENV['remark_user_option_node_connector'] = ['连接数', '客户端'];         //用户搜索字段 node_connector 的别名，可多个，格式为 PHP 数组
 

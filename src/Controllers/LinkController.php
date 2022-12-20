@@ -455,7 +455,7 @@ class LinkController extends BaseController
     {
         $return = [];
         $info_array = (array)Setting::obtain('subscribe_diy_message');
-        if (strtotime($user->expire_in) > time()) {
+        if (strtotime($user->class_expire) > time()) {
             if ($user->transfer_enable == 0) {
                 $unusedTraffic = '剩余流量：0';
             } else {

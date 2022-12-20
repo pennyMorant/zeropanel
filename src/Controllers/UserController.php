@@ -497,51 +497,6 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function backToAdmin($request, $response, $args)
-    {
-        $userid = Cookie::get('uid');
-        $adminid = Cookie::get('old_uid');
-        $user = User::find($userid);
-        $admin = User::find($adminid);
-
-        if (!$admin->is_admin || !$user) {
-            Cookie::set([
-                'uid' => null,
-                'email' => null,
-                'key' => null,
-                'ip' => null,
-                'expire_in' => null,
-                'old_uid' => null,
-                'old_email' => null,
-                'old_key' => null,
-                'old_ip' => null,
-                'old_expire_in' => null,
-                'old_local' => null
-            ], time() - 1000);
-        }
-        $expire_in = Cookie::get('old_expire_in');
-        $local = Cookie::get('old_local');
-        Cookie::set([
-            'uid' => Cookie::get('old_uid'),
-            'email' => Cookie::get('old_email'),
-            'key' => Cookie::get('old_key'),
-            'ip' => Cookie::get('old_ip'),
-            'expire_in' => $expire_in,
-            'old_uid' => null,
-            'old_email' => null,
-            'old_key' => null,
-            'old_ip' => null,
-            'old_expire_in' => null,
-            'old_local' => null
-        ], $expire_in);
-        return $response->withStatus(302)->withHeader('Location', $local);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function logout($request, $response, $args)
     {
         Auth::logout();

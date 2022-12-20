@@ -24,26 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <div aria-hidden="true" class="modal modal-va-middle fade" id="changetouser_modal" role="dialog"
-                     tabindex="-1">
-                    <div class="modal-dialog modal-xs">
-                        <div class="modal-content">
-                            <div class="modal-heading">
-                                <a class="modal-close" data-dismiss="modal">×</a>
-                                <h2 class="modal-title">确认要切换为该用户？</h2>
-                            </div>
-                            <div class="modal-inner">
-                                <p>切换为该用户以后，你随时可以通过菜单底部的「返回管理员身份」按钮返回本条工单。</p>
-                            </div>
-                            <div class="modal-footer">
-                                <p class="text-right">
-                                    <button class="btn btn-flat btn-brand-accent waves-attach waves-effect" data-dismiss="modal" type="button">取消</button>
-                                    <button class="btn btn-flat btn-brand-accent waves-attach" data-dismiss="modal" id="changetouser_input" type="button">确定</button>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="card">
                     <div class="card-main">
                         <div class="card-inner">
@@ -54,7 +35,6 @@
                                         <button id="submit" type="submit" class="btn btn-brand waves-attach waves-light">添加</button>
                                         <button id="close" type="submit" class="btn btn-brand-accent waves-attach waves-light">添加并关闭</button>
                                         <button id="close_directly" type="submit" class="btn btn-brand-accent waves-attach waves-light">直接关闭</button>
-                                        <button  id="changetouser" class="btn btn-brand waves-attach waves-light" onClick="changetouser_modal_show()">切换为该用户</button>
                                     </div>
                                 </div>
                             </div>
@@ -87,9 +67,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.min.js"></script>
 <script>
-    function changetouser_modal_show() {
-        $("#changetouser_modal").modal();
-    }
     window.addEventListener('load', () => {
         function submit() {
             $("#result").modal();
@@ -158,37 +135,7 @@
                 }
             });
         });
-        function changetouser_id() {
-            $.ajax({
-                type: "POST",
-                url: "/admin/user/changetouser",
-                dataType: "json",
-                data: {
-                    userid: {$ticket->user()->id},
-                    adminid: {$user->id},
-                    local: '/admin/ticket/' + {$ticket->id} +'/view'
-                },
-                success: data => {
-                    if (data.ret) {
-                        $("#result").modal();
-                        $$.getElementById('msg').innerHTML = data.msg;
-                        window.setTimeout("location.href='/user'", {$config['jump_delay']});
-                    } else {
-                        $("#result").modal();
-                        $$.getElementById('msg').innerHTML = data.msg;
-                    }
-                },
-                error: jqXHR => {
-                    $("#result").modal();
-                    $$.getElementById('msg').innerHTML = `发生错误：${
-                            jqXHR.status
-                            }`;
-                }
-            });
-        }
-        $$.getElementById('changetouser_input').addEventListener('click', () => {
-            changetouser_id();
-        });
+        
     });
     (() => {
         editor = editormd("editormd", {

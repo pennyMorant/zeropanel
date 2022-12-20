@@ -94,50 +94,12 @@
 					</div>
 				</div>
 
-				<div class="card">
-					<div class="card-main">
-						<div class="card-inner">
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="ban_time">手动封禁时长 (分钟)，不封禁不要修改</label>
-                                <input class="form-control maxwidth-edit" id="ban_time" type="text"
-                                       value="0">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="last_detect_ban_time">最后一次被封禁的时间</label>
-                                <input class="form-control maxwidth-edit" id="last_detect_ban_time" type="text"
-                                       value="{$edit_user->last_detect_ban_time()}" readonly>
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="relieve_time">当前解封时间</label>
-                                <input class="form-control maxwidth-edit" id="relieve_time" type="text"
-                                       value="{$edit_user->relieve_time()}" readonly>
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="detect_ban_number">累计封禁次数</label>
-                                <input class="form-control maxwidth-edit" id="detect_ban_number" type="text"
-                                       value="{if $edit_user->detect_ban_number()==0}标杆用户，没有被封禁过耶{else}太坏了，这位用户累计被封禁过 {$edit_user->detect_ban_number()} 次呢{/if}" readonly>
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="all_detect_number">累计违规次数</label>
-                                <input class="form-control maxwidth-edit" id="all_detect_number" type="text"
-                                       value="{$edit_user->all_detect_number}" readonly>
-                            </div>
-
-						</div>
-					</div>
-				</div>
-
                 <div class="card">
                     <div class="card-main">
                         <div class="card-inner">
 
                             <div class="form-group form-group-label">
-                                <label class="floating-label" for="passwd">连接密码</label>
+                                <label class="floating-label" for="passwd">SS连接密码</label>
                                 <input class="form-control maxwidth-edit" id="passwd" type="text"
                                        value="{$edit_user->passwd}">
                             </div>
@@ -149,33 +111,9 @@
                             </div>
 
                             <div class="form-group form-group-label">
-                                <label class="floating-label" for="method">自定义加密</label>
+                                <label class="floating-label" for="method">SS加密</label>
                                 <input class="form-control maxwidth-edit" id="method" type="text"
                                        value="{$edit_user->method}">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="protocol">自定义协议</label>
-                                <input class="form-control maxwidth-edit" id="protocol" type="text"
-                                       value="{$edit_user->protocol}">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="protocol_param">自定义协议参数</label>
-                                <input class="form-control maxwidth-edit" id="protocol_param" type="text"
-                                       value="{$edit_user->protocol_param}">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="obfs">自定义混淆方式</label>
-                                <input class="form-control maxwidth-edit" id="obfs" type="text"
-                                       value="{$edit_user->obfs}">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="obfs_param">自定义混淆参数</label>
-                                <input class="form-control maxwidth-edit" id="obfs_param" type="text"
-                                       value="{$edit_user->obfs_param}">
                             </div>
                         </div>
                     </div>
@@ -235,13 +173,6 @@
                                 <label class="floating-label" for="class_expire">用户等级过期时间</label>
                                 <input class="form-control maxwidth-edit" id="class_expire" type="text"
                                        value="{$edit_user->class_expire}">
-                                <p class="form-control-guide"><i class="material-icons">info</i>不过期就请不要动</p>
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="expire_in">用户账户过期时间</label>
-                                <input class="form-control maxwidth-edit" id="expire_in" type="text"
-                                       value="{$edit_user->expire_in}">
                                 <p class="form-control-guide"><i class="material-icons">info</i>不过期就请不要动</p>
                             </div>
 
@@ -348,7 +279,6 @@
                     ref_by: $$getValue('ref_by'),
                     class: $$getValue('class'),
                     class_expire: $$getValue('class_expire'),
-                    expire_in: $$getValue('expire_in'),
                     node_connector: $$getValue('node_connector'),
                     protocol: $$getValue('protocol'),
                     protocol_param: $$getValue('protocol_param'),

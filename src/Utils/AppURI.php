@@ -76,6 +76,9 @@ class AppURI
                     if ($item['tls'] == 'tls') {
                         $tls = ', tls=true';
                         $sni = $item['sni'] ? ', ' . $item['sni'] : '';
+                    } else {
+                        $tls = ', ';
+                        $sni = ', ';
                     }
                     $ws = ($item['net'] == 'ws'
                         ? ', ws=true, ws-path=' . $item['path'] . ', ws-headers=host:' . $item['host']
@@ -177,6 +180,9 @@ class AppURI
                 if ($item['tls'] == 'tls') {
                     $tls = ', tls=true';
                     $sni = $item['sni'] ? ', ' . $item['sni'] : '';
+                } else {
+                    $tls = ', ';
+                    $sni = ', ';
                 }
                 $ws = ($item['net'] == 'ws'
                     ? ', ws=true, ws-path=' . $item['path'] . ', ws-headers=host:' . $item['host']

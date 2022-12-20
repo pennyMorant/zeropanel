@@ -64,7 +64,7 @@ return function (SlimApp $app) {
         $group->get('/trafficlog',               App\Controllers\UserController::class . ':trafficLog');
         $group->post('/kill',                    App\Controllers\UserController::class . ':handleKill');
         $group->get('/logout',                   App\Controllers\UserController::class . ':logout');
-        $group->get('/backtoadmin',              App\Controllers\UserController::class . ':backToAdmin');
+
         $group->post('/code',                    App\Controllers\UserController::class . 'redeemCode');
         $group->get('/unbind_telegram',          App\Controllers\UserController::class . ':unbindTelegram');
         
@@ -161,10 +161,6 @@ return function (SlimApp $app) {
         // Shop Mange
         $group->get('/shop',                     App\Controllers\Admin\ProductController::class . ':index');
         $group->post('/shop/ajax',               App\Controllers\Admin\ProductController::class . ':ajaxShop');
-
-        $group->get('/bought',                   App\Controllers\Admin\ProductController::class . ':bought');
-        $group->delete('/bought',                App\Controllers\Admin\ProductController::class . ':deleteBoughtGet');
-        $group->post('/bought/ajax',             App\Controllers\Admin\ProductController::class . ':ajaxBought');
         
         $group->get('/order',                   App\Controllers\Admin\OrderController::class . ':index');
         $group->post('/order/ajax',             App\Controllers\Admin\OrderController::class . ':ajaxOrder');
@@ -197,7 +193,6 @@ return function (SlimApp $app) {
         $group->get('/user/{id}/edit',           App\Controllers\Admin\UserController::class . ':edit');
         $group->put('/user/{id}',                App\Controllers\Admin\UserController::class . ':update');
         $group->delete('/user',                  App\Controllers\Admin\UserController::class . ':delete');
-        $group->post('/user/changetouser',       App\Controllers\Admin\UserController::class . ':changetouser');
         $group->post('/user/ajax',               App\Controllers\Admin\UserController::class . ':ajax');
         $group->post('/user/create',             App\Controllers\Admin\UserController::class . ':createNewUser');
         $group->post('/user/buy',                App\Controllers\Admin\UserController::class . ':buy');

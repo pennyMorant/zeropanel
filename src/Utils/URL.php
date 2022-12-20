@@ -156,9 +156,6 @@ class URL
     public static function get_NewAllUrl(User $user, array $Rule): string
     {
         $return_url = '';
-        if (strtotime($user->expire_in) < time()) {
-            return $return_url;
-        }
 
         $items = URL::getNew_AllItems($user, $Rule);
         foreach ($items as $item) {

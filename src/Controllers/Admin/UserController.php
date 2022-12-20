@@ -42,14 +42,10 @@ class UserController extends AdminController
             'email'                 => '邮箱',
             'money'                 => '金钱',
             'node_group'            => '群组',
-            'expire_in'             => '账户过期时间',
             'class'                 => '等级',
             'class_expire'          => '等级过期时间',
             'passwd'                => '连接密码',
             'method'                => '加密方式',
-            'protocol'              => '连接协议',
-            'obfs'                  => '混淆方式',
-            'obfs_param'            => '混淆参数',
             'online_ip_count'       => '在线IP数',
             'last_use_time'          => '上次使用时间',
             'used_traffic'          => '已用流量/GB',
@@ -115,17 +111,12 @@ class UserController extends AdminController
         $user->u                    = 0;
         $user->d                    = 0;
         $user->method               = $configs['sign_up_for_method'];
-        $user->protocol             = $configs['sign_up_for_protocol'];
-        $user->protocol_param       = $configs['sign_up_for_protocol_param'];
-        $user->obfs                 = $configs['sign_up_for_obfs'];
-        $user->obfs_param           = $configs['sign_up_for_obfs_param'];
         $user->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
         $user->money                = ($money != -1 ? $money : 0);
         $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);
         $user->class                = $configs['sign_up_for_class'];
         $user->node_connector       = $configs['connection_device_limit'];
         $user->node_speedlimit      = $configs['connection_rate_limit'];
-        $user->expire_in            = date('Y-m-d H:i:s', time() + $configs['sign_up_for_free_time'] * 86400);
         $user->reg_date             = date('Y-m-d H:i:s');
         $user->reg_ip               = $_SERVER['REMOTE_ADDR'];
         $user->theme                = $_ENV['theme'];
@@ -195,10 +186,6 @@ class UserController extends AdminController
 
 
         $user->passwd           = $request->getParam('passwd');
-        $user->protocol         = $request->getParam('protocol');
-        $user->protocol_param   = $request->getParam('protocol_param');
-        $user->obfs             = $request->getParam('obfs');
-        $user->obfs_param       = $request->getParam('obfs_param');
         $user->transfer_enable  = Tools::toGB($request->getParam('transfer_enable'));
         $user->method           = $request->getParam('method');
         $user->node_speedlimit  = $request->getParam('node_speedlimit');
@@ -212,7 +199,6 @@ class UserController extends AdminController
         $user->money            = $request->getParam('money');
         $user->class            = $request->getParam('class');
         $user->class_expire     = $request->getParam('class_expire');
-        $user->expire_in        = $request->getParam('expire_in');
         $user->rebate           = $request->getParam('rebate');
         $user->agent            = $request->getParam('agent');
         $user->commission       = $request->getParam('commission');
@@ -252,48 +238,6 @@ class UserController extends AdminController
     }
     
     /**
-     * 后台切换用户
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function changetouser($request, $response, $args)
-    {
-        $userid     = $request->getParam('userid');
-        $adminid    = $request->getParam('adminid');
-        $user       = User::find($userid);
-        $admin      = User::find($adminid);
-        $expire_in  = time() + 60 * 60;
-
-        if (!$admin->is_admin || !$user || !Auth::getUser()->isLogin) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '非法请求'
-            ]);
-        }
-
-        Cookie::set([
-            'uid'           => $user->id,
-            'email'         => $user->email,
-            'key'           => Hash::cookieHash($user->password, $expire_in),
-            'ip'            => md5($_SERVER['REMOTE_ADDR'] . Setting::obtain('website_security_token') . $user->id . $expire_in),
-            'expire_in'     => $expire_in,
-            'old_uid'       => Cookie::get('uid'),
-            'old_email'     => Cookie::get('email'),
-            'old_key'       => Cookie::get('key'),
-            'old_ip'        => Cookie::get('ip'),
-            'old_expire_in' => Cookie::get('expire_in'),
-            'old_local'     => $request->getParam('local'),
-        ], $expire_in);
-        
-        return $response->withJson([
-            'ret' => 1,
-            'msg' => '切换成功'
-        ]);
-    }
-    
-    /**
      * 后台用户AJAX
      * 
      * @param Request   $request
@@ -329,19 +273,15 @@ class UserController extends AdminController
 
 
             $tempdata['id']                     = $value->id;
-            $tempdata['name']              = $value->name;
+            $tempdata['name']                   = $value->name;
             $tempdata['remark']                 = $value->remark;
             $tempdata['email']                  = $value->email;
             $tempdata['money']                  = $value->money;
             $tempdata['node_group']             = $value->node_group;
-            $tempdata['expire_in']              = $value->expire_in;
             $tempdata['class']                  = $value->class;
             $tempdata['class_expire']           = $value->class_expire;
             $tempdata['passwd']                 = $value->passwd;
             $tempdata['method']                 = $value->method;
-            $tempdata['protocol']               = $value->protocol;
-            $tempdata['obfs']                   = $value->obfs;
-            $tempdata['obfs_param']             = $value->obfs_param;
             $tempdata['online_ip_count']        = $value->online_ip_count();
             $tempdata['last_use_time']          = $value->lastUseTime();
             $tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);
@@ -351,7 +291,7 @@ class UserController extends AdminController
             $tempdata['reg_date']               = $value->reg_date;
             $tempdata['reg_ip']                 = $value->reg_ip;
             $tempdata['ref_by']                 = $value->ref_by;
-            $tempdata['ref_by_name']       = $value->ref_by_name();
+            $tempdata['ref_by_name']            = $value->ref_by_name();
             $tempdata['top_up']                 = $value->get_top_up();
             $tempdata['rebate']                 = $value->rebate > 0 ? $value->rebate . '%' : ($configs['rebate_ratio'] * 100) . '%';
 

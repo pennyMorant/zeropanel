@@ -476,39 +476,6 @@ class Job extends Command
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
     }
 
-    /**
-     *  检查用户过期任务
-     */
-    public function CheckUserExpire()
-    {
-        echo '用户账户过期检测开始' . PHP_EOL;
-        $users = User::query()
-            ->where('expire_in', '<', date('Y-m-d H:i:s', time()))
-            ->where('expire_notified', 0)
-            ->where('is_admin', '!=', 1)
-            ->get();
-
-        foreach ($users as $user) {
-            $user->transfer_enable = 0;
-            $user->u = 0;
-            $user->d = 0;
-            $user->last_day_t = 0;
-            $user->sendMail(
-                Setting::obtain('website_general_name') . '-您的用户账户已经过期了',
-                'news/warn.tpl',
-                [
-                    'text' => '您好，系统发现您的账号已经过期了。'
-                ],
-                [],
-                $_ENV['email_queue']
-            );
-            $user->expire_notified = true;
-            $user->save();
-        }
-        echo '用户账户过期检测结束' . PHP_EOL;
-        echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
-    }
-
     public function CheckOrderStatus()
     {
         echo '订单状态检测开始' . PHP_EOL;

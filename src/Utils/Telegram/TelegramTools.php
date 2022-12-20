@@ -82,7 +82,6 @@ class TelegramTools
             'node_group'        => $_ENV['remark_user_option_node_group'],
             'class'             => $_ENV['remark_user_option_class'],
             'class_expire'      => $_ENV['remark_user_option_class_expire'],
-            'expire_in'         => $_ENV['remark_user_option_expire_in'],
             'node_speedlimit'   => $_ENV['remark_user_option_node_speedlimit'],
             'node_connector'    => $_ENV['remark_user_option_node_connector'],
         ];
@@ -157,7 +156,6 @@ class TelegramTools
                 $new = Tools::flowAutoShow($new);
                 break;
                 // ##############
-            case 'expire_in':
             case 'class_expire':
                 $strArray = [
                     '// 支持的写法，单位：天',

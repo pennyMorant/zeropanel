@@ -154,34 +154,6 @@ class ProductController extends AdminController
 
 
     /**
-     * 后台购买记录页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function bought($request, $response, $args)
-    {
-        $table_config['total_column'] = array(
-            'paid_time'              => '购买日期',
-            'type'                  => '产品类型',
-            'product_price'                 => '价格',
-            'user_id'                => '用户ID',
-            'product_name'             => '产品名称',
-        );
-        $table_config['default_show_column'] = array();
-        foreach ($table_config['total_column'] as $column => $value) {
-            $table_config['default_show_column'][] = $column;
-        }
-        $table_config['ajax_url'] = 'bought/ajax';
-        $this->view()
-            ->assign('table_config', $table_config)
-            ->display('admin/shop/bought.tpl');
-        return $response;
-    }
-
-
-    /**
      * 后台商品页面 AJAX
      *
      * @param Request   $request
@@ -219,53 +191,6 @@ class ProductController extends AdminController
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
             'recordsTotal'    => Product::count(),
-            'recordsFiltered' => $query['count'],
-            'data'            => $data,
-        ]);
-    }
-
-    /**
-     * 后台购买记录 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajaxBought($request, $response, $args)
-    {
-        $sort = $request->getParam('order')[0]['dir'];             # 得到排序方法
-        $field = $request->getParam('order')[0]['column'];            
-        $sort_field = $request->getParam('columns')[$field]['data'];
-        $querys = Order::where('order_status', 'paid')->where('order_type', 'purchase_product_order')->orderBy($sort_field, $sort);
-        $query = Order::getTableDataFromAdmin(
-            $request,
-            static function (&$order_field) {
-                if (in_array($order_field, ['op'])) {
-                    $order_field = 'id';
-                }
-                
-            },
-            null,
-            $querys
-        );
-
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Bought $value */
-            $product = Product::where('id', $value->product_id)->first();
-            $tempdata                          = [];
-            $tempdata['paid_time']             = date('Y-m-d H:i:s', $value->paid_time);
-            $tempdata['type']                  = $product->type;
-            $tempdata['product_price']         = $value->product_price;
-            $tempdata['user_id']               = $value->user_id;
-            $tempdata['product_name']            = $value->product_name;
-
-            $data[] = $tempdata;
-        }
-
-        return $response->withJson([
-            'draw'            => $request->getParam('draw'),
-            'recordsTotal'    => $query['count'],
             'recordsFiltered' => $query['count'],
             'data'            => $data,
         ]);

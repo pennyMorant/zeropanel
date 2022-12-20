@@ -111,7 +111,6 @@ class Reply
             '用户等级：' . $user->class,
             '剩余流量：' . $user->unusedTraffic(),
             '等级到期：' . $user->class_expire,
-            '账户到期：' . $user->expire_in,
             '套餐详情：'
         ];
         $boughts = self::getUserBoughts($user);
