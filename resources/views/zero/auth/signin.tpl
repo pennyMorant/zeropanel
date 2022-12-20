@@ -54,7 +54,7 @@
 								</div>
 								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
-										<div class="cf-turnstile" id="turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
+										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>
 								{/if}
 								<div class="d-grid mb-10">
