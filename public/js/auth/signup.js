@@ -71,7 +71,7 @@ var KTSignupGeneral = function() {
                 s.preventDefault(),
                 //a.revalidateField("password"),
                 a.validate().then((function(a) {
-                    if (document.getElementById('turnstile') != null) {
+                    if ($('div').is('.cf-turnstile') == true) {
                         var datas = {
                             email: $("#email").val(),
                                 name: $("#name").val(),
