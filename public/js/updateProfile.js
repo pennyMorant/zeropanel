@@ -722,7 +722,8 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						document.getElementById('zero_modal_vmess_node_info_id').innerHTML = data.info.id;
 						document.getElementById('zero_modal_vmess_node_info_net').innerHTML = data.info.net;
 						document.getElementById('zero_modal_vmess_node_info_path').innerHTML = data.info.path;
-                        document.getElementById('zero_modal_vmess_node_info_servicename').innerHTML =data.info.servicename;
+                        document.getElementById('zero_modal_vmess_node_info_host').innerHTML = data.info.host
+                        document.getElementById('zero_modal_vmess_node_info_servicename').innerHTML = data.info.servicename;
 						document.getElementById('zero_modal_vmess_node_info_type').innerHTML = data.info.type;
 						document.getElementById('zero_modal_vmess_node_info_security').innerHTML = data.info.tls;
 						document.getElementById('zero_modal_vmess_node_info_qrcode').innerHTML = '<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>';

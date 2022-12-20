@@ -455,6 +455,7 @@
                                     <p>{$trans->t('user.node.uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_id"></span></p>
                                     <p>{$trans->t('user.node.network')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_net"></span></p>
                                     <p>{$trans->t('user.node.path')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_path"></span></p>
+									<p>{$trans->t('user.node.host')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_host"></span></p>
                                     <p>{$trans->t('user.node.servicename')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_servicename"></span></p>
                                     <p>{$trans->t('user.node.protocol')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_type"></span></p>
                                     <p>{$trans->t('user.node.security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_security"></span></p>
