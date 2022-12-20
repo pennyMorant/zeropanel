@@ -39,7 +39,7 @@ var KTSigninGeneral = function() {
             t.addEventListener("click", (function(n) {
                 n.preventDefault(),
                 i.validate().then((function(i) {
-                    if ($(".cf-turnstile") != null) {
+                    if ($('div').is('.cf-turnstile') == true) {
                         var datas = {
                             email: $("#signin-email").val(),
                             passwd: $("#signin-passwd").val(),                               
