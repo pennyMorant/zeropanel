@@ -275,15 +275,10 @@
                     rebate: $$getValue('rebate'),
                     enable,
                     is_admin,
-                    ban_time: $$getValue('ban_time'),
                     ref_by: $$getValue('ref_by'),
                     class: $$getValue('class'),
                     class_expire: $$getValue('class_expire'),
-                    node_connector: $$getValue('node_connector'),
-                    protocol: $$getValue('protocol'),
-                    protocol_param: $$getValue('protocol_param'),
-                    obfs: $$getValue('obfs'),
-                    obfs_param: $$getValue('obfs_param'),
+                    node_connector: $$getValue('node_connector')
                 },
                 success: data => {
                     if (data.ret) {
