@@ -122,8 +122,8 @@ class Analytics
     // admin
     public function getNewUsers($start, $end)
     {
-        $users = User::where('reg_date', '>=', date("Y-m-d H:i:s", $start))
-        ->where('reg_date', '<', date("Y-m-d H:i:s", $end))
+        $users = User::where('signup_date', '>=', date("Y-m-d H:i:s", $start))
+        ->where('signup_date', '<', date("Y-m-d H:i:s", $end))
         ->count();
         if ($users == null) {
             $users = 0;

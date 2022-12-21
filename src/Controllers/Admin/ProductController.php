@@ -72,7 +72,6 @@ class ProductController extends AdminController
         $shop->type = $request->getParam('type');
         $shop->sort = $request->getParam('sort');
         $shop->traffic = $request->getParam('traffic');
-        $shop->account_validity_period = $request->getParam('expire');
         $shop->user_group = $request->getParam('node_group');
         $shop->class = $request->getParam('class');
         $shop->class_validity_period = $request->getParam('class_expire');
@@ -129,7 +128,7 @@ class ProductController extends AdminController
         $shop->type = $request->getParam('type');
         $shop->sort = $request->getParam('sort');
         $shop->traffic = $request->getParam('traffic');
-        $shop->account_validity_period = $request->getParam('expire');
+
         $shop->user_group = $request->getParam('node_group');
         $shop->class = $request->getParam('class');
         $shop->class_validity_period = $request->getParam('class_expire');

@@ -121,7 +121,7 @@ class User extends Command
             $user->transfer_enable  = Tools::toGB($configs['sign_up_for_free_traffic']);
             $user->ref_by           = 0;
             $user->is_admin         = 1;
-            $user->reg_date         = date('Y-m-d H:i:s');
+            $user->signup_date         = date('Y-m-d H:i:s');
             $user->money            = 0;
             $user->class            = 0;
             $user->node_speedlimit  = 0;

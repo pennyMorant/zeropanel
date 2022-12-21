@@ -362,8 +362,8 @@ class Agent extends \App\Controllers\BaseController
         $newuser->node_connector       = $configs['connection_device_limit'];
         $newuser->node_speedlimit      = $configs['connection_rate_limit'];
 
-        $newuser->reg_date             = date('Y-m-d H:i:s');
-        $newuser->reg_ip               = $_SERVER['REMOTE_ADDR'];
+        $newuser->signup_date             = date('Y-m-d H:i:s');
+        $newuser->signup_ip               = $_SERVER['REMOTE_ADDR'];
         $newuser->theme                = $_ENV['theme'];
 
         # 是代理商新建
@@ -649,7 +649,7 @@ class Agent extends \App\Controllers\BaseController
                 for ($i=0; $i < 14 ; $i++) {
                     $time_a -= 86400;
                     $time_b -= 86400;
-                    $total   = User::where('ref_by', $user->id)->where('reg_date', '>', date('Y-m-d H:i:s', $time_a))->where('reg_date', '<', date('Y-m-d H:i:s', $time_b))->count();
+                    $total   = User::where('ref_by', $user->id)->where('signup_date', '>', date('Y-m-d H:i:s', $time_a))->where('signup_date', '<', date('Y-m-d H:i:s', $time_b))->count();
                     $datas[] = [
                         'x' => date('m-d', $time_a),
                         'y' => $total,

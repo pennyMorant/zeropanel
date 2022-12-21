@@ -290,7 +290,7 @@ class AdminController extends UserController
         for ($i=0; $i < $times ; $i++) {
             $time_a -= 86400;
             $time_b -= 86400;
-            $total   = User::where('reg_date', '>=', date("Y-m-d",$time_a))->where('reg_date', '<', date("Y-m-d",$time_b))->count();
+            $total   = User::where('signup_date', '>=', date("Y-m-d",$time_a))->where('signup_date', '<', date("Y-m-d",$time_b))->count();
             $datas[] = [
                 'x'  => date('Y-m-d', $time_a),
                 'y' => $total ?? 0,

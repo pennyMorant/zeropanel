@@ -27,10 +27,7 @@ class Product extends Model
         return $this->traffic ?? 0;
     }
 
-    public function expire()
-    {
-        return $this->account_validity_period ?? 0;
-    }
+    
 
     public function reset()
     {

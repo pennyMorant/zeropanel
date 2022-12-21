@@ -52,8 +52,8 @@ class UserController extends AdminController
             'enable_traffic'        => '总流量/GB',
             'today_traffic'         => '今日流量',
             'enable'                => '是否启用',
-            'reg_date'              => '注册时间',
-            'reg_ip'                => '注册IP',
+            'signup_date'              => '注册时间',
+            'signup_ip'                => '注册IP',
             'ref_by'                => '邀请人ID',
             'ref_by_name'      => '邀请人用户名',
             'top_up'                => '累计充值',
@@ -117,8 +117,8 @@ class UserController extends AdminController
         $user->class                = $configs['sign_up_for_class'];
         $user->node_connector       = $configs['connection_device_limit'];
         $user->node_speedlimit      = $configs['connection_rate_limit'];
-        $user->reg_date             = date('Y-m-d H:i:s');
-        $user->reg_ip               = $_SERVER['REMOTE_ADDR'];
+        $user->signup_date             = date('Y-m-d H:i:s');
+        $user->signup_ip               = $_SERVER['REMOTE_ADDR'];
         $user->theme                = $_ENV['theme'];
         $user->node_group           = 0;
         
@@ -288,8 +288,8 @@ class UserController extends AdminController
             $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable);
             $tempdata['today_traffic']          = $value->TodayusedTraffic();
             $tempdata['enable']                 = $value->enable == 1 ? '可用' : '禁用';
-            $tempdata['reg_date']               = $value->reg_date;
-            $tempdata['reg_ip']                 = $value->reg_ip;
+            $tempdata['signup_date']               = $value->signup_date;
+            $tempdata['signup_ip']                 = $value->signup_ip;
             $tempdata['ref_by']                 = $value->ref_by;
             $tempdata['ref_by_name']            = $value->ref_by_name();
             $tempdata['top_up']                 = $value->get_top_up();

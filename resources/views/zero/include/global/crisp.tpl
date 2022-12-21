@@ -28,7 +28,7 @@
                             ["Money", "¥ "+"{$user->money}"],
                             ["Traffic", '{$user->unusedTraffic()}'],
                             ["Last_Time", '{$user->lastUseTime()}'],
-                            ["Reg_Time", '{$user->reg_date}'],
+                            ["Reg_Time", '{$user->signup_date}'],
                             ["Update_Time", '{date("Y-m-d H:i:s")}'],
                         ]
                     ]

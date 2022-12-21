@@ -668,7 +668,7 @@
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('user.dashboard.ref.content_1')}</span>                                               
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('user.dashboard.ref.content_2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
-                                                                <a href="JavaScript:;" id="test_1" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('user.dashboard.ref.copy')}</a>
+                                                                <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('user.dashboard.ref.copy')}</a>
                                                             </div>                                                
                                                         </div>                                                                                        
                                                         <div class="col-5 pt-10">                                               

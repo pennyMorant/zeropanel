@@ -7,11 +7,11 @@ use App\Utils\QQWry;
 /**
  * Ip Model
  */
-class LoginIp extends Model
+class SigninIp extends Model
 {
     protected $connection = 'default';
 
-    protected $table = 'login_ip';
+    protected $table = 'signin_ip';
 
     protected $casts = [
         'type' => 'int',

@@ -499,14 +499,14 @@ function KTUsersResetSubLink() {
 // show configure product modal 
 function kTUserConfigureProductModal(id) {
     the_product_id = id;
-    const html = document.getElementById('zero_product_'+id).innerHTML;
-    const name = document.getElementById('zero_product_name_'+id).innerHTML;
-    const price = document.getElementById('zero_product_price_'+id).innerHTML;
+    const html = $('#zero_product_'+id).html();
+    const name = $('#zero_product_name_'+id).html();
+    const price = $('#zero_product_price_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]')
-    document.getElementById('zero_modal_configure_product_inner_html').innerHTML =  html;
-    document.getElementById('zero_modal_configure_product_name').innerHTML = name + '&nbsp;X&nbsp;1';
-    document.getElementById('zero_modal_configure_product_price').innerHTML = price + 'USD';
-    document.getElementById('zero_modal_configure_product_total').innerHTML = price + 'USD';
+    $('#zero_modal_configure_product_inner_html').html(html);
+    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;1');
+    $('#zero_modal_configure_product_price').html(price + 'USD');
+    $('#zero_modal_configure_product_total').html(price + 'USD');
     submitButton.setAttribute('onclick', 'KTUsersCreateOrder("purchase_product_order",' +id+')');
     $("#zero_modal_configure_product").modal("show");
 }
@@ -715,18 +715,18 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 				if (data.ret == 1){
 					if (data.sort == 11) {
 						var content = data.url;
-						document.getElementById('zero_modal_vmess_node_info_remark').innerHTML = data.info.remark;
-						document.getElementById('zero_modal_vmess_node_info_add').innerHTML = data.info.add;
-						document.getElementById('zero_modal_vmess_node_info_port').innerHTML = data.info.port;
-						document.getElementById('zero_modal_vmess_node_info_aid').innerHTML = data.info.aid;
-						document.getElementById('zero_modal_vmess_node_info_id').innerHTML = data.info.id;
-						document.getElementById('zero_modal_vmess_node_info_net').innerHTML = data.info.net;
-						document.getElementById('zero_modal_vmess_node_info_path').innerHTML = data.info.path;
-                        document.getElementById('zero_modal_vmess_node_info_host').innerHTML = data.info.host
-                        document.getElementById('zero_modal_vmess_node_info_servicename').innerHTML = data.info.servicename;
-						document.getElementById('zero_modal_vmess_node_info_type').innerHTML = data.info.type;
-						document.getElementById('zero_modal_vmess_node_info_security').innerHTML = data.info.tls;
-						document.getElementById('zero_modal_vmess_node_info_qrcode').innerHTML = '<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>';
+                        $("#zero_modal_vmess_node_info_remark").html(data.info.remark);
+						$("#zero_modal_vmess_node_info_add").html(data.info.add);
+						$("#zero_modal_vmess_node_info_port").html(data.info.port);
+						$("#zero_modal_vmess_node_info_aid").html(data.info.aid);
+                        $("#zero_modal_vmess_node_info_id").html(data.info.id);
+						$("#zero_modal_vmess_node_info_net").html(data.info.net);
+						$("#zero_modal_vmess_node_info_path").html(data.info.path);
+						$("#zero_modal_vmess_node_info_host").html(data.info.host);
+                        $("#zero_modal_vmess_node_info_servicename").html(data.info.servicename);
+                        $("#zero_modal_vmess_node_info_type").html(data.info.type);
+						$("#zero_modal_vmess_node_info_security").html(data.info.tls);
+						$("#zero_modal_vmess_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
 						$("#qrcode"  + nodeid).qrcode({
 							width: 200,
 							height: 200,
@@ -737,13 +737,13 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						$("#zero_modal_vmess_node_info").modal('show');
 					} else if ( data.sort == 14) {
 						var content = data.url;
-						document.getElementById('zero_modal_trojan_node_info_remark').innerHTML = data.info.remark;
-						document.getElementById('zero_modal_trojan_node_info_add').innerHTML = data.info.address;
-						document.getElementById('zero_modal_trojan_node_info_port').innerHTML = data.info.port;
-						document.getElementById('zero_modal_trojan_node_info_id').innerHTML = data.info.passwd;
-						document.getElementById('zero_modal_trojan_node_info_host').innerHTML = data.info.host;
-						document.getElementById('zero_modal_trojan_node_info_security').innerHTML = data.info.tls;
-						document.getElementById('zero_modal_trojan_node_info_qrcode').innerHTML = '<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>';
+                        $("#zero_modal_trojan_node_info_remark").html(data.info.remark);
+						$("#zero_modal_trojan_node_info_add").html(data.info.address);
+						$("#zero_modal_trojan_node_info_port").html(data.info.port);						
+                        $("#zero_modal_trojan_node_info_id").html(data.info.passwd);
+						$("#zero_modal_trojan_node_info_host").html(data.info.host);
+						$("#zero_modal_trojan_node_info_security").html(data.info.tls);
+						$("#zero_modal_trojan_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
 						$("#qrcode"  + nodeid).qrcode({
 							width: 200,
 							height: 200,
@@ -754,17 +754,19 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						$("#nodeinfo-trojan-modal").modal('show');
 					} else if (data.sort == 15) {
 						var content = data.url;
-						document.getElementById('zero_modal_vless_node_info_remark').innerHTML = data.info.remark;
-						document.getElementById('zero_modal_vless_node_info_add').innerHTML = data.info.add;
-						document.getElementById('zero_modal_vless_node_info_port').innerHTML = data.info.port;
-						document.getElementById('zero_modal_vless_node_info_id').innerHTML = data.info.id;
-						document.getElementById('zero_modal_vless_node_info_net').innerHTML = data.info.net;
-						document.getElementById('zero_modal_vless_node_info_path').innerHTML = data.info.path;
-						document.getElementById('zero_modal_vless_node_info_type').innerHTML = data.info.type;
-						document.getElementById('zero_modal_vless_node_info_security').innerHTML = data.info.tls;
-						document.getElementById('zero_modal_vless_node_info_flow').innerHTML = data.info.flow;
-						document.getElementById('zero_modal_vless_node_info_sni').innerHTML = data.info.sni;
-						document.getElementById('zero_modal_vless_node_info_qrcode').innerHTML = '<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>';
+                        $("#zero_modal_vless_node_info_remark").html(data.info.remark);
+						$("#zero_modal_vless_node_info_add").html(data.info.add);
+						$("#zero_modal_vless_node_info_port").html(data.info.port);
+                        $("#zero_modal_vless_node_info_id").html(data.info.id);
+						$("#zero_modal_vless_node_info_net").html(data.info.net);
+						$("#zero_modal_vless_node_info_path").html(data.info.path);
+						$("#zero_modal_vless_node_info_host").html(data.info.host);
+                        $("#zero_modal_vless_node_info_servicename").html(data.info.servicename);
+                        $("#zero_modal_vless_node_info_type").html(data.info.type);
+						$("#zero_modal_vless_node_info_security").html(data.info.tls);
+                        $("#zero_modal_vless_node_info_flow").html(data.info.flow);
+						$("#zero_modal_vless_node_info_sni").html(data.info.sni);
+						$("#zero_modal_vless_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
 						$("#qrcode"  + nodeid).qrcode({
 							width: 200,
 							height: 200,
@@ -775,12 +777,12 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 						$("#nodeinfo-vless-modal").modal('show');
 					} else if (data.sort == 0) {
 						var content = data.url;
-						document.getElementById('zero_modal_shadowsocks_node_info_remark').innerHTML = data.info.remark;
-						document.getElementById('zero_modal_shadowsocks_node_info_address').innerHTML = data.info.address;
-						document.getElementById('zero_modal_shadowsocks_node_info_port').innerHTML = data.info.port;
-						document.getElementById('zero_modal_shadowsocks_node_info_method').innerHTML = data.info.method;
-						document.getElementById('zero_modal_shadowsocks_node_info_passwd').innerHTML = data.info.passwd;
-						document.getElementById('zero_modal_shadowsocks_node_info_qrcode').innerHTML = '<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>';
+						$("#zero_modal_shadowsocks_node_info_remark").html(data.info.remark);
+						$("#zero_modal_shadowsocks_node_info_address").html(data.info.address);
+						$("#zero_modal_shadowsocks_node_info_port").html(data.info.port);
+						$("#zero_modal_shadowsocks_node_info_method").html(data.info.method);
+						$("#zero_modal_shadowsocks_node_info_passwd").html(data.info.passwd);
+						$("#zero_modal_shadowsocks_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
 						$("#qrcode"  + nodeid).qrcode({
 							width: 200,
 							height: 200,

@@ -628,7 +628,7 @@
 																	</tr>
                                                                     <tr>
                                                                         <td>账户注册时间</td>
-                                                                        <td>{$user->reg_date}</td>
+                                                                        <td>{$user->signup_date}</td>
                                                                         
 																	</tr>
                                                                     

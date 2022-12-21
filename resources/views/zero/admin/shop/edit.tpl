@@ -73,11 +73,7 @@
                 <div class="card">
                     <div class="card-main">
                         <div class="card-inner">
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="expire">账户有效期天数</label>
-                                <input class="form-control maxwidth-edit" id="expire" type="text"
-                                       value="{$shop->expire()}">
-                            </div>
+                        
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="node_group">用户群组</label>
                                 <input class="form-control maxwidth-edit" id="node_group" type="text" value="{$shop->node_group()}">
@@ -191,7 +187,6 @@
                 traffic: $$getValue('traffic'),
                 speed_limit: $$getValue('speed_limit'),
                 ip_limit: $$getValue('ip_limit'),
-                expire: $$getValue('expire'),
                 class: $$getValue('class'),
                 class_expire: $$getValue('class_expire'),
                 reset: $$getValue('reset'),
