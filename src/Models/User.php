@@ -316,7 +316,7 @@ class User extends Model
         InviteCode::where('user_id', '=', $uid)->delete();
         Ip::where('userid', '=', $uid)->delete();
         Link::where('userid', '=', $uid)->delete();
-        LoginIp::where('userid', '=', $uid)->delete();
+        SigninIp::where('userid', '=', $uid)->delete();
         PasswordReset::where('email', '=', $email)->delete();
         TelegramSession::where('user_id', '=', $uid)->delete();
         Token::where('user_id', '=', $uid)->delete();
@@ -527,14 +527,14 @@ class User extends Model
      * @param string $ip
      * @param int    $type 登录失败为 1
      */
-    public function collectLoginIP(string $ip, int $type = 0): bool
+    public function collectSigninIp(string $ip, int $type = 0): bool
     {
-        $loginip           = new LoginIp();
-        $loginip->ip       = $ip;
-        $loginip->userid   = $this->id;
-        $loginip->datetime = time();
-        $loginip->type     = $type;
+        $SigninIp           = new SigninIp();
+        $SigninIp->ip       = $ip;
+        $SigninIp->userid   = $this->id;
+        $SigninIp->datetime = time();
+        $SigninIp->type     = $type;
 
-        return $loginip->save();
+        return $SigninIp->save();
     }
 }

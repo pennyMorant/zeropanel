@@ -7,7 +7,7 @@ use App\Models\{
     Ip,
     Node,
     Payback,
-    LoginIp,
+    SigninIp,
     Setting,
     InviteCode,
     UserSubscribeLog
@@ -394,18 +394,18 @@ class Callback
             case 'login_log':
                 // 登录记录
                 $iplocation  = new QQWry();
-                $totallogin  = LoginIp::where('userid', '=', $this->User->id)->where('type', '=', 0)->orderBy('datetime', 'desc')->take(10)->get();
-                $userloginip = [];
+                $totallogin  = SigninIp::where('userid', '=', $this->User->id)->where('type', '=', 0)->orderBy('datetime', 'desc')->take(10)->get();
+                $userSigninIp = [];
                 foreach ($totallogin as $single) {
                     $location        = $iplocation->getlocation($single->ip);
-                    $loginiplocation = iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
-                    if (!in_array($loginiplocation, $userloginip)) {
-                        $userloginip[] = $loginiplocation;
+                    $signiniplocation = iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
+                    if (!in_array($signiniplocation, $usersigninip)) {
+                        $usersigninip[] = $signiniplocation;
                     }
                 }
                 $text  = '<strong>以下是您最近 10 次的登录位置：</strong>';
                 $text .= PHP_EOL . PHP_EOL;
-                $text .= implode('、', $userloginip);
+                $text .= implode('、', $usersigninip);
                 $sendMessage = [
                     'text'                     => $text,
                     'disable_web_page_preview' => false,

@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Models\Token;
 use App\Models\Bought;
 use App\Models\Ticket;
-use App\Models\LoginIp;
+use App\Models\SigninIp;
 use App\Models\TrafficLog;
 use App\Models\Disconnect;
 use App\Models\EmailVerify;
@@ -82,7 +82,7 @@ class Job extends Command
         PasswordReset::where('expire_time', '<', time() - 86400 * 3)->delete();
         Ip::where('datetime', '<', time() - 300)->delete();
         TelegramSession::where('datetime', '<', time() - 900)->delete();
-        LoginIp::where('datetime', '<', time() - 86400 * 7)->delete();
+        SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
         IP::where('datetime', '<', time() - 86400 * 7)->delete();
         echo '清理数据库各表结束;' . PHP_EOL;
 

@@ -5,7 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\AdminController;
 use App\Models\{
     Ip,
-    LoginIp
+    SigninIp
 };
 use App\Utils\{
     QQWry,
@@ -53,7 +53,7 @@ class IpController extends AdminController
      */
     public function ajaxLogin($request, $response, $args)
     {
-        $query = LoginIp::getTableDataFromAdmin(
+        $query = SigninIp::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
                 if (in_array($order_field, ['name'])) {
@@ -68,10 +68,10 @@ class IpController extends AdminController
         $data  = [];
         $QQWry = new QQWry();
         foreach ($query['datas'] as $value) {
-            /** @var LoginIp $value */
+            /** @var SigninIp $value */
 
             if ($value->user() == null) {
-                LoginIp::user_is_null($value);
+                SigninIp::user_is_null($value);
                 continue;
             }
             $tempdata              = [];
@@ -88,7 +88,7 @@ class IpController extends AdminController
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
-            'recordsTotal'    => LoginIp::count(),
+            'recordsTotal'    => SigninIp::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
         ]);

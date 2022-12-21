@@ -116,15 +116,15 @@ return function (SlimApp $app) {
 
     // Auth
     $app->group('/auth', function (Group $group) {
-        $group->get('/signin',           App\Controllers\AuthController::class . ':login');
+        $group->get('/signin',           App\Controllers\AuthController::class . ':signin');
         $group->post('/qrcode_check',    App\Controllers\AuthController::class . ':qrcode_check');
-        $group->post('/login',           App\Controllers\AuthController::class . ':loginHandle');
+        $group->post('/signin',           App\Controllers\AuthController::class . ':signinHandle');
         $group->post('/qrcode_login',    App\Controllers\AuthController::class . ':qrcode_loginHandle');
         $group->get('/signup',           App\Controllers\AuthController::class . ':signUp');
         $group->post('/register',        App\Controllers\AuthController::class . ':registerHandle');
         $group->post('/send',            App\Controllers\AuthController::class . ':sendVerify');
         $group->get('/logout',           App\Controllers\AuthController::class . ':logout');
-        $group->get('/login_getCaptcha', App\Controllers\AuthController::class . ':getCaptcha');
+
     })->add(new Guest());
 
     // Password

@@ -19,7 +19,7 @@ use App\Models\{
     Ticket,
     Order,
     Payback,
-    LoginIp,
+    SigninIp,
     TrafficLog,
     UserSubscribeLog,
     Setting
@@ -209,7 +209,7 @@ class ZeroController extends BaseController
                 break;
             case 'loginlog':
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;
-                $querys = LoginIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
+                $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
 

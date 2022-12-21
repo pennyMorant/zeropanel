@@ -39,7 +39,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function login($request, $response, $args)
+    public function signin($request, $response, $args)
     {
         $captcha = [];
 
@@ -55,27 +55,14 @@ class AuthController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function getCaptcha($request, $response, $args)
-    {
-        $captcha = Captcha::generate();
-        return $response->withJson([
-            'turnstileKey' => $captcha['turnstile'],
-            'GtSdk'        => $captcha['geetest'],
-            'respon'       => 1,
-        ]);
-    }
+    
 
     /**
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function loginHandle($request, $response, $args)
+    public function signinHandle($request, $response, $args)
     {
         $email = strtolower(trim($request->getParam('email')));
         $passwd     = $request->getParam('passwd');
@@ -103,7 +90,7 @@ class AuthController extends BaseController
 
         if (!Hash::checkPassword($user->password, $passwd)) {
             // 记录登录失败
-            $user->collectLoginIP($_SERVER['REMOTE_ADDR'], 1);
+            $user->collectSigninIp($_SERVER['REMOTE_ADDR'], 1);
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $trans->t('auth.notify.signin.error_passwd')
@@ -117,7 +104,7 @@ class AuthController extends BaseController
 
         Auth::login($user->id, $time);
         // 记录登录成功
-        $user->collectLoginIP($_SERVER['REMOTE_ADDR']);
+        $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
         $user->last_signin_time = date('Y-m-d H:i:s');
         $user->save();
 
@@ -339,7 +326,7 @@ class AuthController extends BaseController
         if ($user->save()) {
             Auth::login($user->id, 3600);
             // 记录登录成功
-            $user->collectLoginIP($_SERVER['REMOTE_ADDR']);
+            $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
             $user->sendMail(
                 '',
                 'news/welcome.tpl',

@@ -56,7 +56,7 @@ var KTSigninGeneral = function() {
                         t.disabled = !1,
                         $.ajax({
                             type: 'POST',
-                            url: "/auth/login",
+                            url: "/auth/signin",
                             dataType: "json",                           
                             data: datas,
                             success: function(data){
