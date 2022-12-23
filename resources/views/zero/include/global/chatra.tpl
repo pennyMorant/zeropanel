@@ -12,7 +12,6 @@
         </script>
         <script>
             window.ChatraIntegration = {
-                name: '{$user->name}',
                 email: '{$user->email}',
                 'Class': '{$user->class}',
                 'Class_Expire': '{$user->class_expire}',

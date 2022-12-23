@@ -37,7 +37,6 @@ class UserController extends AdminController
         $table_config['total_column'] = array(
             'op'                    => '操作',
             'id'                    => 'ID',
-            'name'             => '用户名',
             'remark'                => '备注',
             'email'                 => '邮箱',
             'money'                 => '金钱',
@@ -103,7 +102,6 @@ class UserController extends AdminController
         $user                       = new User();
         $current_timestamp          = time();
         $user->password             = Hash::passwordHash($pass);
-        $user->name                 = $email;
         $user->email                = $email;
         $user->passwd               = Tools::genRandomChar(16);
         $user->uuid                 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
@@ -195,7 +193,6 @@ class UserController extends AdminController
         $user->node_group       = $request->getParam('group');
         $user->ref_by           = $request->getParam('ref_by');
         $user->remark           = $request->getParam('remark');
-        $user->name             = $request->getParam('name');
         $user->money            = $request->getParam('money');
         $user->class            = $request->getParam('class');
         $user->class_expire     = $request->getParam('class_expire');

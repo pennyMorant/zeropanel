@@ -242,7 +242,6 @@ class SubController extends BaseController
             "version" => 1,
             "sub_name" => Setting::obtain('website_general_name'),
             "user_email" => $user->email,
-            "user_name" => $user->name,
             "user_class" => $user->class,
             "user_class_expire_date" => $user->class_expire,
             "user_total_traffic" => $user->transfer_enable,

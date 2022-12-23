@@ -68,7 +68,7 @@ class Telegram
 
         $messageText = '交易提醒' . PHP_EOL .
             '------------------------------' . PHP_EOL .
-            '用户名：' . $user->name . '  #' . $user->id . PHP_EOL .
+            '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
             '交易类型：' . $type . PHP_EOL .
             '充值金额：' . $pl->total . PHP_EOL .
             '钱包余额：' . $user->money . PHP_EOL .

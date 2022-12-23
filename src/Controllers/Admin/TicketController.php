@@ -32,7 +32,6 @@ class TicketController extends AdminController
             'datetime'  => '时间',
             'title'     => '标题',
             'userid'    => '用户ID',
-            'name' => '用户名',
             'status'    => '状态'
         );
         $table_config['default_show_column'] = array(
@@ -215,7 +214,6 @@ class TicketController extends AdminController
             $tempdata['datetime']   = $value->datetime();
             $tempdata['title']      = $value->title;
             $tempdata['userid']     = $value->userid;
-            $tempdata['name']  = $value->name();
             $tempdata['status']     = $value->status();
 
             $data[] = $tempdata;

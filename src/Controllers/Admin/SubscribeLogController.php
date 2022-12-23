@@ -23,7 +23,6 @@ class SubscribeLogController extends AdminController
     {
         $table_config['total_column'] = array(
             'id'                  => 'ID',
-            'user_name'                => '用户名',
             'user_id'             => '用户ID',
             'email'               => '用户邮箱',
             'subscribe_type'      => '类型',
@@ -70,7 +69,6 @@ class SubscribeLogController extends AdminController
             }
             $tempdata                       = [];
             $tempdata['id']                 = $value->id;
-            $tempdata['user_name']          = $value->user_name;
             $tempdata['user_id']            = $value->user_id;
             $tempdata['email']              = $value->email;
             $tempdata['subscribe_type']     = $value->subscribe_type;

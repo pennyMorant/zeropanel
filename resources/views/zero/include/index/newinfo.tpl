@@ -2,7 +2,7 @@
 								<div class="card-body">
 									<div class="card-px text-center pt-15 pb-15">
 										<h2 class="text-gray-800 fs-2 fw-bolder mb-10">
-										    {$trans->t('user.dashboard.new_user.welcome')}, {$user->name}
+										    {$trans->t('user.dashboard.new_user.welcome')}, {$user->email}
 										</h2>
 										<p class="fs-5 fw-bold mb-10 text-gray-800">
 										    {$trans->t('user.dashboard.new_user.not_product')}

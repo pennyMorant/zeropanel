@@ -288,46 +288,6 @@ class UserController extends BaseController
             'msg' => I18n::get()->t('user.profile.notify.email.success')
         ]);
     }
-    
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateUserName($request, $response, $args)
-    {
-        $newusername = $request->getParam('newusername');
-        $regname = '#[^\x{4e00}-\x{9fa5}A-Za-z0-9]#u';
-        $user = $this->user;
-        try {
-            if (Setting::obtain('enable_change_username_user_general') != true) {
-                throw new \Exception(I18n::get()->t('user.profile.notify.name.error_not_allowed'));
-
-            }
-            if ($newusername==''){
-                throw new \Exception(I18n::get()->t('user.profile.notify.name.error_empty_name'));
-            }
-            if (preg_match($regname,$newusername)){
-                throw new \Exception(I18n::get()->t('user.profile.notify.name.error_not_allowed_symbol'));
-            }
-            if (strlen($newusername) > 30) {
-                throw new \Exception(I18n::get()->t('user.profile.notify.name.error_long_name'));
-            }
-        } catch (\Exception $e) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => $e->getMessage(),
-            ]);
-        }
-        $antiXss = new AntiXSS();
-        $user->name = $antiXss->xss_clean($newusername);
-        $user->save();
-
-        return $response->withJson([
-            'ret' => 1,
-            'msg' => I18n::get()->t('user.profile.notify.name.success')
-        ]);
-    }
 
     /**
      * @param Request   $request

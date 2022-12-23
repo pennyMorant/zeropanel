@@ -265,7 +265,7 @@
         <div class="dropdown margin-right">
             <a class="dropdown-toggle padding-left-no padding-right-no" data-toggle="dropdown">
                 {if $user->isLogin}
-                <span class="access-hide">{$user->name}</span>
+                <span class="access-hide">{$user->email}</span>
                 <span class="avatar avatar-sm"><img src="{$user->gravatar}"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-right">

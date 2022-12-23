@@ -16,7 +16,6 @@
             $crisp.push(["safe", true])
             $crisp.push(
                 ["set", "user:email", "{$user->email}"],
-                ["set", "user:nickname", "{$user->name}"]
             );
             $crisp.push(
                 ["set", "session:data", 

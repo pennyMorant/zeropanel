@@ -8,13 +8,6 @@ var KTSignupGeneral = function() {
             r = KTPasswordMeter.getInstance(e.querySelector('[data-kt-password-meter="true"]')),
             a = FormValidation.formValidation(e, {
                 fields: {
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: "请输入用户名"
-                            }
-                        }
-                    },
                     email: {
                         validators: {
                             regexp: {
@@ -74,7 +67,6 @@ var KTSignupGeneral = function() {
                     if ($('div').is('.cf-turnstile') == true) {
                         var datas = {
                             email: $("#email").val(),
-                                name: $("#name").val(),
                                 passwd: $("#passwd").val(),
                                 repasswd: $("#repasswd").val(),
                                 code: $("#code").val(),
@@ -83,7 +75,6 @@ var KTSignupGeneral = function() {
                     } else {
                         datas = {
                             email: $("#email").val(),
-                                name: $("#name").val(),
                                 passwd: $("#passwd").val(),
                                 repasswd: $("#repasswd").val(),
                                 code: $("#code").val() 

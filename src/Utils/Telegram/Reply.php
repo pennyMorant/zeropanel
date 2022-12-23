@@ -103,7 +103,7 @@ class Reply
     public static function getUserInfoFromAdmin($user, $ChatID)
     {
         $strArray = [
-            '#' . $user->id . ' ' . $user->name . ' 的用户信息',
+            '#' . $user->id . ' ' . $user->email . ' 的用户信息',
             '',
             '用户邮箱：' . TelegramTools::getUserEmail($user->email, $ChatID),
             '账户余额：' . $user->money,

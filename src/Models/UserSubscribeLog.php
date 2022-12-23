@@ -54,7 +54,6 @@ class UserSubscribeLog extends Model
     public static function addSubscribeLog($user, $type, $ua)
     {
         $log                     = new UserSubscribeLog();
-        $log->name          = $user->name;
         $log->user_id            = $user->id;
         $log->email              = $user->email;
         $log->subscribe_type     = $type;

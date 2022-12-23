@@ -28,10 +28,6 @@
 										<h1 class="text-dark fw-bolder mb-3">注册</h1>
 								</div>
 								<div class="fv-row mb-10">
-									<input class="form-control bg-transparent" type="text" placeholder="名称" name="name" id="name" autocomplete="off" data-kt-translate="sign-up-input-first-name" />									
-								</div>
-
-								<div class="fv-row mb-10">
 									<input class="form-control bg-transparent" type="email" placeholder="邮箱" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
 								</div>
 

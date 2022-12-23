@@ -294,7 +294,6 @@ class LinkController extends BaseController
     private static function Subscribe_log($user, $type, $ua)
     {
         $log = new UserSubscribeLog();
-        $log->user_name = $user->name;
         $log->user_id = $user->id;
         $log->email = $user->email;
         $log->subscribe_type = $type;

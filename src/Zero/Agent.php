@@ -485,7 +485,7 @@ class Agent extends \App\Controllers\BaseController
         }
         $text = '提现提醒' . PHP_EOL .
             '------------------------------' . PHP_EOL .
-            '用户名：' . $user->name . '  #' . $user->id . PHP_EOL .
+            '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
             '提现类型：' . $type === 1 ? '提现到余额' : '提现到其他账户' . PHP_EOL .
             '提现金额：' . $commission . PHP_EOL .
             '提现时间：' . date('Y-m-d H:i:s', time());

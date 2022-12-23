@@ -19,12 +19,6 @@
                                 <input class="form-control maxwidth-edit" id="email" type="email"
                                        value="{$edit_user->email}">
                             </div>
-                            
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="name">用户昵称</label>
-                                <input class="form-control maxwidth-edit" id="name" type="text"
-                                       value="{$edit_user->name}">
-                            </div>
 
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="remark">备注(仅对管理员可见)</label>
@@ -268,7 +262,6 @@
                     node_speedlimit: $$getValue('node_speedlimit'),
                     method: $$getValue('method'),
                     remark: $$getValue('remark'),
-                    name: $$getValue('name'),
                     money: $$getValue('money'),
                     agent,
                     commission: $$getValue('commission'),

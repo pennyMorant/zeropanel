@@ -30,7 +30,6 @@ class IpController extends AdminController
         $table_config['total_column'] = array(
             'id'        => 'ID',
             'userid'    => '用户ID',
-            'name' => '用户名',
             'ip'        => 'IP',
             'location'  => '归属地',
             'datetime'  => '时间',
@@ -77,7 +76,6 @@ class IpController extends AdminController
             $tempdata              = [];
             $tempdata['id']        = $value->id;
             $tempdata['userid']    = $value->userid;
-            $tempdata['name'] = $value->name();
             $tempdata['ip']        = $value->ip;
             $tempdata['location']  = $value->location($QQWry);
             $tempdata['datetime']  = $value->datetime();
@@ -106,7 +104,6 @@ class IpController extends AdminController
         $table_config['total_column'] = array(
             'id'        => 'ID',
             'userid'    => '用户ID',
-            'name' => '用户名',
             'nodeid'    => '节点ID',
             'node_name' => '节点名',
             'ip'        => 'IP',
@@ -157,7 +154,6 @@ class IpController extends AdminController
             $tempdata              = [];
             $tempdata['id']        = $value->id;
             $tempdata['userid']    = $value->userid;
-            $tempdata['name'] = $value->name();
             $tempdata['nodeid']    = $value->nodeid;
             $tempdata['node_name'] = $value->node_name();
             $tempdata['ip']        = Tools::getRealIp($value->ip);

@@ -181,8 +181,7 @@
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<div class="fw-bold d-flex align-items-center fs-5">{$user->name}
-													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
+													<div class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">LV&nbsp;{$user->class}</div>
 													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
 												</div>
 												<!--end::Username-->
@@ -732,7 +731,6 @@
                                                             <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                                 
                                                                 <th>User ID</th>
-                                                                <th>User Name</th>
                                                                 <th>User Email</th>
                                                                 <th>User Balance</th>
                                                                 <th>Traffic</th>

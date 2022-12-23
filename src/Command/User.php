@@ -110,7 +110,6 @@ class User extends Command
             $configs = Setting::getClass('register');
             // do reg user
             $user                   = new ModelsUser();
-            $user->name             = 'admin';
             $user->email            = $email;
             $user->password         = Hash::passwordHash($passwd);
             $user->passwd           = Tools::genRandomChar(16);
@@ -118,7 +117,7 @@ class User extends Command
             $user->t                = 0;
             $user->u                = 0;
             $user->d                = 0;
-            $user->transfer_enable  = Tools::toGB($configs['sign_up_for_free_traffic']);
+            $user->transfer_enable  = 0;
             $user->ref_by           = 0;
             $user->is_admin         = 1;
             $user->signup_date         = date('Y-m-d H:i:s');

@@ -23,7 +23,7 @@
         d.getElementsByTagName("head")[0].appendChild(s);
     })();
     $crisp.push(["safe", true])
-    $crisp.push(["set","user:nickname", "{$user->name}"],
+    $crisp.push(
               ["set","user:email","{$user->email}"],
               ["set", "session:data",
                 [[
