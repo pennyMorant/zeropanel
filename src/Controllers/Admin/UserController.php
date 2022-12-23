@@ -270,7 +270,6 @@ class UserController extends AdminController
 
 
             $tempdata['id']                     = $value->id;
-            $tempdata['name']                   = $value->name;
             $tempdata['remark']                 = $value->remark;
             $tempdata['email']                  = $value->email;
             $tempdata['money']                  = $value->money;
