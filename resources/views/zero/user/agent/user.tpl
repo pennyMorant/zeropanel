@@ -181,7 +181,7 @@
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
+													<div class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">LV&nbsp;{$user->class}</div>
 													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
 												</div>
 												<!--end::Username-->
@@ -514,12 +514,6 @@
                                             <div class="table-responsive">
                                                 <table class="table align-middle table-row-dashed gy-5">
                                                     <tbody class="fs-6 fw-semibold text-gray-600">
-                                                        <tr>
-                                                            <td>名称</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" id="agent_user_name" value="{$agent_referral_user->name}">       
-                                                            </td>                                                           
-                                                        </tr>
                                                         <tr>
                                                             <td>Email</td>
                                                             <td>
