@@ -617,7 +617,7 @@
                                                                     
                                                                     <tr>
                                                                         <td>权限过期时间</td>
-                                                                        <td>{$user->class_expire}</td>
+                                                                        <td>{if $user->class <= 0}No Product{else}{$user->class_expire}{/if}</td>
                                                                         
 																	</tr>
                                                                 </tbody>
