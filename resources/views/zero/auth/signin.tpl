@@ -27,10 +27,10 @@
 									<h1 class="text-dark fw-bolder mb-6">Sign In</h1>
 								</div>
 								<div class="fv-row mb-8">
-									<input type="text" placeholder="Email" name="email" autocomplete="off" id="signin-email" data-kt-translate="sign-in-input-email" class="form-control bg-transparent" />
+									<input type="text" placeholder="Email" name="email" autocomplete="off" id="signin-email" data-kt-translate="sign-in-input-email" class="form-control form-control-lg bg-transparent" />
 								</div>
 								<div class="fv-row mb-8">
-									<input type="password" placeholder="Password" name="password" autocomplete="off" id="signin-passwd" data-kt-translate="sign-in-input-password" class="form-control bg-transparent" />
+									<input type="password" placeholder="Password" name="password" autocomplete="off" id="signin-passwd" data-kt-translate="sign-in-input-password" class="form-control form-control-lg bg-transparent" />
 								</div>
 								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-8">

@@ -27,27 +27,15 @@
 									<h1 class="text-dark fw-bolder mb-6">Sign Up</h1>
 								</div>
 								<div class="fv-row mb-5">
-									<input class="form-control bg-transparent" type="email" placeholder="Email" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
+									<input class="form-control form-control-lg bg-transparent" type="email" placeholder="Email" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
 								</div>
 
-								<div class="fv-row mb-5" data-kt-password-meter="true">
-									<div class="mb-1">
-										<div class="position-relative mb-3">
-											<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Password" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
-											<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-												<i class="bi bi-eye-slash fs-2"></i>
-												<i class="bi bi-eye fs-2 d-none"></i>
-											</span>
-										</div>
-
-										<div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
-										</div>
-									</div>
-									<div class="text-muted" data-kt-translate="sign-up-hint">Use 8 or more characters and mix letters, numbers, and symbols.</div>
+								<div class="fv-row mb-5" data-kt-password-meter="true">			
+									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Password" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
+									<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+										<i class="bi bi-eye-slash fs-2"></i>
+										<i class="bi bi-eye fs-2 d-none"></i>
+									</span>
 								</div>
 
 								<div class="fv-row mb-5">
