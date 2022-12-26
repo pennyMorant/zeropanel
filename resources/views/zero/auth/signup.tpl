@@ -39,11 +39,11 @@
 								</div>
 
 								<div class="fv-row mb-5">
-									<input class="form-control bg-transparent" type="password" placeholder="Comfirm Password" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
+									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Comfirm Password" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
 								</div>
 
                                 <div class="fv-row mb-5">
-                                    <input class="form-control bg-transparent" type="text" placeholder="Code" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
+                                    <input class="form-control form-control-lg bg-transparent" type="text" placeholder="Code" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
 								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
