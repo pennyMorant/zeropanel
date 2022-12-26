@@ -43,7 +43,7 @@
 										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>
 								{/if}
-								<div class="d-grid mb-10">
+								<div class="d-grid mb-6">
 									<button id="kt_sign_in_submit" class="btn btn-primary">
 										<span class="indicator-label" data-kt-translate="sign-in-submit">登入</span>
 										<span class="indicator-progress">
