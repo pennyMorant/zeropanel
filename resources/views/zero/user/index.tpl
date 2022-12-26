@@ -371,14 +371,12 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fs-lg fw-bolder text-gray-800 mb-1">
-																<strong>
-																	{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																		<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('general.day')}</span>
-																	{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
-																		<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
-																	{else}<span class="counter">No product</span>
-																	{/if}
-																</strong>
+																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
+																	<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('general.day')}</span>
+																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
+																	<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
+																{else}<span class="counter">No product</span>
+																{/if}
 															</a>					   
 															<span class="text-muted fw-semibold d-block">
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
@@ -395,7 +393,7 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																<strong>{$trans->t('user.account.traffic')}:&nbsp;{$user->usedTraffic()}</strong> / <strong id="traffic">{$user->enableTraffic()}</strong>
+																{$trans->t('user.account.traffic')}:&nbsp;{$user->usedTraffic()} / <span id="traffic">{$user->enableTraffic()}</span>
 															</a>
 															<span class="text-muted fw-semibold d-block">
 																{$trans->t('user.account.reset_date')}:&nbsp;{$user->productTrafficResetDate()}
@@ -411,9 +409,7 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																<strong>
-																	{$trans->t('user.account.online_ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('user.status.unlimited')}{else}{$user->node_connector}{/if}
-																</strong>
+																{$trans->t('user.account.online_ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('user.status.unlimited')}{else}{$user->node_connector}{/if}
 															</a>
 															<span class="text-muted fw-semibold d-block">
 																{$trans->t('user.account.last_used')}:&nbsp;{$user->lastUseTime()}
@@ -428,9 +424,7 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																<strong>
-																	{$trans->t('user.account.credit')}:&nbsp;{$user->money} $
-																</strong>
+																{$trans->t('user.account.credit')}:&nbsp;{$user->money} $
 															</a>
 															<span class="text-muted fw-semibold d-block">
 																{$trans->t('user.account.commission')}:&nbsp;{$user->commission} $
