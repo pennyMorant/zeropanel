@@ -26,17 +26,13 @@
 							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/user" action="#">
 								
 								<div class="text-center mb-6">
-									<h1 class="text-dark fw-bolder mb-3">登入</h1>
+									<h1 class="text-dark fw-bolder mb-3">SignIn</h1>
 								</div>
 								<div class="fv-row mb-5">
 									<input type="text" placeholder="Email" name="email" autocomplete="off" id="signin-email" data-kt-translate="sign-in-input-email" class="form-control bg-transparent" />
 								</div>
 								<div class="fv-row mb-5">
 									<input type="password" placeholder="Password" name="password" autocomplete="off" id="signin-passwd" data-kt-translate="sign-in-input-password" class="form-control bg-transparent" />
-								</div>
-								<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-5">
-									<div></div>
-									<a href="/password/reset" class="link-primary" data-kt-translate="sign-in-forgot-password">忘记密码 ?</a>
 								</div>
 								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
@@ -45,7 +41,7 @@
 								{/if}
 								<div class="d-grid mb-6">
 									<button id="kt_sign_in_submit" class="btn btn-primary">
-										<span class="indicator-label" data-kt-translate="sign-in-submit">登入</span>
+										<span class="indicator-label" data-kt-translate="sign-in-submit">SignIn</span>
 										<span class="indicator-progress">
 											<span data-kt-translate="general-progress">Please wait...</span>
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -53,8 +49,9 @@
 									</button>									
 								</div>
 								<div class="text-gray-500 text-center fw-semibold fs-6">
-									还没有帐号？
-									<a class="link-primary" href="/auth/signup">注册</a>
+									<span><a class="link-primary" href="/auth/signup">SignUp</a></span>
+									|
+									<span><a href="/password/reset" class="link-primary" data-kt-translate="sign-in-forgot-password">Forgot Password</a></span>
 								</div>
 							</form>
 						</div>

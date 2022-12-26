@@ -25,16 +25,16 @@
 						<div class="card-body p-10 p-lg-20">
 							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/user" action="#">
 								<div class="text-center mb-11">
-									<h1 class="text-dark fw-bolder mb-6">注册</h1>
+									<h1 class="text-dark fw-bolder mb-6">SignUp</h1>
 								</div>
 								<div class="fv-row mb-5">
-									<input class="form-control bg-transparent" type="email" placeholder="邮箱" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
+									<input class="form-control bg-transparent" type="email" placeholder="Email" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
 								</div>
 
 								<div class="fv-row mb-5" data-kt-password-meter="true">
 									<div class="mb-1">
 										<div class="position-relative mb-3">
-											<input class="form-control form-control-lg bg-transparent" type="password" placeholder="密码" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
+											<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Password" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
 											<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
 												<i class="bi bi-eye-slash fs-2"></i>
 												<i class="bi bi-eye fs-2 d-none"></i>
@@ -48,15 +48,15 @@
 											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
 										</div>
 									</div>
-									<div class="text-muted" data-kt-translate="sign-up-hint">使用 8 个或更多字符，并混合使用字母、数字和符号。</div>
+									<div class="text-muted" data-kt-translate="sign-up-hint">Use 8 or more characters and mix letters, numbers, and symbols.</div>
 								</div>
 
 								<div class="fv-row mb-5">
-									<input class="form-control bg-transparent" type="password" placeholder="确认密码" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
+									<input class="form-control bg-transparent" type="password" placeholder="Comfirm Password" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
 								</div>
 
                                 <div class="fv-row mb-5">
-                                    <input class="form-control bg-transparent" type="text" placeholder="推广码 可留空" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
+                                    <input class="form-control bg-transparent" type="text" placeholder="Code" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
 								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
@@ -65,16 +65,16 @@
 								{/if}
 								<div class="d-grid mb-6">
 									<button id="kt_sign_up_submit" class="btn btn-primary">
-										<span class="indicator-label" data-kt-translate="sign-up-submit">确定</span>
+										<span class="indicator-label" data-kt-translate="sign-up-submit">SignUp</span>
                                         <span class="indicator-progress">
-                                            <span data-kt-translate="general-progress">请等待...</span>
+                                            <span data-kt-translate="general-progress">Please Wating...</span>
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                         </span>
 									</button>
 								</div>
 								<div class="text-gray-500 text-center fw-semibold fs-6">
-										已经有帐号？
-									<a class="link-primary" href="/auth/signin">登录</a>
+										Already have account？
+									<a class="link-primary" href="/auth/signin">SignIn</a>
 								</div>
 							</form>
 						</div>
