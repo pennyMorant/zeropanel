@@ -29,7 +29,7 @@
                                         <div class="text-gray-500 fw-semibold fs-6">Enter email to reset password</div>
 								</div>
 								<div class="fv-row mb-10">
-									<input class="form-control bg-transparent" type="text" placeholder="Email" name="email" id="email" autocomplete="off"/>									
+									<input class="form-control form-control-lg bg-transparent" type="text" placeholder="Email" name="email" id="email" autocomplete="off"/>									
 								</div>
 
 								<div class="d-flex flex-warp justify-content-center pb-lg-0">
