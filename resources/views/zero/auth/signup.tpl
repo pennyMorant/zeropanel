@@ -83,7 +83,7 @@
 			<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
 				<div class="app-container container-fluid d-flex flex-column flex-center py-3">
 					<div class="text-white order-2 order-md-1 text-center">
-						&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<span>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</span><a class="text-white" href="https://github.com/zeropanel/zeropanel">&nbsp;Powered By ZeroBoard</a>
+						&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<span>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</span>
 					</div>
 				</div>
 			</div>
