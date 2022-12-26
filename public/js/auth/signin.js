@@ -12,17 +12,17 @@ var KTSigninGeneral = function() {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "请输入正确的邮箱"
+                                message: "The value is not a valid email address"
                             },
                             notEmpty: {
-                                message: "请输入邮箱"
+                                message: "Email address is required"
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: "请输入密码"
+                                message: "The password is required"
                             }
                         }
                     }

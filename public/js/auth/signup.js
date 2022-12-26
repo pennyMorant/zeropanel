@@ -12,20 +12,20 @@ var KTSignupGeneral = function() {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "请输入正确的邮箱"
+                                message: "The value is not a valid email address"
                             },
                             notEmpty: {
-                                message: "请输入邮箱"
+                                message: "Email address is required"
                             }
                         }
                     },
                     password: {
                         validators: {
                             notEmpty: {
-                                message: "请输入密码"
+                                message: "The password is required"
                             },
                             callback: {
-                                message: "请输入有效的密码",
+                                message: "Use 8 or more characters with a mix of letters, numbers & symbols.",
                                 callback: function(e) {
                                     if (e.value.length > 0) return s()
                                 }
@@ -35,13 +35,13 @@ var KTSignupGeneral = function() {
                     "confirm-password": {
                         validators: {
                             notEmpty: {
-                                message: "请再次输入密码"
+                                message: "he password confirmation is required"
                             },
                             identical: {
                                 compare: function() {
                                     return e.querySelector('[name="password"]').value
                                 },
-                                message: "两次密码输入不一致"
+                                message: "The password and its confirm are not the same"
                             }
                         }
                     }
