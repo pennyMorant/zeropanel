@@ -376,7 +376,7 @@
 																		<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('general.day')}</span>
 																	{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
 																		<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
-																	{else}<span class="counter">长期有效用户</span>
+																	{else}<span class="counter">No product</span>
 																	{/if}
 																</strong>
 															</a>					   
@@ -465,9 +465,9 @@
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('user.dashboard.clash')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["clash"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['clash']}">{$trans->t('user.dashboard.copy_url')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo["clash"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('user.dashboard.import_url')}</a></li>
 																</ul>
 															</div>
 															{/if}

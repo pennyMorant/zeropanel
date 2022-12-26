@@ -25,13 +25,13 @@
 						<div class="card-body p-10 p-lg-20">
 							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/user" action="#">
 								<div class="text-center mb-11">
-										<h1 class="text-dark fw-bolder mb-3">注册</h1>
+									<h1 class="text-dark fw-bolder mb-6">注册</h1>
 								</div>
-								<div class="fv-row mb-10">
+								<div class="fv-row mb-5">
 									<input class="form-control bg-transparent" type="email" placeholder="邮箱" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
 								</div>
 
-								<div class="fv-row mb-10" data-kt-password-meter="true">
+								<div class="fv-row mb-5" data-kt-password-meter="true">
 									<div class="mb-1">
 										<div class="position-relative mb-3">
 											<input class="form-control form-control-lg bg-transparent" type="password" placeholder="密码" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
@@ -51,11 +51,11 @@
 									<div class="text-muted" data-kt-translate="sign-up-hint">使用 8 个或更多字符，并混合使用字母、数字和符号。</div>
 								</div>
 
-								<div class="fv-row mb-10">
+								<div class="fv-row mb-5">
 									<input class="form-control bg-transparent" type="password" placeholder="确认密码" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
 								</div>
 
-                                <div class="fv-row mb-10">
+                                <div class="fv-row mb-5">
                                     <input class="form-control bg-transparent" type="text" placeholder="推广码 可留空" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
 								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
