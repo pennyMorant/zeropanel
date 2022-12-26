@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head><base href="../../../"/>
-		<title>{$config['appName']} SignIn</title>
+	<head>
+		<title>{$config['appName']} Sign In</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />		
 		<link rel="shortcut icon" href="/favicon.png" />
@@ -16,32 +16,30 @@
 			<div class="d-flex flex-column flex-column-fluid flex-lg-row">
 				<div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
 					<div class="d-flex flex-center flex-lg-start flex-column">
-						<a href="#" class="mb-7 fs-3hx fw-bold text-white">{$config['appName']}</a>
-						
+						<a href="" class="mb-7 fs-3hx fw-bold text-white">{$config['appName']}</a>						
 					</div>
 				</div>
 				<div class="d-flex flex-center w-lg-50 p-10">
 					<div class="card rounded-3 w-md-550px">
 						<div class="card-body p-10 p-lg-20">							
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/user" action="#">
-								
-								<div class="text-center mb-6">
-									<h1 class="text-dark fw-bolder mb-3">SignIn</h1>
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="/user" action="#">								
+								<div class="text-center mb-11">
+									<h1 class="text-dark fw-bolder mb-6">Sign In</h1>
 								</div>
-								<div class="fv-row mb-5">
+								<div class="fv-row mb-8">
 									<input type="text" placeholder="Email" name="email" autocomplete="off" id="signin-email" data-kt-translate="sign-in-input-email" class="form-control bg-transparent" />
 								</div>
-								<div class="fv-row mb-5">
+								<div class="fv-row mb-8">
 									<input type="password" placeholder="Password" name="password" autocomplete="off" id="signin-passwd" data-kt-translate="sign-in-input-password" class="form-control bg-transparent" />
 								</div>
 								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
-									<div class="fv-row mb-7">
+									<div class="fv-row mb-8">
 										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>
 								{/if}
-								<div class="d-grid mb-6">
+								<div class="d-grid mb-10">
 									<button id="kt_sign_in_submit" class="btn btn-primary">
-										<span class="indicator-label" data-kt-translate="sign-in-submit">SignIn</span>
+										<span class="indicator-label" data-kt-translate="sign-in-submit">Sign In</span>
 										<span class="indicator-progress">
 											<span data-kt-translate="general-progress">Please wait...</span>
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -49,7 +47,7 @@
 									</button>									
 								</div>
 								<div class="text-gray-500 text-center fw-semibold fs-6">
-									<span><a class="link-primary" href="/auth/signup">SignUp</a></span>
+									<span><a class="link-primary" href="/auth/signup">Sign Up</a></span>
 									|
 									<span><a href="/password/reset" class="link-primary" data-kt-translate="sign-in-forgot-password">Forgot Password</a></span>
 								</div>
