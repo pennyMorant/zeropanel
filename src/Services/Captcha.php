@@ -30,7 +30,7 @@ class Captcha
         switch (Setting::obtain('captcha_provider'))
         {
             case 'turnstile':
-                if ($param['turnstile'] !== '') {
+                if (isset($param['turnstile'])) {
                     $postdata = http_build_query(
                         [
                             'secret' => Setting::obtain('turnstile_secret'),

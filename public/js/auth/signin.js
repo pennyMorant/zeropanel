@@ -91,7 +91,7 @@ var KTSigninGeneral = function() {
                             }
                         })
                     }), 2e3)) : Swal.fire({
-                        text: "抱歉，似乎检测到一些错误，请重试",
+                        text: "Sorry, it seems some errors were detected, please try again",
                         icon: "error",
                         buttonsStyling: !1,
                         confirmButtonText: "Ok",
