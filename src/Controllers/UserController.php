@@ -59,35 +59,8 @@ class UserController extends BaseController
             ->assign('invite_url', $invite_url)
             ->registerClass('URL', URL::class)
             ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
-            ->assign('getUniversalSub', SubController::getUniversalSub($this->user))
             ->display('user/index.tpl');
         return $response;
-    }
-
-    public function isHTTPS()
-    {
-        define('HTTPS', false);
-        if (defined('HTTPS') && HTTPS) {
-            return true;
-        }
-        if (!isset($_SERVER)) {
-            return false;
-        }
-        if (!isset($_SERVER['HTTPS'])) {
-            return false;
-        }
-        if ($_SERVER['HTTPS'] === 1) {  //Apache
-            return true;
-        }
-
-        if ($_SERVER['HTTPS'] === 'on') { //IIS
-            return true;
-        }
-
-        if ($_SERVER['SERVER_PORT'] == 443) { //其他
-            return true;
-        }
-        return false;
     }
     
     /**
@@ -158,18 +131,6 @@ class UserController extends BaseController
             ->display('user/referral.tpl');
         return $response;
     }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function sys($request, $response, $args)
-    {
-        $this->view()->assign('ana', '')->display('user/sys.tpl');
-        return $response;
-    }
-
     
     /**
      * @param Request   $request
@@ -434,21 +395,6 @@ class UserController extends BaseController
     {
         $user = $this->user;
         $this->view()->display('user/record.tpl');
-        return $response;
-    }
-
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
-    public function SharedAccount($request, $response, $args)
-    {
-        $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
-        $this->view()
-            ->assign('class_left_days', $class_left_days)
-            ->display('user/shared_account.tpl');
         return $response;
     }
 

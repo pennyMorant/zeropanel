@@ -88,20 +88,11 @@ return function (SlimApp $app) {
         $group->delete('/ajax_data/delete',      App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
 
         // Agent
-        $group->get('/agent',                        App\Zero\Agent::class . ':pages');
-        $group->get('/agent/adduser',                App\Zero\Agent::class . ':addUser');
-        $group->get('/agent/view/{id}',              App\Zero\Agent::class . ':editUser');
-        $group->get('/agent/ajax_data/table/{name}',      App\Zero\Agent::class . ':ajaxDatatable');
-        $group->get('/agent/ajax_data/chart/{name}',      App\Zero\Agent::class . ':ajaxChart');
-        $group->post('/agent/adduser',               App\Zero\Agent::class . ':addUserSave');
-        $group->post('/agent/view/{id}',             App\Zero\Agent::class . ':editUserSave');
-        $group->post('/agent/withdraw_commission',            App\Zero\Agent::class . ':withdraw');
-        $group->post('/agent/withdraw_account_setting',  App\Zero\Agent::class . ':withdrawAccountSettings');
-        $group->post('/agent_data/process/{name}',   App\Zero\Agent::class . ':ajaxDatatableProcess');
-        
-        $group->post('/purchase_sales_agent',        App\Zero\Agent::class . ':purchaseSalesAgent');
-
-        $group->delete('/agent_data/delete',         App\Zero\Agent::class . ':delete');
+        $group->get('/agent/ajax_data/table/{name}',        App\Zero\Agent::class . ':ajaxDatatable');
+        $group->get('/agent/ajax_data/chart/{name}',        App\Zero\Agent::class . ':ajaxChart');
+        $group->post('/agent/withdraw_commission',          App\Zero\Agent::class . ':withdraw');
+        $group->post('/agent/withdraw_account_setting',     App\Zero\Agent::class . ':withdrawAccountSettings');
+        $group->post('/agent_data/process/{name}',          App\Zero\Agent::class . ':ajaxDatatableProcess');
     })->add(new Auth());
 
     $app->group('/payment', function (Group $group) {
@@ -246,11 +237,6 @@ return function (SlimApp $app) {
 
     $app->group('/link', function (Group $group) {
         $group->get('/{token}',          App\Controllers\LinkController::class . ':GetContent');
-    });
-    
-    // 通用订阅
-    $app->group('/sub', function (Group $group) {
-        $group->get('/{token}/{subtype}',    App\Controllers\SubController::class . ':getContent');
     });
 
     $app->group('/user', function (Group $group) {

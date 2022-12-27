@@ -318,18 +318,7 @@
 											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
 										</a>
 									</div>
-									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/agent">
-											<span class="menu-icon">
-												<span class="svg-icon svg-icon-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command" viewBox="0 0 16 16">
-                                                        <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3zM6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5H6zm4 1v4H6V6h4zm1-1V3.5A1.5 1.5 0 1 1 12.5 5H11zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5V11zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11H5z"/>
-                                                    </svg>
-												</span>
-											</span>
-											<span class="menu-title">{$trans->t('user.menu.agent_center')}</span>
-										</a>
-									</div>
+
 									{if $user->is_admin == '1'}
 									<div class="menu-item menu-accordion">
 										<a class="menu-link" href="admin">
@@ -348,7 +337,7 @@
 						</div>
 						<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 							<a href="{$config['admin_contact3']}" target="_blank" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="获取最新的信息">
-								<span class="btn-label fw-bold">加入 Telegram 群组</span>
+								<span class="btn-label fw-bold">Join Telegram Group</span>
 								<span class="svg-icon btn-icon svg-icon-2 m-0">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z" fill="currentColor" />
@@ -375,7 +364,7 @@
                                                         </div>
                                                         <a class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">{$user->email}</a>
                                                         <div class="mb-9">
-                                                            <div class="badge badge-lg badge-light-primary d-inline">{$user->class}级权限</div>
+                                                            <div class="badge badge-lg badge-light-primary d-inline">LV-{$user->class}</div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-stack fs-4 py-3">
@@ -392,14 +381,14 @@
                                                     <div class="separator"></div>
                                                     <div id="kt_user_view_details" class="collapse show" style>
                                                         <div class="pb-5 fs-6">
-                                                            <div class="fw-bold mt-5">用户 ID</div>
+                                                            <div class="fw-bold mt-5">User ID</div>
                                                             <div class="text-gray-600">ID-{$user->id}</div>
-                                                            <div class="fw-bold mt-5">邮箱</div>
+                                                            <div class="fw-bold mt-5">Email</div>
                                                             <div class="text-gray-600">
                                                                 <a class="text-gray-600 text-hover-primary">{$user->email}</a>
                                                             </div>
-                                                            <div class="fw-bold mt-5">最后登录时间</div>
-                                                            <div class="text-gray-600">{if $user->last_signin_time == null}暂无记录{else}{$user->last_signin_time}{/if}</div>
+                                                            <div class="fw-bold mt-5">Last Signin Date</div>
+                                                            <div class="text-gray-600">{if $user->last_signin_time == null}No Record{else}{$user->last_signin_time}{/if}</div>
                                                         </div>
                                                     </div>                                                   
                                                 </div>
@@ -407,7 +396,7 @@
                                             <div class="card mb-5 mb-xl-8">
                                                 <div class="card-header border-0">
                                                     <div class="card-title">
-                                                        <h3 class="fw-bold m-0">通知</h3>
+                                                        <h3 class="fw-bold m-0">Notification</h3>
                                                     </div>
                                                 </div>
                                                 <div class="card-body pt-2">
@@ -417,7 +406,7 @@
                                                                 <i class="bi bi-envelope text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
                                                                     <a class="fs-5 text-dark text-hover-primary fw-bold">Email</a>
-                                                                    <div class="fs-6 fw-semibold text-muted">邮件接收通知</div>
+                                                                    <div class="fs-6 fw-semibold text-muted">Email received</div>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-end">
@@ -432,7 +421,7 @@
                                                                 <i class="bi bi-telegram text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
                                                                     <a class="fs-5 text-dark text-hover-primary fw-bold">Telegram</a>
-                                                                    <div class="fs-6 fw-semibold text-muted">Telegram接收通知</div>
+                                                                    <div class="fs-6 fw-semibold text-muted">Telegram received</div>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-end">
@@ -455,8 +444,8 @@
                                                 <div class="card card-flush mb-5">
                                                     <div class="card-header pt-5">
                                                         <div class="card-title d-flex flex-column">
-                                                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2" id="wallet_total">{$user->commission + $user->money}</span>
-                                                            <span class="text-gray-400 pt-1 fw-semibold fs-6">我的钱包</span>
+                                                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2" id="wallet_total">{$user->commission + $user->money}$</span>
+                                                            <span class="text-gray-400 pt-1 fw-semibold fs-6">Wallet</span>
                                                         </div>
                                                         <div class="card-toolbar">
                                                             <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -473,17 +462,17 @@
                                                             </button>
                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                                                                 <div class="menu-item px-3">
-                                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">快速操作</div>
+                                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">Actions</div>
                                                                 </div>
                                                                 <div class="separator mb-3 opacity-75"></div>
                                                                 <div class="menu-item px-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_add_credit_modal" class="menu-link px-3">账户充值</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_add_credit_modal" class="menu-link px-3">Purchase</a>
                                                                 </div>
                                                                 <div class="menu-item px-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_modal" class="menu-link px-3">佣金提现</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_modal" class="menu-link px-3">Commssion Withdraw</a>
                                                                 </div>
 																<div class="menu-item px-3 mb-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_method_modal" class="menu-link px-3">提现账户设置</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_method_modal" class="menu-link px-3">Withdraw Account</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -499,13 +488,13 @@
 																<div class="d-flex flex-column content-justify-center flex-grow-1">
 																	<div class="d-flex fs-6 fw-semibold align-items-center">
 																		<div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可使用金额</div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">Balance</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_balance">{trim($user->money)}</div>
 																	</div>
 																	<div class="d-flex fs-6 fw-semibold align-items-center my-1">
 																		<div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">可提现佣金</div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">Commssion</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_commission">{trim($user->commission)}</div>
 																	</div>
@@ -555,10 +544,10 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>Shadwosocks 密码</td>
+                                                                        <td>Shadwosocks Password</td>
                                                                         <td>{$user->passwd}</td>
                                                                         <td class="text-end">
-                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="点击重置" onclick="KTUsersResetPasswd()">
+                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetPasswd()">
                                                                                 <span class="svg-icon svg-icon-3">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                                                                                         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
@@ -569,10 +558,10 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>VMESS/TROJAN 密码</td>
+                                                                        <td>VMESS/TROJAN UUID</td>
                                                                         <td>{$user->uuid}</td>
                                                                         <td class="text-end">
-                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="点击重置" onclick="KTUsersResetUUID()">
+                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetUUID()">
                                                                                 <span class="svg-icon svg-icon-3">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                                                                                         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
@@ -583,10 +572,10 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>订阅识别码</td>
+                                                                        <td>Sub Token</td>
                                                                         <td>{$sub_token}</td>
                                                                         <td class="text-end">
-                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="点击重置" onclick="KTUsersResetSubLink()">
+                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetSubLink()">
                                                                                 <span class="svg-icon svg-icon-3">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
                                                                                         <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
@@ -598,7 +587,7 @@
 																	</tr>
                                                                     <tr>
                                                                         <td>Telegram</td>
-                                                                        <td>{if $user->telegram_id == null}未绑定Telegram{else}{$user->telegram_id}{/if}</td>
+                                                                        <td>{if $user->telegram_id == null}Unbind Telegram{else}{$user->telegram_id}{/if}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="绑定或者解绑">
                                                                                 <span class="svg-icon svg-icon-3">
@@ -610,13 +599,13 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>账户注册时间</td>
+                                                                        <td>Signup Date</td>
                                                                         <td>{$user->signup_date}</td>
                                                                         
 																	</tr>
                                                                     
                                                                     <tr>
-                                                                        <td>权限过期时间</td>
+                                                                        <td>Menber Expired Date</td>
                                                                         <td>{if $user->class <= 0}No Product{else}{$user->class_expire}{/if}</td>
                                                                         
 																	</tr>

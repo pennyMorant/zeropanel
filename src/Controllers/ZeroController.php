@@ -51,20 +51,6 @@ class ZeroController extends BaseController
      * @param Response   $response
      * @param array      $args
      */
-    public function getmoney($request, $response, $args)
-    {
-        $user = $this->user;
-        $res['money'] = $user->money;
-        $res['ret'] = 1;
-        return $response->withJson($res);
-    }
-
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
     public function NodeInfo($request, $response, $args)
     {
         $user = $this->user;

@@ -44,7 +44,6 @@ class UserController extends AdminController
             'class'                 => '等级',
             'class_expire'          => '等级过期时间',
             'passwd'                => '连接密码',
-            'method'                => '加密方式',
             'online_ip_count'       => '在线IP数',
             'last_use_time'          => '上次使用时间',
             'used_traffic'          => '已用流量/GB',
@@ -108,7 +107,6 @@ class UserController extends AdminController
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->method               = $configs['sign_up_for_method'];
         $user->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
         $user->money                = ($money != -1 ? $money : 0);
         $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);
@@ -185,7 +183,6 @@ class UserController extends AdminController
 
         $user->passwd           = $request->getParam('passwd');
         $user->transfer_enable  = Tools::toGB($request->getParam('transfer_enable'));
-        $user->method           = $request->getParam('method');
         $user->node_speedlimit  = $request->getParam('node_speedlimit');
         $user->node_connector   = $request->getParam('node_connector');
         $user->enable           = $request->getParam('enable');
@@ -277,7 +274,6 @@ class UserController extends AdminController
             $tempdata['class']                  = $value->class;
             $tempdata['class_expire']           = $value->class_expire;
             $tempdata['passwd']                 = $value->passwd;
-            $tempdata['method']                 = $value->method;
             $tempdata['online_ip_count']        = $value->online_ip_count();
             $tempdata['last_use_time']          = $value->lastUseTime();
             $tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);

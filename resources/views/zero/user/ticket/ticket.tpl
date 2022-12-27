@@ -179,7 +179,7 @@
 												<!--end::Avatar-->
 												<!--begin::Username-->
 												<div class="d-flex flex-column">
-													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
+													<div class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">LV&nbsp;{$user->class}</div>
 													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
 												</div>
 												<!--end::Username-->
@@ -436,22 +436,6 @@
 												<!--end::Svg Icon-->
 											</span>
 											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
-										</a>
-									</div>
-                                    <!--begin:Menu item-->
-									<div class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="user/agent">
-											<span class="menu-icon">
-												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-												<span class="svg-icon svg-icon-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command" viewBox="0 0 16 16">
-                                                        <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3zM6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5H6zm4 1v4H6V6h4zm1-1V3.5A1.5 1.5 0 1 1 12.5 5H11zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5V11zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11H5z"/>
-                                                    </svg>
-												</span>
-												<!--end::Svg Icon-->
-											</span>
-											<span class="menu-title">{$trans->t('user.menu.agent_center')}</span>
 										</a>
 									</div>
 									<!--begin:Menu item-->

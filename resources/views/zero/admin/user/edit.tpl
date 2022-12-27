@@ -103,12 +103,6 @@
                                 <input class="form-control maxwidth-edit" id="uuid" type="text"
                                        value="{$edit_user->uuid}">
                             </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="method">SS加密</label>
-                                <input class="form-control maxwidth-edit" id="method" type="text"
-                                       value="{$edit_user->method}">
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,7 +254,6 @@
                     uuid: $$getValue('uuid'),
                     transfer_enable: $$getValue('transfer_enable'),
                     node_speedlimit: $$getValue('node_speedlimit'),
-                    method: $$getValue('method'),
                     remark: $$getValue('remark'),
                     money: $$getValue('money'),
                     agent,
