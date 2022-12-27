@@ -210,45 +210,4 @@ class URL
         }
         return $return . '#' . rawurlencode($server['remark']);
     }
-
-    public static function getJsonObfs(array $item): string
-    {
-        $ss_obfs_list = Config::getSupportParam('ss_obfs');
-        $plugin = '';
-        if (in_array($item['obfs'], $ss_obfs_list)) {
-            if (strpos($item['obfs'], 'http') !== false) {
-                $plugin .= 'obfs-local --obfs http';
-            } else {
-                $plugin .= 'obfs-local --obfs tls';
-            }
-            if ($item['obfs_param'] != '') {
-                $plugin .= '--obfs-host ' . $item['obfs_param'];
-            }
-        }
-        return $plugin;
-    }
-
-    public static function getSurgeObfs(array $item): string
-    {
-        $ss_obfs_list = Config::getSupportParam('ss_obfs');
-        $plugin = '';
-        if (in_array($item['obfs'], $ss_obfs_list)) {
-            if (strpos($item['obfs'], 'http') !== false) {
-                $plugin .= ', obfs=http';
-            } else {
-                $plugin .= ', obfs=tls';
-            }
-            if ($item['obfs_param'] != '') {
-                $plugin .= ', obfs-host=' . $item['obfs_param'];
-            } else {
-                $plugin .= ', obfs-host=wns.windows.com';
-            }
-        }
-        return $plugin;
-    }
-
-    public static function cloneUser(User $user): User
-    {
-        return clone $user;
-    }
 }

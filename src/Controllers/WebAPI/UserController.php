@@ -80,7 +80,7 @@ class UserController extends BaseController
             $key_list = array('node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'node_connector', 'uuid', 'alive_ip');
         } else {
             $key_list = array(
-                'method', 'obfs', 'obfs_param', 'protocol', 'protocol_param', 'node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'port', 'passwd', 'node_connector', 'alive_ip'
+                'node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'passwd', 'node_connector', 'alive_ip'
             );
         }
 

@@ -226,15 +226,6 @@ class Tools
         return substr($origin_text, $begin_pos + strlen($begin_text), $end_pos - $begin_pos - strlen($begin_text));
     }
 
-    public static function is_param_validate($type, $str)
-    {
-        $list = Config::getSupportParam($type);
-        if (in_array($str, $list)) {
-            return true;
-        }
-        return false;
-    }
-
     public static function has_conflict_rule($input_rule, $ruleset, $edit_rule_id = 0, $origin_node_id = 0, $user_id = 0)
     {
         foreach ($ruleset as $rule) {

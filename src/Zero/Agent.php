@@ -342,7 +342,6 @@ class Agent extends \App\Controllers\BaseController
         $current_timestamp             = time();
         $newuser                       = new User();
         $pass                          = Tools::genRandomChar(16);
-        $newuser->name            = $email;
         $newuser->email                = $email;
         $newuser->password                 = Hash::passwordHash($pass);
         $newuser->passwd               = Tools::genRandomChar(16);
@@ -350,11 +349,6 @@ class Agent extends \App\Controllers\BaseController
         $newuser->t                    = 0;
         $newuser->u                    = 0;
         $newuser->d                    = 0;
-        $newuser->method               = $configs['sign_up_for_method'];
-        $newuser->protocol             = $configs['sign_up_for_protocol'];
-        $newuser->protocol_param       = $configs['sign_up_for_protocol_param'];
-        $newuser->obfs                 = $configs['sign_up_for_obfs'];
-        $newuser->obfs_param           = $configs['sign_up_for_obfs_param'];
         $newuser->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
         $newuser->money                = 0;
         $newuser->class_expire         = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);

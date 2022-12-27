@@ -793,56 +793,6 @@
     },
     {
         "id": null,
-        "item": "sign_up_for_method",
-        "value": "aes-128-gcm",
-        "class": "register",
-        "is_public": 0,
-        "type": "string",
-        "default": "aes-128-gcm",
-        "mark": "默认加密"
-    },
-    {
-        "id": null,
-        "item": "sign_up_for_protocol",
-        "value": "origin",
-        "class": "register",
-        "is_public": 0,
-        "type": "string",
-        "default": "origin",
-        "mark": "默认协议"
-    },
-    {
-        "id": null,
-        "item": "sign_up_for_obfs",
-        "value": "plain",
-        "class": "register",
-        "is_public": 0,
-        "type": "string",
-        "default": "plain",
-        "mark": "默认混淆"
-    },
-    {
-        "id": null,
-        "item": "sign_up_for_protocol_param",
-        "value": "",
-        "class": "register",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "默认协议参数"
-    },
-    {
-        "id": null,
-        "item": "sign_up_for_obfs_param",
-        "value": "www.jd.hk",
-        "class": "register",
-        "is_public": 0,
-        "type": "string",
-        "default": "www.jd.hk",
-        "mark": "默认混淆参数"
-    },
-    {
-        "id": null,
         "item": "sign_up_for_daily_report",
         "value": "0",
         "class": "register",

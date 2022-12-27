@@ -863,32 +863,6 @@
                                             <label class="floating-label">使用速率限制</label>
                                             <input class="form-control maxwidth-edit" id="connection_rate_limit" value="{$settings['connection_rate_limit']}">
                                         </div>
-                                        <h5>SSR 设置</h5>
-                                        <!-- sign_up_for_method -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">默认加密</label>
-                                            <input class="form-control maxwidth-edit" id="sign_up_for_method" value="{$settings['sign_up_for_method']}">
-                                        </div>
-                                        <!-- sign_up_for_protocol -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">默认协议</label>
-                                            <input class="form-control maxwidth-edit" id="sign_up_for_protocol" value="{$settings['sign_up_for_protocol']}">
-                                        </div>
-                                        <!-- sign_up_for_protocol_param -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">默认协议参数</label>
-                                            <input class="form-control maxwidth-edit" id="sign_up_for_protocol_param" value="{$settings['sign_up_for_protocol_param']}">
-                                        </div>
-                                        <!-- sign_up_for_obfs -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">默认混淆</label>
-                                            <input class="form-control maxwidth-edit" id="sign_up_for_obfs" value="{$settings['sign_up_for_obfs']}">
-                                        </div>
-                                        <!-- sign_up_for_obfs_param -->
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">默认混淆参数</label>
-                                            <input class="form-control maxwidth-edit" id="sign_up_for_obfs_param" value="{$settings['sign_up_for_obfs_param']}">
-                                        </div>
                                         <h5>其他</h5>
                                         <!-- sign_up_for_daily_report -->
                                         <div class="form-group form-group-label">
@@ -2163,11 +2137,6 @@
                     sign_up_for_invitation_codes: $$getValue('sign_up_for_invitation_codes'),
                     connection_device_limit: $$getValue('connection_device_limit'),
                     connection_rate_limit: $$getValue('connection_rate_limit'),
-                    sign_up_for_method: $$getValue('sign_up_for_method'),
-                    sign_up_for_protocol: $$getValue('sign_up_for_protocol'),
-                    sign_up_for_protocol_param: $$getValue('sign_up_for_protocol_param'),
-                    sign_up_for_obfs: $$getValue('sign_up_for_obfs'),
-                    sign_up_for_obfs_param: $$getValue('sign_up_for_obfs_param'),
                     sign_up_for_daily_report: $$getValue('sign_up_for_daily_report')
                 },
                 success: data => {

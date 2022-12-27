@@ -147,7 +147,7 @@ class SettingController extends AdminController
                 $list = array('reg_mode', 'reg_email_verify', 'email_verify_ttl', 'email_verify_ip_limit');
                 break;
             case 'register_default_value':
-                $list = array('sign_up_for_free_traffic', 'sign_up_for_free_time', 'sign_up_for_class', 'sign_up_for_class_time', 'sign_up_for_invitation_codes', 'connection_device_limit', 'connection_rate_limit', 'sign_up_for_method', 'sign_up_for_protocol', 'sign_up_for_protocol_param', 'sign_up_for_obfs', 'sign_up_for_obfs_param', 'sign_up_for_daily_report');
+                $list = array('sign_up_for_free_traffic', 'sign_up_for_free_time', 'sign_up_for_class', 'sign_up_for_class_time', 'sign_up_for_invitation_codes', 'connection_device_limit', 'connection_rate_limit', 'sign_up_for_daily_report');
                 break;
             // 邀请设置
             case 'invitation_reward':

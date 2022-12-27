@@ -527,26 +527,6 @@ class Callback
             ],
             [
                 [
-                    'text'          => '更改加密方式',
-                    'callback_data' => 'user.edit.encrypt'
-                ],
-                [
-                    'text'          => '更改协议类型',
-                    'callback_data' => 'user.edit.protocol'
-                ]
-            ],
-            [
-                [
-                    'text'          => '更改混淆类型',
-                    'callback_data' => 'user.edit.obfs'
-                ],
-                [
-                    'text'          => '每日邮件接收',
-                    'callback_data' => 'user.edit.sendemail'
-                ],
-            ],
-            [
-                [
                     'text'          => '账户解绑',
                     'callback_data' => 'user.edit.unbind'
                 ],
@@ -641,129 +621,6 @@ class Callback
                     ),
                 ];
                 break;
-            case 'encrypt':
-                // 加密方式更改
-                $keyboard = $back;
-                if (isset($CallbackDataExplode[1])) {
-                    if (in_array($CallbackDataExplode[1], Config::getSupportParam('method'))) {
-                        $temp = $this->User->setMethod($CallbackDataExplode[1]);
-                        if ($temp['ok'] === true) {
-                            $text = '您当前的加密方式为：' . $this->User->method . PHP_EOL . PHP_EOL . $temp['msg'];
-                        } else {
-                            $text = '发生错误，请重新选择.' . PHP_EOL . PHP_EOL . $temp['msg'];
-                        }
-                    } else {
-                        $text = '发生错误，请重新选择.';
-                    }
-                } else {
-                    $Encrypts = [];
-                    foreach (Config::getSupportParam('method') as $value) {
-                        $Encrypts[] = [
-                            'text'          => $value,
-                            'callback_data' => 'user.edit.encrypt|' . $value
-                        ];
-                    }
-                    $Encrypts = array_chunk($Encrypts, 2);
-                    $keyboard = [];
-                    foreach ($Encrypts as $Encrypt) {
-                        $keyboard[] = $Encrypt;
-                    }
-                    $keyboard[] = $back[0];
-                    $text       = '您当前的加密方式为：' . $this->User->method;
-                }
-                $sendMessage = [
-                    'text'                     => $text,
-                    'disable_web_page_preview' => false,
-                    'reply_to_message_id'      => null,
-                    'reply_markup'             => json_encode(
-                        [
-                            'inline_keyboard' => $keyboard
-                        ]
-                    ),
-                ];
-                break;
-            case 'protocol':
-                // 协议更改
-                $keyboard = $back;
-                if (isset($CallbackDataExplode[1])) {
-                    if (in_array($CallbackDataExplode[1], Config::getSupportParam('protocol'))) {
-                        $temp = $this->User->setProtocol($CallbackDataExplode[1]);
-                        if ($temp['ok'] === true) {
-                            $text = '您当前的协议为：' . $this->User->protocol . PHP_EOL . PHP_EOL . $temp['msg'];
-                        } else {
-                            $text = '发生错误，请重新选择.' . PHP_EOL . PHP_EOL . $temp['msg'];
-                        }
-                    } else {
-                        $text = '发生错误，请重新选择.';
-                    }
-                } else {
-                    $Protocols = [];
-                    foreach (Config::getSupportParam('protocol') as $value) {
-                        $Protocols[] = [
-                            'text'          => $value,
-                            'callback_data' => 'user.edit.protocol|' . $value
-                        ];
-                    }
-                    $Protocols = array_chunk($Protocols, 1);
-                    $keyboard  = [];
-                    foreach ($Protocols as $Protocol) {
-                        $keyboard[] = $Protocol;
-                    }
-                    $keyboard[] = $back[0];
-                    $text       = '您当前的协议为：' . $this->User->protocol;
-                }
-                $sendMessage = [
-                    'text'                     => $text,
-                    'disable_web_page_preview' => false,
-                    'reply_to_message_id'      => null,
-                    'reply_markup'             => json_encode(
-                        [
-                            'inline_keyboard' => $keyboard
-                        ]
-                    ),
-                ];
-                break;
-            case 'obfs':
-                // 混淆更改
-                $keyboard = $back;
-                if (isset($CallbackDataExplode[1])) {
-                    if (in_array($CallbackDataExplode[1], Config::getSupportParam('obfs'))) {
-                        $temp = $this->User->setObfs($CallbackDataExplode[1]);
-                        if ($temp['ok'] === true) {
-                            $text = '您当前的协议为：' . $this->User->obfs . PHP_EOL . PHP_EOL . $temp['msg'];
-                        } else {
-                            $text = '发生错误，请重新选择.' . PHP_EOL . PHP_EOL . $temp['msg'];
-                        }
-                    } else {
-                        $text = '发生错误，请重新选择.';
-                    }
-                } else {
-                    $Obfss = [];
-                    foreach (Config::getSupportParam('obfs') as $value) {
-                        $Obfss[] = [
-                            'text'          => $value,
-                            'callback_data' => 'user.edit.obfs|' . $value
-                        ];
-                    }
-                    $Obfss    = array_chunk($Obfss, 1);
-                    $keyboard = [];
-                    foreach ($Obfss as $Obfs) {
-                        $keyboard[] = $Obfs;
-                    }
-                    $keyboard[] = $back[0];
-                    $text       = '您当前的协议为：' . $this->User->obfs;
-                }
-                $sendMessage = [
-                    'text'                     => $text,
-                    'disable_web_page_preview' => false,
-                    'reply_to_message_id'      => null,
-                    'reply_markup'             => json_encode(
-                        [
-                            'inline_keyboard' => $keyboard
-                        ]
-                    ),
-                ];
-                break;
             case 'unbind':
                 // Telegram 账户解绑
                 $this->AllowEditMessage = false;
@@ -821,9 +678,6 @@ class Callback
                 $text  = '您可在此编辑您的资料或连接信息：' . PHP_EOL . PHP_EOL;
                 $text .= '端口：' . $this->User->port . PHP_EOL;
                 $text .= '密码：' . $this->User->passwd . PHP_EOL;
-                $text .= '加密：' . $this->User->method . PHP_EOL;
-                $text .= '协议：' . $this->User->protocol . PHP_EOL;
-                $text .= '混淆：' . $this->User->obfs;
                 $sendMessage = [
                     'text'                     => $text,
                     'disable_web_page_preview' => false,
