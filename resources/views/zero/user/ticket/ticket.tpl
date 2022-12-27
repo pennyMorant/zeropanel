@@ -461,7 +461,7 @@
 						<!--begin::Footer-->
 						<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 							<a href="{$config['admin_contact3']}" target="_blank" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="获取最新的信息">
-								<span class="btn-label fw-bold">加入 Telegram 群组</span>
+								<span class="btn-label fw-bold">Join Telegram Group</span>
 								<!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
 								<span class="svg-icon btn-icon svg-icon-2 m-0">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

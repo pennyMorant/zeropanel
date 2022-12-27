@@ -814,11 +814,11 @@ function oneclickImport(client, subLink) {
       ssr: "sub://" + btoa(subLink)
     }
     Swal.fire({
-        title: "是否导入订阅链接",
+        title: "Whether to import subscription links",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "导入",
-        cancelButtonText: "取消",
+        confirmButtonText: "Submit",
+        cancelButtonText: "Discard",
         focusClose: false,
         focusConfirm: false,
     }).then((result) => {

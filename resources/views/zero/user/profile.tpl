@@ -368,7 +368,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-stack fs-4 py-3">
-                                                        <div class="fw-bold rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">详细
+                                                        <div class="fw-bold rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">Details
                                                             <span class="ms-2 rotate-180">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
