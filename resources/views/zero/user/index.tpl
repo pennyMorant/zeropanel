@@ -148,8 +148,8 @@
 													<img alt="Logo" src="{$user->gravatar}" />
 												</div>
 												<div class="d-flex flex-column">
-													<div class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">LV&nbsp;{$user->class}</div>
-													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
+													<a class="badge badge-light-success fw-bold fs-8">LV&nbsp;{$user->class}</a>
+													<a class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
 												</div>
 											</div>
 										</div>
