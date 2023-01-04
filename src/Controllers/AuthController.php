@@ -399,21 +399,6 @@ class AuthController extends BaseController
             }
         }
 
-        // check pwd length
-        if (strlen($passwd) < 8) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '密码请大于8位'
-            ]);
-        }
-
-        // check pwd re
-        if ($passwd != $repasswd) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '两次密码输入不符'
-            ]);
-        }
         if (Setting::obtain('reg_email_verify')) {
             EmailVerify::where('email', $email)->delete();
         }
