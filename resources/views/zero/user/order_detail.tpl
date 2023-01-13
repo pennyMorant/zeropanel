@@ -360,7 +360,7 @@
                                         
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h2>Order #{$order->tradeno}</h2>
+                                                <h2>Order #{$order->no}</h2>
                                             </div>
                                         </div>
                                         

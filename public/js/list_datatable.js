@@ -21,9 +21,7 @@ var KTDatatablesOrderSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/order",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'order_total' },
                 { data: 'order_status' },
@@ -94,9 +92,7 @@ var KTDatatablesTicketSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/ticket",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'id' },
                 { data: 'title' },
@@ -161,9 +157,7 @@ var KTDatatablesSigninLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/loginlog",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
@@ -204,9 +198,7 @@ var KTDatatablesUsedLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/uselog",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
@@ -247,9 +239,7 @@ var KTDatatablesSubscribeLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/sublog",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'subscribe_type' },
                 { data: 'request_ip' },
@@ -304,9 +294,7 @@ var KTDatatablesTrafficLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/trafficlog",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'node_name' },
                 { data: 'traffic' },
@@ -347,9 +335,7 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/get_commission_log",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
+            
             columns: [
                 { data: 'ref_get' },
                 { data: 'datetime'},
