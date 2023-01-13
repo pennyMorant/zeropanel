@@ -184,7 +184,7 @@ class ZeroController extends BaseController
                     $tempdata['no']                = $value->no;
                     $tempdata['order_total']       = $value->order_total;
                     $tempdata['order_status']      = $value->order_status;
-                    $tempdata['order_type']        = $value->order_type == 'purchase_product_order' ? "产品购买" : "账户充值";
+                    $tempdata['order_type']        = $value->order_type == 'purchase_product_order' ? "Product" : "Credit";
                     $tempdata['created_time']      = date('Y-m-d H:i:s', $value->created_time);
                     $tempdata['expired_time']      = $value->expired_time;
                     $data[]                        = $tempdata;

@@ -137,11 +137,6 @@ class Tools
         return bin2hex(openssl_random_pseudo_bytes($length / 2));
     }
 
-    public static function genToken()
-    {
-        return self::genRandomChar(64);
-    }
-
     // Unix time to Date Time
     public static function toDateTime($time)
     {
@@ -153,18 +148,6 @@ class Tools
         $dtF = new DateTime('@0');
         $dtT = new DateTime("@$seconds");
         return $dtF->diff($dtT)->format('%a 天, %h 小时, %i 分 + %s 秒');
-    }
-
-    public static function genSID()
-    {
-        $unid = uniqid(Setting::obtain('website_security_token'), true);
-        return Hash::sha256WithSalt($unid);
-    }
-
-    public static function genUUID()
-    {
-        // @TODO
-        return self::genSID();
     }
 
     public static function base64_url_encode($input)
@@ -196,64 +179,6 @@ class Tools
     public static function isSpecialChars($input)
     {
         return ! preg_match('/[^A-Za-z0-9\-_\.]/', $input);
-    }
-
-    public static function is_relay_rule_avaliable($rule, $ruleset, $node_id)
-    {
-        $cur_id = $rule->id;
-
-        foreach ($ruleset as $single_rule) {
-            if (($rule->port == $single_rule->port || $single_rule->port == 0) && ($node_id == $single_rule->source_node_id || $single_rule->source_node_id == 0) && (($rule->id != $single_rule->id && $rule->priority < $single_rule->priority) || ($rule->id < $single_rule->id && $rule->priority == $single_rule->priority))) {
-                $cur_id = $single_rule->id;
-            }
-        }
-
-        return !($cur_id != $rule->id);
-    }
-
-    public static function get_middle_text($origin_text, $begin_text, $end_text)
-    {
-        $begin_pos = strpos($origin_text, $begin_text);
-        if ($begin_pos == false) {
-            return null;
-        }
-
-        $end_pos = strpos($origin_text, $end_text, $begin_pos + strlen($begin_text));
-        if ($end_pos == false) {
-            return null;
-        }
-
-        return substr($origin_text, $begin_pos + strlen($begin_text), $end_pos - $begin_pos - strlen($begin_text));
-    }
-
-    public static function has_conflict_rule($input_rule, $ruleset, $edit_rule_id = 0, $origin_node_id = 0, $user_id = 0)
-    {
-        foreach ($ruleset as $rule) {
-            if (($rule->source_node_id == $input_rule->dist_node_id) && (($rule->port == $input_rule->port || $input_rule->port == 0) || $rule->port == 0)) {
-                if ($rule->dist_node_id == $origin_node_id && $rule->id != $edit_rule_id) {
-                    return $rule->id;
-                }
-
-                //递归处理这个节点
-                $maybe_rule_id = self::has_conflict_rule($rule, $ruleset, $edit_rule_id, $origin_node_id, $rule->user_id);
-                if ($maybe_rule_id != 0) {
-                    return $maybe_rule_id;
-                }
-            }
-        }
-
-        if (($input_rule->id == $edit_rule_id || $edit_rule_id == 0) && $input_rule->dist_node_id != -1) {
-            $dist_node = Node::find($input_rule->dist_node_id);
-            if ($input_rule->source_node_id == 0 && ($dist_node->sort == 10 || $dist_node->sort == 12)) {
-                return -1;
-            }
-
-            if ($input_rule->dist_node_id == $input_rule->source_node_id) {
-                return -1;
-            }
-        }
-
-        return 0;
     }
 
     /**
