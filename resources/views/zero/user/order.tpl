@@ -368,12 +368,12 @@
                                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_order_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
-                                                        <th>金额</th>
-                                                        <th>状态</th>
-														<th>订单类型</th>
-                                                        <th>时间</th>
-														<th>订单号</th>
-														<th>操作</th>
+                                                        <th>Amount</th>
+                                                        <th>Status</th>
+														<th>Type</th>
+                                                        <th>Date</th>
+														<th>No</th>
+														<th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>

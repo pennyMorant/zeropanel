@@ -37,18 +37,18 @@ var KTDatatablesOrderSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data) {
-                        return `<a class="btn btn-sm btn-light-primary" href="/user/order/${data.no}" >详情</a>`;
+                        return `<a class="btn btn-sm btn-light-primary" href="/user/order/${data.no}" >Details</a>`;
                     },
                 },
                 {
                     targets: 1,
                     render: function (data, type, row) {
                         if (data == 'paid') {
-                            return '<div class="badge font-weight-bold badge-light-success fs-6">支付成功</div>';
+                            return '<div class="badge font-weight-bold badge-light-success fs-6">Paid</div>';
                         } else if (data == 'pending') {
-                            return `<div class="badge font-weight-bold badge-light-warning fs-6">等待支付</div>`;
+                            return `<div class="badge font-weight-bold badge-light-warning fs-6">Pending</div>`;
                         } else if (data == 'invalid') {
-                            return `<div class="badge font-weight-bold badge-light-danger fs-6">订单失效</div>`;
+                            return `<div class="badge font-weight-bold badge-light-danger fs-6">Invalid</div>`;
                         }
                     },
                 },
@@ -105,16 +105,16 @@ var KTDatatablesTicketSide = function () {
                     targets: 2,
                     render: function (data) {
                         if (data == 1) {
-                            return '<div class="badge font-weight-bold badge-light-success fs-6">活跃</div>';
+                            return '<div class="badge font-weight-bold badge-light-success fs-6">Active</div>';
                         } else {
-                            return '<div class="badge font-weight-bold badge-light fs-6">关闭</div>';
+                            return '<div class="badge font-weight-bold badge-light fs-6">Closed</div>';
                         }
                     },
                 },
                 {
                     targets: -1,
                     render: function (data) {
-                        return `<a class="btn btn-sm btn-light-primary" href="/user/ticket/${data.id}/view" >详情</a>`;
+                        return `<a class="btn btn-sm btn-light-primary" href="/user/ticket/${data.id}/view" >Details</a>`;
                     },
                 },
                 

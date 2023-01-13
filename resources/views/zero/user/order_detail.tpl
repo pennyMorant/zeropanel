@@ -372,13 +372,13 @@
                                                     
                                                     <thead>
                                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                            <th class="min-w-175px">订单类型</th>
-                                                            <th class="min-w-70px text-end">状态</th>
-															{if $order->order_status == 'paid'}<th class="min-w-70px text-end">支付方式</th>{/if}
-                                                            <th class="min-w-100px text-end">订单号</th>
-                                                            <th class="min-w-70px text-end">数量</th>
-                                                            <th class="min-w-100px text-end">单价</th>
-                                                            <th class="min-w-100px text-end">总价</th>
+                                                            <th class="min-w-175px">Type</th>
+                                                            <th class="min-w-70px text-end">Status</th>
+															{if $order->order_status == 'paid'}<th class="min-w-70px text-end">Payment</th>{/if}
+                                                            <th class="min-w-100px text-end">No</th>
+                                                            <th class="min-w-70px text-end">Quantity</th>
+                                                            <th class="min-w-100px text-end">Price</th>
+                                                            <th class="min-w-100px text-end">Total</th>
                                                         </tr>
                                                     </thead>
                                                     
@@ -392,8 +392,8 @@
                                                                     
                                                                     
                                                                     <div class="ms-5">
-                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}账户充值{else}产品购买: {$order->product_name}{/if}</a>
-                                                                        <div class="fs-7 text-muted">发起时间: {date('Y-m-d h:i:s', $order->create_time)}</div>
+                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}Add Credit{else}Purchase Product: {$order->product_name}{/if}</a>
+                                                                        <div class="fs-7 text-muted">Date: {date('Y-m-d h:i:s', $order->create_time)}</div>
                                                                     </div>
                                                                     
                                                                 </div>
@@ -401,11 +401,11 @@
                                                             
                                                             <td class="text-end">
                                                                 {if $order->order_status == 'pending'}
-                                                                <span class="badge badge-warning fs-6 fw-bold">等待支付</span>
+                                                                <span class="badge badge-warning fs-6 fw-bold">Pending</span>
                                                                 {else if $order->order_status == 'paid'}
-                                                                <span class="badge badge-success fs-6 fw-bold">支付完成</span>
+                                                                <span class="badge badge-success fs-6 fw-bold">Paid</span>
 																{else if $order->order_status == 'invalid'}
-																<span class="badge badge-danger fs-6 fw-bold">订单失效</span>	
+																<span class="badge badge-danger fs-6 fw-bold">Invalid</span>	
                                                                 {/if}   
                                                             </td>
 															{if $order->order_status == 'paid'}<td class="text-end">{$payment}</td>{/if}
@@ -424,26 +424,27 @@
                                                         
                                                         
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">小计</td>
+                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">Subtotal</td>
                                                             <td class="text-end">{$order->order_total}</td>
                                                         </tr>
                                                         
                                                         
 														{if $order->order_coupon != null}
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">折扣</td>
+                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">Discount</td>
                                                             <td class="text-end">{$order->product_price - $order->order_total}</td>
                                                         </tr>
 														{/if}
                                                         
                                                         
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="fs-3 text-dark text-end">合计</td>
+                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="fs-3 text-dark text-end">Total</td>
                                                             <td class="text-dark fs-3 fw-bolder text-end">{$order->order_total}</td>
                                                         </tr>
+														
 														{if $order->order_status == 'paid'}
 														<tr>
-                                                            <td colspan="6" class="fs-3 text-dark text-end">实付</td>
+                                                            <td colspan="6" class="fs-3 text-dark text-end">Paid</td>
                                                             <td class="text-dark fs-3 fw-bolder text-end">{$order->order_total}</td>
                                                         </tr>
 														{/if}
@@ -496,7 +497,7 @@
 																<span class="nav-icon py-2 w-auto">
 																	<i class="bi bi-wallet fs-2hx text-info"></i>
 																</span>
-																<span class="nav-text fs-5 py-2 text-center">余额支付</span>
+																<span class="nav-text fs-5 py-2 text-center">Credit Pay</span>
 															</a>
 														</li>
 														{/if}
