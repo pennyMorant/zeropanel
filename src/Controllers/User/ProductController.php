@@ -28,15 +28,15 @@ final class ProductController extends BaseController
         $product_tab_lists = [
             [
                 'type' => 'cycle',
-                'name' => '按周期',
+                'name' => 'Cycle',
             ],
             [
                 'type' => 'traffic',
-                'name' => '按流量',
+                'name' => 'Traffic',
             ],
             [
                 'type' => 'other',
-                'name' => '其他商品',
+                'name' => 'Others',
             ],
         ];
 

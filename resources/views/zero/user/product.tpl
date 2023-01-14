@@ -360,7 +360,7 @@
                                         <div class="card-body p-lg-17">
                                             <div class="d-flex flex-column">
                                                 <div class="mb-13 text-center">
-                                                    <h1 class="fs-2hx fw-bold mb-5">选择您的计划</h1>
+                                                    <h1 class="fs-2hx fw-bold mb-5">Choose your product</h1>
                                                     <div class="text-gray-400 fw-semibold fs-5"></div>
                                                 </div>
                                                 <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
