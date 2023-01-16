@@ -31,7 +31,6 @@ return function (SlimApp $app) {
         $group->get('/profile',                  App\Controllers\UserController::class . ':profile');
         $group->get('/record',                   App\Controllers\UserController::class . ':record');
         $group->get('/ban',                      App\Controllers\UserController::class . ':ban');
-        $group->get('/shared_account',           App\Controllers\UserController::class . ':SharedAccount');
         // 订单系统
         $group->get('/order',                           App\Controllers\OrderController::class . ':order');
         $group->get('/order/{no}',                      App\Controllers\OrderController::class . ':orderDetails');
