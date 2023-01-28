@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><base href="../../"/>
+    <head>
 	<title>{$config["appName"]} Order</title>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -368,7 +368,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-stack fs-4 py-3">
-                                                        <div class="fw-bold rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">Details
+                                                        <div class="fw-bold rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">{$trans->t('details')}
                                                             <span class="ms-2 rotate-180">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -381,14 +381,14 @@
                                                     <div class="separator"></div>
                                                     <div id="kt_user_view_details" class="collapse show" style>
                                                         <div class="pb-5 fs-6">
-                                                            <div class="fw-bold mt-5">User ID</div>
+                                                            <div class="fw-bold mt-5">{$trans->t('users')} ID</div>
                                                             <div class="text-gray-600">ID-{$user->id}</div>
-                                                            <div class="fw-bold mt-5">Email</div>
+                                                            <div class="fw-bold mt-5">{$trans->t('email')}</div>
                                                             <div class="text-gray-600">
                                                                 <a class="text-gray-600 text-hover-primary">{$user->email}</a>
                                                             </div>
-                                                            <div class="fw-bold mt-5">Last Signin Date</div>
-                                                            <div class="text-gray-600">{if $user->last_signin_time == null}No Record{else}{$user->last_signin_time}{/if}</div>
+                                                            <div class="fw-bold mt-5">{$trans->t('last signin date')}</div>
+                                                            <div class="text-gray-600">{if $user->last_signin_time == null}{$trans->t('no record')}{else}{$user->last_signin_time}{/if}</div>
                                                         </div>
                                                     </div>                                                   
                                                 </div>
@@ -396,7 +396,7 @@
                                             <div class="card mb-5 mb-xl-8">
                                                 <div class="card-header border-0">
                                                     <div class="card-title">
-                                                        <h3 class="fw-bold m-0">Notification</h3>
+                                                        <h3 class="fw-bold m-0">{$trans->t('notification')}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="card-body pt-2">
@@ -405,8 +405,8 @@
                                                             <div class="d-flex">
                                                                 <i class="bi bi-envelope text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
-                                                                    <a class="fs-5 text-dark text-hover-primary fw-bold">Email</a>
-                                                                    <div class="fs-6 fw-semibold text-muted">Email received</div>
+                                                                    <a class="fs-5 text-dark text-hover-primary fw-bold">{$trans->t('email')}</a>
+                                                                    <div class="fs-6 fw-semibold text-muted">{$trans->t('email notification')}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-end">
@@ -421,7 +421,7 @@
                                                                 <i class="bi bi-telegram text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
                                                                     <a class="fs-5 text-dark text-hover-primary fw-bold">Telegram</a>
-                                                                    <div class="fs-6 fw-semibold text-muted">Telegram received</div>
+                                                                    <div class="fs-6 fw-semibold text-muted">{$trans->t('telegram notification')}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex justify-content-end">
@@ -445,7 +445,7 @@
                                                     <div class="card-header pt-5">
                                                         <div class="card-title d-flex flex-column">
                                                             <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2" id="wallet_total">{$user->commission + $user->money}$</span>
-                                                            <span class="text-gray-400 pt-1 fw-semibold fs-6">Wallet</span>
+                                                            <span class="text-gray-400 pt-1 fw-semibold fs-6">{$trans->t('wallet')}</span>
                                                         </div>
                                                         <div class="card-toolbar">
                                                             <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
@@ -462,17 +462,17 @@
                                                             </button>
                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                                                                 <div class="menu-item px-3">
-                                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">Actions</div>
+                                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">{$trans->t('action')}</div>
                                                                 </div>
                                                                 <div class="separator mb-3 opacity-75"></div>
                                                                 <div class="menu-item px-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_add_credit_modal" class="menu-link px-3">Purchase</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_add_credit_modal" class="menu-link px-3">{$trans->t('add credit')}</a>
                                                                 </div>
                                                                 <div class="menu-item px-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_modal" class="menu-link px-3">Commssion Withdraw</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_modal" class="menu-link px-3">{$trans->t('commission withdrawal')}</a>
                                                                 </div>
 																<div class="menu-item px-3 mb-3">
-                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_method_modal" class="menu-link px-3">Withdraw Account</a>
+                                                                    <a data-bs-toggle="modal" type="button" data-bs-target="#zero_user_withdraw_method_modal" class="menu-link px-3">{$trans->t('withdraw account')}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -488,13 +488,13 @@
 																<div class="d-flex flex-column content-justify-center flex-grow-1">
 																	<div class="d-flex fs-6 fw-semibold align-items-center">
 																		<div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">Balance</div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">{$trans->t('credit')}</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_balance">{trim($user->money)}</div>
 																	</div>
 																	<div class="d-flex fs-6 fw-semibold align-items-center my-1">
 																		<div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">Commssion</div>
+																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">{$trans->t('commission')}</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_commission">{trim($user->commission)}</div>
 																	</div>
@@ -506,7 +506,7 @@
                                                 <div class="card pt-4 mb-6 mb-xl-9">
                                                     <div class="card-header border-0">
                                                         <div class="card-title">
-                                                            <h2>Profile</h2>
+                                                            <h2>{$trans->t('profile')}</h2>
                                                         </div>
                                                     </div>
                                                     <div class="card-body pt-0 pb-5">
@@ -514,7 +514,7 @@
                                                             <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
                                                                 <tbody class="fs-6 fw-semibold text-gray-600">
                                                                     <tr>
-                                                                        <td>Email</td>
+                                                                        <td>{$trans->t('email')}</td>
                                                                         <td>{$user->email}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#zero_modal_user_update_email">
@@ -530,7 +530,7 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>Password</td>
+                                                                        <td>{$trans->t('passwd')}</td>
                                                                         <td>******</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#zero_modal_user_update_password">
@@ -544,7 +544,7 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>Shadwosocks Password</td>
+                                                                        <td>Shadwosocks {$trans->t('passwd')}</td>
                                                                         <td>{$user->passwd}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetPasswd()">
@@ -572,7 +572,7 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>Sub Token</td>
+                                                                        <td>{$trans->t('subscription token')}</td>
                                                                         <td>{$sub_token}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetSubLink()">
@@ -587,7 +587,7 @@
 																	</tr>
                                                                     <tr>
                                                                         <td>Telegram</td>
-                                                                        <td>{if $user->telegram_id == null}Unbind Telegram{else}{$user->telegram_id}{/if}</td>
+                                                                        <td>{if $user->telegram_id == null}{$trans->t('unbound')} Telegram{else}{$user->telegram_id}{/if}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="绑定或者解绑">
                                                                                 <span class="svg-icon svg-icon-3">
@@ -599,13 +599,13 @@
                                                                         </td>
 																	</tr>
                                                                     <tr>
-                                                                        <td>Signup Date</td>
+                                                                        <td>{$trans->t('signup date')}</td>
                                                                         <td>{$user->signup_date}</td>
                                                                         
 																	</tr>
                                                                     
                                                                     <tr>
-                                                                        <td>Menber Expired Date</td>
+                                                                        <td>{$trans->t('membership expiration date')}</td>
                                                                         <td>{if $user->class <= 0}No Product{else}{$user->class_expire}{/if}</td>
                                                                         
 																	</tr>
