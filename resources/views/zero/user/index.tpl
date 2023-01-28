@@ -208,7 +208,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.dashboard')}</span>
+											<span class="menu-title">{$trans->t('dashboard')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -220,7 +220,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.order')}</span>
+											<span class="menu-title">{$trans->t('order')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -235,7 +235,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.products')}</span>
+											<span class="menu-title">{$trans->t('products')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -247,7 +247,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.node')}</span>
+											<span class="menu-title">{$trans->t('node')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -261,7 +261,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ticket')}</span>
+											<span class="menu-title">{$trans->t('ticket')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -275,7 +275,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.user_center')}</span>
+											<span class="menu-title">{$trans->t('user center')}</span>
 										</a>
 									</div>
                                     
@@ -289,7 +289,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.log')}</span>
+											<span class="menu-title">{$trans->t('record')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -304,7 +304,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
+											<span class="menu-title">{$trans->t('referral plan')}</span>
 										</a>
 									</div>
 									{if $user->is_admin == '1'}
@@ -316,7 +316,7 @@
 														<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v3a.5.5 0 0 1-.5.5h-3A1.5 1.5 0 0 0 0 6.5v3A1.5 1.5 0 0 0 1.5 11h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 6.5 16h3a1.5 1.5 0 0 0 1.5-1.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 16 9.5v-3A1.5 1.5 0 0 0 14.5 5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 9.5 0h-3ZM6 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 11.5 6h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a1.5 1.5 0 0 0-1.5 1.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 4.5 10h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 6 4.5v-3Z"/>
 													</svg>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.admin')}</span>
+											<span class="menu-title">{$trans->t('admin')}</span>
 										</a>
 									</div>
 									{/if}
@@ -346,7 +346,7 @@
 										<div class="col-xxl-6">
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('user.dashboard.sub')}</div>
+													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>
 												</div>     
 												<div class="card-body pt-0">
 													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
@@ -360,15 +360,15 @@
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fs-lg fw-bolder text-gray-800 mb-1">
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('general.day')}</span>
+																	<span class="counter">{$trans->t('time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('day')}</span>
 																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
-																	<span class="counter">{$trans->t('user.account.time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
+																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
 																{else}<span class="counter">No product</span>
 																{/if}
 															</a>					   
 															<span class="text-muted fw-semibold d-block">
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	{$trans->t('user.account.expired_date')}:&nbsp;{substr($user->class_expire, 0, 10)}
+																	{$trans->t('expired date')}:&nbsp;{substr($user->class_expire, 0, 10)}
 																{/if}
 															</span>
 														</div>
@@ -381,10 +381,10 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('user.account.traffic')}:&nbsp;{$user->usedTraffic()} / <span id="traffic">{$user->enableTraffic()}</span>
+																{$trans->t('traffic')}:&nbsp;{$user->usedTraffic()} / <span id="traffic">{$user->enableTraffic()}</span>
 															</a>
 															<span class="text-muted fw-semibold d-block">
-																{$trans->t('user.account.reset_date')}:&nbsp;{$user->productTrafficResetDate()}
+																{$trans->t('reset date')}:&nbsp;{$user->productTrafficResetDate()}
 															</span>
 														</div>
 													</div>
@@ -397,10 +397,10 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('user.account.online_ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('user.status.unlimited')}{else}{$user->node_connector}{/if}
+																{$trans->t('online ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('unlimited')}{else}{$user->node_connector}{/if}
 															</a>
 															<span class="text-muted fw-semibold d-block">
-																{$trans->t('user.account.last_used')}:&nbsp;{$user->lastUseTime()}
+																{$trans->t('latest used date')}:&nbsp;{$user->lastUseTime()}
 															</span>
 														</div>
 													</div>
@@ -412,10 +412,10 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('user.account.credit')}:&nbsp;{$user->money} $
+																{$trans->t('credit')}:&nbsp;{$user->money} $
 															</a>
 															<span class="text-muted fw-semibold d-block">
-																{$trans->t('user.account.commission')}:&nbsp;{$user->commission} $
+																{$trans->t('commission')}:&nbsp;{$user->commission} $
 															</span>
 														</div>
 													</div>
@@ -425,7 +425,7 @@
 										<div class="col-xxl-6">
 											<div class="card card-flush mb-5">
 												<div class="card-header pt-5">
-													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('user.dashboard.traffic')}</div>
+													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
 												</div>
 												<div class="card-body d-flex flex-column pt-0">
 													<div id="traffic_widgets" data-kt-chart-color="success" style="height: 150px; min-height: 130px;"></div>
@@ -435,7 +435,7 @@
 												<div class="card-header border-0">
 													<div class="card-title text-dark fw-bolder fs-3">
 														
-															{$trans->t('user.dashboard.sub_url')}
+															{$trans->t('subscription url')}
 														
 													</div>
 												</div>
@@ -445,22 +445,22 @@
 															{if in_array('clash',$zeroconfig['index_sub'])}
 															<!-- Clash订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('user.dashboard.clash')}&nbsp;&nbsp;</button>
+																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('clash')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['clash']}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['clash']}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
 															{if in_array('surge',$zeroconfig['index_sub'])}
 															<!-- Surge订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('user.dashboard.surge')}&nbsp;&nbsp;</button>
+																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('surge')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surge"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surge"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
@@ -473,35 +473,35 @@
 															{if in_array('v2ray',$zeroconfig['index_sub'])}
 															<!-- V2Ray订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('user.dashboard.v2ray')}</button>
+																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2ray')}</button>
 															</div>
 															{/if}
 															{if in_array('shadowrocket',$zeroconfig['index_sub'])}
 															<!-- Shadowrocket订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('user.dashboard.shadowrocket')}</button>
+																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["shadowrocket"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["shadowrocket"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo["shadowrocket"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo["shadowrocket"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
 															{if in_array('quantumult',$zeroconfig['index_sub'])}
 															<!-- Quantumult订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('user.dashboard.quan')}</button>
+																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["quantumult"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["quantumult"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo["quantumult"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo["quantumult"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
 															{if in_array('quantumultx',$zeroconfig['index_sub'])}
 															<!-- QuantumultX订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumultx copy-text" data-clipboard-text="{$subInfo["quantumultx"]}"><i class="zero-quantumultx text-white"></i>{$trans->t('user.dashboard.quanx')}</button>
+																<button type="button" class="btn btn-pill btn-quantumultx copy-text" data-clipboard-text="{$subInfo["quantumultx"]}"><i class="zero-quantumultx text-white"></i>{$trans->t('quanx')}</button>
 															</div>
 															{/if}
 															{if in_array('v2rayvless',$zeroconfig['index_sub'])}
@@ -513,11 +513,11 @@
 															{if in_array('surfboard',$zeroconfig['index_sub'])}
 															<!-- Surfboard订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('user.dashboard.surfboard')}</button>
+																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('surfboard')}</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surfboard"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surfboard"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo["surfboard"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo["surfboard"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
@@ -530,11 +530,11 @@
 															{if in_array('anxray',$zeroconfig['index_sub'])}
 															<!-- AnXray订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('user.dashboard.sagernet')}&nbsp;&nbsp;</button>
+																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('sagernet')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["anxray"]}">{$trans->t('user.dashboard.copy_url')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["anxray"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo["anxray"]}')">{$trans->t('user.dashboard.import_url')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo["anxray"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															{/if}
@@ -550,7 +550,7 @@
 												<div class="card-header">
 													<div class="card-title">
 														<div class="fw-bolder text-dark fs-h3">
-															{$trans->t('user.dashboard.doc')}
+															{$trans->t('tutorial details')}
 														</div>
 													</div>
 												
@@ -584,7 +584,7 @@
 															<div class="d-flex flex-column flex-grow-1 me-2">
 																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
 															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('user.dashboard.view')}</a>
+															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 														</div>
 														{/foreach}
 													</div>
@@ -599,7 +599,7 @@
 															<div class="d-flex flex-column flex-grow-1 mr-2">
 																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
 															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('user.dashboard.view')}</a>
+															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 														</div>
 														{/foreach}
 													</div>
@@ -614,7 +614,7 @@
 															<div class="d-flex flex-column flex-grow-1 mr-2">
 																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
 															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('user.dashboard.view')}</a>
+															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 														</div>
 														{/foreach}
 													</div>
@@ -629,7 +629,7 @@
 															<div class="d-flex flex-column flex-grow-1 mr-2">
 																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
 															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('user.dashboard.view')}</a>
+															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 														</div>
 														{/foreach}
 													</div>
@@ -643,13 +643,13 @@
                                                     <div class="row align-items-center h-100">                                           
                                                         <div class="col-7 ps-xl-13">                                                
                                                             <div class="text-white mb-6 pt-6">
-                                                                <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('user.dashboard.ref.gift')}</span>
-                                                                <span class="fs-h2 fw-bolder">{$trans->t('user.dashboard.ref.referral')}</span>
+                                                                <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('ref.gift')}</span>
+                                                                <span class="fs-h2 fw-bolder">{$trans->t('ref.referral')}</span>
                                                             </div>                                                                                              
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('user.dashboard.ref.content_1')}</span>                                               
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('user.dashboard.ref.content_2')}</span>                                                                                          
+                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')}</span>                                               
+                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
-                                                                <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('user.dashboard.ref.copy')}</a>
+                                                                <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
                                                             </div>                                                
                                                         </div>                                                                                        
                                                         <div class="col-5 pt-10">                                               

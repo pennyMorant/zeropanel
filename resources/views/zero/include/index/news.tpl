@@ -3,7 +3,7 @@
 		<div class="card-header pe-5" id="kt_drawer_chat_messenger_header">
 			<div class="card-title">
 				<div class="me-3">
-					<p class="fs-4 fw-bold text-gray-900 me-1 mb-2 lh-1">最新公告</a>
+					<p class="fs-4 fw-bold text-gray-900 me-1 mb-2 lh-1">{$trans->t('news')}</a>
 				</div>
 			</div>
 			<div class="card-toolbar">

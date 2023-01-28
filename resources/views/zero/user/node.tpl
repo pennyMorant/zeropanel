@@ -219,7 +219,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.dashboard')}</span>
+											<span class="menu-title">{$trans->t('dashboard')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -231,7 +231,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.order')}</span>
+											<span class="menu-title">{$trans->t('order')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -246,7 +246,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.products')}</span>
+											<span class="menu-title">{$trans->t('products')}</span>
 										</a>
 									</div>
                                     
@@ -259,7 +259,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.node')}</span>
+											<span class="menu-title">{$trans->t('node')}</span>
 										</a>
 									</div>
                                     
@@ -273,7 +273,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ticket')}</span>
+											<span class="menu-title">{$trans->t('ticket')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -286,7 +286,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.user_center')}</span>
+											<span class="menu-title">{$trans->t('user center')}</span>
 										</a>
 									</div>
                                     
@@ -301,7 +301,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.log')}</span>
+											<span class="menu-title">{$trans->t('record')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -315,7 +315,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
+											<span class="menu-title">{$trans->t('referral plan')}</span>
 										</a>
 									</div>
 									{if $user->is_admin == '1'}
@@ -327,7 +327,7 @@
 														<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v3a.5.5 0 0 1-.5.5h-3A1.5 1.5 0 0 0 0 6.5v3A1.5 1.5 0 0 0 1.5 11h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 6.5 16h3a1.5 1.5 0 0 0 1.5-1.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 16 9.5v-3A1.5 1.5 0 0 0 14.5 5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 9.5 0h-3ZM6 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 11.5 6h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a1.5 1.5 0 0 0-1.5 1.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 4.5 10h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 6 4.5v-3Z"/>
 													</svg>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.admin')}</span>
+											<span class="menu-title">{$trans->t('admin')}</span>
 										</a>
 									</div>
 									{/if}
@@ -415,15 +415,15 @@
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
                         <h4 class="modal-title">
-						<strong id="zero_modal_vmess_node_info_remark">节点名称</strong></h4>
+						<strong id="zero_modal_vmess_node_info_remark">{$trans->t('node name')}</strong></h4>
                     </div>
                     <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
 						<nav class="nav nav-tabs nav-justified" role="tablist">
 							<button class="nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_vmess_qrcode">
-								{$trans->t('user.node.qrcode')}
+								{$trans->t('qrcode')}
 							</button>
 							<button class="nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_vmess_config">
-								{$trans->t('user.node.config')}
+								{$trans->t('config')}
 							</button>
                         </nav>
                         <div class="tab-content m-0 p-0">
@@ -435,22 +435,22 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_vmess_config">
 								<div class="pt-10 pl-10 ms-10 text-start fs-4">
-                                    <p>{$trans->t('user.node.address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_add"></span></p>
-                                    <p>{$trans->t('user.node.port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_port"></span></p>
-                                    <p>{$trans->t('user.node.alter_id')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_aid"></span></p>
-                                    <p>{$trans->t('user.node.uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_id"></span></p>
-                                    <p>{$trans->t('user.node.network')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_net"></span></p>
-                                    <p>{$trans->t('user.node.path')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_path"></span></p>
-									<p>{$trans->t('user.node.host')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_host"></span></p>
-                                    <p>{$trans->t('user.node.servicename')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_servicename"></span></p>
-                                    <p>{$trans->t('user.node.protocol')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_type"></span></p>
-                                    <p>{$trans->t('user.node.security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_security"></span></p>
+                                    <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_add"></span></p>
+                                    <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_port"></span></p>
+                                    <p>{$trans->t('alter id')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_aid"></span></p>
+                                    <p>{$trans->t('uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_id"></span></p>
+                                    <p>{$trans->t('network')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_net"></span></p>
+                                    <p>{$trans->t('path')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_path"></span></p>
+									<p>{$trans->t('host')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_host"></span></p>
+                                    <p>{$trans->t('grpc servicename')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_servicename"></span></p>
+                                    <p>{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_type"></span></p>
+                                    <p>{$trans->t('security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_security"></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('general.cancel')}
+                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('discard')}
                         </button>
                     </div>
                 </div>
@@ -462,15 +462,15 @@
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
                         <h4 class="modal-title">
-						<strong id="zero_modal_shadowsocks_node_info_remark">节点名称</strong></h4>
+						<strong id="zero_modal_shadowsocks_node_info_remark">{$trans->t('node name')}</strong></h4>
                     </div>
                     <div class="modal-body align-items-center" id="zero_modal_vmess_node_info_body">
                         <nav class="nav nav-tabs nav-justified" role="tablist">
 							<button class="nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_shadowsocks_qrcode">
-								{$trans->t('user.node.qrcode')}
+								{$trans->t('qrcode')}
 							</button>
 							<button class="nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_shadowsocks_config">
-								{$trans->t('user.node.config')}
+								{$trans->t('config')}
 							</button>
                         </nav>
                         <div class="tab-content m-0 p-0">
@@ -482,16 +482,16 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_shadowsocks_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
-                                    <p>{$trans->t('user.node.address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_address"></span></p>
-                                    <p>{$trans->t('user.node.port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_port"></span></p>
-									<p>{$trans->t('user.node.encrypt')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_method"></span></p>
-                                    <p>{$trans->t('general.passwd')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_passwd"></span></p>
+                                    <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_address"></span></p>
+                                    <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_port"></span></p>
+									<p>{$trans->t('encrypt')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_method"></span></p>
+                                    <p>{$trans->t('passwd')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_passwd"></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('general.cancel')}
+                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('discard')}
                         </button>
                     </div>
                 </div>

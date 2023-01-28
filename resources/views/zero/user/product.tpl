@@ -218,7 +218,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.dashboard')}</span>
+											<span class="menu-title">{$trans->t('dashboard')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -230,7 +230,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.order')}</span>
+											<span class="menu-title">{$trans->t('order')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion here show">
@@ -245,7 +245,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.products')}</span>
+											<span class="menu-title">{$trans->t('products')}</span>
 										</a>
 									</div>
                                     
@@ -258,7 +258,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.node')}</span>
+											<span class="menu-title">{$trans->t('node')}</span>
 										</a>
 									</div>
                                     
@@ -272,7 +272,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ticket')}</span>
+											<span class="menu-title">{$trans->t('ticket')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -285,7 +285,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.user_center')}</span>
+											<span class="menu-title">{$trans->t('user center')}</span>
 										</a>
 									</div>
                                     
@@ -300,7 +300,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.log')}</span>
+											<span class="menu-title">{$trans->t('record')}</span>
 										</a>
 									</div>
 
@@ -315,7 +315,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
+											<span class="menu-title">{$trans->t('referral plan')}</span>
 										</a>
 									</div>
                                     
@@ -329,7 +329,7 @@
 														<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v3a.5.5 0 0 1-.5.5h-3A1.5 1.5 0 0 0 0 6.5v3A1.5 1.5 0 0 0 1.5 11h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 6.5 16h3a1.5 1.5 0 0 0 1.5-1.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 16 9.5v-3A1.5 1.5 0 0 0 14.5 5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 9.5 0h-3ZM6 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 11.5 6h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a1.5 1.5 0 0 0-1.5 1.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 4.5 10h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 6 4.5v-3Z"/>
 													</svg>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.admin')}</span>
+											<span class="menu-title">{$trans->t('admin')}</span>
 										</a>
 									</div>
 									{/if}
@@ -360,7 +360,7 @@
                                         <div class="card-body p-lg-17">
                                             <div class="d-flex flex-column">
                                                 <div class="mb-13 text-center">
-                                                    <h1 class="fs-2hx fw-bold mb-5">Choose your product</h1>
+                                                    <h1 class="fs-2hx fw-bold mb-5">{$trans->t('choose your product')}</h1>
                                                     <div class="text-gray-400 fw-semibold fs-5"></div>
                                                 </div>
                                                 <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
@@ -387,7 +387,7 @@
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$product->class_expire()} {$trans->t('user.products.time')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->class_expire()}</span> {$trans->t('days menbership')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -396,7 +396,7 @@
 																							</span>
 																						</div>
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$product->bandwidth()}GB {$trans->t('user.products.traffic')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -405,7 +405,7 @@
 																							</span>
 																						</div>
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->connector()} == '0' }{$trans->t('user.status.unlimited')}{else}{$product->connector()}IPs{/if}{$trans->t('user.products.ip')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->connector()} == '0' }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->connector()}IPs{/if}&nbsp;{$trans->t('online ip')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -414,7 +414,7 @@
 																							</span>
 																						</div>
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speedlimit()} == '0' }{$trans->t('user.status.unlimited')}{else}{$product->speedlimit()} Mbps{/if}{$trans->t('user.products.bandwidth')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speedlimit()} == '0' }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->speedlimit()} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -423,7 +423,7 @@
 																							</span>
 																						</div>
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$trans->t('user.products.rule')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$trans->t('no rule')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -432,7 +432,7 @@
 																							</span>
 																						</div>
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Lv1 权限支持</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Lv1 {$trans->t('access permission')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -442,7 +442,7 @@
 																						</div>
 																						{if $product->class > 1}
 																							<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">lv2 权限支持</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">lv2 {$trans->t('access permission')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -452,7 +452,7 @@
 																						</div>
 																						{else}
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-400 flex-grow-1 pe-3">Lv2 权限支持</span>
+																							<span class="fw-semibold fs-6 text-gray-400 flex-grow-1 pe-3">Lv2 {$trans->t('access permission')}</span>
 																							<span class="svg-icon svg-icon-1">
 																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -463,7 +463,7 @@
 																						</div>
 																						{/if}
 																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1">{$trans->t('user.products.only_owner')}</span>
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1">{$trans->t('only owner use')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-warning">
 																								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
 																									<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
@@ -472,9 +472,9 @@
 																						</div>
 																					</div>
 																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
-																						<button class="btn btn-sm fw-bold btn-primary" disabled>售罄</button>
+																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">购买</button>
+																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">{$trans->t('purchase')}</button>
 																					{/if}
 																				</div>
 																			</div>
@@ -519,7 +519,7 @@
 					</div>
 					<div class="modal-body pt-0 pb-15 px-5 px-xl-20">
 						<div class="mb-13 text-center">
-							<h1 class="mb-3">配置产品</h1>
+							<h1 class="mb-3">{$trans->t('configure product')}</h1>
 						</div>
 						<div class="d-flex flex-column">
 							<div class="row mt-10">
@@ -527,8 +527,8 @@
 									<div class="tab-content rounded h-100 bg-light p-10">
 										<div class="tab-pane fade show active">
 											<div class="pb-5">
-												<h2 class="fw-bold text-dark">产品包含的内容</h2>
-												<div class="text-muted fw-semibold">适合轻度使用用户</div>
+												<h2 class="fw-bold text-dark">{$trans->t('what the product contains')}</h2>
+												<div class="text-muted fw-semibold">{$trans->t('for light users')}</div>
 											</div>
 											<div class="w-100 mb-10" id="zero_modal_configure_product_inner_html">
 											</div>
@@ -539,8 +539,8 @@
 									<div class="card card-dashed">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
-												<input class="form-control me-3" placeholder="优惠码" type="text" id="zero_coupon_code">
-												<button id="zero" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">验证</button>
+												<input class="form-control me-3" placeholder={$trans->t('promo code')} type="text" id="zero_coupon_code">
+												<button id="zero" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">{$trans->t('verify')}</button>
 											</div>
 										</div>
 									</div>
@@ -552,7 +552,7 @@
 											</div>
 											<div class="separator my-10"></div>
 											<div class="d-flex align-items-center">
-												<span class="fw-semibold fs-4 flex-grow-1 pe-3">总计</span>
+												<span class="fw-semibold fs-4 flex-grow-1 pe-3">{$trans->t('total')}</span>
 												<span class="fw-bold fs-2" id="zero_modal_configure_product_total"></span>
 											</div>
 										</div>
@@ -561,10 +561,10 @@
 							</div>
 						</div>
 						<div class="d-flex flex-center flex-row-fluid pt-12">
-							<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+							<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
 							<button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="">
-								<span class="indicator-label">Order</span>			
-								<span class="indicator-progress">Please wait...
+								<span class="indicator-label">{$trans->t('submit')}</span>			
+								<span class="indicator-progress">{$trans->t('please wait')}
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 							</button>
 						</div>

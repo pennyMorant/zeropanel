@@ -22,21 +22,22 @@ final class ProductController extends BaseController
      */
     public function product($request, $response, $args)
     {
+        $trans = I18n::get();
         $products = Product::where('status', '1')
             ->orderBy('sort', 'asc')
             ->get();
         $product_tab_lists = [
             [
                 'type' => 'cycle',
-                'name' => 'Cycle',
+                'name' => $trans->t('cycle'),
             ],
             [
                 'type' => 'traffic',
-                'name' => 'Traffic',
+                'name' => $trans->t('traffic'),
             ],
             [
                 'type' => 'other',
-                'name' => 'Others',
+                'name' => $trans->t('other'),
             ],
         ];
 

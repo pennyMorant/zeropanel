@@ -219,7 +219,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.dashboard')}</span>
+											<span class="menu-title">{$trans->t('dashboard')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion here show">
@@ -231,7 +231,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.order')}</span>
+											<span class="menu-title">{$trans->t('order')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -246,7 +246,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.products')}</span>
+											<span class="menu-title">{$trans->t('products')}</span>
 										</a>
 									</div>
                                     
@@ -259,7 +259,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.node')}</span>
+											<span class="menu-title">{$trans->t('node')}</span>
 										</a>
 									</div>
                                     
@@ -273,7 +273,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ticket')}</span>
+											<span class="menu-title">{$trans->t('ticket')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
@@ -286,7 +286,7 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.user_center')}</span>
+											<span class="menu-title">{$trans->t('user center')}</span>
 										</a>
 									</div>
                                     
@@ -301,7 +301,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.log')}</span>
+											<span class="menu-title">{$trans->t('record')}</span>
 										</a>
 									</div>
 
@@ -316,7 +316,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
+											<span class="menu-title">{$trans->t('referral plan')}</span>
 										</a>
 									</div>
 
@@ -329,7 +329,7 @@
 														<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v3a.5.5 0 0 1-.5.5h-3A1.5 1.5 0 0 0 0 6.5v3A1.5 1.5 0 0 0 1.5 11h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 6.5 16h3a1.5 1.5 0 0 0 1.5-1.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 16 9.5v-3A1.5 1.5 0 0 0 14.5 5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 9.5 0h-3ZM6 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 11.5 6h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a1.5 1.5 0 0 0-1.5 1.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 4.5 10h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 6 4.5v-3Z"/>
 													</svg>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.admin')}</span>
+											<span class="menu-title">{$trans->t('admin')}</span>
 										</a>
 									</div>
 									{/if}
@@ -359,7 +359,7 @@
                                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                             <div class="card-title">
                                                 <div class="fs-3 fw-bolder text-dark">
-                                                    {$trans->t('card.order_record')}
+                                                    {$trans->t('order record')}
                                                 </div>
                                             </div>
                                         </div>
@@ -368,12 +368,12 @@
                                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_order_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
-                                                        <th>Amount</th>
-                                                        <th>Status</th>
-														<th>Type</th>
-                                                        <th>Date</th>
-														<th>No</th>
-														<th>Action</th>
+                                                        <th>{$trans->t('amount')}</th>
+                                                        <th>{$trans->t('status')}</th>
+														<th>{$trans->t('type')}</th>
+                                                        <th>{$trans->t('date')}</th>
+														<th>{$trans->t('order number')}</th>
+														<th>{$trans->t('action')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
