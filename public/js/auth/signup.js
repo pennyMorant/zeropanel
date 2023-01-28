@@ -5,7 +5,6 @@ var KTSignupGeneral = function() {
         init: function() {
             e = document.querySelector("#kt_sign_up_form"),
             t = document.querySelector("#kt_sign_up_submit"),
-            r = KTPasswordMeter.getInstance(e.querySelector('[data-kt-password-meter="true"]')),
             a = FormValidation.formValidation(e, {
                 fields: {
                     email: {
@@ -91,7 +90,7 @@ var KTSignupGeneral = function() {
                             success: function (data) {
                                 if (data.ret == 1){
                                     Swal.fire({
-                                        text: "You have successfully signup",
+                                        text: data.msg,
                                         icon: "success",
                                         buttonsStyling: !1,
                                         confirmButtonText: "Ok",
@@ -100,8 +99,7 @@ var KTSignupGeneral = function() {
                                         }
                                     }).then((function(t) {
                                         if (t.isConfirmed) {
-                                            e.reset(),
-                                            r.reset();
+                                            e.reset();
                                             var a = e.getAttribute("data-kt-redirect-url");
                                             a && (location.href = a)
                                         }

@@ -5,7 +5,6 @@ var KTSigninGeneral = function() {
         init: function() {
             e = document.querySelector("#kt_sign_in_form"),
             t = document.querySelector("#kt_sign_in_submit"),
-            
             i = FormValidation.formValidation(e, {
                 fields: {
                     email: {
@@ -62,7 +61,7 @@ var KTSigninGeneral = function() {
                             success: function(data){
                                 if(data.ret == 1){
                                     Swal.fire({
-                                        text: "You have successfully logged in!",
+                                        text: data.msg,
                                         icon: "success",
                                         buttonsStyling: !1,
                                         confirmButtonText: "Ok",

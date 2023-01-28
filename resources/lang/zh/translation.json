@@ -53,6 +53,7 @@
     "email": "邮箱",
     "passwd": "密码",
     "signin": "登录",
+    "signout": "登出",
     "signup": "注册",
     "forgot passwd": "忘记密码",
     "back to signin": "返回登录",

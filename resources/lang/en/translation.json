@@ -50,6 +50,7 @@
     "email": "Email",
     "passwd": "Password",
     "signin": "SignIn",
+    "signout": "SignOut",
     "signup": "SignUp",
     "forgot passwd": "Forgot Password",
     "back to signin": "Back to sigin",

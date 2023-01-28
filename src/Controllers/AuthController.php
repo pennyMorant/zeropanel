@@ -110,7 +110,7 @@ class AuthController extends BaseController
 
         return $response->withJson([
             'ret' => 1,
-            'msg' => $trans->t('auth.notify.signin.success')
+            'msg' => $trans->t('signin success')
         ]);
     }
 
@@ -328,7 +328,7 @@ class AuthController extends BaseController
                 $_ENV['email_queue']
             );
             $res['ret'] = 1;
-            $res['msg'] = $trans->t('auth.notify.signup.success');
+            $res['msg'] = $trans->t('signup success');
 
             return $res;
         }

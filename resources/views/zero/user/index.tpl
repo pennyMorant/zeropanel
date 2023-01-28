@@ -170,7 +170,7 @@
 											</div>
 										</div>
 										<div class="menu-item px-5">
-											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('user.menu.signout')}</a>
+											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('signout')}</a>
 										</div>
 									</div>
 								</div>
@@ -362,7 +362,7 @@
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
 																	<span class="counter">{$trans->t('time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('day')}</span>
 																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
-																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('user.status.no_product')}</span>
+																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('no product')}</span>
 																{else}<span class="counter">No product</span>
 																{/if}
 															</a>					   
