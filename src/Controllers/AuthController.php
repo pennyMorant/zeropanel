@@ -245,7 +245,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function register_helper($name, $email, $passwd, $code, $telegram_id)
+    public function register_helper($email, $passwd, $code, $telegram_id)
     {
         $trans = I18n::get();
         if (Setting::obtain('reg_mode') == 'close') {
@@ -344,7 +344,6 @@ class AuthController extends BaseController
      */
     public function registerHandle($request, $response, $args)
     {
-        $name = $request->getParam('name');
         $email = $request->getParam('email');
         $email = trim($email);
         $email = strtolower($email);
@@ -404,7 +403,7 @@ class AuthController extends BaseController
         }
         
         return $response->withJson(
-            $this->register_helper($name, $email, $passwd, $code, 0)
+            $this->register_helper($email, $passwd, $code, 0)
         );
     }
 
