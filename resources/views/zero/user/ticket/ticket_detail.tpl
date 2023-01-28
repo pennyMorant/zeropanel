@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><base href="../../../"/>
+    <head>
 	<title>{$config["appName"]} Ticket </title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
-        <meta name="description" content="Updates and statistics" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -318,7 +317,7 @@
 									<!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/order">
+										<a class="menu-link" href="/user/order">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com005.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -336,7 +335,7 @@
 									<!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/product">
+										<a class="menu-link" href="/user/product">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -357,7 +356,7 @@
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/node">
+										<a class="menu-link" href="/user/node">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -373,7 +372,7 @@
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion here show">
 										<!--begin:Menu link-->
-										<a class="menu-link active" href="user/ticket">
+										<a class="menu-link active" href="/user/ticket">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -390,7 +389,7 @@
 									<!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/profile">
+										<a class="menu-link" href="/user/profile">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -408,7 +407,7 @@
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/record">
+										<a class="menu-link" href="/user/record">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -425,7 +424,7 @@
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="user/referral">
+										<a class="menu-link" href="/user/referral">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">
@@ -443,7 +442,7 @@
 									<!--begin:Menu item-->
 									{if $user->is_admin == '1'}
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="admin">
+										<a class="menu-link" href="/admin">
 											<span class="menu-icon">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dpad" viewBox="0 0 16 16">
 														<path d="m7.788 2.34-.799 1.278A.25.25 0 0 0 7.201 4h1.598a.25.25 0 0 0 .212-.382l-.799-1.279a.25.25 0 0 0-.424 0Zm0 11.32-.799-1.277A.25.25 0 0 1 7.201 12h1.598a.25.25 0 0 1 .212.383l-.799 1.278a.25.25 0 0 1-.424 0ZM3.617 9.01 2.34 8.213a.25.25 0 0 1 0-.424l1.278-.799A.25.25 0 0 1 4 7.201V8.8a.25.25 0 0 1-.383.212Zm10.043-.798-1.277.799A.25.25 0 0 1 12 8.799V7.2a.25.25 0 0 1 .383-.212l1.278.799a.25.25 0 0 1 0 .424Z"/>

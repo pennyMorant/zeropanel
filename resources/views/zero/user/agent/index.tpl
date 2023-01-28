@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><base href="../../"/>
+    <head>
 	<title>{$config["appName"]} 代理中心</title>
         
         <meta charset="UTF-8" />

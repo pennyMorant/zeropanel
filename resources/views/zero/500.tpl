@@ -2,7 +2,7 @@
 
 <html lang="en">
 	
-	<head><base href="../../"/>
+	<head>
 		<title>{$config['appName']}</title>
 		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 		

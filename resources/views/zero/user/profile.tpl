@@ -222,7 +222,7 @@
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/order">
+										<a class="menu-link" href="/user/order">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
@@ -234,7 +234,7 @@
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/product">
+										<a class="menu-link" href="/user/product">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -250,7 +250,7 @@
 									</div>
                                     
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/node">
+										<a class="menu-link" href="/user/node">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
@@ -263,7 +263,7 @@
 									</div>
                                     
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/ticket">
+										<a class="menu-link" href="/user/ticket">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
@@ -276,7 +276,7 @@
 										</a>
 									</div>
 									<div class="menu-item menu-accordion here show">
-										<a class="menu-link active" href="user/profile">
+										<a class="menu-link active" href="/user/profile">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -291,7 +291,7 @@
                                     
                                     
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/record">
+										<a class="menu-link" href="/user/record">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
@@ -305,7 +305,7 @@
 									</div>
 									
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/referral">
+										<a class="menu-link" href="/user/referral">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-optical-audio" viewBox="0 0 16 16">
@@ -321,7 +321,7 @@
 
 									{if $user->is_admin == '1'}
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="admin">
+										<a class="menu-link" href="/admin">
 											<span class="menu-icon">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dpad" viewBox="0 0 16 16">
 														<path d="m7.788 2.34-.799 1.278A.25.25 0 0 0 7.201 4h1.598a.25.25 0 0 0 .212-.382l-.799-1.279a.25.25 0 0 0-.424 0Zm0 11.32-.799-1.277A.25.25 0 0 1 7.201 12h1.598a.25.25 0 0 1 .212.383l-.799 1.278a.25.25 0 0 1-.424 0ZM3.617 9.01 2.34 8.213a.25.25 0 0 1 0-.424l1.278-.799A.25.25 0 0 1 4 7.201V8.8a.25.25 0 0 1-.383.212Zm10.043-.798-1.277.799A.25.25 0 0 1 12 8.799V7.2a.25.25 0 0 1 .383-.212l1.278.799a.25.25 0 0 1 0 .424Z"/>

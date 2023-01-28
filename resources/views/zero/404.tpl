@@ -2,7 +2,7 @@
 
 <html lang="en">
 	
-	<head><base href="../../"/>
+	<head>
         <title>{$config['appName']}</title>
 		
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
