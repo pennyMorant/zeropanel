@@ -315,7 +315,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ban')}</span>
+											<span class="menu-title">{$trans->t('ban')}</span>
 										</a>
 									</div>
                                     

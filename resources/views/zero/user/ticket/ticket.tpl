@@ -422,9 +422,6 @@
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
-<<<<<<< HEAD
-										<a class="menu-link" href="/user/referral">
-=======
 										<a class="menu-link" href="/user/ban">
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
@@ -436,14 +433,13 @@
 												</span>
 												<!--end::Svg Icon-->
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ban')}</span>
+											<span class="menu-title">{$trans->t('ban')}</span>
 										</a>
 									</div>
                                     <!--begin:Menu item-->
 									<div class="menu-item menu-accordion">
 										<!--begin:Menu link-->
 										<a class="menu-link" href="/user/referral">
->>>>>>> parent of 3fdb9b2 (delete ban code)
 											<span class="menu-icon">
 												<!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
 												<span class="svg-icon svg-icon-2">

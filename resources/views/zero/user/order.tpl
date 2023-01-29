@@ -306,7 +306,7 @@
 									</div>
                                     
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/ban">
+										<a class="menu-link" href="/user/ban">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bandaid" viewBox="0 0 16 16">
@@ -315,7 +315,7 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user.menu.ban')}</span>
+											<span class="menu-title">{$trans->t('ban')}</span>
 										</a>
 									</div>
                                     
