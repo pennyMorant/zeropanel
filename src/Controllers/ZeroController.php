@@ -134,7 +134,7 @@ class ZeroController extends BaseController
                     $datas[] = [
                         'x'  => date('Y-m-d', $time_a),
                         'y' => substr(Tools::flowToGB($total1 + $total2), 0, 4),                      
-                        'name' => I18n::get()->t('general.traffic'),
+                        'name' => I18n::get()->t('traffic'),
                     ];
                 }
                 return $response->withJson(array_reverse($datas));
