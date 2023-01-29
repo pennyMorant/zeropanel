@@ -139,6 +139,7 @@
     "doc": "帮助",
     "record": "帐号记录",
     "user center": "个人中心",
+    "ban": "封禁",
     "referral plan": "推广计划",
     "admin": "管理员",
     "theme day": "白天模式",
@@ -197,6 +198,8 @@
     "commission record": "佣金记录",
     "no need to reset": "无需重置",
     "never used": "从未使用过",
+    "packet plaintext match": "数据包明文匹配",
+    "packet hex match": "数据包hex匹配",
     "tutorial": {
         "android": {
             "clash": {

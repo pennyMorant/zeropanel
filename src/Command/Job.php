@@ -24,6 +24,8 @@ use App\Models\Setting;
 use App\Models\Paytake;
 use App\Models\Order;
 use App\Models\Payback;
+use App\Models\DetectBanLog;
+use App\Models\DetectLog;
 use App\Services\Mail;
 use App\Services\ZeroConfig;
 use App\Utils\Telegram\TelegramTools;
@@ -78,6 +80,7 @@ class Job extends Command
         echo '清理数据库各表开始' . PHP_EOL;
         UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_save_days')))->delete();
         Token::where('expire_time', '<', time())->delete();
+        DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
         EmailVerify::where('expire_in', '<', time() - 86400 * 3)->delete();
         PasswordReset::where('expire_time', '<', time() - 86400 * 3)->delete();
         Ip::where('datetime', '<', time() - 300)->delete();
@@ -398,6 +401,18 @@ class Job extends Command
                 }
                 echo '用户订阅余量检测结束' . PHP_EOL;
             }
+
+            // 审计封禁解封
+            if ($user->enable == 0) {
+                $logs = DetectBanLog::where('user_id', $user->id)->orderBy('id', 'desc')->first();
+                if ($logs != null) {
+                    if (($logs->end_time + $logs->ban_time * 60) <= time()) {
+                        $user->enable = 1;
+                    }
+                }
+            }
+
+            $user->save();
         }
     }
 

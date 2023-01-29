@@ -14,7 +14,7 @@ use App\Models\{
     Payback,
     Setting,
     InviteCode,
-    EmailVerify,
+    EmailVerify
 };
 use App\Utils\{
     Check,
@@ -395,6 +395,18 @@ class UserController extends BaseController
     {
         $user = $this->user;
         $this->view()->display('user/record.tpl');
+        return $response;
+    }
+    
+    /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function ban($request, $response, $args)
+    {
+        $user = $this->user;
+        $this->view()->display('user/ban.tpl');
         return $response;
     }
 

@@ -135,6 +135,7 @@
     "doc": "Document",
     "record": "Record",
     "user center": "User Center",
+    "ban": "Ban",
     "referral plan": "Referral",
     "admin": "ADMIN",
     "theme day": "Light",
@@ -193,6 +194,8 @@
     "commission record": "Commission Record",
     "no need to reset": "No need to reset",
     "never used": "Never used",
+    "packet plaintext match": "Packet plaintext match",
+    "packet hex match": "packet hex match",
     "tutorial": {
         "android": {
             "clash": {

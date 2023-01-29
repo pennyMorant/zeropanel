@@ -8,7 +8,8 @@ use App\Models\{
     Node,
     User,
     TrafficLog,
-    NodeOnlineLog
+    NodeOnlineLog,
+    DetectLog,
 };
 use App\Utils\Tools;
 use Slim\Http\{
@@ -222,6 +223,52 @@ class UserController extends BaseController
                 $ip_log->ip = $ip;
                 $ip_log->datetime = time();
                 $ip_log->save();
+            }
+        }
+
+        $res = [
+            'ret' => 1,
+            'data' => 'ok',
+        ];
+        return $response->withJson($res);
+    }
+
+    /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function addDetectLog($request, $response, $args)
+    {
+        $params = $request->getQueryParams();
+
+        $data = $request->getParam('data');
+        $node_id = $params['node_id'];
+        if ($node_id == '0') {
+            $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
+            $node_id = $node->id;
+        }
+        $node = Node::find($node_id);
+
+        if ($node == null) {
+            $res = [
+                'ret' => 0
+            ];
+            return $response->withJson($res);
+        }
+
+        if (count($data) > 0) {
+            foreach ($data as $log) {
+                $list_id = $log['list_id'];
+                $user_id = $log['user_id'];
+
+                // log
+                $detect_log = new DetectLog();
+                $detect_log->user_id = $user_id;
+                $detect_log->list_id = $list_id;
+                $detect_log->node_id = $node_id;
+                $detect_log->datetime = time();
+                $detect_log->save();
             }
         }
 
