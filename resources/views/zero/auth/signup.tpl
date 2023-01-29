@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>{$config['appName']} Sign Up</title>
+		<title>{$config['appName']} - {$trans->t('signup')}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -24,14 +24,14 @@
 						<div class="card-body p-10 p-lg-20">
 							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/user" action="#">
 								<div class="text-center mb-11">
-									<h1 class="text-dark fw-bolder mb-6">Sign Up</h1>
+									<h1 class="text-dark fw-bolder mb-6">{$trans->t('signup')}</h1>
 								</div>
 								<div class="fv-row mb-5">
-									<input class="form-control form-control-lg bg-transparent" type="email" placeholder="Email" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
+									<input class="form-control form-control-lg bg-transparent" type="email" placeholder="{$trans->t('email')}" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
 								</div>
 
 								<div class="fv-row mb-5" data-kt-password-meter="true">			
-									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Password" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
+									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="{$trans->t('passwd')}" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
 									<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
 										<i class="bi bi-eye-slash fs-2"></i>
 										<i class="bi bi-eye fs-2 d-none"></i>
@@ -39,11 +39,11 @@
 								</div>
 
 								<div class="fv-row mb-5">
-									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="Comfirm Password" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
+									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="{$trans->t('comfirm passwd')}" name="confirm-password" id="repasswd" autocomplete="off" data-kt-translate="sign-up-input-confirm-password" />
 								</div>
 
                                 <div class="fv-row mb-5">
-                                    <input class="form-control form-control-lg bg-transparent" type="text" placeholder="Code" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
+                                    <input class="form-control form-control-lg bg-transparent" type="text" placeholder="{$trans->t('referral code')}" name="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
 								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
 									<div class="fv-row mb-7">
@@ -52,16 +52,16 @@
 								{/if}
 								<div class="d-grid mb-10">
 									<button id="kt_sign_up_submit" class="btn btn-primary">
-										<span class="indicator-label" data-kt-translate="sign-up-submit">Sign Up</span>
+										<span class="indicator-label" data-kt-translate="sign-up-submit">{$trans->t('signup')}</span>
                                         <span class="indicator-progress">
-                                            <span data-kt-translate="general-progress">Please Wating...</span>
+                                            <span data-kt-translate="general-progress">{$trans->t('please wait')}</span>
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                         </span>
 									</button>
 								</div>
 								<div class="text-gray-500 text-center fw-semibold fs-6">
-										Already have account？
-									<a class="link-primary" href="/auth/signin">Sign In</a>
+										{$trans->t('already have account')}?
+									<a class="link-primary" href="/auth/signin">{$trans->t('signin')}</a>
 								</div>
 							</form>
 						</div>

@@ -75,7 +75,7 @@ class AuthController extends BaseController
             if (!$ret) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.captcha.error')
+                    'msg' => $trans->t('captcha failed')
                 ]);
             }
         }
@@ -84,7 +84,7 @@ class AuthController extends BaseController
         if ($user == null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $trans->t('auth.notify.signin.error_email')
+                'msg' => $trans->t('email does not exist')
             ]);
         }
 
@@ -93,7 +93,7 @@ class AuthController extends BaseController
             $user->collectSigninIp($_SERVER['REMOTE_ADDR'], 1);
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $trans->t('auth.notify.signin.error_passwd')
+                'msg' => $trans->t('passwd error')
             ]);
         }
 
@@ -127,13 +127,6 @@ class AuthController extends BaseController
         if (Setting::obtain('reg_email_verify')) {
             $email = trim($request->getParam('email'));
             $email = strtolower($email);
-
-            if ($email == '') {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('auth.notify.email.error_no_email')
-                ]);
-            }
             
             // check email format
             $check_res = Check::isEmailLegal($email);
@@ -145,7 +138,7 @@ class AuthController extends BaseController
             if ($user != null) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.email.error_used_email')
+                    'msg' => $trans->t('email has been registered')
                 ]);
             }
 
@@ -155,7 +148,7 @@ class AuthController extends BaseController
             if ($ipcount >= Setting::obtain('email_verify_ip_limit')) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.email.error_ip')
+                    'msg' => $trans->t('too many current ip requests')
                 ]);
             }
 
@@ -165,7 +158,7 @@ class AuthController extends BaseController
             if ($mailcount >= 3) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.email.error_more_times')
+                    'msg' => $trans->t('this email requests frequently will try later')
                 ]);
             }
 
@@ -191,13 +184,13 @@ class AuthController extends BaseController
             } catch (Exception $e) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.email.error_sendcode')
+                    'msg' => $trans->t('email sending failed')
                 ]);
             }
 
             return $response->withJson([
                 'ret' => 1,
-                'msg' => $trans->t('auth.notify.email.success')
+                'msg' => $trans->t('email sending success')
             ]);
         }
         return $response->withJson([
@@ -248,15 +241,10 @@ class AuthController extends BaseController
     public function register_helper($email, $passwd, $code, $telegram_id)
     {
         $trans = I18n::get();
-        if (Setting::obtain('reg_mode') == 'close') {
-            $res['ret'] = 0;
-            $res['msg'] = $trans->t('auth.notify.error_not_open');
-            return $res;
-        }
         
         if ($code == '' && Setting::obtain('reg_mode') === 'invite') {
             $res['ret'] = 0;
-            $res['msg'] = $trans->t('auth.notify.signup.error_need_invite_code');
+            $res['msg'] = $trans->t('referral code must be filled in');
             return $res;
         }
 
@@ -264,13 +252,13 @@ class AuthController extends BaseController
         if ($code !== '') {
             if ($c == null) {
                 $res['ret'] = 0;
-                $res['msg'] = $trans->t('auth.notify.signup.error_unknown_invite_code');
+                $res['msg'] = $trans->t('referral code does not exist');
                 return $res;
             } else if ($c->user_id != 0) {
                 $gift_user = User::where('id', $c->user_id)->first();
                 if ($gift_user == null) {
                     $res['ret'] = 0;
-                    $res['msg'] = $trans->t('auth.notify.signup.error_expired_invite_code');
+                    $res['msg'] = $trans->t('referral code has expired');
                     return $res;
                 }
             }
@@ -353,18 +341,12 @@ class AuthController extends BaseController
 
         $trans = I18n::get();
 
-        if (Setting::obtain('reg_mode') == 'close') {
-            $res['ret'] = 0;
-            $res['msg'] = $trans->t('auth.notify.signup.error_not_open');
-            return $response->withJson($res);
-        }
-
         if (Setting::obtain('enable_signup_captcha') == true) {
             $ret = Captcha::verify($request->getParams());
             if (!$ret) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.captcha.error')
+                    'msg' => $trans->t('captcha failed')
                 ]);
             }
         }
@@ -380,7 +362,7 @@ class AuthController extends BaseController
         if ($user != null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $trans->t('auth.notify.email.error_used_email')
+                'msg' => $trans->t('email has been registered')
             ]);
         }
 
@@ -393,7 +375,7 @@ class AuthController extends BaseController
             if ($mailcount == null) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => $trans->t('auth.notify.signup.error_emailcode')
+                    'msg' => $trans->t('email verification code error')
                 ]);
             }
         }

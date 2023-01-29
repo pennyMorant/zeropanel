@@ -360,7 +360,7 @@
 											<div class="card card-flush mb-9">
 												<div class="card-body">
 													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$referred_user}</p>
-													<p class="text-gray-400 text-center">Registered User</p>
+													<p class="text-gray-400 text-center">{$trans->t('registered user')}</p>
 												</div>
 											</div>
 										</div>
@@ -368,7 +368,7 @@
 											<div class="card card-flush mb-9">
 												<div class="card-body">
 													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$config['rebate_ratio'] * 100}%</p>
-													<p class="text-gray-400 text-center">Commssion ratio</p>
+													<p class="text-gray-400 text-center">{$trans->t('commission ratio')}</p>
 												</div>
 											</div>
 										</div>
@@ -377,7 +377,7 @@
 										<div class="card-header align-items-center py-5 gap-2 gap-md-5">
 											<div class="card-title">
 												<div class="fs-3 fw-bolder text-dark">
-													Commssion Record
+													{$trans->t('commission record')}
 												</div>
 											</div>
 										</div>
@@ -385,8 +385,8 @@
 											<table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_user_get_commission_log_table">
 												<thead>
 													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-														<th>Commission</th>
-														<th>Datetime</th>
+														<th>{$trans->t('commission')}</th>
+														<th>{$trans->t('date')}</th>
 													</tr>
 												</thead>
 												<tbody class="text-gray-600 fw-semibold"></tbody>

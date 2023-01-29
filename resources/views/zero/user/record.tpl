@@ -370,8 +370,8 @@
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
                                                         <th>IP</th>
-                                                        <th>Address</th>
-                                                        <th>Date</th>
+                                                        <th>{$trans->t('address')}</th>
+                                                        <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
@@ -393,8 +393,8 @@
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
                                                         <th>IP</th>
-                                                        <th>Address</th>
-                                                        <th>Date</th>
+                                                        <th>{$trans->t('address')}</th>
+                                                        <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
@@ -414,11 +414,11 @@
                                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_subscribe_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
-                                                        <th>Type</th>
+                                                        <th>{$trans->t('type')}</th>
                                                         <th>IP</th>
-                                                        <th>Address</th>
-                                                        <th>Client</th>
-                                                        <th>Date</th>
+                                                        <th>{$trans->t('address')}</th>
+                                                        <th>{$trans->t('client')}</th>
+                                                        <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
@@ -439,9 +439,9 @@
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
-                                                        <th>Node</th>
-                                                        <th>Traffic</th>
-                                                        <th>Date</th>
+                                                        <th>{$trans->t('node name')}</th>
+                                                        <th>{$trans->t('traffic')}</th>
+                                                        <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
