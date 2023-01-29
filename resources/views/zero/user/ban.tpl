@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{$config["appName"]} Dashboard</title>
-        <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
+    <head><base href="../../"/>
+		<title>{$config["appName"]} Ban</title>
+        
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />
@@ -22,6 +22,7 @@
         <link href="/favicon.png" rel="shortcut icon">
         <link href="/apple-touch-icon.png" rel="apple-touch-icon">
     </head>
+    
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
 		<script>var defaultThemeMode = "system"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if ( localStorage.getItem("data-theme") !== null ) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
 		<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
@@ -39,7 +40,7 @@
 							</div>
 						</div>
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-							<a href="/user" class="d-lg-none fs-1 text-dark fw-bolder">
+							<a href="/user" class="d-lg-none fs-1 fw-bolder text-dark">
 								{$config['appName']}
 							</a>
 						</div>
@@ -123,20 +124,6 @@
 										</div>
 									</div>
 								</div>
-								<div class="app-navbar-item ms-1 ms-lg-3">
-									<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
-										<span class="svg-icon svg-icon-1">
-											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="currentColor"></path>
-												<rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor"></rect>
-												<rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor"></rect>
-											</svg>
-										</span>
-										
-										<span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
-										
-									</div>
-								</div>
 								<div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 									<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 										<img src="{$user->gravatar}" alt="user" />
@@ -148,8 +135,9 @@
 													<img alt="Logo" src="{$user->gravatar}" />
 												</div>
 												<div class="d-flex flex-column">
-													<a class="badge badge-light-success fw-bold fs-8">LV&nbsp;{$user->class}</a>
-													<a class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
+													<div class="fw-bold d-flex align-items-center fs-5">{$user->name}
+													<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
+													<a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
 												</div>
 											</div>
 										</div>
@@ -158,19 +146,43 @@
 											<a href="#" class="menu-link px-5">
 												<span class="menu-title position-relative">Language
 												<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-												<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>
+												<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flag/united-states.svg" alt="" /></span></span>
 											</a>
 											<div class="menu-sub menu-sub-dropdown w-175px py-4">
 												<div class="menu-item px-3">
 													<a href="#" class="menu-link d-flex px-5 active">
 													<span class="symbol symbol-20px me-4">
-														<img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+														<img class="rounded-1" src="/theme/zero/assets/media/flag/united-states.svg" alt="" />
 													</span>English</a>
-												</div>												
+												</div>
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link d-flex px-5">
+													<span class="symbol symbol-20px me-4">
+														<img class="rounded-1" src="/theme/zero/assets/media/flag/spain.svg" alt="" />
+													</span>Spanish</a>
+												</div>
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link d-flex px-5">
+													<span class="symbol symbol-20px me-4">
+														<img class="rounded-1" src="/theme/zero/assets/media/flag/germany.svg" alt="" />
+													</span>German</a>
+												</div>
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link d-flex px-5">
+													<span class="symbol symbol-20px me-4">
+														<img class="rounded-1" src="/theme/zero/assets/media/flag/japan.svg" alt="" />
+													</span>Japanese</a>
+												</div>
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link d-flex px-5">
+													<span class="symbol symbol-20px me-4">
+														<img class="rounded-1" src="/theme/zero/assets/media/flag/france.svg" alt="" />
+													</span>French</a>
+												</div>
 											</div>
 										</div>
 										<div class="menu-item px-5">
-											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('signout')}</a>
+											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('user.menu.signout')}</a>
 										</div>
 									</div>
 								</div>
@@ -179,7 +191,7 @@
 					</div>
 				</div>
 				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-					<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+					<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }"  data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<a href="/user" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
                                 {$config['appName']}
@@ -196,8 +208,8 @@
 						<div class="app-sidebar-menu overflow-hidden flex-column-fluid">
 							<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
 								<div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-									<div class="menu-item here show menu-accordion">
-										<a class="menu-link active" href="/user">
+									<div class="menu-item menu-accordion">
+										<a class="menu-link" href="/user">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,11 +220,11 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('dashboard')}</span>
+											<span class="menu-title">{$trans->t('user.menu.dashboard')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="/user/order">
+										<a class="menu-link" href="user/order">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
@@ -220,11 +232,11 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('order')}</span>
+											<span class="menu-title">{$trans->t('user.menu.order')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="/user/product">
+										<a class="menu-link" href="user/product">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -235,11 +247,12 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('products')}</span>
+											<span class="menu-title">{$trans->t('user.menu.products')}</span>
 										</a>
 									</div>
+                                    
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="/user/node">
+										<a class="menu-link" href="user/node">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
@@ -247,12 +260,12 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('node')}</span>
+											<span class="menu-title">{$trans->t('user.menu.node')}</span>
 										</a>
 									</div>
+                                    
 									<div class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="/user/ticket">
+										<a class="menu-link" href="user/ticket">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-detailed" viewBox="0 0 16 16">
@@ -261,12 +274,11 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('ticket')}</span>
+											<span class="menu-title">{$trans->t('user.menu.ticket')}</span>
 										</a>
 									</div>
 									<div class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-										<a class="menu-link" href="/user/profile">
+										<a class="menu-link" href="user/profile">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -275,12 +287,13 @@
 													</svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('user center')}</span>
+											<span class="menu-title">{$trans->t('user.menu.user_center')}</span>
 										</a>
 									</div>
                                     
+                                    
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="/user/record">
+										<a class="menu-link" href="user/record">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
@@ -289,16 +302,13 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('record')}</span>
+											<span class="menu-title">{$trans->t('user.menu.log')}</span>
 										</a>
 									</div>
-									<div class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-<<<<<<< HEAD
-										<a class="menu-link" href="/user/referral">
-=======
+                                    
+									<div class="menu-item menu-accordion here show">
 										<a class="menu-link" href="user/ban">
-											<span class="menu-icon">
+											<span class="menu-icon active">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bandaid" viewBox="0 0 16 16">
                                                         <path d="M14.121 1.879a3 3 0 0 0-4.242 0L8.733 3.026l4.261 4.26 1.127-1.165a3 3 0 0 0 0-4.242ZM12.293 8 8.027 3.734 3.738 8.031 8 12.293 12.293 8Zm-5.006 4.994L3.03 8.737 1.879 9.88a3 3 0 0 0 4.241 4.24l.006-.006 1.16-1.121ZM2.679 7.676l6.492-6.504a4 4 0 0 1 5.66 5.653l-1.477 1.529-5.006 5.006-1.523 1.472a4 4 0 0 1-5.653-5.66l.001-.002 1.505-1.492.001-.002Z"/>
@@ -309,10 +319,9 @@
 											<span class="menu-title">{$trans->t('user.menu.ban')}</span>
 										</a>
 									</div>
+                                    
 									<div class="menu-item menu-accordion">
-										<!--begin:Menu link-->
 										<a class="menu-link" href="user/referral">
->>>>>>> parent of 3fdb9b2 (delete ban code)
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-optical-audio" viewBox="0 0 16 16">
@@ -322,19 +331,32 @@
                                                     </svg>
 												</span>
 											</span>
-											<span class="menu-title">{$trans->t('referral plan')}</span>
+											<span class="menu-title">{$trans->t('user.menu.promote')}</span>
 										</a>
 									</div>
-									{if $user->is_admin == '1'}
+                                    
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="/admin">
+										<a class="menu-link" href="user/agent">
+											<span class="menu-icon">
+												<span class="svg-icon svg-icon-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-command" viewBox="0 0 16 16">
+                                                        <path d="M3.5 2A1.5 1.5 0 0 1 5 3.5V5H3.5a1.5 1.5 0 1 1 0-3zM6 5V3.5A2.5 2.5 0 1 0 3.5 6H5v4H3.5A2.5 2.5 0 1 0 6 12.5V11h4v1.5a2.5 2.5 0 1 0 2.5-2.5H11V6h1.5A2.5 2.5 0 1 0 10 3.5V5H6zm4 1v4H6V6h4zm1-1V3.5A1.5 1.5 0 1 1 12.5 5H11zm0 6h1.5a1.5 1.5 0 1 1-1.5 1.5V11zm-6 0v1.5A1.5 1.5 0 1 1 3.5 11H5z"/>
+                                                    </svg>
+												</span>
+											</span>
+											<span class="menu-title">{$trans->t('user.menu.agent_center')}</span>
+										</a>
+									</div>
+									{if $user->is_admin == 1}
+									<div class="menu-item menu-accordion">
+										<a class="menu-link" href="admin">
 											<span class="menu-icon">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dpad" viewBox="0 0 16 16">
 														<path d="m7.788 2.34-.799 1.278A.25.25 0 0 0 7.201 4h1.598a.25.25 0 0 0 .212-.382l-.799-1.279a.25.25 0 0 0-.424 0Zm0 11.32-.799-1.277A.25.25 0 0 1 7.201 12h1.598a.25.25 0 0 1 .212.383l-.799 1.278a.25.25 0 0 1-.424 0ZM3.617 9.01 2.34 8.213a.25.25 0 0 1 0-.424l1.278-.799A.25.25 0 0 1 4 7.201V8.8a.25.25 0 0 1-.383.212Zm10.043-.798-1.277.799A.25.25 0 0 1 12 8.799V7.2a.25.25 0 0 1 .383-.212l1.278.799a.25.25 0 0 1 0 .424Z"/>
 														<path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v3a.5.5 0 0 1-.5.5h-3A1.5 1.5 0 0 0 0 6.5v3A1.5 1.5 0 0 0 1.5 11h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 6.5 16h3a1.5 1.5 0 0 0 1.5-1.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 16 9.5v-3A1.5 1.5 0 0 0 14.5 5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 9.5 0h-3ZM6 1.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3A1.5 1.5 0 0 0 11.5 6h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a1.5 1.5 0 0 0-1.5 1.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3A1.5 1.5 0 0 0 4.5 10h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 0 6 4.5v-3Z"/>
 													</svg>
 											</span>
-											<span class="menu-title">{$trans->t('admin')}</span>
+											<span class="menu-title">{$trans->t('user.menu.admin')}</span>
 										</a>
 									</div>
 									{/if}
@@ -343,7 +365,7 @@
 						</div>
 						<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 							<a href="{$config['admin_contact3']}" target="_blank" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="获取最新的信息">
-								<span class="btn-label fw-bold">Join Telegram Group</span>
+								<span class="btn-label fw-bold">加入 Telegram 群组</span>
 								<span class="svg-icon btn-icon svg-icon-2 m-0">
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z" fill="currentColor" />
@@ -360,339 +382,70 @@
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
-									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-										<div class="col-xxl-6">
-											<div class="card card-flush h-md-100">
-												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>
-												</div>     
-												<div class="card-body pt-0">
-													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
-														<span class="svg-icon svg-icon-warning svg-icon-1 me-5">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
-																<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
-																<path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
-																<path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
-															</svg>
-														</span>
-														<div class="d-flex flex-column flex-grow-1 mr-2">
-															<a class="fs-lg fw-bolder text-gray-800 mb-1">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	<span class="counter">{$trans->t('time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('day')}</span>
-																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
-																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('no product')}</span>
-																{else}<span class="counter">No product</span>
-																{/if}
-															</a>					   
-															<span class="text-muted fw-semibold d-block">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	{$trans->t('expired date')}:&nbsp;{substr($user->class_expire, 0, 10)}
-																{/if}
-															</span>
-														</div>
-													</div>
-													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-9">
-														<span class="svg-icon svg-icon-success svg-icon-1 me-5">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-soundwave" viewBox="0 0 16 16">
-																<path fill-rule="evenodd" d="M8.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5zm-2 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm-6 1.5A.5.5 0 0 1 5 6v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm-10 1A.5.5 0 0 1 3 7v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5zm12 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5z"/>
-															</svg>
-														</span>
-														<div class="d-flex flex-column flex-grow-1 mr-2">
-															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('traffic')}:&nbsp;{$user->usedTraffic()} / <span id="traffic">{$user->enableTraffic()}</span>
-															</a>
-															<span class="text-muted fw-semibold d-block">
-																{$trans->t('reset date')}:&nbsp;{$user->productTrafficResetDate()}
-															</span>
-														</div>
-													</div>
-													<div class="d-flex align-items-center bg-light-danger rounded p-5 mb-9">
-														<span class="svg-icon svg-icon-danger svg-icon-1 me-5">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-																<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
-																<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-															</svg>
-														</span>
-														<div class="d-flex flex-column flex-grow-1 mr-2">
-															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('online ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('unlimited')}{else}{$user->node_connector}{/if}
-															</a>
-															<span class="text-muted fw-semibold d-block">
-																{$trans->t('latest used date')}:&nbsp;{$user->lastUseTime()}
-															</span>
-														</div>
-													</div>
-													<div class="d-flex align-items-center bg-light-info rounded p-5 mb-5">
-														<span class="svg-icon svg-icon-info svg-icon-1 me-5">
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
-																<path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
-															</svg>
-														</span>
-														<div class="d-flex flex-column flex-grow-1 mr-2">
-															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('credit')}:&nbsp;{$user->money} $
-															</a>
-															<span class="text-muted fw-semibold d-block">
-																{$trans->t('commission')}:&nbsp;{$user->commission} $
-															</span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-xxl-6">
-											<div class="card card-flush mb-5">
-												<div class="card-header pt-5">
-													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
-												</div>
-												<div class="card-body d-flex flex-column pt-0">
-													<div id="traffic_widgets" data-kt-chart-color="success" style="height: 150px; min-height: 130px;"></div>
-												</div>
-											</div>
-											<div class="card card-flush">
-												<div class="card-header border-0">
-													<div class="card-title text-dark fw-bolder fs-3">
-														
-															{$trans->t('subscription url')}
-														
-													</div>
-												</div>
-												<div class="card-body pt-0">
-													<div class="row">
-														<div class="col">
-															{if in_array('clash',$zeroconfig['index_sub'])}
-															<!-- Clash订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('clash')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['clash']}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-															{if in_array('surge',$zeroconfig['index_sub'])}
-															<!-- Surge订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('surge')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surge"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-															{if in_array('ss',$zeroconfig['index_sub'])}
-															<!-- ss订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;复制 SS 订阅&nbsp;&nbsp;</button>
-															</div>
-															{/if}
-															{if in_array('v2ray',$zeroconfig['index_sub'])}
-															<!-- V2Ray订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2ray')}</button>
-															</div>
-															{/if}
-															{if in_array('shadowrocket',$zeroconfig['index_sub'])}
-															<!-- Shadowrocket订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["shadowrocket"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo["shadowrocket"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-															{if in_array('quantumult',$zeroconfig['index_sub'])}
-															<!-- Quantumult订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["quantumult"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo["quantumult"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-															{if in_array('quantumultx',$zeroconfig['index_sub'])}
-															<!-- QuantumultX订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumultx copy-text" data-clipboard-text="{$subInfo["quantumultx"]}"><i class="zero-quantumultx text-white"></i>{$trans->t('quanx')}</button>
-															</div>
-															{/if}
-															{if in_array('v2rayvless',$zeroconfig['index_sub'])}
-																<!-- V2Ray订阅 -->
-																<div class="btn-group mb-3 mr-3">
-																	<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray_vless"]}"><i class="zero-v2rayng text-white"></i>&nbsp;&nbsp;复制 V2Ray-VLESS 订阅&nbsp;&nbsp;</button>
-																</div>
-															{/if}
-															{if in_array('surfboard',$zeroconfig['index_sub'])}
-															<!-- Surfboard订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('surfboard')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surfboard"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo["surfboard"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-															{if in_array('kitsunebi',$zeroconfig['index_sub'])}
-															<!-- Kitsunebi订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-kitsunebi copy-text" data-clipboard-text="{$subInfo["kitsunebi"]}"><i class="zero-kitsunebi text-white"></i>&nbsp;&nbsp;复制 Kitsunebi 订阅&nbsp;&nbsp;</button>
-															</div>
-															{/if}
-															{if in_array('anxray',$zeroconfig['index_sub'])}
-															<!-- AnXray订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('sagernet')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["anxray"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo["anxray"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															{/if}
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>                                   
-									</div>
-									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-										<div class="col-xxl-8">
-										<div class="card card-flush">
-												<div class="card-header">
-													<div class="card-title">
-														<div class="fw-bolder text-dark fs-h3">
-															{$trans->t('tutorial details')}
-														</div>
-													</div>
-												
-													<div class="card-toolbar">
-														<ul class="nav">
-															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary active fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_1_1">Android</a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_2_2">IOS</a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_3_3">MACOS</a>
-															</li>
-															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4" data-bs-toggle="tab" href="#kt_tab_pane_4_4">Windows</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-												<div class="card-body pt-0">
-													<div class="tab-content mt-5">
-													<div class="tab-pane fade show active" id="kt_tab_pane_1_1">
-														{foreach $zeroconfig['client_android'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
-															</div>
-															<div class="d-flex flex-column flex-grow-1 me-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
-														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_2_2" role="tabpanel" aria-labelledby="kt_tab_pane_2_2">
-														{foreach $zeroconfig['client_ios'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
-															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
-														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_3_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
-														{foreach $zeroconfig['client_macos'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
-															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
-														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel" aria-labelledby="kt_tab_pane_4_4">
-														{foreach $zeroconfig['client_windows'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
-															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
-														</div>
-														{/foreach}
-													</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-xxl-4">
-										<div class="card card-flush h-md-100" style="background: linear-gradient(112.14deg, #00D2FF 0%, #3A7BD5 100%)">                                   
-                                                <div class="card-body">                                        
-                                                    <div class="row align-items-center h-100">                                           
-                                                        <div class="col-7 ps-xl-13">                                                
-                                                            <div class="text-white mb-6 pt-6">
-                                                                <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('ref.gift')}</span>
-                                                                <span class="fs-h2 fw-bolder">{$trans->t('ref.referral')}</span>
-                                                            </div>                                                                                              
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')}</span>                                               
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
-                                                            <div class="d-flex flex-column flex-sm-row">
-                                                                <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
-                                                            </div>                                                
-                                                        </div>                                                                                        
-                                                        <div class="col-5 pt-10">                                               
-                                                            <div class="bgi-no-repeat bgi-size-contain bgi-position-x-end h-225px" style="background-image:url('/theme/zero/assets/media/svg/illustrations/easy/5.svg');"></div>                                                
-                                                        </div>                                           
-                                                    </div>                                       
-                                                </div>                                   
+                                    <div class="card mb-9">
+                                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                            <div class="card-title">
+                                                <div class="fs-3 fw-bolder text-dark">
+                                                    规则列表
+                                                </div>
                                             </div>
-										</div>
-									</div>
-								</div>
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_ban_rule_table">
+                                                <thead>
+                                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                        
+                                                        <th>Rule Name</th>
+                                                        <th>Rule Detail</th>
+                                                        <th>Rule Introduction</th>
+                                                        <th>Rule Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-gray-600 fw-semibold"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-9">
+                                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                            <div class="card-title">
+                                                <div class="fs-3 fw-bolder text-dark">
+                                                    规则触发记录
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_user_baned_log_table">
+                                                <thead>
+                                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                        
+                                                        <th>Node Name</th>
+                                                        <th>Rule Nanme</th>
+                                                        <th>Rule Detail</th>
+                                                        <th>Rule Introduction</th>
+                                                        <th>Rule Type</th>
+                                                        <th>Datetime</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-gray-600 fw-semibold"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-						<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
-							<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
-								<div class="text-dark-75 order-2 order-md-1">
-									&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
-								</div>
-							</div>
-                    	</div>
+                        <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
+                            <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
+                                <div class="text-dark-75 order-2 order-md-1">
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-		{include file='include/global/scripts.tpl'}
-		{include file='include/index/news.tpl'}										
-	</body>
+        {include file='include/global/scripts.tpl'}
+    </body>
 </html>

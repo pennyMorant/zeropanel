@@ -397,6 +397,18 @@ class UserController extends BaseController
         $this->view()->display('user/record.tpl');
         return $response;
     }
+    
+    /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function ban($request, $response, $args)
+    {
+        $user = $this->user;
+        $this->view()->display('user/ban.tpl');
+        return $response;
+    }
 
     /**
      * @param Request   $request
