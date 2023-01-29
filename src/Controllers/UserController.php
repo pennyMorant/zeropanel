@@ -14,7 +14,7 @@ use App\Models\{
     Payback,
     Setting,
     InviteCode,
-    EmailVerify,
+    EmailVerify
 };
 use App\Utils\{
     Check,

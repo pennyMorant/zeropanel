@@ -198,6 +198,8 @@
     "commission record": "佣金记录",
     "no need to reset": "无需重置",
     "never used": "从未使用过",
+    "packet plaintext match": "数据包明文匹配",
+    "packet hex match": "数据包hex匹配",
     "tutorial": {
         "android": {
             "clash": {

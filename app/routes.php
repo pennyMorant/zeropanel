@@ -171,6 +171,20 @@ return function (SlimApp $app) {
         $group->delete('/announcement',          App\Controllers\Admin\AnnController::class . ':delete');
         $group->post('/announcement/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
 
+        // Detect Mange
+        $group->get('/detect',                   App\Controllers\Admin\DetectController::class . ':index');
+        $group->get('/detect/create',            App\Controllers\Admin\DetectController::class . ':create');
+        $group->post('/detect',                  App\Controllers\Admin\DetectController::class . ':add');
+        $group->get('/detect/{id}/edit',         App\Controllers\Admin\DetectController::class . ':edit');
+        $group->put('/detect/{id}',              App\Controllers\Admin\DetectController::class . ':update');
+        $group->delete('/detect',                App\Controllers\Admin\DetectController::class . ':delete');
+        $group->get('/detect/log',               App\Controllers\Admin\DetectController::class . ':log');
+        $group->post('/detect/ajax',             App\Controllers\Admin\DetectController::class . ':ajaxRule');
+        $group->post('/detect/log/ajax',         App\Controllers\Admin\DetectController::class . ':ajaxLog');
+
+        $group->get('/detect/ban',               App\Controllers\Admin\DetectBanLogController::class . ':index');
+        $group->post('/detect/ban/ajax',         App\Controllers\Admin\DetectBanLogController::class . ':ajaxLog');
+
         // IP Mange
         $group->get('/login',                    App\Controllers\Admin\IpController::class . ':index');
         $group->get('/alive',                    App\Controllers\Admin\IpController::class . ':alive');
@@ -228,10 +242,12 @@ return function (SlimApp $app) {
         $group->get('/users',                App\Controllers\WebAPI\UserController::class . ':index');
         $group->post('/users/traffic',       App\Controllers\WebAPI\UserController::class . ':addTraffic');
         $group->post('/users/aliveip',       App\Controllers\WebAPI\UserController::class . ':addAliveIp');
+        $group->post('/users/detectlog',     App\Controllers\WebAPI\UserController::class . ':addDetectLog');
         $group->post('/nodes/{id}/info',     App\Controllers\WebAPI\NodeController::class . ':info');
         $group->get('/nodes',                App\Controllers\WebAPI\NodeController::class . ':getAllInfo');
         $group->post('/nodes/config',        App\Controllers\WebAPI\NodeController::class . ':getConfig');
         $group->get('/func/ping',            App\Controllers\WebAPI\FuncController::class . ':ping');
+        $group->get('/func/detect_rules',    App\Controllers\WebAPI\FuncController::class . ':getDetectLogs');
     })->add(new WebAPI());
 
     $app->group('/link', function (Group $group) {

@@ -315,8 +315,6 @@ KTUtil.onDOMContentLoaded(function () {
     KTDatatablesTrafficLogSide.init();
 });
 
-<<<<<<< HEAD
-=======
 // ban rule
 var KTDatatablesBanRuleSide = function () {
     var table;
@@ -407,7 +405,6 @@ KTUtil.onDOMContentLoaded(function () {
     KTDatatablesUserBanedLogSide.init();
 });
 
->>>>>>> parent of 3fdb9b2 (delete ban code)
 // commission
 var KTDatatablesUserGetCommissionLogSide = function () {
     var table;

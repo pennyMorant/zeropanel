@@ -22,7 +22,9 @@ use App\Models\{
     SigninIp,
     TrafficLog,
     UserSubscribeLog,
-    Setting
+    Setting,
+    DetectRule,
+    DetectLog
 };
 use App\Utils\{
     URL, 
@@ -256,7 +258,6 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'trafficlog':
-
                 $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400)->orderBy($sort_field, $sort);
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
@@ -267,6 +268,41 @@ class ZeroController extends BaseController
                     $tempdata['rate'] = $value->rate;
                     $tempdata['traffic'] = $value->traffic;
                     $tempdata['datetime'] = date('Y-m-d H:i:s', $value->date_time);
+                    $data[] = $tempdata;
+                }
+                $recordsTotal = $query['count'];
+                $recordsFiltered = $query['count'];
+                break;
+            case 'user_baned_log':
+                $querys = DetectLog::query()->orderBy($sort_field, 'desc')->where('user_id', $user->id);
+                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $data = [];
+                foreach ($query['datas'] as $value) {
+                    $tempdata['id'] = $value->id;
+                    $tempdata['node_id'] = $value->node_id;
+                    $tempdata['node_name'] = $value->Node()->name;
+                    $tempdata['list_id'] = $value->list_id;
+                    $tempdata['rule_name'] = $value->DetectRule()->name;
+                    $tempdata['rule_text'] = $value->DetectRule()->text;
+                    $tempdata['rule_regex'] = $value->DetectRule()->regex;
+                    $tempdata['rule_type'] = ($value->DetectRule()->type === 1 ? '数据包明文匹配' : ($value->DetectRule()->type === 2 ? '数据包 hex 匹配' : '未知'));
+                    $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
+                    $data[] = $tempdata;
+                }
+                $recordsTotal = $query['count'];
+                $recordsFiltered = $query['count'];
+                break;               
+            case 'ban_rule':
+                $querys = DetectRule::query()->orderBy($sort_field, $sort);
+                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $data = [];
+
+                foreach ($query['datas'] as $value) {
+                    $tempdata['id'] = $value->id;
+                    $tempdata['name'] = $value->name;
+                    $tempdata['text'] = $value->text;
+                    $tempdata['regex'] = $value->regex;
+                    $tempdata['type'] = ($value->type === 1 ? '数据包明文匹配' : ($value->type === 2 ? '数据包 hex 匹配' : '未知'));
                     $data[] = $tempdata;
                 }
                 $recordsTotal = $query['count'];

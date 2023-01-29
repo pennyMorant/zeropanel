@@ -333,8 +333,6 @@
                     <ul class="menu-collapse collapse in" id="ui_menu_config">
                         <li><a href="/admin/setting"><i class="icon icon-lg">settings</i>&nbsp;设置中心</a></li>
                     </ul>
-<<<<<<< HEAD
-=======
 
                     <a class="waves-attach" data-toggle="collapse" href="#ui_menu_detect">审计</a>
                     <ul class="menu-collapse collapse in" id="ui_menu_detect">
@@ -343,8 +341,6 @@
                         <li><a href="/admin/detect/ban"><i class="icon icon-lg">text_fields</i>&nbsp;审计封禁</a></li>
                     </ul>
 
-
->>>>>>> parent of 3fdb9b2 (delete ban code)
                     <a class="waves-attach" data-toggle="collapse" href="#ui_menu_trade">交易</a>
                     <ul class="menu-collapse collapse in" id="ui_menu_trade">
                         <li><a href="/admin/order"><i class="icon icon-lg">list</i>&nbsp;订单记录</a></li>

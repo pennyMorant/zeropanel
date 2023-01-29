@@ -182,7 +182,7 @@
 											</div>
 										</div>
 										<div class="menu-item px-5">
-											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('user.menu.signout')}</a>
+											<a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('signout')}</a>
 										</div>
 									</div>
 								</div>
