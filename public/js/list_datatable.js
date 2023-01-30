@@ -28,33 +28,10 @@ var KTDatatablesOrderSide = function () {
                 { data: 'order_type' },
                 { data: 'created_time' },
                 { data: 'no' },
-                { data: null},
+                { data: 'action'},
             ],
             
-            columnDefs: [
-                {
-                    targets: -1,
-                    orderable: false,
-                    className: 'text-end',
-                    render: function (data) {
-                        return `<a class="btn btn-sm btn-light-primary" href="/user/order/${data.no}" >Details</a>`;
-                    },
-                },
-                {
-                    targets: 1,
-                    render: function (data, type, row) {
-                        if (data == 'paid') {
-                            return '<div class="badge font-weight-bold badge-light-success fs-6">Paid</div>';
-                        } else if (data == 'pending') {
-                            return `<div class="badge font-weight-bold badge-light-warning fs-6">Pending</div>`;
-                        } else if (data == 'invalid') {
-                            return `<div class="badge font-weight-bold badge-light-danger fs-6">Invalid</div>`;
-                        }
-                    },
-                },
-                
-            ],
-            
+            columnDefs: [],           
         });
 
     }
@@ -98,27 +75,9 @@ var KTDatatablesTicketSide = function () {
                 { data: 'title' },
                 { data: 'status' },
                 { data: 'datetime' },
-                { data: null},
+                { data: 'action'},
             ],
-            columnDefs: [
-                {
-                    targets: 2,
-                    render: function (data) {
-                        if (data == 1) {
-                            return '<div class="badge font-weight-bold badge-light-success fs-6">Active</div>';
-                        } else {
-                            return '<div class="badge font-weight-bold badge-light fs-6">Closed</div>';
-                        }
-                    },
-                },
-                {
-                    targets: -1,
-                    render: function (data) {
-                        return `<a class="btn btn-sm btn-light-primary" href="/user/ticket/${data.id}/view" >Details</a>`;
-                    },
-                },
-                
-            ],
+            columnDefs: [],
             
         });
 

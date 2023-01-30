@@ -200,6 +200,8 @@
     "never used": "从未使用过",
     "packet plaintext match": "数据包明文匹配",
     "packet hex match": "数据包hex匹配",
+    "active": "活跃",
+    "closed": "关闭",
     "tutorial": {
         "android": {
             "clash": {

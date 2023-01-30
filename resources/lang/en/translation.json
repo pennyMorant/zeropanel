@@ -196,6 +196,8 @@
     "never used": "Never used",
     "packet plaintext match": "Packet plaintext match",
     "packet hex match": "packet hex match",
+    "active": "Active",
+    "closed": "Closed",
     "tutorial": {
         "android": {
             "clash": {

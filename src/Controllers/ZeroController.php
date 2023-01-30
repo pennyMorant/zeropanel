@@ -160,6 +160,8 @@ class ZeroController extends BaseController
             return 0;
         }
 
+        $trans = I18n::get();
+
         switch ($name) {
             case 'ticket':
                 $querys = Ticket::query()->where('userid', $user->id)->where('rootid', 0)->orderBy($sort_field, $sort);
@@ -168,8 +170,17 @@ class ZeroController extends BaseController
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
                     $tempdata['title'] = $value->title;
+                    switch ($value->status) {
+                        case '1': 
+                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light-success fs-6">' . $trans->t('active') . '</div>';
+                            break;
+                        case '0':
+                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light fs-6">' . $trans->t('closed') . '</div>';
+                            break;
+                        return $tempdata['status'];
+                    }
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
-                    $tempdata['status'] = $value->status;
+                    $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/' . $value->id . '/view">' . $trans->t('details') . '</a>';
                     $data[] = $tempdata;
                 }
 
@@ -185,10 +196,23 @@ class ZeroController extends BaseController
  
                     $tempdata['no']                = $value->no;
                     $tempdata['order_total']       = $value->order_total;
-                    $tempdata['order_status']      = $value->order_status;
-                    $tempdata['order_type']        = $value->order_type == 'purchase_product_order' ? "Product" : "Credit";
+                    switch ($value->order_status) {
+                        case 'paid':
+                            $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-success fs-6">' . $trans->t('paid') . '</div>';
+                            break;
+                        case 'pending':
+                            $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-warning fs-6">' . $trans->t('pending') . '</div>';
+                            break;
+                        case 'invalid': 
+                            $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-danger fs-6">' . $trans->t('invalid') . '</div>';
+                            break;
+                        return $tempdata['order_status'];
+                    }
+                    //$tempdata['order_status']      = $value->order_status;
+                    $tempdata['order_type']        = $value->order_type == 'purchase_product_order' ? $trans->t('purchase product') : $trans->t('add credit');
                     $tempdata['created_time']      = date('Y-m-d H:i:s', $value->created_time);
                     $tempdata['expired_time']      = $value->expired_time;
+                    $tempdata['action']            = '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$value->no.'">' . $trans->t('details') . '</a>';
                     $data[]                        = $tempdata;
                 }
 
