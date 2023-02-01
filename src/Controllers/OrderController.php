@@ -35,13 +35,13 @@ class OrderController extends BaseController
             ->where('no', $order_no)
             ->first();
         if ($order->order_payment == 'creditpay') {
-            $payment = '余额支付';
+            $payment = I18n::get()->t('credit');
         } else if ($order->order_payment == 'alipay') {
-            $payment = '支付宝';
+            $payment = I18n::get()->t('alipay');
         } else if ($order->order_payment == 'wechatpay') {
-            $payment = '微信';
+            $payment = I18n::get()->t('wechat');
         } else if ($order->order_payment == 'cryptopay') {
-            $payment = '虚拟币';
+            $payment = I18n::get()->t('crypto');
         } else {
             $payment = '未知';
         }
@@ -67,44 +67,10 @@ class OrderController extends BaseController
             case 'purchase_product_order':
                 try {
                     if ($product == null) {
-                        throw new \Exception(I18n::get()->t('general.notify.error_null'));
+                        throw new \Exception(I18n::get()->t('error request'));
                     }
                     if ($user->class == $product->class && $product->traffic_reset_period != $user->userTrafficResetPeriod()) {
-                        throw new \Exception('产品属性与用户当前产品属性不同，不可购买该产品');
-                    }
-                    if ($coupon_code != '') {
-                        $coupon = Coupon::where('code', $coupon_code)->first();
-                        if ($coupon == null) {
-                            throw new \Exception(I18n::get()->t('user.products.promo.notify.error_unknown'));
-                        }
-
-                        if ($coupon->expire < time()) {
-                            throw new \Exception(I18n::get()->t('user.products.promo.notify.error_expired'));
-                        }
-                        
-                        if ($coupon->order($product->id) == false) {
-                            throw new \Exception(I18n::get()->t('user.products.promo.notify.error_limited'));
-                        }
-
-                        $per_use_limit = $coupon->per_use_count;
-                        if ($per_use_limit > 0) {
-                            $use_count = Order::where('order_status', 'paid')
-                                ->where('order_coupon', $coupon_code)
-                                ->where('user_id', $user->id)
-                                ->count();
-                            if ($use_count >= $per_use_limit) {
-                                throw new \Exception(I18n::get()->t('user.products.promo.notify.error_times'));
-                            }
-                        }
-                        $total_use_limit = $coupon->total_use_count;
-                        if ($total_use_limit > 0) {
-                            $total_use_count = Order::where('order_status', 'paid')
-                                ->where('order_coupon', $coupon_code)
-                                ->count();
-                            if ($total_use_count >= $total_use_limit) {
-                                throw new \Exception(I18n::get()->t('user.products.promo.notify.error_times'));
-                            }
-                        }
+                        throw new \Exception('The product attribute is different from the user current product attribute, and the product cannot be purchased');
                     }
 
                     $order = new Order();
@@ -135,10 +101,10 @@ class OrderController extends BaseController
             case 'add_credit_order':
                 try {
                     if ($amount == '') {
-                        throw new \Exception('请输入充值金额');
+                        throw new \Exception(I18n::get()->t('please enter the amount'));
                     }
                     if ($amount <= 0) {
-                        throw new \Exception('充值金额应当大于零');
+                        throw new \Exception(I18n::get()->t('amount should be greater than zero'));
                     }
                     $order = new Order();
                     $order->no = self::createOrderNo();
@@ -187,21 +153,15 @@ class OrderController extends BaseController
         $order = Order::where('user_id', $user->id)->where('no', $order_no)->first();
         try {
             if (time() > $order->expired_time) {
-                throw new \Exception('此订单已过期');
+                throw new \Exception(I18n::get()->t('order has expired'));
             }
             if ($order->order_status == 'paid') {
-                throw new \Exception('此订单已支付');
+                throw new \Exception(I18n::get()->t('order has paid'));
             }
             
             if ($payment == 'creditpay') {
-                if ($order->order_type == 'add_credit_order') {
-                    throw new \Exception('账户充值请使用在线支付');
-                }
                 if ($user->money < ($order->order_total)) {
-                    if ($user->money > 0) {
-                        throw new \Exception('余额已抵扣此账单，差额请使用其他方式支付');
-                    }
-                    throw new \Exception('账户余额不足，请使用其他方式支付');
+                    throw new \Exception(I18n::get()->t('insufficient credit'));
                 }
                 
                 $order->order_payment = $payment;
@@ -236,7 +196,7 @@ class OrderController extends BaseController
 
         return $response->withJson([
             'ret' => 2, // 0时表示错误; 1是在线支付订单创建成功状态码; 2分配给账户余额支付
-            'msg' => '购买成功',
+            'msg' => I18n::get()->t('success'),
         ]);
     }
 
@@ -347,7 +307,7 @@ class OrderController extends BaseController
 
         if ($product == null) {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('general.notify.error_null');
+            $res['msg'] = I18n::get()->t('error request');
             return $response->withJson($res);
         }
 
@@ -355,19 +315,19 @@ class OrderController extends BaseController
 
         if ($coupons == null) {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.products.promo.notify.error_unknown');
+            $res['msg'] = I18n::get()->t('promo code invalid');
             return $response->withJson($res);
         }
 
         if ($coupons->expire < time()) {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.products.promo.notify.error_expired');
+            $res['msg'] = I18n::get()->t('promo code has expired');
             return $response->withJson($res);
         }
         
         if ($coupons->order($product->id) == false) {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.products.promo.notify.error_limited');
+            $res['msg'] = I18n::get()->t('the conditions of use are not met');
             return $response->withJson($res);
         }
 
@@ -379,7 +339,7 @@ class OrderController extends BaseController
                 ->count();
             if ($use_count >= $per_use_limit) {
                 $res['ret'] = 0;
-                $res['msg'] = I18n::get()->t('user.products.promo.notify.error_times');
+                $res['msg'] = I18n::get()->t('promo code have been used up');
                 return $response->withJson($res);
             }
         }
@@ -391,7 +351,7 @@ class OrderController extends BaseController
                 ->count();
             if ($total_use_count >= $total_use_limit) {
                 $res['ret'] = 0;
-                $res['msg'] = I18n::get()->t('user.products.promo.notify.error_times');
+                $res['msg'] = I18n::get()->t('promo code have been used up');
                 return $response->withJson($res);
             }
         }

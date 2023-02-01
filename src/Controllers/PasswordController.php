@@ -44,13 +44,13 @@ class PasswordController extends BaseController
         if ($user == null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => I18n::get()->t('auth.notify.resetpasswd.error_email_not_exist')
+                'msg' => I18n::get()->t('email does not exist')
             ]);
         }
         if (Password::sendResetEmail($email)) {
-            $msg = I18n::get()->t('auth.notify.resetpasswd.success_send_email_code');
+            $msg = I18n::get()->t('email sending success');
         } else {
-            $msg = I18n::get()->t('auth.notify.resetpasswd.success_send_email_fail');;
+            $msg = I18n::get()->t('email sending failed');;
         }
         return $response->withJson([
             'ret' => 1,
@@ -83,26 +83,12 @@ class PasswordController extends BaseController
         $password = $request->getParam('password');
         $repassword = $request->getParam('repassword');
 
-        if ($password != $repassword) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => I18n::get()->t('auth.notify.resetpasswd.error_passwd_not_same')
-            ]);
-        }
-
-        if (strlen($password) < 8) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => I18n::get()->t('auth.notify.resetpasswd.error_passwd_too_short')
-            ]);
-        }
-
         // check token
         $token = PasswordReset::where('token', $tokenStr)->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
         if ($token == null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => I18n::get()->t('auth.notify.resetpasswd.error_reset_url_invalid')
+                'msg' => I18n::get()->t('link is dead')
             ]);
         }
         /** @var PasswordReset $token */
@@ -110,7 +96,7 @@ class PasswordController extends BaseController
         if ($user == null) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => I18n::get()->t('auth.notify.resetpasswd.error_reset_url_invalid')
+                'msg' => I18n::get()->t('link is dead')
             ]);
         }
 
@@ -120,10 +106,10 @@ class PasswordController extends BaseController
 
         if (!$user->save()) {
             $rs['ret'] = 0;
-            $rs['msg'] = I18n::get()->t('auth.notify.resetpasswd.error_resetpasswd_fail');
+            $rs['msg'] = I18n::get()->t('failed');
         } else {
             $rs['ret'] = 1;
-            $rs['msg'] = I18n::get()->t('auth.notify.resetpasswd.success_resetpasswd');
+            $rs['msg'] = I18n::get()->t('success');
             
             if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
                 $user->clean_link();

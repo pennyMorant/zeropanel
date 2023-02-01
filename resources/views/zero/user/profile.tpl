@@ -649,7 +649,7 @@
 	<div class="modal-dialog modal-dialog-centered mw-650px">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="fw-bold">更改邮箱地址</h2>
+				<h2 class="fw-bold">{$trans->t('change email')}</h2>
 			</div>
 			<div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
 				<form class="form" action="#" id="zero_modal_user_update_email_form">
@@ -669,15 +669,15 @@
 					</div>
 				    <div class="fv-row mb-7">
 					    <label class="fs-6 fw-semibold form-label mb-2">
-							<span class="required">Email address</span>
+							<span class="required">{$trans->t('email')}</span>
 						</label>
 						<input class="form-control form-control-solid" placeholder="" name="profile_email" value="" id="profile_email" />
 					</div>
 				    <div class="text-center pt-15">
 						<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
 						<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-							<span class="indicator-label">submit</span>
-							<span class="indicator-progress">please waite
+							<span class="indicator-label">{$trans->t('submit')}</span>
+							<span class="indicator-progress">{$trans->t('please wait')}
 							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 						</button>
 					</div>
@@ -690,7 +690,7 @@
 	<div class="modal-dialog modal-dialog-centered mw-650px">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="fw-bold">更改用户密码</h2>
+				<h2 class="fw-bold">{$trans->t('change passwd')}</h2>
 			</div>
 			<div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
 				<form id="zero_modal_user_update_password_form" class="form" action="#">
@@ -722,10 +722,10 @@
 						<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="confirm_password" name="confirm_password" autocomplete="off" />
 					</div>
 					<div class="text-center pt-15">
-						<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">Discard</button>
+						<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
 						<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-							<span class="indicator-label">Submit</span>
-							<span class="indicator-progress">Please wait...
+							<span class="indicator-label">{$trans->t('submit')}</span>
+							<span class="indicator-progress">{$trans->t('please wait')}
 							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 						</button>
 					</div>
@@ -738,13 +738,13 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{$trans->t('user.billing.withdraw_setting')}</h4>
+                <h4 class="modal-title">{$trans->t('withdraw account')}</h4>
             </div>
             <div class="modal-body">
-                <p class="text-warning">{$trans->t('user.billing.withdraw_alert')}</p>
+                <!--<p class="text-warning">{$trans->t('user.billing.withdraw_alert')}</p>-->
                 <form>
 					<div class="mb-3">
-						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('user.billing.withdraw_account_type')}:</label>
+						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('type')}:</label>
 						<select class="form-select" id="withdraw_account_type" data-style="btn-primary">
 							{foreach json_decode($config['withdraw_method'], true) as $acctype}
 							<option value="{$acctype}" {if isset($user->withdraw_account) && $acctype == $user->withdraw_account_type}selected="selected"{/if}>{$acctype}</option>
@@ -753,7 +753,7 @@
                 </form>
                 <form>
 					<div class="mb-3">
-						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('user.billing.withdraw_account')}:</label>						
+						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('account')}:</label>						
 						{if isset($user->withdraw_account) && $user->withdraw_account_type}
 						<input type="text" class="form-control" value="{$user->withdraw_account}" id="withdraw_account_value"/>
 						{else}
@@ -774,22 +774,22 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{$trans->t('user.billing.withdraw_confirm')}</h4>
+                <h4 class="modal-title">{$trans->t('commission withdrawal')}</h4>
             </div>
             <div class="modal-body">
-				<label class="col-form-label fw-bold" for="recipient-name">提现金额:</label>
+				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>
                 <form class="mb-3">
-                    <input type="number" class="form-control" placeholder="{$trans->t('user.billing.withdraw_amount')}" id="commission_amount"/>
+                    <input type="number" class="form-control" placeholder="{$trans->t('amount')}" id="commission_amount"/>
                 </form>
-				<label class="col-form-label fw-bold" for="recipient-name">提现方式:</label>
+				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('withdrawal method')}:</label>
                 <ul class="nav nav-pills row nav-primary mb-3" role="tablist">
                     <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0" id="taketype">
                         <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-type="1">
                             <span class="py-2 w-auto">
 								<i class="bi bi-wallet-fill text-primary fs-2hx"></i>
                             </span>
-                            <span class="nav-text fs-6 py-2 text-center">{$trans->t('user.billing.withdraw_to_balance')}<br/>
-                            <small>{$trans->t('user.billing.less_than')}: 0</small></span>
+                            <span class="nav-text fs-6 py-2 text-center">{$trans->t('withdraw to credit')}<br/>
+                            <small>{$trans->t('no less than')}: 0</small></span>
                         </a>
                     </li>
                     {if $config['enable_withdraw'] == true}
@@ -816,13 +816,13 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('user.billing.add_credit')}</h4>
+                <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
             </div>
             <div class="modal-body">
-				<label class="col-form-label fw-bold" for="recipient-name">充值金额:</label>		
+				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>		
 				<div class="form-group">
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="{$trans->t('user.billing.add_amount')}" id="add_credit_amount">
+						<input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
 					</div>
 				</div>
                 
@@ -831,7 +831,7 @@
 				<button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
                 <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder('add_credit_order')">
 					<span class="indicator-label">{$trans->t('submit')}</span>			
-					<span class="indicator-progress">Please wait...
+					<span class="indicator-progress">{$trans->t('please wait')}
 					<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 				</button>
             </div>

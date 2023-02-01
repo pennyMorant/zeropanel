@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><base href="../../"/>
+    <head>
 		<title>{$config["appName"]} Ban</title>
         
         <meta charset="UTF-8" />
@@ -384,10 +384,10 @@
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
-                                                        <th>Rule Name</th>
-                                                        <th>Rule Detail</th>
+                                                        <th>{$trans->t('name')}</th>
+                                                        <th>{$trans->t('details')}</th>
                                                         <th>Rule Introduction</th>
-                                                        <th>Rule Type</th>
+                                                        <th>{$trans->t('type')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>
@@ -408,12 +408,9 @@
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
-                                                        <th>Node Name</th>
-                                                        <th>Rule Nanme</th>
-                                                        <th>Rule Detail</th>
-                                                        <th>Rule Introduction</th>
-                                                        <th>Rule Type</th>
-                                                        <th>Datetime</th>
+                                                        <th>{$trans->t('node')}</th>
+                                                        <th>{$trans->t('name')}</th>
+                                                        <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>

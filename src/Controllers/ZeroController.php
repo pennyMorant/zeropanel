@@ -59,18 +59,18 @@ class ZeroController extends BaseController
         $emoji = (bool)Setting::obtain('enable_subscribe_emoji');
         if (!$user->isLogin) {
             $res = ['ret' => -1, 'msg' => '登录状态已失效'];
-            return $response->getBody()->write(json_encode($res));
+            return $response->withJson($res);
         }
 
         $id   = $args['id'];
         $node = Node::find($id);
         if ($node == null) {
             $res = ['ret' => 0, 'msg' => '节点错误,请刷新页面重新获取'];
-            return $response->getBody()->write(json_encode($res));
+            return $response->withJson($res);
         }
         if ($user->class < $node->node_class) {
-            $res = ['ret' => 0, 'msg' => '权限不足'];
-            return $response->getBody()->write(json_encode($res));
+            $res = ['ret' => 0, 'msg' => I18n::get()->t('insufficient permissions')];
+            return $response->withJson($res);
         }
 
         switch ($node->sort) {

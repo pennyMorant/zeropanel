@@ -294,9 +294,6 @@ var KTDatatablesBanRuleSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/ban_rule",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
             columns: [
                 { data: 'name' },
                 { data: 'regex' },
@@ -328,7 +325,7 @@ var KTDatatablesUserBanedLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[5, 'desc']],
+            order: [[2, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -338,15 +335,9 @@ var KTDatatablesUserBanedLogSide = function () {
             ajax: {
                 url: "/user/ajax_data/table/user_baned_log",
             },
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.12.1/i18n/zh.json",
-            },
             columns: [
                 { data: 'node_name' },
                 { data: 'rule_name' },
-                { data: 'rule_regex'},
-                { data: 'rule_text' },
-                { data: 'rule_type'},
                 { data: 'datetime'},
             ],
         });

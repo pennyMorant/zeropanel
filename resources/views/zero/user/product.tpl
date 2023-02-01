@@ -319,7 +319,7 @@
 									</div>
                                     
 									<div class="menu-item menu-accordion">
-										<a class="menu-link" href="user/referral">
+										<a class="menu-link" href="/user/referral">
 											<span class="menu-icon">
 												<span class="svg-icon svg-icon-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-optical-audio" viewBox="0 0 16 16">

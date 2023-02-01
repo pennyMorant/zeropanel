@@ -171,7 +171,7 @@ class UserController extends BaseController
         try {
         if (!Hash::checkPassword($user->password, $current_password)) {
             
-            throw new \Exception(I18n::get()->t('user.profile.notify.passwd.error_current_passwd'));
+            throw new \Exception(I18n::get()->t('passwd error'));
         }
         $hashPassword = Hash::passwordHash($new_password);
         $user->password = $hashPassword;
@@ -189,7 +189,7 @@ class UserController extends BaseController
         }
         return $response->withJson([
             'ret' => 1,
-            'msg' => I18n::get()->t('user.profile.notify.passwd.success')
+            'msg' => I18n::get()->t('success')
         ]);
     }
 
@@ -206,7 +206,7 @@ class UserController extends BaseController
         $otheruser = User::where('email', $newemail)->first();
         try {
             if (Setting::obtain('enable_change_email_user_general') != true) {           
-                throw new \Exception(I18n::get()->t('user.profile.notify.email.error_not_allowed'));          
+                throw new \Exception(I18n::get()->t('no changes allowed'));          
             }
             
             if (Setting::obtain('reg_email_verify')) {
@@ -214,12 +214,12 @@ class UserController extends BaseController
                 $mailcount = EmailVerify::where('email', '=', $newemail)->where('code', '=', $emailcode)->where('expire_in', '>', time())->first();
                 if ($mailcount == null) {
 
-                    throw new \Exception(I18n::get()->t('user.profile.notify.email.error_invalid_email_code'));
+                    throw new \Exception(I18n::get()->t('email verification code error'));
                 }
             }
             
             if ($newemail == '') {
-                throw new \Exception(I18n::get()->t('user.profile.notify.email.error_empty_email'));
+                throw new \Exception(I18n::get()->t('blank is not allowed'));
             }
             
             $check_res = Check::isEmailLegal($newemail);
@@ -228,11 +228,11 @@ class UserController extends BaseController
             }
             
             if ($otheruser != null) {
-                throw new \Exception(I18n::get()->t('user.profile.notify.email.error_used_email'));
+                throw new \Exception(I18n::get()->t('email has been registered'));
             }
             
             if ($newemail == $oldemail) {
-                throw new \Exception(I18n::get()->t('user.profile.notify.email.error_same_email'));
+                throw new \Exception(I18n::get()->t('can not be the same as the current email'));
             }
         } catch (\Exception $e) {
             return $response->withJson([
@@ -246,7 +246,7 @@ class UserController extends BaseController
 
         return $response->withJson([
             'res' => 1,
-            'msg' => I18n::get()->t('user.profile.notify.email.success')
+            'msg' => I18n::get()->t('success')
         ]);
     }
 
@@ -264,7 +264,7 @@ class UserController extends BaseController
         $user->uuid = $new_uuid;
         $user->save();
         $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('user.profile.notify.sub.success');
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 
@@ -280,7 +280,7 @@ class UserController extends BaseController
         $user->passwd = $passwd;
         $user->save();
         $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('user.profile.notify.sub.success');
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 
@@ -305,7 +305,7 @@ class UserController extends BaseController
         $user = $this->user;
         $user->clean_link();
         $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('user.profile.notify.sub.success');
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 
@@ -319,7 +319,7 @@ class UserController extends BaseController
         $user = $this->user;
         $user->clear_inviteCodes();
         $res['ret'] = 1;
-        $res['msg'] = '重置成功';
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 
@@ -359,7 +359,7 @@ class UserController extends BaseController
         $res = array();
         if (!Hash::checkPassword($user->password, $passwd)) {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.profile.notify.delete.error_passwd');
+            $res['msg'] = I18n::get()->t('passwd error');
             return $response->withJson($res);
         }
 
@@ -367,10 +367,10 @@ class UserController extends BaseController
             Auth::logout();
             $user->kill_user();
             $res['ret'] = 1;
-            $res['msg'] = I18n::get()->t('user.profile.notify.delete.success');
+            $res['msg'] = I18n::get()->t('success');
         } else {
             $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('user.profile.notify.delete.error_not_allowed');
+            $res['msg'] = I18n::get()->t('not allowed');
         }
         return $response->withJson($res);
     }
