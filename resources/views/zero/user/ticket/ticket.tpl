@@ -502,11 +502,11 @@
 										<div class="card-header align-items-center py-5 gap-2 gap-md-5">
 											<div class="card-title">
 												<div class="fs-3 fw-bolder text-dark">
-													工单列表
+													{$trans->t('ticket')}
 												</div>
 											</div>
 											<div class="card-toolbar">
-												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">创建工单</button>
+												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">{$trans->t('create ticket')}</button>
 											</div>
 										</div>
 										<div class="card-body pt-0">
@@ -515,10 +515,10 @@
 												<thead>
 													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
 														<th>ID</th>
-														<th>Subject</th>
-														<th>Status</th>
-														<th>Last Updated</th>
-														<th>Actions</th>
+														<th>{$trans->t('subject')}</th>
+														<th>{$trans->t('status')}</th>
+														<th>{$trans->t('date')}</th>
+														<th>{$trans->t('action')}</th>
 													</tr>
 												</thead>
 												<tbody class="text-gray-600 fw-semibold"></tbody>
@@ -560,25 +560,25 @@
 					</div>
 					<div class="modal-body scroll-y pt-0 pb-15 px-5 px-xl-20">
 						<div class="mb-13 text-center">
-							<h1 class="mb-3">创建工单</h1>
+							<h1 class="mb-3">{$trans->t('create ticket')}</h1>
 						</div>
 						<div class="d-flex flex-column mb-8">
 							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-								<span class="required">工单主题</span>
+								<span class="required">{$trans->t('subject')}</span>
 							</label>
-							<input type="text" class="form-control form-control-solid" placeholder="主题" id="zero_create_ticket_title">
+							<input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
 						</div>
 						<div class="d-flex flex-column mb-8">
 							<label class="fs-6 fw-semibold mb-2">
-								<span class="required">工单内容</span>
+								<span class="required">{$trans->t('details')}</span>
 							</label>
 							<textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>
 						</div>
 						<div class="d-flex flex-center flex-row-fluid pt-12">
-							<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">取消</button>
+							<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
 							<button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersTicket('create_ticket')">
-								<span class="indicator-label">创建</span>
-								<span class="indicator-progress">请稍候...
+								<span class="indicator-label">{$trans->t('submit')}</span>
+								<span class="indicator-progress">{$trans->t('please wait')}
 								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 							</button>
 						</div>

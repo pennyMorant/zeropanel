@@ -216,6 +216,8 @@
     "no less than": "No less than",
     "change email": "Change email",
     "change passwd": "Change password",
+    "subject": "Subject",
+    "create ticket": "Create Ticket",
     "tutorial": {
         "android": {
             "clash": {

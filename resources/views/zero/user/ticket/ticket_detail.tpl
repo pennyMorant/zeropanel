@@ -507,7 +507,7 @@
 													<div class="accordion-item">
 														<div class="accordion-header" id="zero_accordion_ticket_header">
 															<button class="accordion-button fs-4 fw-semibold" type="button"  data-bs-toggle="collapse" data-bs-target="#zero_accordion_ticket_body" aria-expanded="true" aria-controls="zero_accordion_ticket_body">
-																点击回复
+																{$trans->t('reply')}
 															</button>
 														</div>
 														<div class="accordion-collapse collapse show" id="zero_accordion_ticket_body" aria-labelledby="zero_accordion_ticket_header" data-bs-parent="#zero_accordion_ticket">
@@ -516,8 +516,8 @@
 																</textarea>
 																<div class="d-flex align-items-center mt-5">
 																	<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersTicket('reply_ticket', {$id}, 1)">
-																		<span class="indicator-label">回复</span>
-																		<span class="indicator-progress">请稍候...
+																		<span class="indicator-label">{$trans->t('submit')}</span>
+																		<span class="indicator-progress">{$trans->t('please wait')}
 																		<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 																	</button>
 																</div>

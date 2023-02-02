@@ -309,7 +309,7 @@ class ZeroController extends BaseController
                     $tempdata['rule_name'] = $value->DetectRule()->name;
                     $tempdata['rule_text'] = $value->DetectRule()->text;
                     $tempdata['rule_regex'] = $value->DetectRule()->regex;
-                    $tempdata['rule_type'] = ($value->DetectRule()->type === 1 ? '数据包明文匹配' : ($value->DetectRule()->type === 2 ? '数据包 hex 匹配' : '未知'));
+                    $tempdata['rule_type'] = ($value->DetectRule()->type === 1 ? $trans->t('packet plaintext match') : ($value->DetectRule()->type === 2 ? $trans->t('packet hex match') : '未知'));
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
                     $data[] = $tempdata;
                 }
@@ -326,7 +326,7 @@ class ZeroController extends BaseController
                     $tempdata['name'] = $value->name;
                     $tempdata['text'] = $value->text;
                     $tempdata['regex'] = $value->regex;
-                    $tempdata['type'] = ($value->type === 1 ? '数据包明文匹配' : ($value->type === 2 ? '数据包 hex 匹配' : '未知'));
+                    $tempdata['type'] = ($value->type === 1 ? $trans->t('packet plaintext match') : ($value->type === 2 ? $trans->t('packet plaintext match') : '未知'));
                     $data[] = $tempdata;
                 }
                 $recordsTotal = $query['count'];

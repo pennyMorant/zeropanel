@@ -284,7 +284,7 @@ var KTDatatablesBanRuleSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[3, 'desc']],
+            order: [[2, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -297,7 +297,6 @@ var KTDatatablesBanRuleSide = function () {
             columns: [
                 { data: 'name' },
                 { data: 'regex' },
-                { data: 'text'},
                 { data: 'type' },
             ],
         });

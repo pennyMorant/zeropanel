@@ -220,6 +220,9 @@
     "no less than": "不少于",
     "change email": "更改邮箱",
     "change passwd": "更改密码",
+    "subject": "主题",
+    "create ticket": "创建工单",
+    "reply": "回复",
     "tutorial": {
         "android": {
             "clash": {

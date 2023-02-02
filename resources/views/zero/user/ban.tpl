@@ -386,7 +386,6 @@
                                                         
                                                         <th>{$trans->t('name')}</th>
                                                         <th>{$trans->t('details')}</th>
-                                                        <th>Rule Introduction</th>
                                                         <th>{$trans->t('type')}</th>
                                                     </tr>
                                                 </thead>
