@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>{$config['appName']} Reset Passwrod</title>
+		<title>{$config['appName']} - {$trans->t('reset passwd')}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -25,22 +25,22 @@
 						<div class="card-body p-10 p-lg-20">
 							<form class="form w-100" novalidate="novalidate" id="kt_password_reset_form" action="#">
 								<div class="text-center mb-11">
-										<h1 class="text-dark fw-bolder mb-3">Reset Passwrod</h1>
-                                        <div class="text-gray-500 fw-semibold fs-6">Enter email to reset password</div>
+										<h1 class="text-dark fw-bolder mb-3">{$trans->t('reset passwd')}</h1>
+                                        <!-- <div class="text-gray-500 fw-semibold fs-6">Enter email to reset password</div> -->
 								</div>
 								<div class="fv-row mb-10">
-									<input class="form-control form-control-lg bg-transparent" type="text" placeholder="Email" name="email" id="email" autocomplete="off"/>									
+									<input class="form-control form-control-lg bg-transparent" type="text" placeholder={$trans->t('email')} name="email" id="email" autocomplete="off"/>									
 								</div>
 
 								<div class="d-flex flex-warp justify-content-center pb-lg-0">
 									<button id="kt_password_reset_submit" class="btn btn-primary">
-										<span class="indicator-label" data-kt-translate="sign-up-submit">Submit</span>
+										<span class="indicator-label" data-kt-translate="sign-up-submit">{$trans->t('submit')}</span>
                                         <span class="indicator-progress">
-                                            <span data-kt-translate="general-progress">Please Wating...</span>
+                                            <span data-kt-translate="general-progress">{$trans->t('please wait')}</span>
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                         </span>
 									</button>
-                                    <a href="/auth/signin" class="btn btn-light">Discard</a>
+                                    <a href="/auth/signin" class="btn btn-light">{$trans->t('discard')}</a>
 								</div>
 								
 							</form>
