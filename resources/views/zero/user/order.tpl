@@ -386,7 +386,6 @@
                                                         <th>{$trans->t('status')}</th>
 														<th>{$trans->t('type')}</th>
                                                         <th>{$trans->t('date')}</th>
-														<th>{$trans->t('order number')}</th>
 														<th>{$trans->t('action')}</th>
                                                     </tr>
                                                 </thead>

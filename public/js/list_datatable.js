@@ -27,7 +27,6 @@ var KTDatatablesOrderSide = function () {
                 { data: 'order_status' },
                 { data: 'order_type' },
                 { data: 'created_time' },
-                { data: 'no' },
                 { data: 'action'},
             ],
             

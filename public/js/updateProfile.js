@@ -713,85 +713,87 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 			data: {},
 			success: function(data) {
 				if (data.ret == 1){
-					if (data.sort == 11) {
-						var content = data.url;
-                        $("#zero_modal_vmess_node_info_remark").html(data.info.remark);
-						$("#zero_modal_vmess_node_info_add").html(data.info.add);
-						$("#zero_modal_vmess_node_info_port").html(data.info.port);
-						$("#zero_modal_vmess_node_info_aid").html(data.info.aid);
-                        $("#zero_modal_vmess_node_info_id").html(data.info.id);
-						$("#zero_modal_vmess_node_info_net").html(data.info.net);
-						$("#zero_modal_vmess_node_info_path").html(data.info.path);
-						$("#zero_modal_vmess_node_info_host").html(data.info.host);
-                        $("#zero_modal_vmess_node_info_servicename").html(data.info.servicename);
-                        $("#zero_modal_vmess_node_info_type").html(data.info.type);
-						$("#zero_modal_vmess_node_info_security").html(data.info.tls);
-						$("#zero_modal_vmess_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-						$("#qrcode"  + nodeid).qrcode({
-							width: 200,
-							height: 200,
-							render: "canvas",
-							text: content
-						});
-						Swal.close();
-						$("#zero_modal_vmess_node_info").modal('show');
-					} else if ( data.sort == 14) {
-						var content = data.url;
-                        $("#zero_modal_trojan_node_info_remark").html(data.info.remark);
-						$("#zero_modal_trojan_node_info_add").html(data.info.address);
-						$("#zero_modal_trojan_node_info_port").html(data.info.port);						
-                        $("#zero_modal_trojan_node_info_id").html(data.info.passwd);
-						$("#zero_modal_trojan_node_info_host").html(data.info.host);
-						$("#zero_modal_trojan_node_info_security").html(data.info.tls);
-						$("#zero_modal_trojan_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-						$("#qrcode"  + nodeid).qrcode({
-							width: 200,
-							height: 200,
-							render: "canvas",
-							text: content
-						});
-						Swal.close();
-						$("#nodeinfo-trojan-modal").modal('show');
-					} else if (data.sort == 15) {
-						var content = data.url;
-                        $("#zero_modal_vless_node_info_remark").html(data.info.remark);
-						$("#zero_modal_vless_node_info_add").html(data.info.add);
-						$("#zero_modal_vless_node_info_port").html(data.info.port);
-                        $("#zero_modal_vless_node_info_id").html(data.info.id);
-						$("#zero_modal_vless_node_info_net").html(data.info.net);
-						$("#zero_modal_vless_node_info_path").html(data.info.path);
-						$("#zero_modal_vless_node_info_host").html(data.info.host);
-                        $("#zero_modal_vless_node_info_servicename").html(data.info.servicename);
-                        $("#zero_modal_vless_node_info_type").html(data.info.type);
-						$("#zero_modal_vless_node_info_security").html(data.info.tls);
-                        $("#zero_modal_vless_node_info_flow").html(data.info.flow);
-						$("#zero_modal_vless_node_info_sni").html(data.info.sni);
-						$("#zero_modal_vless_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-						$("#qrcode"  + nodeid).qrcode({
-							width: 200,
-							height: 200,
-							render: "canvas",
-							text: content
-						});
-						Swal.close();
-						$("#nodeinfo-vless-modal").modal('show');
-					} else if (data.sort == 0) {
-						var content = data.url;
-						$("#zero_modal_shadowsocks_node_info_remark").html(data.info.remark);
-						$("#zero_modal_shadowsocks_node_info_address").html(data.info.address);
-						$("#zero_modal_shadowsocks_node_info_port").html(data.info.port);
-						$("#zero_modal_shadowsocks_node_info_method").html(data.info.method);
-						$("#zero_modal_shadowsocks_node_info_passwd").html(data.info.passwd);
-						$("#zero_modal_shadowsocks_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-						$("#qrcode"  + nodeid).qrcode({
-							width: 200,
-							height: 200,
-							render: "canvas",
-							text: content
-						});
-						Swal.close();
-						$("#zero_modal_shadowsocks_node_info").modal('show');
-					}
+                    var content = data.url;
+                    switch (data.sort) {
+                        case 11:
+                            $("#zero_modal_vmess_node_info_remark").html(data.info.remark);
+                            $("#zero_modal_vmess_node_info_add").html(data.info.add);
+                            $("#zero_modal_vmess_node_info_port").html(data.info.port);
+                            $("#zero_modal_vmess_node_info_aid").html(data.info.aid);
+                            $("#zero_modal_vmess_node_info_id").html(data.info.id);
+                            $("#zero_modal_vmess_node_info_net").html(data.info.net);
+                            $("#zero_modal_vmess_node_info_path").html(data.info.path);
+                            $("#zero_modal_vmess_node_info_host").html(data.info.host);
+                            $("#zero_modal_vmess_node_info_servicename").html(data.info.servicename);
+                            $("#zero_modal_vmess_node_info_type").html(data.info.type);
+                            $("#zero_modal_vmess_node_info_security").html(data.info.tls);
+                            $("#zero_modal_vmess_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
+                            $("#qrcode"  + nodeid).qrcode({
+                                width: 200,
+                                height: 200,
+                                render: "canvas",
+                                text: content
+                            });
+                            Swal.close();
+                            $("#zero_modal_vmess_node_info").modal('show');
+                            break;
+                        case 14:
+                            $("#zero_modal_trojan_node_info_remark").html(data.info.remark);
+                            $("#zero_modal_trojan_node_info_add").html(data.info.address);
+                            $("#zero_modal_trojan_node_info_port").html(data.info.port);						
+                            $("#zero_modal_trojan_node_info_id").html(data.info.passwd);
+                            $("#zero_modal_trojan_node_info_host").html(data.info.host);
+                            $("#zero_modal_trojan_node_info_security").html(data.info.tls);
+                            $("#zero_modal_trojan_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
+                            $("#qrcode"  + nodeid).qrcode({
+                                width: 200,
+                                height: 200,
+                                render: "canvas",
+                                text: content
+                            });
+                            Swal.close();
+                            $("#nodeinfo-trojan-modal").modal('show');
+                            break;
+                        case 15:
+                            $("#zero_modal_vless_node_info_remark").html(data.info.remark);
+                            $("#zero_modal_vless_node_info_add").html(data.info.add);
+                            $("#zero_modal_vless_node_info_port").html(data.info.port);
+                            $("#zero_modal_vless_node_info_id").html(data.info.id);
+                            $("#zero_modal_vless_node_info_net").html(data.info.net);
+                            $("#zero_modal_vless_node_info_path").html(data.info.path);
+                            $("#zero_modal_vless_node_info_host").html(data.info.host);
+                            $("#zero_modal_vless_node_info_servicename").html(data.info.servicename);
+                            $("#zero_modal_vless_node_info_type").html(data.info.type);
+                            $("#zero_modal_vless_node_info_security").html(data.info.tls);
+                            $("#zero_modal_vless_node_info_flow").html(data.info.flow);
+                            $("#zero_modal_vless_node_info_sni").html(data.info.sni);
+                            $("#zero_modal_vless_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
+                            $("#qrcode"  + nodeid).qrcode({
+                                width: 200,
+                                height: 200,
+                                render: "canvas",
+                                text: content
+                            });
+                            Swal.close();
+                            $("#nodeinfo-vless-modal").modal('show');
+                            break;
+                        case 0:
+                            $("#zero_modal_shadowsocks_node_info_remark").html(data.info.remark);
+                            $("#zero_modal_shadowsocks_node_info_address").html(data.info.address);
+                            $("#zero_modal_shadowsocks_node_info_port").html(data.info.port);
+                            $("#zero_modal_shadowsocks_node_info_method").html(data.info.method);
+                            $("#zero_modal_shadowsocks_node_info_passwd").html(data.info.passwd);
+                            $("#zero_modal_shadowsocks_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
+                            $("#qrcode"  + nodeid).qrcode({
+                                width: 200,
+                                height: 200,
+                                render: "canvas",
+                                text: content
+                            });
+                            Swal.close();
+                            $("#zero_modal_shadowsocks_node_info").modal('show');
+                            break;
+                    }
 				} else {                   
 					getResult(data.msg, "", "error");
 				}
@@ -808,10 +810,9 @@ function oneclickImport(client, subLink) {
       surfboard: "surfboard:///install-config?url=" + encodeURIComponent(subLink),
       quantumult: "quantumult://configuration?server=" + btoa(subLink).replace(/=/g, '') + "&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw",
       shadowrocket: "shadowrocket://add/sub://" + btoa(subLink),
-      surge4: "surge3:///install-config?url=" + encodeURIComponent(subLink),
+      surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
       clash: "clash://install-config?url=" + encodeURIComponent(subLink),
       sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
-      ssr: "sub://" + btoa(subLink)
     }
     Swal.fire({
         title: "Whether to import subscription links",
