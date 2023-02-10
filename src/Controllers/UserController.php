@@ -158,169 +158,112 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
+
     /**
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function updatePassword($request, $response, $args)
+    public function updateProfile($request, $response, $args)
     {
-        $current_password = $request->getParam('current_password');
-        $new_password = $request->getParam('new_password');
+        $type = $args['type'];
         $user = $this->user;
-        try {
-        if (!Hash::checkPassword($user->password, $current_password)) {
-            
-            throw new \Exception(I18n::get()->t('passwd error'));
-        }
-        $hashPassword = Hash::passwordHash($new_password);
-        $user->password = $hashPassword;
-        $user->save();
-        } catch (\Exception $e) {
-            return $response->withJson([
-                'ret' => 0,
-                    //'msg' => $e->getFile() . $e->getLine() . $e->getMessage(),
-                'msg' => $e->getMessage(),
-            ]);
+        switch ($type) {
+            case 'password':
+                $current_password = $request->getParam('current_password');
+                $new_password = $request->getParam('new_password');
+                try {
+                if (!Hash::checkPassword($user->password, $current_password)) {  
+                    throw new \Exception(I18n::get()->t('passwd error'));
+                }
+                $hashPassword = Hash::passwordHash($new_password);
+                $user->password = $hashPassword;
+                $user->save();
+                } catch (\Exception $e) {
+                    return $response->withJson([
+                        'ret' => 0,
+                            //'msg' => $e->getFile() . $e->getLine() . $e->getMessage(),
+                        'msg' => $e->getMessage(),
+                    ]);
+                }
+
+                if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
+                    $user->clean_link();
+                }
+                break;
+            case 'email':
+                $newemail = $request->getParam('newemail');
+                $oldemail = $user->email;
+                $otheruser = User::where('email', $newemail)->first();
+                try {
+                    if (Setting::obtain('enable_change_email_user_general') != true) {           
+                        throw new \Exception(I18n::get()->t('no changes allowed'));          
+                    }
+                    
+                    if (Setting::obtain('reg_email_verify')) {
+                        $emailcode = $request->getParam('emailcode');
+                        $mailcount = EmailVerify::where('email', '=', $newemail)->where('code', '=', $emailcode)->where('expire_in', '>', time())->first();
+                        if ($mailcount == null) {
+
+                            throw new \Exception(I18n::get()->t('email verification code error'));
+                        }
+                    }
+                    
+                    if ($newemail == '') {
+                        throw new \Exception(I18n::get()->t('blank is not allowed'));
+                    }
+                    
+                    $check_res = Check::isEmailLegal($newemail);
+                    if ($check_res['ret'] == 0) {
+                        throw new \Exception((string)$check_res);
+                    }
+                    
+                    if ($otheruser != null) {
+                        throw new \Exception(I18n::get()->t('email has been registered'));
+                    }
+                    
+                    if ($newemail == $oldemail) {
+                        throw new \Exception(I18n::get()->t('can not be the same as the current email'));
+                    }
+                } catch (\Exception $e) {
+                    return $response->withJson([
+                        'ret' => 0,
+                        'msg' => $e->getMessage(),
+                    ]);
+                }
+                $antiXss = new AntiXSS();
+                $user->email = $antiXss->xss_clean($newemail);
+                $user->save();
+                break;
+            case 'uuid':
+                $current_timestamp = time();
+                $new_uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $user->email . '|' . $current_timestamp);
+                $user->uuid = $new_uuid;
+                $user->save();
+                break;
+            case 'passwd':
+                $passwd = Tools::genRandomChar(16);
+                $user->passwd = $passwd;
+                $user->save();
+                break;
+            case 'sub_token':
+                $user->clean_link();
+                break;
+            case 'referral_code':
+                $user->clear_inviteCodes();
+                break;
+            case 'unbind_telegram':
+                $user->unbindTelegram();
+                break;
+            default:
+                return 0;
+                break;
         }
 
-        if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
-            $user->clean_link();
-        }
         return $response->withJson([
             'ret' => 1,
             'msg' => I18n::get()->t('success')
         ]);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateEmail($request, $response, $args)
-    {
-        $user = $this->user;
-        $newemail = $request->getParam('newemail');
-        $oldemail = $user->email;
-        $otheruser = User::where('email', $newemail)->first();
-        try {
-            if (Setting::obtain('enable_change_email_user_general') != true) {           
-                throw new \Exception(I18n::get()->t('no changes allowed'));          
-            }
-            
-            if (Setting::obtain('reg_email_verify')) {
-                $emailcode = $request->getParam('emailcode');
-                $mailcount = EmailVerify::where('email', '=', $newemail)->where('code', '=', $emailcode)->where('expire_in', '>', time())->first();
-                if ($mailcount == null) {
-
-                    throw new \Exception(I18n::get()->t('email verification code error'));
-                }
-            }
-            
-            if ($newemail == '') {
-                throw new \Exception(I18n::get()->t('blank is not allowed'));
-            }
-            
-            $check_res = Check::isEmailLegal($newemail);
-            if ($check_res['ret'] == 0) {
-                throw new \Exception((string)$check_res);
-            }
-            
-            if ($otheruser != null) {
-                throw new \Exception(I18n::get()->t('email has been registered'));
-            }
-            
-            if ($newemail == $oldemail) {
-                throw new \Exception(I18n::get()->t('can not be the same as the current email'));
-            }
-        } catch (\Exception $e) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => $e->getMessage(),
-            ]);
-        }
-        $antiXss = new AntiXSS();
-        $user->email = $antiXss->xss_clean($newemail);
-        $user->save();
-
-        return $response->withJson([
-            'res' => 1,
-            'msg' => I18n::get()->t('success')
-        ]);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function resetUUID($request, $response, $args)
-    {
-        $user = $this->user;
-        $current_timestamp = time();
-        $new_uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $user->email . '|' . $current_timestamp);
-        
-        $user->uuid = $new_uuid;
-        $user->save();
-        $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('success');
-        return $response->withJson($res);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function resetPasswd($request, $response, $args)
-    {
-        $user = $this->user;
-        $passwd = Tools::genRandomChar(16);
-        $user->passwd = $passwd;
-        $user->save();
-        $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('success');
-        return $response->withJson($res);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function unbindTelegram($request, $response, $args)
-    {
-        $user = $this->user;
-        $user->unbindTelegram();
-        return $response->withStatus(302)->withHeader('Location', '/user/profile');
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function resetSubLink($request, $response, $args) {
-        $user = $this->user;
-        $user->clean_link();
-        $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('success');
-        return $response->withJson($res);
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function resetReferralCode($request, $response, $args)
-    {
-        $user = $this->user;
-        $user->clear_inviteCodes();
-        $res['ret'] = 1;
-        $res['msg'] = I18n::get()->t('success');
-        return $response->withJson($res);
     }
 
     /**

@@ -36,117 +36,6 @@ function getLoad() {
     });
 }
 
-// Class definition
-var KTUsersUpdateName = function () {
-    // Shared variables
-    const element = document.getElementById('zero_modal_user_update_name');
-    const form = element.querySelector('#zero_modal_user_update_name_form');
-    const modal = new bootstrap.Modal(element);
-
-    // Init add schedule modal
-    var initUpdateName = () => {
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'profile_name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Naem is required'
-                            }
-                        }
-                    },
-                },
-
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
-
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
-
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable button to avoid multiple click 
-                        submitButton.disabled = true;
-
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        setTimeout(function () {
-                            // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            // Enable button
-                            submitButton.disabled = false;
-
-                            // Show popup confirmation
-                            $.ajax({
-                                type: "POST",
-                                url: "/user/update_name",
-                                dataType: "json",
-                                data: {
-                                    newusername: $("#profile_name").val()
-                                },
-                                success: function(data) {
-                                    if (data.ret == 1) {
-                                        Swal.fire({
-                                            text: data.msg,
-                                            icon: "success",
-                                            buttonsStyling: false,
-                                            confirmButtonText: "Ok, got it!",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary"
-                                            }
-                                        }).then(function (result) {
-                                            if (result.isConfirmed) {
-                                                modal.hide();
-                                                location.reload();
-                                            }
-                                        });
-                                    } else {
-                                        getResult(data.msg, '', 'error');
-                                    }
-                                }
-                            });
-                            //form.submit(); // Submit form
-                        }, 2000);
-                    }
-                });
-            }
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            initUpdateName();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersUpdateName.init();
-});
-
 // update email
 var KTUsersUpdateEmail = function () {
     // Shared variables
@@ -214,7 +103,7 @@ var KTUsersUpdateEmail = function () {
                             // Show popup confirmation 
                             $.ajax({
                                 type: "POST",
-                                url: "/user/update_email",
+                                url: "/user/update_profile/email",
                                 dataType: "json",
                                 data: {
                                     newemail: $("#profile_email").val()
@@ -341,7 +230,7 @@ var KTUsersUpdatePassword = function () {
                             submitButton.disabled = false;
                             $.ajax({
                                 type: "POST",
-                                url: "/user/update_password",
+                                url: "/user/update_profile/password",
                                 dataType: "json",
                                 data: {
                                     current_password: $("#current_password").val(),
@@ -412,7 +301,7 @@ function KTUsersEnableNotify(type) {
 function KTUsersResetPasswd() {
     $.ajax({
         type: "POST",
-        url: "/user/reset_passwd",
+        url: "/user/update_profile/passwd",
         dataType: "json",
         data: {},
         success: function(data) {
@@ -442,7 +331,7 @@ function KTUsersResetUUID() {
 
     $.ajax({
         type: "POST",
-        url: "/user/reset_uuid",
+        url: "/user/update_profile/uuid",
         dataType: "json",
         data: {},
         success: function(data) {
@@ -471,7 +360,7 @@ function KTUsersResetUUID() {
 function KTUsersResetSubLink() {
     $.ajax({
         type: "POST",
-        url: "/user/reset_sub_link",
+        url: "/user/update_profile/sub_token",
         dataType: "json",
         data: {},
         success: function(data) {

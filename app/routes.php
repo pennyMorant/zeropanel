@@ -49,23 +49,13 @@ return function (SlimApp $app) {
         $group->get('/ticket/{id}/view',         App\Controllers\User\TicketController::class . ':ticketView');
         $group->put('/ticket/{id}',              App\Controllers\User\TicketController::class . ':ticketUpdate');
         
-        $group->post('/update_email',            App\Controllers\UserController::class . ':updateEmail');
-        $group->post('/update_name',             App\Controllers\UserController::class . ':updateUserName');
-        $group->post('/update_password',         App\Controllers\UserController::class . ':updatePassword');
+        $group->post('/update_profile/{type}',    App\Controllers\UserController::class . ':updateProfile');
         $group->post('/send',                    App\Controllers\AuthController::class . ':sendVerify');
-        $group->post('/reset_sub_link',          App\Controllers\UserController::class . ':resetSubLink');
-        $group->get('/reset_referral_code',      App\Controllers\UserController::class . ':resetReferralCode');
         $group->post('/mail',                    App\Controllers\UserController::class . ':updateMail');
-        $group->post('/reset_uuid',              App\Controllers\UserController::class . ':resetUUID');
-        $group->post('/reset_passwd',            App\Controllers\UserController::class . ':resetPasswd');
         $group->post('/enable_notify',           App\Controllers\UserController::class . ':enableNotify');
-        $group->get('/sys',                      App\Controllers\UserController::class . ':sys');
         $group->get('/trafficlog',               App\Controllers\UserController::class . ':trafficLog');
         $group->post('/kill',                    App\Controllers\UserController::class . ':handleKill');
         $group->get('/logout',                   App\Controllers\UserController::class . ':logout');
-
-        $group->post('/code',                    App\Controllers\UserController::class . 'redeemCode');
-        $group->get('/unbind_telegram',          App\Controllers\UserController::class . ':unbindTelegram');
         
         
 
