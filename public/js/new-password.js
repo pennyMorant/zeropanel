@@ -53,9 +53,7 @@ var KTAuthNewPassword = function () {
                 r.validate().then((function (r) {
                     "Valid" == r ? (e.setAttribute("data-kt-indicator", "on"), 
                     e.disabled = !0, 
-                    setTimeout((function () {
-                        e.removeAttribute("data-kt-indicator"), 
-                        e.disabled = !1, 
+                    setTimeout((function () {                        
                         $.ajax({
                             type: "POST",
                             url: location.pathname,
@@ -91,6 +89,8 @@ var KTAuthNewPassword = function () {
                                             confirmButton: "btn btn-primary"
                                         }
                                     });
+                                    e.removeAttribute("data-kt-indicator");
+                                    e.disabled = !1;
                                 }
                             }
                         })                       

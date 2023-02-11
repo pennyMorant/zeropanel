@@ -28,8 +28,6 @@ var KTAuthResetPassword = function () {
             }), e.addEventListener("click", (function (r) {
                 r.preventDefault(), i.validate().then((function (i) {
                     "Valid" == i ? (e.setAttribute("data-kt-indicator", "on"), e.disabled = !0, setTimeout((function () {
-                        e.removeAttribute("data-kt-indicator"),
-                        e.disabled = !1, 
                         $.ajax({
                             type: "POST",
                             url: "/password/reset",
@@ -43,7 +41,7 @@ var KTAuthResetPassword = function () {
                                         text: data.msg,
                                         icon: "success",
                                         buttonsStyling: !1,
-                                        confirmButtonText: "Ok, got it!",
+                                        confirmButtonText: "Ok",
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
@@ -58,6 +56,8 @@ var KTAuthResetPassword = function () {
                                             confirmButton: "btn btn-primary"
                                         }
                                     });
+                                    e.removeAttribute("data-kt-indicator");
+                                    e.disabled = !1;
                                 }
                             }
                         })
@@ -65,7 +65,7 @@ var KTAuthResetPassword = function () {
                         text: "抱歉，似乎检测到一些错误，请重试",
                         icon: "error",
                         buttonsStyling: !1,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
