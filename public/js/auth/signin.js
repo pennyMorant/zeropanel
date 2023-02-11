@@ -51,8 +51,6 @@ var KTSigninGeneral = function() {
                         };
                     }
                     "Valid" == i ? (t.setAttribute("data-kt-indicator", "on"), t.disabled = !0, setTimeout((function() {
-                        t.removeAttribute("data-kt-indicator"),
-                        t.disabled = !1,
                         $.ajax({
                             type: 'POST',
                             url: "/auth/signin",
@@ -85,7 +83,9 @@ var KTSigninGeneral = function() {
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
-                                    })
+                                    });
+                                    t.removeAttribute("data-kt-indicator");
+                                    t.disabled = !1;
                                 }
                             }
                         })

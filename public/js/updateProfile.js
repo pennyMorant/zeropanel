@@ -328,7 +328,6 @@ function KTUsersResetPasswd() {
 
 // reset uuid
 function KTUsersResetUUID() {
-
     $.ajax({
         type: "POST",
         url: "/user/update_profile/uuid",
