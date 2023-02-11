@@ -94,11 +94,6 @@ var KTUsersUpdateEmail = function () {
 
                         // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
-                            // Remove loading indication
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            // Enable button
-                            submitButton.disabled = false;
 
                             // Show popup confirmation 
                             $.ajax({
@@ -114,7 +109,7 @@ var KTUsersUpdateEmail = function () {
                                             text: data.msg,
                                             icon: "success",
                                             buttonsStyling: false,
-                                            confirmButtonText: "Ok, got it!",
+                                            confirmButtonText: "Ok",
                                             customClass: {
                                                 confirmButton: "btn btn-primary"
                                             }
@@ -126,6 +121,11 @@ var KTUsersUpdateEmail = function () {
                                         });
                                     } else {
                                         getResult(data.msg, '', 'error');
+                                        // Remove loading indication
+                                        submitButton.removeAttribute('data-kt-indicator');
+
+                                        // Enable button
+                                        submitButton.disabled = false;
                                     }
                                 }
                             });
@@ -226,8 +226,7 @@ var KTUsersUpdatePassword = function () {
                         submitButton.disabled = true;
 
                         setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
-                            submitButton.disabled = false;
+                            
                             $.ajax({
                                 type: "POST",
                                 url: "/user/update_profile/password",
@@ -254,6 +253,8 @@ var KTUsersUpdatePassword = function () {
                                         });
                                     } else {
                                         getResult(data.msg, '', 'error');
+                                        submitButton.removeAttribute('data-kt-indicator');
+                                        submitButton.disabled = false;
                                     }
                                 }
                             });
