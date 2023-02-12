@@ -483,8 +483,8 @@ class Job extends Command
             $user->node_connector = $configs['connection_device_limit'];
             $user->node_speedlimit = $configs['connection_rate_limit'];
             $user->save();
-            $product = Product::where('id', $user->current_product_id)->first();
-            $product->sales -= 1;
+            $product = Product::where('id', $user->current_product_id)->where('stock', '!=', -1)->first();
+            $product->stock += 1;
             $product->save();
         }
         echo '用户等级过期检测结束' . PHP_EOL;

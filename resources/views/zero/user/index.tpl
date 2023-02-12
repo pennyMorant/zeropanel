@@ -69,7 +69,7 @@
 																{$trans->t('traffic')}:&nbsp;{$user->usedTraffic()} / <span id="traffic">{$user->enableTraffic()}</span>
 															</a>
 															<span class="text-muted fw-semibold d-block">
-																{$trans->t('reset date')}:&nbsp;{$user->productTrafficResetDate()}
+																{$trans->t('reset date')}:&nbsp;{if $user->class >= 1}{$user->productTrafficResetDate()}{else}{$trans->t('no need to reset')}{/if}
 															</span>
 														</div>
 													</div>

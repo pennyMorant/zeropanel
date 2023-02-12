@@ -494,20 +494,18 @@ class User extends Model
     public function productTrafficResetDate()
     {
         $orders = Order::where('user_id', $this->id)->where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
-        $data = [];
+        $reset_date = [];
         foreach ($orders as $order) {
             $product = Product::where('id', $order->product_id)->where('class', $this->class)->where('type', 'cycle')->first();
             if ($order->paid_time + $product->class_validity_period * 86400 >= time()) {
             $day = 24 * 60 * 60;
             $base_time = 1 +  (int)((time() - $order->paid_time - $day) / ($product->traffic_reset_period * $day));
-            $rest_date = date('Y-m-d', strtotime('+1 day', strtotime(date('Y-m-d', $base_time * 30 * $day + $order->paid_time))));
-            return $rest_date;
+            $reset_date = date('Y-m-d', strtotime('+1 day', strtotime(date('Y-m-d', $base_time * 30 * $day + $order->paid_time))));
             }
         }
 
-        if (count($data) == 0) {
-            return i18n::get()->t('no need to reset');
-        }  
+        
+        return $reset_date;
     }
 
     /**
