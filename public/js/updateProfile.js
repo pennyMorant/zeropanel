@@ -18,7 +18,9 @@ function getResult(titles, texts, icons) {
         }
     });
 }
-
+$(document).ready(function (){
+    $("a.menu-link[href='"+window.location.pathname+"']").addClass('active');
+});
 //get load
 function getLoad() {
     Swal.fire({
