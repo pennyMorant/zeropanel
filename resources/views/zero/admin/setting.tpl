@@ -32,9 +32,7 @@
                                 <li>
                                     <a data-toggle="tab" href="#verification_code_settings"><i class="icon icon-lg">verified_user</i>&nbsp;验证</a>
                                 </li>
-                                <li>
-                                    <a data-toggle="tab" href="#personalise_settings"><i class="icon icon-lg">color_lens</i>&nbsp;个性化</a>
-                                </li>
+                                
                                 <li>
                                     <a data-toggle="tab" href="#registration_settings"><i class="icon icon-lg">group_add</i>&nbsp;注册</a>
                                 </li>
