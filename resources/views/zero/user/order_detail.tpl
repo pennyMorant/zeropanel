@@ -64,7 +64,7 @@
                                                                     
                                                                     
                                                                     <div class="ms-5">
-                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}{$trans->t('add credit')}{else}{$trans->t('purchase product')}: {$order->product_name}{/if}</a>
+                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}{$trans->t('add credit')}{else}{$trans->t('purchase product')}: {$product->name}{/if}</a>
                                                                         <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d h:i:s', $order->create_time)}</div>
                                                                     </div>
                                                                     

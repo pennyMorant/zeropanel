@@ -195,7 +195,7 @@ class UserController extends AdminController
         $user->class            = $request->getParam('class');
         $user->class_expire     = $request->getParam('class_expire');
         $user->rebate           = $request->getParam('rebate');
-        $user->agent            = $request->getParam('agent');
+        //$user->agent            = $request->getParam('agent');
         $user->commission       = $request->getParam('commission');
 
         // 手动封禁
@@ -299,8 +299,8 @@ class UserController extends AdminController
             $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable);
             $tempdata['today_traffic']          = $value->TodayusedTraffic();
             $tempdata['enable']                 = $value->enable == 1 ? '可用' : '禁用';
-            $tempdata['signup_date']               = $value->signup_date;
-            $tempdata['signup_ip']                 = $value->signup_ip;
+            $tempdata['signup_date']            = $value->signup_date;
+            $tempdata['signup_ip']              = $value->signup_ip;
             $tempdata['ref_by']                 = $value->ref_by;
             $tempdata['ref_by_name']            = $value->ref_by_name();
             $tempdata['top_up']                 = $value->get_top_up();

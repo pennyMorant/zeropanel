@@ -74,10 +74,8 @@ class ProductController extends AdminController
         $shop->traffic = $request->getParam('traffic');
         $shop->user_group = $request->getParam('node_group');
         $shop->class = $request->getParam('class');
-        $shop->class_validity_period = $request->getParam('class_expire');
-        $shop->traffic_reset_period = $request->getParam('reset');
-        $shop->traffic_reset_validity_period = $request->getParam('reset_exp');
-        $shop->traffic_reset_value = $request->getParam('reset_value');
+        $shop->time = $request->getParam('class_expire');
+        $shop->reset_traffic_cycle = $request->getParam('reset');
         $shop->speed_limit = $request->getParam('speed_limit');
         $shop->ip_limit = $request->getParam('ip_limit');
         $shop->stock = $request->getParam('stock');
@@ -131,10 +129,8 @@ class ProductController extends AdminController
 
         $shop->user_group = $request->getParam('node_group');
         $shop->class = $request->getParam('class');
-        $shop->class_validity_period = $request->getParam('class_expire');
-        $shop->traffic_reset_period = $request->getParam('reset');
-        $shop->traffic_reset_validity_period = $request->getParam('reset_exp');
-        $shop->traffic_reset_value = $request->getParam('reset_value');
+        $shop->time = $request->getParam('class_expire');
+        $shop->reset_traffic_cycle = $request->getParam('reset');
         $shop->speed_limit = $request->getParam('speed_limit');
         $shop->ip_limit = $request->getParam('ip_limit');
         $shop->stock = $request->getParam('stock') - $shop->sales;

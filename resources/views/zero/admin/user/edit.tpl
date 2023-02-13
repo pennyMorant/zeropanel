@@ -63,14 +63,7 @@
 				<div class="card">
 					<div class="card-main">
 						<div class="card-inner">
-
-                            <div class="form-group form-group-label">
-                                <div class="checkbox switch">
-                                    <label for="agent">
-                                        <input {if $edit_user->agent==1}checked{/if} class="access-hide" id="agent" type="checkbox"><span class="switch-toggle"></span>是否代理商
-                                    </label>
-                                </div>
-                            </div>
+                            
                             
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="commission">返利余额</label>
@@ -83,7 +76,6 @@
                                 <input class="form-control maxwidth-edit" id="rebate" type="text" value="{$edit_user->rebate}">
                                 <p class="form-control-guide"><i class="material-icons">info</i>仅适用于销售代理;  -1 按销售代理设置的返利百分比进行返利, 其他为相应的比例</p>
                             </div>
-
 						</div>
 					</div>
 				</div>
@@ -274,12 +266,6 @@
                 var enable = 0;
             }
 
-            if (document.getElementById('agent').checked) {
-                var agent = 1;
-            } else {
-                var agent = 0;
-            }
-
             $.ajax({
                 type: "PUT",
                 url: "/admin/user/{$edit_user->id}",
@@ -294,7 +280,6 @@
                     node_speedlimit: $$getValue('node_speedlimit'),
                     remark: $$getValue('remark'),
                     money: $$getValue('money'),
-                    agent,
                     commission: $$getValue('commission'),
                     rebate: $$getValue('rebate'),
                     enable,

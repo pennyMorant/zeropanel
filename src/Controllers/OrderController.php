@@ -34,6 +34,8 @@ class OrderController extends BaseController
         $order = Order::where('user_id', $this->user->id)
             ->where('no', $order_no)
             ->first();
+        $product = Product::find($order->product_id);
+
         if ($order->order_payment == 'creditpay') {
             $payment = I18n::get()->t('credit');
         } else if ($order->order_payment == 'alipay') {
@@ -48,6 +50,7 @@ class OrderController extends BaseController
         $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
                 ->assign('order', $order)
+                ->assign('product', $product)
                 ->assign('payment', $payment)
                 ->assign('payment_gateway', $payment_gateway)
                 ->display('user/order_detail.tpl');
@@ -69,7 +72,7 @@ class OrderController extends BaseController
                     if ($product == null) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    if ($user->class == $product->class && $product->traffic_reset_period != $user->userTrafficResetPeriod()) {
+                    if ($user->class == $product->class && $product->reset_traffic_cycle != $user->userTrafficResetCycle()) {
                         throw new \Exception('The product attribute is different from the user current product attribute, and the product cannot be purchased');
                     }
 
@@ -77,9 +80,7 @@ class OrderController extends BaseController
                     $order->no = self::createOrderNo();
                     $order->user_id = $user->id;
                     $order->product_id = $product->id;
-                    $order->product_name = $product->name;
                     $order->order_type = $type;
-                    $order->product_content = $product->translate;
                     $order->product_price = $product->price;
                     $order->order_coupon = (empty($coupon)) ? null : $coupon_code;
                     $order->order_total = (empty($coupon)) ? $product->price : round($product->price * ((100 - $coupon->discount) / 100), 2);
@@ -169,8 +170,6 @@ class OrderController extends BaseController
                 $order->save();
                 $user->money -= $order->order_total;
                 $user->save();
-                
-
                 self::execute($order->no);
             } else {
                 // 计算结账金额
@@ -232,27 +231,10 @@ class OrderController extends BaseController
         $product = Product::find($order->product_id);
         $user = User::find($order->user_id);
 
-        if ($order->credit_paid != 0 && $order->order_payment != 'creditpay') {
-            if ($user->money - $order->credit_paid < 0) {
-                $order->order_status = 'abnormal';
-                $order->updated_time = time();
-                $order->paid_time = time();
-                $order->save();
-                return false;
-            }
-            $user->money -= $order->credit_paid;
-            $user->save();
-        }
-
         if ($order->execute_status != '1') {
             $order->order_status = 'paid';
             $order->updated_time = time();
             $order->paid_time = time();
-            $order->save();
-
-            //$product->stock -= 1; // 减库存
-            $product->sales += 1; // 加销量
-            $product->save();
 
             if (!empty($order->order_coupon)) {
                 $coupon = Coupon::where('coupon', $order->order_coupon)->first();
@@ -261,9 +243,7 @@ class OrderController extends BaseController
                 $coupon->save();
             }
 
-            $product->purchase($user);
-            $user->save();
-            
+            $product->purchase($user);           
 
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase' && $user->agent === 0) {
@@ -273,7 +253,11 @@ class OrderController extends BaseController
             // 如果上面的代码执行成功，没有报错，再标记为已处理
             $order->execute_status = 1;
             $order->save();
-
+            if ($product->stock !== -1) {
+                $product->stock -= 1; // 减库存
+            }
+            //$product->sales += 1; // 加销量
+            $product->save();
             // 告罄补货通知
             if ($product->stock - $product->sales == 5 || $product->stock - $product->sales == 0) {
                 $admin_users = User::where('is_admin', '1')->get();

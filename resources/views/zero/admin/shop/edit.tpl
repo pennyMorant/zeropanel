@@ -106,22 +106,11 @@
                     <div class="card-main">
                         <div class="card-inner">
                             <div class="form-group form-group-label">
-                                <label class="floating-label" for="reset_exp">多少天内</label>
-                                <input class="form-control maxwidth-edit" id="reset_exp" type="number"
-                                       value="{$shop->reset_exp()}">
-                            </div>
-
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="reset">每多少天</label>
-                                <input class="form-control maxwidth-edit" id="reset" type="number"
-                                       value="{$shop->reset()}">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="reset_value">重置流量为多少G</label>
-                                <input class="form-control maxwidth-edit" id="reset_value" type="number"
-                                       value="{$shop->reset_value()}">
+                                <select class="form-control maxwidth-edit" id="reset">
+                                    <option value="0" {if $shop->reset_traffic_cycle === 0}selected{/if}>不重置</option>
+                                    <option value="1" {if $shop->reset_traffic_cycle === 1}selected{/if}>订单日重置</option>
+                                    <option value="2" {if $shop->reset_traffic_cycle === 2}selected{/if}>每月1日重置</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -190,8 +179,6 @@
                 class: $$getValue('class'),
                 class_expire: $$getValue('class_expire'),
                 reset: $$getValue('reset'),
-                reset_value: $$getValue('reset_value'),
-                reset_exp: $$getValue('reset_exp'),
                 node_group: $$getValue('node_group'),
                 stock: $$getValue('stock'),
             }

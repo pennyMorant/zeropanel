@@ -475,17 +475,11 @@ class User extends Model
     /**
      * 当前用户产品流量重置周期
      */
-    public function userTrafficResetPeriod()
+    public function userTrafficResetCycle()
     {
-        $orders = Order::where('user_id', $this->id)->where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
-        $data = [];
-        foreach ($orders as $order) {
-            $product = Product::where('id', $order->product_id)->where('class', $this->class)->where('type', 'cycle')->first();
-            if ($order->paid_time + $product->class_validity_period * 86400 >= time()) {
-            $period = $product->traffic_reset_period;
-            return $period;
-            }
-        }
+        Product::find($this->product_id);
+        $cycle = $product->reset_trafffic_cycle;
+        return $cycle;
     }
 
     /**
@@ -493,19 +487,14 @@ class User extends Model
      */
     public function productTrafficResetDate()
     {
-        $orders = Order::where('user_id', $this->id)->where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
-        $reset_date = [];
-        foreach ($orders as $order) {
-            $product = Product::where('id', $order->product_id)->where('class', $this->class)->where('type', 'cycle')->first();
-            if ($order->paid_time + $product->class_validity_period * 86400 >= time()) {
-            $day = 24 * 60 * 60;
-            $base_time = 1 +  (int)((time() - $order->paid_time - $day) / ($product->traffic_reset_period * $day));
-            $reset_date = date('Y-m-d', strtotime('+1 day', strtotime(date('Y-m-d', $base_time * 30 * $day + $order->paid_time))));
-            }
+        if ($this->reset_traffic_date != null) {
+            $d = $this->reset_traffic_date;
+            $ym = date('Y-m', strtotime('+1 month'));
+            $reset_date = $ym.'-'.$d;
+            return $reset_date;
+        } else {
+            return I18n::get()->t('no need to reset');
         }
-
-        
-        return $reset_date;
     }
 
     /**

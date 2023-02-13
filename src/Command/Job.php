@@ -100,23 +100,19 @@ class Job extends Command
         //auto reset
         echo '重置用户流量开始' . PHP_EOL;
         
-        $orders = Order::where('order_status', 'paid')->where('order_type', 'purchase_product_order')->get();
-        $order_users = array();
-        foreach ($orders as $order) {
-            
-            $user = User::where('id', $order->user_id)->first();
+        $users = User::where('class','>=', '1')->get();
+        foreach ($users as $user) {
             if ($user == null) {
                 continue;
             }
-            $product = Product::where('id', $order->product_id)->first();
+            $product = Product::where('id', $user->product_id)->first();
             if ($product == null) {
                 continue;
             }
-            if ($product->reset() != 0 && $product->reset_value() != 0 && $product->reset_exp() != 0) {
-                $order_users[] = $order->user_id;
-                if ($user->class > 0 && (int)((time() - $order->paid_time) / 86400) % $product->reset() == 0 && (int)((time() - $order->paid_time) / 86400) != 0) {
-                    echo('用户ID:' . $user->id . ' 根据套餐ID:' . $product->id . ' 重置流量为' . $product->reset_value() . 'GB' . PHP_EOL);
-                    $user->transfer_enable = Tools::toGB($product->reset_value());
+            if ($product->reset_traffic_date != null) {               
+                if (date('d') === $user->reset_traffic_date) {
+                    echo('用户ID:' . $user->id . ' 根据套餐ID:' . $product->id . ' 重置流量为' . $product->traffic . 'GB' . PHP_EOL);
+                    $user->transfer_enable = Tools::toGB($product->traffic);
                     $user->u = 0;
                     $user->d = 0;
                     $user->last_day_t = 0;
@@ -135,32 +131,6 @@ class Job extends Command
             }
         }
     
-        User::chunkById(1000, function ($users) use ($order_users) {
-            foreach ($users as $user) {
-                /** @var User $user */
-                $user->last_day_t = ($user->u + $user->d);
-                $user->save();
-                if (in_array($user->id, $order_users)) {
-                    continue;
-                }
-                if (date('d') == Setting::obtain('user_general_free_user_reset_day')) {
-                    $user->u = 0;
-                    $user->d = 0;
-                    $user->last_day_t = 0;
-                    $user->transfer_enable = Setting::obtain('user_general_free_user_reset_traffic') * 1024 * 1024 * 1024;
-                    $user->save();
-                    $user->sendMail(
-                        Setting::obtain('website_general_name') . '-您的免费流量被重置了',
-                        'news/warn.tpl',
-                        [
-                            'text' => '您好，您的免费流量已经被重置为' . $user->auto_reset_bandwidth . 'GB'
-                        ],
-                        [],
-                        $_ENV['email_queue']
-                    );
-                }
-            }
-        });
         echo '重置用户流量结束' . PHP_EOL;
          // ------- 发送每日系统运行报告
         if (Setting::obtain('enable_system_clean_database_report_telegram_notify') == true) {
