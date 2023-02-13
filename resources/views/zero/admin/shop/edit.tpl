@@ -59,7 +59,7 @@
                         <div class="card-inner">
 
                             <div class="form-group form-group-label">
-                                <label class="floating-label" for="stock">限制购买总数量 (该套餐当前已销售 {$shop->sales} 份)</label>
+                                <label class="floating-label" for="stock">限制购买总数量{if $shop->stock !== -1} (该套餐当前已销售{$shop->sales} 份){/if}</label>
                                 <input class="form-control maxwidth-edit" id="stock" type="text" value="{$shop->stock}">
                                 <p class="form-control-guide"><i class="material-icons">info</i>按所有用户中, 生效套餐为该套餐的累计, 超过该数量其他用户则不能购买, -1 为不限制</p>
                                 <p class="form-control-guide"><i class="material-icons">info</i>如果其他用户套餐到期后没有再购买该套餐, 则自动有1个名额可以购买</p>
@@ -106,6 +106,7 @@
                     <div class="card-main">
                         <div class="card-inner">
                             <div class="form-group form-group-label">
+                                <label class="floating-label" for="reset">流量重置周期</label>
                                 <select class="form-control maxwidth-edit" id="reset">
                                     <option value="0" {if $shop->reset_traffic_cycle === 0}selected{/if}>一次性</option>
                                     <option value="1" {if $shop->reset_traffic_cycle === 1}selected{/if}>订单日重置</option>
