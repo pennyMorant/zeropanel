@@ -79,7 +79,7 @@ class ProductController extends AdminController
         $shop->speed_limit = $request->getParam('speed_limit');
         $shop->ip_limit = $request->getParam('ip_limit');
         $shop->stock = $request->getParam('stock');
-
+        $shop->status = 1;
         if (!$shop->save()) {
             return $response->withJson([
                 'ret' => 0,
