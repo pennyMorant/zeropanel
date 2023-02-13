@@ -10,6 +10,7 @@ use App\Models\{
     Order,
     User,
     Payback,
+    Ann,
 };
 use Slim\Http\{
     Request,
@@ -24,7 +25,8 @@ class OrderController extends BaseController
     public function order($request, $response, $args)
     {
         $this->view()
-                ->display('user/order.tpl');
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
+            ->display('user/order.tpl');
         return $response;
     }
 
@@ -49,6 +51,7 @@ class OrderController extends BaseController
         }
         $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
+                ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
                 ->assign('payment', $payment)

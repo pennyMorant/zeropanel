@@ -81,6 +81,7 @@ class UserController extends BaseController
             $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
             $this->view()
                 ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
+                ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('class_left_days', $class_left_days)
                 ->assign('user', $this->user)
                 ->registerClass('URL', URL::class)
@@ -101,6 +102,7 @@ class UserController extends BaseController
 
         $this->view()
             ->assign('user', $this->user)
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('sub_token', $this->user->getSublink())
             ->assign('bind_token', $bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
@@ -126,6 +128,7 @@ class UserController extends BaseController
         $invite_url = Setting::obtain('website_general_url') . '/signup?ref=' . $code->code;
         $this->view()
             ->assign('code', $code)
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('referred_user', $referred_user)
             ->assign('referral_url', $invite_url)
             ->display('user/referral.tpl');
@@ -337,7 +340,9 @@ class UserController extends BaseController
     public function record($request, $response, $args)
     {
         $user = $this->user;
-        $this->view()->display('user/record.tpl');
+        $this->view()
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
+            ->display('user/record.tpl');
         return $response;
     }
     
@@ -349,7 +354,9 @@ class UserController extends BaseController
     public function ban($request, $response, $args)
     {
         $user = $this->user;
-        $this->view()->display('user/ban.tpl');
+        $this->view()
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
+            ->display('user/ban.tpl');
         return $response;
     }
 

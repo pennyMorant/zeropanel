@@ -5,7 +5,8 @@ namespace App\Controllers\User;
 use App\Controllers\UserController;
 use App\Models\{
     Node,
-    User
+    User,
+    Ann
 };
 use App\Utils\{
     URL,
@@ -88,6 +89,7 @@ class NodeController extends UserController
             ->assign('min_node_class', $min_node_class)
             ->assign('nodes', $array_nodes)
             ->assign('user', $user)
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->registerClass('URL', URL::class)
             ->display('user/node.tpl');
         return $response;

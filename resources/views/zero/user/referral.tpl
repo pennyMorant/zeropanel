@@ -80,5 +80,6 @@
             </div>
         </div>
 		{include file='include/global/scripts.tpl'}
+		{include file='include/index/news.tpl'}
     </body>
 </html>

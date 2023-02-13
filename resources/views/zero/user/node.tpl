@@ -82,6 +82,7 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
+        {include file='include/index/news.tpl'}
 		<!-- vmess modal -->
         <div class="modal fade" id="zero_modal_vmess_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">

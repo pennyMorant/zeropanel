@@ -174,6 +174,8 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
+		{include file='include/index/news.tpl'}
+
 		<div class="modal fade" id="zero_modal_configure_product" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="modal-content rounded">

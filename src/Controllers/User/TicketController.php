@@ -6,7 +6,8 @@ use App\Controllers\UserController;
 use App\Models\{
     User,
     Ticket,
-    Setting
+    Setting,
+    Ann
 };
 use voku\helper\AntiXSS;
 use Slim\Http\{
@@ -45,6 +46,7 @@ class TicketController extends UserController
         $this->view()
             ->assign('tickets', $tickets)
             ->assign('tickets_all', $tickets_all)
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/ticket.tpl');
         return $response;
     }
@@ -224,6 +226,7 @@ class TicketController extends UserController
             ->assign('tickets', $ticket_main)
             ->assign('ticket_detail', $ticket_detail)
             ->assign('id', $id)
+            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/ticket_detail.tpl');
         return $response;  
     }
