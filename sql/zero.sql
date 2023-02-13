@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-01-29 16:49:20
--- 服务器版本： 10.9.4-MariaDB
--- PHP 版本： 8.2.1
+-- 生成日期： 2023-02-13 11:59:08
+-- 服务器版本： 10.9.5-MariaDB
+-- PHP 版本： 8.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `zero`
 --
+DROP DATABASE IF EXISTS `zero`;
+CREATE DATABASE IF NOT EXISTS `zero` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `zero`;
 
 -- --------------------------------------------------------
 
@@ -238,8 +241,6 @@ CREATE TABLE `order` (
   `order_type` text DEFAULT NULL COMMENT '订单类型,purchase_product_order-购买产品,add_credit_order-充值',
   `user_id` int(11) DEFAULT NULL COMMENT '提交用户',
   `product_id` int(11) DEFAULT NULL COMMENT '订单商品',
-  `product_name` text DEFAULT NULL COMMENT '商品名称',
-  `product_content` text DEFAULT NULL COMMENT '商品内容',
   `product_price` decimal(12,2) DEFAULT NULL COMMENT '商品售价',
   `order_coupon` text DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) DEFAULT NULL COMMENT '订单金额',
@@ -292,21 +293,19 @@ CREATE TABLE `payback_take_log` (
 
 CREATE TABLE `product` (
   `id` bigint(20) NOT NULL,
-  `name` varchar(512) NOT NULL COMMENT '产品名称',
-  `price` decimal(12,2) NOT NULL COMMENT '产品价格',
+  `name` varchar(512) DEFAULT NULL COMMENT '产品名称',
+  `price` decimal(12,2) DEFAULT NULL COMMENT '产品价格',
   `traffic` bigint(20) DEFAULT NULL COMMENT '产品包含的流量',
   `user_group` int(11) DEFAULT NULL COMMENT '用户群组',
   `class` int(11) DEFAULT NULL COMMENT '产品等级',
   `time` bigint(20) DEFAULT NULL COMMENT '产品等级有效时间',
-  `reset_traffic_cycle` int(11) DEFAULT NULL COMMENT '流量重置周期',
-  `traffic_reset_validity_period` bigint(20) DEFAULT NULL COMMENT '流量重置有效时间',
-  `traffic_reset_value` bigint(20) DEFAULT NULL COMMENT '流量周期重置的值',
+  `reset_traffic_cycle` int(11) NOT NULL DEFAULT 0 COMMENT '流量重置周期[0-不重置, 1-订单日重置, 2-每月一号重置]',
   `speed_limit` bigint(20) DEFAULT NULL COMMENT '速度限制',
   `ip_limit` int(11) DEFAULT NULL COMMENT 'IP限制',
   `type` varchar(128) NOT NULL COMMENT '产品类型, cycle-周期,traffic-按流量,other-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '产品状态',
-  `stock` int(11) NOT NULL DEFAULT 0 COMMENT '库存',
+  `stock` int(11) NOT NULL DEFAULT -1 COMMENT '库存',
   `sales` int(11) NOT NULL DEFAULT 0 COMMENT '销量'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -389,7 +388,8 @@ CREATE TABLE `user` (
   `t` int(11) NOT NULL DEFAULT 0,
   `u` bigint(20) NOT NULL,
   `d` bigint(20) NOT NULL,
-  `current_product_id` int(11) DEFAULT NULL COMMENT '用户当前产品ID',
+  `product_id` int(11) DEFAULT NULL COMMENT '用户当前产品ID',
+  `reset_traffic_date` int(11) DEFAULT NULL COMMENT '重置流量日期',
   `transfer_enable` bigint(20) NOT NULL COMMENT '总流量',
   `enable` tinyint(4) NOT NULL DEFAULT 1 COMMENT '是否启用',
   `detect_ban` int(11) NOT NULL DEFAULT 0 COMMENT '是否被封禁',
@@ -399,20 +399,18 @@ CREATE TABLE `user` (
   `signup_date` datetime NOT NULL COMMENT '注册日期',
   `money` decimal(12,2) NOT NULL COMMENT '金钱',
   `notify_type` varchar(32) DEFAULT NULL COMMENT '接收通知的的方式',
-  `ref_by` int(11) NOT NULL DEFAULT 0,
-  `expire_time` int(11) NOT NULL DEFAULT 0,
-  `signup_ip` varchar(182) NOT NULL DEFAULT '127.0.0.1',
-  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00,
-  `node_connector` int(11) NOT NULL DEFAULT 0,
-  `is_admin` int(11) NOT NULL DEFAULT 0,
+  `ref_by` int(11) NOT NULL DEFAULT 0 COMMENT '推荐人',
+  `signup_ip` varchar(182) NOT NULL DEFAULT '127.0.0.1' COMMENT '注册IP',
+  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '端口速度',
+  `node_connector` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
+  `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员',
   `last_day_t` bigint(20) NOT NULL DEFAULT 0,
-  `class` int(11) NOT NULL DEFAULT 0,
-  `class_expire` datetime NOT NULL DEFAULT '1989-06-04 00:05:00',
+  `class` int(11) NOT NULL DEFAULT 0 COMMENT '等级',
+  `class_expire` datetime NOT NULL DEFAULT '1989-06-04 00:05:00' COMMENT '等级到期时间',
   `theme` varchar(128) NOT NULL,
-  `remark` mediumtext DEFAULT NULL,
+  `remark` mediumtext DEFAULT NULL COMMENT '备注',
   `node_group` int(11) NOT NULL DEFAULT 0 COMMENT '分组',
   `telegram_id` bigint(20) DEFAULT NULL,
-  `expire_notified` tinyint(1) NOT NULL DEFAULT 0,
   `traffic_notified` tinyint(1) DEFAULT 0,
   `lang` varchar(128) NOT NULL DEFAULT 'zh-cn' COMMENT '用户的语言',
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
