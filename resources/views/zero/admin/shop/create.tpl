@@ -103,7 +103,7 @@
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="reset">流量重置周期</label>
                                 <select class="form-control maxwidth-edit" id="reset">
-                                    <option value="0">不重置</option>
+                                    <option value="0">一次性</option>
                                     <option value="1">订单日重置</option>
                                     <option value="2">每月1日重置</option>
                                 </select>

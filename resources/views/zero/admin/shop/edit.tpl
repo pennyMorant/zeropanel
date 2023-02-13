@@ -107,7 +107,7 @@
                         <div class="card-inner">
                             <div class="form-group form-group-label">
                                 <select class="form-control maxwidth-edit" id="reset">
-                                    <option value="0" {if $shop->reset_traffic_cycle === 0}selected{/if}>不重置</option>
+                                    <option value="0" {if $shop->reset_traffic_cycle === 0}selected{/if}>一次性</option>
                                     <option value="1" {if $shop->reset_traffic_cycle === 1}selected{/if}>订单日重置</option>
                                     <option value="2" {if $shop->reset_traffic_cycle === 2}selected{/if}>每月1日重置</option>
                                 </select>
