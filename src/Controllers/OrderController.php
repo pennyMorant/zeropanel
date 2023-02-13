@@ -254,9 +254,8 @@ class OrderController extends BaseController
             $order->execute_status = 1;
             $order->save();
             if ($product->stock !== -1) {
-                $product->stock -= 1; // 减库存
-            }
-            //$product->sales += 1; // 加销量
+                $product->sales += 1; // 加销量
+            }           
             $product->save();
             // 告罄补货通知
             if ($product->stock - $product->sales == 5 || $product->stock - $product->sales == 0) {
