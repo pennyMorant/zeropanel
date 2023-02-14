@@ -66,7 +66,7 @@ class SettingController extends AdminController
                 $list = array('website_backend_token');
                 break;
             case 'user_general':
-                $list = array('user_general_free_user_reset_day', 'user_general_free_user_reset_traffic', 'user_general_class_expire_reset_traffic', 'enable_reset_traffic_when_purchase_user_general', 'enable_add_times_when_purchase_user_general', 'enable_change_username_user_general', 'enable_change_email_user_general', 'enable_delete_account_user_general');
+                $list = array('user_general_class_expire_reset_traffic', 'enable_reset_traffic_when_purchase_user_general', 'enable_add_times_when_purchase_user_general', 'enable_change_username_user_general', 'enable_change_email_user_general', 'enable_delete_account_user_general');
                 break;
             case 'user_notify':
                 $list = array('enable_insufficient_traffic_user_notify');
