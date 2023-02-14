@@ -20,16 +20,32 @@
 
 
                             <div class="form-group form-group-label">
-                                <label class="floating-label" for="price">价格</label>
-                                <input class="form-control maxwidth-edit" id="price" type="text">
+                                <label class="floating-label" for="price">月付</label>
+                                <input class="form-control maxwidth-edit" id="month_price" type="text">
+                            </div>
+                            <div class="form-group form-group-label">
+                                <label class="floating-label" for="price">季付</label>
+                                <input class="form-control maxwidth-edit" id="quarter_price" type="text">
+                            </div>
+                            <div class="form-group form-group-label">
+                                <label class="floating-label" for="price">半年</label>
+                                <input class="form-control maxwidth-edit" id="half_year_price" type="text">
+                            </div>
+                            <div class="form-group form-group-label">
+                                <label class="floating-label" for="price">一年</label>
+                                <input class="form-control maxwidth-edit" id="year_price" type="text">
+                            </div>
+                            <div class="form-group form-group-label">
+                                <label class="floating-label" for="price">两年</label>
+                                <input class="form-control maxwidth-edit" id="two_year_price" type="text">
                             </div>
 
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="price">产品类型</label>
                                 <select class="form-control maxwidth-edit" id="type">
-                                    <option value="cycle">周期产品</option>
-                                    <option value="traffic">流量产品</option>
-                                    <option value="other">其他产品</option>
+                                    <option value="1">周期产品</option>
+                                    <option value="2">流量产品</option>
+                                    <option value="3">其他产品</option>
                                 </select>
                             </div>
                             <div class="form-group form-group-label">
@@ -87,11 +103,6 @@
                             <div class="form-group form-group-label">
                                 <label class="floating-label" for="class">等级</label>
                                 <input class="form-control maxwidth-edit" id="class" type="text" value="0">
-                            </div>
-
-                            <div class="form-group form-group-label">
-                                <label class="floating-label" for="class_expire">等级有效期天数</label>
-                                <input class="form-control maxwidth-edit" id="class_expire" type="text" value="0">
                             </div>
                         </div>
                     </div>
@@ -165,14 +176,17 @@
 
             let data = {
                 name: $$getValue('name'),
-                price: $$getValue('price'),
+                month_price: $$getValue('month_price'),
+                quarter_price: $$getValue('quarter_price'),
+                half_year_price: $$getValue('half_year_price'),
+                year_price: $$getValue('year_price'),
+                two_year_price: $$getValue('two_year_price'),
                 type: $$getValue('type'),
                 sort: $$getValue('sort'),
                 traffic: $$getValue('traffic'),
                 speed_limit: $$getValue('speed_limit'),
                 ip_limit: $$getValue('ip_limit'),
                 class: $$getValue('class'),
-                class_expire: $$getValue('class_expire'),
                 reset: $$getValue('reset'),
                 node_group: $$getValue('node_group'),
                 stock: $$getValue('stock'),

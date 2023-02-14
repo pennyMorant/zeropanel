@@ -46,7 +46,7 @@
                                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                             <th class="min-w-175px">{$trans->t('type')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('status')}</th>
-															{if $order->order_status == 'paid'}<th class="min-w-70px text-end">{$trans->t('payment method')}</th>{/if}
+															{if $order->order_status == '2'}<th class="min-w-70px text-end">{$trans->t('payment method')}</th>{/if}
                                                             <th class="min-w-100px text-end">{$trans->t('order number')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('quantity')}</th>
                                                             <th class="min-w-100px text-end">{$trans->t('price')}</th>
@@ -58,13 +58,10 @@
                                                     <tbody class="fw-semibold text-gray-600">
                                                         
                                                         <tr>
-                                                            
                                                             <td>
                                                                 <div class="d-flex align-items-center">
-                                                                    
-                                                                    
                                                                     <div class="ms-5">
-                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 'add_credit_order'}{$trans->t('add credit')}{else}{$trans->t('purchase product')}: {$product->name}{/if}</a>
+                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 2}{$trans->t('add credit')}{elseif $order->order_type == 1}{$trans->t('purchase product')}: {$product->name}{/if}</a>
                                                                         <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d h:i:s', $order->create_time)}</div>
                                                                     </div>
                                                                     
@@ -72,15 +69,15 @@
                                                             </td>
                                                             
                                                             <td class="text-end">
-                                                                {if $order->order_status == 'pending'}
+                                                                {if $order->order_status == '1'}
                                                                 <span class="badge badge-warning fs-6 fw-bold">{$trans->t('pending')}</span>
-                                                                {else if $order->order_status == 'paid'}
+                                                                {else if $order->order_status == '2'}
                                                                 <span class="badge badge-success fs-6 fw-bold">{$trans->t('paid')}</span>
-																{else if $order->order_status == 'invalid'}
+																{else if $order->order_status == '0'}
 																<span class="badge badge-danger fs-6 fw-bold">{$trans->t('invalid')}</span>	
                                                                 {/if}   
                                                             </td>
-															{if $order->order_status == 'paid'}
+															{if $order->order_status == '2'}
 																<td class="text-end">{$payment}</td>
 															{/if}
                                                             <td class="text-end">{$order->no}</td>                                                           
@@ -89,25 +86,25 @@
                                                             <td class="text-end">{$order->order_total}</td>                                                           
                                                         </tr>                                                                                                              
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('subtotal')}</td>
+                                                            <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('subtotal')}</td>
                                                             <td class="text-end">{$order->order_total}</td>
                                                         </tr>
                                                         
                                                         
 														{if $order->order_coupon != null}
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('discount')}</td>
+                                                            <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('discount')}</td>
                                                             <td class="text-end">{$order->product_price - $order->order_total}</td>
                                                         </tr>
 														{/if}
                                                         
                                                         
                                                         <tr>
-                                                            <td {if $order->order_status == 'paid'}colspan="6"{else}colspan="5"{/if} class="fs-3 text-dark text-end">{$trans->t('total')}</td>
+                                                            <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="fs-3 text-dark text-end">{$trans->t('total')}</td>
                                                             <td class="text-dark fs-3 fw-bolder text-end">{$order->order_total}</td>
                                                         </tr>
 														
-														{if $order->order_status == 'paid'}
+														{if $order->order_status == '2'}
 														<tr>
                                                             <td colspan="6" class="fs-3 text-dark text-end">{$trans->t('paid')}</td>
                                                             <td class="text-dark fs-3 fw-bolder text-end">{$order->order_total}</td>
@@ -119,7 +116,7 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status == 'pending'}
+											{if $order->order_status == '1'}
 											<div class="form-group row form-group-marginless">
 												<label class="col-lg-12 col-form-label kt-font-boldest"><strong>{$trans->t('payment method')}: </strong></label>
 												<div class="col-lg-12">
@@ -156,7 +153,7 @@
 														</li>
 														{/if}
 													{/if}
-														{if $order->order_type != 'add_credit_order'}
+														{if $order->order_type != 2}
 														<li class="nav-wallet nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 															<a class="btn btn-outline btn-active-light-info text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="creditpay">
 																<span class="nav-icon py-2 w-auto">

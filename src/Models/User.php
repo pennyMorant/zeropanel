@@ -335,7 +335,7 @@ class User extends Model
      */
     public function get_top_up(): float
     {
-        $number = Order::where('user_id', $this->id)->where('order_status', 'paid')->where('order_payment', '!=', 'creditpay')->sum('order_total');
+        $number = Order::where('user_id', $this->id)->where('order_status', 2)->where('order_payment', '!=', 'creditpay')->sum('order_total');
         return is_null($number) ? 0.00 : round($number, 2);
     }
 
@@ -477,8 +477,8 @@ class User extends Model
      */
     public function userTrafficResetCycle()
     {
-        Product::find($this->product_id);
-        $cycle = $product->reset_trafffic_cycle;
+        $product = Product::find($this->product_id);
+        $cycle = $product->reset_traffic_cycle;
         return $cycle;
     }
 

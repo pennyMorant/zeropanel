@@ -468,7 +468,7 @@ class Job extends Command
         echo '订单状态检测开始' . PHP_EOL;
         $orders = Order::where('order_status', 'pending')->where('expired_time', '<', time())->get();
         foreach ($orders as $order) {
-            $order->order_status = 'invalid';
+            $order->order_status = 0;
             $order->save();
         }
         echo '订单状态检测结束' . PHP_EOL;

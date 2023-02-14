@@ -197,19 +197,19 @@ class ZeroController extends BaseController
                     $tempdata['no']                = $value->no;
                     $tempdata['order_total']       = $value->order_total;
                     switch ($value->order_status) {
-                        case 'paid':
+                        case 2:
                             $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-success fs-6">' . $trans->t('paid') . '</div>';
                             break;
-                        case 'pending':
+                        case 1:
                             $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-warning fs-6">' . $trans->t('pending') . '</div>';
                             break;
-                        case 'invalid': 
+                        case 0: 
                             $tempdata['order_status'] = '<div class="badge font-weight-bold badge-light-danger fs-6">' . $trans->t('invalid') . '</div>';
                             break;
                         return $tempdata['order_status'];
                     }
                     //$tempdata['order_status']      = $value->order_status;
-                    $tempdata['order_type']        = $value->order_type == 'purchase_product_order' ? $trans->t('purchase product') : $trans->t('add credit');
+                    $tempdata['order_type']        = $value->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit');
                     $tempdata['created_time']      = date('Y-m-d H:i:s', $value->created_time);
                     $tempdata['expired_time']      = $value->expired_time;
                     $tempdata['action']            = '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$value->no.'">' . $trans->t('details') . '</a>';

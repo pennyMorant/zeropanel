@@ -487,7 +487,7 @@
             </div>
             <div class="modal-footer">
 				<button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder('add_credit_order')">
+                <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder('2')">
 					<span class="indicator-label">{$trans->t('submit')}</span>			
 					<span class="indicator-progress">{$trans->t('please wait')}
 					<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

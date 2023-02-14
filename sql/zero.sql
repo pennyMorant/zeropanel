@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-02-13 11:59:08
+-- 生成日期： 2023-02-14 07:19:28
 -- 服务器版本： 10.9.5-MariaDB
 -- PHP 版本： 8.2.2
 
@@ -20,9 +20,6 @@ SET time_zone = "+00:00";
 --
 -- 数据库： `zero`
 --
-DROP DATABASE IF EXISTS `zero`;
-CREATE DATABASE IF NOT EXISTS `zero` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `zero`;
 
 -- --------------------------------------------------------
 
@@ -238,14 +235,14 @@ CREATE TABLE `node_online_log` (
 CREATE TABLE `order` (
   `id` bigint(20) NOT NULL COMMENT 'AUTO_INCREMENT',
   `no` text DEFAULT NULL COMMENT '订单号',
-  `order_type` text DEFAULT NULL COMMENT '订单类型,purchase_product_order-购买产品,add_credit_order-充值',
+  `order_type` int(11) DEFAULT NULL COMMENT '订单类型1购买产品2账户充值',
   `user_id` int(11) DEFAULT NULL COMMENT '提交用户',
   `product_id` int(11) DEFAULT NULL COMMENT '订单商品',
   `product_price` decimal(12,2) DEFAULT NULL COMMENT '商品售价',
   `order_coupon` text DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) DEFAULT NULL COMMENT '订单金额',
   `credit_paid` int(11) DEFAULT NULL COMMENT '订单余额支付部分',
-  `order_status` text DEFAULT NULL COMMENT '订单状态,pending-等待支付,paid-完成支付,invalid-订单失效',
+  `order_status` int(11) DEFAULT NULL COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
   `created_time` int(11) DEFAULT NULL COMMENT '订单创建时间',
   `updated_time` int(11) DEFAULT NULL COMMENT '订单更新时间',
   `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
@@ -294,15 +291,18 @@ CREATE TABLE `payback_take_log` (
 CREATE TABLE `product` (
   `id` bigint(20) NOT NULL,
   `name` varchar(512) DEFAULT NULL COMMENT '产品名称',
-  `price` decimal(12,2) DEFAULT NULL COMMENT '产品价格',
+  `month_price` decimal(12,2) DEFAULT NULL COMMENT '产品价格',
+  `quarter_price` decimal(12,2) DEFAULT NULL,
+  `half_year_price` decimal(12,2) DEFAULT NULL,
+  `year_price` decimal(12,2) DEFAULT NULL,
+  `two_year_price` decimal(12,2) DEFAULT NULL,
   `traffic` bigint(20) DEFAULT NULL COMMENT '产品包含的流量',
   `user_group` int(11) DEFAULT NULL COMMENT '用户群组',
   `class` int(11) DEFAULT NULL COMMENT '产品等级',
-  `time` bigint(20) DEFAULT NULL COMMENT '产品等级有效时间',
-  `reset_traffic_cycle` int(11) NOT NULL DEFAULT 0 COMMENT '流量重置周期[0-不重置, 1-订单日重置, 2-每月一号重置]',
+  `reset_traffic_cycle` int(11) DEFAULT NULL COMMENT '流量重置周期[0-一次性, 1-订单日重置, 2-每月一号重置]',
   `speed_limit` bigint(20) DEFAULT NULL COMMENT '速度限制',
   `ip_limit` int(11) DEFAULT NULL COMMENT 'IP限制',
-  `type` varchar(128) NOT NULL COMMENT '产品类型, cycle-周期,traffic-按流量,other-其他商品',
+  `type` int(11) DEFAULT NULL COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '产品状态',
   `stock` int(11) NOT NULL DEFAULT -1 COMMENT '库存',

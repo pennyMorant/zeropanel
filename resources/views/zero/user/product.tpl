@@ -35,12 +35,12 @@
                                                 </div>
                                                 <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
 													{foreach $product_tab_lists as $product_tab}
-                                                    <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $product_tab['type'] == 'cycle'} active{/if}" data-bs-toggle="tab" data-bs-target="#product_tab_type_{$product_tab['type']}">{$product_tab['name']}</button>
+                                                    <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $product_tab['type'] == 1} active{/if}" data-bs-toggle="tab" data-bs-target="#product_tab_type_{$product_tab['type']}">{$product_tab['name']}</button>
                                                     {/foreach}
                                                 </div>
 												<div class="tab-content">
 													{foreach $product_lists as $key => $value}
-													<div class="tab-pane fade show {if $key == 'cycle'} active{/if}" id="product_tab_type_{$key}">
+													<div class="tab-pane fade show {if $key == 1} active{/if}" id="product_tab_type_{$key}">
 														<div class="row g-10">                                               
 															{if $count[$key] != '0'}
 																{foreach $products as $product}
@@ -52,7 +52,7 @@
 																						<h1 class="text-dark mb-5 fw-bolder" id="zero_product_name_{$product->id}">{$product->name}</h1>
 																						<div class="text-center">
 																							<span class="mb-2 text-primary">$</span>
-																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}">{$product->price}</span>
+																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}" data-price-quarter="{$product->quarter_price}" data-price-half-year="{$product->half_year_price}" data-price-year="{$product->year_price}">{$product->month_price}</span>
 																						</div>
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
@@ -195,7 +195,7 @@
 						</div>
 						<div class="d-flex flex-column">
 							<div class="row mt-10">
-								<div class="col-lg-8">
+								<div class="col-lg-7">
 									<div class="tab-content rounded h-100 bg-light p-10">
 										<div class="tab-pane fade show active">
 											<div class="pb-5">
@@ -207,7 +207,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-4 mt-5">
+								<div class="col-lg-5 mt-5">
 									<div class="card card-dashed">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
@@ -226,6 +226,29 @@
 											<div class="d-flex align-items-center">
 												<span class="fw-semibold fs-4 flex-grow-1 pe-3">{$trans->t('total')}</span>
 												<span class="fw-bold fs-2" id="zero_modal_configure_product_total"></span>
+											</div>
+										</div>
+									</div>
+									<div class="card card-dashed card-flush mt-5">
+										<div class="card-body">
+											<div class="d-flex align-items-center">
+												<ul class="nav nav-pills nav-fill">
+													<li class="nav-item" id="zero_modal_configure_product_month_price">
+														
+													</li>
+													
+													<li class="nav-item" id="zero_modal_configure_product_quarter_price">
+														
+													</li>
+													
+													<li class="nav-item" id="zero_modal_configure_product_half_year_price">
+														
+													</li>
+													
+													<li class="nav-item" id="zero_modal_configure_product_year_price">
+														
+													</li>
+												</ul>
 											</div>
 										</div>
 									</div>

@@ -29,29 +29,29 @@ final class ProductController extends BaseController
             ->get();
         $product_tab_lists = [
             [
-                'type' => 'cycle',
+                'type' => 1,
                 'name' => $trans->t('cycle'),
             ],
             [
-                'type' => 'traffic',
+                'type' => 2,
                 'name' => $trans->t('traffic'),
             ],
             [
-                'type' => 'other',
+                'type' => 3,
                 'name' => $trans->t('other'),
             ],
         ];
 
         $product_lists = [
-            'cycle' => '时间流量包',
-            'traffic' => '流量包',
-            'other' => '其他商品',
+            1 => $trans->t('cycle'),
+            2 => $trans->t('traffic'),
+            3 => $trans->t('other'),
         ];
         $all_products = Product::where('status', '1')->get();
         $count = [
-            'cycle' => $all_products->where('type', 'cycle')->count(),
-            'traffic' => $all_products->where('type', 'traffic')->count(),
-            'other' => $all_products->where('type', 'other')->count(),
+            1 => $all_products->where('type', 1)->count(),
+            2 => $all_products->where('type', 2)->count(),
+            3 => $all_products->where('type', 3)->count(),
         ];
         
         $configs = Setting::getClass('flash_sell');

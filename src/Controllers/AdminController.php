@@ -264,7 +264,7 @@ class AdminController extends UserController
         for ($i=0; $i < $times ; $i++) {
             $time_a -= 86400;
             $time_b -= 86400;
-            $total   = Order::where('order_type', 'paid')->where('order_payment', '!=', 'creditpay')->where('paid_time', '>=', $time_a)->where('paid_time', '<=', $time_b)->sum('order_total');
+            $total   = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->where('paid_time', '>=', $time_a)->where('paid_time', '<=', $time_b)->sum('order_total');
             $datas[] = [
                 'x'  => date('Y-m-d', $time_a),
                 'y' => $total ?? 0,

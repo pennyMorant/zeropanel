@@ -65,14 +65,19 @@ class OrderController extends BaseController
         $user = $this->user;
         $coupon_code = $request->getParam('coupon_code');
         $product_id = $request->getParam('product_id');
+        $product_price = $request->getParam('product_price');
         $product = Product::find($product_id);
         $amount = $request->getParam('add_credit_amount');
         $type = $args['type'];
 
         switch ($type) {
-            case 'purchase_product_order':
+            case 1:
                 try {
                     if ($product == null) {
+                        throw new \Exception(I18n::get()->t('error request'));
+                    }
+                    $all_price = array($product->month_price, $product->quarter_price, $product->half_year_price, $product->year_price);
+                    if (!in_array($product_price, $all_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
                     if ($user->class == $product->class && $product->reset_traffic_cycle != $user->userTrafficResetCycle()) {
@@ -84,11 +89,11 @@ class OrderController extends BaseController
                     $order->user_id = $user->id;
                     $order->product_id = $product->id;
                     $order->order_type = $type;
-                    $order->product_price = $product->price;
+                    $order->product_price = $product_price;
                     $order->order_coupon = (empty($coupon)) ? null : $coupon_code;
-                    $order->order_total = (empty($coupon)) ? $product->price : round($product->price * ((100 - $coupon->discount) / 100), 2);
+                    $order->order_total = (empty($coupon)) ? $product_price : round($product_price * ((100 - $coupon->discount) / 100), 2);
                     
-                    $order->order_status = 'pending';
+                    $order->order_status = 1;
                     $order->created_time = time();
                     $order->updated_time = time();
                     $order->expired_time = time() + 600;
@@ -102,7 +107,7 @@ class OrderController extends BaseController
                     ]);
                 }
                 break;
-            case 'add_credit_order':
+            case 2:
                 try {
                     if ($amount == '') {
                         throw new \Exception(I18n::get()->t('please enter the amount'));
@@ -115,7 +120,7 @@ class OrderController extends BaseController
                     $order->user_id = $user->id;
                     $order->order_total = $amount;
                     $order->order_type = $type;
-                    $order->order_status = 'pending';
+                    $order->order_status = 1;
                     $order->created_time = time();
                     $order->updated_time = time();
                     $order->expired_time = time() + 600;
@@ -159,7 +164,7 @@ class OrderController extends BaseController
             if (time() > $order->expired_time) {
                 throw new \Exception(I18n::get()->t('order has expired'));
             }
-            if ($order->order_status == 'paid') {
+            if ($order->order_status == 2) {
                 throw new \Exception(I18n::get()->t('order has paid'));
             }
             
@@ -217,7 +222,7 @@ class OrderController extends BaseController
         if ($order->execute_status != '1') {
             $order->paid_time = time();
             $order->updated_time = time();
-            $order->order_status = 'paid';
+            $order->order_status = 2;
             $order->save();
 
             $user = User::find($order->user_id);
@@ -235,7 +240,7 @@ class OrderController extends BaseController
         $user = User::find($order->user_id);
 
         if ($order->execute_status != '1') {
-            $order->order_status = 'paid';
+            $order->order_status = 2;
             $order->updated_time = time();
             $order->paid_time = time();
 
@@ -246,7 +251,7 @@ class OrderController extends BaseController
                 $coupon->save();
             }
 
-            $product->purchase($user);           
+            $product->purchase($user, $order->product_price);           
 
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase' && $user->agent === 0) {

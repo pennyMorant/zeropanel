@@ -392,14 +392,56 @@ function kTUserConfigureProductModal(id) {
     the_product_id = id;
     const html = $('#zero_product_'+id).html();
     const name = $('#zero_product_name_'+id).html();
-    const price = $('#zero_product_price_'+id).html();
-    const submitButton = document.querySelector('[data-kt-users-action="submit"]')
+    const month_price = $('#zero_product_price_'+id).html();
+    const quarter_price = $('#zero_product_price_'+id).attr('data-price-quarter');
+    const half_year_price = $('#zero_product_price_'+id).attr('data-price-half-year');
+    const year_price = $('#zero_product_price_'+id).attr('data-price-year');
+    const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+    if (!!month_price) {
+        $('#zero_modal_configure_product_month_price').html('<a class="btn btn-outline btn-active-light-primary active" data-bs-toggle="pill">月付</a>');
+        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month)');
+    }
+    if (!!quarter_price) {
+        $('#zero_modal_configure_product_quarter_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">季付</a>');
+        $('#zero_modal_configure_product_quarter_price').attr('onclick', 'KTUsersChangePlan("'+quarter_price+'", ' +id+ ', "quarter")');
+    }
+    if (!!half_year_price) {
+        $('#zero_modal_configure_product_half_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">半年付</a>');
+        $('#zero_modal_configure_product_half_year_price').attr('onclick', 'KTUsersChangePlan("'+half_year_price+'", ' +id+ ', "half_year")');
+    }
+    if (!!year_price) {
+        $('#zero_modal_configure_product_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">年付</a>');
+        $('#zero_modal_configure_product_year_price').attr('onclick', 'KTUsersChangePlan("'+year_price+'", ' +id+ ', "year")');
+    }
     $('#zero_modal_configure_product_inner_html').html(html);
-    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;1');
+    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;月付');
+    $('#zero_modal_configure_product_price').html(month_price + 'USD');
+    $('#zero_modal_configure_product_total').html(month_price + 'USD');
+    submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +month_price+ '", ' +id+ ')');
+    $("#zero_modal_configure_product").modal("show");
+}
+
+function KTUsersChangePlan(price, id, type) {
+    switch (type) {
+        case 'month':
+            plan = '月付';
+            break;
+        case 'quarter':
+            plan = '季付';
+            break;
+        case 'half_year':
+            plan = '半年付';
+            break;
+        case 'year':
+            plan = '年付';
+            break;
+    }
+    const name = $('#zero_product_name_'+id).html();
+    const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;' + plan);
     $('#zero_modal_configure_product_price').html(price + 'USD');
     $('#zero_modal_configure_product_total').html(price + 'USD');
-    submitButton.setAttribute('onclick', 'KTUsersCreateOrder("purchase_product_order",' +id+')');
-    $("#zero_modal_configure_product").modal("show");
+    submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
 }
 
 // verify coupon
@@ -422,12 +464,12 @@ function KTUserVerifyCoupon() {
     })
 }
 // create order
-function KTUsersCreateOrder(type, product_id) {
+function KTUsersCreateOrder(type, price, product_id) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
     switch (type) {
-        case 'purchase_product_order':
+        case 1:
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
@@ -435,6 +477,7 @@ function KTUsersCreateOrder(type, product_id) {
                     dataType: "json",
                     data: {
                         product_id: product_id,
+                        product_price: price,
                         coupon_code: $("#zero_coupon_code").val(),
                     },
                     success: function (data) {
@@ -453,7 +496,7 @@ function KTUsersCreateOrder(type, product_id) {
                 });
             }, 2000)
             break;
-        case 'add_credit_order':
+        case 2:
             setTimeout(function () {
                 $.ajax({
                     type: "POST",

@@ -66,21 +66,24 @@ class ProductController extends AdminController
      */
     public function add($request, $response, $args)
     {
-        $shop = new Product();
-        $shop->name = $request->getParam('name');
-        $shop->price = $request->getParam('price');
-        $shop->type = $request->getParam('type');
-        $shop->sort = $request->getParam('sort');
-        $shop->traffic = $request->getParam('traffic');
-        $shop->user_group = $request->getParam('node_group');
-        $shop->class = $request->getParam('class');
-        $shop->time = $request->getParam('class_expire');
-        $shop->reset_traffic_cycle = $request->getParam('reset');
-        $shop->speed_limit = $request->getParam('speed_limit');
-        $shop->ip_limit = $request->getParam('ip_limit');
-        $shop->stock = $request->getParam('stock');
-        $shop->status = 1;
-        if (!$shop->save()) {
+        $product = new Product();
+        $product->name = $request->getParam('name');
+        $product->month_price = (empty($request->getParam('month_price'))) ? NULL : $request->getParam('month_price');
+        $product->quarter_price = (empty($request->getParam('quarter_price'))) ? NULL : $request->getParam('quarter_price');
+        $product->half_year_price = (empty($request->getParam('half_year_price'))) ? NULL : $request->getParam('half_year_price');
+        $product->year_price = (empty($request->getParam('year_price'))) ? NULL : $request->getParam('year_price');
+        $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
+        $product->type = $request->getParam('type');
+        $product->sort = $request->getParam('sort');
+        $product->traffic = $request->getParam('traffic');
+        $product->user_group = $request->getParam('node_group');
+        $product->class = $request->getParam('class');
+        $product->reset_traffic_cycle = $request->getParam('reset');
+        $product->speed_limit = $request->getParam('speed_limit');
+        $product->ip_limit = $request->getParam('ip_limit');
+        $product->stock = $request->getParam('stock');
+        $product->status = 1;
+        if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '添加失败'
@@ -102,9 +105,9 @@ class ProductController extends AdminController
     public function edit($request, $response, $args)
     {
         $id = $args['id'];
-        $shop = Product::find($id);
+        $product = Product::find($id);
         $this->view()
-            ->assign('shop', $shop)
+            ->assign('product', $product)
             ->display('admin/shop/edit.tpl');
         return $response;
     }
@@ -119,23 +122,26 @@ class ProductController extends AdminController
     public function update($request, $response, $args)
     {
         $id = $args['id'];
-        $shop = Product::find($id);
+        $product = Product::find($id);
 
-        $shop->name = $request->getParam('name');
-        $shop->price = $request->getParam('price');
-        $shop->type = $request->getParam('type');
-        $shop->sort = $request->getParam('sort');
-        $shop->traffic = $request->getParam('traffic');
+        $product->name = $request->getParam('name');
+        $product->month_price = (empty($request->getParam('month_price'))) ? NULL : $request->getParam('month_price');
+        $product->quarter_price = (empty($request->getParam('quarter_price'))) ? NULL : $request->getParam('quarter_price');
+        $product->half_year_price = (empty($request->getParam('half_year_price'))) ? NULL : $request->getParam('half_year_price');
+        $product->year_price = (empty($request->getParam('year_price'))) ? NULL : $request->getParam('year_price');
+        $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
+        $product->type = $request->getParam('type');
+        $product->sort = $request->getParam('sort');
+        $product->traffic = $request->getParam('traffic');
 
-        $shop->user_group = $request->getParam('node_group');
-        $shop->class = $request->getParam('class');
-        $shop->time = $request->getParam('class_expire');
-        $shop->reset_traffic_cycle = $request->getParam('reset');
-        $shop->speed_limit = $request->getParam('speed_limit');
-        $shop->ip_limit = $request->getParam('ip_limit');
-        $shop->stock = $request->getParam('stock') - $shop->sales;
-        $shop->status = 1;
-        if (!$shop->save()) {
+        $product->user_group = $request->getParam('node_group');
+        $product->class = $request->getParam('class');
+        $product->reset_traffic_cycle = $request->getParam('reset');
+        $product->speed_limit = $request->getParam('speed_limit');
+        $product->ip_limit = $request->getParam('ip_limit');
+        $product->stock = $request->getParam('stock') - $product->sales;
+        $product->status = 1;
+        if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '保存失败'
