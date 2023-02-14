@@ -399,7 +399,7 @@ function kTUserConfigureProductModal(id) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     if (!!month_price) {
         $('#zero_modal_configure_product_month_price').html('<a class="btn btn-outline btn-active-light-primary active" data-bs-toggle="pill">月付</a>');
-        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month)');
+        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month")');
     }
     if (!!quarter_price) {
         $('#zero_modal_configure_product_quarter_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">季付</a>');
