@@ -115,16 +115,6 @@
 
                                     <div class="tab-pane fade active in" id="user_general">
                                         <div class="form-group form-group-label">
-                                            <label class="floating-label">免费用户流量重置日</label>
-                                            <input class="form-control maxwidth-edit" id="user_general_free_user_reset_day" value="{$settings['user_general_free_user_reset_day']}">
-                                            <p class="form-control-guide"><i class="material-icons">info</i>免费用户的流量定期重置日, 0表示不重置</p>
-                                        </div>
-                                        <div class="form-group form-group-label">
-                                            <label class="floating-label">免费用户流量重置值 (单位: GB)</label>
-                                            <input class="form-control maxwidth-edit" id="user_general_free_user_reset_traffic" value="{$settings['user_general_free_user_reset_traffic']}">
-                                            <p class="form-control-guide"><i class="material-icons">info</i>免费用户的流量定期充值的值, 0表示不重置</p>
-                                        </div>
-                                        <div class="form-group form-group-label">
                                             <label class="floating-label">等级到期流量重置值 (单位: GB)</label>
                                             <input class="form-control maxwidth-edit" id="user_general_class_expire_reset_traffic" value="{$settings['user_general_class_expire_reset_traffic']}">
                                             <p class="form-control-guide"><i class="material-icons">info</i>用户等级到期重置流量的值, 小于0时表示不重置</p>
@@ -1399,8 +1389,6 @@
                 dataType: "json",
                 data: {
                     class: 'user_general',
-                    user_general_free_user_reset_day: $$getValue('user_general_free_user_reset_day'),
-                    user_general_free_user_reset_traffic: $$getValue('user_general_free_user_reset_traffic'),
                     user_general_class_expire_reset_traffic: $$getValue('user_general_class_expire_reset_traffic'),
                     enable_reset_traffic_when_purchase_user_general: $$getValue('enable_reset_traffic_when_purchase_user_general'),
                     enable_add_times_when_purchase_user_general: $$getValue('enable_add_times_when_purchase_user_general'),

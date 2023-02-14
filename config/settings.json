@@ -51,26 +51,6 @@
     },
     {
         "id": null,
-        "item": "user_general_free_user_reset_day",
-        "value": "0",
-        "class": "user_general",
-        "is_public": "0",
-        "type": "string",
-        "default": "0",
-        "mark": "免费用户流量重置日"
-    },
-    {
-        "id": null,
-        "item": "user_general_free_user_reset_traffic",
-        "value": "0",
-        "class": "user_general",
-        "is_public": "0",
-        "type": "string",
-        "default": "0",
-        "mark": "免费用户流量重置值"
-    },
-    {
-        "id": null,
         "item": "user_general_class_expire_reset_traffic",
         "value": "0",
         "class": "user_general",
