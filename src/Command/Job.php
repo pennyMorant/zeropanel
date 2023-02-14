@@ -452,8 +452,8 @@ class Job extends Command
             $user->class = 0;
             $user->node_connector = $configs['connection_device_limit'];
             $user->node_speedlimit = $configs['connection_rate_limit'];
-            $user->product_id = null;
-            $user->reset_traffic_date = null;
+            $user->product_id = NULL;
+            $user->reset_traffic_date = NULL;
             $user->save();
             $product = Product::where('id', $user->product_id)->where('stock', '!=', -1)->first();
             $product->sales -= 1;
