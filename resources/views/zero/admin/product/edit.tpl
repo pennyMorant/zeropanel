@@ -31,7 +31,7 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">产品配置</div>
                                             <div class="card-toolbar">
-                                                <a class="btn btn-primary btn-sm fw-bold" onclick="createProduct('{$product->id}')">保存产品</a>
+                                                <a class="btn btn-primary btn-sm fw-bold" onclick="zeroAdminUpdateProduct('{$product->id}')">保存产品</a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -96,7 +96,7 @@
         {include file='admin/script.tpl'}
     </body>
     <script>
-        function createProduct(id) {
+        function zeroAdminUpdateProduct(id) {
             $.ajax({
                 type: "PUT",
                 url: "/admin/product/update",

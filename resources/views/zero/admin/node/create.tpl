@@ -33,7 +33,7 @@
                                         <div class="card-header card-flush">
                                             <div class="card-title fw-bold">节点配置</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-sm btn-primary fw-bold" onclick="updateNodeAll()">保存节点</button>
+                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">创建节点</button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -124,7 +124,7 @@
     const editor = new JSONEditor(container, options);
     </script>
     <script>
-        function createNode() {
+        function zeroAdminCreateNode() {
             $.ajax({
                 type: "POST",
                 url: "/admin/node/create",

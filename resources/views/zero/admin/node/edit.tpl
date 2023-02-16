@@ -33,7 +33,7 @@
                                         <div class="card-header card-flush">
                                             <div class="card-title fw-bold">节点配置</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-sm btn-primary fw-bold" onclick="updateNodeAll('{$node->id}')">保存节点</button>
+                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminUpdateNode('{$node->id}')">保存节点</button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -126,7 +126,7 @@
     editor.set({$node->custom_config})
     </script>
     <script>
-        function updateNodeAll(id) {
+        function zeroAdminUpdateNode(id) {
             $.ajax({
                 type: "PUT",
                 url: "/admin/node/update",
