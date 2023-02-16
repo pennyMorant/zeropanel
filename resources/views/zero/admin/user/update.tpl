@@ -42,7 +42,7 @@
                                                     <label class="form-label required">用户备注</label>
                                                     <input class="form-control mb-5" id="remark" name="remark" type="text" placeholder="用户备注" value="{$user->remark}">
                                                     <label class="form-label required">用户密码</label>
-                                                    <input class="form-control mb-5" id="passwrod" name="passwrod" type="password" placeholder="用户密码" value="{$user->password}">
+                                                    <input class="form-control mb-5" id="password" name="password" type="password" placeholder="用户密码" value="{$user->password}">
                                                     <label class="form-label required">用户余额</label>
                                                     <input class="form-control mb-5" id="money" name="money" type="number" placeholder="用户余额" value="{$user->money}">
                                                     <label class="form-label required">用户佣金</label>
