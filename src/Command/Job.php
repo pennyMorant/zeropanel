@@ -466,7 +466,7 @@ class Job extends Command
     public function CheckOrderStatus()
     {
         echo '订单状态检测开始' . PHP_EOL;
-        $orders = Order::where('order_status', 'pending')->where('expired_time', '<', time())->get();
+        $orders = Order::where('order_status', 1)->where('expired_time', '<', time())->get();
         foreach ($orders as $order) {
             $order->order_status = 0;
             $order->save();
