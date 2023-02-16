@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-02-14 07:19:28
--- 服务器版本： 10.9.5-MariaDB
--- PHP 版本： 8.2.2
+-- 生成日期： 2023-02-16 17:40:43
+-- 服务器版本： 10.10.3-MariaDB
+-- PHP 版本： 8.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,7 @@ CREATE TABLE `alive_ip` (
 CREATE TABLE `announcement` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `content` longtext NOT NULL,
-  `markdown` longtext NOT NULL
+  `content` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -178,7 +177,7 @@ CREATE TABLE `link` (
 CREATE TABLE `node` (
   `id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
-  `type` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
   `server` varchar(128) NOT NULL,
   `custom_config` text NOT NULL,
   `info` varchar(128) NOT NULL,
@@ -195,8 +194,7 @@ CREATE TABLE `node` (
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
   `node_ip` varchar(182) DEFAULT NULL,
   `node_group` int(11) NOT NULL DEFAULT 0,
-  `online` tinyint(1) NOT NULL DEFAULT 1,
-  `gfw_block` tinyint(1) NOT NULL DEFAULT 0
+  `online` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
