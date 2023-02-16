@@ -53,6 +53,8 @@ class NodeController extends UserController
         ->get();
         if (isset($class)) {
             $min_node_class = min($class->toArray())['node_class'];
+        } else {
+            $min_node_class = 0;
         }
         $nodes       = Node::where('status', 1)->orderBy('node_class')->orderBy('name')->get();
 
