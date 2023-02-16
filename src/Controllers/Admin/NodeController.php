@@ -85,7 +85,7 @@ class NodeController extends AdminController
         $node                   = new Node();
         $node->name             = $request->getParam('name');
         $node->server           = trim($request->getParam('server'));
-        $node->traffic_rate     = $request->getParam('rate');
+        $node->traffic_rate     = $request->getParam('traffic_rate');
         $node->status           = 0;
         $node->node_group       = $request->getParam('node_group');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
