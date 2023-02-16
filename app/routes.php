@@ -122,55 +122,55 @@ return function (SlimApp $app) {
 
         $group->get('/log/{name}',               App\Controllers\Admin\LogController::class . ':index');
         $group->post('/log/ajax/{name}',         App\Controllers\Admin\LogController::class . ':ajax');
+
         // Node Mange
         $group->get('/node',                     App\Controllers\Admin\NodeController::class . ':index');
-
-        $group->get('/node/create',              App\Controllers\Admin\NodeController::class . ':create');
-        $group->post('/node',                    App\Controllers\Admin\NodeController::class . ':add');
-        $group->get('/node/{id}/edit',           App\Controllers\Admin\NodeController::class . ':edit');
-        $group->put('/node/{id}',                App\Controllers\Admin\NodeController::class . ':update');
+        $group->get('/node/create',              App\Controllers\Admin\NodeController::class . ':createNodeIndex');
+        $group->post('/node/create',                    App\Controllers\Admin\NodeController::class . ':createNode');
+        $group->get('/node/update/{id}',           App\Controllers\Admin\NodeController::class . ':updateNodeIndex');
+        $group->put('/node/update',          App\Controllers\Admin\NodeController::class . ':updateNode');
         $group->delete('/node',                  App\Controllers\Admin\NodeController::class . ':delete');
-        $group->post('/node/ajax',               App\Controllers\Admin\NodeController::class . ':ajax');
+        $group->post('/node/ajax',               App\Controllers\Admin\NodeController::class . ':nodeAjax');
+        $group->put('/node/update/status',      App\Controllers\Admin\NodeController::class . ':updateNodeStatus');
 
-
+        //ticket
         $group->get('/ticket',                   App\Controllers\Admin\TicketController::class . ':index');
-        $group->get('/ticket/{id}/view',         App\Controllers\Admin\TicketController::class . ':show');
-        $group->put('/ticket/{id}',              App\Controllers\Admin\TicketController::class . ':update');
+        $group->get('/ticket/update/{id}',         App\Controllers\Admin\TicketController::class . ':updateTicketIndex');
+        $group->put('/ticket/update',              App\Controllers\Admin\TicketController::class . ':updateTicket');
         $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ajax');
 
         // Shop Mange
-        $group->get('/shop',                     App\Controllers\Admin\ProductController::class . ':index');
-        $group->post('/shop/ajax',               App\Controllers\Admin\ProductController::class . ':ajaxShop');
-        
+        $group->get('/product',                     App\Controllers\Admin\ProductController::class . ':index');
+        $group->post('/product/ajax',               App\Controllers\Admin\ProductController::class . ':productAjax');
+        $group->get('/product/create',              App\Controllers\Admin\ProductController::class . ':createProductIndex');
+        $group->post('/product/create',                    App\Controllers\Admin\ProductController::class . ':createProduct');
+        $group->get('/product/update/{id}',           App\Controllers\Admin\ProductController::class . ':updateProductIndex');
+        $group->put('/product/update',                App\Controllers\Admin\ProductController::class . ':updateProduct');
+        $group->delete('/product',                  App\Controllers\Admin\ProductController::class . ':deleteGet');
+        $group->put('/product/update/status',      App\Controllers\Admin\ProductController::class . ':updateProductStatus');
+
+        // order
         $group->get('/order',                   App\Controllers\Admin\OrderController::class . ':index');
         $group->post('/order/ajax',             App\Controllers\Admin\OrderController::class . ':ajaxOrder');
-
-        $group->get('/shop/create',              App\Controllers\Admin\ProductController::class . ':create');
-        $group->post('/shop',                    App\Controllers\Admin\ProductController::class . ':add');
-        $group->get('/shop/{id}/edit',           App\Controllers\Admin\ProductController::class . ':edit');
-        $group->put('/shop/{id}',                App\Controllers\Admin\ProductController::class . ':update');
-        $group->delete('/shop',                  App\Controllers\Admin\ProductController::class . ':deleteGet');
         
-
-        // Ann Mange
-        $group->get('/announcement',             App\Controllers\Admin\AnnController::class . ':index');
-        $group->get('/announcement/create',      App\Controllers\Admin\AnnController::class . ':create');
-        $group->post('/announcement',            App\Controllers\Admin\AnnController::class . ':add');
-        $group->get('/announcement/{id}/edit',   App\Controllers\Admin\AnnController::class . ':edit');
-        $group->put('/announcement/{id}',        App\Controllers\Admin\AnnController::class . ':update');
-        $group->delete('/announcement',          App\Controllers\Admin\AnnController::class . ':delete');
-        $group->post('/announcement/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
+        // news
+        $group->get('/news',             App\Controllers\Admin\AnnController::class . ':index');
+        $group->post('/news/create',      App\Controllers\Admin\AnnController::class . ':createNews');
+        $group->put('/news/update',        App\Controllers\Admin\AnnController::class . ':updateNews');
+        $group->delete('/news',          App\Controllers\Admin\AnnController::class . ':delete');
+        $group->post('/news/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
+        $group->post('/news/request',       App\Controllers\Admin\AnnController::class . ':newsRequest');
 
         // Detect Mange
-        $group->get('/detect',                   App\Controllers\Admin\DetectController::class . ':index');
+        $group->get('/ban',                      App\Controllers\Admin\BanController::class . ':index');
         $group->get('/detect/create',            App\Controllers\Admin\DetectController::class . ':create');
         $group->post('/detect',                  App\Controllers\Admin\DetectController::class . ':add');
         $group->get('/detect/{id}/edit',         App\Controllers\Admin\DetectController::class . ':edit');
         $group->put('/detect/{id}',              App\Controllers\Admin\DetectController::class . ':update');
         $group->delete('/detect',                App\Controllers\Admin\DetectController::class . ':delete');
-        $group->get('/detect/log',               App\Controllers\Admin\DetectController::class . ':log');
-        $group->post('/detect/ajax',             App\Controllers\Admin\DetectController::class . ':ajaxRule');
-        $group->post('/detect/log/ajax',         App\Controllers\Admin\DetectController::class . ':ajaxLog');
+        $group->post('/ban/detect/record/ajax',  App\Controllers\Admin\BanController::class . ':detectRuleRecordAjax');
+        $group->post('/ban/rule/ajax',           App\Controllers\Admin\BanController::class . ':banRuleAjax');
+        $group->post('/ban/record/ajax',         App\Controllers\Admin\BanController::class . ':banRecordAjax');
 
         $group->get('/detect/ban',               App\Controllers\Admin\DetectBanLogController::class . ':index');
         $group->post('/detect/ban/ajax',         App\Controllers\Admin\DetectBanLogController::class . ':ajaxLog');
@@ -184,12 +184,13 @@ return function (SlimApp $app) {
 
         // User Mange
         $group->get('/user',                     App\Controllers\Admin\UserController::class . ':index');
-        $group->get('/user/{id}/edit',           App\Controllers\Admin\UserController::class . ':edit');
-        $group->put('/user/{id}',                App\Controllers\Admin\UserController::class . ':update');
+        $group->get('/user/update/{id}',           App\Controllers\Admin\UserController::class . ':updateUserIndex');
+        $group->put('/user/update',                App\Controllers\Admin\UserController::class . ':updateUser');
         $group->delete('/user',                  App\Controllers\Admin\UserController::class . ':delete');
         $group->post('/user/ajax',               App\Controllers\Admin\UserController::class . ':ajax');
         $group->post('/user/create',             App\Controllers\Admin\UserController::class . ':createNewUser');
         $group->post('/user/buy',                App\Controllers\Admin\UserController::class . ':buy');
+        $group->put('/user/update/status/{type}', App\Controllers\Admin\UserController::class . ':updateUserStatus');
 
 
         $group->get('/coupon',                   App\Controllers\AdminController::class . ':coupon');

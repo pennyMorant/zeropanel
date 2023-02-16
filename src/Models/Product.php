@@ -58,6 +58,23 @@ class Product extends Model
     {
         return $this->user_group ?? -1;
     }
+
+    public function status()
+    {
+        switch ($this->status) {
+            case 0:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="product_status_'.$this->id.'" onclick="updateProductStatus('.$this->id.')" />
+                            </div>';
+                break;
+            case 1:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="product_status_'.$this->id.'" checked="checked" onclick="updateProductStatus('.$this->id.')" />
+                            </div>';
+                break;
+        }
+        return $status;
+    }
     
 
     public function purchase($user, $price)

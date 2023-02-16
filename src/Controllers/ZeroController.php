@@ -170,15 +170,7 @@ class ZeroController extends BaseController
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
                     $tempdata['title'] = $value->title;
-                    switch ($value->status) {
-                        case '1': 
-                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light-success fs-6">' . $trans->t('active') . '</div>';
-                            break;
-                        case '0':
-                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light fs-6">' . $trans->t('closed') . '</div>';
-                            break;
-                        return $tempdata['status'];
-                    }
+                    $tempdata['status'] = $value->status();
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
                     $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/' . $value->id . '/view">' . $trans->t('details') . '</a>';
                     $data[] = $tempdata;

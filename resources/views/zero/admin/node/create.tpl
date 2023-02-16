@@ -1,163 +1,118 @@
-{include file='admin/main.tpl'}
-
-<main class="content">
-    <div class="content-header ui-content-header">
-        <div class="container">
-            <h1 class="content-heading">添加节点</h1>
-        </div>
-    </div>
-    <div class="container">
-        <div class="col-lg-12 col-sm-12">
-            <section class="content-inner margin-top-no">
-                <form id="main_form">
-                    <div class="card">
-                        <div class="card-main">
-                            <div class="card-inner">
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="name">节点名称</label>
-                                    <input class="form-control maxwidth-edit" id="name" type="text" name="name">
-                                </div>
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="server">节点地址</label>
-                                    <input class="form-control maxwidth-edit" id="server" type="text" name="server">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>如果填写为域名，“节点IP”会自动设置为解析的IP</p>
-                                </div>
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="server">节点IP</label>
-                                    <input class="form-control maxwidth-edit" id="node_ip" name="node_ip" type="text">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>如果“节点地址”填写为域名，则此处的值会被忽视
-                                    </p>
-                                </div>
-                                <div class="form-group">
-                                    <dev id="custom_config"></dev>
-                                    <p class="form-control-guide"><i class="material-icons">info</i>请参考 <a href="//wiki.sspanel.org/#/setup-custom-config" target="_blank">wiki.sspanel.org/#/setup-custom-config</a> 进行配置
-                                    </p>
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="rate">流量比例</label>
-                                    <input class="form-control maxwidth-edit" id="rate" type="text" name="rate"
-                                           value="1">
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-main">
-                            <div class="card-inner">
-                                <div class="form-group form-group-label">
-                                    <div class="checkbox switch">
-                                        <label for="type">
-                                            <input checked class="access-hide" id="type" type="checkbox"
-                                                   name="type"><span class="switch-toggle"></span>是否显示
-                                        </label>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{$config["appName"]} Dashboard</title>
+        <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
+        <meta charset="UTF-8" />
+        <meta name="renderer" content="webkit" />
+        <meta name="description" content="Updates and statistics" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no,email=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="theme-color" content="#3B5598" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+        <meta http-equiv="expires" content="0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+        <link href="/theme/zero/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="/theme/zero/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="/theme/zero/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+        <script src="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.js"></script>
+        <link href="/favicon.png" rel="shortcut icon">
+        <link href="/apple-touch-icon.png" rel="apple-touch-icon">
+    </head>
+	{include file ='admin/menu.tpl'}
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <div class="d-flex flex-column flex-column-fluid mt-10">
+                            <div id="kt_app_content" class="app-content flex-column-fluid">
+                                <div id="kt_app_content_container" class="app-container container-xxl">
+                                    <div class="card mb-5">
+                                        <div class="card-header card-flush">
+                                            <div class="card-title fw-bold">节点配置</div>
+                                            <div class="card-toolbar">
+                                                <button class="btn btn-sm btn-primary fw-bold" onclick="updateNodeAll()">保存节点</button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="custom_config"></div>
+                                        </div>
                                     </div>
-                                </div>
-
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="flag">节点旗帜</label>
-                                    <input class="form-control maxwidth-edit" id="flag" type="text" name="flag"
-                                           value="un">
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <div class="form-group form-group-label">
-                                        <label class="floating-label" for="sort">节点类型</label>
-                                        <select id="sort" class="form-control maxwidth-edit" name="sort">
-                                            <option value="0">Shadowsocks</option>
-                                            <option value="11">VMESS</option>
-                                            <option value="13">Shadowsocks V2Ray-Plugin&Obfs</option>
-                                            <option value="14">TROJAN</option>
-                                            <option value="15">VLESS</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="info">节点描述</label>
-                                    <input class="form-control maxwidth-edit" id="info" type="text" name="info"
-                                           value="无描述">
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="class">节点等级</label>
-                                    <input class="form-control maxwidth-edit" id="class" type="text" value="0"
-                                           name="class">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>不分级请填0，分级填写相应数字</p>
-                                </div>
-
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="group">节点群组</label>
-                                    <input class="form-control maxwidth-edit" id="group" type="text" value="0"
-                                           name="group">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>分组为数字，不分组请填0</p>
-                                </div>
-
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="node_bandwidth_limit">节点流量上限（GB）</label>
-                                    <input class="form-control maxwidth-edit" id="node_bandwidth_limit" type="text"
-                                           value="0" name="node_bandwidth_limit">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>不设上限请填0</p>
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="bandwidthlimit_resetday">节点流量上限清空日</label>
-                                    <input class="form-control maxwidth-edit" id="bandwidthlimit_resetday" type="text"
-                                           value="1" name="bandwidthlimit_resetday">
-                                </div>
-
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="node_speedlimit">节点限速（Mbps）</label>
-                                    <input class="form-control maxwidth-edit" id="node_speedlimit" type="text" value="0"
-                                           name="node_speedlimit">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>不限速填0，对于每个用户端口生效</p>
-                                </div>
-                                <div class="form-group form-group-label">
-                                    <label class="floating-label" for="node_speedlimit">节点排序</label>
-                                    <input class="form-control maxwidth-edit" id="node_sort" type="text" value="0"
-                                           name="node_sort">
-                                    <p class="form-control-guide"><i class="material-icons">info</i>数字越大越靠前</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="card">
-                        <div class="card-main">
-                            <div class="card-inner">
-
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-10 col-md-push-1">
-                                            <button id="submit" type="submit"
-                                                    class="btn btn-block btn-brand waves-attach waves-light">添加
-                                            </button>
+                                    <div class="row g-5">
+                                        <div class="col-xxl-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <label class="form-label required">节点名称</label>
+                                                    <input class="form-control mb-5" id="name" name="name" type="text" placeholder="节点名称" value="">
+                                                    <label class="form-label required">节点地址</label>
+                                                    <input class="form-control mb-5" id="server" name="server" type="text" placeholder="节点地址" value="">
+                                                    <label class="form-label required">节点IP</label>
+                                                    <input class="form-control mb-5" id="node_ip" name="node_ip" type="text" placeholder="节点IP" value="">
+                                                    <label class="form-label">流量比例</label>
+                                                    <input class="form-control mb-5" id="traffic_rate" name="traffic_rate" type="text" placeholder="流量比例" value="1">
+                                                    <label class="form-label required">节点旗帜</label>
+                                                    <select class="form-select mb-5" id="node_flag">
+                                                        <option value="us" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">美国</option>
+                                                        <option value="uk" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
+                                                        <option value="ca" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">加拿大</option>
+                                                        <option value="rus" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg">俄罗斯</option>
+                                                        <option value="hk" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">香港</option>
+                                                        <option value="jp" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">日本</option>
+                                                        <option value="sg" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">新加坡</option>
+                                                        <option value="kr" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg">韩国</option>
+                                                        <option value="au" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg">澳大利亚</option>
+                                                        <option value="tr" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg">土耳其</option>
+                                                        <option value="arg" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg">阿根廷</option>
+                                                        <option value="br" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg">巴西</option>
+                                                        <option value="de" data-kt-select2-country="/theme/zero/assets/media/flags/germany.svg">德国</option>
+                                                        <option value="fr" data-kt-select2-country="/theme/zero/assets/media/flags/france.svg">法国</option>
+                                                        <option value="irl" data-kt-select2-country="/theme/zero/assets/media/flags/ireland.svg">爱尔兰</option>
+                                                        <option value="th" data-kt-select2-country="/theme/zero/assets/media/flags/thailand.svg">泰国</option>
+                                                        <option value="phi" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg">菲律宾</option>
+                                                        <option value="my" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
+                                                    </select>
+                                                    <label class="form-label required">节点类型</label>
+                                                    <select class="form-select mb-5" id="sort">
+                                                        <option value="0">Shadowsocks</option>
+                                                        <option value="11">VMESS</option>
+                                                        <option value="13">Shadowsocks V2Ray-Plugin&Obfs</option>
+                                                        <option value="14">TROJAN</option>
+                                                        <option value="15">VLESS</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-6">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <label class="form-label">节点等级</label>
+                                                    <input class="form-control mb-5" id="node_class" name="node_class" type="number" placeholder="节点等级" value="0">
+                                                    <label class="form-label">节点群组</label>
+                                                    <input class="form-control mb-5" id="node_group" name="node_group" type="number" placeholder="节点群组" value="0">
+                                                    <label class="form-label">流量上限(GB)</label>
+                                                    <input class="form-control mb-5" id="node_bandwidth_limit" name="node_bandwidth_limit" type="text" value="0" placeholder="流量上限">
+                                                    <label class="form-label">流量上限清空日</label>
+                                                    <input class="form-control mb-5" id="bandwidthlimit_resetday" name="bandwidthlimit_resetday" type="text" value="1" placeholder="流量上限清空日">
+                                                    <label class="form-label">节点速度</label>
+                                                    <input class="form-control mb-5" id="node_speedlimit" name="node_speedlimit" type="text" value="0" placeholder="节点速度">
+                                                    <label class="form-label required">节点排序</label>
+                                                    <input class="form-control mb-5" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
+                                                </div>
+                                            </div>  
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </form>
-                {include file='dialog.tpl'}
-
-
+                </div>
+            </div>
         </div>
-
-
-    </div>
-</main>
-
-{include file='admin/footer.tpl'}
-
-
-<script>
+        {include file='admin/script.tpl'}
+    </body>
+    <script>
     const container = document.getElementById('custom_config');
     var options = {
         mode: 'tree',
@@ -167,65 +122,73 @@
         }
     };
     const editor = new JSONEditor(container, options);
-{literal}
-    $('#main_form').validate({
-        ignore: ".jsoneditor *",
-        rules: {
-            name: {required: true},
-            rate: {required: true},
-            info: {required: true},
-            group: {required: true},
-            flag: {required: true},
-            node_speedlimit: {required: true},
-            sort: {required: true},
-            node_bandwidth_limit: {required: true},
-            bandwidthlimit_resetday: {required: true}
-        },
-        submitHandler: () => {
-            if ($$.getElementById('type').checked) {
-                var type = 1;
-            } else {
-                var type = 0;
-            }
-{/literal}
+    </script>
+    <script>
+        function createNode() {
             $.ajax({
                 type: "POST",
-                url: "/admin/node",
-                dataType: "json",
+                url: "/admin/node/create",
+                dataType: "JSON",
                 data: {
-                    name: $$getValue('name'),
-                    server: $$getValue('server'),
+                    name: $('#name').val(),
+                    server: $('#server').val(),
+                    node_ip: $('#node_ip').val(),
+                    traffic_rate: $('#traffic_rate').val(),
+                    flag: $('#node_flag').val(),
+                    sort: $('#sort').val(),
+                    node_class: $('#node_class').val(),
+                    node_group: $('#node_group').val(),
+                    node_bandwidth_limit: $('#node_bandwidth_limit').val(),
+                    bandwidthlimit_resetday: $('#bandwidthlimit_resetday').val(),
+                    node_speedlimit: $('#node_speedlimit').val(),
+                    node_sort: $('#node_sort').val(),
                     custom_config: editor.get(),
-                    node_ip: $$getValue('node_ip'),
-                    rate: $$getValue('rate'),
-                    info: $$getValue('info'),
-                    type,
-                    group: $$getValue('group'),
-                    flag: $$getValue('flag'),
-                    node_speedlimit: $$getValue('node_speedlimit'),
-                    sort: $$getValue('sort'),
-                    node_sort: $$getValue('node_sort'),
-                    class: $$getValue('class'),
-                    node_bandwidth_limit: $$getValue('node_bandwidth_limit'),
-                    bandwidthlimit_resetday: $$getValue('bandwidthlimit_resetday')
                 },
-                success: data => {
-                    if (data.ret) {
-                        $("#result").modal();
-                        $$.getElementById('msg').innerHTML = data.msg;
-                        window.setTimeout("location.href=top.document.referrer", {$config['jump_delay']});
+                success: function(data){
+                    if(data.ret === 1) {
+                        Swal.fire({
+                            text: data.msg,
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function (result) {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            }
+                        });
                     } else {
-                        $("#result").modal();
-                        $$.getElementById('msg').innerHTML = data.msg;
+                        getResult(data.msg, '', 'error');
                     }
-                },
-                error: (jqXHR) => {
-                    $("#result").modal();
-                    $$.getElementById('msg').innerHTML = `发生错误：${
-                            jqXHR.status
-                            }`;
                 }
             });
         }
-    });
-</script>
+    </script>
+    <script>
+        // Format options
+var optionFormat = function(item) {
+    if ( !item.id ) {
+        return item.text;
+    }
+
+    var span = document.createElement('span');
+    var imgUrl = item.element.getAttribute('data-kt-select2-country');
+    var template = '';
+
+    template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
+    template += item.text;
+
+    span.innerHTML = template;
+
+    return $(span);
+}
+
+// Init Select2 --- more info: https://select2.org/
+$('#node_flag').select2({
+    templateSelection: optionFormat,
+    templateResult: optionFormat
+});
+    </script>
+</html>
