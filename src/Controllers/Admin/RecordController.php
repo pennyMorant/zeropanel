@@ -201,7 +201,7 @@ class RecordController extends AdminController
                 $query = TrafficLog::getTableDataFromAdmin($request);
                 $data = [];
                 foreach ($query['datas'] as $value) {
-                    $node                       = Node::where('id', $value->node_id)->first();
+                    $node                       = Node::find($value->node_id);
                     $tempdata                   = [];
                     $tempdata['id']             = $value->id;
                     $tempdata['user_id']        = $value->user_id;
