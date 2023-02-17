@@ -23,4 +23,3 @@ columns: [
 
 
 var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
-

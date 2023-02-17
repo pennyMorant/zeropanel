@@ -176,10 +176,10 @@ return function (SlimApp $app) {
         $group->post('/detect/ban/ajax',         App\Controllers\Admin\DetectBanLogController::class . ':ajaxLog');
 
         // IP Mange
-        $group->get('/login',                    App\Controllers\Admin\IpController::class . ':index');
-        $group->get('/alive',                    App\Controllers\Admin\IpController::class . ':alive');
-        $group->post('/login/ajax',              App\Controllers\Admin\IpController::class . ':ajaxLogin');
-        $group->post('/alive/ajax',              App\Controllers\Admin\IpController::class . ':ajaxAlive');
+        $group->get('/login',                    App\Controllers\Admin\RecordController::class . ':index');
+        $group->get('/record',                    App\Controllers\Admin\RecordController::class . ':recordIndex');
+        $group->post('/record/ajax{type}',              App\Controllers\Admin\RecordController::class . ':recordAjax');
+        $group->post('/alive/ajax',              App\Controllers\Admin\RecordController::class . ':ajaxAlive');
 
 
         // User Mange
