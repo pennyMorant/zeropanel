@@ -55,7 +55,7 @@
                                                         </div>
                                                     </div>
                                                     <label class="form-label required">产品类型</label>
-                                                    <select class="form-select mb-5" id="type">
+                                                    <select class="form-select mb-5" id="type" data-control="select2" data-hide-search="true">
                                                         <option value="1" {if $product->type == 1}selected{/if}>周期产品</option>
                                                         <option value="2" {if $product->type == 2}selected{/if}>流量产品</option>
                                                         <option value="3" {if $product->type == 3}selected{/if}>其他产品</option>
@@ -71,7 +71,7 @@
                                                     <label class="form-label required">产品库存</label>
                                                     <input class="form-control mb-5" id="stock" name="name" type="number" placeholder="产品库存" value="{$product->stock}">
                                                     <label class="form-label required">产品流量重置周期</label>
-                                                    <select class="form-select mb-5" id="reset">
+                                                    <select class="form-select mb-5" id="reset" data-control="select2" data-hide-search="true">
                                                         <option value="0" {if $product->reset_traffic_cycle === 0}selected{/if}>一次性</option>
                                                         <option value="1" {if $product->reset_traffic_cycle === 1}selected{/if}>订单日重置</option>
                                                         <option value="2" {if $product->reset_traffic_cycle === 2}selected{/if}>每月1日重置</option>

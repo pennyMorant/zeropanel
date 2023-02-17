@@ -74,7 +74,7 @@
                                                         <option value="my" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
-                                                    <select class="form-select mb-5" id="sort">
+                                                    <select class="form-select mb-5" id="sort" data-control="select2" data-hide-search="true">
                                                         <option value="0">Shadowsocks</option>
                                                         <option value="11">VMESS</option>
                                                         <option value="13">Shadowsocks V2Ray-Plugin&Obfs</option>
