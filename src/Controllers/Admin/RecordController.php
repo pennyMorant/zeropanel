@@ -7,7 +7,8 @@ use App\Models\{
     Ip,
     SigninIp,
     TrafficLog,
-    UserSubscribeLog
+    UserSubscribeLog,
+    Node
 };
 use App\Utils\{
     QQWry,
@@ -20,31 +21,6 @@ use Slim\Http\{
 
 class RecordController extends AdminController
 {
-    /**
-     * 后台登录记录页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index($request, $response, $args)
-    {
-        $table_config_signin['total_column'] = array(
-            'id'        => 'ID',
-            'userid'    => '用户ID',
-            'ip'        => 'IP',
-            'location'  => '归属地',
-            'datetime'  => '时间',
-            'type'      => '类型'
-        );
-        $table_config_signin['ajax_url'] = 'login/ajax';
-        $this->view()
-            ->assign('table_config_signin', $table_config_signin)
-            ->display('admin/ip/login.tpl');
-        return $response;
-    }
-
-
     /**
      * 后台在线 IP 页面
      *
@@ -147,8 +123,9 @@ class RecordController extends AdminController
                     $tempdata['location']  = $value->location($QQWry);
                     $tempdata['datetime']  = $value->datetime();
                     $data[] = $tempdata;
-                    $total = Ip::count();
+                    
                 }
+                $total = Ip::count();
                 break;
             case 'signin':
                 $query = SigninIp::getTableDataFromAdmin(
@@ -181,8 +158,9 @@ class RecordController extends AdminController
                     $tempdata['type']      = $value->type();
         
                     $data[] = $tempdata;
-                    $total = SigninIp::count();
+                    
                 }
+                $total = SigninIp::count();
                 break;
             case "subscribe":
                 $query = UserSubscribeLog::getTableDataFromAdmin(
@@ -215,8 +193,9 @@ class RecordController extends AdminController
                     $tempdata['request_user_agent'] = $value->request_user_agent;
         
                     $data[] = $tempdata;
-                    $total = UserSubscribeLog::count();
+                    
                 }
+                $total = UserSubscribeLog::count();
                 break;
             case 'traffic':
                 $query = TrafficLog::getTableDataFromAdmin($request);
@@ -232,8 +211,9 @@ class RecordController extends AdminController
                     $tempdata['traffic']        = $value->traffic;
                     $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
                     $data[] = $tempdata;
-                    $total = TrafficLog::count();
+                    
                 }
+                $total = TrafficLog::count();
                 break;
         }
         return $response->withJson([
