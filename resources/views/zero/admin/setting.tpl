@@ -478,7 +478,7 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">开启提现</label>
-                                                                    <select class="form-select mb-5">
+                                                                    <select class="form-select mb-5" data-control="select2" data-hide-search="true">
                                                                         <option value="0" >关闭</option>
                                                                         <option value="1">开启</option>
                                                                     </select>
@@ -505,13 +505,13 @@
                                                             <div class="row g-5">
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">注册模式</label>
-                                                                    <select class="form-select mb-5">
+                                                                    <select class="form-select mb-5" data-control="select2" data-hide-search="true">
                                                                         <option value="0" >关闭注册</option>
                                                                         <option value="1">开启注册</option>
                                                                         <option value="3">仅限邀请注册</option>
                                                                     </select>
                                                                     <label class="form-label">注册邮箱验证</label>
-                                                                    <select class="form-select mb-5">
+                                                                    <select class="form-select mb-5" data-control="select2" data-hide-search="true">
                                                                         <option value="0" >关闭</option>
                                                                         <option value="1">开启</option>
                                                                     </select>
