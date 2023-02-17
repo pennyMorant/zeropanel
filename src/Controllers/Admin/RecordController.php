@@ -201,11 +201,10 @@ class RecordController extends AdminController
                 $query = TrafficLog::getTableDataFromAdmin($request);
                 $data = [];
                 foreach ($query['datas'] as $value) {
-                    $node                       = Node::find($value->node_id);
                     $tempdata                   = [];
                     $tempdata['id']             = $value->id;
                     $tempdata['user_id']        = $value->user_id;
-                    $tempdata['node_name']      = $node->name;
+                    $tempdata['node_name']      = $value->node()->name;
                     $tempdata['rate']           = $value->rate;
                     $tempdata['origin_traffic'] = Tools::flowAutoShow($value->u + $value->d);
                     $tempdata['traffic']        = $value->traffic;
