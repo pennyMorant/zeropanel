@@ -87,7 +87,7 @@
                     </div>
                     <div class="d-flex flex-center flex-row-fluid pt-12">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                        <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="zeroAdminCreateTicket()">
+                        <button type="submit" class="btn btn-primary" data-kt-admin-action="submit" onclick="zeroAdminCreateTicket()">
                             <span class="indicator-label">{$trans->t('submit')}</span>
                             <span class="indicator-progress">{$trans->t('please wait')}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

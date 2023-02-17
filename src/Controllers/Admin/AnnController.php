@@ -196,7 +196,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    public function newsRequest($request, $response, $args)
+    public function requestNews($request, $response, $args)
     {
         $id = $request->getParam('id');
         $news = Ann::find($id);

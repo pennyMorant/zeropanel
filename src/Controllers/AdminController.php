@@ -176,8 +176,8 @@ class AdminController extends UserController
         foreach ($query['datas'] as $value) {
             $tempdata['id'] = $value->id;
             $tempdata['code'] = $value->code;
-            $tempdata['expire'] = $value->expire;
-            $tempdata['limited_product'] = $value->limited_product;
+            $tempdata['expire'] = date('Y-m-d H:i:s', $value->expire);
+            $tempdata['limited_product'] = $value->limited_product == '' ? '无限制' : $value->limited_product;
             $tempdata['discount'] = $value->discount;
             $tempdata['per_use_count'] = $value->per_use_count == '-1' ? '无限次使用' : $value->per_use_count;
             $tempdata['total_use_count'] = $value->total_use_count == '-1' ? '无限次使用' : $value->total_use_count;
@@ -204,7 +204,7 @@ class AdminController extends UserController
     {
         $generate_type = (int) $request->getParam('generate_type');
         $final_code    = $request->getParam('code');
-        if (!empty($final_code) && in_array($generate_type, [1, 3])) {
+        if (empty($final_code) && in_array($generate_type, [1, 3])) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '优惠码不能为空'

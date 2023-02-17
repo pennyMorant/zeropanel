@@ -75,7 +75,7 @@ class BanController extends AdminController
                 }
             }
         );
-
+        $type = "'request'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var DetectRule $value */
@@ -86,7 +86,12 @@ class BanController extends AdminController
             $tempdata['text']     = $value->text;
             $tempdata['regex']    = $value->regex;
             $tempdata['type']     = $value->type();
-            $tempdata['action']   = '<a class="btn btn-light-primary btn-sm">操作</a>';
+            $tempdata['action']   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type.', '.$value->id.')">编辑</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                        </ul>
+                                    </div>';
             $data[] = $tempdata;
         }
 
@@ -99,26 +104,13 @@ class BanController extends AdminController
     }
 
     /**
-     * 后台增加审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function create($request, $response, $args)
-    {
-        $this->view()->display('admin/detect/add.tpl');
-        return $response;
-    }
-
-    /**
      * 后台增加审计规则页面
      * 
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function add($request, $response, $args)
+    public function createBanRule($request, $response, $args)
     {
         $rule = new DetectRule();
         $rule->name = $request->getParam('name');
@@ -141,30 +133,15 @@ class BanController extends AdminController
     }
 
     /**
-     * 后台编辑审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function edit($request, $response, $args)
-    {
-        $id = $args['id'];
-        $rule = DetectRule::find($id);
-        $this->view()->assign('rule', $rule)->display('admin/detect/edit.tpl');
-        return $response;
-    }
-
-    /**
      * 后台编辑审计规则页面
      * 
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateBanRule($request, $response, $args)
     {
-        $id = $args['id'];
+        $id = $request->getParam('id');
         $rule = DetectRule::find($id);
 
         $rule->name = $request->getParam('name');
@@ -309,6 +286,19 @@ class BanController extends AdminController
             'recordsTotal'    => DetectBanLog::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    public function requestBanRule($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $rule = DetectRule::find($id);
+        return $response->withJson([
+            'name'   => $rule->name,
+            'id'    => $rule->id,
+            'text'  => $rule->text,
+            'regex' => $rule->regex,
+            'type'  => $rule->type
         ]);
     }
 }

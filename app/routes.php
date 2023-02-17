@@ -156,21 +156,16 @@ return function (SlimApp $app) {
         $group->put('/news/update',        App\Controllers\Admin\AnnController::class . ':updateNews');
         $group->delete('/news',          App\Controllers\Admin\AnnController::class . ':delete');
         $group->post('/news/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
-        $group->post('/news/request',       App\Controllers\Admin\AnnController::class . ':newsRequest');
+        $group->post('/news/request',       App\Controllers\Admin\AnnController::class . ':requestNews');
 
         // Detect Mange
         $group->get('/ban',                      App\Controllers\Admin\BanController::class . ':index');
-        $group->get('/detect/create',            App\Controllers\Admin\DetectController::class . ':create');
-        $group->post('/detect',                  App\Controllers\Admin\DetectController::class . ':add');
-        $group->get('/detect/{id}/edit',         App\Controllers\Admin\DetectController::class . ':edit');
-        $group->put('/detect/{id}',              App\Controllers\Admin\DetectController::class . ':update');
-        $group->delete('/detect',                App\Controllers\Admin\DetectController::class . ':delete');
+        $group->post('/ban/rule/create',         App\Controllers\Admin\BanController::class . ':createBanRule');
+        $group->put('/ban/rule/update',          App\Controllers\Admin\BanController::class . ':updateBanRule');
         $group->post('/ban/detect/record/ajax',  App\Controllers\Admin\BanController::class . ':detectRuleRecordAjax');
         $group->post('/ban/rule/ajax',           App\Controllers\Admin\BanController::class . ':banRuleAjax');
         $group->post('/ban/record/ajax',         App\Controllers\Admin\BanController::class . ':banRecordAjax');
-
-        $group->get('/detect/ban',               App\Controllers\Admin\DetectBanLogController::class . ':index');
-        $group->post('/detect/ban/ajax',         App\Controllers\Admin\DetectBanLogController::class . ':ajaxLog');
+        $group->post('/ban/rule/request',          App\Controllers\Admin\BanController::class . ':requestBanRule');
 
         // record Mange
         $group->get('/record',                    App\Controllers\Admin\RecordController::class . ':recordIndex');
