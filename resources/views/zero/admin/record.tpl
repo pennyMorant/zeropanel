@@ -83,7 +83,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">流量记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_admin_record_subscribe">
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="zero_admin_record_traffic">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}

@@ -120,9 +120,6 @@ return function (SlimApp $app) {
         $group->get('',                          App\Controllers\AdminController::class . ':index');
         $group->get('/',                         App\Controllers\AdminController::class . ':index');
 
-        $group->get('/log/{name}',               App\Controllers\Admin\LogController::class . ':index');
-        $group->post('/log/ajax/{name}',         App\Controllers\Admin\LogController::class . ':ajax');
-
         // Node Mange
         $group->get('/node',                     App\Controllers\Admin\NodeController::class . ':index');
         $group->get('/node/create',              App\Controllers\Admin\NodeController::class . ':createNodeIndex');
@@ -139,7 +136,7 @@ return function (SlimApp $app) {
         $group->put('/ticket/update',              App\Controllers\Admin\TicketController::class . ':updateTicket');
         $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ajax');
 
-        // Shop Mange
+        // Product Mange
         $group->get('/product',                     App\Controllers\Admin\ProductController::class . ':index');
         $group->post('/product/ajax',               App\Controllers\Admin\ProductController::class . ':productAjax');
         $group->get('/product/create',              App\Controllers\Admin\ProductController::class . ':createProductIndex');
@@ -202,10 +199,6 @@ return function (SlimApp $app) {
         $group->get('/sys',                      App\Controllers\AdminController::class . ':sys');
         $group->get('/logout',                   App\Controllers\AdminController::class . ':logout');
         $group->post('/payback/ajax',            App\Controllers\AdminController::class . ':ajaxPayBack');
-
-        // Subscribe Log Mange
-        $group->get('/subscribe',                App\Controllers\Admin\SubscribeLogController::class . ':index');
-        $group->post('/subscribe/ajax',          App\Controllers\Admin\SubscribeLogController::class . ':ajaxSubscribeLog');
        
         // 设置中心
         $group->get('/setting',                  App\Controllers\Admin\SettingController::class . ':index');

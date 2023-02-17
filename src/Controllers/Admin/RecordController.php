@@ -236,8 +236,6 @@ class RecordController extends AdminController
                 }
                 break;
         }
-        
-
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
             'recordsTotal'    => $total,
