@@ -55,7 +55,7 @@
                                                     <label class="form-label required">节点旗帜</label>
                                                     <select class="form-select mb-5" id="node_flag">
                                                         <option value="us" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">美国</option>
-                                                        <option value="uk" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
+                                                        <option value="gb" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
                                                         <option value="ca" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">加拿大</option>
                                                         <option value="rus" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg">俄罗斯</option>
                                                         <option value="hk" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">香港</option>
