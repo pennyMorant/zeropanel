@@ -933,7 +933,7 @@
     },
     {
         "id": null,
-        "item": "telegraml_group_account",
+        "item": "telegram_group_account",
         "value": "",
         "class": "telegram",
         "is_public": 0,
