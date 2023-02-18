@@ -42,11 +42,11 @@
     {
         "id": null,
         "item": "website_backend_token",
-        "value": "",
+        "value": "thisiszero",
         "class": "website",
         "is_public": "0",
         "type": "string",
-        "default": "",
+        "default": "thisiszero",
         "mark": "网站后端token"
     },
     {
