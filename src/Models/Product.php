@@ -96,26 +96,18 @@ class Product extends Model
         break;
         
         case 1:
-            if (Setting::obtain('enable_reset_traffic_when_purchase_user_general') == true) {
-                $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
-                $user->u = 0;
-                $user->d = 0;
-                $user->last_day_t = 0;
+           
+            $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
+            $user->u = 0;
+            $user->d = 0;
+            $user->last_day_t = 0;
+            
+            if ($user->class == $this->class) {
+                $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
             } else {
-                $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
-            }
-
-            if (Setting::obtain('enable_add_times_when_purchase_user_general') == true) {
-                if ($user->class == $this->class) {
-                    $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
-                } else {
-                    $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
-                }
-                $user->class = $this->class;
-            } else {
-                $user->class = $this->class;
                 $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
             }
+            $user->class = $this->class;
 
             $user->node_speedlimit = $this->speed_limit;
             $user->node_connector = $this->ip_limit;

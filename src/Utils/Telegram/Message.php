@@ -203,14 +203,7 @@ class Message
                 return;
             }
             */
-            if (Setting::obtain('enable_welcome_message_telegram_notify') == true) {
-                $text = ($NewUser->class >= 1 ? '欢迎 VIP' . $NewUser->class . ' 用户 ' . $Member['name'] . '回到组织.' : '欢迎 ' . $Member['name']);
-                $this->replyWithMessage(
-                    [
-                        'text' => $text
-                    ]
-                );
-            }
+            
         }
     }
 }

@@ -61,10 +61,6 @@ class PingCommand extends Command
                 ]);
             }
 
-            if (Setting::obtain('enable_telegram_bot_group_quiet') == true) {
-                // 群组中不回应
-                return;
-            }
 
             // 发送 '输入中' 会话状态
             $this->replyWithChatAction(['action' => Actions::TYPING]);

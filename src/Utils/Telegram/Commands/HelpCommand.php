@@ -36,9 +36,7 @@ class HelpCommand extends Command
                     'messageid'   => $Message->getMessageId(),
                 ]);
             }
-            if (Setting::obtain('enable_telegram_bot_group_quiet') == true) {
-                return;
-            }
+            
         }
         if (!preg_match('/^\/help\s?(@' . Setting::obtain('telegram_bot_id') . ')?.*/i', $Message->getText())) {
             if ($_ENV['help_any_command'] === false) {

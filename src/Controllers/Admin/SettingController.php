@@ -56,21 +56,9 @@ class SettingController extends AdminController
         $class = $request->getParam('class');
 
         switch ($class) {
-            case 'website_general':
-                $list = array('website_general_url', 'website_general_name', 'website_general_landing_index');
-                break;
-            case 'website_security':
-                $list = array('website_security_token');
-                break;
-            case 'website_backend':
-                $list = array('website_backend_token');
-                break;
-            case 'user_general':
-                $list = array('user_general_class_expire_reset_traffic', 'enable_reset_traffic_when_purchase_user_general', 'enable_add_times_when_purchase_user_general', 'enable_change_username_user_general', 'enable_change_email_user_general', 'enable_delete_account_user_general');
-                break;
-            case 'user_notify':
-                $list = array('enable_insufficient_traffic_user_notify');
-                break;
+            case 'website':
+                $list = array('website_url', 'website_name', 'website_landing_index', 'website_security_token','website_backend_token');
+                break;          
             // 支付
             case 'payment_gateway':
                 $list = array ('alipay_payment', 'wechatpay_payment', 'cryptopay_payment');
@@ -122,71 +110,48 @@ class SettingController extends AdminController
                 $list = array('aws_access_key_id', 'aws_secret_access_key');
                 break;
             // 验证码
-            case 'verify_code':
-                $list = array('captcha_provider', 'enable_signup_captcha', 'enable_signin_captcha');
-                break;
-            case 'verify_code_turnstile':
-                $list = array('turnstile_sitekey', 'turnstile_secret');
-                break;
-            case 'verify_code_geetest':
-                $list = array('geetest_id', 'geetest_key');
+            case 'captcha':
+                $list = array('captcha_provider', 'enable_signup_captcha', 'enable_signin_captcha', 'turnstile_sitekey', 'turnstile_secret');
                 break;
             // 备份
             case 'email_backup':
                 $list = array('auto_backup_email', 'auto_backup_password', 'auto_backup_notify');
                 break;
             // 客户服务
-            case 'admin_contact':
-                $list = array('enable_admin_contact', 'admin_contact1', 'admin_contact2', 'admin_contact3');
-                break;
             case 'web_customer_service_system':
                 $list = array('live_chat', 'tawk_id', 'crisp_id', 'livechat_id', 'mylivechat_id');
                 break;          
             // 注册设置
             case 'register':
-                $list = array('reg_mode', 'reg_email_verify', 'email_verify_ttl', 'email_verify_ip_limit');
-                break;
-            case 'register_default_value':
-                $list = array('sign_up_for_free_traffic', 'sign_up_for_free_time', 'sign_up_for_class', 'sign_up_for_class_time', 'sign_up_for_invitation_codes', 'connection_device_limit', 'connection_rate_limit', 'sign_up_for_daily_report');
+                $list = array('reg_mode', 'reg_email_verify', 'email_verify_ttl', 'email_verify_ip_limit', 'signup_default_traffic', 'signup_default_class', 'signup_default_class_time', 'signup_default_ip_limit', 'signup_default_speed_limit');
                 break;
             // 邀请设置
-            case 'invitation_reward':
-                $list = array('invitation_to_register_balance_reward', 'invitation_to_register_traffic_reward');
-                break;
-            // 返利设置
-            case 'rebate_mode':
-                $list = array('invitation_mode', 'invite_rebate_mode', 'rebate_ratio', 'rebate_frequency_limit', 'rebate_amount_limit', 'rebate_time_range_limit');
+            case 'invite':
+                $list = array('invitation_to_signup_credit_reward', 'invitation_to_signup_traffic_reward', 'invitation_mode', 'invite_rebate_mode', 'rebate_ratio', 'rebate_frequency_limit', 'rebate_amount_limit', 'rebate_time_range_limit');
                 break;
             // 提现设置
             case 'withdraw':
-                $list = array('enable_withdraw', 'withdraw_less_amount', 'withdraw_method');
-                break;
-            // 闪购设置
-            case 'flash_sell':
-                $list = array('enable_flash_sell', 'flash_sell_product_id', 'flash_sell_product_name', 'flash_sell_start_time');
+                $list = array('enable_withdraw', 'withdraw_minimum_amount', 'withdraw_method');
                 break;
             // 货币设置
             case 'currency':
-                $list = array('enable_currency', 'setting_currency','currency_exchange_rate', 'currency_exchange_rate_api_key');
+                $list = array('enable_currency', 'currency_unit','currency_exchange_rate', 'currency_exchange_rate_api_key');
                 break;
             // 代理设置
             case 'sales_agent':
                 $list = array('enable_sales_agent', 'purchase_sales_agent_price', 'sales_agent_commission_ratio');
                 break;
-            case 'telegram_general':
-                $list = array('telegram_general_admin_id', 'telegram_general_group_id', 'telegram_general_channel_id');
+            case 'telegram':
+                $list = array('telegram_admin_id', 'telegram_group_id', 'telegraml_group_account', 'telegram_channel_id');
                 break;
             case 'telegram_bot':
-                $list = array('enable_telegram_bot', 'enable_new_telegram_bot', 'enable_telegram_bot_group_quiet', 'enable_telegram_bot_menu_show_join_group', 'telegram_bot_token', 'telegram_bot_id', 'telegram_bot_request_token');
-                break;
-            case 'telegram_notify':
-                $list = array('enable_sell_telegram_notify', 'enable_ticket_telegram_notify', 'enable_welcome_message_telegram_notify', 'enable_finance_report_telegram_notify', 'enable_system_report_telegram_notify', 'enable_system_clean_database_report_telegram_notify', 'enable_system_node_offline_report_telegram_notify', 'enable_system_node_online_report_telegram_notify');
+                $list = array('enable_push_top_up_message', 'enable_push_ticket_message', 'enable_push_system_report', 'enable_telegram_bot', 'telegram_bot_token', 'telegram_bot_id', 'telegram_bot_request_token');
                 break;
             case 'telegram_notify_content';
                 $list = array('diy_system_report_telegram_notify_content', 'diy_system_clean_database_report_telegram_notify_content', 'diy_system_node_offline_report_telegram_notify_content', 'diy_system_node_online_report_telegram_notify_content');
                 break;
-            case 'subscribe_general';
-                $list = array('enable_subscribe', 'subscribe_address_url', 'enable_subscribe_emoji', 'enable_subscribe_extend', 'enable_subscribe_change_token_when_change_passwd', 'enable_subscribe_log', 'subscribe_log_save_days', 'subscribe_diy_message', 'subscribe_clash_default_profile', 'subscribe_surge_default_profile', 'subscribe_surfboard_default_profile');
+            case 'subscribe';
+                $list = array('subscribe_address_url', 'enable_subscribe_emoji', 'enable_subscribe_extend', 'enable_subscribe_log', 'subscribe_log_keep_time', 'subscribe_diy_message', 'subscribe_clash_default_profile', 'subscribe_surge_default_profile', 'subscribe_surfboard_default_profile');
                 break;
         }
 

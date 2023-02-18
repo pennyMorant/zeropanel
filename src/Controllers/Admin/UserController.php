@@ -110,12 +110,12 @@ class UserController extends AdminController
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
+        $user->transfer_enable      = Tools::toGB($configs['signup_default_traffic']);
         $user->money                = ($money != -1 ? $money : 0);
-        $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);
-        $user->class                = $configs['sign_up_for_class'];
-        $user->node_connector       = $configs['connection_device_limit'];
-        $user->node_speedlimit      = $configs['connection_rate_limit'];
+        $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
+        $user->class                = $configs['signup_default_class'];
+        $user->node_connector       = $configs['signup_default_ip_limit'];
+        $user->node_speedlimit      = $configs['signup_default_speed_limit'];
         $user->signup_date             = date('Y-m-d H:i:s');
         $user->signup_ip               = $_SERVER['REMOTE_ADDR'];
         $user->theme                = $_ENV['theme'];

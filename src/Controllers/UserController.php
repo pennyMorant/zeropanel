@@ -190,18 +190,14 @@ class UserController extends BaseController
                     ]);
                 }
 
-                if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
-                    $user->clean_link();
-                }
+                
+                $user->clean_link();
                 break;
             case 'email':
                 $newemail = $request->getParam('newemail');
                 $oldemail = $user->email;
                 $otheruser = User::where('email', $newemail)->first();
                 try {
-                    if (Setting::obtain('enable_change_email_user_general') != true) {           
-                        throw new \Exception(I18n::get()->t('no changes allowed'));          
-                    }
                     
                     if (Setting::obtain('reg_email_verify')) {
                         $emailcode = $request->getParam('emailcode');
@@ -309,15 +305,10 @@ class UserController extends BaseController
             return $response->withJson($res);
         }
 
-        if (Setting::obtain('enable_delete_account_user_general') == true) {
-            Auth::logout();
-            $user->kill_user();
-            $res['ret'] = 1;
-            $res['msg'] = I18n::get()->t('success');
-        } else {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('not allowed');
-        }
+        Auth::logout();
+        $user->kill_user();
+        $res['ret'] = 1;
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 

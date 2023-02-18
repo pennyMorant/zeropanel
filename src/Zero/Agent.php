@@ -72,11 +72,11 @@ class Agent extends \App\Controllers\BaseController
                     'msg' => '还未设置提现账号'
                 ]);
             }
-            $withdraw_less_amount = Setting::obtain('withdraw_less_amount');
-            if ($withdraw_less_amount !== 0 && $commission < $withdraw_less_amount) {
+            $withdraw_minimum_amount = Setting::obtain('withdraw_minimum_amount');
+            if ($withdraw_minimum_amount !== 0 && $commission < $withdraw_minimum_amount) {
                 return $response->withJson([
                     'ret' => 0,
-                    'msg' => '提现金额需大于' . $withdraw_less_amount
+                    'msg' => '提现金额需大于' . $withdraw_minimum_amount
                 ]);
             }
         }

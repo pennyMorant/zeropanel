@@ -81,7 +81,7 @@ class Callback
         $this->CallbackData     = $Callback->getData();
         $this->AllowEditMessage = time() < $Callback->getMessage()->getDate() + 172800;
 
-        if ($this->ChatID < 0 && Setting::obtain('enable_telegram_bot_group_quiet') == true) {
+        if ($this->ChatID < 0) {
             // 群组中不回应
             return;
         }
@@ -259,14 +259,13 @@ class Callback
         $text .= Reply::getUserInfo($user);
         $text .= PHP_EOL;
         $text .= '流量重置时间：' . $user->productTrafficResetDate();
-        if (Setting::obtain('enable_telegram_bot_menu_show_join_group') == true) {
-            $Keyboard[] = [
-                [
-                    'text' => '加入用户群',
-                    'url'  => Config::getconfig('Telegram.string.group_link')
-                ]
-            ];
-        }
+        
+        $Keyboard[] = [
+            [
+                'text' => '加入用户群',
+                'url'  => Config::getconfig('Telegram.string.group_link')
+            ]
+        ];
         return [
             'text'     => $text,
             'keyboard' => $Keyboard,
@@ -925,8 +924,8 @@ class Callback
         $text = [
             '<strong>分享计划，您每邀请 1 位用户注册：</strong>',
             '',
-            '- 您会获得 <strong>' . $invitation['invitation_to_register_traffic_reward'] . 'G</strong> 流量奖励.',
-            '- 对方将获得 <strong>' . $invitation['invitation_to_register_balance_reward'] . ' 元</strong> 奖励作为初始资金.',
+            '- 您会获得 <strong>' . $invitation['invitation_to_signup_traffic_reward'] . 'G</strong> 流量奖励.',
+            '- 对方将获得 <strong>' . $invitation['invitation_to_signup_credit_reward'] . ' 元</strong> 奖励作为初始资金.',
             '- 对方充值时您还会获得对方充值金额的 <strong>' . $invitation['rebate_ratio'] . '%</strong> 的返利.',
             '',
             '已获得返利：' . $paybacks_sum . ' 元.',

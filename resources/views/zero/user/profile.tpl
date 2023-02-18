@@ -457,7 +457,7 @@
 								<i class="bi bi-currency-exchange fs-2hx text-primary"></i>
                             </span>
                             <span class="nav-text fs-6 py-2 text-center">{$trans->t('user.billing.withdraw_to_usdt')}<br />
-                            <small>{$trans->t('user.billing.less_than')}: {$config['withdraw_less_amount']}</small></span>
+                            <small>{$trans->t('user.billing.less_than')}: {$config['withdraw_minimum_amount']}</small></span>
                         </a>
                     </li>
                     {/if}

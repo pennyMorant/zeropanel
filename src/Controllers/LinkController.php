@@ -66,9 +66,6 @@ class LinkController extends BaseController
      */
     public static function GetContent($request, $response, $args)
     {
-        if (Setting::obtain('enable_subscribe') == false) {
-            return null;
-        }
 
         $token = $args['token'];
 
