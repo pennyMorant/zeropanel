@@ -141,7 +141,7 @@ class SettingController extends AdminController
                 $list = array('enable_sales_agent', 'purchase_sales_agent_price', 'sales_agent_commission_ratio');
                 break;
             case 'telegram':
-                $list = array('telegram_admin_id', 'telegram_group_id', 'telegram_group_account', 'telegram_channel_id');
+                $list = array('telegram_admin_id', 'telegram_group_id', 'telegram_group_url', 'telegram_channel_id');
                 break;
             case 'telegram_bot':
                 $list = array('enable_push_top_up_message', 'enable_push_ticket_message', 'enable_push_system_report', 'enable_telegram_bot', 'telegram_bot_token', 'telegram_bot_id', 'telegram_bot_request_token');

@@ -350,8 +350,8 @@
                                                                 <div class="card-body">
                                                                     <label class="form-label">群组 ID</label>
                                                                     <input class="form-control mb-5" id="telegram_group_id" value="{$settings['telegram_group_id']}" type="text" placeholder="ID" />
-                                                                    <label class="form-label">群组账号</label>
-                                                                    <input class="form-control mb-5" id="telegram_group_account" value="{$settings['telegram_group_account']}" type="text" placeholder="账号" />
+                                                                    <label class="form-label">群组地址</label>
+                                                                    <input class="form-control mb-5" id="telegram_group_url" value="{$settings['telegram_group_url']}" type="text" placeholder="地址" />
                                                                     <label class="form-label">频道账号</label>
                                                                     <input class="form-control mb-5" id="telegram_channel_id" value="{$settings['telegram_channel_id']}" type="text" placeholder="账号" />
                                                                     <label class="form-label">ADMIN ID</label>
@@ -978,7 +978,7 @@
                         data: {
                             class: type,
                             telegram_group_id: $('#telegram_group_id').val(),
-                            telegram_group_account: $('#telegram_group_account').val(),
+                            telegram_group_url: $('#telegram_group_url').val(),
                             telegram_channel_id: $('#telegram_channel_id').val(),
                             telegram_admin_id: $('#telegram_admin_id').val(),
                         },
