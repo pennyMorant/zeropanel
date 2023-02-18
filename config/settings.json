@@ -933,13 +933,13 @@
     },
     {
         "id": null,
-        "item": "telegram_group_account",
+        "item": "telegram_group_url",
         "value": "",
         "class": "telegram",
         "is_public": 0,
         "type": "string",
         "default": "",
-        "mark": "Telegram 群组账户"
+        "mark": "Telegram 群组地址"
     },
     {
         "id": null,
