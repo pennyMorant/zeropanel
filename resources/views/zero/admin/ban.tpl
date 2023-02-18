@@ -301,7 +301,7 @@
     <script>
     KTAdminBanRecord = $('#zero_admin_ban_record').DataTable({
     ajax: {
-    url: '{$table_config_ban_record['ajax_url']}',
+    url: "{$table_config_ban_record['ajax_url']}",
     type: "POST"
     },
     processing: true,
@@ -330,7 +330,7 @@
     <script>
     KTAdminDetectRecord = $('#zero_admin_detect_record').DataTable({
     ajax: {
-    url: '{$table_config_detect_record['ajax_url']}',
+    url: "{$table_config_detect_record['ajax_url']}",
     type: "POST"
     },
     processing: true,

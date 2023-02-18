@@ -39,9 +39,8 @@ class SettingController extends AdminController
         }
 
         $this->view()
-            //->registerClass('Setting', Setting::class)
+            ->registerClass('Setting', Setting::class)
             ->assign('settings', $config)
-            ->assign('payment_gateways', self::return_gateways_list())
             ->display('admin/setting.tpl');
         return $response;
     }
@@ -98,7 +97,7 @@ class SettingController extends AdminController
                 $list = array('mail_driver');
                 break;
             case 'smtp':
-                $list = array('smtp_host', 'smtp_username', 'smtp_password', 'smtp_port', 'smtp_name', 'smtp_sender', 'smtp_ssl', 'smtp_bbc');
+                $list = array('smtp_host', 'smtp_username', 'smtp_password', 'smtp_port', 'smtp_name', 'smtp_sender', 'smtp_ssl');
                 break;
             case 'mailgun':
                 $list = array('mailgun_key', 'mailgun_domain', 'mailgun_sender');
@@ -114,11 +113,11 @@ class SettingController extends AdminController
                 $list = array('captcha_provider', 'enable_signup_captcha', 'enable_signin_captcha', 'turnstile_sitekey', 'turnstile_secret');
                 break;
             // 备份
-            case 'email_backup':
+            case 'backup':
                 $list = array('auto_backup_email', 'auto_backup_password', 'auto_backup_notify');
                 break;
             // 客户服务
-            case 'web_customer_service_system':
+            case 'live_chat':
                 $list = array('live_chat', 'tawk_id', 'crisp_id', 'livechat_id', 'mylivechat_id');
                 break;          
             // 注册设置
@@ -142,7 +141,7 @@ class SettingController extends AdminController
                 $list = array('enable_sales_agent', 'purchase_sales_agent_price', 'sales_agent_commission_ratio');
                 break;
             case 'telegram':
-                $list = array('telegram_admin_id', 'telegram_group_id', 'telegraml_group_account', 'telegram_channel_id');
+                $list = array('telegram_admin_id', 'telegram_group_id', 'telegram_group_account', 'telegram_channel_id');
                 break;
             case 'telegram_bot':
                 $list = array('enable_push_top_up_message', 'enable_push_ticket_message', 'enable_push_system_report', 'enable_telegram_bot', 'telegram_bot_token', 'telegram_bot_id', 'telegram_bot_request_token');

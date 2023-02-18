@@ -2,21 +2,21 @@
     {
         "id": null,
         "item": "website_url",
-        "value": "",
+        "value": "http://localhost.com",
         "class": "website",
         "is_public": "1",
         "type": "string",
-        "default": "",
+        "default": "http://localhost.com",
         "mark": "网站地址"
     },
     {
         "id": null,
         "item": "website_name",
-        "value": "",
+        "value": "ZeroBoard",
         "class": "website",
         "is_public": "1",
         "type": "string",
-        "default": "",
+        "default": "ZeroBoard",
         "mark": "网站名称"
     },
     {
@@ -198,16 +198,6 @@
         "type": "bool",
         "default": "1",
         "mark": "是否使用 TLS\/SSL 发信"
-    },
-    {
-        "id": null,
-        "item": "smtp_bbc",
-        "value": "",
-        "class": "smtp",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "发给用户的邮件密送给指定邮箱备份"
     },
     {
         "id": null,
@@ -834,11 +824,11 @@
     {
         "id": null,
         "item": "currency_unit",
-        "value": "",
+        "value": "CNY",
         "class": "currency",
         "is_public": 0,
         "type": "string",
-        "default": "",
+        "default": "CNY",
         "mark": "货币"
     },
     {
@@ -1214,31 +1204,31 @@
     {
         "id": null,
         "item": "alipay_payment",
-        "value": "",
+        "value": "none",
         "class": "payment_gateway",
         "is_public": 0,
         "type": "string",
-        "default": "",
+        "default": "none",
         "mark": "支付宝支付渠道"
     },
     {
         "id": null,
         "item": "wechatpay_payment",
-        "value": "",
+        "value": "none",
         "class": "payment_gateway",
         "is_public": 0,
         "type": "string",
-        "default": "",
+        "default": "none",
         "mark": "微信支付渠道"
     },
     {
         "id": null,
         "item": "cryptopay_payment",
-        "value": "",
+        "value": "none",
         "class": "payment_gateway",
         "is_public": 0,
         "type": "string",
-        "default": "",
+        "default": "none",
         "mark": "虚拟币支付渠道"
     }
 ]
