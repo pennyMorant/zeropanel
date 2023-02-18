@@ -12,11 +12,11 @@
     {
         "id": null,
         "item": "website_name",
-        "value": "ZeroBoard",
+        "value": "ZeroPanel",
         "class": "website",
         "is_public": "1",
         "type": "string",
-        "default": "ZeroBoard",
+        "default": "ZeroPanel",
         "mark": "网站名称"
     },
     {
