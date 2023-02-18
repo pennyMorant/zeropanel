@@ -936,7 +936,7 @@
         "item": "telegram_group_url",
         "value": "",
         "class": "telegram",
-        "is_public": 0,
+        "is_public": 1,
         "type": "string",
         "default": "",
         "mark": "Telegram 群组地址"
@@ -946,7 +946,7 @@
         "item": "telegram_channel_id",
         "value": "",
         "class": "telegram",
-        "is_public": 0,
+        "is_public": 1,
         "type": "string",
         "default": "",
         "mark": "Telegram 频道ID"
