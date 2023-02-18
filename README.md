@@ -27,7 +27,7 @@ Here are some ideas to get you started:
 ## 演示网站
 http://zeroboard.top
 ## 安装教程（基于debian11）
-#### 安装环境
+#### 安装环境(如何安装最新环境请google)
 1.nginx最新版  
 2.php8.1  
 3.mariadb最新版  
@@ -67,9 +67,17 @@ http://zeroboard.top
             fastcgi_pass unix:/run/php/php8.1-fpm.sock;
         }
     }
+
 ##### 重启nginx和php-fpm
     systemctl restart nginx
     systemctl restart php8.1-fpm
+#### 第六步，回到网站根目录执行下面命令
+    cp .config.example.php .config.php
+    cp .zeroconfig.example.php .zeroconfig.php
+    cp appprofile.example.php appprofile.php
+    php xcat Tool importAllSettings
+    php xcat Tool initQQWry
+    php xcat User createAdmin
 #### 配置定时任务
     crontab -e
 ##### 复制以下文件到定时任务中
