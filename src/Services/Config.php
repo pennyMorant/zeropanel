@@ -32,8 +32,8 @@ class Config
             'livechat_id'             => $public_configs['livechat_id'],
             'mylivechat_id'           => $public_configs['mylivechat_id'],
             // 验证码
-            'captcha_provider'        => $public_configs['captcha_provider'],
-            'enable_signup_captcha'      => $public_configs['enable_signup_captcha'],
+            'captcha_provider'         => $public_configs['captcha_provider'],
+            'enable_signup_captcha'    => $public_configs['enable_signup_captcha'],
             'enable_signin_captcha'    => $public_configs['enable_signin_captcha'],
             // 注册
             'register_mode'           => $public_configs['reg_mode'],

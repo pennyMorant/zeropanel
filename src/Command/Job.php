@@ -135,7 +135,7 @@ class Job extends Command
          // ------- 发送每日系统运行报告
         
             echo '每日数据库清理成功报告发送开始' . PHP_EOL;
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
@@ -168,7 +168,6 @@ class Job extends Command
      */
     public function CheckJob()
     {
-
         //节点掉线检测
         if ($_ENV['enable_detect_offline'] == true) {
             echo '节点掉线检测开始' . PHP_EOL;
@@ -199,7 +198,7 @@ class Job extends Command
                     
 
                     
-                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
                         foreach ($sendAdmins as $sendAdmin) {
                             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                             $messagetext = $notice_text;
@@ -231,7 +230,7 @@ class Job extends Command
                     }
 
                     
-                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
                         foreach ($sendAdmins as $sendAdmin) {
                             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                             $messagetext = $notice_text;

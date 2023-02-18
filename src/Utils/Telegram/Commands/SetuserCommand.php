@@ -56,7 +56,7 @@ class SetuserCommand extends Command
             ]);
         }
 
-        if (!in_array($SendUser['id'], (array)json_decode(Setting::obtain('telegram_general_admin_id')))) {
+        if (!in_array($SendUser['id'], (array)json_decode(Setting::obtain('telegram_admin_id')))) {
             $AdminUser = User::where('is_admin', 1)->where('telegram_id', $SendUser['id'])->first();
             if ($AdminUser == null) {
                 // 非管理员回复消息

@@ -217,6 +217,7 @@
     "order has paid": "订单已支付",
     "insufficient credit": "余额不足",
     "withdraw to credit": "提现至余额",
+    "withdraw to usdt": "提现至USDT",
     "no less than": "不少于",
     "change email": "更改邮箱",
     "change passwd": "更改密码",

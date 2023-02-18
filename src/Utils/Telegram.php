@@ -81,7 +81,7 @@ class Telegram
         if (Setting::obtain('enable_telegram_bot') == true) {
             
                 // 发送给非群组时使用异步
-                $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_general_admin_id'))));
+                $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
                 $sendMessage = [
                     'chat_id'                   => $chat_id,

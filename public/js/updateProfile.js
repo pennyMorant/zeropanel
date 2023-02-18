@@ -738,6 +738,47 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
     }
 }
 
+// withdraw 
+function KTUsersWithdrawCommission(type){
+    switch (type) {
+        case 1:
+            $.ajax({
+                type: "POST",
+                url: "/user/withdraw_commission",
+                dataType: "json",
+                data: {
+                    commission: $('#withdraw_commission_amount').val(),
+                    type: $("#withdraw_type a.active").attr("data-type")
+                },
+                success: function(data){
+                    if(data.ret == 1) {
+                        getResult(data.msg, '', 'success');
+                    }else{
+                        getResult(data.msg, '', 'error');
+                    }
+                }
+            });
+            break;
+        case 2:
+            $.ajax({
+                type: "POST",
+                url: "/user/withdraw_account_setting",
+                dataType: "json",
+                data: {
+                    acc: $('#withdraw_account_value').val(),
+                    method: $('#withdraw_method').val()
+                },
+                success: function(data){
+                    if(data.ret == 1) {
+                        getResult(data.msg, '', 'success');
+                    }else{
+                        getResult(data.msg, '', 'error');
+                    }
+                }
+            });
+    }
+}
+
 //import sub url
 function oneclickImport(client, subLink) {
     var sublink = {

@@ -1069,9 +1069,9 @@
                         dataType: "json",
                         data: {
                             class: type,
-                            enable_withdraw: $('#enable_currency').val(),
-                            withdraw_method: $('#currency_unit').val(),
-                            withdraw_minimum_amount: $('#currency_exchange_rate').val()
+                            enable_withdraw: $('#enable_withdraw').val(),
+                            withdraw_method: $('#withdraw_method').val(),
+                            withdraw_minimum_amount: $('#withdraw_minimum_amount').val()
                         },
                         success: function(data){
                             if (data.ret === 1){

@@ -70,11 +70,13 @@ return function (SlimApp $app) {
 
         # Zero
         
-        $group->get('/nodeinfo/{id}',            App\Controllers\ZeroController::class . ':NodeInfo');
+        $group->get('/nodeinfo/{id}',            App\Controllers\ZeroController::class . ':nodeInfo');
         $group->get('/money',                    App\Controllers\ZeroController::class . ':getmoney');
         $group->get('/ajax_data/table/{name}',   App\Controllers\ZeroController::class . ':ajaxDatatable');
         $group->get('/ajax_data/chart/{name}',   App\Controllers\ZeroController::class . ':ajaxDataChart');
         $group->delete('/ajax_data/delete',      App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
+        $group->post('/withdraw_commission',          App\Controllers\ZeroController::class . ':withdrawCommission');
+        $group->post('/withdraw_account_setting',     App\Controllers\ZeroController::class . ':withdrawAccountSettings');
 
         // Agent
         $group->get('/agent/ajax_data/table/{name}',        App\Zero\Agent::class . ':ajaxDatatable');
@@ -207,9 +209,9 @@ return function (SlimApp $app) {
 
         // Agent
         $group->group('/agent', function (Group $group) {
-            $group->get('/take_log',             App\Controllers\Admin\AgentController::class . ':takeLog');
-            $group->put('/take_update/{mode}',   App\Controllers\Admin\AgentController::class . ':takeUpdate');
-            $group->post('/take_ajax',           App\Controllers\Admin\AgentController::class . ':ajaxTake');
+            $group->get('/withdraw',             App\Controllers\Admin\AgentController::class . ':index');
+            $group->put('/withdraw/update',   App\Controllers\Admin\AgentController::class . ':updateWithdrawCommission');
+            $group->post('/withdraw/ajax',           App\Controllers\Admin\AgentController::class . ':withdrawAjax');
         });
     })->add(new Admin());
 

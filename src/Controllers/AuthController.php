@@ -48,7 +48,7 @@ class AuthController extends BaseController
         }
 
         $this->view()
-            ->assign('base_url', Setting::obtain('website_general_url'))
+            ->assign('base_url', Setting::obtain('website_url'))
             ->assign('captcha', $captcha)
             ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signin.tpl');
@@ -226,7 +226,7 @@ class AuthController extends BaseController
         }
         $this->view()
             ->assign('code', $code)
-            ->assign('base_url', Setting::obtain('website_general_url'))
+            ->assign('base_url', Setting::obtain('website_url'))
             ->assign('captcha', $captcha)
             ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signup.tpl');

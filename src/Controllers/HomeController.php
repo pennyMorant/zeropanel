@@ -29,7 +29,7 @@ class HomeController extends BaseController
     public function index($request, $response, $args)
     {
         $this->view()
-            ->display(Setting::obtain('website_general_landing_index') . '.tpl');
+            ->display(Setting::obtain('website_landing_index') . '.tpl');
         return $response;
     }
 

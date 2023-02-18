@@ -19,7 +19,7 @@ class SendDiaryMail extends Command
     {
         $sts = new Analytics();
         if (Setting::obtain('enable_system_report_telegram_notify') == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = str_replace(
