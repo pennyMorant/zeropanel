@@ -76,8 +76,8 @@ class FinanceMail extends Command
             }
         }
 
-        if (Setting::obtain('enable_finance_report_telegram_notify') == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+        
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = 
@@ -87,7 +87,7 @@ class FinanceMail extends Command
                     '凌晨也在努力工作~';               
                 Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
             }
-        }
+        
     }
 
     public function week()
@@ -127,8 +127,8 @@ class FinanceMail extends Command
             }
         }
 
-        if (Setting::obtain('enable_finance_report_telegram_notify') == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+        
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = 
@@ -138,7 +138,7 @@ class FinanceMail extends Command
                     '周末也在努力工作~';      
                 Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
             }
-        }
+        
     }
 
     public function month()
@@ -176,8 +176,8 @@ class FinanceMail extends Command
             }
         }
 
-        if (Setting::obtain('enable_finance_report_telegram_notify') == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+        
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = 
@@ -187,6 +187,6 @@ class FinanceMail extends Command
                     '月初也在努力工作~';      
                 Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
             }
-        }
+        
     }
 }

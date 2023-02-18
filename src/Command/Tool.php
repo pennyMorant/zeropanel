@@ -37,23 +37,12 @@ class Tool extends Command
      */
     public function setTelegram()
     {
-        if (Setting::obtain('enable_new_telegram_bot') == true) {
+        if (Setting::obtain('enable_telegram_bot') == true) {
             $WebhookUrl = (Setting::obtain('website_general_url') . '/telegram_callback?token=' . Setting::obtain('telegram_bot_request_token'));
             $telegram = new \Telegram\Bot\Api(Setting::obtain('telegram_bot_token'));
             $telegram->removeWebhook();
             if ($telegram->setWebhook(['url' => $WebhookUrl])) {
                 echo ('New Bot @' . $telegram->getMe()->getUsername() . ' 设置成功！' . PHP_EOL);
-            }
-        } else {
-            $bot = new \TelegramBot\Api\BotApi(Setting::obtain('telegram_bot_token'));
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, sprintf('https://api.telegram.org/bot%s/deleteWebhook', Setting::obtain('telegram_bot_token')));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-            $deleteWebhookReturn = json_decode(curl_exec($ch));
-            curl_close($ch);
-            if ($deleteWebhookReturn->ok && $deleteWebhookReturn->result && $bot->setWebhook(Setting::obtain('website_general_url') . '/telegram_callback?token=' . Setting::obtain('telegram_bot_request_token')) == 1) {
-                echo ('Old Bot 设置成功！' . PHP_EOL);
             }
         }
     }

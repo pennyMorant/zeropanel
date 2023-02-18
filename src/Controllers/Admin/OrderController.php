@@ -7,6 +7,7 @@ use App\Models\{
     Order,
     Code
 };
+use Pkly\I18Next\I18n;
 use Slim\Http\{
     Request,
     Response
@@ -36,7 +37,7 @@ class OrderController extends AdminController
         $table_config['ajax_url'] = 'order/ajax';
         $this->view()
             ->assign('table_config', $table_config)
-            ->display('admin/shop/order.tpl');
+            ->display('admin/order.tpl');
         return $response;
     }
 
@@ -48,6 +49,7 @@ class OrderController extends AdminController
      */
     public function ajaxOrder($request, $response, $args)
     {
+        $trans = I18n::get();
         $query = Order::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
@@ -61,15 +63,15 @@ class OrderController extends AdminController
         foreach ($query['datas'] as $value) {
             /** @var Code $value */
             /** 充值记录作为对账，用户不存在也不应删除 */
-            $tempdata                = [];
-            $tempdata['id']          = $value->id;
-            $tempdata['user_id']      = $value->user_id;
-            $tempdata['order_total']       = $value->order_total;
-            $tempdata['order_status']      = $value->order_status;
-            $tempdata['no']     = $value->no;
-            $tempdata['created_time']    = date('Y-m-d H:i:s', $value->created_time);
+            $tempdata                         = [];
+            $tempdata['id']                   = $value->id;
+            $tempdata['user_id']              = $value->user_id;
+            $tempdata['order_total']          = $value->order_total;
+            $tempdata['order_status']         = $value->status();
+            $tempdata['no']                   = $value->no;
+            $tempdata['created_time']         = date('Y-m-d H:i:s', $value->created_time);
             $tempdata['order_payment']        = $value->order_payment;
-            $tempdata['order_type']     = $value->order_type;
+            $tempdata['order_type']           = $value->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit');
             
             $data[] = $tempdata;
         }

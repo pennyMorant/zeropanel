@@ -61,7 +61,7 @@
                                                     <div class="card-body">
                                                         <div class="w-100 d-flex flex-stack mb-8">
                                                             <div class="d-flex align-itmes-center f">
-																<i class="bi bi-person-fill fs-3x me-3 {if $ticket->User()->is_admin == 1}text-primary {else}text-success{/if}"></i>
+																<i class="bi bi-person-fill fs-3x me-3 {if $ticket->user()->is_admin == 1}text-primary {else}text-success{/if}"></i>
                                                                 <div class="d-flex flex-column fw-semibold fs-5 text-gray-600 text-dark">
                                                                     <div class="d-flex align-items-center">
                                                                         <a class="text-gray-800 fw-bold text-hover-primary fs-5 me-3">{$ticket->User()->name}</a>

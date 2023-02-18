@@ -8,14 +8,10 @@ use App\Services\{
 };
 use App\Models\{
     Ip, 
-    Code,
     Node,
     Product,
     User,
-    Help,
     Link,
-    Helpc,
-    Bought,
     Ticket,
     Order,
     Payback,
@@ -24,7 +20,8 @@ use App\Models\{
     UserSubscribeLog,
     Setting,
     DetectRule,
-    DetectLog
+    DetectLog,
+    Withdraw
 };
 use App\Utils\{
     URL, 
@@ -48,12 +45,150 @@ use Exception;
 class ZeroController extends BaseController
 {
     /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function withdrawCommission($request, $response, $args)
+    {
+        $user = $this->user;
+        if ($user == null || !$user->isLogin) {
+            return $response->withJson([
+                'ret' => -1
+            ]);
+        }
+
+        $commission = (int) trim($request->getParam('commission'));         # 金额
+        $type  = (int) trim($request->getParam('type'));    # 1:转余额 2:提现
+
+        if (!is_numeric($commission)) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '非法金额'
+            ]);
+        }
+
+        if ($commission > $user->commission) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '可提现余额不足'
+            ]);
+        }
+
+        # 提现
+        if ($type === 2) {
+            # 检查是否有提现账号
+            if (!$user->withdraw_account) {
+                return $response->withJson([
+                    'ret' => 0,
+                    'msg' => '还未设置提现账号'
+                ]);
+            }
+            $withdraw_minimum_amount = Setting::obtain('withdraw_minimum_amount');
+            if ($withdraw_minimum_amount !== 0 && $commission < $withdraw_minimum_amount) {
+                return $response->withJson([
+                    'ret' => 0,
+                    'msg' => '提现金额需大于' . $withdraw_minimum_amount
+                ]);
+            }
+        }
+
+        # 创建提现记录
+        $withdraw           = new Withdraw();
+        $withdraw->userid   = $user->id;
+        $withdraw->type     = $type;
+        $withdraw->total    = $commission;
+        $withdraw->status   = ($type === 1 ? 1 : 0);
+        $withdraw->datetime = time();
+        if (!$withdraw->save()) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '创建提现申请失败,请联系客服'
+            ]);
+        }
+
+        # 扣除用户返利余额
+        $user->commission = bcsub($user->commission, $commission, 2);
+
+        # 转余额
+        if ($type === 1){
+            if ($commission <= 0) {
+                $withdraw->delete();
+                return $response->withJson([
+                    'ret' => 0,
+                    'msg' => '提现金额需要大于0'
+                ]);
+            }
+            $user->money        = bcadd($user->money, $commission, 2);
+        }
+
+        if (!$user->save()){
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '发生错误,请联系客服'
+            ]);
+        }
+        $text = '提现提醒' . PHP_EOL .
+            '------------------------------' . PHP_EOL .
+            '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
+            '提现类型：' . $type === 1 ? '提现到余额' : '提现到其他账户' . PHP_EOL .
+            '提现金额：' . $commission . PHP_EOL .
+            '提现时间：' . date('Y-m-d H:i:s', time());
+        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
+        foreach ($sendAdmins as $sendAdmin) {
+            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+            if ($admin_telegram_id != null) {
+                Telegram::PushToAdmin($text, $admin_telegram_id);
+            }
+        }
+
+        $res['ret'] = 1;
+        $res['msg'] = ($type === 1 ? '已提现至账号余额' : '提现申请成功' );
+        return $response->withJson($res);
+    }
+
+    /**
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function withdrawAccountSettings($request, $response, $args)
+    {
+        $user = $this->user;
+        if ($user == null || !$user->isLogin) {
+            $res['ret'] = -1;
+            return $response->withJson($res);
+        }
+
+        $account   = trim($request->getParam('acc'));   # 账号
+        $type  = trim($request->getParam('method'));  # 类型
+
+        if ($type !== Setting::obtain('withdraw_method')) {
+            $res['ret'] = 0;
+            $res['msg'] = '不支持该账号类型提现';
+            return $response->withJson($res);
+        }
+        if (!$account) {
+            $res['ret'] = 0;
+            $res['msg'] = '提现账号不能留空';
+            return $response->withJson($res);
+        }
+
+        $user->withdraw_account = $account;
+        $user->save();
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '设置成功'
+        ]);
+    }
+
+    /**
      *
      * @param Request    $request
      * @param Response   $response
      * @param array      $args
      */
-    public function NodeInfo($request, $response, $args)
+    public function nodeInfo($request, $response, $args)
     {
         $user = $this->user;
         $emoji = (bool)Setting::obtain('enable_subscribe_emoji');
@@ -170,15 +305,7 @@ class ZeroController extends BaseController
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
                     $tempdata['title'] = $value->title;
-                    switch ($value->status) {
-                        case '1': 
-                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light-success fs-6">' . $trans->t('active') . '</div>';
-                            break;
-                        case '0':
-                            $tempdata['status'] = '<div class="badge font-weight-bold badge-light fs-6">' . $trans->t('closed') . '</div>';
-                            break;
-                        return $tempdata['status'];
-                    }
+                    $tempdata['status'] = $value->status();
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
                     $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/' . $value->id . '/view">' . $trans->t('details') . '</a>';
                     $data[] = $tempdata;

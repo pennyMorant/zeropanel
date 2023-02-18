@@ -55,8 +55,16 @@ class Ticket extends Model
     /**
      * 工单状态
      */
-    public function status(): string
+    public function status()
     {
-        return $this->status == 1 ? '开启' : '关闭';
+        switch ($this->status) {
+            case '1': 
+                $status = '<div class="badge font-weight-bold badge-light-success fs-6">活跃</div>';
+                break;
+            case '0':
+                $status = '<div class="badge font-weight-bold badge-light fs-6">关闭</div>';
+                break;
+        }
+        return $status;
     }
 }

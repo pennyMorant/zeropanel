@@ -19,9 +19,9 @@ class Config
         // 鉴于还未完成配置的全面数据库化，先这么用着
         
         return [
-            'appName'                 => $public_configs['website_general_name'],
+            'appName'                 => $public_configs['website_name'],
             'version'                 => VERSION,
-            'baseUrl'                 => $public_configs['website_general_url'],
+            'baseUrl'                 => $public_configs['website_url'],
             // 充值
             'stripe_min_recharge'     => $public_configs['stripe_min_recharge'],
             'stripe_max_recharge'     => $public_configs['stripe_max_recharge'],
@@ -31,31 +31,21 @@ class Config
             'crisp_id'                => $public_configs['crisp_id'],
             'livechat_id'             => $public_configs['livechat_id'],
             'mylivechat_id'           => $public_configs['mylivechat_id'],
-            // 联系方式
-            'enable_admin_contact'    => $public_configs['enable_admin_contact'],
-            'admin_contact1'          => $public_configs['admin_contact1'],
-            'admin_contact2'          => $public_configs['admin_contact2'],
-            'admin_contact3'          => $public_configs['admin_contact3'],
             // 验证码
-            'captcha_provider'        => $public_configs['captcha_provider'],
-            'enable_signup_captcha'      => $public_configs['enable_signup_captcha'],
+            'captcha_provider'         => $public_configs['captcha_provider'],
+            'enable_signup_captcha'    => $public_configs['enable_signup_captcha'],
             'enable_signin_captcha'    => $public_configs['enable_signin_captcha'],
             // 注册
             'register_mode'           => $public_configs['reg_mode'],
             'enable_email_verify'     => $public_configs['reg_email_verify'],
             // 邀请
-            'invite_get_money'        => $public_configs['invitation_to_register_balance_reward'],
-            'invite_gift'             => $public_configs['invitation_to_register_traffic_reward'],
+            'invite_get_money'        => $public_configs['invitation_to_signup_credit_reward'],
+            'invite_gift'             => $public_configs['invitation_to_signup_traffic_reward'],
             'rebate_ratio'            => $public_configs['rebate_ratio'],
             // 提现
             'enable_withdraw'        => $public_configs['enable_withdraw'],
-            'withdraw_less_amount'   => $public_configs['withdraw_less_amount'],
+            'withdraw_minimum_amount'   => $public_configs['withdraw_minimum_amount'],
             'withdraw_method'        => $public_configs['withdraw_method'],
-            // 闪购
-            'enable_flash_sell'      => $public_configs['enable_flash_sell'],
-            'flash_sell_product_id'  => $public_configs['flash_sell_product_id'],
-            'flash_sell_product_name' => $public_configs['flash_sell_product_name'],
-            'flash_sell_start_time'  => $public_configs['flash_sell_start_time'], 
             // 代理
             'enable_sales_agent'      => $public_configs['enable_sales_agent'],
             'purchase_sales_agent_price' => $public_configs['purchase_sales_agent_price'],
@@ -63,7 +53,7 @@ class Config
             'jump_delay'              => $_ENV['jump_delay'],
             //'enable_reg_im'           => $_ENV['enable_reg_im'],
             // tg
-            'subscribe_log_save_days' => $public_configs['subscribe_log_save_days'],
+            'subscribe_log_keep_time' => $public_configs['subscribe_log_keep_time'],
             'enable_telegram_bot'     => $public_configs['enable_telegram_bot'],
             'telegram_bot_id'         => $public_configs['telegram_bot_id'],
 

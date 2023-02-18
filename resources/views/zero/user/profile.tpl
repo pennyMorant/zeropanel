@@ -303,200 +303,223 @@
                 </div>
             </div>
         </div>
-<div class="modal fade" id="zero_modal_user_update_email" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered mw-650px">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h2 class="fw-bold">{$trans->t('change email')}</h2>
-			</div>
-			<div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
-				<form class="form" action="#" id="zero_modal_user_update_email_form">
-					<div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-					    <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-								<rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor" />
-								<rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="currentColor" />
-							</svg>
-						</span>
-						<div class="d-felx flex-stack flex-grow-1">
-						    <div class="fw-semibold">
-							    <div class="fs-6 text-gray-700">邮箱是本网站唯一凭证，请妥善保管帐号。请勿设置虚假邮箱帐号</div>
-							</div>
-						</div>
-					</div>
-				    <div class="fv-row mb-7">
-					    <label class="fs-6 fw-semibold form-label mb-2">
-							<span class="required">{$trans->t('email')}</span>
-						</label>
-						<input class="form-control form-control-solid" placeholder="" name="profile_email" value="" id="profile_email" />
-					</div>
-				    <div class="text-center pt-15">
-						<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-						<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-							<span class="indicator-label">{$trans->t('submit')}</span>
-							<span class="indicator-progress">{$trans->t('please wait')}
-							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="zero_modal_user_update_password" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered mw-650px">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h2 class="fw-bold">{$trans->t('change passwd')}</h2>
-			</div>
-			<div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
-				<form id="zero_modal_user_update_password_form" class="form" action="#">
-					<div class="fv-row mb-10">
-						<label class="required form-label fs-6 mb-2">Current Password</label>
-						<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="current_password" name="current_password" autocomplete="off" />
-					</div>
-					<div class="mb-10 fv-row" data-kt-password-meter="true">
-						<div class="mb-1">
-							<label class="form-label fw-semibold fs-6 mb-2">New Password</label>
-							<div class="position-relative mb-3">
-								<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="new_password" name="new_password" autocomplete="off" />
-								<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-									<i class="bi bi-eye-slash fs-2"></i>
-									<i class="bi bi-eye fs-2 d-none"></i>
-								</span>
-							</div>
-							<div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
-								<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-								<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-								<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
-								<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
-							</div>
-						</div>
-						<div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
-					</div>
-					<div class="fv-row mb-10">
-						<label class="form-label fw-semibold fs-6 mb-2">Confirm New Password</label>
-						<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="confirm_password" name="confirm_password" autocomplete="off" />
-					</div>
-					<div class="text-center pt-15">
-						<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-						<button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-							<span class="indicator-label">{$trans->t('submit')}</span>
-							<span class="indicator-progress">{$trans->t('please wait')}
-							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="zero_user_withdraw_method_modal" tabindex="-1" data-bs-keyboard="false" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{$trans->t('withdraw account')}</h4>
-            </div>
-            <div class="modal-body">
-                <!--<p class="text-warning">{$trans->t('user.billing.withdraw_alert')}</p>-->
-                <form>
-					<div class="mb-3">
-						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('type')}:</label>
-						<select class="form-select" id="withdraw_account_type" data-style="btn-primary">
-							{foreach json_decode($config['withdraw_method'], true) as $acctype}
-							<option value="{$acctype}" {if isset($user->withdraw_account) && $acctype == $user->withdraw_account_type}selected="selected"{/if}>{$acctype}</option>
-							{/foreach}
-						</select>
-                </form>
-                <form>
-					<div class="mb-3">
-						<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('account')}:</label>						
-						{if isset($user->withdraw_account) && $user->withdraw_account_type}
-						<input type="text" class="form-control" value="{$user->withdraw_account}" id="withdraw_account_value"/>
-						{else}
-						<input type="text" class="form-control" value="" id="withdraw_account_value"/>
-						{/if}
-					</div>
-                </form>
-            </div>
-            <div class="modal-footer">
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                <button type="button" class="btn btn-primary" onclick="updateWithdrawAccount()">{$trans->t('submit')}</button>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="modal fade" id="zero_user_withdraw_modal" tabindex="-1" data-bs-keyboard="false" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{$trans->t('commission withdrawal')}</h4>
-            </div>
-            <div class="modal-body">
-				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>
-                <form class="mb-3">
-                    <input type="number" class="form-control" placeholder="{$trans->t('amount')}" id="commission_amount"/>
-                </form>
-				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('withdrawal method')}:</label>
-                <ul class="nav nav-pills row nav-primary mb-3" role="tablist">
-                    <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0" id="taketype">
-                        <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-type="1">
-                            <span class="py-2 w-auto">
-								<i class="bi bi-wallet-fill text-primary fs-2hx"></i>
-                            </span>
-                            <span class="nav-text fs-6 py-2 text-center">{$trans->t('withdraw to credit')}<br/>
-                            <small>{$trans->t('no less than')}: 0</small></span>
-                        </a>
-                    </li>
-                    {if $config['enable_withdraw'] == true}
-                    <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0" id="taketype">
-                        <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-type="2">
-                            <span class="nav-icon py-2 w-auto">
-								<i class="bi bi-currency-exchange fs-2hx text-primary"></i>
-                            </span>
-                            <span class="nav-text fs-6 py-2 text-center">{$trans->t('user.billing.withdraw_to_usdt')}<br />
-                            <small>{$trans->t('user.billing.less_than')}: {$config['withdraw_less_amount']}</small></span>
-                        </a>
-                    </li>
-                    {/if}
-                </ul>
-            </div>
-            <div class="modal-footer">
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                <button type="button" class="btn btn-primary" type="button" onclick="withdrawCommission()">{$trans->t('submit')}</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="zero_user_add_credit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
-            </div>
-            <div class="modal-body">
-				<label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>		
-				<div class="form-group">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
-					</div>
-				</div>
-                
-            </div>
-            <div class="modal-footer">
-				<button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder(2, '', '')">
-					<span class="indicator-label">{$trans->t('submit')}</span>			
-					<span class="indicator-progress">{$trans->t('please wait')}
-					<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-				</button>
-            </div>
-        </div>
-    </div>
-</div>
-{include file='include/global/scripts.tpl'}
-{include file='include/index/news.tpl'}
     </body>
+
+    <div class="modal fade" id="zero_modal_user_update_email" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">{$trans->t('change email')}</h2>
+                </div>
+                <div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
+                    <form class="form" action="#" id="zero_modal_user_update_email_form">
+                        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+                            <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="currentColor" />
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <div class="d-felx flex-stack flex-grow-1">
+                                <div class="fw-semibold">
+                                    <div class="fs-6 text-gray-700">邮箱是本网站唯一凭证，请妥善保管帐号。请勿设置虚假邮箱帐号</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fv-row mb-7">
+                            <label class="fs-6 fw-semibold form-label mb-2">
+                                <span class="required">{$trans->t('email')}</span>
+                            </label>
+                            <input class="form-control form-control-solid" placeholder="" name="profile_email" value="" id="profile_email" />
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                <span class="indicator-label">{$trans->t('submit')}</span>
+                                <span class="indicator-progress">{$trans->t('please wait')}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="zero_modal_user_update_password" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="fw-bold">{$trans->t('change passwd')}</h2>
+                </div>
+                <div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
+                    <form id="zero_modal_user_update_password_form" class="form" action="#">
+                        <div class="fv-row mb-10">
+                            <label class="required form-label fs-6 mb-2">Current Password</label>
+                            <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="current_password" name="current_password" autocomplete="off" />
+                        </div>
+                        <div class="mb-10 fv-row" data-kt-password-meter="true">
+                            <div class="mb-1">
+                                <label class="form-label fw-semibold fs-6 mb-2">New Password</label>
+                                <div class="position-relative mb-3">
+                                    <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="new_password" name="new_password" autocomplete="off" />
+                                    <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                        <i class="bi bi-eye-slash fs-2"></i>
+                                        <i class="bi bi-eye fs-2 d-none"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+                                    <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                    <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                    <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                    <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+                                </div>
+                            </div>
+                            <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
+                        </div>
+                        <div class="fv-row mb-10">
+                            <label class="form-label fw-semibold fs-6 mb-2">Confirm New Password</label>
+                            <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="confirm_password" name="confirm_password" autocomplete="off" />
+                        </div>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
+                                <span class="indicator-label">{$trans->t('submit')}</span>
+                                <span class="indicator-progress">{$trans->t('please wait')}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="zero_user_withdraw_method_modal" tabindex="-1" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{$trans->t('withdraw account')}</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('type')}:</label>
+                            <select class="form-select" id="withdraw_method" data-style="btn-primary">	
+                                <option value="USDT" data-kt-select2-image="/tether.svg">USDT</option>
+                            </select>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="mb-3">
+                            <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('account')}:</label>						
+                            <input type="text" class="form-control" value="{$user->withdraw_account}" id="withdraw_account_value"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                    <button type="button" class="btn btn-primary" onclick="KTUsersWithdrawCommission(2)">{$trans->t('submit')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="zero_user_withdraw_modal" tabindex="-1" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{$trans->t('commission withdrawal')}</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>
+                    <form class="mb-3">
+                        <input type="number" class="form-control" placeholder="{$trans->t('amount')}" id="withdraw_commission_amount"/>
+                    </form>
+                    <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('withdrawal method')}:</label>
+                    <ul class="nav nav-pills row nav-primary mb-3" role="tablist" id="withdraw_type">
+                        <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-type="1">
+                                <span class="py-2 w-auto">
+                                    <i class="bi bi-wallet-fill text-primary fs-2hx"></i>
+                                </span>
+                                <span class="nav-text fs-6 py-2 text-center">{$trans->t('withdraw to credit')}<br/>
+                                <small>{$trans->t('no less than')}: 0</small></span>
+                            </a>
+                        </li>
+                        {if $config['enable_withdraw'] == true}
+                        <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
+                            <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-type="2">
+                                <span class="nav-icon py-2 w-auto">
+                                    <i class="bi bi-currency-exchange fs-2hx text-primary"></i>
+                                </span>
+                                <span class="nav-text fs-6 py-2 text-center">{$trans->t('withdraw to usdt')}<br />
+                                <small>{$trans->t('no less than')}: {$config['withdraw_minimum_amount']}</small></span>
+                            </a>
+                        </li>
+                        {/if}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                    <button type="button" class="btn btn-primary" type="button" onclick="KTUsersWithdrawCommission(1)">{$trans->t('submit')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="zero_user_add_credit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>		
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                    <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder(2, '', '')">
+                        <span class="indicator-label">{$trans->t('submit')}</span>			
+                        <span class="indicator-progress">{$trans->t('please wait')}
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file='include/global/scripts.tpl'}
+    {include file='include/index/news.tpl'}
+    <script>
+        var optionFormatCommission = function(item) {
+            if ( !item.id ) {
+                return item.text;
+            }
+    
+            var span = document.createElement('span');
+            var template = '';
+    
+            template += '<img src="' + item.element.getAttribute('data-kt-select2-image') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += item.text;
+    
+            span.innerHTML = template;
+    
+            return $(span);
+        }
+    
+        // Init Select2 --- more info: https://select2.org/
+        $('#withdraw_method').select2({
+            placeholder: "Select coin",
+            minimumResultsForSearch: Infinity,
+            templateSelection: optionFormatCommission,
+            templateResult: optionFormatCommission
+        });
+    </script>
 </html> 

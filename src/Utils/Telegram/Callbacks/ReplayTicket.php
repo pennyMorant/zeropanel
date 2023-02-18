@@ -69,7 +69,7 @@ class ReplayTicket
         $this->MessageID        = $Message->getMessageId();
         $this->TickedId         = $ticketId;
 
-        if ($this->ChatID < 0 && Setting::obtain('enable_telegram_bot_group_quiet') == true) {
+        if ($this->ChatID < 0) {
             // 群组中不回应
             return;
         }

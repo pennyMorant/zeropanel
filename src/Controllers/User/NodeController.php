@@ -35,13 +35,13 @@ class NodeController extends UserController
 
         $user_group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);
         if ($user->is_admin == 0) {
-            $servers = Node::where('type' ,1)
+            $servers = Node::where('status' ,1)
             ->where('sort', '!=', '9') // 我也不懂为什么
             ->whereIn('node_group', $user_group) // 筛选用户所在分组的服务器
             ->orderBy('name', 'asc')
             ->get();
         } else if ($user->is_admin == 1) {
-            $servers = Node::where('type' ,1)
+            $servers = Node::where('status' ,1)
             ->where('sort', '!=', '9') // 我也不懂为什么
             ->orderBy('name', 'asc')
             ->get();
@@ -53,8 +53,10 @@ class NodeController extends UserController
         ->get();
         if (isset($class)) {
             $min_node_class = min($class->toArray())['node_class'];
+        } else {
+            $min_node_class = 0;
         }
-        $nodes       = Node::where('type', 1)->orderBy('node_class')->orderBy('name')->get();
+        $nodes       = Node::where('status', 1)->orderBy('node_class')->orderBy('name')->get();
 
         $array_nodes = [];
 
@@ -69,7 +71,6 @@ class NodeController extends UserController
             $array_node['class']      = $node->node_class;
             $array_node['name']       = $node->name;
             $array_node['sort']       = $node->sort;
-            $array_node['info']       = $node->info;
             $array_node['group']      = $node->node_group;
             $array_node['online_user']    = $node->get_node_online_user_count();
             $array_node['online']         = $node->get_node_online_status();

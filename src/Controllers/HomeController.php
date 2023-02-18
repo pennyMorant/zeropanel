@@ -29,7 +29,7 @@ class HomeController extends BaseController
     public function index($request, $response, $args)
     {
         $this->view()
-            ->display(Setting::obtain('website_general_landing_index') . '.tpl');
+            ->display(Setting::obtain('website_landing_index') . '.tpl');
         return $response;
     }
 
@@ -42,11 +42,9 @@ class HomeController extends BaseController
     {
         $token = $request->getQueryParam('token');
         if ($token == Setting::obtain('telegram_bot_request_token')) {
-            if (Setting::obtain('enable_new_telegram_bot')) {
-                Process::index();
-            } else {
-                TelegramProcess::process();
-            }
+           
+            Process::index();
+            
             $result = '1';
         } else {
             $result = '0';

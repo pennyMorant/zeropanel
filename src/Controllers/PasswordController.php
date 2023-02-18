@@ -111,9 +111,8 @@ class PasswordController extends BaseController
             $rs['ret'] = 1;
             $rs['msg'] = I18n::get()->t('success');
             
-            if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
-                $user->clean_link();
-            }
+           
+            $user->clean_link();
 
             // 禁止链接多次使用
             $token->expire_time = time();

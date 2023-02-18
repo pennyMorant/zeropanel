@@ -27,21 +27,17 @@ class TicketController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'op'        => '操作',
             'id'        => 'ID',
             'datetime'  => '时间',
             'title'     => '标题',
             'userid'    => '用户ID',
-            'status'    => '状态'
-        );
-        $table_config['default_show_column'] = array(
-            'op', 'id',
-            'datetime', 'title', 'userid', 'name', 'status'
+            'status'    => '状态',
+            'action'        => '操作',
         );
         $table_config['ajax_url'] = 'ticket/ajax';
         $this->view()
             ->assign('table_config', $table_config)
-            ->display('admin/ticket/index.tpl');
+            ->display('admin/ticket/ticket.tpl');
         return $response;
     }
 
@@ -103,9 +99,9 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateTicket($request, $response, $args)
     {
-        $id      = $args['id'];
+        $id      = $request->getParam('id');
         $content = $request->getParam('content');
         $status  = $request->getParam('status');
         if ($content == '' || $status == '') {
@@ -155,24 +151,24 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function show($request, $response, $args)
+    public function updateTicketIndex($request, $response, $args)
     {
         $id            = $args['id'];
         $ticket = Ticket::where('id','=', $id)->first();
         if($ticket == null) {
-            return $response->withStatus(302)->withHeader('Location', '/user/ticket');
+            return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
         }
 
         $pageNum       = $request->getQueryParams()['page'] ?? 1;
-        $ticketset     = Ticket::where('id', $id)->orWhere('rootid', '=', $id)->orderBy('datetime', 'desc')->paginate(5, ['*'], 'page', $pageNum);
-        $ticketset->setPath('/admin/ticket/' . $id . '/view');
+        $ticket_details     = Ticket::where('id', $id)->orWhere('rootid', '=', $id)->orderBy('datetime', 'desc')->paginate(5, ['*'], 'page', $pageNum);
+        $ticket_details->setPath('/admin/ticket/' . $id . '/view');
 
-        $render = Tools::paginate_render($ticketset);
+        $render = Tools::paginate_render($ticket_details);
         $this->view()
-            ->assign('ticketset', $ticketset)
+            ->assign('ticket_details', $ticket_details)
             ->assign('id', $id)
             ->assign('render', $render)
-            ->display('admin/ticket/view.tpl');
+            ->display('admin/ticket/update.tpl');
         return $response;
     }
 
@@ -188,10 +184,10 @@ class TicketController extends AdminController
         $query = Ticket::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['op'])) {
+                if (in_array($order_field, ['action'])) {
                     $order_field = 'id';
                 }
-                if (in_array($order_field, ['name'])) {
+                if (in_array($order_field, ['user_id'])) {
                     $order_field = 'userid';
                 }
             },
@@ -209,13 +205,17 @@ class TicketController extends AdminController
                 continue;
             }
             $tempdata               = [];
-            $tempdata['op']         = '<a class="btn btn-brand" href="/admin/ticket/' . $value->id . '/view">查看</a>';
             $tempdata['id']         = $value->id;
             $tempdata['datetime']   = $value->datetime();
             $tempdata['title']      = $value->title;
             $tempdata['userid']     = $value->userid;
             $tempdata['status']     = $value->status();
-
+            $tempdata['action']     = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="/admin/ticket/update/'.$value->id.'">编辑</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                            </ul>
+                                        </div>';
             $data[] = $tempdata;
         }
 

@@ -30,10 +30,6 @@ class Smtp extends Base
             $mail->SMTPSecure = ($this->config['port'] == '587' ? 'tls' : 'ssl');
         }
 
-        if ($this->config['smtp_bbc'] != '') {
-            $mail->addBCC($this->config['smtp_bbc']);
-        }
-
         $this->mail = $mail;
     }
 
@@ -48,8 +44,7 @@ class Smtp extends Base
             'passsword' => $configs['smtp_password'],
             'smtp_ssl' => $configs['smtp_ssl'],
             'name' => $configs['smtp_name'],
-            'sender' => $configs['smtp_sender'],
-            'smtp_bbc' => $configs['smtp_bbc']
+            'sender' => $configs['smtp_sender']
         ];
     }
 

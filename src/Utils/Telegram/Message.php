@@ -157,8 +157,8 @@ class Message
                         'user_id'   => $Member['id'],
                     ]
                 );
-                if (count((array)json_decode(Setting::obtain('telegram_general_admin_id'))) >= 1) {
-                    foreach ((array)json_decode(Setting::obtain('telegram_general_admin_id')) as $id) {
+                if (count((array)json_decode(Setting::obtain('telegram_admin_id'))) >= 1) {
+                    foreach ((array)json_decode(Setting::obtain('telegram_admin_id')) as $id) {
                         $this->bot->sendMessage(
                             [
                                 'text'      => '根据您的设定，Bot 退出了一个群组.' . PHP_EOL . PHP_EOL . '群组名称：' . $this->Message->getChat()->getTitle(),
@@ -203,14 +203,7 @@ class Message
                 return;
             }
             */
-            if (Setting::obtain('enable_welcome_message_telegram_notify') == true) {
-                $text = ($NewUser->class >= 1 ? '欢迎 VIP' . $NewUser->class . ' 用户 ' . $Member['name'] . '回到组织.' : '欢迎 ' . $Member['name']);
-                $this->replyWithMessage(
-                    [
-                        'text' => $text
-                    ]
-                );
-            }
+            
         }
     }
 }

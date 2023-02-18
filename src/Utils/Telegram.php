@@ -21,7 +21,7 @@ class Telegram
             $chat_id = Setting::obtain('telegram_general_group_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
-            if (Setting::obtain('enable_new_telegram_bot') == true) {
+            
                 // 发送给非群组时使用异步
                 $async = ($chat_id != Setting::obtain('telegram_general_group_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
@@ -34,10 +34,7 @@ class Telegram
                     'reply_markup'              => null
                 ];
                 $bot->sendMessage($sendMessage);
-            } else {
-                $bot = new BotApi(Setting::obtain('telegram_bot_token'));
-                $bot->sendMessage($chat_id, $messageText);
-            }
+            
         }
     }
 
@@ -53,7 +50,7 @@ class Telegram
             $chat_id = Setting::obtain('telegram_general_group_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
-            if (Setting::obtain('enable_new_telegram_bot') == true) {
+            
                 // 发送给非群组时使用异步
                 $async = ($chat_id != Setting::obtain('telegram_general_group_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
@@ -70,14 +67,6 @@ class Telegram
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-            } else {
-                $bot = new BotApi(Setting::obtain('telegram_bot_token'));
-                try {
-                    $bot->sendMessage($chat_id, $messageText, 'Markdown');
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-            }
         }
     }
     
@@ -90,9 +79,9 @@ class Telegram
     public static function PushToAdmin($messageText, $chat_id = 0): void
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
-            if (Setting::obtain('enable_new_telegram_bot') == true) {
+            
                 // 发送给非群组时使用异步
-                $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_general_admin_id'))));
+                $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
                 $sendMessage = [
                     'chat_id'                   => $chat_id,
@@ -107,14 +96,6 @@ class Telegram
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-            } else {
-                $bot = new BotApi(Setting::obtain('telegram_bot_token'));
-                try {
-                    $bot->sendMessage($chat_id, $messageText);
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-            }
         }
     }
 
@@ -130,7 +111,7 @@ class Telegram
             $chat_id = Setting::obtain('telegram_general_channel_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
-            if (Setting::obtain('enable_new_telegram_bot') == true) {
+           
                 // 发送给非群组时使用异步
                 $async = ($chat_id != Setting::obtain('telegram_general_channel_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
@@ -147,14 +128,6 @@ class Telegram
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
-            } else {
-                $bot = new BotApi(Setting::obtain('telegram_bot_token'));
-                try {
-                    $bot->sendMessage($chat_id, $messageText);
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
-            }
         }
     }
 }

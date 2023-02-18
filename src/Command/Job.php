@@ -78,7 +78,7 @@ class Job extends Command
 
         // 清理各表记录
         echo '清理数据库各表开始' . PHP_EOL;
-        UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_save_days')))->delete();
+        UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_keep_time')))->delete();
         Token::where('expire_time', '<', time())->delete();
         DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
         EmailVerify::where('expire_in', '<', time() - 86400 * 3)->delete();
@@ -133,16 +133,16 @@ class Job extends Command
     
         echo '重置用户流量结束' . PHP_EOL;
          // ------- 发送每日系统运行报告
-        if (Setting::obtain('enable_system_clean_database_report_telegram_notify') == true) {
+        
             echo '每日数据库清理成功报告发送开始' . PHP_EOL;
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
                 Telegram::PushToAdmin($messagetext, $admin_telegram_id);
             }
             echo '每日数据库清理成功报告发送结束' . PHP_EOL;
-        }
+        
 
         $this->ZeroTask();
 
@@ -152,7 +152,7 @@ class Job extends Command
             $swap = (new Builder())
                 ->add('abstract_api', ['api_key' => $configs['currency_exchange_rate_api_key']])
             ->build();
-            $rate = $swap->latest($configs['setting_currency'] . '/CNY');
+            $rate = $swap->latest($configs['currency_unit'] . '/CNY');
             $result = $rate->getValue();
             $setting = Setting::where('item', '=', 'currency_exchange_rate')->first();
             $setting->value = substr($result, 0, 4);
@@ -168,7 +168,6 @@ class Job extends Command
      */
     public function CheckJob()
     {
-
         //节点掉线检测
         if ($_ENV['enable_detect_offline'] == true) {
             echo '节点掉线检测开始' . PHP_EOL;
@@ -198,14 +197,14 @@ class Job extends Command
 					}
                     
 
-                    if (Setting::obtain('enable_system_node_offline_report_telegram_notify') == true) {
-                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+                    
+                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
                         foreach ($sendAdmins as $sendAdmin) {
                             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                             $messagetext = $notice_text;
                             Telegram::PushToAdmin($messagetext, $admin_telegram_id);
                         }
-                    }
+                    
 
                     $node->online = false;
                     $node->save();
@@ -230,14 +229,14 @@ class Job extends Command
                         );
                     }
 
-                    if (Setting::obtain('enable_system_node_online_report_telegram_notify') == true) {
-                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+                    
+                        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
                         foreach ($sendAdmins as $sendAdmin) {
                             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                             $messagetext = $notice_text;
                             Telegram::PushToAdmin($messagetext, $admin_telegram_id);
                         }
-                    }
+                    
 
                     $node->online = true;
                     $node->save();
@@ -337,7 +336,7 @@ class Job extends Command
     {
         $users = User::all();
         foreach ($users as $user) {
-            if (Setting::obtain('enable_insufficient_traffic_user_notify') != false) {
+           
                 echo '用户订阅余量检测开始' . PHP_EOL;
                 $user_traffic_left = $user->transfer_enable - $user->u - $user->d;
                 $under_limit = false;
@@ -370,7 +369,7 @@ class Job extends Command
                     $user->save();
                 }
                 echo '用户订阅余量检测结束' . PHP_EOL;
-            }
+            
 
             // 审计封禁解封
             if ($user->enable == 0) {
@@ -432,7 +431,7 @@ class Job extends Command
 
         foreach ($users as $user) {
             $text = '您好，系统发现您的账号等级已经过期了。';
-            $reset_traffic = Setting::obtain('user_general_class_expire_reset_traffic');
+            $reset_traffic = 0;
             if ($reset_traffic >= 0) {
                 $user->transfer_enable = Tools::toGB($reset_traffic);
                 $user->u = 0;
@@ -450,8 +449,8 @@ class Job extends Command
                 $_ENV['email_queue']
             );
             $user->class = 0;
-            $user->node_connector = $configs['connection_device_limit'];
-            $user->node_speedlimit = $configs['connection_rate_limit'];
+            $user->node_connector = $configs['signup_default_ip_limit'];
+            $user->node_speedlimit = $configs['signup_default_speed_limit'];
             $user->product_id = NULL;
             $user->reset_traffic_date = NULL;
             $user->save();
@@ -466,7 +465,7 @@ class Job extends Command
     public function CheckOrderStatus()
     {
         echo '订单状态检测开始' . PHP_EOL;
-        $orders = Order::where('order_status', 'pending')->where('expired_time', '<', time())->get();
+        $orders = Order::where('order_status', 1)->where('expired_time', '<', time())->get();
         foreach ($orders as $order) {
             $order->order_status = 0;
             $order->save();

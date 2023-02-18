@@ -5,13 +5,14 @@ namespace App\Controllers\Admin;
 use App\Controllers\AdminController;
 use App\Models\DetectLog;
 use App\Models\DetectRule;
+use App\Models\DetectBanLog;
 use App\Utils\Telegram;
 use Slim\Http\{
     Request,
     Response
 };
 
-class DetectController extends AdminController
+class BanController extends AdminController
 {
     /**
      * 后台审计规则
@@ -23,18 +24,38 @@ class DetectController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'op'    => '操作',
+            
             'id'    => 'ID',
             'name'  => '名称',
             'text'  => '介绍',
             'regex' => '正则表达式',
-            'type'  => '类型'
+            'type'  => '类型',
+            'action'    => '操作',
         );
-        $table_config['default_show_column'] = array_keys($table_config['total_column']);
-        $table_config['ajax_url'] = 'detect/ajax';
+        $table_config_ban_record['total_column'] = array(
+            'id'                => 'ID',
+            'user_id'           => '用户ID',
+            'detect_number'     => '违规次数',
+            'ban_time'          => '封禁时长(分钟)',
+            'end_time'          => '封禁开始时间',
+            'ban_end_time'      => '封禁结束时间',
+            'all_detect_number' => '累计违规次数'
+        );
+        $table_config_detect_record['total_column'] = array(
+            'id'          => 'ID',
+            'user_id'     => '用户ID',
+            'node_id'     => '节点ID',
+            'list_id'     => '规则ID',
+            'datetime'    => '时间'
+        );
+        $table_config_detect_record['ajax_url'] = 'ban/detect/record/ajax';
+        $table_config_ban_record['ajax_url'] = 'ban/record/ajax';
+        $table_config['ajax_url'] = 'ban/rule/ajax';
         $this->view()
             ->assign('table_config', $table_config)
-            ->display('admin/detect/index.tpl');
+            ->assign('table_config_detect_record', $table_config_detect_record)
+            ->assign('table_config_ban_record', $table_config_ban_record)
+            ->display('admin/ban.tpl');
         return $response;
     }
 
@@ -44,29 +65,33 @@ class DetectController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxRule($request, $response, $args)
+    public function banRuleAjax($request, $response, $args)
     {
         $query = DetectRule::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['op'])) {
+                if (in_array($order_field, ['action'])) {
                     $order_field = 'id';
                 }
             }
         );
-
+        $type = "'request'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var DetectRule $value */
 
             $tempdata             = [];
-            $tempdata['op']       = '<a class="btn btn-brand" href="/admin/detect/' . $value->id . '/edit">编辑</a> <a class="btn btn-brand-accent" id="delete" value="' . $value->id . '" href="javascript:void(0);" onClick="delete_modal_show(\'' . $value->id . '\')">删除</a>';
             $tempdata['id']       = $value->id;
             $tempdata['name']     = $value->name;
             $tempdata['text']     = $value->text;
             $tempdata['regex']    = $value->regex;
             $tempdata['type']     = $value->type();
-
+            $tempdata['action']   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type.', '.$value->id.')">编辑</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                        </ul>
+                                    </div>';
             $data[] = $tempdata;
         }
 
@@ -79,26 +104,13 @@ class DetectController extends AdminController
     }
 
     /**
-     * 后台增加审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function create($request, $response, $args)
-    {
-        $this->view()->display('admin/detect/add.tpl');
-        return $response;
-    }
-
-    /**
      * 后台增加审计规则页面
      * 
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function add($request, $response, $args)
+    public function createBanRule($request, $response, $args)
     {
         $rule = new DetectRule();
         $rule->name = $request->getParam('name');
@@ -121,30 +133,15 @@ class DetectController extends AdminController
     }
 
     /**
-     * 后台编辑审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function edit($request, $response, $args)
-    {
-        $id = $args['id'];
-        $rule = DetectRule::find($id);
-        $this->view()->assign('rule', $rule)->display('admin/detect/edit.tpl');
-        return $response;
-    }
-
-    /**
      * 后台编辑审计规则页面
      * 
      * @param Request   $request
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateBanRule($request, $response, $args)
     {
-        $id = $args['id'];
+        $id = $request->getParam('id');
         $rule = DetectRule::find($id);
 
         $rule->name = $request->getParam('name');
@@ -187,35 +184,6 @@ class DetectController extends AdminController
         ]);
     }
 
-    /**
-     * 后台用户触发审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function log($request, $response, $args)
-    {
-        $table_config['total_column'] = array(
-            'id'          => 'ID',
-            'user_id'     => '用户ID',
-            'name'   => '用户名',
-            'node_id'     => '节点ID',
-            'node_name'   => '节点名',
-            'list_id'     => '规则ID',
-            'rule_name'   => '规则名',
-            'rule_text'   => '规则描述',
-            'rule_regex'  => '规则正则表达式',
-            'rule_type'   => '规则类型',
-            'datetime'    => '时间'
-        );
-        $table_config['default_show_column'] = array_keys($table_config['total_column']);
-        $table_config['ajax_url'] = 'log/ajax';
-        $this->view()
-            ->assign('table_config', $table_config)
-            ->display('admin/detect/log.tpl');
-        return $response;
-    }
 
     /**
      * 后台用户触发审计规则AJAX
@@ -224,18 +192,18 @@ class DetectController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxLog($request, $response, $args)
+    public function detectRuleRecordAjax($request, $response, $args)
     {
         $query = DetectLog::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['node_name'])) {
+                if (in_array($order_field, ['node_id'])) {
                     $order_field = 'node_id';
                 }
-                if (in_array($order_field, ['rule_name', 'rule_text', 'rule_regex', 'rule_type'])) {
+                if (in_array($order_field, ['list_id'])) {
                     $order_field = 'list_id';
                 }
-                if (in_array($order_field, ['name'])) {
+                if (in_array($order_field, ['user_id'])) {
                     $order_field = 'user_id';
                 }
             }
@@ -260,14 +228,8 @@ class DetectController extends AdminController
             $tempdata               = [];
             $tempdata['id']         = $value->id;
             $tempdata['user_id']    = $value->user_id;
-            $tempdata['name']  = $value->name();
             $tempdata['node_id']    = $value->node_id;
-            $tempdata['node_name']  = $value->node_name();
             $tempdata['list_id']    = $value->list_id;
-            $tempdata['rule_name']  = $value->rule_name();
-            $tempdata['rule_text']  = $value->rule_text();
-            $tempdata['rule_regex'] = $value->rule_regex();
-            $tempdata['rule_type']  = $value->rule_type();
             $tempdata['datetime']   = $value->datetime();
 
             $data[] = $tempdata;
@@ -278,6 +240,65 @@ class DetectController extends AdminController
             'recordsTotal'    => DetectLog::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    /**
+     * 后台审计封禁AJAX
+     * 
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function banRecordAjax($request, $response, $args)
+    {
+        $query = DetectBanLog::getTableDataFromAdmin(
+            $request,
+            static function (&$order_field) {
+                if (in_array($order_field, ['ban_end_time'])) {
+                    $order_field = 'end_time';
+                }
+            }
+        );
+
+        $data  = [];
+        foreach ($query['datas'] as $value) {
+            /** @var DetectBanLog $value */
+
+            if ($value->user() == null) {
+                DetectBanLog::user_is_null($value);
+                continue;
+            }
+            $tempdata                         = [];
+            $tempdata['id']                   = $value->id;
+            $tempdata['user_id']              = $value->user_id;
+            $tempdata['detect_number']        = $value->detect_number;
+            $tempdata['ban_time']             = $value->ban_time;
+            $tempdata['end_time']             = $value->end_time();
+            $tempdata['ban_end_time']         = $value->ban_end_time();
+            $tempdata['all_detect_number']    = $value->all_detect_number;
+
+            $data[] = $tempdata;
+        }
+
+        return $response->withJson([
+            'draw'            => $request->getParam('draw'),
+            'recordsTotal'    => DetectBanLog::count(),
+            'recordsFiltered' => $query['count'],
+            'data'            => $data,
+        ]);
+    }
+
+    public function requestBanRule($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $rule = DetectRule::find($id);
+        return $response->withJson([
+            'name'   => $rule->name,
+            'id'    => $rule->id,
+            'text'  => $rule->text,
+            'regex' => $rule->regex,
+            'type'  => $rule->type
         ]);
     }
 }

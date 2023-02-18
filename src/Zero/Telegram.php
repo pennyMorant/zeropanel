@@ -38,7 +38,7 @@ class Telegram
             ]
         ];
 
-        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
         foreach ($sendAdmins as $sendAdmin) {
             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             if ($admin_telegram_id != null) {
@@ -75,7 +75,7 @@ class Telegram
             '发起时间：' . date('Y-m-d H:i:s', $pl->datetime) . PHP_EOL .
             '到账时间：' . $codeq->usedatetime;
 
-        $sendAdmins = (array)json_decode(Setting::obtain('telegram_general_admin_id'));
+        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
         foreach ($sendAdmins as $sendAdmin) {
             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             if ($admin_telegram_id != null) {
@@ -136,7 +136,7 @@ class Telegram
     public static function Send($messageText, $chat_id, $keyboard = null)
     {
         // 发送给非群组时使用异步
-        $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_general_admin_id'))));
+        $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
         $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
 
         if ($keyboard !== null) {

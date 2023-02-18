@@ -40,9 +40,21 @@ class Node extends Model
     /**
      * 节点是否显示和隐藏
      */
-    public function type(): string
+    public function status()
     {
-        return $this->type ? '显示' : '隐藏';
+        switch ($this->status) {
+            case 0:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" onclick="updateNodeStatus('.$this->id.')" />
+                            </div>';
+                break;
+            case 1:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" checked="checked" onclick="updateNodeStatus('.$this->id.')" />
+                            </div>';
+                break;
+        }
+        return $status;
     }
 
     /**

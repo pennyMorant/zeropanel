@@ -7,7 +7,7 @@ use App\Controllers\{
 };
 use App\Models\{
     User, 
-    Paytake 
+    Withdraw
 };
 use App\Utils\{ 
     DatatablesHelper 
@@ -25,30 +25,68 @@ class AgentController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function takeLog($request, $response, $args)
+    public function index($request, $response, $args)
     {
-        $table_config['total_column'] = array(
-            'op' => '操作', 
+        $table_config['total_column'] = array( 
             'id' => 'ID',
             'type' => '提现类型', 
             'userid' => '用户', 
             'total' => '金额', 
             'status' => '状态',
             'datetime' => '时间',
-        );
-        $table_config['default_show_column'] = array(
-            'op', 
-            'id',
-            'type', 
-            'userid',
-            'total',
-            'status',
-            'datetime',
+            'action' => '操作'
         );
 
-        $table_config['ajax_url'] = '/admin/agent/take_ajax';
-        $this->view()->assign('table_config', $table_config)->display('admin/agent/take_log.tpl');
+        $table_config['ajax_url'] = '/admin/agent/withdraw/ajax';
+        $this->view()->assign('table_config', $table_config)->display('admin/commission.tpl');
         return $response;
+    }
+
+    /**
+     * 后台公告页面 AJAX
+     *
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function withdrawAjax($request, $response, $args)
+    {
+        $query = Withdraw::getTableDataFromAdmin(
+            $request,
+            static function (&$order_field) {
+                if (in_array($order_field, ['action'])) {
+                    $order_field = 'id';
+                }
+            }
+        );
+        $mark_done = "'mark_done'";
+        $go_back = "'go_back'";
+        $data  = [];
+        foreach ($query['datas'] as $value) {
+            /** @var Ann $value */
+
+            $tempdata            = [];
+            $tempdata['id']      = $value->id;
+            $tempdata['userid']    = $value->userid;
+            $tempdata['total'] = $value->total;
+            $tempdata['type'] = $value->type == 1 ? '提现至余额' : '提现至USDT';
+            $tempdata['status'] = $value->status();
+            $tempdata['datetime'] = date('Y-m-d H:i:s', $value->datetime);
+            $tempdata['action']                   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$value->id.')">完成</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$value->id.')">拒绝</a></li>
+                                                        </ul>
+                                                    </div>';
+            $data[] = $tempdata;
+        }
+
+        return $response->withJson([
+            'draw'            => $request->getParam('draw'),
+            'recordsTotal'    => Withdraw::count(),
+            'recordsFiltered' => $query['count'],
+            'data'            => $data,
+        ]);
     }
 
     /**
@@ -56,70 +94,16 @@ class AgentController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxTake($request, $response, $args)
+    public function updateWithdrawCommission($request, $response, $args)
     {
-        $datatables = new Datatables(new DatatablesHelper());
-        $datatables->query('Select id as op,id,type,userid,total,status,datetime from payback_take_log');
-
-        $datatables->edit('op', static function ($data) {
-            if ($data['status'] === 0) {
-                $text = '<a class="btn btn-brand" id="mark_done" value="' . $data['id'] . '" href="javascript:void(0);" onClick="mark_done_modal_show(\'' . $data['id'] . '\')">标记完成</a>
-                       <a class="btn btn-brand-accent" id="go_back" value="' . $data['id'] . '" href="javascript:void(0);" onClick="go_back_modal_show(\'' . $data['id'] . '\')">拒绝</a>';
-            } else if ($data['status'] === 1) {
-                $text = '该申请已结转';
-            } else if ($data['status'] === -1) {
-                $text = '该申请已原路退回';
-            }
-            return  $text;
-        });
-
-        $datatables->edit('type', static function ($data) {
-            return $data['type'] === 1 ? '转至钱包余额' : '转账提现';
-        });
-
-        $datatables->edit('userid', static function ($data) {
-            $take_user = User::find($data['userid']);
-            $text = 'ID: ' . $take_user->id . '<br />邮箱：' . $take_user->email . '<br />代理：' . ($take_user->agent ? '是' : '否');
-
-            if ($data['type'] === '转账提现') {
-                $text .= '<br />提现账号：' . $take_user->config['take_account']['acc'] . '<br />账号类型：' . $take_user->config['take_account']['type'];
-            }
-            return $text;
-        });
-
-        $datatables->edit('status', static function ($data) {
-            $status = [
-               -1 => '已退回',
-                0 => '处理中',
-                1 => '已完成',
-            ];
-            return $status[$data['status']];
-        });
-
-        $datatables->edit('datetime', static function ($data) {
-            return date('Y-m-d H:i:s', $data['datetime']);
-        });
-
-        $body = $response->getBody();
-        $body->write($datatables->generate());
-        return $response;
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function takeUpdate($request, $response, $args)
-    {
-        $mode = $args['mode'];
+        $mode = $request->getParam('mode');
         $id   = $request->getParam('id');
 
         switch ($mode) {
             case 'mark_done': 
-                $paytake = Paytake::find($id);
-                $paytake->status = 1;
-                if (!$paytake->save()) {
+                $withdraw = Withdraw::find($id);
+                $withdraw->status = 1;
+                if (!$withdraw->save()) {
                     $res['ret'] = 0;
                     $res['msg'] = '标记失败';
                     return $response->withJson($res);   
@@ -128,11 +112,11 @@ class AgentController extends AdminController
                 $res['msg'] = '标记成功';
                 return $response->withJson($res);
             case 'go_back': 
-                $paytake = Paytake::find($id);
-                $paytake->status = -1;
-                $paytake->save();
-                $go_user = User::find($paytake->userid);
-                $go_user->commission = bcadd($go_user->commission, $paytake->total, 2);
+                $withdraw = Withdraw::find($id);
+                $withdraw->status = -1;
+                $withdraw->save();
+                $go_user = User::find($withdraw->userid);
+                $go_user->commission = bcadd($go_user->commission, $withdraw->total, 2);
                 if (!$go_user->save()) {
                     $res['ret'] = 0;
                     $res['msg'] = '退回失败';

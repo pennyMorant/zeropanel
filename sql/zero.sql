@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-02-14 07:19:28
--- 服务器版本： 10.9.5-MariaDB
--- PHP 版本： 8.2.2
+-- 生成日期： 2023-02-18 15:17:24
+-- 服务器版本： 10.10.3-MariaDB
+-- PHP 版本： 8.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,8 +44,7 @@ CREATE TABLE `alive_ip` (
 CREATE TABLE `announcement` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `content` longtext NOT NULL,
-  `markdown` longtext NOT NULL
+  `content` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -178,10 +177,9 @@ CREATE TABLE `link` (
 CREATE TABLE `node` (
   `id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
-  `type` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
   `server` varchar(128) NOT NULL,
   `custom_config` text NOT NULL,
-  `info` varchar(128) NOT NULL,
   `flag` varchar(128) NOT NULL,
   `sort` int(11) NOT NULL,
   `traffic_rate` float NOT NULL DEFAULT 1,
@@ -195,8 +193,7 @@ CREATE TABLE `node` (
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
   `node_ip` varchar(182) DEFAULT NULL,
   `node_group` int(11) NOT NULL DEFAULT 0,
-  `online` tinyint(1) NOT NULL DEFAULT 1,
-  `gfw_block` tinyint(1) NOT NULL DEFAULT 0
+  `online` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -265,21 +262,6 @@ CREATE TABLE `payback` (
   `ref_by` bigint(20) NOT NULL,
   `ref_get` decimal(12,2) NOT NULL,
   `datetime` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `payback_take_log`
---
-
-CREATE TABLE `payback_take_log` (
-  `id` int(11) NOT NULL,
-  `type` int(11) DEFAULT 0,
-  `userid` int(11) DEFAULT 0,
-  `total` decimal(10,2) DEFAULT NULL,
-  `status` int(11) DEFAULT 0,
-  `datetime` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -415,23 +397,7 @@ CREATE TABLE `user` (
   `lang` varchar(128) NOT NULL DEFAULT 'zh-cn' COMMENT '用户的语言',
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
-  `withdraw_account_type` varchar(128) DEFAULT NULL,
-  `withdraw_account` varchar(256) DEFAULT NULL,
-  `config` mediumtext DEFAULT NULL COMMENT '用户配置'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `user_hourly_usage`
---
-
-CREATE TABLE `user_hourly_usage` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `traffic` varchar(32) NOT NULL,
-  `hourly_usage` varchar(32) NOT NULL,
-  `datetime` int(11) NOT NULL
+  `withdraw_account` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -507,6 +473,21 @@ CREATE TABLE `user_traffic_log` (
   `rate` float NOT NULL,
   `traffic` varchar(32) NOT NULL,
   `datetime` int(11) NOT NULL COMMENT '记录时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `withdraw_log`
+--
+
+CREATE TABLE `withdraw_log` (
+  `id` int(11) NOT NULL,
+  `type` int(11) DEFAULT 0,
+  `userid` int(11) DEFAULT 0,
+  `total` decimal(10,2) DEFAULT NULL,
+  `status` int(11) DEFAULT 0,
+  `datetime` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -608,12 +589,6 @@ ALTER TABLE `payback`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `payback_take_log`
---
-ALTER TABLE `payback_take_log`
-  ADD PRIMARY KEY (`id`) USING BTREE;
-
---
 -- 表的索引 `product`
 --
 ALTER TABLE `product`
@@ -652,13 +627,6 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `uuid` (`uuid`) USING BTREE;
 
 --
--- 表的索引 `user_hourly_usage`
---
-ALTER TABLE `user_hourly_usage`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- 表的索引 `user_invite_code`
 --
 ALTER TABLE `user_invite_code`
@@ -688,6 +656,12 @@ ALTER TABLE `user_token`
 --
 ALTER TABLE `user_traffic_log`
   ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `withdraw_log`
+--
+ALTER TABLE `withdraw_log`
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -784,12 +758,6 @@ ALTER TABLE `payback`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `payback_take_log`
---
-ALTER TABLE `payback_take_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `product`
 --
 ALTER TABLE `product`
@@ -826,12 +794,6 @@ ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `user_hourly_usage`
---
-ALTER TABLE `user_hourly_usage`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `user_invite_code`
 --
 ALTER TABLE `user_invite_code`
@@ -859,6 +821,12 @@ ALTER TABLE `user_token`
 -- 使用表AUTO_INCREMENT `user_traffic_log`
 --
 ALTER TABLE `user_traffic_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `withdraw_log`
+--
+ALTER TABLE `withdraw_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

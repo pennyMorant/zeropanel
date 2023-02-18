@@ -28,34 +28,35 @@ class NodeController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'op'                      => '操作',
+            
             'id'                      => 'ID',
             'online'                  => 'Online',
             'name'                    => '节点名称',
-            'onlineuser'              => '在线人数',
-            'type'                    => '显示与隐藏',
+            'onlineuser'              => '在线人数',           
             'sort'                    => '类型',
-            'server'                  => '节点地址',
-            'outaddress'              => '出口地址',
+            //'server'                  => '节点地址',
+            //'outaddress'              => '出口地址',
             'node_ip'                 => '节点IP',
-            'info'                    => '节点信息',
-            'flag'                    => '旗帜',
-            'traffic_rate'            => '流量比率',
-            'node_group'              => '节点群组',
+            //'info'                    => '节点信息',
+            //'flag'                    => '旗帜',
+            //'traffic_rate'            => '流量比率',
+            //'node_group'              => '节点群组',
             'node_class'              => '节点等级',
-            'node_sort'               => '节点排序',
-            'node_speedlimit'         => '节点限速/Mbps',
-            'node_bandwidth'          => '已走流量/GB',
-            'node_bandwidth_limit'    => '流量限制/GB',
-            'bandwidthlimit_resetday' => '流量重置日',
-            'node_heartbeat'          => '上一次活跃时间',
+            //'node_sort'               => '节点排序',
+            'node_speedlimit'         => '速度',
+            //'node_bandwidth'          => '已走流量/GB',
+            //'node_bandwidth_limit'    => '流量限制/GB',
+            //'bandwidthlimit_resetday' => '流量重置日',
+            //'node_heartbeat'          => '上一次活跃时间',
+            'status'                    => '显示与隐藏',
+            'action'                  => '操作',
         );
         $table_config['default_show_column'] = array('op', 'id', 'name', 'sort');
         $table_config['ajax_url'] = 'node/ajax';
 
         $this->view()
             ->assign('table_config', $table_config)
-            ->display('admin/node/index.tpl');
+            ->display('admin/node/node.tpl');
         return $response;
     }
 
@@ -66,7 +67,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function create($request, $response, $args)
+    public function createNodeIndex($request, $response, $args)
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
@@ -79,15 +80,14 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function add($request, $response, $args)
+    public function createNode($request, $response, $args)
     {
         $node                   = new Node();
         $node->name             = $request->getParam('name');
         $node->server           = trim($request->getParam('server'));
-        $node->traffic_rate     = $request->getParam('rate');
-        $node->info             = $request->getParam('info');
-        $node->type             = $request->getParam('type');
-        $node->node_group       = $request->getParam('group');
+        $node->traffic_rate     = $request->getParam('traffic_rate');
+        $node->status           = 0;
+        $node->node_group       = $request->getParam('node_group');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
         $node->flag             = $request->getParam('flag');
         $node->sort             = $request->getParam('sort');
@@ -114,7 +114,7 @@ class NodeController extends AdminController
             ]);
         }
         
-        $node->node_class                 = $request->getParam('class');
+        $node->node_class                 = $request->getParam('node_class');
         $node->node_sort                  = (int)$request->getParam('node_sort');
         $node->node_bandwidth_limit       = $request->getParam('node_bandwidth_limit') * 1024 * 1024 * 1024;
         $node->bandwidthlimit_resetday    = $request->getParam('bandwidthlimit_resetday');
@@ -139,7 +139,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function edit($request, $response, $args)
+    public function updateNodeIndex($request, $response, $args)
     {
         $id = $args['id'];
         $node = Node::find($id);
@@ -156,17 +156,15 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateNode($request, $response, $args)
     {
-        $id                     = $args['id'];
+        $id                     = $request->getParam('id');
         $node                   = Node::find($id);
         $node->name             = $request->getParam('name');
-        $node->node_group       = $request->getParam('group');
+        $node->node_group       = $request->getParam('node_group');
         $node->server           = trim($request->getParam('server'));
-        $node->traffic_rate     = $request->getParam('rate');
-        $node->info             = $request->getParam('info');
+        $node->traffic_rate     = $request->getParam('traffic_rate');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->type             = $request->getParam('type');
         $node->sort             = $request->getParam('sort');
 
         if ($request->getParam('custom_config') != null) {
@@ -191,7 +189,7 @@ class NodeController extends AdminController
             ]);
         }
         $node->flag                     = $request->getParam('flag');
-        $node->node_class                 = $request->getParam('class');
+        $node->node_class                 = $request->getParam('node_class');
         $node->node_sort                  = (int)$request->getParam('node_sort');
         $node->node_bandwidth_limit       = $request->getParam('node_bandwidth_limit') * 1024 * 1024 * 1024;
         $node->bandwidthlimit_resetday    = $request->getParam('bandwidthlimit_resetday');
@@ -236,12 +234,12 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax($request, $response, $args)
+    public function nodeAjax($request, $response, $args)
     {
         $query = Node::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['op'])) {
+                if (in_array($order_field, ['action'])) {
                     $order_field = 'id';
                 }
                 if (in_array($order_field, ['outaddress'])) {
@@ -255,28 +253,33 @@ class NodeController extends AdminController
             /** @var Node $value */
 
             $tempdata                            = [];
-            $tempdata['op']                      = '<a class="btn btn-brand" href="/admin/node/' . $value->id . '/edit">编辑</a> <a class="btn btn-brand-accent" id="delete" value="' . $value->id . '" href="javascript:void(0);" onClick="delete_modal_show(\'' . $value->id . '\')">删除</a>';
+            
             $tempdata['id']                      = $value->id;
-            $tempdata['online']                  = $value->online == 1 ? '<div class="label label-dot label-xl label-success"></div>' : '<div class="label label-dot label-xl label-danger"></div>';
+            $tempdata['online']                  = $value->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>';
             $tempdata['name']                    = $value->name;
             $tempdata['onlineuser']              = $value->get_node_online_user_count();
-            $tempdata['type']                    = $value->type();
             $tempdata['sort']                    = $value->sort();
-            $tempdata['server']                  = $value->server;
-            $tempdata['outaddress']              = $value->getOutAddress();
+            //$tempdata['server']                  = $value->server;
+            //$tempdata['outaddress']              = $value->getOutAddress();
             $tempdata['node_ip']                 = $value->node_ip;
-            $tempdata['info']                    = $value->info;
-            $tempdata['flag']                    = $value->flag;
-            $tempdata['traffic_rate']            = $value->traffic_rate;
-            $tempdata['node_group']              = $value->node_group;
-            $tempdata['node_sort']               = $value->node_sort;
+            //$tempdata['info']                    = $value->info;
+            //$tempdata['flag']                    = $value->flag;
+            //$tempdata['traffic_rate']            = $value->traffic_rate;
+            //$tempdata['node_group']              = $value->node_group;
+            //$tempdata['node_sort']               = $value->node_sort;
             $tempdata['node_class']              = $value->node_class;
-            $tempdata['node_speedlimit']         = $value->node_speedlimit;
-            $tempdata['node_bandwidth']          = Tools::flowToGB($value->node_bandwidth);
-            $tempdata['node_bandwidth_limit']    = Tools::flowToGB($value->node_bandwidth_limit);
-            $tempdata['bandwidthlimit_resetday'] = $value->bandwidthlimit_resetday;
-            $tempdata['node_heartbeat']          = $value->node_heartbeat();
-
+            $tempdata['node_speedlimit']         = $value->node_speedlimit == 0 ? '不限速' : $value->node_speedlimit . 'Mbps';
+            //$tempdata['node_bandwidth']          = Tools::flowToGB($value->node_bandwidth);
+            //$tempdata['node_bandwidth_limit']    = Tools::flowToGB($value->node_bandwidth_limit);
+            //$tempdata['bandwidthlimit_resetday'] = $value->bandwidthlimit_resetday;
+            //$tempdata['node_heartbeat']          = $value->node_heartbeat();
+            $tempdata['status']                  = $value->status();
+            $tempdata['action']                  = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="/admin/node/update/'.$value->id.'">编辑</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                        </ul>
+                                                    </div>';
             $data[] = $tempdata;
         }
         return $response->withJson([
@@ -284,6 +287,25 @@ class NodeController extends AdminController
             'recordsTotal'    => Node::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    /**
+     * 
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function updateNodeStatus($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $status = $request->getParam('status');
+        $node = Node::find($id);
+        $node->status = $status;
+        $node->save();
+        return $response->withJson([
+            'ret'   => 1,
+            'msg'   => 'success'
         ]);
     }
 }

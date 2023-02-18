@@ -229,9 +229,7 @@ class TelegramProcess
             }
         } else {
             //群组
-            if (Setting::obtain('enable_telegram_bot_group_quiet') == true) {
-                return;
-            }
+            
             $bot->sendChatAction($message->getChat()->getId(), 'typing');
 
             switch ($command) {
@@ -260,11 +258,6 @@ class TelegramProcess
                         if ($message->getChat()->getId() == Setting::obtain('telegram_general_group_id')) {
                             $reply['message'] = '我是一个机器人';
                         }
-                    }
-                    if ($message->getNewChatMember() != null && Setting::obtain('enable_welcome_message_telegram_notify') == true) {
-                        $reply['message'] = '欢迎 ' . $message->getNewChatMember()->getFirstName() . ' ' . $message->getNewChatMember()->getLastName();
-                    } else {
-                        $reply['message'] = null;
                     }
             }
         }

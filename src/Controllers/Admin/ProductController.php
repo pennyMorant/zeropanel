@@ -25,22 +25,22 @@ class ProductController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'op'                    => '操作',
             'id'                    => 'ID',
-            'sort'                  => 'Sort',   
+            'sort'                  => '排序',   
             'name'                  => '商品名称',
-            'price'                 => '价格',
             'type'                  => '产品类型',
-            'period_sales'          => '周期销量'
+            'period_sales'          => '周期销量',
+            'status'                => '状态',
+            'action'                => '操作'
         );
         $table_config['default_show_column'] = array();
         foreach ($table_config['total_column'] as $column => $value) {
             $table_config['default_show_column'][] = $column;
         }
-        $table_config['ajax_url'] = 'shop/ajax';
+        $table_config['ajax_url'] = 'product/ajax';
         $this->view()
             ->assign('table_config', $table_config)
-            ->display('admin/shop/index.tpl');
+            ->display('admin/product/product.tpl');
         return $response;
     }
 
@@ -51,9 +51,9 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function create($request, $response, $args)
+    public function createProductIndex($request, $response, $args)
     {
-        $this->view()->display('admin/shop/create.tpl');
+        $this->view()->display('admin/product/create.tpl');
         return $response;
     }
 
@@ -64,7 +64,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function add($request, $response, $args)
+    public function createProduct($request, $response, $args)
     {
         $product = new Product();
         $product->name = $request->getParam('name');
@@ -76,13 +76,13 @@ class ProductController extends AdminController
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
         $product->traffic = $request->getParam('traffic');
-        $product->user_group = $request->getParam('node_group');
+        $product->user_group = $request->getParam('group');
         $product->class = $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
         $product->speed_limit = $request->getParam('speed_limit');
         $product->ip_limit = $request->getParam('ip_limit');
         $product->stock = $request->getParam('stock');
-        $product->status = 1;
+        $product->status = 0;
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,
@@ -102,13 +102,13 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function edit($request, $response, $args)
+    public function updateProductIndex($request, $response, $args)
     {
         $id = $args['id'];
         $product = Product::find($id);
         $this->view()
             ->assign('product', $product)
-            ->display('admin/shop/edit.tpl');
+            ->display('admin/product/edit.tpl');
         return $response;
     }
 
@@ -119,9 +119,9 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateProduct($request, $response, $args)
     {
-        $id = $args['id'];
+        $id = $request->getParam('id');
         $product = Product::find($id);
 
         $product->name = $request->getParam('name');
@@ -140,7 +140,6 @@ class ProductController extends AdminController
         $product->speed_limit = $request->getParam('speed_limit');
         $product->ip_limit = $request->getParam('ip_limit');
         $product->stock = $request->getParam('stock') - $product->sales;
-        $product->status = 1;
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,
@@ -161,12 +160,12 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxShop($request, $response, $args)
+    public function productAjax($request, $response, $args)
     {
         $query = Product::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['op', 'period_sales'])) {
+                if (in_array($order_field, ['action', 'period_sales'])) {
                     $order_field = 'id';
                 }
             }
@@ -177,14 +176,18 @@ class ProductController extends AdminController
             /** @var Shop $value */
 
             $tempdata                         = [];
-            $tempdata['op']                   = '<a class="btn btn-brand" href="/admin/shop/' . $value->id . '/edit">编辑</a> <a class = "btn btn-brand-accent" ' . ($value->status == 0 ? 'disabled' : 'id="row_delete_' . $value->id . '" href="javascript:void(0);" onClick="delete_modal_show(\'' . $value->id . '\')"') . '>下架</a>';
             $tempdata['id']                   = $value->id;
             $tempdata['sort']                 = $value->sort;
             $tempdata['name']                 = $value->name;
-            $tempdata['price']                = $value->price;
             $tempdata['type']                 = $value->type;
-            
             $tempdata['period_sales']         = $value->sales;
+            $tempdata['status']               = $value->status();
+            $tempdata['action']               = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="/admin/product/update/'.$value->id.'">编辑</a></li>
+                                                        <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                    </ul>
+                                                </div>';
 
             $data[] = $tempdata;
         }
@@ -194,6 +197,25 @@ class ProductController extends AdminController
             'recordsTotal'    => Product::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    /**
+     * 
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function updateProductStatus($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $status = $request->getParam('status');
+        $product = Product::find($id);
+        $product->status = $status;
+        $product->save();
+        return $response->withJson([
+            'ret'   => 1,
+            'msg'   => 'success'
         ]);
     }
 }

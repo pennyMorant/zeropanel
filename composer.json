@@ -31,7 +31,8 @@
         "stripe/stripe-php": "7.108",
         "geerlingguy/ping": "^1.2",
         "alpakaio/i18next-php": "*",
-        "florianv/swap": "*"
+        "florianv/swap": "*",
+        "league/html-to-markdown": "5.1.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,6 +41,9 @@
     },
     "config": {
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

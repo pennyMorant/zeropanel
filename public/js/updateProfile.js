@@ -388,7 +388,7 @@ function KTUsersResetSubLink() {
 }
 
 // show configure product modal 
-function kTUserConfigureProductModal(id) {
+function kTUserConfigureProductModal(id, currency) {
     the_product_id = id;
     const html = $('#zero_product_'+id).html();
     const name = $('#zero_product_name_'+id).html();
@@ -399,29 +399,29 @@ function kTUserConfigureProductModal(id) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     if (!!month_price) {
         $('#zero_modal_configure_product_month_price').html('<a class="btn btn-outline btn-active-light-primary active" data-bs-toggle="pill">月付</a>');
-        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month")');
+        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month", "'+currency+'")');
     }
     if (!!quarter_price) {
         $('#zero_modal_configure_product_quarter_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">季付</a>');
-        $('#zero_modal_configure_product_quarter_price').attr('onclick', 'KTUsersChangePlan("'+quarter_price+'", ' +id+ ', "quarter")');
+        $('#zero_modal_configure_product_quarter_price').attr('onclick', 'KTUsersChangePlan("'+quarter_price+'", ' +id+ ', "quarter", "'+currency+'")');
     }
     if (!!half_year_price) {
         $('#zero_modal_configure_product_half_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">半年付</a>');
-        $('#zero_modal_configure_product_half_year_price').attr('onclick', 'KTUsersChangePlan("'+half_year_price+'", ' +id+ ', "half_year")');
+        $('#zero_modal_configure_product_half_year_price').attr('onclick', 'KTUsersChangePlan("'+half_year_price+'", ' +id+ ', "half_year", "'+currency+'")');
     }
     if (!!year_price) {
         $('#zero_modal_configure_product_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">年付</a>');
-        $('#zero_modal_configure_product_year_price').attr('onclick', 'KTUsersChangePlan("'+year_price+'", ' +id+ ', "year")');
+        $('#zero_modal_configure_product_year_price').attr('onclick', 'KTUsersChangePlan("'+year_price+'", ' +id+ ', "year", "'+currency+'")');
     }
     $('#zero_modal_configure_product_inner_html').html(html);
     $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;月付');
-    $('#zero_modal_configure_product_price').html(month_price + 'USD');
-    $('#zero_modal_configure_product_total').html(month_price + 'USD');
+    $('#zero_modal_configure_product_price').html(month_price + currency);
+    $('#zero_modal_configure_product_total').html(month_price + currency);
     submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +month_price+ '", ' +id+ ')');
     $("#zero_modal_configure_product").modal("show");
 }
 
-function KTUsersChangePlan(price, id, type) {
+function KTUsersChangePlan(price, id, type, currency) {
     switch (type) {
         case 'month':
             plan = '月付';
@@ -439,8 +439,8 @@ function KTUsersChangePlan(price, id, type) {
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;' + plan);
-    $('#zero_modal_configure_product_price').html(price + 'USD');
-    $('#zero_modal_configure_product_total').html(price + 'USD');
+    $('#zero_modal_configure_product_price').html(price + currency);
+    $('#zero_modal_configure_product_total').html(price + currency);
     submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
 }
 
@@ -735,6 +735,47 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 		});
     } else {
         getResult("权限不足", "", "error");
+    }
+}
+
+// withdraw 
+function KTUsersWithdrawCommission(type){
+    switch (type) {
+        case 1:
+            $.ajax({
+                type: "POST",
+                url: "/user/withdraw_commission",
+                dataType: "json",
+                data: {
+                    commission: $('#withdraw_commission_amount').val(),
+                    type: $("#withdraw_type a.active").attr("data-type")
+                },
+                success: function(data){
+                    if(data.ret == 1) {
+                        getResult(data.msg, '', 'success');
+                    }else{
+                        getResult(data.msg, '', 'error');
+                    }
+                }
+            });
+            break;
+        case 2:
+            $.ajax({
+                type: "POST",
+                url: "/user/withdraw_account_setting",
+                dataType: "json",
+                data: {
+                    acc: $('#withdraw_account_value').val(),
+                    method: $('#withdraw_method').val()
+                },
+                success: function(data){
+                    if(data.ret == 1) {
+                        getResult(data.msg, '', 'success');
+                    }else{
+                        getResult(data.msg, '', 'error');
+                    }
+                }
+            });
     }
 }
 

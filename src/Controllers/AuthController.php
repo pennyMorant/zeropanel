@@ -48,7 +48,7 @@ class AuthController extends BaseController
         }
 
         $this->view()
-            ->assign('base_url', Setting::obtain('website_general_url'))
+            ->assign('base_url', Setting::obtain('website_url'))
             ->assign('captcha', $captcha)
             ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signin.tpl');
@@ -226,7 +226,7 @@ class AuthController extends BaseController
         }
         $this->view()
             ->assign('code', $code)
-            ->assign('base_url', Setting::obtain('website_general_url'))
+            ->assign('base_url', Setting::obtain('website_url'))
             ->assign('captcha', $captcha)
             ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signup.tpl');
@@ -276,7 +276,7 @@ class AuthController extends BaseController
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
+        $user->transfer_enable      = Tools::toGB($configs['signup_default_traffic']);
         $user->money                = 0;
 
         //dumplin：填写邀请人，写入邀请奖励
@@ -285,9 +285,9 @@ class AuthController extends BaseController
             $invitation = Setting::getClass('invite');
             // 设置新用户
             $user->ref_by = $c->user_id;
-            $user->money = $invitation['invitation_to_register_balance_reward'];
+            $user->money = $invitation['invitation_to_signup_credit_reward'];
             // 给邀请人反流量
-            $gift_user->transfer_enable += $invitation['invitation_to_register_traffic_reward'] * 1024 * 1024 * 1024;
+            $gift_user->transfer_enable += $invitation['invitation_to_signup_traffic_reward'] * 1024 * 1024 * 1024;
             $gift_user->save();
         }
         
@@ -295,10 +295,10 @@ class AuthController extends BaseController
             $user->telegram_id = $telegram_id;
         }
 
-        $user->class_expire     = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);
-        $user->class            = $configs['sign_up_for_class'];
-        $user->node_connector   = $configs['connection_device_limit'];
-        $user->node_speedlimit  = $configs['connection_rate_limit'];
+        $user->class_expire     = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
+        $user->class            = $configs['signup_default_class'];
+        $user->node_connector   = $configs['signup_default_ip_limit'];
+        $user->node_speedlimit  = $configs['signup_default_speed_limit'];
         $user->signup_date         = date('Y-m-d H:i:s');
         $user->signup_ip           = $_SERVER['REMOTE_ADDR'];
         $user->theme            = $_ENV['theme'];

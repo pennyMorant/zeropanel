@@ -36,35 +36,37 @@ class UserController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'op'                    => '操作',
+            
             'id'                    => 'ID',
-            'remark'                => '备注',
+            //'remark'                => '备注',
             'email'                 => '邮箱',
             'money'                 => '金钱',
-            'node_group'            => '群组',
+            //'node_group'            => '群组',
             'class'                 => '等级',
             'class_expire'          => '等级过期时间',
-            'passwd'                => '连接密码',
-            'online_ip_count'       => '在线IP数',
-            'last_use_time'          => '上次使用时间',
-            'used_traffic'          => '已用流量/GB',
-            'enable_traffic'        => '总流量/GB',
-            'today_traffic'         => '今日流量',
-            'enable'                => '是否启用',
-            'signup_date'              => '注册时间',
-            'signup_ip'                => '注册IP',
-            'ref_by'                => '邀请人ID',
-            'ref_by_name'      => '邀请人用户名',
-            'top_up'                => '累计充值',
-            'rebate'                => '销售代理返利百分比',
+            //'passwd'                => '连接密码',
+            //'online_ip_count'       => '在线IP数',
+            //'last_use_time'          => '上次使用时间',
+            //'used_traffic'          => '已用流量/GB',
+            'enable_traffic'        => '总流量',
+            //'today_traffic'         => '今日流量',
+            'enable'                => '启用',
+            'is_admin'              => '管理员',
+            //'signup_date'              => '注册时间',
+            //'signup_ip'                => '注册IP',
+           // 'ref_by'                => '邀请人ID',
+            //'ref_by_name'      => '邀请人用户名',
+            //'top_up'                => '累计充值',
+            //'rebate'                => '销售代理返利百分比',
+            'action'                    => '操作',
         );
         $table_config['default_show_column'] = array('op', 'id', 'name', 'remark', 'email');
         $table_config['ajax_url'] = 'user/ajax';
-        $shops = Product::where('status', 1)->orderBy('name')->get();
+        $products = Product::where('status', 1)->orderBy('name')->get();
         $this->view()
-            ->assign('shops', $shops)
+            ->assign('products', $products)
             ->assign('table_config', $table_config)
-            ->display('admin/user/index.tpl');
+            ->display('admin/user/user.tpl');
         return $response;
     }
     
@@ -108,12 +110,12 @@ class UserController extends AdminController
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->transfer_enable      = Tools::toGB($configs['sign_up_for_free_traffic']);
+        $user->transfer_enable      = Tools::toGB($configs['signup_default_traffic']);
         $user->money                = ($money != -1 ? $money : 0);
-        $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['sign_up_for_class_time'] * 86400);
-        $user->class                = $configs['sign_up_for_class'];
-        $user->node_connector       = $configs['connection_device_limit'];
-        $user->node_speedlimit      = $configs['connection_rate_limit'];
+        $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
+        $user->class                = $configs['signup_default_class'];
+        $user->node_connector       = $configs['signup_default_ip_limit'];
+        $user->node_speedlimit      = $configs['signup_default_speed_limit'];
         $user->signup_date             = date('Y-m-d H:i:s');
         $user->signup_ip               = $_SERVER['REMOTE_ADDR'];
         $user->theme                = $_ENV['theme'];
@@ -148,11 +150,11 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function edit($request, $response, $args)
+    public function updateUserIndex($request, $response, $args)
     {
         $id = $args['id'];
         $user = User::find($id);
-        $this->view()->assign('edit_user', $user)->display('admin/user/edit.tpl');
+        $this->view()->assign('user', $user)->display('admin/user/update.tpl');
         return $response;
     }
     
@@ -163,9 +165,9 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function update($request, $response, $args)
+    public function updateUser($request, $response, $args)
     {
-        $id = $args['id'];
+        $id = $request->getParam('id');
         $user = User::find($id);
 
         $email1 = $user->email;
@@ -174,28 +176,20 @@ class UserController extends AdminController
 
         $email2 = $request->getParam('email');
 
-        $passwd = $request->getParam('passwd');
-
-        if ($request->getParam('pass') != '') {
-            $user->password = Hash::passwordHash($request->getParam('pass'));
+        if ($request->getParam('password') != '') {
+            $user->password = Hash::passwordHash($request->getParam('password'));
             $user->clean_link();
         }
 
 
-        $user->passwd           = $request->getParam('passwd');
         $user->transfer_enable  = Tools::toGB($request->getParam('transfer_enable'));
         $user->node_speedlimit  = $request->getParam('node_speedlimit');
         $user->node_connector   = $request->getParam('node_connector');
-        $user->enable           = $request->getParam('enable');
-        $user->is_admin         = $request->getParam('is_admin');
         $user->node_group       = $request->getParam('group');
-        $user->ref_by           = $request->getParam('ref_by');
         $user->remark           = $request->getParam('remark');
         $user->money            = $request->getParam('money');
         $user->class            = $request->getParam('class');
         $user->class_expire     = $request->getParam('class_expire');
-        $user->rebate           = $request->getParam('rebate');
-        //$user->agent            = $request->getParam('agent');
         $user->commission       = $request->getParam('commission');
 
         // 手动封禁
@@ -279,32 +273,34 @@ class UserController extends AdminController
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var User $value */
-
-            $tempdata['op']                     = '' .
-                '<a class="btn btn-brand" href="/admin/user/' . $value->id . '/edit">编辑</a>' .
-                '<a class="btn btn-brand-accent" id="delete" href="javascript:void(0);" onClick="delete_modal_show(\'' . $value->id . '\')">删除</a>';
-
-
             $tempdata['id']                     = $value->id;
-            $tempdata['remark']                 = $value->remark;
+            //$tempdata['remark']                 = $value->remark;
             $tempdata['email']                  = $value->email;
             $tempdata['money']                  = $value->money;
-            $tempdata['node_group']             = $value->node_group;
+            //$tempdata['node_group']             = $value->node_group;
             $tempdata['class']                  = $value->class;
             $tempdata['class_expire']           = $value->class_expire;
-            $tempdata['passwd']                 = $value->passwd;
-            $tempdata['online_ip_count']        = $value->online_ip_count();
-            $tempdata['last_use_time']          = $value->lastUseTime();
-            $tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);
-            $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable);
-            $tempdata['today_traffic']          = $value->TodayusedTraffic();
-            $tempdata['enable']                 = $value->enable == 1 ? '可用' : '禁用';
-            $tempdata['signup_date']            = $value->signup_date;
-            $tempdata['signup_ip']              = $value->signup_ip;
-            $tempdata['ref_by']                 = $value->ref_by;
-            $tempdata['ref_by_name']            = $value->ref_by_name();
-            $tempdata['top_up']                 = $value->get_top_up();
-            $tempdata['rebate']                 = $value->rebate > 0 ? $value->rebate . '%' : ($configs['rebate_ratio'] * 100) . '%';
+            //$tempdata['passwd']                 = $value->passwd;
+            //$tempdata['online_ip_count']        = $value->online_ip_count();
+            //$tempdata['last_use_time']          = $value->lastUseTime();
+            //$tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);
+            $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable).'GB';
+            //$tempdata['today_traffic']          = $value->TodayusedTraffic();
+            $tempdata['is_admin']               = $value->is_admin();
+            $tempdata['enable']                 = $value->enable();
+            //$tempdata['signup_date']            = $value->signup_date;
+            //$tempdata['signup_ip']              = $value->signup_ip;
+            //$tempdata['ref_by']                 = $value->ref_by;
+            //$tempdata['ref_by_name']            = $value->ref_by_name();
+            //$tempdata['top_up']                 = $value->get_top_up();
+            //$tempdata['rebate']                 = $value->rebate > 0 ? $value->rebate . '%' : ($configs['rebate_ratio'] * 100) . '%';
+            $tempdata['action']                   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="/admin/user/update/'.$value->id.'">编辑</a></li>
+                                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                        </ul>
+                                                    </div>';
+
 
             $data[] = $tempdata;
         }
@@ -314,6 +310,28 @@ class UserController extends AdminController
             'recordsTotal'    => User::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    public function updateUserStatus($request, $response, $args)
+    {
+        $type = $args['type'];
+        $id = $request->getParam('id');
+        $enable = $request->getParam('enable');
+        $is_admin = $request->getParam('is_admin');
+        $user = User::find($id);
+        switch ($type) {
+            case 'enable': 
+                $user->enable = $enable;
+                break;
+            case 'is_admin':
+                $user->is_admin = $is_admin;
+                break;  
+        }
+        $user->save();
+        return $response->withJson([
+            'ret'   => 1,
+            'msg'   => 'success',
         ]);
     }
 }

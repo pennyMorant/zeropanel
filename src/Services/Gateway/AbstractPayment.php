@@ -98,7 +98,7 @@ abstract class AbstractPayment
             }
         } else {
             // 返利
-            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') == 'after_recharge' && $user->agent === 0) {
+            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') == 'after_topup' && $user->agent === 0) {
                 Payback::rebate($user->id, $p->total);
             }
         }

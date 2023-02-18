@@ -48,10 +48,7 @@ class MyCommand extends Command
                     'messageid'   => $MessageID,
                 ]);
             }
-            if (Setting::obtain('enable_telegram_bot_group_quiet') == true) {
-                // 群组中不回应
-                return;
-            }
+            
             if ($ChatID != Setting::obtain('telegram_general_group_id')) {
                 // 非我方群组
                 return;

@@ -50,7 +50,7 @@ class UserController extends BaseController
             $this->user->addInviteCode();
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
-        $invite_url = Setting::obtain('website_general_url') . '/auth/signup?code=' . $code->code;
+        $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
         $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
         $this->view()
             ->assign('sub_token', $this->user->getSublink())
@@ -125,7 +125,7 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $referred_user = User::where('ref_by', $this->user->id)->count();
-        $invite_url = Setting::obtain('website_general_url') . '/signup?ref=' . $code->code;
+        $invite_url = Setting::obtain('website_url') . '/signup?ref=' . $code->code;
         $this->view()
             ->assign('code', $code)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
@@ -190,18 +190,14 @@ class UserController extends BaseController
                     ]);
                 }
 
-                if (Setting::obtain('enable_subscribe_change_token_when_change_passwd') == true) {
-                    $user->clean_link();
-                }
+                
+                $user->clean_link();
                 break;
             case 'email':
                 $newemail = $request->getParam('newemail');
                 $oldemail = $user->email;
                 $otheruser = User::where('email', $newemail)->first();
                 try {
-                    if (Setting::obtain('enable_change_email_user_general') != true) {           
-                        throw new \Exception(I18n::get()->t('no changes allowed'));          
-                    }
                     
                     if (Setting::obtain('reg_email_verify')) {
                         $emailcode = $request->getParam('emailcode');
@@ -309,15 +305,10 @@ class UserController extends BaseController
             return $response->withJson($res);
         }
 
-        if (Setting::obtain('enable_delete_account_user_general') == true) {
-            Auth::logout();
-            $user->kill_user();
-            $res['ret'] = 1;
-            $res['msg'] = I18n::get()->t('success');
-        } else {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('not allowed');
-        }
+        Auth::logout();
+        $user->kill_user();
+        $res['ret'] = 1;
+        $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);
     }
 

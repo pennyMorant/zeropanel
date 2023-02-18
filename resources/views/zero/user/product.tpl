@@ -51,7 +51,7 @@
 																					<div class="mb-7 text-center">
 																						<h1 class="text-dark mb-5 fw-bolder" id="zero_product_name_{$product->id}">{$product->name}</h1>
 																						<div class="text-center">
-																							<span class="mb-2 text-primary">$</span>
+																							<span class="mb-2 text-primary fw-bold">{$currency_unit}</span>
 																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}" data-price-quarter="{$product->quarter_price}" data-price-half-year="{$product->half_year_price}" data-price-year="{$product->year_price}">{$product->month_price}</span>
 																						</div>
 																					</div>
@@ -135,7 +135,7 @@
 																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">{$trans->t('purchase')}</button>
+																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal('{$product->id}', '{$currency_unit}')">{$trans->t('purchase')}</button>
 																					{/if}
 																				</div>
 																			</div>
