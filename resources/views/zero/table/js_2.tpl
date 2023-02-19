@@ -5,12 +5,11 @@ type: "POST"
 },
 processing: true,
 serverSide: true,
+scrollX: true,
 order: [[ 0, 'desc' ]],
 stateSave: true,
 columnDefs: [
 {
-targets: [ '_all' ],
-className: 'mdl-data-table__cell--non-numeric'
 }
 ],
 columns: [

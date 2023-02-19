@@ -113,30 +113,30 @@ ClassicEditor
         submitButton.disabled = true;
         var text = editors.getData();
         setTimeout(function () {
-                $.ajax({
-                    type: "PUT",
-                    url: "/admin/ticket/update",
-                    dataType: "json",
-                    data: {
-                        id,
-                        status: ticket_status,
-                        content: text
-                    },
-                    success: function (data) {
-                        if (data.ret == 1) {
-                            setTimeout(function() {
-                                location.reload();
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
-                            }, 1500);
-                        } else {
-                            getResult(data.msg, '', 'error');
+            $.ajax({
+                type: "PUT",
+                url: "/admin/ticket/update",
+                dataType: "json",
+                data: {
+                    id,
+                    status: ticket_status,
+                    content: text
+                },
+                success: function (data) {
+                    if (data.ret == 1) {
+                        setTimeout(function() {
+                            location.reload();
                             submitButton.removeAttribute('data-kt-indicator');
                             submitButton.disabled = false;
-                        }
+                        }, 1500);
+                    } else {
+                        getResult(data.msg, '', 'error');
+                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.disabled = false;
                     }
-                });
-            }, 2000);
+                }
+            });
+        }, 2000);
     }
 </script>
     </body>
