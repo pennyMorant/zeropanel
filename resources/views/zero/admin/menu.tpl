@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-						<a href="/user" class="d-lg-none fs-1 text-dark fw-bolder">
+						<a href="/admin" class="d-lg-none fs-1 text-dark fw-bolder">
 							{$config['appName']}
 						</a>
 					</div>
@@ -157,7 +157,7 @@
 			<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
 				<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 					<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-						<a href="/user" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
+						<a href="/admin" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
 							{$config['appName']}
 						</a>
 						<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
@@ -335,7 +335,7 @@
 						</div>
 					</div>
 					<div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-						<a href="/user" target="_blank" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="获取最新的信息">
+						<a href="/user" target="_blank" class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="返回用户中心">
 							<span class="btn-label fw-bold">用户中心</span>
 							<span class="svg-icon btn-icon svg-icon-2 m-0">
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
