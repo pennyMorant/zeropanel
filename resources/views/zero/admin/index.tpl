@@ -33,10 +33,10 @@
 												<div class="card-header border-0">
 													<div class="card-title text-dark fs-3 fw-bolder">收入趋势</div>
                                                     <div class="card-toolbar">
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="income_all">所有</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="income_year">年度</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="income_half_year">半年</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="income_month">月度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="income_all">所有</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_year">年度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_half_year">半年</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_month">月度</a>
 													</div>
 												</div>     
 												<div class="card-body pt-0">
@@ -49,10 +49,10 @@
 												<div class="card-header border-0">
 													<div class="card-title text-dark fs-3 fw-bolder">注册趋势</div>
                                                     <div class="card-toolbar">
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="signup_all">所有</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="signup_year">年度</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="signup_half_year">半年</a>
-                                                        <a class="btn btn-sm btn-primary fw-bold px-4 me-1" id="signup_month">月度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="signup_all">所有</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_year">年度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_half_year">半年</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_month">月度</a>
 													</div>
 												</div>     
 												<div class="card-body pt-0">
