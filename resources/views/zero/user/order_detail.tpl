@@ -40,7 +40,7 @@
                                         <div class="card-body pt-0">
                                             <div class="table-responsive">
                                                 
-                                                <table class="table table-striped table-row-bordered gy-5 gs-7 mb-0">
+                                                <table class="table align-middle table-striped table-row-bordered gy-5 gs-7 mb-0">
                                                     
                                                     <thead>
                                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">

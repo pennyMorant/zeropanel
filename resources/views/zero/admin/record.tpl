@@ -32,7 +32,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">在线用户</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_alive">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_alive">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
@@ -49,7 +49,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">登录记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_signin">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_signin">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
@@ -66,7 +66,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">订阅记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_subscribe">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_subscribe">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
@@ -83,7 +83,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">流量记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_traffic">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_traffic">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}

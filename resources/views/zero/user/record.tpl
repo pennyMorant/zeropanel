@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_signin_log_table">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_signin_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_used_log_table">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_used_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_subscribe_log_table">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_subscribe_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
                                                         <th>{$trans->t('type')}</th>
@@ -107,7 +107,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table table-striped table-row-bordered gy-5 gs-7" id="zero_traffic_log_table">
+                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_traffic_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
