@@ -9,9 +9,9 @@ $(document).ready(function() {
         return;
     }
     var color = element.getAttribute('data-kt-chart-color');
-    var labelColor = KTUtil.getCssVariableValue('--kt-' + 'gray-800');
-    var baseColor = KTUtil.getCssVariableValue('--kt-' + color);
-    var lightColor = KTUtil.getCssVariableValue('--kt-' + color + '-light');
+    var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
+    var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
+    var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light');
     var url = '/user/ajax_data/chart/traffic_chart';
     $.ajax({
         dataType: "json",
@@ -175,8 +175,8 @@ var KTZeroUserWalletChart = function () {
                 }
             },
             colors: [
-                KTUtil.getCssVariableValue('--kt-success'), 
-                KTUtil.getCssVariableValue('--kt-primary'), 
+                KTUtil.getCssVariableValue('--bs-success'), 
+                KTUtil.getCssVariableValue('--bs-primary'), 
             ],           
             stroke: {
               width: 0
