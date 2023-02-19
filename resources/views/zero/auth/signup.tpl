@@ -45,7 +45,7 @@
                                 <div class="fv-row mb-5">
                                     <input class="form-control form-control-lg bg-transparent" type="text" placeholder="{$trans->t('referral code')}" name="code" id="referral_code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
-								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
+								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile' && $captcha['turnstile_sitekey'] != ''}
 									<div class="fv-row mb-7">
 										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>

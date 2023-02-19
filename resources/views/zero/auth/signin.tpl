@@ -32,7 +32,7 @@
 								<div class="fv-row mb-8">
 									<input type="password" placeholder="{$trans->t('passwd')}" name="password" autocomplete="off" id="signin-passwd" data-kt-translate="sign-in-input-password" class="form-control form-control-lg bg-transparent" />
 								</div>
-								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile'}
+								{if $config['enable_signin_captcha'] == true && $config['captcha_provider'] == 'turnstile' && $captcha['turnstile_sitekey'] != ''}
 									<div class="fv-row mb-8">
 										<div class="cf-turnstile" data-sitekey="{$captcha['turnstile_sitekey']}" data-theme="light"></div>
 									</div>
