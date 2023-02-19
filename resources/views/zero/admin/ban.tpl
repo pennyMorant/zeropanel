@@ -43,7 +43,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">封禁记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_ban_record">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_ban_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
                                                         <th>ID</th>
@@ -64,7 +64,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">探测记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_detect_record">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_detect_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
                                                         <th>ID</th>
@@ -309,10 +309,8 @@
     order: [[ 0, 'desc' ]],
     stateSave: true,
     columnDefs: [
-    {
-    targets: [ '_all' ],
-    className: 'mdl-data-table__cell--non-numeric'
-    }
+        { width: '5%', targets: 0 },
+        { className: 'text-end', targets: -1 }
     ],
     columns: [
     {foreach $table_config_ban_record['total_column'] as $key => $value}
@@ -338,10 +336,8 @@
     order: [[ 0, 'desc' ]],
     stateSave: true,
     columnDefs: [
-    {
-    targets: [ '_all' ],
-    className: 'mdl-data-table__cell--non-numeric'
-    }
+        { width: '5%', targets: 0 },
+        { className: 'text-end', targets: -1 }
     ],
     columns: [
     {foreach $table_config_detect_record['total_column'] as $key => $value}

@@ -1,4 +1,3 @@
-
 // Class definition
 var KTDatatablesOrderSide = function () {
     // Shared variables
@@ -11,6 +10,8 @@ var KTDatatablesOrderSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollCollapse: true,
+            scrollX: true,
             order: [[3, 'desc']],
             stateSave: true,
             select: {
@@ -27,10 +28,15 @@ var KTDatatablesOrderSide = function () {
                 { data: 'order_status' },
                 { data: 'order_type' },
                 { data: 'created_time' },
-                { data: 'action'},
+                { data: 'action' },
             ],
             
-            columnDefs: [],           
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
+            ],
         });
 
     }
@@ -58,6 +64,8 @@ var KTDatatablesTicketSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -76,7 +84,12 @@ var KTDatatablesTicketSide = function () {
                 { data: 'datetime' },
                 { data: 'action'},
             ],
-            columnDefs: [],
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
+            ],
             
         });
 
@@ -105,6 +118,8 @@ var KTDatatablesSigninLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -120,6 +135,13 @@ var KTDatatablesSigninLogSide = function () {
                 { data: 'ip' },
                 { data: 'location' },
                 { data: 'datetime' },
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 
@@ -146,6 +168,8 @@ var KTDatatablesUsedLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -161,6 +185,13 @@ var KTDatatablesUsedLogSide = function () {
                 { data: 'ip' },
                 { data: 'location' },
                 { data: 'datetime' },
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 
@@ -187,6 +218,8 @@ var KTDatatablesSubscribeLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[4, 'desc']],
             stateSave: true,
             select: {
@@ -213,9 +246,11 @@ var KTDatatablesSubscribeLogSide = function () {
                 {
                     targets: 3,
                     orderable: false
-                }
-                
-                
+                },
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }       
             ],
         });
 
@@ -242,6 +277,8 @@ var KTDatatablesTrafficLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -257,6 +294,13 @@ var KTDatatablesTrafficLogSide = function () {
                 { data: 'node_name' },
                 { data: 'traffic' },
                 { data: 'datetime' },
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 
@@ -283,6 +327,8 @@ var KTDatatablesBanRuleSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -297,6 +343,13 @@ var KTDatatablesBanRuleSide = function () {
                 { data: 'name' },
                 { data: 'regex' },
                 { data: 'type' },
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 
@@ -323,6 +376,8 @@ var KTDatatablesUserBanedLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[2, 'desc']],
             stateSave: true,
             select: {
@@ -337,6 +392,13 @@ var KTDatatablesUserBanedLogSide = function () {
                 { data: 'node_name' },
                 { data: 'rule_name' },
                 { data: 'datetime'},
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 
@@ -363,6 +425,8 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
+            scrollX: true,
+            scrollCollapse: true,
             order: [[1, 'desc']],
             stateSave: true,
             select: {
@@ -377,6 +441,13 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             columns: [
                 { data: 'ref_get' },
                 { data: 'datetime'},
+            ],
+
+            columnDefs: [
+                { 
+                    targets: -1, 
+                    className: 'text-end'
+                }
             ],
         });
 

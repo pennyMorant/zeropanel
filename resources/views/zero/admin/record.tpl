@@ -32,7 +32,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">在线用户</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_alive">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_alive_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
@@ -49,7 +49,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">登录记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_signin">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_signin_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
@@ -66,7 +66,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">订阅记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_subscribe">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_subscribe_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
@@ -83,7 +83,7 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">流量记录</div>
                                         </div>
                                         <div class="card-body">
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_admin_record_traffic">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_traffic_record">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
                                                         {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}
@@ -105,7 +105,7 @@
         {include file='admin/script.tpl'}
     </body>
     <script>
-        table_1 = $('#zero_admin_record_alive').DataTable({
+        KTAdminAliveRecord = $('#zero_admin_alive_record').DataTable({
         ajax: {
         url: '{$table_config_alive['ajax_url']}',
         type: "POST"
@@ -115,8 +115,8 @@
         order: [[ 0, 'desc' ]],
         stateSave: true,
         columnDefs: [
-        {
-        }
+            { width: '5%', targets: 0 },
+            { className: 'text-end', targets: -1 }
         ],
         columns: [
         {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
@@ -130,7 +130,7 @@
         var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
     </script>
     <script>
-        table_1 = $('#zero_admin_record_signin').DataTable({
+        KTAdminSigninRecord = $('#zero_admin_signin_record').DataTable({
         ajax: {
         url: '{$table_config_signin['ajax_url']}',
         type: "POST"
@@ -140,8 +140,8 @@
         order: [[ 0, 'desc' ]],
         stateSave: true,
         columnDefs: [
-        {
-        }
+            { width: '5%', targets: 0 },
+            { className: 'text-end', targets: -1 }
         ],
         columns: [
         {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
@@ -155,7 +155,7 @@
         var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
     </script>
     <script>
-        table_1 = $('#zero_admin_record_subscribe').DataTable({
+        KTAdminSubscribeRecord = $('#zero_admin_subscribe_record').DataTable({
         ajax: {
         url: '{$table_config_subscribe['ajax_url']}',
         type: "POST"
@@ -165,8 +165,8 @@
         order: [[ 0, 'desc' ]],
         stateSave: true,
         columnDefs: [
-        {
-        }
+            { width: '5%', targets: 0 },
+            { className: 'text-end', targets: -1 }
         ],
         columns: [
         {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
@@ -180,7 +180,7 @@
         var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
     </script>
     <script>
-        table_1 = $('#zero_admin_record_traffic').DataTable({
+        KTAdminTrafficRecord = $('#zero_admin_traffic_record').DataTable({
         ajax: {
         url: '{$table_config_traffic['ajax_url']}',
         type: "POST"
@@ -190,8 +190,8 @@
         order: [[ 0, 'desc' ]],
         stateSave: true,
         columnDefs: [
-        {
-        }
+            { width: '5%', targets: 0 },
+            { className: 'text-end', targets: -1 }
         ],
         columns: [
         {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}

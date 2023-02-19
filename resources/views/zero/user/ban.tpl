@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_ban_rule_table">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_ban_rule_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="card-body pt-0">
                                             
-                                            <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_user_baned_log_table">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_user_baned_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                         
