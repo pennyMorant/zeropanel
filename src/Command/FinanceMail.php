@@ -65,7 +65,7 @@ class FinanceMail extends Command
             foreach ($adminUser as $user) {
                 echo 'Send offline mail to user: ' . $user->id . PHP_EOL;
                 $user->sendMail(
-                    Setting::obtain('website_general_name') . '-财务日报',
+                    Setting::obtain('website_name') . '-财务日报',
                     'news/finance.tpl',
                     [
                         'title' => '财务日报',
@@ -116,7 +116,7 @@ class FinanceMail extends Command
             foreach ($adminUser as $user) {
                 echo 'Send offline mail to user: ' . $user->id;
                 $user->sendMail(
-                    Setting::obtain('website_general_name') . '-财务周报',
+                    Setting::obtain('website_name') . '-财务周报',
                     'news/finance.tpl',
                     [
                         'title' => '财务周报',
@@ -165,7 +165,7 @@ class FinanceMail extends Command
             foreach ($adminUser as $user) {
                 echo 'Send offline mail to user: ' . $user->id;
                 $user->sendMail(
-                    Setting::obtain('website_general_name') . '-财务月报',
+                    Setting::obtain('website_name') . '-财务月报',
                     'news/finance.tpl',
                     [
                         'title' => '财务月报',

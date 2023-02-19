@@ -41,7 +41,7 @@ class ExtMail extends Command
             $days = intval($timediff / 86400);
             if ($days == 7) {
                 echo 'Send daily mail to user: ' . $user->id .PHP_EOL;
-                $subject = Setting::obtain('website_general_name') . '- 您的用户账户即将过期';
+                $subject = Setting::obtain('website_name') . '- 您的用户账户即将过期';
                 $text = '您好，系统发现您的账号还剩 ' . $days . ' 天就过期了，请记得及时续费哦~';
                 $user->sendMail(
                     $subject,
@@ -65,10 +65,10 @@ class ExtMail extends Command
             if ($user->t == 0) {
                 echo 'Send daily mail to user: ' . $user->id .PHP_EOL;
                 $user->sendMail(
-                    Setting::obtain('website_general_name') . '-期待您的回归',
+                    Setting::obtain('website_name') . '-期待您的回归',
                     'ext/back.tpl',
                     [
-                        'text' => '似乎您在' . Setting::obtain('website_general_name') . '上的流量一直是 0 呢(P.S:也可能是您没有使用 ss 而使用了其他还不能计入流量的方式....)，如果您在使用上遇到了任何困难，请不要犹豫，登录到' . Setting::obtain('website_general_name') . ',您就会知道如何使用了，特别是对于 iOS 用户，最近在使用的优化上大家都付出了很多的努力。期待您的回归～'
+                        'text' => '似乎您在' . Setting::obtain('website_name') . '上的流量一直是 0 呢(P.S:也可能是您没有使用 ss 而使用了其他还不能计入流量的方式....)，如果您在使用上遇到了任何困难，请不要犹豫，登录到' . Setting::obtain('website_name') . ',您就会知道如何使用了，特别是对于 iOS 用户，最近在使用的优化上大家都付出了很多的努力。期待您的回归～'
                     ],
                     [],
                     $_ENV['email_queue']
@@ -84,10 +84,10 @@ class ExtMail extends Command
             if ($user->t != 0 && $user->t < 1451577599) {
                 echo 'Send daily mail to user: ' . $user->id;
                 $user->sendMail(
-                    Setting::obtain('website_general_name') . '-期待您的回归',
+                    Setting::obtain('website_name') . '-期待您的回归',
                     'ext/back.tpl',
                     [
-                        'text' => '似乎您在 2017 年以来就没有使用过' . Setting::obtain('website_general_name') . '了呢，如果您在使用上遇到了任何困难，请不要犹豫，登录到' . Setting::obtain('website_general_name') . '，您就会知道如何使用了，特别是对于 iOS 用户，最近在使用的优化上大家都付出了很多的努力。期待您的回归～'
+                        'text' => '似乎您在 2017 年以来就没有使用过' . Setting::obtain('website_name') . '了呢，如果您在使用上遇到了任何困难，请不要犹豫，登录到' . Setting::obtain('website_name') . '，您就会知道如何使用了，特别是对于 iOS 用户，最近在使用的优化上大家都付出了很多的努力。期待您的回归～'
                     ],
                     [],
                     $_ENV['email_queue']

@@ -78,7 +78,7 @@ class TicketController extends AdminController
 
         $user = User::find($userid);
         $user->sendMail(
-            Setting::obtain('website_general_name') . '-新管理员工单被开启',
+            Setting::obtain('website_name') . '-新管理员工单被开启',
             'news/warn.tpl',
             [
                 'text' => '管理员开启了新的工单，请您及时访问用户面板处理。'
@@ -119,7 +119,7 @@ class TicketController extends AdminController
         $main = Ticket::find($id);
         $user = User::find($main->userid);
         $user->sendMail(
-            Setting::obtain('website_general_name') . '-工单被回复',
+            Setting::obtain('website_name') . '-工单被回复',
             'news/warn.tpl',
             [
                 'text' => '您好，有人回复了<a href="' . Setting::obtain('website_url') . '/user/ticket/' . $main->id . '/view">工单</a>，请您查看。'

@@ -97,7 +97,7 @@ class AppURI
         $return = null;
         switch ($item['type']) {
             case 'ss':
-                $return = $item['remark'] . ' = shadowsocks, ' . $item['address'] . ', ' . $item['port'] . ', ' . $item['method'] . ', "' . $item['passwd'] . '", upstream-proxy=false, upstream-proxy-auth=false' . ', group=' . Setting::obtain('website_general_name') . '_ss';
+                $return = $item['remark'] . ' = shadowsocks, ' . $item['address'] . ', ' . $item['port'] . ', ' . $item['method'] . ', "' . $item['passwd'] . '", upstream-proxy=false, upstream-proxy-auth=false' . ', group=' . Setting::obtain('website_name') . '_ss';
                 break;
             case 'vmess':
                 if (!in_array($item['net'], ['ws', 'tcp', 'http'])) {
@@ -116,7 +116,7 @@ class AppURI
                 if (in_array($item['net'], ['ws', 'http'])) {
                     $obfs = ', obfs=' . $item['net'] . ', obfs-path="' . $item['path'] . '", obfs-header="Host: ' . $item['host'] . '[Rr][Nn]User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 18_0_0 like Mac OS X) AppleWebKit/888.8.88 (KHTML, like Gecko) Mobile/6666666"';
                 }
-                $return = $item['remark'] . ' = vmess, ' . $item['add'] . ', ' . $item['port'] . ', chacha20-ietf-poly1305, "' . $item['id'] . '", group=' . Setting::obtain('website_general_name') . '_VMess' . $tls . $obfs;
+                $return = $item['remark'] . ' = vmess, ' . $item['add'] . ', ' . $item['port'] . ', chacha20-ietf-poly1305, "' . $item['id'] . '", group=' . Setting::obtain('website_name') . '_VMess' . $tls . $obfs;
                 break;
         }
         return $return;

@@ -136,7 +136,7 @@ class LinkController extends BaseController
                     } else {
                         $SubscribeExtend = self::getSubscribeExtend($key, $query_value);
                     }
-                    $filename =  Setting::obtain('website_general_name'). '_' . $SubscribeExtend['filename'] . '_' . time() . '.' . $SubscribeExtend['suffix'];
+                    $filename =  Setting::obtain('website_name'). '_' . $SubscribeExtend['filename'] . '_' . time() . '.' . $SubscribeExtend['suffix'];
                     $subscribe_type = $SubscribeExtend['filename'];
 
                     $class = ('get' . $SubscribeExtend['class']);
@@ -489,10 +489,10 @@ class LinkController extends BaseController
             'path' => '/',
             'tls' => '',
             'sni' => '',
-            'group' => Setting::obtain('website_general_name')
+            'group' => Setting::obtain('website_name')
         ];
         if ($list == 'shadowrocket') {
-            $return[] = ('STATUS=' . $unusedTraffic . '.♥.' . $expire_in . PHP_EOL . 'REMARKS=' . Setting::obtain('website_general_name'));
+            $return[] = ('STATUS=' . $unusedTraffic . '.♥.' . $expire_in . PHP_EOL . 'REMARKS=' . Setting::obtain('website_name'));
         }
         foreach ($info_array as $remark) {
             $Extend['remark'] = $remark;

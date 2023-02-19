@@ -118,7 +118,7 @@ class Job extends Command
                     $user->last_day_t = 0;
                     $user->save();
                     $user->sendMail(
-                        Setting::obtain('website_general_name') . '-您的流量被重置了',
+                        Setting::obtain('website_name') . '-您的流量被重置了',
                         'news/warn.tpl',
                         [
                             'text' => '您好，根据您所订购的订单 ID:' . $order->no . '，流量已经被重置为' . $product->reset_value() . 'GB'
@@ -180,7 +180,7 @@ class Job extends Command
 					    if ($_ENV['sendemail'] === true) {
 							echo 'Send offline mail to user: ' . $user->id . PHP_EOL;
 							$user->sendMail(
-								Setting::obtain('website_general_name') . '-系统警告',
+								Setting::obtain('website_name') . '-系统警告',
 								'news/warn.tpl',
 								[
 									'text' => '管理员您好，系统发现节点 ' . $node->name . ' 掉线了，请您及时处理。'
@@ -213,7 +213,7 @@ class Job extends Command
                         if ($_ENV['sendemail'] === true) {
                             echo 'Send offline mail to user: ' . $user->id . PHP_EOL;
                             $user->sendMail(
-                                Setting::obtain('website_general_name') . '-系统提示',
+                                Setting::obtain('website_name') . '-系统提示',
                                 'news/warn.tpl',
                                 [
                                     'text' => '管理员您好，系统发现节点 ' . $node->name . ' 恢复上线了。'
@@ -352,7 +352,7 @@ class Job extends Command
 
                 if ($under_limit == true && $user->traffic_notified == false) {
                     $result = $user->sendMail(
-                        Setting::obtain('website_general_name') . '-您的剩余流量过低',
+                        Setting::obtain('website_name') . '-您的剩余流量过低',
                         'news/warn.tpl',
                         [
                             'text' => '您好，系统发现您剩余流量已经低于 ' . 1000 . $unit_text . ' 。'
@@ -440,7 +440,7 @@ class Job extends Command
                 $text .= '流量已经被重置为' . $reset_traffic . 'GB';
             }
             $user->sendMail(
-                Setting::obtain('website_general_name') . '-您的账户等级已经过期了',
+                Setting::obtain('website_name') . '-您的账户等级已经过期了',
                 'news/warn.tpl',
                 [
                     'text' => $text

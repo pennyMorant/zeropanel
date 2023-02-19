@@ -65,7 +65,7 @@ EOL;
         echo $ret;
         $backup_passwd = $configs['auto_backup_password'] === '' ? '' : ' -P ' . $configs['auto_backup_password'];
         system('zip -r /tmp/backup.zip /tmp/backup/* ' . $backup_passwd, $ret);
-        $subject = Setting::obtain('website_general_name') . '-备份成功';
+        $subject = Setting::obtain('website_name') . '-备份成功';
         $text = '您好，系统已经为您自动备份，请查看附件，用您设定的密码解压。';
         try {
             Mail::send($to, $subject, 'news/backup.tpl', [

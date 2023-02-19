@@ -93,7 +93,7 @@ class AnnController extends AdminController
     {
         $issend   = $request->getParam('issend');
         $content  = $request->getParam('content');
-        $subject  = Setting::obtain('website_general_name') . '-公告';
+        $subject  = Setting::obtain('website_name') . '-公告';
 
 
         $ann           = new Ann();

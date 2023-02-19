@@ -173,7 +173,7 @@ class AuthController extends BaseController
             try {
                 Mail::send(
                     $email,
-                    Setting::obtain('website_general_name') . '- 验证邮件',
+                    Setting::obtain('website_name') . '- 验证邮件',
                     'auth/verify.tpl',
                     [
                         'code' => $code,

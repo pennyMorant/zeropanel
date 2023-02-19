@@ -31,7 +31,7 @@ class Password
         if (!$pwdRst->save()) {
             return false;
         }
-        $subject  = Setting::obtain('website_general_name') . '重置密码';
+        $subject  = Setting::obtain('website_name') . '重置密码';
         $resetUrl = Setting::obtain('website_url') . '/password/token/' . $pwdRst->token;
         try {
             Mail::send(
