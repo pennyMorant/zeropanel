@@ -16,12 +16,11 @@ class ZeroPay
 
         if ($method == 'alipay') {
             # 支付宝
-            $payment_system = Setting::obtain('alipay_payment');
-            switch ($payment_system) {
+            $payment = Setting::obtain('alipay_payment');
+            switch ($payment) {
                 case ('paytaro'):
                     $paytaro = new PayTaro();
                     $result = $paytaro->ZeroPay($user_id, $method, $order_no, $amount);
-                    
                     return $result;
                 case ('paybeaver'):
                     $paybeaver = new PayBeaver();
@@ -57,8 +56,8 @@ class ZeroPay
 
         } else if ($method == 'wechatpay') {
             # 微信支付
-            $payment_system = Setting::obtain('wechatpay_payment');
-            switch ($payment_system) {
+            $payment = Setting::obtain('wechatpay_payment');
+            switch ($payment) {
                 case ('paytaro'):
                     $paytaro = new PayTaro();
                     $result = $paytaro->ZeroPay($user_id, $method, $order_no, $amount);                   
@@ -96,8 +95,8 @@ class ZeroPay
             }
         } else if ($method == 'cryptopay') {
             # 数字货币
-            $payment_system = Setting::obtain('cryptopay_payment');
-            switch ($payment_system) {
+            $payment = Setting::obtain('cryptopay_payment');
+            switch ($payment) {
                 case ('paytaro'):
                     $paytaro = new PayTaro();
                     $result = $paytaro->ZeroPay($user_id, $method, $order_no, $amount);                 
@@ -119,9 +118,9 @@ class ZeroPay
         $path = $request->getUri()->getPath();
         file_put_contents(BASE_PATH . '/storage/pay.log', json_encode(file_get_contents("php://input")) . "\r\n", FILE_APPEND);
         $path_exploded = explode('/', $path);
-        $payment_system = $path_exploded[3];
+        $payment = $path_exploded[3];
 
-        switch ($payment_system) {
+        switch ($payment) {
             case ('vmqpay'):
                 $vmqpay = new VmqPay();
                 $vmqpay->notify($request, $response, $args);

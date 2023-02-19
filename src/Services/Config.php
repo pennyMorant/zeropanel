@@ -58,9 +58,6 @@ class Config
             'telegram_bot_id'         => $public_configs['telegram_bot_id'],
             'telegram_group_url'  => $public_configs['telegram_group_url'],
             'telegram_channel_id'     => $public_configs['telegram_channel_id'],
-
-            // 支付暂时使用办法
-            'payment_system'          => $_ENV['payment_system'],
         ];
     }
 

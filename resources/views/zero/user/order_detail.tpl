@@ -121,8 +121,8 @@
 												<label class="col-lg-12 col-form-label kt-font-boldest"><strong>{$trans->t('payment method')}: </strong></label>
 												<div class="col-lg-12">
 													<ul class="nav nav-pills nav-justified row" role="tablist" id="payment_method">
-													{if $config['payment_system'] == 'zeropay'}
-														{if $payment_gateway['alipay_payment'] != null}
+													
+														{if $payment_gateway['alipay_payment'] != 'none'}
 														<li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 															<a class="btn btn-outline btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-name="alipay">
 																<span class="nav-icon py-2 w-auto">
@@ -132,7 +132,7 @@
 															</a>
 														</li>
 														{/if}
-														{if $payment_gateway['wechatpay_payment'] != null}
+														{if $payment_gateway['wechatpay_payment'] != 'none'}
 														<li class="nav-wxpay nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 															<a class="btn btn-outline btn-active-light-success text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="wechatpay">
 																<span class="nav-icon py-2 w-auto">
@@ -142,7 +142,7 @@
 															</a>
 														</li>
 														{/if}
-														{if $payment_gateway['cryptopay_payment'] != null}
+														{if $payment_gateway['cryptopay_payment'] != 'none'}
 														<li class="nav-crypto nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 															<a class="btn btn-outline btn-active-light-warning text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="cryptopay">
 																<span class="nav-icon py-2 w-auto">
@@ -152,7 +152,7 @@
 															</a>
 														</li>
 														{/if}
-													{/if}
+													
 														{if $order->order_type != 2}
 														<li class="nav-wallet nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
 															<a class="btn btn-outline btn-active-light-info text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="creditpay">
