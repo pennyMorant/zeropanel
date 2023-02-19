@@ -30,17 +30,21 @@ http://zeroboard.top
 #### 安装环境(如何安装最新环境请google)
 1.nginx最新版  
 2.php8.1  
-3.mariadb最新版  
-#### 第一步
+3.mariadb最新版
+#### 第一步，创建网站文件目录
+    cd /var/www
+    mkdir zeropanel
+    cd zeropanel
+#### 第二步，下载源码
     git clone https://github.com/zeropanel/zeropanel.git ${PWD}
-#### 第二步
+#### 第三步
     wget https://getcomposer.org/installer -O composer.phar
     php composer.phar
     php composer.phar install
-#### 第三步
+#### 第四步
     chmod -R 755 ${PWD}
     chown -R www-data:www-data ${PWD}
-#### 第四步，创建数据库
+#### 第五步，创建数据库
     mysql -u root -p
     CREATE DATABASE zeropanel;
     use zeropanel;
@@ -48,7 +52,7 @@ http://zeroboard.top
     GRANT ALL PRIVILEGES ON *.* TO 'zeropanel'@'localhost';
     FLUSH PRIVILEGES;
     source /var/www/zeropanel/sql/zero.sql;
-#### 第五步，配置Nginx
+#### 第六步，配置Nginx
     cd /etc/nginx
     vim enabled-sites/zeropanel.conf
 ##### 复制以下文件到nginx配置文件中
@@ -78,7 +82,7 @@ http://zeroboard.top
     php xcat Tool importAllSettings
     php xcat Tool initQQWry
     php xcat User createAdmin
-#### 配置定时任务
+#### 第七步，配置定时任务
     crontab -e
 ##### 复制以下文件到定时任务中
     * * * * * php /var/www/zeropanel/xcat Job CheckJob
