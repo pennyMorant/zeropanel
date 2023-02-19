@@ -542,8 +542,6 @@ function KTUsersPayOrder(order_no) {
                 if (data.ret == 1) {
                     setTimeout(function() {
                         $(location).attr('href', data.url);
-                        submitButton.removeAttribute('data-kt-indicator');
-                        submitButton.disabled = false;
                     }, 1500);
                 } else if (data.ret == 2){
                     Swal.fire({
