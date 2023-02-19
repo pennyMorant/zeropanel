@@ -58,13 +58,13 @@
                                                                     <label class="form-label">网站名称</label>
                                                                     <input class="form-control mb-5" id="website_name" name="website_name" type="text" placeholder="网站名称" value="{$settings['website_name']}" />
                                                                     <label class="form-label">LANDING INDEX</label>
-                                                                    <input class="form-control mb-5" id="website_landing_index" name="website_landing_index" type="text" placeholder="" value="{$settings['website_landing_index']}" />
+                                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="不懂请保持默认" id="website_landing_index" name="website_landing_index" type="text" placeholder="" value="{$settings['website_landing_index']}" />
                                                                 </div>
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">安全TOKEN</label>
-                                                                    <input class="form-control mb-5" id="website_security_token" name="website_security_token" type="text" placeholder="TOKEN" value="{$settings['website_security_token']}" />
+                                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="随意填写,尽可能的复杂" id="website_security_token" name="website_security_token" type="text" placeholder="TOKEN" value="{$settings['website_security_token']}" />
                                                                     <label class="form-label">后端TOKEN</label>
-                                                                    <input class="form-control mb-5" id="website_backend_token" name="website_backend_token" type="text" placeholder="token" value="{$settings['website_backend_token']}" />
+                                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="请输入安全的密钥" id="website_backend_token" name="website_backend_token" type="text" placeholder="token" value="{$settings['website_backend_token']}" />
                                                                 </div>
                                                             </div>
                                                         </div>

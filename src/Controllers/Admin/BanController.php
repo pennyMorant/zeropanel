@@ -86,7 +86,7 @@ class BanController extends AdminController
             $tempdata['text']     = $value->text;
             $tempdata['regex']    = $value->regex;
             $tempdata['type']     = $value->type();
-            $tempdata['action']   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+            $tempdata['action']   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type.', '.$value->id.')">编辑</a></li>
                                             <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>

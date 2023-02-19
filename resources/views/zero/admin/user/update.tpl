@@ -76,9 +76,9 @@
                                                     <label class="form-label required">用户等级过期时间</label>
                                                     <input class="form-control mb-5" id="class_expire" name="class_expire" type="text" value="{$user->class_expire}">
                                                     <label class="form-label required">用户速度</label>
-                                                    <input class="form-control mb-5" id="node_speedlimit" name="node_speedlimit" type="text" value="{$user->node_speedlimit}">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$user->node_speedlimit}">
                                                     <label class="form-label required">用户IP数</label>
-                                                    <input class="form-control mb-5" id="node_connector" name="node_connector" type="text" value="{$user->node_connector}">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_connector" name="node_connector" type="text" value="{$user->node_connector}">
                                                 </div>
                                             </div>
                                         </div>  

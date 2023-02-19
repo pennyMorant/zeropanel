@@ -72,7 +72,7 @@ class AgentController extends AdminController
             $tempdata['type'] = $value->type == 1 ? '提现至余额' : '提现至USDT';
             $tempdata['status'] = $value->status();
             $tempdata['datetime'] = date('Y-m-d H:i:s', $value->datetime);
-            $tempdata['action']                   = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+            $tempdata['action']                   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                         <ul class="dropdown-menu">
                                                             <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$value->id.')">完成</a></li>
                                                             <li><a class="dropdown-item" href="#" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$value->id.')">拒绝</a></li>

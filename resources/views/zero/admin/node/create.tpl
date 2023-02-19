@@ -47,7 +47,7 @@
                                                     <label class="form-label required">节点名称</label>
                                                     <input class="form-control mb-5" id="name" name="name" type="text" placeholder="节点名称" value="">
                                                     <label class="form-label required">节点地址</label>
-                                                    <input class="form-control mb-5" id="server" name="server" type="text" placeholder="节点地址" value="">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="填写域名,节点IP会自动设置解析的IP" id="server" name="server" type="text" placeholder="节点地址" value="">
                                                     <label class="form-label required">节点IP</label>
                                                     <input class="form-control mb-5" id="node_ip" name="node_ip" type="text" placeholder="节点IP" value="">
                                                     <label class="form-label">流量比例</label>
@@ -90,15 +90,15 @@
                                                     <label class="form-label">节点等级</label>
                                                     <input class="form-control mb-5" id="node_class" name="node_class" type="number" placeholder="节点等级" value="0">
                                                     <label class="form-label">节点群组</label>
-                                                    <input class="form-control mb-5" id="node_group" name="node_group" type="number" placeholder="节点群组" value="0">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不分组" id="node_group" name="node_group" type="number" placeholder="节点群组" value="0">
                                                     <label class="form-label">流量上限(GB)</label>
-                                                    <input class="form-control mb-5" id="node_bandwidth_limit" name="node_bandwidth_limit" type="text" value="0" placeholder="流量上限">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_bandwidth_limit" name="node_bandwidth_limit" type="text" value="0" placeholder="流量上限">
                                                     <label class="form-label">流量上限清空日</label>
                                                     <input class="form-control mb-5" id="bandwidthlimit_resetday" name="bandwidthlimit_resetday" type="text" value="1" placeholder="流量上限清空日">
                                                     <label class="form-label">节点速度</label>
-                                                    <input class="form-control mb-5" id="node_speedlimit" name="node_speedlimit" type="text" value="0" placeholder="节点速度">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="0" placeholder="节点速度">
                                                     <label class="form-label required">节点排序</label>
-                                                    <input class="form-control mb-5" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
                                                 </div>
                                             </div>  
                                         </div>

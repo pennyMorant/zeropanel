@@ -182,7 +182,7 @@ class ProductController extends AdminController
             $tempdata['type']                 = $value->type;
             $tempdata['period_sales']         = $value->sales;
             $tempdata['status']               = $value->status();
-            $tempdata['action']               = '<div class="dropdown"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+            $tempdata['action']               = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item" href="/admin/product/update/'.$value->id.'">编辑</a></li>
                                                         <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
