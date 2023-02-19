@@ -86,6 +86,7 @@
                                 </div>
                             </div>
                         </div>
+                        {include file='admin/footer.tpl'}
                     </div>
                 </div>
             </div>
