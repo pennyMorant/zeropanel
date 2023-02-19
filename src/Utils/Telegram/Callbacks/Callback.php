@@ -968,7 +968,7 @@ class Callback
                     $this->User->addInviteCode();
                     $code = InviteCode::where('user_id', $this->User->id)->first();
                 }
-                $inviteUrl   = Setting::obtain('website_general_url') . '/auth/register?code=' . $code->code;
+                $inviteUrl   = Setting::obtain('website_url') . '/auth/register?code=' . $code->code;
                 $text        = '<a href="' . $inviteUrl . '">' . $inviteUrl . '</a>';
                 $sendMessage = [
                     'text'                     => $text,

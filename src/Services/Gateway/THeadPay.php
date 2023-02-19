@@ -100,7 +100,7 @@ class THeadPay extends AbstractPayment
         $params = $this->pay([
             'trade_no' => $pl->tradeno,
             'total_fee' => $pl->total * 100,
-            'notify_url' => rtrim(Setting::obtain('website_general_url'), '/') . '/payment/notify/theadpay',
+            'notify_url' => rtrim(Setting::obtain('website_url'), '/') . '/payment/notify/theadpay',
         ]);;
         $result['pid'] = $pl->tradeno;
 
@@ -129,7 +129,7 @@ class THeadPay extends AbstractPayment
             $res = $this->pay([
                 'trade_no' => $pl->tradeno,
                 'total_fee' => $pl->total * 100,
-                'notify_url' => rtrim(Setting::obtain('website_general_url'), '/') . '/payment/notify',
+                'notify_url' => rtrim(Setting::obtain('website_url'), '/') . '/payment/notify',
             ]);
 
             return $response->withJson([

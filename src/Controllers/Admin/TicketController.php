@@ -122,7 +122,7 @@ class TicketController extends AdminController
             Setting::obtain('website_general_name') . '-工单被回复',
             'news/warn.tpl',
             [
-                'text' => '您好，有人回复了<a href="' . Setting::obtain('website_general_url') . '/user/ticket/' . $main->id . '/view">工单</a>，请您查看。'
+                'text' => '您好，有人回复了<a href="' . Setting::obtain('website_url') . '/user/ticket/' . $main->id . '/view">工单</a>，请您查看。'
             ],
             []
         );

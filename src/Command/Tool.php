@@ -38,7 +38,7 @@ class Tool extends Command
     public function setTelegram()
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
-            $WebhookUrl = (Setting::obtain('website_general_url') . '/telegram_callback?token=' . Setting::obtain('telegram_bot_request_token'));
+            $WebhookUrl = (Setting::obtain('website_url') . '/telegram_callback?token=' . Setting::obtain('telegram_bot_request_token'));
             $telegram = new \Telegram\Bot\Api(Setting::obtain('telegram_bot_token'));
             $telegram->removeWebhook();
             if ($telegram->setWebhook(['url' => $WebhookUrl])) {

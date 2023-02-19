@@ -32,7 +32,7 @@ class Password
             return false;
         }
         $subject  = Setting::obtain('website_general_name') . '重置密码';
-        $resetUrl = Setting::obtain('website_general_url') . '/password/token/' . $pwdRst->token;
+        $resetUrl = Setting::obtain('website_url') . '/password/token/' . $pwdRst->token;
         try {
             Mail::send(
                 $email,

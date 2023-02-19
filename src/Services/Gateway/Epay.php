@@ -45,11 +45,11 @@ class Epay
             "pid" => trim($this->epay['partner']),
             "type" => $method == 'alipay' ? 'Alipay' : 'Wechat',
             "out_trade_no" => $order_no,
-            "notify_url" => Setting::obtain('website_general_url') . "/payment/notify/epay",
-            "return_url" => Setting::obtain('website_general_url') . "/user/payment/return?tradeno=" . $order_no,
-            "name" => Setting::obtain('website_general_url') . "充值" . $amount,
+            "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
+            "return_url" => Setting::obtain('website_url') . "/user/payment/return?tradeno=" . $order_no,
+            "name" => Setting::obtain('website_url') . "充值" . $amount,
             "money" => $final_amount,
-            "sitename" => Setting::obtain('website_general_url')
+            "sitename" => Setting::obtain('website_url')
         );
         $alipaySubmit = new EpaySubmit($this->epay);
         $html_text = $alipaySubmit->buildRequestForm($data);

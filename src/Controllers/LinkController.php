@@ -472,7 +472,7 @@ class LinkController extends BaseController
             $info_array[] = $unusedTraffic;
             $info_array[] = $expire_in;
         }
-        $baseUrl = explode('//', Setting::obtain('website_general_url'))[1];
+        $baseUrl = explode('//', Setting::obtain('website_url'))[1];
         $Extend = [
             'remark' => '',
             'type' => '',

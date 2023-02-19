@@ -66,8 +66,8 @@ class TronapiPay
         $order_id = $order_no;
         $customer_id = $user_id;
         $product_name = '';
-        $notify_url = Setting::obtain('website_general_url') . '/payment/notify/tronapipay';
-        $redirect_url = Setting::obtain('website_general_url') . '/user/payment/return?tradeno=' . $order_no;
+        $notify_url = Setting::obtain('website_url') . '/payment/notify/tronapipay';
+        $redirect_url = Setting::obtain('website_url') . '/user/payment/return?tradeno=' . $order_no;
         $signatureStr = $amount.$currency.$coin_code.$order_id.$product_name.$customer_id.$notify_url.$redirect_url.$this->public_key.$this->private_key;
         $signature = $this->sign($signatureStr);
 

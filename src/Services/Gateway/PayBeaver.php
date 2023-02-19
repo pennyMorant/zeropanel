@@ -60,8 +60,8 @@ class PayBeaver
         } else {
             $data['total_amount'] = (int)($amount * 100);
         }
-        $data['notify_url'] = Setting::obtain('website_general_url') . '/payment/notify/paybeaver';
-        $data['return_url'] = Setting::obtain('website_general_url') . '/user/payment/return?tradeno=' . $order_no;
+        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify/paybeaver';
+        $data['return_url'] = Setting::obtain('website_url') . '/user/payment/return?tradeno=' . $order_no;
         $params = $this->buildQuery($data);
         $data['sign'] = $this->sign($params);
     	$result = json_decode($this->post($data), true);

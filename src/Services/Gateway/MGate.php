@@ -100,8 +100,8 @@ class MGate extends AbstractPayment
         $data['app_id'] = Config::get('mgate_app_id');
         $data['out_trade_no'] = $pl->tradeno;
         $data['total_amount'] = (int)($price * 100);
-        $data['notify_url'] = Setting::obtain('website_general_url') . '/payment/notify/mgate';
-        $data['return_url'] = Setting::obtain('website_general_url') . '/user/payment/return';
+        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify/mgate';
+        $data['return_url'] = Setting::obtain('website_url') . '/user/payment/return';
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
         $result = json_decode($this->post($data), true);
@@ -129,8 +129,8 @@ class MGate extends AbstractPayment
         $data['app_id'] = Config::get('mgate_app_id');
         $data['out_trade_no'] = $pl->tradeno;
         $data['total_amount'] = (int)($price * 100);
-        $data['notify_url'] = Setting::obtain('website_general_url') . '/payment/notify/mgate';
-        $data['return_url'] = Setting::obtain('website_general_url') . '/user/payment/return?tradeno='.$pl->tradeno;
+        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify/mgate';
+        $data['return_url'] = Setting::obtain('website_url') . '/user/payment/return?tradeno='.$pl->tradeno;
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
         $result = json_decode($this->post($data), true);

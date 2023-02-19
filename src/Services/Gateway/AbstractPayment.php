@@ -55,7 +55,7 @@ abstract class AbstractPayment
     abstract public function getPurchaseHTML();
     
     protected static function getCallbackUrl() {
-        return Setting::obtain('website_general_url') . '/payment/notify/' . (get_called_class())::_name();
+        return Setting::obtain('website_url') . '/payment/notify/' . (get_called_class())::_name();
     }
     
     protected static function getActiveGateway($key) {

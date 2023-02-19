@@ -45,7 +45,7 @@ class StripePay extends AbstractPayment
                 'currency'  => $configs['stripe_currency'],
                 'type'      => $type,
                 'redirect'  => [
-                    'return_url' => Setting::obtain('website_general_url') . '/user/payment/return',
+                    'return_url' => Setting::obtain('website_url') . '/user/payment/return',
                 ],
             ]);
         } catch (\Stripe\Exception\InvalidRequestException $e) {

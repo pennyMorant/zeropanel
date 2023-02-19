@@ -103,8 +103,8 @@ class PAYJS extends AbstractPayment
             'mchid'         => Setting::obtain('payjs_mchid'),
             'out_trade_no'  => $pl->tradeno,
             'total_fee'     => (float) $pl->total * 100,
-            'notify_url'    => Setting::obtain('website_general_url') . '/payment/notify/payjs',
-            'callback_url'  => Setting::obtain('website_general_url') . '/user/payment/return?tradeno='.$pl->tradeno,
+            'notify_url'    => Setting::obtain('website_url') . '/payment/notify/payjs',
+            'callback_url'  => Setting::obtain('website_url') . '/user/payment/return?tradeno='.$pl->tradeno,
         ];
         $params         = $this->prepareSign($data);
         $data['sign']   = $this->sign($params);
@@ -132,7 +132,7 @@ class PAYJS extends AbstractPayment
         //$data['type'] = $type;
         $data['out_trade_no'] = $pl->tradeno;
         $data['total_fee'] = (float) $price * 100;
-        $data['notify_url'] = Setting::obtain('website_general_url') . '/payment/notify?way=payjs';
+        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify?way=payjs';
         //$data['callback_url'] = $_ENV['baseUrl'] . '/user/code';
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);

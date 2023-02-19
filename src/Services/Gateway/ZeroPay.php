@@ -139,7 +139,7 @@ class ZeroPay
                 $gateway->setAppId($_ENV['f2fpay_app_id']);
                 $gateway->setPrivateKey($_ENV['merchant_private_key']); // 可以是路径，也可以是密钥内容
                 $gateway->setAlipayPublicKey($_ENV['alipay_public_key']); // 可以是路径，也可以是密钥内容
-                $notifyUrl = $_ENV['f2fNotifyUrl'] ?? (Setting::obtain('website_general_url') . '/payment/notify/f2fpay');
+                $notifyUrl = $_ENV['f2fNotifyUrl'] ?? (Setting::obtain('website_url') . '/payment/notify/f2fpay');
                 $gateway->setNotifyUrl($notifyUrl);
 
                 $aliRequest = $gateway->completePurchase();
