@@ -483,8 +483,6 @@ function KTUsersCreateOrder(type, price, product_id) {
                     success: function (data) {
                         if (data.ret == 1) {
                             setTimeout(function() {
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
                                 $(location).attr('href', '/user/order/' + data.order_id);
                             }, 1500);
                         } else {
@@ -508,8 +506,6 @@ function KTUsersCreateOrder(type, price, product_id) {
                     success: function (data) {
                         if (data.ret == 1) {
                             setTimeout(function() {
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
                                 $(location).attr('href', '/user/order/' + data.order_id);
                             }, 1500);
                         } else {
@@ -590,8 +586,6 @@ function KTUsersTicket(type, ticket_id, ticket_status) {
                         if (data.ret == 1) {
                             setTimeout(function() {
                                 $(location).attr('href', '/user/ticket/'+data.tid+'/view');
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
                             }, 1500);
                         } else {
                             getResult(data.msg, '', 'error');
@@ -616,8 +610,6 @@ function KTUsersTicket(type, ticket_id, ticket_status) {
                         if (data.ret == 1) {
                             setTimeout(function() {
                                 location.reload();
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
                             }, 1500);
                         } else {
                             getResult(data.msg, '', 'error');
