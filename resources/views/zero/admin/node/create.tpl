@@ -115,7 +115,7 @@
         <script>
             const container = document.getElementById('custom_config');
             var options = {
-                mode: 'tree',
+                mode: 'text',
                 modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
                 onModeChange: function (newMode, oldMode) {
                     console.log('Mode switched from', oldMode, 'to', newMode)
