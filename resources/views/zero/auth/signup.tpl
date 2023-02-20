@@ -86,7 +86,7 @@
 		</div>
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
-		<script src="/js/auth/signup.js"></script>
+		<script src="/js/auth/signup.min.js"></script>
 		{if $config['enable_signup_captcha'] === true && $config['captcha_provider'] === 'turnstile'}
 			<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 		{/if}	
