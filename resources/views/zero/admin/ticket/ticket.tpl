@@ -100,11 +100,11 @@
         {include file='admin/script.tpl'}
         <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
         <script>
-            var editors;
+            var editorsCreate;
             ClassicEditor
                 .create(document.getElementById('zero_modal_create_ticket_ckeditor_classic'))
                 .then(editor => {
-                    editors = editor;
+                    editorsCreate = editor;
                 })
                 .catch(error => {
                     console.error(error);
@@ -120,7 +120,7 @@
                 const submitButton = document.querySelector('[data-kt-admin-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
-                var text = editors.getData();
+                var text = editorsCreate.getData();
                 setTimeout(function () {
                     $.ajax({
                         type: "POST",
