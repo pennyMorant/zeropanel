@@ -71,13 +71,13 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">用户ID</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="用户ID" id="zero_create_ticket_userid">
+                            <input type="text" class="form-control form-control-solid" placeholder="用户ID" id="zero_admin_create_ticket_userid">
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">{$trans->t('subject')}</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
+                            <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_admin_create_ticket_title">
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">
@@ -127,17 +127,17 @@
                         url: "/admin/ticket/create",
                         dataType: "json",
                         data: {
-                            content: text,
-                            title: $('#zero_create_ticket_title'),
-                            userid: $('#zero_create_ticket_userid')
+                            title: $("#zero_admin_create_ticket_title").val(),
+                            userid: $("#zero_admin_create_ticket_userid").val(),
+                            content: text
                         },
                         success: function (data) {
                             if (data.ret == 1) {
-                                setTimeout(function() {
-                                    location.reload();
-                                    submitButton.removeAttribute('data-kt-indicator');
-                                    submitButton.disabled = false;
-                                }, 1500);
+                                getResult(data.msg, '', 'success');
+                                submitButton.removeAttribute('data-kt-indicator');
+                                submitButton.disabled = false;
+                                $('#zero_modal_create_ticket').modal('hide');
+                                table_1.ajax.reload();
                             } else {
                                 getResult(data.msg, '', 'error');
                                 submitButton.removeAttribute('data-kt-indicator');

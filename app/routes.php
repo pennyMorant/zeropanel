@@ -134,7 +134,7 @@ return function (SlimApp $app) {
 
         //ticket
         $group->get('/ticket',                   App\Controllers\Admin\TicketController::class . ':index');
-        $group->put('/ticket/create',              App\Controllers\Admin\TicketController::class . ':createTicket');
+        $group->post('/ticket/create',              App\Controllers\Admin\TicketController::class . ':createTicket');
         $group->get('/ticket/update/{id}',         App\Controllers\Admin\TicketController::class . ':updateTicketIndex');
         $group->put('/ticket/update',              App\Controllers\Admin\TicketController::class . ':updateTicket');
         $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ajax');

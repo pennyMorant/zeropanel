@@ -169,12 +169,11 @@
                         },
                         success: function (data) {
                             if (data.ret == 1) {
-                                setTimeout(function() {
-                                    submitButton.removeAttribute('data-kt-indicator');
-                                    submitButton.disabled = false;
-                                    getResult(data.msg, '', 'success');
-                                    location.reload();
-                                }, 1500);
+                                getResult(data.msg, '', 'success');
+                                submitButton.removeAttribute('data-kt-indicator');
+                                submitButton.disabled = false;
+                                $('#zero_modal_create_news').modal('hide');
+                                table_1.ajax.reload();
                             } else {
                                 getResult(data.msg, '', 'error');
                                 submitButton.removeAttribute('data-kt-indicator');
@@ -219,12 +218,11 @@
                                 },
                                 success: function (data) {
                                     if (data.ret == 1) {
-                                        setTimeout(function() {
-                                            getResult(data.msg, '', 'success');
-                                            submitButton.removeAttribute('data-kt-indicator');
-                                            submitButton.disabled = false;
-                                            //location.reload();
-                                        }, 1500);
+                                        getResult(data.msg, '', 'success');
+                                        submitButton.removeAttribute('data-kt-indicator');
+                                        submitButton.disabled = false;
+                                        $('#zero_modal_update_news').modal('hide');
+                                        table_1.ajax.reload();
                                     } else {
                                         getResult(data.msg, '', 'error');
                                         submitButton.removeAttribute('data-kt-indicator');
