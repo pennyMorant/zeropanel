@@ -46,7 +46,7 @@ return function (SlimApp $app) {
         $group->get('/ticket',                   App\Controllers\User\TicketController::class . ':ticket');
         $group->get('/ticket/create',            App\Controllers\User\TicketController::class . ':ticketCreate');
         $group->post('/ticket',                  App\Controllers\User\TicketController::class . ':ticketAdd');
-        $group->get('/ticket/{id}/view',         App\Controllers\User\TicketController::class . ':ticketView');
+        $group->get('/ticket/view/{id}',         App\Controllers\User\TicketController::class . ':ticketView');
         $group->put('/ticket/{id}',              App\Controllers\User\TicketController::class . ':ticketUpdate');
         
         $group->post('/update_profile/{type}',    App\Controllers\UserController::class . ':updateProfile');

@@ -457,7 +457,7 @@ class User extends Model
                 \App\Utils\Telegram\TelegramTools::SendPost(
                     'kickChatMember',
                     [
-                        'chat_id'   => Setting::obtain('telegram_general_group_id'),
+                        'chat_id'   => Setting::obtain('telegram_group_id'),
                         'user_id'   => $telegram_id,
                     ]
                 );

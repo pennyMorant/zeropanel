@@ -87,7 +87,7 @@ class TicketController extends UserController
             return $response->withJson(
                 [
                     'ret' => 0,
-                    'msg' => I18n::get()->t('user.ticket.notify.error_1')
+                    'msg' => I18n::get()->t('request error')
                 ]
             );
         }
@@ -102,15 +102,15 @@ class TicketController extends UserController
         $ticket->datetime = time();
         $ticket->save();
 
-        if (Setting::obtain('enable_ticket_telegram_notify') == true) {
+        if (Setting::obtain('enable_push_ticket_message') == true) {
             Telegram::SendTicket($this->user->id, $title, $content);
         }
 
         return $response->withJson(
             [
                 'ret' => 1,
-                'tid' => $ticket->id,
-                'msg' => I18n::get()->t('user.ticket.notify.success_0')
+                'id' => $ticket->id,
+                'msg' => I18n::get()->t('success')
             ]
         );
     }
@@ -131,7 +131,7 @@ class TicketController extends UserController
             return $response->withJson(
                 [
                     'ret' => 0,
-                    'msg' => I18n::get()->t('user.ticket.notify.error_0')
+                    'msg' => I18n::get()->t('request error')
                 ]
             );
         }
@@ -140,7 +140,7 @@ class TicketController extends UserController
             return $response->withJson(
                 [
                     'ret' => 0,
-                    'msg' => I18n::get()->t('user.ticket.notify.error_1')
+                    'msg' => I18n::get()->t('request error')
                 ]
             );
         }
@@ -152,11 +152,11 @@ class TicketController extends UserController
         }
 
         if ($status == 1 && $ticket_main->status != $status) {
-            if (Setting::obtain('enable_ticket_telegram_notify') == true) {
+            if (Setting::obtain('enable_push_ticket_message') == true) {
                 Telegram::SendTicket($this->user->id, $ticket_main->title, $content, 'restart');
             }
         } else {
-            if (Setting::obtain('enable_ticket_telegram_notify') == true) {
+            if (Setting::obtain('enable_push_ticket_message') == true) {
                 Telegram::SendTicket($this->user->id, $ticket_main->title, $content, 'update');
             }
         }
@@ -177,7 +177,7 @@ class TicketController extends UserController
         return $response->withJson(
             [
                 'ret' => 1,
-                'msg' => I18n::get()->t('user.ticket.notify.success_0')
+                'msg' => I18n::get()->t('success')
             ]
         );
     }

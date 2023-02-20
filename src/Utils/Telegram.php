@@ -18,12 +18,12 @@ class Telegram
     public static function Send($messageText, $chat_id = 0): void
     {
         if ($chat_id === 0) {
-            $chat_id = Setting::obtain('telegram_general_group_id');
+            $chat_id = Setting::obtain('telegram_group_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
             
                 // 发送给非群组时使用异步
-                $async = ($chat_id != Setting::obtain('telegram_general_group_id'));
+                $async = ($chat_id != Setting::obtain('telegram_group_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
                 $sendMessage = [
                     'chat_id'                   => $chat_id,
@@ -47,12 +47,12 @@ class Telegram
     public static function SendMarkdown(string $messageText, int $chat_id = 0): void
     {
         if ($chat_id === 0) {
-            $chat_id = Setting::obtain('telegram_general_group_id');
+            $chat_id = Setting::obtain('telegram_group_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
             
                 // 发送给非群组时使用异步
-                $async = ($chat_id != Setting::obtain('telegram_general_group_id'));
+                $async = ($chat_id != Setting::obtain('telegram_group_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
                 $sendMessage = [
                     'chat_id'                   => $chat_id,
@@ -108,12 +108,12 @@ class Telegram
     public static function PushToChanel($messageText, $chat_id = 0): void
     {
         if ($chat_id === 0) {
-            $chat_id = Setting::obtain('telegram_general_channel_id');
+            $chat_id = Setting::obtain('telegram_channel_id');
         }
         if (Setting::obtain('enable_telegram_bot') == true) {
            
                 // 发送给非群组时使用异步
-                $async = ($chat_id != Setting::obtain('telegram_general_channel_id'));
+                $async = ($chat_id != Setting::obtain('telegram_channel_id'));
                 $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
                 $sendMessage = [
                     'chat_id'                   => $chat_id,

@@ -255,7 +255,7 @@ class TelegramProcess
                     break;
                 default:
                     if ($message->getText() != null) {
-                        if ($message->getChat()->getId() == Setting::obtain('telegram_general_group_id')) {
+                        if ($message->getChat()->getId() == Setting::obtain('telegram_group_id')) {
                             $reply['message'] = '我是一个机器人';
                         }
                     }

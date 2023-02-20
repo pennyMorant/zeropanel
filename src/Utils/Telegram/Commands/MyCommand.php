@@ -49,7 +49,7 @@ class MyCommand extends Command
                 ]);
             }
             
-            if ($ChatID != Setting::obtain('telegram_general_group_id')) {
+            if ($ChatID != Setting::obtain('telegram_group_id')) {
                 // 非我方群组
                 return;
             }

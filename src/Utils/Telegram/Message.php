@@ -182,7 +182,7 @@ class Message
             if (
                 Config::getconfig('Telegram.bool.group_bound_user') === true
                 &&
-                $this->ChatID == Setting::obtain('telegram_general_group_id')
+                $this->ChatID == Setting::obtain('telegram_group_id')
                 &&
                 $NewUser == null
                 &&

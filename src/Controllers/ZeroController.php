@@ -307,7 +307,7 @@ class ZeroController extends BaseController
                     $tempdata['title'] = $value->title;
                     $tempdata['status'] = $value->status();
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
-                    $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/' . $value->id . '/view">' . $trans->t('details') . '</a>';
+                    $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$value->id.'">' . $trans->t('details') . '</a>';
                     $data[] = $tempdata;
                 }
 

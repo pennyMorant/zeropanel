@@ -644,7 +644,7 @@ class Callback
                     TelegramTools::SendPost(
                         'unbanChatMember',
                         [
-                            'chat_id' => Setting::obtain('telegram_general_group_id'),
+                            'chat_id' => Setting::obtain('telegram_group_id'),
                             'user_id' => $this->triggerUser['id'],
                         ]
                     );

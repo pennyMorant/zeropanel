@@ -57,16 +57,6 @@ abstract class AbstractPayment
     protected static function getCallbackUrl() {
         return Setting::obtain('website_url') . '/payment/notify/' . (get_called_class())::_name();
     }
-    
-    protected static function getActiveGateway($key) {
-        $payment_gateways = Setting::where('item', '=', 'payment_gateway')->first();
-        $active_gateways = json_decode($payment_gateways->value);
-        if (in_array($key, $active_gateways)) {
-            return true;
-        }
-        return false;
-    }
-
     public function postPayment($pid, $method)
     {
         $p = Order::where('tradeno', $pid)->first();
@@ -103,7 +93,7 @@ abstract class AbstractPayment
             }
         }
 
-        if (Setting::obtain('enable_sell_telegram_notify') == true) {
+        if (Setting::obtain('enable_push_top_up_message') == true) {
             Telegram::SendPayment($user, $p, $codeq);
         }
 

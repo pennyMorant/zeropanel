@@ -18,7 +18,7 @@ class SendDiaryMail extends Command
     public function boot()
     {
         $sts = new Analytics();
-        if (Setting::obtain('enable_system_report_telegram_notify') == true) {
+        if (Setting::obtain('enable_push_system_report') == true) {
             $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
             foreach ($sendAdmins as $sendAdmin) {
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');

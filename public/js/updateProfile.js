@@ -585,7 +585,7 @@ function KTUsersTicket(type, ticket_id, ticket_status) {
                     success: function (data) {
                         if (data.ret == 1) {
                             setTimeout(function() {
-                                $(location).attr('href', '/user/ticket/'+data.tid+'/view');
+                                $(location).attr('href', '/user/ticket/view/'+data.id);
                             }, 1500);
                         } else {
                             getResult(data.msg, '', 'error');
