@@ -45,10 +45,10 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
+        <script>
+            window.addEventListener('load', () => {
+                {include file='table/js_2.tpl'}
+            })
+        </script>
     </body>
-    <script>
-        window.addEventListener('load', () => {
-            {include file='table/js_2.tpl'}
-        })
-    </script>
 </html>

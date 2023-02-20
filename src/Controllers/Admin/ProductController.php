@@ -171,6 +171,7 @@ class ProductController extends AdminController
             }
         );
 
+        $type = "'product'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var Shop $value */
@@ -185,7 +186,7 @@ class ProductController extends AdminController
             $tempdata['action']               = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item" href="/admin/product/update/'.$value->id.'">编辑</a></li>
-                                                        <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                        <li><a class="dropdown-item" type="button" onclick="KTAdminDelete('.$type.', '.$value->id.')">删除</a></li>
                                                     </ul>
                                                 </div>';
 
@@ -216,6 +217,24 @@ class ProductController extends AdminController
         return $response->withJson([
             'ret'   => 1,
             'msg'   => 'success'
+        ]);
+    }
+
+    /**
+     * 
+     * @param Request   $request
+     * @param Response  $response
+     * @param array     $args
+     */
+    public function deleteProduct($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        $product = Product::find($id);
+        $product->delete();
+
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '删除成功'
         ]);
     }
 }

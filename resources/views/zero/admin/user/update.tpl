@@ -92,48 +92,48 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-        function updateUser(id) {
-            $.ajax({
-                type: "PUT",
-                url: "/admin/user/update",
-                dataType: "JSON",
-                data: {
-                    id,
-                    email: $('#email').val(),
-                    password: $('#password').val(),
-                    group: $('#group').val(),
-                    transfer_enable: $('#transfer_enable').val(),
-                    node_speedlimit: $('#node_speedlimit').val(),
-                    remark: $('#remark').val(),
-                    money: $('#money').val(),
-                    commission: $('#commission').val(),
-                    ban_time: $('#ban_time').val(),
-                    class: $('#class').val(),
-                    class_expire: $('#class_expire').val(),
-                    node_connector: $('#node_connector').val()
-                },
-                success: function(data){
-                    if (data.ret === 1){
-                        Swal.fire({
-                            text: data.msg,
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        getResult(data.msg, '', 'error');
+        <script>
+            function updateUser(id) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/user/update",
+                    dataType: "JSON",
+                    data: {
+                        id,
+                        email: $('#email').val(),
+                        password: $('#password').val(),
+                        group: $('#group').val(),
+                        transfer_enable: $('#transfer_enable').val(),
+                        node_speedlimit: $('#node_speedlimit').val(),
+                        remark: $('#remark').val(),
+                        money: $('#money').val(),
+                        commission: $('#commission').val(),
+                        ban_time: $('#ban_time').val(),
+                        class: $('#class').val(),
+                        class_expire: $('#class_expire').val(),
+                        node_connector: $('#node_connector').val()
+                    },
+                    success: function(data){
+                        if (data.ret === 1){
+                            Swal.fire({
+                                text: data.msg,
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            getResult(data.msg, '', 'error');
+                        }
                     }
-                }
-            })
-        }
-    </script>
+                })
+            }
+        </script>
+    </body>
 </html>

@@ -306,7 +306,7 @@ class UserController extends BaseController
         }
 
         Auth::logout();
-        $user->kill_user();
+        $user->deleteUser();
         $res['ret'] = 1;
         $res['msg'] = I18n::get()->t('success');
         return $response->withJson($res);

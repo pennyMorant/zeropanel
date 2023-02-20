@@ -48,50 +48,50 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-        window.addEventListener('load', () => {
-            {include file='table/js_2.tpl'}
-        })
-    </script>
-    <script>
-        function updateUserStatus(type, id){
-            switch (type){
-                case 'enable':
-                    if ($("#user_enable_"+id).prop("checked")) {
-                        var enable = 1;
-                    } else {
-                        var enable = 0;
-                    }
-                    $.ajax({
-                        type: "PUT",
-                        url: "/admin/user/update/status/enable",
-                        dataType: "JSON",
-                        data: {
-                            enable,
-                            id,
-                        },
-                        success: function(data){}
-                    });
-                    break;
-                case 'is_admin':
-                if ($("#user_is_admin_"+id).prop("checked")) {
-                        var is_admin = 1;
-                    } else {
-                        var is_admin = 0;
-                    }
-                    $.ajax({
-                        type: "PUT",
-                        url: "/admin/user/update/status/is_admin",
-                        dataType: "JSON",
-                        data: {
-                            is_admin,
-                            id,
-                        },
-                        success: function(data){}
-                    });
-                    break;
+        <script>
+            window.addEventListener('load', () => {
+                {include file='table/js_2.tpl'}
+            })
+        </script>
+        <script>
+            function updateUserStatus(type, id){
+                switch (type){
+                    case 'enable':
+                        if ($("#user_enable_"+id).prop("checked")) {
+                            var enable = 1;
+                        } else {
+                            var enable = 0;
+                        }
+                        $.ajax({
+                            type: "PUT",
+                            url: "/admin/user/update/status/enable",
+                            dataType: "JSON",
+                            data: {
+                                enable,
+                                id,
+                            },
+                            success: function(data){}
+                        });
+                        break;
+                    case 'is_admin':
+                        if ($("#user_is_admin_"+id).prop("checked")) {
+                            var is_admin = 1;
+                        } else {
+                            var is_admin = 0;
+                        }
+                        $.ajax({
+                            type: "PUT",
+                            url: "/admin/user/update/status/is_admin",
+                            dataType: "JSON",
+                            data: {
+                                is_admin,
+                                id,
+                            },
+                            success: function(data){}
+                        });
+                        break;
+                }
             }
-        }
-    </script>
+        </script>
+    </body>
 </html>

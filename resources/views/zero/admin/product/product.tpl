@@ -48,29 +48,29 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-        window.addEventListener('load', () => {
-            {include file='table/js_2.tpl'}
-        })
-    </script>
-    <script>
-        function updateProductStatus(id) {
-            if ($("#product_status_"+id).prop("checked")) {
-                var status = 1;
-            } else {
-                var status = 0;
+        <script>
+            window.addEventListener('load', () => {
+                {include file='table/js_2.tpl'}
+            })
+        </script>
+        <script>
+            function updateProductStatus(id) {
+                if ($("#product_status_"+id).prop("checked")) {
+                    var status = 1;
+                } else {
+                    var status = 0;
+                }
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/product/update/status",
+                    dataType: "JSON",
+                    data: {
+                        status,
+                        id,
+                    },
+                    success: function(data){}
+                });
             }
-            $.ajax({
-                type: "PUT",
-                url: "/admin/product/update/status",
-                dataType: "JSON",
-                data: {
-                    status,
-                    id,
-                },
-                success: function(data){}
-            });
-        }
-    </script>
+        </script>
+    </body>
 </html>

@@ -48,11 +48,10 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function add($request, $response, $args)
+    public function createTicket($request, $response, $args)
     {
         $title    = $request->getParam('title');
         $content  = $request->getParam('content');
-        $markdown = $request->getParam('markdown');
         $userid   = $request->getParam('userid');
         if ($title == '' || $content == '') {
             return $response->withJson([

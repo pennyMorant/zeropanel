@@ -674,515 +674,514 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
+        <script>
+            // Format options
+            var optionFormatCountry = function(item) {
+                if ( !item.id ) {
+                    return item.text;
+                }
+    
+                var span = document.createElement('span');
+                var imgUrl = item.element.getAttribute('data-kt-select2-country');
+                var template = '';
+    
+                template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
+                template += item.text;
+    
+                span.innerHTML = template;
+    
+                return $(span);
+            }
+    
+            // Init Select2 --- more info: https://select2.org/
+            $('#currency_unit').select2({
+                templateSelection: optionFormatCountry,
+                templateResult: optionFormatCountry
+            });
+        </script>
+                                                                
+        <script>
+            var optionFormatCommission = function(item) {
+                if ( !item.id ) {
+                    return item.text;
+                }
+    
+                var span = document.createElement('span');
+                var template = '';
+    
+                template += '<img src="' + item.element.getAttribute('data-kt-select2-image') + '" class="rounded-circle h-20px me-2" alt="image"/>';
+                template += item.text;
+    
+                span.innerHTML = template;
+    
+                return $(span);
+            }
+    
+            // Init Select2 --- more info: https://select2.org/
+            $('#withdraw_method').select2({
+                placeholder: "Select coin",
+                minimumResultsForSearch: Infinity,
+                templateSelection: optionFormatCommission,
+                templateResult: optionFormatCommission
+            });
+        </script>
+        <script>
+            function updateAdminConfigSettings(type){
+                switch (type){
+                    // website
+                    case 'website':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                website_url: $('#website_url').val(),
+                                website_name: $('#website_name').val(),
+                                website_landing_index: $('#website_landing_index').val(),
+                                website_security_token: $('#website_security_token').val(),
+                                website_request_token: $('#website_request_token').val(),
+                                website_backend_token: $('#website_backend_token').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'payment_gateway':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                alipay_payment: $('#alipay_payment').val(),
+                                wechatpay_payment: $('#wechatpay_payment').val(),
+                                cryptopay_payment: $('#cryptopay_payment').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'paybeaver':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                paybeaver_app_id: $('#paybeaver_app_id').val(),
+                                paybeaver_app_secret: $('#paybeaver_app_secret').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'paytaro':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                paytaro_app_id: $('#paytaro_app_id').val(),
+                                paytaro_app_secret: $('#paytaro_app_secret').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'tronapipay':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                tronapipay_public_key: $('#tronapipay_public_key').val(),
+                                tronapipay_private_key: $('#tronapipay_private_key').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'epay':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                epay_url: $('#epay_url').val(),
+                                epay_pid: $('#epay_pid').val(),
+                                epay_key: $('#epay_key').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'mail':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                mail_driver: $('#mail_driver').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'backup':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                auto_backup_email: $('#auto_backup_email').val(),
+                                auto_backup_password: $('#auto_backup_password').val(),
+                                auto_backup_notify: $('#auto_backup_notify').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'sendgrid':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                sendgrid_key: $('#sendgrid_key').val(),
+                                sendgrid_sender: $('#sendgrid_sender').val(),
+                                sendgrid_name: $('#sendgrid_name').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'smtp':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                smtp_host: $('#smtp_host').val(),
+                                smtp_username: $('#smtp_username').val(),
+                                smtp_password: $('#smtp_password').val(),
+                                smtp_port: $('#smtp_port').val(),
+                                smtp_name: $('#smtp_name').val(),
+                                smtp_sender: $('#smtp_sender').val(),
+                                smtp_ssl: $('#smtp_ssl').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'mailgun':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                mailgun_key: $('#mailgun_key').val(),
+                                mailgun_domain: $('#mailgun_domain').val(),
+                                mailgun_sender: $('#smtp_password').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'ses':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                aws_access_key_id: $('#aws_access_key_id').val(),
+                                aws_secret_access_key: $('#aws_secret_access_key').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'telegram':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                telegram_group_id: $('#telegram_group_id').val(),
+                                telegram_group_url: $('#telegram_group_url').val(),
+                                telegram_channel_id: $('#telegram_channel_id').val(),
+                                telegram_admin_id: $('#telegram_admin_id').val(),
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'telegram_bot':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                enable_telegram_bot: $('#enable_telegram_bot').val(),
+                                telegram_bot_token: $('#telegram_bot_token').val(),
+                                telegram_bot_id: $('#telegram_bot_id').val(),
+                                telegram_bot_request_token: $('#telegram_bot_request_token').val(),
+                                enable_push_top_up_message: $('#enable_push_top_up_message').val(),
+                                enable_push_ticket_message: $('#enable_push_ticket_message').val(),
+                                enable_push_system_report: $('#enable_push_system_report').val(),
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'subscribe':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                subscribe_address_url: $('#subscribe_address_url').val(),
+                                enable_subscribe_extend: $('#enable_subscribe_extend').val(),
+                                enable_subscribe_emoji: $('#enable_subscribe_emoji').val(),
+                                enable_subscribe_log: $('#enable_subscribe_log').val(),
+                                subscribe_log_keep_time: $('#subscribe_log_keep_time').val(),
+                                subscribe_diy_message: $('#subscribe_diy_message').val(),
+                                subscribe_clash_default_profile: $('#subscribe_clash_default_profile').val(),
+                                subscribe_surge_default_profile: $('#subscribe_surge_default_profile').val(),
+                                subscribe_surfboard_default_profile: $('#subscribe_surfboard_default_profile').val(),
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'currency':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                enable_currency: $('#enable_currency').val(),
+                                currency_unit: $('#currency_unit').val(),
+                                currency_exchange_rate: $('#currency_exchange_rate').val(),
+                                currency_exchange_rate_api_key: $('#currency_exchange_rate_api_key').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'withdraw':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                enable_withdraw: $('#enable_withdraw').val(),
+                                withdraw_method: $('#withdraw_method').val(),
+                                withdraw_minimum_amount: $('#withdraw_minimum_amount').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'register':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                reg_mode: $('#reg_mode').val(),
+                                reg_email_verify: $('#reg_email_verify').val(),
+                                email_verify_ttl: $('#email_verify_ttl').val(),
+                                email_verify_ip_limit: $('#email_verify_ip_limit').val(),
+                                signup_default_class: $('#signup_default_class').val(),
+                                signup_default_class_time: $('#signup_default_class_time').val(),
+                                signup_default_traffic: $('#signup_default_traffic').val(),
+                                signup_default_ip_limit: $('#signup_default_ip_limit').val(),
+                                signup_default_speed_limit: $('#signup_default_speed_limit').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'captcha':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                captcha_provider: $('#captcha_provider').val(),
+                                enable_signup_captcha: $('#enable_signup_captcha').val(),
+                                enable_signin_captcha: $('#enable_signin_captcha').val(),
+                                turnstile_sitekey: $('#turnstile_sitekey').val(),
+                                turnstile_secret: $('#turnstile_secret').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'live_chat':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                live_chat: $('#live_chat').val(),
+                                tawk_id: $('#tawk_id').val(),
+                                crisp_id: $('#crisp_id').val(),
+                                livechat_id: $('#livechat_id').val(),
+                                mylivechat_id: $('#mylivechat_id').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'invite':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                invitation_mode: $('#invitation_mode').val(),
+                                invite_rebate_mode: $('#invite_rebate_mode').val(),
+                                rebate_ratio: $('#rebate_ratio').val(),
+                                rebate_time_range_limit: $('#rebate_time_range_limit').val(),
+                                rebate_frequency_limit: $('#rebate_frequency_limit').val(),
+                                rebate_amount_limit: $('#rebate_amount_limit').val(),
+                                invitation_to_signup_credit_reward: $('#invitation_to_signup_credit_reward').val(),
+                                invitation_to_signup_traffic_reward: $('#invitation_to_signup_traffic_reward').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'default':
+                        getResult('请求错误', '', 'error');
+                        break;
+                }
+            }
+        </script>
     </body>
-    <script>
-        // Format options
-        var optionFormatCountry = function(item) {
-            if ( !item.id ) {
-                return item.text;
-            }
-
-            var span = document.createElement('span');
-            var imgUrl = item.element.getAttribute('data-kt-select2-country');
-            var template = '';
-
-            template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
-            template += item.text;
-
-            span.innerHTML = template;
-
-            return $(span);
-        }
-
-        // Init Select2 --- more info: https://select2.org/
-        $('#currency_unit').select2({
-            templateSelection: optionFormatCountry,
-            templateResult: optionFormatCountry
-        });
-    </script>
-                                                            
-    <script>
-        var optionFormatCommission = function(item) {
-            if ( !item.id ) {
-                return item.text;
-            }
-
-            var span = document.createElement('span');
-            var template = '';
-
-            template += '<img src="' + item.element.getAttribute('data-kt-select2-image') + '" class="rounded-circle h-20px me-2" alt="image"/>';
-            template += item.text;
-
-            span.innerHTML = template;
-
-            return $(span);
-        }
-
-        // Init Select2 --- more info: https://select2.org/
-        $('#withdraw_method').select2({
-            placeholder: "Select coin",
-            minimumResultsForSearch: Infinity,
-            templateSelection: optionFormatCommission,
-            templateResult: optionFormatCommission
-        });
-    </script>
-    <script>
-        function updateAdminConfigSettings(type){
-            switch (type){
-                // website
-                case 'website':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            website_url: $('#website_url').val(),
-                            website_name: $('#website_name').val(),
-                            website_landing_index: $('#website_landing_index').val(),
-                            website_security_token: $('#website_security_token').val(),
-                            website_request_token: $('#website_request_token').val(),
-                            website_backend_token: $('#website_backend_token').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'payment_gateway':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            alipay_payment: $('#alipay_payment').val(),
-                            wechatpay_payment: $('#wechatpay_payment').val(),
-                            cryptopay_payment: $('#cryptopay_payment').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'paybeaver':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            paybeaver_app_id: $('#paybeaver_app_id').val(),
-                            paybeaver_app_secret: $('#paybeaver_app_secret').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'paytaro':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            paytaro_app_id: $('#paytaro_app_id').val(),
-                            paytaro_app_secret: $('#paytaro_app_secret').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'tronapipay':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            tronapipay_public_key: $('#tronapipay_public_key').val(),
-                            tronapipay_private_key: $('#tronapipay_private_key').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'epay':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            epay_url: $('#epay_url').val(),
-                            epay_pid: $('#epay_pid').val(),
-                            epay_key: $('#epay_key').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'mail':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            mail_driver: $('#mail_driver').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'backup':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            auto_backup_email: $('#auto_backup_email').val(),
-                            auto_backup_password: $('#auto_backup_password').val(),
-                            auto_backup_notify: $('#auto_backup_notify').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'sendgrid':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            sendgrid_key: $('#sendgrid_key').val(),
-                            sendgrid_sender: $('#sendgrid_sender').val(),
-                            sendgrid_name: $('#sendgrid_name').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'smtp':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            smtp_host: $('#smtp_host').val(),
-                            smtp_username: $('#smtp_username').val(),
-                            smtp_password: $('#smtp_password').val(),
-                            smtp_port: $('#smtp_port').val(),
-                            smtp_name: $('#smtp_name').val(),
-                            smtp_sender: $('#smtp_sender').val(),
-                            smtp_ssl: $('#smtp_ssl').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'mailgun':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            mailgun_key: $('#mailgun_key').val(),
-                            mailgun_domain: $('#mailgun_domain').val(),
-                            mailgun_sender: $('#smtp_password').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'ses':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            aws_access_key_id: $('#aws_access_key_id').val(),
-                            aws_secret_access_key: $('#aws_secret_access_key').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'telegram':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            telegram_group_id: $('#telegram_group_id').val(),
-                            telegram_group_url: $('#telegram_group_url').val(),
-                            telegram_channel_id: $('#telegram_channel_id').val(),
-                            telegram_admin_id: $('#telegram_admin_id').val(),
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'telegram_bot':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            enable_telegram_bot: $('#enable_telegram_bot').val(),
-                            telegram_bot_token: $('#telegram_bot_token').val(),
-                            telegram_bot_id: $('#telegram_bot_id').val(),
-                            telegram_bot_request_token: $('#telegram_bot_request_token').val(),
-                            enable_push_top_up_message: $('#enable_push_top_up_message').val(),
-                            enable_push_ticket_message: $('#enable_push_ticket_message').val(),
-                            enable_push_system_report: $('#enable_push_system_report').val(),
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'subscribe':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            subscribe_address_url: $('#subscribe_address_url').val(),
-                            enable_subscribe_extend: $('#enable_subscribe_extend').val(),
-                            enable_subscribe_emoji: $('#enable_subscribe_emoji').val(),
-                            enable_subscribe_log: $('#enable_subscribe_log').val(),
-                            subscribe_log_keep_time: $('#subscribe_log_keep_time').val(),
-                            subscribe_diy_message: $('#subscribe_diy_message').val(),
-                            subscribe_clash_default_profile: $('#subscribe_clash_default_profile').val(),
-                            subscribe_surge_default_profile: $('#subscribe_surge_default_profile').val(),
-                            subscribe_surfboard_default_profile: $('#subscribe_surfboard_default_profile').val(),
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'currency':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            enable_currency: $('#enable_currency').val(),
-                            currency_unit: $('#currency_unit').val(),
-                            currency_exchange_rate: $('#currency_exchange_rate').val(),
-                            currency_exchange_rate_api_key: $('#currency_exchange_rate_api_key').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'withdraw':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            enable_withdraw: $('#enable_withdraw').val(),
-                            withdraw_method: $('#withdraw_method').val(),
-                            withdraw_minimum_amount: $('#withdraw_minimum_amount').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'register':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            reg_mode: $('#reg_mode').val(),
-                            reg_email_verify: $('#reg_email_verify').val(),
-                            email_verify_ttl: $('#email_verify_ttl').val(),
-                            email_verify_ip_limit: $('#email_verify_ip_limit').val(),
-                            signup_default_class: $('#signup_default_class').val(),
-                            signup_default_class_time: $('#signup_default_class_time').val(),
-                            signup_default_traffic: $('#signup_default_traffic').val(),
-                            signup_default_ip_limit: $('#signup_default_ip_limit').val(),
-                            signup_default_speed_limit: $('#signup_default_speed_limit').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'captcha':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            captcha_provider: $('#captcha_provider').val(),
-                            enable_signup_captcha: $('#enable_signup_captcha').val(),
-                            enable_signin_captcha: $('#enable_signin_captcha').val(),
-                            turnstile_sitekey: $('#turnstile_sitekey').val(),
-                            turnstile_secret: $('#turnstile_secret').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'live_chat':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            live_chat: $('#live_chat').val(),
-                            tawk_id: $('#tawk_id').val(),
-                            crisp_id: $('#crisp_id').val(),
-                            livechat_id: $('#livechat_id').val(),
-                            mylivechat_id: $('#mylivechat_id').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'invite':
-                    $.ajax({
-                        type: 'POST',
-                        url: '/admin/setting',
-                        dataType: "json",
-                        data: {
-                            class: type,
-                            invitation_mode: $('#invitation_mode').val(),
-                            invite_rebate_mode: $('#invite_rebate_mode').val(),
-                            rebate_ratio: $('#rebate_ratio').val(),
-                            rebate_time_range_limit: $('#rebate_time_range_limit').val(),
-                            rebate_frequency_limit: $('#rebate_frequency_limit').val(),
-                            rebate_amount_limit: $('#rebate_amount_limit').val(),
-                            invitation_to_signup_credit_reward: $('#invitation_to_signup_credit_reward').val(),
-                            invitation_to_signup_traffic_reward: $('#invitation_to_signup_traffic_reward').val()
-                        },
-                        success: function(data){
-                            if (data.ret === 1){
-                                getResult(data.msg, '', 'success');
-                            }else{
-                                getResult(data.msg, '', 'error');
-                            }
-                        }
-                    });
-                    break;
-                case 'default':
-                    getResult('请求错误', '', 'error');
-                    break;
-                
-            }
-        }
-    </script>
 </html>

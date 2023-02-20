@@ -104,105 +104,105 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
+        <script>
+            KTAdminAliveRecord = $('#zero_admin_alive_record').DataTable({
+            ajax: {
+            url: '{$table_config_alive['ajax_url']}',
+            type: "POST"
+            },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, 'desc' ]],
+            stateSave: true,
+            columnDefs: [
+                { width: '5%', targets: 0 },
+                { className: 'text-end', targets: -1 }
+            ],
+            columns: [
+            {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
+                { "data": "{$key_alive}" },
+            {/foreach}
+            ],
+            {include file='table/lang_chinese.tpl'}
+            })
+    
+    
+            var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
+        </script>
+        <script>
+            KTAdminSigninRecord = $('#zero_admin_signin_record').DataTable({
+            ajax: {
+            url: '{$table_config_signin['ajax_url']}',
+            type: "POST"
+            },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, 'desc' ]],
+            stateSave: true,
+            columnDefs: [
+                { width: '5%', targets: 0 },
+                { className: 'text-end', targets: -1 }
+            ],
+            columns: [
+            {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
+                { "data": "{$key_signin}" },
+            {/foreach}
+            ],
+            {include file='table/lang_chinese.tpl'}
+            })
+    
+    
+            var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
+        </script>
+        <script>
+            KTAdminSubscribeRecord = $('#zero_admin_subscribe_record').DataTable({
+            ajax: {
+            url: '{$table_config_subscribe['ajax_url']}',
+            type: "POST"
+            },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, 'desc' ]],
+            stateSave: true,
+            columnDefs: [
+                { width: '5%', targets: 0 },
+                { className: 'text-end', targets: -1 }
+            ],
+            columns: [
+            {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
+                { "data": "{$key_subscribe}" },
+            {/foreach}
+            ],
+            {include file='table/lang_chinese.tpl'}
+            })
+    
+    
+            var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
+        </script>
+        <script>
+            KTAdminTrafficRecord = $('#zero_admin_traffic_record').DataTable({
+            ajax: {
+            url: '{$table_config_traffic['ajax_url']}',
+            type: "POST"
+            },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, 'desc' ]],
+            stateSave: true,
+            columnDefs: [
+                { width: '5%', targets: 0 },
+                { className: 'text-end', targets: -1 }
+            ],
+            columns: [
+            {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}
+                { "data": "{$key_traffic}" },
+            {/foreach}
+            ],
+            {include file='table/lang_chinese.tpl'}
+            })
+    
+    
+            var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
+        </script>
     </body>
-    <script>
-        KTAdminAliveRecord = $('#zero_admin_alive_record').DataTable({
-        ajax: {
-        url: '{$table_config_alive['ajax_url']}',
-        type: "POST"
-        },
-        processing: true,
-        serverSide: true,
-        order: [[ 0, 'desc' ]],
-        stateSave: true,
-        columnDefs: [
-            { width: '5%', targets: 0 },
-            { className: 'text-end', targets: -1 }
-        ],
-        columns: [
-        {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
-            { "data": "{$key_alive}" },
-        {/foreach}
-        ],
-        {include file='table/lang_chinese.tpl'}
-        })
-
-
-        var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
-    </script>
-    <script>
-        KTAdminSigninRecord = $('#zero_admin_signin_record').DataTable({
-        ajax: {
-        url: '{$table_config_signin['ajax_url']}',
-        type: "POST"
-        },
-        processing: true,
-        serverSide: true,
-        order: [[ 0, 'desc' ]],
-        stateSave: true,
-        columnDefs: [
-            { width: '5%', targets: 0 },
-            { className: 'text-end', targets: -1 }
-        ],
-        columns: [
-        {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
-            { "data": "{$key_signin}" },
-        {/foreach}
-        ],
-        {include file='table/lang_chinese.tpl'}
-        })
-
-
-        var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
-    </script>
-    <script>
-        KTAdminSubscribeRecord = $('#zero_admin_subscribe_record').DataTable({
-        ajax: {
-        url: '{$table_config_subscribe['ajax_url']}',
-        type: "POST"
-        },
-        processing: true,
-        serverSide: true,
-        order: [[ 0, 'desc' ]],
-        stateSave: true,
-        columnDefs: [
-            { width: '5%', targets: 0 },
-            { className: 'text-end', targets: -1 }
-        ],
-        columns: [
-        {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
-            { "data": "{$key_subscribe}" },
-        {/foreach}
-        ],
-        {include file='table/lang_chinese.tpl'}
-        })
-
-
-        var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
-    </script>
-    <script>
-        KTAdminTrafficRecord = $('#zero_admin_traffic_record').DataTable({
-        ajax: {
-        url: '{$table_config_traffic['ajax_url']}',
-        type: "POST"
-        },
-        processing: true,
-        serverSide: true,
-        order: [[ 0, 'desc' ]],
-        stateSave: true,
-        columnDefs: [
-            { width: '5%', targets: 0 },
-            { className: 'text-end', targets: -1 }
-        ],
-        columns: [
-        {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}
-            { "data": "{$key_traffic}" },
-        {/foreach}
-        ],
-        {include file='table/lang_chinese.tpl'}
-        })
-
-
-        var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
-    </script>
 </html>

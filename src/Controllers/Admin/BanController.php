@@ -75,7 +75,9 @@ class BanController extends AdminController
                 }
             }
         );
-        $type = "'request'";
+
+        $type_1 = "'request'";
+        $type_2 = "'ban_rule'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var DetectRule $value */
@@ -88,8 +90,8 @@ class BanController extends AdminController
             $tempdata['type']     = $value->type();
             $tempdata['action']   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type.', '.$value->id.')">编辑</a></li>
-                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                            <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type_1.', '.$value->id.')">编辑</a></li>
+                                            <li><a class="dropdown-item" type="button" onclick="KTAdminDelete('.$type_2.', '.$value->id.')">删除</a></li>
                                         </ul>
                                     </div>';
             $data[] = $tempdata;
@@ -168,16 +170,11 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function delete($request, $response, $args)
+    public function deleteBanRule($request, $response, $args)
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);
-        if (!$rule->delete()) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '删除失败'
-            ]);
-        }
+        $rule->delete();
         return $response->withJson([
             'ret' => 1,
             'msg' => '删除成功'

@@ -45,30 +45,30 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-        window.addEventListener('load', () => {
-            {include file='table/js_2.tpl'}
-        })
-    </script>
-    <script>
-        function zeroAdminUpdateWithdrawCommission(mode, id){
-            $.ajax({
-                type: "PUT",
-                url: "/admin/agent/withdraw/update",
-                dataType: "json",
-                data: {
-                    mode,
-                    id
-                },
-                success: function(data){
-                    if(data.ret == 1) {
-                        getResult(data.msg, '', 'success');
-                    }else{
-                        getResult(data.msg, '', 'error');
+        <script>
+            window.addEventListener('load', () => {
+                {include file='table/js_2.tpl'}
+            })
+        </script>
+        <script>
+            function zeroAdminUpdateWithdrawCommission(mode, id){
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/agent/withdraw/update",
+                    dataType: "json",
+                    data: {
+                        mode,
+                        id
+                    },
+                    success: function(data){
+                        if(data.ret == 1) {
+                            getResult(data.msg, '', 'success');
+                        }else{
+                            getResult(data.msg, '', 'error');
+                        }
                     }
-                }
-            });
-        }
-    </script>
+                });
+            }
+        </script>
+    </body>
 </html>

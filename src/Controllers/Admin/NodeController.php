@@ -209,18 +209,11 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function delete($request, $response, $args)
+    public function deleteNode($request, $response, $args)
     {
         $id = $request->getParam('id');
         $node = Node::find($id);
-
-        if (!$node->delete()) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '删除失败'
-            ]);
-        }
-
+        $node->delete();
         return $response->withJson([
             'ret' => 1,
             'msg' => '删除成功'
@@ -248,6 +241,7 @@ class NodeController extends AdminController
             }
         );
 
+        $type = "'node'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var Node $value */
@@ -277,7 +271,7 @@ class NodeController extends AdminController
             $tempdata['action']                  = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                         <ul class="dropdown-menu">
                                                             <li><a class="dropdown-item" href="/admin/node/update/'.$value->id.'">编辑</a></li>
-                                                            <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                            <li><a class="dropdown-item" type="button" onclick="KTAdminDelete('.$type.', '.$value->id.')">删除</a></li>
                                                         </ul>
                                                     </div>';
             $data[] = $tempdata;

@@ -85,7 +85,7 @@ class DetectBan extends Command
                     }
                     if ($tmp != 0) {
                         if ($_ENV['auto_detect_ban'][$tmp]['type'] == 'kill') {
-                            $user->kill_user();
+                            $user->deleteUser();
                         } else {
                             $last_detect_ban_time               = $user->last_detect_ban_time;
                             $end_time                           = date('Y-m-d H:i:s');

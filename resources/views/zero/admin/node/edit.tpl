@@ -113,87 +113,87 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-    const container = document.getElementById('custom_config');
-    var options = {
-        mode: 'tree',
-        modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
-        onModeChange: function (newMode, oldMode) {
-            console.log('Mode switched from', oldMode, 'to', newMode)
-        }
-    };
-    const editor = new JSONEditor(container, options);
-    editor.set({$node->custom_config})
-    </script>
-    <script>
-        function zeroAdminUpdateNode(id) {
-            $.ajax({
-                type: "PUT",
-                url: "/admin/node/update",
-                dataType: "JSON",
-                data: {
-                    id,
-                    name: $('#name').val(),
-                    server: $('#server').val(),
-                    node_ip: $('#node_ip').val(),
-                    traffic_rate: $('#traffic_rate').val(),
-                    flag: $('#node_flag').val(),
-                    sort: $('#sort').val(),
-                    node_class: $('#node_class').val(),
-                    node_group: $('#node_group').val(),
-                    node_bandwidth_limit: $('#node_bandwidth_limit').val(),
-                    bandwidthlimit_resetday: $('#bandwidthlimit_resetday').val(),
-                    node_speedlimit: $('#node_speedlimit').val(),
-                    node_sort: $('#node_sort').val(),
-                    custom_config: editor.get(),
-                },
-                success: function(data){
-                    if(data.ret === 1) {
-                        Swal.fire({
-                            text: data.msg,
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        getResult(data.msg, '', 'error');
-                    }
+        <script>
+            const container = document.getElementById('custom_config');
+            var options = {
+                mode: 'tree',
+                modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+                onModeChange: function (newMode, oldMode) {
+                    console.log('Mode switched from', oldMode, 'to', newMode)
                 }
+            };
+            const editor = new JSONEditor(container, options);
+            editor.set({$node->custom_config})
+        </script>
+        <script>
+            function zeroAdminUpdateNode(id) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/node/update",
+                    dataType: "JSON",
+                    data: {
+                        id,
+                        name: $('#name').val(),
+                        server: $('#server').val(),
+                        node_ip: $('#node_ip').val(),
+                        traffic_rate: $('#traffic_rate').val(),
+                        flag: $('#node_flag').val(),
+                        sort: $('#sort').val(),
+                        node_class: $('#node_class').val(),
+                        node_group: $('#node_group').val(),
+                        node_bandwidth_limit: $('#node_bandwidth_limit').val(),
+                        bandwidthlimit_resetday: $('#bandwidthlimit_resetday').val(),
+                        node_speedlimit: $('#node_speedlimit').val(),
+                        node_sort: $('#node_sort').val(),
+                        custom_config: editor.get(),
+                    },
+                    success: function(data){
+                        if(data.ret === 1) {
+                            Swal.fire({
+                                text: data.msg,
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            getResult(data.msg, '', 'error');
+                        }
+                    }
+                });
+            }
+        </script>
+        
+        <script>
+            // Format options
+            var optionFormat = function(item) {
+            if ( !item.id ) {
+                return item.text;
+            }
+            
+            var span = document.createElement('span');
+            var imgUrl = item.element.getAttribute('data-kt-select2-country');
+            var template = '';
+            
+            template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
+            template += item.text;
+            
+            span.innerHTML = template;
+            
+            return $(span);
+            }
+            
+            // Init Select2 --- more info: https://select2.org/
+            $('#node_flag').select2({
+            templateSelection: optionFormat,
+            templateResult: optionFormat
             });
-        }
-    </script>
-
-<script>
-    // Format options
-var optionFormat = function(item) {
-if ( !item.id ) {
-    return item.text;
-}
-
-var span = document.createElement('span');
-var imgUrl = item.element.getAttribute('data-kt-select2-country');
-var template = '';
-
-template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
-template += item.text;
-
-span.innerHTML = template;
-
-return $(span);
-}
-
-// Init Select2 --- more info: https://select2.org/
-$('#node_flag').select2({
-templateSelection: optionFormat,
-templateResult: optionFormat
-});
-</script>
+        </script>
+    </body>
 </html>

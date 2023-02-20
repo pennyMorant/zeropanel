@@ -95,49 +95,49 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-    </body>
-    <script>
-        function zeroAdminCreateProduct() {
-            $.ajax({
-                type: "POST",
-                url: "/admin/product/create",
-                dataType: "JSON",
-                data: {
-                    name: $('#name').val(),
-                    month_price: $('#month_price').val(),
-                    quarter_price: $('#quarter_price').val(),
-                    half_year_price: $('#half_year_price').val(),
-                    year_price: $('#year_price').val(),
-                    type: $('#type').val(),
-                    traffic: $('#traffic').val(),
-                    class: $('#class').val(),
-                    group: $('#group').val(),
-                    stock: $('#stock').val(),
-                    reset: $('#reset').val(),
-                    speed_limit: $('#speed_limit').val(),
-                    ip_limit: $('#ip_limit').val(),
-                    sort: $('#sort').val(),
-                },
-                success: function(data){
-                    if (data.ret === 1){
-                        Swal.fire({
-                            text: data.msg,
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        getResult(data.msg, '', 'error');
+        <script>
+            function zeroAdminCreateProduct() {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/product/create",
+                    dataType: "JSON",
+                    data: {
+                        name: $('#name').val(),
+                        month_price: $('#month_price').val(),
+                        quarter_price: $('#quarter_price').val(),
+                        half_year_price: $('#half_year_price').val(),
+                        year_price: $('#year_price').val(),
+                        type: $('#type').val(),
+                        traffic: $('#traffic').val(),
+                        class: $('#class').val(),
+                        group: $('#group').val(),
+                        stock: $('#stock').val(),
+                        reset: $('#reset').val(),
+                        speed_limit: $('#speed_limit').val(),
+                        ip_limit: $('#ip_limit').val(),
+                        sort: $('#sort').val(),
+                    },
+                    success: function(data){
+                        if (data.ret === 1){
+                            Swal.fire({
+                                text: data.msg,
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok",
+                                customClass: {
+                                    confirmButton: "btn btn-primary"
+                                }
+                            }).then(function (result) {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else {
+                            getResult(data.msg, '', 'error');
+                        }
                     }
-                }
-            })
-        }
-    </script>
+                })
+            }
+        </script>
+    </body>
 </html>

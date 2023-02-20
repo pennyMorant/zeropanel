@@ -307,7 +307,7 @@ class User extends Model
     /**
      * 销户
      */
-    public function kill_user(): bool
+    public function deleteUser(): bool
     {
         $uid   = $this->id;
         $email = $this->email;
