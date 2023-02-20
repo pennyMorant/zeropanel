@@ -120,11 +120,18 @@ var KTSignupGeneral = function() {
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
-                                    }).then((function(t) {
-                                        if (t.isConfirmed) {
-                                            e.reset();
-                                            var a = e.getAttribute("data-kt-redirect-url");
-                                            a && (location.href = a)
+                                    }).then((function(result) {
+                                        if (result.isConfirmed) {
+                                            form.reset();  // reset form                    
+                                            passwordMeter.reset();  // reset password meter
+
+                                            //form.submit();
+
+                                            //form.submit(); // submit form
+                                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                            if (redirectUrl) {
+                                                location.href = redirectUrl;
+                                            }
                                         }
                                     }))
                                 } else {

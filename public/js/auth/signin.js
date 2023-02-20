@@ -91,7 +91,7 @@ var KTSigninGeneral = function() {
                                         customClass: {
                                             confirmButton: "btn btn-primary"
                                         }
-                                    }).then((function(t) {
+                                    }).then((function(result) {
                                         if (result.isConfirmed) {
                                             form.querySelector('[name="email"]').value= "";
                                             form.querySelector('[name="password"]').value= ""; 
