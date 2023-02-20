@@ -335,10 +335,9 @@ class AuthController extends BaseController
         $user->signup_ip        = $_SERVER['REMOTE_ADDR'];
         $user->theme            = $_ENV['theme'];
         $user->node_group       = 0;
-
+        $user->save();
         Auth::login($user->id, 3600);
         $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
-        $user->save();
 
         return $response->withJson([
             'ret'   => 1,
