@@ -326,10 +326,6 @@ class AuthController extends BaseController
             $gift_user->transfer_enable += $invitation['invitation_to_signup_traffic_reward'] * 1024 * 1024 * 1024;
             $gift_user->save();
         }
-        
-        if ($telegram_id) {
-            $user->telegram_id = $telegram_id;
-        }
 
         $user->class_expire     = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
         $user->class            = $configs['signup_default_class'];
