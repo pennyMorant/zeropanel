@@ -516,9 +516,9 @@
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">注册模式</label>
                                                                     <select class="form-select mb-5" id="reg_mode" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['reg_mode'] == 0} selected{/if}>关闭注册</option>
-                                                                        <option value="1" {if $settings['reg_mode'] == 1} selected{/if}>开启注册</option>
-                                                                        <option value="3" {if $settings['reg_mode'] == 3} selected{/if}>仅限邀请注册</option>
+                                                                        <option value="close" {if $settings['reg_mode'] == 'close'} selected{/if}>关闭注册</option>
+                                                                        <option value="open" {if $settings['reg_mode'] == 'open'} selected{/if}>开启注册</option>
+                                                                        <option value="invite" {if $settings['reg_mode'] == 'invite'} selected{/if}>仅限邀请注册</option>
                                                                     </select>
                                                                     <label class="form-label">注册邮箱验证</label>
                                                                     <select class="form-select mb-5" id="reg_email_verify" data-control="select2" data-hide-search="true">

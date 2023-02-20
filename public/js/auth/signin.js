@@ -1,56 +1,81 @@
 "use strict";
+
+// Class definition
 var KTSigninGeneral = function() {
-    var e, t, i;
-    return {
-        init: function() {
-            e = document.querySelector("#kt_sign_in_form"),
-            t = document.querySelector("#kt_sign_in_submit"),
-            i = FormValidation.formValidation(e, {
-                fields: {
-                    email: {
+    // Elements
+    var form;
+    var submitButton;
+    var validator;
+
+    // Handle form
+    var handleValidation = function(e) {
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+        validator = FormValidation.formValidation(
+			form,
+			{
+				fields: {					
+					'email': {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "The value is not a valid email address"
+                                message: 'The value is not a valid email address',
                             },
-                            notEmpty: {
-                                message: "Email address is required"
-                            }
-                        }
-                    },
-                    password: {
+							notEmpty: {
+								message: 'Email address is required'
+							}
+						}
+					},
+                    'password': {
                         validators: {
                             notEmpty: {
-                                message: "The password is required"
+                                message: 'The password is required'
                             }
                         }
-                    }
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger,
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: ".fv-row",
-                        eleInvalidClass: "",
-                        eleValidClass: ""
+                    } 
+				},
+				plugins: {
+					trigger: new FormValidation.plugins.Trigger(),
+					bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: '.fv-row',
+                        eleInvalidClass: '',  // comment to enable invalid state icons
+                        eleValidClass: '' // comment to enable valid state icons
                     })
-                }
-            }),
-            t.addEventListener("click", (function(n) {
-                n.preventDefault(),
-                i.validate().then((function(i) {
-                    if ($('div').is('.cf-turnstile') == true) {
-                        var datas = {
-                            email: $("#signin-email").val(),
-                            passwd: $("#signin-passwd").val(),                               
-                            turnstile: turnstile.getResponse()
-                        };
-                    } else {
-                        datas = {
-                            email: $("#signin-email").val(),
-                            passwd: $("#signin-passwd").val()             
-                        };
-                    }
-                    "Valid" == i ? (t.setAttribute("data-kt-indicator", "on"), t.disabled = !0, setTimeout((function() {
+				}
+			}
+		);	
+    }
+
+    var handleSubmitSignin = function(e) {
+        // Handle form submit
+        submitButton.addEventListener('click', function (e) {
+            // Prevent button default action
+            e.preventDefault();
+
+            if ($('div').is('.cf-turnstile') == true) {
+                var datas = {
+                    email: $("#signin-email").val(),
+                    passwd: $("#signin-passwd").val(),                               
+                    turnstile: turnstile.getResponse()
+                };
+            } else {
+                datas = {
+                    email: $("#signin-email").val(),
+                    passwd: $("#signin-passwd").val()             
+                };
+            }
+            // Validate form
+            validator.validate().then(function (status) {
+                if (status == 'Valid') {
+                    // Show loading indication
+                    submitButton.setAttribute('data-kt-indicator', 'on');
+
+                    // Disable button to avoid multiple click 
+                    submitButton.disabled = true;
+                    
+
+                    // Simulate ajax request
+                    setTimeout(function() {
+                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         $.ajax({
                             type: 'POST',
                             url: "/auth/signin",
@@ -67,11 +92,13 @@ var KTSigninGeneral = function() {
                                             confirmButton: "btn btn-primary"
                                         }
                                     }).then((function(t) {
-                                        if (t.isConfirmed) {
-                                            e.querySelector('[name="email"]').value = "",
-                                            e.querySelector('[name="password"]').value = "";
-                                            var i = e.getAttribute("data-kt-redirect-url");
-                                            i && (location.href = i)
+                                        if (result.isConfirmed) {
+                                            form.querySelector('[name="email"]').value= "";
+                                            form.querySelector('[name="password"]').value= ""; 
+                                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                            if (redirectUrl) {
+                                                location.href = redirectUrl;
+                                            }
                                         }
                                     }))
                                 }else{
@@ -84,25 +111,46 @@ var KTSigninGeneral = function() {
                                             confirmButton: "btn btn-primary"
                                         }
                                     });
-                                    t.removeAttribute("data-kt-indicator");
-                                    t.disabled = !1;
+                                    // Hide loading indication
+                                    submitButton.removeAttribute('data-kt-indicator');
+
+                                    // Enable button
+                                    submitButton.disabled = false;
                                 }
                             }
                         })
-                    }), 2e3)) : Swal.fire({
-                        text: "Sorry, it seems some errors were detected, please try again",
+                    }, 2000);   						
+                } else {
+                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                    Swal.fire({
+                        text: "Sorry, looks like there are some errors detected, please try again.",
                         icon: "error",
-                        buttonsStyling: !1,
-                        confirmButtonText: "Ok",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
-                    })
-                }))
-            }))
-        }
+                    });
+                }
+            });
+		});
     }
-} ();
-KTUtil.onDOMContentLoaded((function() {
-    KTSigninGeneral.init()
-}));
+
+    // Public functions
+    return {
+        // Initialization
+        init: function() {
+            form = document.querySelector('#kt_sign_in_form');
+            submitButton = document.querySelector('#kt_sign_in_submit');
+            
+            handleValidation();
+            handleSubmitSignin(); // used for demo purposes only, if you use the below ajax version you can uncomment this one
+            //handleSubmitAjax(); // use for ajax submit
+        }
+    };
+}();
+
+// On document ready
+KTUtil.onDOMContentLoaded(function() {
+    KTSigninGeneral.init();
+});

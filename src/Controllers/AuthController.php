@@ -9,7 +9,6 @@ use App\Models\{
     EmailVerify
 };
 use App\Utils\{
-    GA,
     Hash,
     Check,
     Tools,
@@ -39,7 +38,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signin($request, $response, $args)
+    public function signInIndex($request, $response, $args)
     {
         $captcha = [];
 
@@ -48,7 +47,6 @@ class AuthController extends BaseController
         }
 
         $this->view()
-            ->assign('base_url', Setting::obtain('website_url'))
             ->assign('captcha', $captcha)
             ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signin.tpl');
@@ -70,30 +68,28 @@ class AuthController extends BaseController
         $rememberMe = $request->getParam('remember_me');
 
         $trans = I18n::get();
-        if (Setting::obtain('enable_signin_captcha') == true) {
-            $ret = Captcha::verify($request->getParams());
-            if (!$ret) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('captcha failed')
-                ]);
+        try {
+            if (Setting::obtain('enable_signin_captcha') == true) {
+                $ret = Captcha::verify($request->getParams());
+                if (!$ret) {
+                    throw new \Exception($trans->t('captcha failed'));
+                }
             }
-        }
 
-        $user = User::where('email', $email)->first();
-        if ($user == null) {
+            $user = User::where('email', $email)->first();
+            if ($user == null) {
+                throw new \Exception($trans->t('email does not exist'));
+            }
+
+            if (!Hash::checkPassword($user->password, $passwd)) {
+                // 记录登录失败
+                $user->collectSigninIp($_SERVER['REMOTE_ADDR'], 1);
+                throw new \Exception($trans->t('passwd error'));
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => $trans->t('email does not exist')
-            ]);
-        }
-
-        if (!Hash::checkPassword($user->password, $passwd)) {
-            // 记录登录失败
-            $user->collectSigninIp($_SERVER['REMOTE_ADDR'], 1);
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => $trans->t('passwd error')
+                'msg' => $e->getMessage(),
             ]);
         }
 
@@ -204,32 +200,30 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signUp($request, $response, $args)
+    public function signUpIndex($request, $response, $args)
     {
-        $captcha = [];
+        if (Setting::obtain('reg_mode') == 'close') {
+            $this->view()->display('auth/soon.tpl');
+        } else {
 
-        if (Setting::obtain('enable_signup_captcha') === true) {
-            $captcha = Captcha::generate();
-        }
+            $captcha = [];
 
-        $ary  = $request->getQueryParams();
-        $code = '';
-        if (isset($ary['code'])) {
-            $antiXss = new AntiXSS();
-            $code    = $antiXss->xss_clean($ary['code']);
-        }
-        
-        if (Setting::obtain('reg_mode')  == 'close') {
+            if (Setting::obtain('enable_signup_captcha') === true) {
+                $captcha = Captcha::generate();
+            }
+            $ary  = $request->getQueryParams();
+            $code = '';
+            if (isset($ary['code'])) {
+                $antiXss = new AntiXSS();
+                $code    = $antiXss->xss_clean($ary['code']);
+            }
             $this->view()
-                ->display('auth/soon.tpl');
-            return $response;
+                ->assign('code', $code)
+                ->assign('base_url', Setting::obtain('website_url'))
+                ->assign('captcha', $captcha)
+                ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
+                ->display('auth/signup.tpl');
         }
-        $this->view()
-            ->assign('code', $code)
-            ->assign('base_url', Setting::obtain('website_url'))
-            ->assign('captcha', $captcha)
-            ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
-            ->display('auth/signup.tpl');
         return $response;
     }
 
@@ -238,30 +232,72 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function register_helper($email, $passwd, $code, $telegram_id)
+    public function signUpHandle($request, $response, $args)
     {
-        $trans = I18n::get();
-        
-        if ($code == '' && Setting::obtain('reg_mode') === 'invite') {
-            $res['ret'] = 0;
-            $res['msg'] = $trans->t('referral code must be filled in');
-            return $res;
-        }
+        $email = $request->getParam('email');
+        $email = trim($email);
+        $email = strtolower($email);
+        $passwd = $request->getParam('passwd');
+        $repasswd = $request->getParam('repasswd');
+        $code = trim($request->getParam('code'));
 
-        $c = InviteCode::where('code', $code)->first();
-        if ($code !== '') {
-            if ($c == null) {
-                $res['ret'] = 0;
-                $res['msg'] = $trans->t('referral code does not exist');
-                return $res;
-            } else if ($c->user_id != 0) {
-                $gift_user = User::where('id', $c->user_id)->first();
-                if ($gift_user == null) {
-                    $res['ret'] = 0;
-                    $res['msg'] = $trans->t('referral code has expired');
-                    return $res;
+        $trans = I18n::get();
+
+        try {
+            if (Setting::obtain('enable_signup_captcha') == true) {
+                $ret = Captcha::verify($request->getParams());
+                if (!$ret) {
+                    throw new \Exception($trans->t('captcha failed'));
                 }
             }
+
+            // check email format
+            $check_res = Check::isEmailLegal($email);
+            if ($check_res['ret'] == 0) {
+                return $response->withJson($check_res);
+            }
+
+            // check email
+            $user = User::where('email', $email)->first();
+            if ($user != null) {
+                throw new \Exception($trans->t('email has been registered'));
+            }
+
+            if (Setting::obtain('reg_email_verify')) {
+                $email_code = trim($request->getParam('emailcode'));
+                $mailcount = EmailVerify::where('email', '=', $email)
+                    ->where('code', '=', $email_code)
+                    ->where('expire_in', '>', time())
+                    ->first();
+                if ($mailcount == null) {
+                    throw new \Exception($trans->t('email verification code error'));
+                }
+            }
+
+            if (Setting::obtain('reg_email_verify')) {
+                EmailVerify::where('email', $email)->delete();
+            }
+
+            if ($code == '' && Setting::obtain('reg_mode') === 'invite') {
+                throw new \Exception($trans->t('referral code must be filled in'));
+            }
+
+            $c = InviteCode::where('code', $code)->first();
+            if ($code !== '') {
+                if ($c == null) {
+                    throw new \Exception($trans->t('referral code does not exist'));
+                } else if ($c->user_id != 0) {
+                    $gift_user = User::where('id', $c->user_id)->first();
+                    if ($gift_user == null) {
+                        throw new \Exception ($trans->t('referral code has expired'));
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => $e->getMessage(),
+            ]);
         }
         
         $configs = Setting::getClass('register');
@@ -299,94 +335,19 @@ class AuthController extends BaseController
         $user->class            = $configs['signup_default_class'];
         $user->node_connector   = $configs['signup_default_ip_limit'];
         $user->node_speedlimit  = $configs['signup_default_speed_limit'];
-        $user->signup_date         = date('Y-m-d H:i:s');
-        $user->signup_ip           = $_SERVER['REMOTE_ADDR'];
+        $user->signup_date      = date('Y-m-d H:i:s');
+        $user->signup_ip        = $_SERVER['REMOTE_ADDR'];
         $user->theme            = $_ENV['theme'];
         $user->node_group       = 0;
 
-        if ($user->save()) {
-            Auth::login($user->id, 3600);
-            // 记录登录成功
-            $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
-            $user->sendMail(
-                '',
-                'news/welcome.tpl',
-                [],
-                [],
-                $_ENV['email_queue']
-            );
-            $res['ret'] = 1;
-            $res['msg'] = $trans->t('signup success');
+        Auth::login($user->id, 3600);
+        $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
+        $user->save();
 
-            return $res;
-        }
-        $res['ret'] = 0;
-        $res['msg'] = '未知错误';
-        return $res;
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function registerHandle($request, $response, $args)
-    {
-        $email = $request->getParam('email');
-        $email = trim($email);
-        $email = strtolower($email);
-        $passwd = $request->getParam('passwd');
-        $repasswd = $request->getParam('repasswd');
-        $code = trim($request->getParam('code'));
-
-        $trans = I18n::get();
-
-        if (Setting::obtain('enable_signup_captcha') == true) {
-            $ret = Captcha::verify($request->getParams());
-            if (!$ret) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('captcha failed')
-                ]);
-            }
-        }
-
-        // check email format
-        $check_res = Check::isEmailLegal($email);
-        if ($check_res['ret'] == 0) {
-            return $response->withJson($check_res);
-        }
-
-        // check email
-        $user = User::where('email', $email)->first();
-        if ($user != null) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => $trans->t('email has been registered')
-            ]);
-        }
-
-        if (Setting::obtain('reg_email_verify')) {
-            $email_code = trim($request->getParam('emailcode'));
-            $mailcount = EmailVerify::where('email', '=', $email)
-                ->where('code', '=', $email_code)
-                ->where('expire_in', '>', time())
-                ->first();
-            if ($mailcount == null) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('email verification code error')
-                ]);
-            }
-        }
-
-        if (Setting::obtain('reg_email_verify')) {
-            EmailVerify::where('email', $email)->delete();
-        }
-        
-        return $response->withJson(
-            $this->register_helper($email, $passwd, $code, 0)
-        );
+        return $response->withJson([
+            'ret'   => 1,
+            'msg'   => $trans->t('signup success'),
+        ]);
     }
 
     /**

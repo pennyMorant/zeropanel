@@ -117,7 +117,6 @@ var KTUsersUpdateEmail = function () {
                                             }
                                         }).then(function (result) {
                                             if (result.isConfirmed) {
-                                                modal.hide();
                                                 location.reload();
                                             }
                                         });

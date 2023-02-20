@@ -98,12 +98,10 @@ return function (SlimApp $app) {
 
     // Auth
     $app->group('/auth', function (Group $group) {
-        $group->get('/signin',           App\Controllers\AuthController::class . ':signin');
-        $group->post('/qrcode_check',    App\Controllers\AuthController::class . ':qrcode_check');
-        $group->post('/signin',           App\Controllers\AuthController::class . ':signinHandle');
-        $group->post('/qrcode_login',    App\Controllers\AuthController::class . ':qrcode_loginHandle');
-        $group->get('/signup',           App\Controllers\AuthController::class . ':signUp');
-        $group->post('/register',        App\Controllers\AuthController::class . ':registerHandle');
+        $group->get('/signin',           App\Controllers\AuthController::class . ':signInIndex');
+        $group->post('/signin',           App\Controllers\AuthController::class . ':signInHandle');
+        $group->get('/signup',           App\Controllers\AuthController::class . ':signUpIndex');
+        $group->post('/signup',        App\Controllers\AuthController::class . ':signUpHandle');
         $group->post('/send',            App\Controllers\AuthController::class . ':sendVerify');
         $group->get('/logout',           App\Controllers\AuthController::class . ':logout');
 

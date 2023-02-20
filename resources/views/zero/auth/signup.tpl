@@ -27,15 +27,23 @@
 									<h1 class="text-dark fw-bolder mb-6">{$trans->t('signup')}</h1>
 								</div>
 								<div class="fv-row mb-5">
-									<input class="form-control form-control-lg bg-transparent" type="email" placeholder="{$trans->t('email')}" name="email" id="email" autocomplete="off" data-kt-translate="sign-up-input-email" />
+									<input class="form-control form-control-lg bg-transparent" type="email" placeholder="{$trans->t('email')}" name="email" id="email" autocomplete="off" />
 								</div>
 
-								<div class="fv-row mb-5" data-kt-password-meter="true">			
-									<input class="form-control form-control-lg bg-transparent" type="password" placeholder="{$trans->t('passwd')}" name="password" id="passwd" autocomplete="off" data-kt-translate="sign-up-input-password" />
-									<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-										<i class="bi bi-eye-slash fs-2"></i>
-										<i class="bi bi-eye fs-2 d-none"></i>
-									</span>
+								<div class="fv-row mb-5" data-kt-password-meter="true">
+									<div class="position-relative mb-3">		
+										<input class="form-control form-control-lg bg-transparent" type="password" placeholder="{$trans->t('passwd')}" name="password" id="passwd" autocomplete="off" />
+										<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+											<i class="bi bi-eye-slash fs-2"></i>
+											<i class="bi bi-eye fs-2 d-none"></i>
+										</span>
+									</div>
+									<div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+										<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+										<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+										<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+										<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+									</div>
 								</div>
 
 								<div class="fv-row mb-5">
@@ -43,7 +51,7 @@
 								</div>
 
                                 <div class="fv-row mb-5">
-                                    <input class="form-control form-control-lg bg-transparent" type="text" placeholder="{$trans->t('referral code')}" name="code" id="referral_code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
+                                    <input class="form-control form-control-lg bg-transparent" type="text" placeholder="{$trans->t('referral code')}" name="code" id="code" autocomplete="off" data-kt-translate="sign-up-input-last-name" />
                                 </div>
 								{if $config['enable_signup_captcha'] == true && $config['captcha_provider'] == 'turnstile' && $captcha['turnstile_sitekey'] != ''}
 									<div class="fv-row mb-7">
