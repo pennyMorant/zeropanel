@@ -80,8 +80,10 @@ class OrderController extends BaseController
                     if (!in_array($product_price, $all_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    if ($user->class == $product->class && $product->reset_traffic_cycle != $user->userTrafficResetCycle()) {
-                        throw new \Exception('The product attribute is different from the user current product attribute, and the product cannot be purchased');
+                    if ($user->class == $product->class) {
+                        if ($product->reset_traffic_cycle != $user->userTrafficResetCycle() || $user->reset_traffic_value != $product->traffic) {
+                            throw new \Exception('The product attribute is different from the user current product attribute, and the product cannot be purchased');
+                        }
                     }
 
                     $order = new Order();

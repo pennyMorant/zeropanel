@@ -6,9 +6,6 @@ namespace App\Models;
  * @property-read   int     $id
  * @property        string  $name
  * @property        float   $price
- * @property        array   $content
- * @property        int     $auto_renew
- * @property        int     $auto_reset_bandwidth
  * @property        int     $status
  */
 class Product extends Model
@@ -93,16 +90,14 @@ class Product extends Model
         case 2:
             $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
             $user->save();
-        break;
-        
-        case 1:
-           
+        break;      
+        case 1:         
             $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
             $user->u = 0;
             $user->d = 0;
             $user->last_day_t = 0;
             
-            if ($user->class == $this->class) {
+            if ($user->class == $this->class && $user->reset_traffic_value == $this->traffic && $user->userTrafficResetCycle() == $this->reset_traffic_cycle) {
                 $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
             } else {
                 $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
@@ -117,8 +112,10 @@ class Product extends Model
             $user->product_id = $this->id;
             if ($this->reset_traffic_cycle === 1 && $time > 30) {
                 $user->reset_traffic_date = date('d');
+                $user->reset_traffic_value = $this->traffic;
             } else if ($this->reset_traffic_cycle === 2 && $time > 30) {
                 $user->reset_traffic_date = 1;
+                $user->reset_traffic_value = $this->traffic;
             }
             $user->save();
         break;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-02-18 15:17:24
+-- 生成日期： 2023-02-21 07:19:35
 -- 服务器版本： 10.10.3-MariaDB
 -- PHP 版本： 8.2.3
 
@@ -371,6 +371,7 @@ CREATE TABLE `user` (
   `u` bigint(20) NOT NULL,
   `d` bigint(20) NOT NULL,
   `product_id` int(11) DEFAULT NULL COMMENT '用户当前产品ID',
+  `reset_traffic_value` int(11) DEFAULT NULL COMMENT '重置流量的值',
   `reset_traffic_date` int(11) DEFAULT NULL COMMENT '重置流量日期',
   `transfer_enable` bigint(20) NOT NULL COMMENT '总流量',
   `enable` tinyint(4) NOT NULL DEFAULT 1 COMMENT '是否启用',

@@ -105,14 +105,10 @@ class Job extends Command
             if ($user == null) {
                 continue;
             }
-            $product = Product::where('id', $user->product_id)->first();
-            if ($product == null) {
-                continue;
-            }
             if ($product->reset_traffic_date != null) {               
                 if (date('d') === $user->reset_traffic_date) {
-                    echo('用户ID:' . $user->id . ' 根据套餐ID:' . $product->id . ' 重置流量为' . $product->traffic . 'GB' . PHP_EOL);
-                    $user->transfer_enable = Tools::toGB($product->traffic);
+                    echo('用户ID:' . $user->id . ' 重置流量为' . $user->reset_traffic_value . 'GB' . PHP_EOL);
+                    $user->transfer_enable = Tools::toGB($user->reset_traffic_valuee);
                     $user->u = 0;
                     $user->d = 0;
                     $user->last_day_t = 0;
@@ -121,7 +117,7 @@ class Job extends Command
                         Setting::obtain('website_name') . '-您的流量被重置了',
                         'news/warn.tpl',
                         [
-                            'text' => '您好，根据您所订购的订单 ID:' . $order->no . '，流量已经被重置为' . $product->reset_value() . 'GB'
+                            'text' => '您好，您的流量被重置为' . $user->reset_traffic_value . 'GB' 
                         ],
                         [],
                         $_ENV['email_queue']
@@ -451,7 +447,7 @@ class Job extends Command
             $user->class = 0;
             $user->node_connector = $configs['signup_default_ip_limit'];
             $user->node_speedlimit = $configs['signup_default_speed_limit'];
-            $user->product_id = NULL;
+            $user->reset_traffic_value = NULL;
             $user->reset_traffic_date = NULL;
             $user->save();
             $product = Product::where('id', $user->product_id)->where('stock', '!=', -1)->first();
