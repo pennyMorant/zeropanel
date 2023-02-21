@@ -54,24 +54,24 @@
                                                     <input class="form-control mb-5" id="traffic_rate" name="traffic_rate" type="text" placeholder="流量比例" value="1">
                                                     <label class="form-label required">节点旗帜</label>
                                                     <select class="form-select mb-5" id="node_flag">
-                                                        <option value="us" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">美国</option>
-                                                        <option value="gb" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
-                                                        <option value="ca" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">加拿大</option>
-                                                        <option value="rus" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg">俄罗斯</option>
-                                                        <option value="hk" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">香港</option>
-                                                        <option value="jp" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">日本</option>
-                                                        <option value="sg" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">新加坡</option>
-                                                        <option value="kr" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg">韩国</option>
-                                                        <option value="au" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg">澳大利亚</option>
-                                                        <option value="tr" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg">土耳其</option>
-                                                        <option value="arg" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg">阿根廷</option>
-                                                        <option value="br" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg">巴西</option>
-                                                        <option value="de" data-kt-select2-country="/theme/zero/assets/media/flags/germany.svg">德国</option>
-                                                        <option value="fr" data-kt-select2-country="/theme/zero/assets/media/flags/france.svg">法国</option>
-                                                        <option value="irl" data-kt-select2-country="/theme/zero/assets/media/flags/ireland.svg">爱尔兰</option>
-                                                        <option value="th" data-kt-select2-country="/theme/zero/assets/media/flags/thailand.svg">泰国</option>
-                                                        <option value="phi" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg">菲律宾</option>
-                                                        <option value="my" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
+                                                        <option value="united-states" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">美国</option>
+                                                        <option value="united-kingdom" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
+                                                        <option value="canada" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">加拿大</option>
+                                                        <option value="russia" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg">俄罗斯</option>
+                                                        <option value="hong-kong" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">香港</option>
+                                                        <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">日本</option>
+                                                        <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">新加坡</option>
+                                                        <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg">韩国</option>
+                                                        <option value="australia" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg"}>澳大利亚</option>
+                                                        <option value="turkey" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg">土耳其</option>
+                                                        <option value="argentina" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg">阿根廷</option>
+                                                        <option value="brazil" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg">巴西</option>
+                                                        <option value="germany" data-kt-select2-country="/theme/zero/assets/media/flags/germany.svg">德国</option>
+                                                        <option value="france" data-kt-select2-country="/theme/zero/assets/media/flags/france.svg">法国</option>
+                                                        <option value="ireland" data-kt-select2-country="/theme/zero/assets/media/flags/ireland.svg">爱尔兰</option>
+                                                        <option value="thailand" data-kt-select2-country="/theme/zero/assets/media/flags/thailand.svg">泰国</option>
+                                                        <option value="philippines" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg">菲律宾</option>
+                                                        <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
                                                     <select class="form-select mb-5" id="sort" data-control="select2" data-hide-search="true">
