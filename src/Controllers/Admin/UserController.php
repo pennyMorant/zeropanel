@@ -38,26 +38,13 @@ class UserController extends AdminController
         $table_config['total_column'] = array(
             
             'id'                    => 'ID',
-            //'remark'                => '备注',
             'email'                 => '邮箱',
             'money'                 => '金钱',
-            //'node_group'            => '群组',
             'class'                 => '等级',
             'class_expire'          => '等级过期时间',
-            //'passwd'                => '连接密码',
-            //'online_ip_count'       => '在线IP数',
-            //'last_use_time'          => '上次使用时间',
-            //'used_traffic'          => '已用流量/GB',
             'enable_traffic'        => '总流量',
-            //'today_traffic'         => '今日流量',
             'enable'                => '启用',
             'is_admin'              => '管理员',
-            //'signup_date'              => '注册时间',
-            //'signup_ip'                => '注册IP',
-           // 'ref_by'                => '邀请人ID',
-            //'ref_by_name'      => '邀请人用户名',
-            //'top_up'                => '累计充值',
-            //'rebate'                => '销售代理返利百分比',
             'action'                    => '操作',
         );
         $table_config['default_show_column'] = array('op', 'id', 'name', 'remark', 'email');
@@ -253,13 +240,9 @@ class UserController extends AdminController
         $query = User::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if ($order_field == 'used_traffic') {
-                    $order_field = 'u + d';
-                } elseif ($order_field == 'enable_traffic') {
+                if ($order_field == 'enable_traffic') {
                     $order_field = 'transfer_enable';
-                } elseif ($order_field == 'today_traffic') {
-                    $order_field = 'u + d - last_day_t';
-                } elseif ($order_field == 'op') {
+                } elseif ($order_field == 'action') {
                     $order_field = 'id';
                 }
             },
@@ -270,26 +253,13 @@ class UserController extends AdminController
         foreach ($query['datas'] as $value) {
             /** @var User $value */
             $tempdata['id']                     = $value->id;
-            //$tempdata['remark']                 = $value->remark;
             $tempdata['email']                  = $value->email;
             $tempdata['money']                  = $value->money;
-            //$tempdata['node_group']             = $value->node_group;
             $tempdata['class']                  = $value->class;
             $tempdata['class_expire']           = $value->class_expire;
-            //$tempdata['passwd']                 = $value->passwd;
-            //$tempdata['online_ip_count']        = $value->online_ip_count();
-            //$tempdata['last_use_time']          = $value->lastUseTime();
-            //$tempdata['used_traffic']           = Tools::flowToGB($value->u + $value->d);
             $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable).'GB';
-            //$tempdata['today_traffic']          = $value->TodayusedTraffic();
             $tempdata['is_admin']               = $value->is_admin();
             $tempdata['enable']                 = $value->enable();
-            //$tempdata['signup_date']            = $value->signup_date;
-            //$tempdata['signup_ip']              = $value->signup_ip;
-            //$tempdata['ref_by']                 = $value->ref_by;
-            //$tempdata['ref_by_name']            = $value->ref_by_name();
-            //$tempdata['top_up']                 = $value->get_top_up();
-            //$tempdata['rebate']                 = $value->rebate > 0 ? $value->rebate . '%' : ($configs['rebate_ratio'] * 100) . '%';
             $tempdata['action']                   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                         <ul class="dropdown-menu">
                                                             <li><a class="dropdown-item" href="/admin/user/update/'.$value->id.'">编辑</a></li>

@@ -3,6 +3,7 @@ ajax: {
 url: '{$table_config['ajax_url']}',
 type: "POST"
 },
+searchDelay: 500,
 processing: true,
 serverSide: true,
 scrollCollapse: true,
@@ -21,6 +22,3 @@ columns: [
 fixedColumns: true,
 {include file='table/lang_chinese.tpl'}
 })
-
-
-var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));

@@ -34,20 +34,9 @@ class NodeController extends AdminController
             'name'                    => '节点名称',
             'onlineuser'              => '在线人数',           
             'sort'                    => '类型',
-            //'server'                  => '节点地址',
-            //'outaddress'              => '出口地址',
             'node_ip'                 => '节点IP',
-            //'info'                    => '节点信息',
-            //'flag'                    => '旗帜',
-            //'traffic_rate'            => '流量比率',
-            //'node_group'              => '节点群组',
             'node_class'              => '节点等级',
-            //'node_sort'               => '节点排序',
             'node_speedlimit'         => '速度',
-            //'node_bandwidth'          => '已走流量/GB',
-            //'node_bandwidth_limit'    => '流量限制/GB',
-            //'bandwidthlimit_resetday' => '流量重置日',
-            //'node_heartbeat'          => '上一次活跃时间',
             'status'                    => '显示与隐藏',
             'action'                  => '操作',
         );
@@ -253,20 +242,9 @@ class NodeController extends AdminController
             $tempdata['name']                    = $value->name;
             $tempdata['onlineuser']              = $value->get_node_online_user_count();
             $tempdata['sort']                    = $value->sort();
-            //$tempdata['server']                  = $value->server;
-            //$tempdata['outaddress']              = $value->getOutAddress();
             $tempdata['node_ip']                 = $value->node_ip;
-            //$tempdata['info']                    = $value->info;
-            //$tempdata['flag']                    = $value->flag;
-            //$tempdata['traffic_rate']            = $value->traffic_rate;
-            //$tempdata['node_group']              = $value->node_group;
-            //$tempdata['node_sort']               = $value->node_sort;
             $tempdata['node_class']              = $value->node_class;
             $tempdata['node_speedlimit']         = $value->node_speedlimit == 0 ? '不限速' : $value->node_speedlimit . 'Mbps';
-            //$tempdata['node_bandwidth']          = Tools::flowToGB($value->node_bandwidth);
-            //$tempdata['node_bandwidth_limit']    = Tools::flowToGB($value->node_bandwidth_limit);
-            //$tempdata['bandwidthlimit_resetday'] = $value->bandwidthlimit_resetday;
-            //$tempdata['node_heartbeat']          = $value->node_heartbeat();
             $tempdata['status']                  = $value->status();
             $tempdata['action']                  = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                         <ul class="dropdown-menu">

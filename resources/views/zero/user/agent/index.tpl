@@ -713,7 +713,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-toolbar">
-                                                        <div class="d-flex align-items-center position-relative my-1">
+                                                        <div class="d-flex align-items-center position-relative me-3">
                                                             <span class="svg-icon svg-icon-1 position-absolute ms-6"> 
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -729,8 +729,7 @@
                                                     <!-- begin datatable -->
                                                     <table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_agent_user_list_table">
                                                         <thead>
-                                                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                                                                
+                                                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                               
                                                                 <th>User ID</th>
                                                                 <th>User Email</th>
                                                                 <th>User Balance</th>
