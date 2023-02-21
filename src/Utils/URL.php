@@ -44,7 +44,7 @@ class URL
         }
         // 等级筛选 end
 
-        $nodes = $query->where('type', '1')->orderBy('node_sort', 'desc')->orderBy('name')->get();
+        $nodes = $query->where('status', '1')->orderBy('node_sort', 'desc')->orderBy('name')->get();
 
 
         return $nodes;
