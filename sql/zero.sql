@@ -193,7 +193,7 @@ CREATE TABLE `node` (
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
   `node_ip` varchar(182) DEFAULT NULL,
   `node_group` int(11) NOT NULL DEFAULT 0,
-  `online` tinyint(1) NOT NULL DEFAULT 1
+  `online` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -395,7 +395,6 @@ CREATE TABLE `user` (
   `node_group` int(11) NOT NULL DEFAULT 0 COMMENT '分组',
   `telegram_id` bigint(20) DEFAULT NULL,
   `traffic_notified` tinyint(1) DEFAULT 0,
-  `lang` varchar(128) NOT NULL DEFAULT 'zh-cn' COMMENT '用户的语言',
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
   `withdraw_account` varchar(256) DEFAULT NULL
