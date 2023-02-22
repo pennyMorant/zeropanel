@@ -208,7 +208,7 @@ class RecordController extends AdminController
                     $tempdata['rate']           = $value->rate;
                     $tempdata['origin_traffic'] = Tools::flowAutoShow($value->u + $value->d);
                     $tempdata['traffic']        = $value->traffic;
-                    $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
+                    $tempdata['datetime']       = date('Y-m-d H', $value->datetime);
                     $data[] = $tempdata;
                     
                 }

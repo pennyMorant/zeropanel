@@ -177,8 +177,8 @@ class URL
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
         $item = $node->getShadowsocksItem($user, $node->custom_config, $emoji);
-        $return = 'ss://' . $item['method'] . ':' . $item['passwd'] . '@' . $item['address'] . ':' . $item['port'];
-        return $return . '#' . rawurlencode($item['remark']);
+        $config = $item['method'] . ':' . $item['passwd'] . '@' . $item['address'] . ':' . $item['port'];
+        return 'ss://'. base64_encode($config) . '#' . rawurlencode($item['remark']);
     }
 
 
@@ -201,13 +201,13 @@ class URL
     public static function getTrojanURL(User $user, Node $node, bool $emoji = false): string
     {
         $server = $node->getTrojanItem($user, $node->custom_config, $emoji);
-        $return = 'trojan://' . $server['passwd'] . '@' . $server['address'] . ':' . $server['port'];
+        $return = $server['passwd'] . '@' . $server['address'] . ':' . $server['port'];
         if ($server['host'] != $server['address']) {
             $return .= '?peer=' . $server['host'] . '&sni=' . $server['host'];
         }
         if($server['tls'] == "xtls"){
             $return.=("&security=".$server['tls']."&flow=".$server['flow']);
         }
-        return $return . '#' . rawurlencode($server['remark']);
+        return 'trojan://' . base64_encode($return) . '#' . rawurlencode($server['remark']);
     }
 }
