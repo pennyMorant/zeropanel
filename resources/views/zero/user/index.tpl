@@ -166,7 +166,7 @@
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["shadowrocket"]}">{$trans->t('copy')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['shadowrocket']}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo["shadowrocket"]}')">{$trans->t('import')}</a></li>
 																</ul>
@@ -177,7 +177,7 @@
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
 																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["quantumult"]}">{$trans->t('copy')}</a></li>
+																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['quantumult']}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo["quantumult"]}')">{$trans->t('import')}</a></li>
 																</ul>

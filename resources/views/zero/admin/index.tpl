@@ -35,8 +35,9 @@
                                                     <div class="card-toolbar">
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="income_all">所有</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_year">年度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_half_year">半年</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_month">月度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_week">一周</a>
+                                                        
 													</div>
 												</div>     
 												<div class="card-body pt-0">
@@ -51,8 +52,9 @@
                                                     <div class="card-toolbar">
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="signup_all">所有</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_year">年度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_half_year">半年</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_month">月度</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_week">一周</a>
+                                                        
 													</div>
 												</div>     
 												<div class="card-body pt-0">
@@ -170,10 +172,10 @@
                     )
                 });
                 document
-                .querySelector('#income_half_year')
+                .querySelector('#income_week')
                 .addEventListener('click', function(e) {
                     resetCssClasses(e)
-                    var days = getDay(180);
+                    var days = getDay(7);
                     chartincomeday.zoomX(
                     new Date(days).getTime(),
                     new Date().getTime(),
@@ -282,10 +284,10 @@
                     )
                 });
                 document
-                .querySelector('#signup_half_year')
+                .querySelector('#signup_week')
                 .addEventListener('click', function(e) {
                     resetCssClasses(e)
-                    var days = getDay(180);
+                    var days = getDay(7);
                     chartusers.zoomX(
                     new Date(days).getTime(),
                     new Date().getTime(),
