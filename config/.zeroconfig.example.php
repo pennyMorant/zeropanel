@@ -10,6 +10,7 @@ $_ZC['index_sub'] = [
     'quantumultx',
     'shadowrocket',
     'anxray',
+    'ss',
 ];
 
 

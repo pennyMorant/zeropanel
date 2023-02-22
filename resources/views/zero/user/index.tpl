@@ -152,7 +152,7 @@
 															{if in_array('ss',$zeroconfig['index_sub'])}
 															<!-- ss订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;复制 SS 订阅&nbsp;&nbsp;</button>
+																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
 															</div>
 															{/if}
 															{if in_array('v2ray',$zeroconfig['index_sub'])}
