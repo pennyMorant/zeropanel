@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Models\{Node, Code};
+use App\Models\{Node, Order};
 use App\Utils\Tools;
 
 class Analytics
@@ -111,19 +111,21 @@ class Analytics
         )->where('node_heartbeat', '>', time() - 90)->count();
     }
     // admin
-    public function getIncome($start, $end)
+    public function getIncome()
     {
-        $sum = Code::whereNotIn('type', [2, 3])->where('usedatetime', '>=', date("Y-m-d H:i:s", $start))->where('usedatetime', '<', date("Y-m-d H:i:s", $end))->sum('number');
+        $month_first_day = mktime(0,0,0,date('m'),1,date('Y'));
+        $month_end_day = mktime(23,59,59,date('m'),date('t'),date('Y'));
+        $sum = Order::where('order_payment','!=', 'creditpay')->where('order_status', 2)->where('paid_time', '>=', $month_first_day)->where('paid_time', '<=', $month_end_day)->sum('order_total');
         if ($sum == null) {
           $sum = 0;
         }
         return $sum;
     }
     // admin
-    public function getNewUsers($start, $end)
+    public function getNewUsers()
     {
-        $users = User::where('signup_date', '>=', date("Y-m-d H:i:s", $start))
-        ->where('signup_date', '<', date("Y-m-d H:i:s", $end))
+        $users = User::where('signup_date', '>=', date("Y-m-d H:i:s", mktime(0,0,0,date('m'),1,date('Y'))))
+        ->where('signup_date', '<', date("Y-m-d H:i:s", mktime(23,59,59,date('m'),date('t'),date('Y'))))
         ->count();
         if ($users == null) {
             $users = 0;

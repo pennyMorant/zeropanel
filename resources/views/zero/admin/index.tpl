@@ -31,12 +31,17 @@
 										<div class="col-xxl-6">
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">收入趋势</div>
-                                                    <div class="card-toolbar">
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="income_all">所有</a>
+													<div class="card-title d-flex flex-column">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class=" text-dark fs-2hx fw-bold me-2">{$sts->getIncome()}</span>
+                                                        </div>
+                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">本月收入</span>
+                                                    </div>
+                                                    <div class="card-toolbar" id="zero_admin_income_trend">
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_all">所有</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_year">年度</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_month">月度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_week">一周</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1 active" id="income_week">一周</a>
                                                         
 													</div>
 												</div>     
@@ -48,12 +53,17 @@
                                         <div class="col-xxl-6">
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">注册趋势</div>
-                                                    <div class="card-toolbar">
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary active px-4 me-1" id="signup_all">所有</a>
+													<div class="card-title d-flex flex-column">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class=" text-dark fs-2hx fw-bold me-2">{$sts->getNewUsers()}</span>
+                                                        </div>
+                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">本月新增用户</span>
+                                                    </div>
+                                                    <div class="card-toolbar" id="zero_admin_signup_trend">
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_all">所有</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_year">年度</a>
                                                         <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_month">月度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_week">一周</a>
+                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1 active" id="signup_week">一周</a>
                                                         
 													</div>
 												</div>     
@@ -124,7 +134,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date("2020-01-01").getTime(),
+                    min: new Date(getDay(7)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -151,9 +161,11 @@
                 };
     
             var chartincomeday = new ApexCharts(document.querySelector("#income_day"), options);
+            
             chartincomeday.render();
-            var resetCssClasses = function(activeEl) {
-                var els = document.querySelectorAll('a');
+            var resetIncomeCssClasses = function(activeEl) {
+                var element = document.getElementById('zero_admin_income_trend');
+                var els = element.querySelectorAll('a');
                 Array.prototype.forEach.call(els, function(el) {
                     el.classList.remove('active')
                 });
@@ -164,7 +176,7 @@
                 document
                 .querySelector('#income_month')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetIncomeCssClasses(e)
                     var days = getDay(30);
                     chartincomeday.zoomX(
                     new Date(days).getTime(),
@@ -174,7 +186,7 @@
                 document
                 .querySelector('#income_week')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetIncomeCssClasses(e)
                     var days = getDay(7);
                     chartincomeday.zoomX(
                     new Date(days).getTime(),
@@ -184,7 +196,7 @@
                 document
                 .querySelector('#income_year')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetIncomeCssClasses(e)
                     var days = getDay(365);
                     chartincomeday.zoomX(
                     new Date(days).getTime(),
@@ -194,7 +206,7 @@
                 document
                 .querySelector('#income_all')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetIncomeCssClasses(e)
                     var days = getDay(30);
                     chartincomeday.zoomX(
                     new Date("2020-01-02").getTime(),
@@ -220,14 +232,15 @@
             var options = {
                 series: [],
                 chart: {
-                type: 'area',
-                id: 'area-datetime',
-                height: 350,
-                zoom: {
-                    enabled: true,
-                    autoScaleYaxis: true
+                    type: 'area',
+                    id: 'area-datetime',
+                    height: 350,
+                    zoom: {
+                        enabled: true,
+                        autoScaleYaxis: true
                     }
                 },
+                
                 dataLabels: {
                     enabled: false
                 },
@@ -245,7 +258,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date("2020-01-01").getTime(),
+                    min: new Date(getDay(7)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -264,8 +277,9 @@
         
                 var chartusers = new ApexCharts(document.querySelector("#signup_day"), options);
                 chartusers.render();
-            var resetCssClasses = function(activeEl) {
-                var els = document.querySelectorAll('a')
+            var resetSignupCssClasses = function(activeEl) {
+                var element = document.getElementById('zero_admin_signup_trend');
+                var els = element.querySelectorAll('a')
                 Array.prototype.forEach.call(els, function(el) {
                     el.classList.remove('active')
                 });
@@ -276,7 +290,7 @@
                 document
                 .querySelector('#signup_month')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetSignupCssClasses(e)
                     var days = getDay(30);
                     chartusers.zoomX(
                     new Date(days).getTime(),
@@ -286,7 +300,7 @@
                 document
                 .querySelector('#signup_week')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetSignupCssClasses(e)
                     var days = getDay(7);
                     chartusers.zoomX(
                     new Date(days).getTime(),
@@ -296,7 +310,7 @@
                 document
                 .querySelector('#signup_year')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetSignupCssClasses(e)
                     var days = getDay(365);
                     chartusers.zoomX(
                     new Date(days).getTime(),
@@ -306,7 +320,7 @@
                 document
                 .querySelector('#signup_all')
                 .addEventListener('click', function(e) {
-                    resetCssClasses(e)
+                    resetSignupCssClasses(e)
                     var days = getDay(30);
                     chartusers.zoomX(
                     new Date("2020-01-02").getTime(),
@@ -314,18 +328,6 @@
                     )
                 });
         </script>
-        <script> 
-            function changechart(date) {
-                if (date == "day") {
-                    document.getElementById('card_day').style.display = "";
-                    document.getElementById('card_month').style.display = "none";
-                    //chartincomeday.render();
-                } else {
-                    document.getElementById('card_day').style.display = "none";
-                    document.getElementById('card_month').style.display = "";
-                    //chartincomemonth.render();
-                }
-            }
-        </script>
+
     </body>
 </html>
