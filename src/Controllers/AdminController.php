@@ -38,16 +38,17 @@ class AdminController extends UserController
     public function index($request, $response, $args)
     {
         $sts = new Analytics();
-	// admin增加收入和用户统计
-        $days = [];
+        $start_time_this_month = mktime(0,0,0,date('m'),1,date('Y'));
+        $end_time_this_month = mktime(23,59,59,date('m'),date('t'),date('Y'));
+        $start_time_last_month = mktime(0, 0, 0, date("m") - 1, 1, date("Y"));
+        $end_time_last_month = mktime(23, 59, 59, date("m"), 0, date("Y"));
+        $income_this_month = $sts->getIncome($start_time_this_month, $end_time_this_month);
+        $new_users_this_month = $sts->getNewUsers(date("Y-m-d H:i:s", $start_time_this_month), date("Y-m-d H:i:s", $end_time_this_month));
 
-        for ($i = 1; $i <= 7; $i++) {
-            $date_expression = '-'.$i.' days';
-            $day = strtotime($date_expression);
-            $days[] = date("Y-m-d", $day);
-        }
-
-        $this->view()->assign('sts', $sts)->assign('days', $days)->display('admin/index.tpl');
+        $this->view()
+            ->assign('income_this_month', $income_this_month)
+            ->assign('new_users_this_month', $new_users_this_month)
+            ->display('admin/index.tpl');
         return $response;
     }
 
