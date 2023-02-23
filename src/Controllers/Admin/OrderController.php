@@ -70,7 +70,7 @@ class OrderController extends AdminController
             $tempdata['order_status']         = $value->status();
             $tempdata['no']                   = $value->no;
             $tempdata['created_time']         = date('Y-m-d H:i:s', $value->created_time);
-            $tempdata['order_payment']        = $value->order_payment;
+            $tempdata['order_payment']        = $value->payment();
             $tempdata['order_type']           = $value->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit');
             
             $data[] = $tempdata;

@@ -24,5 +24,26 @@ class Order extends Model
         }
         return $status;
     }
+
+    public function payment() {
+        switch ($this->order_payment) {
+            case 'creditpay':
+                $payment = '<i class="bi bi-cash-coin fs-2hx text-success"></i>';
+                break;
+            case 'alipay':
+                $payment = '<i class="bi bi-alipay fs-2hx text-primary"></i>';
+                break;
+            case 'wechatpay':
+                $payment = '<i class="bi bi-wechat fs-2hx text-success"></i>';
+                break;
+            case 'cryptopay':
+                $payment = '<i class="bi bi-currency-bitcoin fs-2hx text-warning"></i>';
+                break;
+            default:
+                $payment = '<i class="bi bi-question-circle fs-2hx text-danger"></i>';
+                break;
+        }
+        return $payment;
+    }
 }
 
