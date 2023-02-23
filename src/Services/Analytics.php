@@ -132,4 +132,16 @@ class Analytics
         }
         return $users;
     }
+
+    public function increase_percentage($num_1, $num_2)
+    {
+        if ($num_1 === 0 || $num_1 <= $num_2) {
+            $percent = 0;
+        } else if ($num_2 === 0) {
+            $percent = $num_1 * 100;
+        } else {
+            $percent = ($num_1 - $num_2) / $num_2;
+        }
+        return $percent;
+    }
 }
