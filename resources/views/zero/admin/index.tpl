@@ -132,8 +132,11 @@
                     type: 'area',
                     id: 'area-datetime',
                     height: 350,
+                    toolbar: {
+                        show: false
+                    },
                     zoom: {
-                        enabled: true,
+                        enabled: false,
                         autoScaleYaxis: true
                     }
                 },
@@ -167,7 +170,7 @@
                 },
                 
                 legend: {
-                    horizontalAlign: 'left'
+                    show: false
                 },
                 fill: {
                     type: 'gradient',
@@ -255,8 +258,11 @@
                     type: 'area',
                     id: 'area-datetime',
                     height: 350,
+                    toolbar: {
+                        show: false
+                    },
                     zoom: {
-                        enabled: true,
+                        enabled: false,
                         autoScaleYaxis: true
                     }
                 },
