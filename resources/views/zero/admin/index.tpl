@@ -99,6 +99,14 @@
                                                     <div id="signup_day"></div>
                                                 </div>
                                             </div>
+                                            <div class="card card-flush">
+												<div class="card-header border-0">
+													<div class="card-title">每日用户使用流量排名</div>
+												</div>     
+												<div class="card-body pt-0">
+                                                    <div id="zero_admin_traffic_ranking_chart"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +423,8 @@
                         formatter: function (val) {
                             return val + "GB"
                         }
-                    }
+                    },
+                    
                 },
                 yaxis: {
                     opposite: true
@@ -428,6 +437,64 @@
 
             var zeroAdminTrafficChart = new ApexCharts(document.querySelector("#zero_admin_traffic_chart"), options);
             zeroAdminTrafficChart.render();
+        </script>
+        <script>
+            $.ajax({
+                dataType: "json",
+                url: '/admin/ajax_data/chart/user_traffic_ranking',
+                type: "POST",
+                data: {},
+                success: function(data) {
+                    zeroAdminTrafficRankingChart.updateSeries([{
+                        data: data,
+                        name: '流量'
+                    }]);
+                }
+            });
+            var options = {
+            series: [],
+            chart: {
+                height: 350,
+                type: 'bar',
+                
+            },
+            //colors: colors,
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                    distributed: true,
+                }
+            },
+            dataLabels: {
+            enabled: false
+            },
+            legend: {
+            show: false
+            },
+            xaxis: {
+                categories: [],
+                labels: {
+                    style: {
+                    //colors: colors,
+                    fontSize: '12px'
+                    }
+                }
+            },
+            tooltip: {
+                    style: {
+                        fontSize: '12px'
+                    },
+                    y: {
+                        formatter: function (val) {
+                            return val + "GB"
+                        }
+                    },
+                    
+                },
+            };
+
+            var zeroAdminTrafficRankingChart = new ApexCharts(document.querySelector("#zero_admin_traffic_ranking_chart"), options);
+            zeroAdminTrafficRankingChart.render();
         </script>
     </body>
 </html>

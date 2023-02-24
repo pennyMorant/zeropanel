@@ -355,7 +355,22 @@ class AdminController extends UserController
                     ];
                 }
                 break;
-
+            case 'user_traffic_ranking':
+                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
+                $time_b = $time_a + 86400;
+                $time_a -= 86400;
+                $time_b -= 86400;
+                $user = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->whereBetween('datetime', [$time_a, $time_b])->groupBy('user_id')->orderByRaw('total')->limit('10')->get();
+                $datas = [];
+                $user_id = [];
+                foreach ($user as $value) {
+                    $datas[] = [
+                        'y' => substr(Tools::flowToGB($value->total), 0, 4),
+                        'x' => "用户ID:" . $value->user_id,
+                    ];
+                }
+                return $response->withJson(array_reverse($datas));
+                break;
         }
         return $response->withJson(array_reverse($datas));
     }
