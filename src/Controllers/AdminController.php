@@ -369,7 +369,6 @@ class AdminController extends UserController
                         'x' => "用户ID:" . $value->user_id,
                     ];
                 }
-                return $response->withJson(array_reverse($datas));
                 break;
         }
         return $response->withJson(array_reverse($datas));
