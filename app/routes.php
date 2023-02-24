@@ -204,8 +204,7 @@ return function (SlimApp $app) {
         $group->post('/setting/payment',         App\Controllers\Admin\SettingController::class . ':payment');
 
         // admin 增加收入和新用户统计
-        $group->post('/api/analytics/income',     App\Controllers\AdminController::class . ':getIncome');
-        $group->post('/api/analytics/new-users',  App\Controllers\AdminController::class . ':newUsers');
+        $group->post('/ajax_data/chart/{name}',        App\Controllers\AdminController::class . ':AjaxDataChart');
 
         // Agent
         $group->group('/agent', function (Group $group) {

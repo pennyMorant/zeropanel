@@ -29,7 +29,7 @@
                                 <div id="kt_app_content_container" class="app-container container-xxl">
 									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
 										<div class="col-xxl-6">
-											<div class="card card-flush h-md-100">
+											<div class="card card-flush mb-5">
 												<div class="card-header border-0">
 													<div class="card-title d-flex flex-column">
                                                         <div class="d-flex align-items-center">
@@ -60,9 +60,17 @@
                                                     <div id="income_day"></div>
                                                 </div>
                                             </div>
+                                            <div class="card card-flush">
+												<div class="card-header border-0">
+													<div class="card-title">七天内流量使用情况</div>
+												</div>     
+												<div class="card-body pt-0">
+                                                    <div id="zero_admin_traffic_chart"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-xxl-6">
-											<div class="card card-flush h-md-100">
+											<div class="card card-flush mb-5">
 												<div class="card-header border-0">
 													<div class="card-title d-flex flex-column">
                                                         <div class="d-flex align-items-center">
@@ -112,7 +120,7 @@
                 var result = year + '-' + month + '-' + day;
                 return result;
             }
-            var url = '/admin/api/analytics/income';
+            var url = '/admin/ajax_data/chart/income';
             var date = new Date();
             $.ajax({
                 dataType: "json",
@@ -183,8 +191,7 @@
                 },
                 };
     
-            var chartincomeday = new ApexCharts(document.querySelector("#income_day"), options);
-            
+            var chartincomeday = new ApexCharts(document.querySelector("#income_day"), options);           
             chartincomeday.render();
             var resetIncomeCssClasses = function(activeEl) {
                 var element = document.getElementById('zero_admin_income_trend');
@@ -239,7 +246,7 @@
         </script>
             
         <script> 
-            var url = '/admin/api/analytics/new-users';
+            var url = '/admin/ajax_data/chart/newusers';
             $.ajax({
                 dataType: "json",
                 url: url,
@@ -299,10 +306,10 @@
                 legend: {
                     horizontalAlign: 'left'
                 }
-                };
+            };
         
-                var chartusers = new ApexCharts(document.querySelector("#signup_day"), options);
-                chartusers.render();
+            var chartusers = new ApexCharts(document.querySelector("#signup_day"), options);
+            chartusers.render();
             var resetSignupCssClasses = function(activeEl) {
                 var element = document.getElementById('zero_admin_signup_trend');
                 var els = element.querySelectorAll('a')
@@ -355,5 +362,72 @@
                 });
         </script>
 
+        <script> 
+            $.ajax({
+                dataType: "json",
+                url: '/admin/ajax_data/chart/traffic',
+                type: "POST",
+                data: {},
+                success: function(data) {
+                    zeroAdminTrafficChart.updateSeries([{
+                        name: data[0].name,
+                        data: data
+                    }])
+                }
+            });
+            var options = {
+                series: [],
+                chart: {
+                    type: 'area',
+                    id: 'area-datetime',
+                    height: 350,
+                    toolbar: {
+                        show: false
+                    },
+                    zoom: {
+                        enabled: false,
+                    }
+                },
+                
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '',
+                    align: 'left'
+                },
+                xaxis: {
+                    type: 'datetime',
+                },
+                tooltip: {
+                    style: {
+                        fontSize: '12px'
+                    },
+                    y: {
+                        formatter: function (val) {
+                            return val + "GB"
+                        }
+                    }
+                },
+                yaxis: {
+                    opposite: true
+                },
+                
+                legend: {
+                    horizontalAlign: 'left'
+                }
+            };
+
+            var zeroAdminTrafficChart = new ApexCharts(document.querySelector("#zero_admin_traffic_chart"), options);
+            zeroAdminTrafficChart.render();
+        </script>
     </body>
 </html>

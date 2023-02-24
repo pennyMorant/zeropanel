@@ -2,7 +2,7 @@
 
 // 流量首页记录
 $(document).ready(function() {
-    var element = document.getElementById("traffic_widgets");
+    var element = document.getElementById("zero_user_traffic_chart");
     
     var height = parseInt(KTUtil.css(element, 'height'));
     if (!element) {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     var labelColor = KTUtil.getCssVariableValue('--bs-' + 'gray-800');
     var baseColor = KTUtil.getCssVariableValue('--bs-' + color);
     var lightColor = KTUtil.getCssVariableValue('--bs-' + color + '-light');
-    var url = '/user/ajax_data/chart/traffic_chart';
+    var url = '/user/ajax_data/chart/traffic';
     $.ajax({
         dataType: "json",
         url: url,

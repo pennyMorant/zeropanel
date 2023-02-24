@@ -7,7 +7,8 @@ use App\Models\{
     Coupon,
     Order,
     Node,
-    Payback
+    Payback,
+    TrafficLog
 };
 use App\Utils\{
     Tools,
@@ -16,6 +17,7 @@ use App\Utils\{
 use App\Services\{
     Analytics
 };
+use Pkly\I18Next\I18n;
 use Countable;
 use Ozdemir\Datatables\Datatables;
 use Slim\Http\{
@@ -274,8 +276,7 @@ class AdminController extends UserController
                 'y' => $total ?? 0,
             ];
         }
-        $response->getBody()->write(json_encode(array_reverse($datas)));
-        return $response;
+        return $response->withJson(array_reverse($datas));
     }
 
     /**
@@ -300,7 +301,62 @@ class AdminController extends UserController
                 'y' => $total ?? 0,
             ];
         }
-        $response->getBody()->write(json_encode(array_reverse($datas)));
-        return $response;
+
+        return $response->withJson(array_reverse($datas));
+    }
+
+    public function ajaxDataChart($request, $response, $args)
+    {
+        $name = $args['name'];
+        switch ($name) {
+            case 'newusers':
+                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
+                $time_b = $time_a + 86400;
+                $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
+                $datas = [];
+                for ($i=0; $i < $times ; $i++) {
+                    $time_a -= 86400;
+                    $time_b -= 86400;
+                    $total   = User::where('signup_date', '>=', date("Y-m-d",$time_a))->where('signup_date', '<', date("Y-m-d",$time_b))->count();
+                    $datas[] = [
+                        'x'  => date('Y-m-d', $time_a),
+                        'y' => $total ?? 0,
+                    ];
+                }
+                break;
+            case 'income':
+                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
+                $time_b = $time_a + 86400;
+                $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
+                $datas = [];
+                for ($i=0; $i < $times ; $i++) {
+                    $time_a -= 86400;
+                    $time_b -= 86400;
+                    $total   = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->where('paid_time', '>=', $time_a)->where('paid_time', '<=', $time_b)->sum('order_total');
+                    $datas[] = [
+                        'x'  => date('Y-m-d', $time_a),
+                        'y' => $total ?? 0,
+                    ];
+                }
+                break;
+            case 'traffic':
+                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
+                $time_b = $time_a + 86400;
+                $datas = [];
+                for ($i=0; $i < 8 ; $i++) {
+                    $time_a -= 86400;
+                    $time_b -= 86400;
+                    $total1   = TrafficLog::whereBetween('datetime', [$time_a, $time_b])->sum('u');
+                    $total2   = TrafficLog::whereBetween('datetime', [$time_a, $time_b])->sum('d');
+                    $datas[] = [
+                        'x'  => date('Y-m-d', $time_a),
+                        'y' => substr(Tools::flowToGB($total1 + $total2), 0, 4),                      
+                        'name' => I18n::get()->t('traffic'),
+                    ];
+                }
+                break;
+
+        }
+        return $response->withJson(array_reverse($datas));
     }
 }

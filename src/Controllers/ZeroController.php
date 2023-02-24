@@ -259,7 +259,7 @@ class ZeroController extends BaseController
         $name = $args['name'];
         $user = $this->user;
         switch ($name) {
-            case "traffic_chart":
+            case "traffic":
                 $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
                 $time_b = $time_a + 86400;
                 $datas = [];

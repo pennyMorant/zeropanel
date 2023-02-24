@@ -113,7 +113,7 @@
 													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
 												</div>
 												<div class="card-body d-flex flex-column pt-0">
-													<div id="traffic_widgets" data-kt-chart-color="success" style="height: 150px; min-height: 130px;"></div>
+													<div id="zero_user_traffic_chart" data-kt-chart-color="success" style="height: 150px; min-height: 130px;"></div>
 												</div>
 											</div>
 											<div class="card card-flush">
