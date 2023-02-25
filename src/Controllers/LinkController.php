@@ -207,9 +207,9 @@ class LinkController extends BaseController
                     ];
                 }
                 break;
-            case 'v2ray':
+            case 'v2rayn':
                 $return = [
-                    'filename' => 'V2ray',
+                    'filename' => 'V2rayn',
                     'suffix' => 'txt',
                     'class' => 'Lists'
                 ];
@@ -353,7 +353,7 @@ class LinkController extends BaseController
             'link' => '',
             // sub
             'ss' => '?list=shadowsocks',
-            'v2ray' => '?list=v2ray',
+            'v2rayn' => '?list=v2rayn',
             'trojan' => '?list=trojan',
             'v2ray_vless' => '?sub=5',
             // apps
@@ -382,7 +382,7 @@ class LinkController extends BaseController
             case 'shadowsocks':
                 $return = AppURI::getShadowsocksURI($item);
                 break;
-            case 'v2ray':
+            case 'v2rayn':
                 $return = AppURI::getV2RayNURI($item);
                 break;
             case 'trojan':
@@ -439,7 +439,7 @@ class LinkController extends BaseController
             case 'shadowrocket':
             case 'anxray':
             case 'shadowsocks':
-            case 'v2ray':
+            case 'v2rayn':
             case 'trojan':
                 return base64_encode(implode(PHP_EOL, $return));
             default:

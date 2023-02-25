@@ -18,7 +18,7 @@ class AppURI
     {
         $return = null;
         switch ($node_config['type']) {
-            case 'shadowosocks':
+            case 'shadowsocks':
                 $return = self::getShadowsocksURI($node_config);
                 break;
             case 'vmess':
@@ -31,16 +31,18 @@ class AppURI
                     'aid' => (string)$node_config['aid'],
                     'net' => $node_config['net'],
                     'type' => $node_config['net'] == 'grpc' ? "multi" : $node_config['headertype'],
-                    'host' => $node_config['net'] == 'grpc' ? '' : $node_config['host'],
-                    'path' => $node_config['net'] == 'grpc' ? $node_config['servicename'] : $node_config['path'],
+                    'host' => $node_config['host'],
+                    'path' => $node_config['path'],
                     'tls' => $node_config['security'],
-                    'sni' => $node_config['sni']
+                    'sni' => $node_config['sni'],
                 ];
                 $return = 'vmess://' . json_encode($node, 320);
                 break;
             case 'vless':
                 $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
                 break;
+            case 'trojan':
+                $return = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
         }
         return $return;
     }

@@ -155,10 +155,10 @@
 																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
 															</div>
 															{/if}
-															{if in_array('v2ray',$zeroconfig['index_sub'])}
+															{if in_array('v2rayn',$zeroconfig['index_sub'])}
 															<!-- V2Ray订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2ray')}</button>
+																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2rayn"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2ray')}</button>
 															</div>
 															{/if}
 															{if in_array('shadowrocket',$zeroconfig['index_sub'])}
