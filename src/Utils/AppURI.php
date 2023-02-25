@@ -10,7 +10,7 @@ class AppURI
 {
     public static function getShadowsocksURI(array $node_config)
     {
-        $return = 'ss://' . $node_config['method'] . ':' . $node_config['passwd'] . '@' . $node_config['address'] . ':' . $node_config['port'];
+        $return = 'ss://' . base64_encode($node_config['method'] . ':' . $node_config['passwd'] . '@' . $node_config['address'] . ':' . $node_config['port']);
         return $return . '#' . rawurlencode($node_config['remark']);
     }
 
