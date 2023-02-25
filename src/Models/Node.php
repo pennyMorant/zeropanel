@@ -273,7 +273,7 @@ class Node extends Model
     {
         $custom_configs = json_decode($custom_config, true);
         $config['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
-        $config['type']     = 'ss';
+        $config['type']     = 'shadowsocks';
         $config['passwd']   = $user->passwd;
         $config['method']   = $custom_configs['mu_encryption'];
         $config['address']  = $this->server;
@@ -348,6 +348,12 @@ class Node extends Model
         $config['sni'] = $custom_configs['host'] ?? '';       
         $config['security'] = $custom_configs['security'] ?? 'tls';
         $config['flow'] = $custom_configs['flow'] ?? '';
+        if (isset($config['grpc']) == 1) {
+            $config['net'] = 'grpc';
+            $config['servicename'] = $custom_configs['servicename'] ?? '';
+        } else {
+            $config['net'] = 'tcp';
+        }
         
         return $config;
     }
