@@ -86,6 +86,7 @@
                                                                         <option value="none" {if $settings['alipay_payment'] == 'none'} selected{/if}>关闭</option>
                                                                         <option value="paybeaver" {if $settings['alipay_payment'] == 'paybeaver'} selected{/if}>海狸支付</option>
                                                                         <option value="paytaro" {if $settings['alipay_payment'] == 'paytaro'} selected{/if}>Paytaro</option>
+                                                                        <option value="vmqpay" {if $settings['alipay_payment'] == 'vmqpay'} selected{/if}>VMQPay</option>
                                                                         <!--<option value="stripe" {if $settings['alipay_payment'] == 'stripe'} selected{/if}>Stripe</option>-->
                                                                         <option value="epay" {if $settings['alipay_payment'] == 'epay'} selected{/if}>易支付</option>
                                                                     </select>
@@ -94,6 +95,7 @@
                                                                         <option value="none" {if $settings['wechatpay_payment'] == 'none'} selected{/if}>关闭</option>
                                                                         <option value="paybeaver" {if $settings['wechatpay_payment'] == 'paybeaver'} selected{/if}>海狸支付</option>
                                                                         <option value="paytaro" {if $settings['wechatpay_payment'] == 'paytaro'} selected{/if}>Paytaro</option>
+                                                                        <option value="vmqpay" {if $settings['wechatpay_payment'] == 'vmqpay'} selected{/if}>VMQPay</option>
                                                                        <!-- <option value="stripe" {if $settings['wechatpay_payment'] == 'stripe'} selected{/if}>Stripe</option> -->
                                                                         <option value="epay" {if $settings['wechatpay_payment'] == 'epay'} selected{/if}>易支付</option>
                                                                     </select>
