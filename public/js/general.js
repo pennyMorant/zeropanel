@@ -640,16 +640,16 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                     switch (data.sort) {
                         case 11:
                             $("#zero_modal_vmess_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_vmess_node_info_add").html(data.info.add);
+                            $("#zero_modal_vmess_node_info_address").html(data.info.address);
                             $("#zero_modal_vmess_node_info_port").html(data.info.port);
                             $("#zero_modal_vmess_node_info_aid").html(data.info.aid);
-                            $("#zero_modal_vmess_node_info_id").html(data.info.id);
+                            $("#zero_modal_vmess_node_info_uuid").html(data.info.uuid);
                             $("#zero_modal_vmess_node_info_net").html(data.info.net);
                             $("#zero_modal_vmess_node_info_path").html(data.info.path);
                             $("#zero_modal_vmess_node_info_host").html(data.info.host);
                             $("#zero_modal_vmess_node_info_servicename").html(data.info.servicename);
                             $("#zero_modal_vmess_node_info_type").html(data.info.type);
-                            $("#zero_modal_vmess_node_info_security").html(data.info.tls);
+                            $("#zero_modal_vmess_node_info_security").html(data.info.security);
                             $("#zero_modal_vmess_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
                             $("#qrcode"  + nodeid).qrcode({
                                 width: 200,
@@ -662,11 +662,12 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             break;
                         case 14:
                             $("#zero_modal_trojan_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_trojan_node_info_add").html(data.info.address);
+                            $("#zero_modal_trojan_node_info_address").html(data.info.address);
                             $("#zero_modal_trojan_node_info_port").html(data.info.port);						
-                            $("#zero_modal_trojan_node_info_id").html(data.info.passwd);
-                            $("#zero_modal_trojan_node_info_host").html(data.info.host);
-                            $("#zero_modal_trojan_node_info_security").html(data.info.tls);
+                            $("#zero_modal_trojan_node_info_uuid").html(data.info.uuid);
+                            $("#zero_modal_trojan_node_info_sni").html(data.info.sni);
+                            $("#zero_modal_trojan_node_info_security").html(data.info.security);
+                            $("#zero_modal_trojan_node_info_flow").html(data.info.flow);
                             $("#zero_modal_trojan_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
                             $("#qrcode"  + nodeid).qrcode({
                                 width: 200,
@@ -675,19 +676,19 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 text: content
                             });
                             Swal.close();
-                            $("#nodeinfo-trojan-modal").modal('show');
+                            $("#zero_modal_trojan_node_info").modal('show');
                             break;
                         case 15:
                             $("#zero_modal_vless_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_vless_node_info_add").html(data.info.add);
+                            $("#zero_modal_vless_node_info_address").html(data.info.address);
                             $("#zero_modal_vless_node_info_port").html(data.info.port);
-                            $("#zero_modal_vless_node_info_id").html(data.info.id);
+                            $("#zero_modal_vless_node_info_uuid").html(data.info.uuid);
                             $("#zero_modal_vless_node_info_net").html(data.info.net);
                             $("#zero_modal_vless_node_info_path").html(data.info.path);
                             $("#zero_modal_vless_node_info_host").html(data.info.host);
                             $("#zero_modal_vless_node_info_servicename").html(data.info.servicename);
                             $("#zero_modal_vless_node_info_type").html(data.info.type);
-                            $("#zero_modal_vless_node_info_security").html(data.info.tls);
+                            $("#zero_modal_vless_node_info_security").html(data.info.security);
                             $("#zero_modal_vless_node_info_flow").html(data.info.flow);
                             $("#zero_modal_vless_node_info_sni").html(data.info.sni);
                             $("#zero_modal_vless_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
@@ -698,7 +699,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 text: content
                             });
                             Swal.close();
-                            $("#nodeinfo-vless-modal").modal('show');
+                            $("#zero_modal_vless_node_info").modal('show');
                             break;
                         case 0:
                             $("#zero_modal_shadowsocks_node_info_remark").html(data.info.remark);

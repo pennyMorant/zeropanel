@@ -210,7 +210,7 @@ class ZeroController extends BaseController
 
         switch ($node->sort) {
             case '0':
-                $info = $node->getShadowsocksItem($user, $node->custom_config);
+                $info = $node->getShadowsocksConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
                     'sort' => (int) $node->sort,
@@ -219,7 +219,7 @@ class ZeroController extends BaseController
                 ];
                 break;
             case '11':
-                $info = $node->getVmessItem($user, $node->custom_config);
+                $info = $node->getVmessConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
                     'sort' => (int) $node->sort,
@@ -228,12 +228,21 @@ class ZeroController extends BaseController
                 ];
                 break;
             case '14':
-                $info = $node->getTrojanItem($user, $node->custom_config);
+                $info = $node->getTrojanConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
                     'sort' => 14,
                     'info' => $info,
                     'url' => URL::getTrojanURL($user, $node, $emoji),
+                ];
+                break;
+            case '15':
+                $info = $node->getVlessConfig($user, $node->custom_config);
+                $res = [
+                    'ret' => 1,
+                    'sort' => (int) $node->sort,
+                    'info' => $info,
+                    'url' => URL::getVlessURL($user, $node, $emoji),
                 ];
                 break;
             default:

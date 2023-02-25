@@ -176,9 +176,9 @@ class URL
      */
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
-        $item = $node->getShadowsocksItem($user, $node->custom_config, $emoji);
-        $config = $item['method'] . ':' . $item['passwd'] . '@' . $item['address'] . ':' . $item['port'];
-        return 'ss://'. base64_encode($config) . '#' . rawurlencode($item['remark']);
+        $config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
+        $shadowsocks = $config['method'] . ':' . $config['passwd'] . '@' . $config['address'] . ':' . $config['port'];
+        return 'ss://'. base64_encode($shadowsocks) . '#' . rawurlencode($config['remark']);
     }
 
 
@@ -187,12 +187,19 @@ class URL
      */
     public static function getVmessURL(User $user, Node $node, bool $emoji = false): string
     {
-        $item = $node->getVmessItem($user, $node->custom_config, $emoji);
-        $item['ps'] = $item['remark'];
-        $item['serviceName'] = $item['servicename'];
-        return 'vmess://' . base64_encode(
-            json_encode($item, 320)
-        );
+        $config = $node->getVmessConfig($user, $node->custom_config, $emoji);
+        $vmess = $config['uuid'] . '@' . $config['address'] . ':' . $config['port'] . '?encryption=auto&host=' . $config['host'] . '&path=' . $config['path'] . '&flow=' . $config['flow'] . '&security=' . $config['security'] . '&sni=' . $config['sni'] . '&type=' . $config['net']  . '#' . $config['remark'];
+        return 'vmess://' . $vmess;
+    }
+
+    /**
+     * 获取 VLESS URL
+     */
+    public static function getVlessURL(User $user, Node $node, bool $emoji = false): string
+    {
+        $config = $node->getVlessConfig($user, $node->custom_config, $emoji);
+        //$item['serviceName'] = $item['servicename'];
+        return 'vless://' . $config['uuid'] . '@' . $config['address'] . ':' . $config['port'] . '?encryption=none&flow=' . $config['flow'] . '&security=' . $config['security'] . '&sni=' . $config['sni'] . '&type=' . $config['net'] . '#' . $config['remark'];
     }
     
     /**
@@ -200,14 +207,8 @@ class URL
      */
     public static function getTrojanURL(User $user, Node $node, bool $emoji = false): string
     {
-        $server = $node->getTrojanItem($user, $node->custom_config, $emoji);
-        $return = $server['passwd'] . '@' . $server['address'] . ':' . $server['port'];
-        if ($server['host'] != $server['address']) {
-            $return .= '?peer=' . $server['host'] . '&sni=' . $server['host'];
-        }
-        if($server['tls'] == "xtls"){
-            $return.=("&security=".$server['tls']."&flow=".$server['flow']);
-        }
-        return 'trojan://' . base64_encode($return) . '#' . rawurlencode($server['remark']);
+        $config = $node->getTrojanConfig($user, $node->custom_config, $emoji);
+        $trojan = 'trojan://' . $config['uuid'] . '@' . $config['address'] . ':' . $config['port'] . '?flow=' . $config['flow'] . '&security=' . $config['security'] . '&sni=' . $config['sni'] . '#' . $config['remark'];
+        return $trojan;
     }
 }

@@ -269,70 +269,86 @@ class Node extends Model
     /**
      * 获取 SS 节点
      */
-    public function getShadowsocksItem(User $user, $custom_config, bool $emoji = false): array
+    public function getShadowsocksConfig(User $user, $custom_config, bool $emoji = false): array
     {
         $custom_configs = json_decode($custom_config, true);
-        $item['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
-        $item['type']     = 'ss';
-        $item['passwd']   = $user->passwd;
-        $item['method']   = $custom_configs['mu_encryption'];
-        $item['address']  = $this->server;
-        $item['port']     = $custom_configs['offset_port_user'];
-        $item['class']    = $this->node_class;
+        $config['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['type']     = 'ss';
+        $config['passwd']   = $user->passwd;
+        $config['method']   = $custom_configs['mu_encryption'];
+        $config['address']  = $this->server;
+        $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
+        $config['class']    = $this->node_class;
 
-        return $item;
+        return $config;
     }
 
     /**
-     * 获取 V2Ray 节点
+     * 获取 VMESS 节点
      */
-    public function getVmessItem(User $user, $custom_config, bool $emoji = false): array
+    public function getVmessConfig(User $user, $custom_config, bool $emoji = false): array
     {
         $custom_configs = json_decode($custom_config, true);
-        $item['v']      = '2';      
-        $item['type']   = 'vmess';
-        $item['remark'] = ($emoji ? Tools::addEmoji($this->name) : $this->name);
-        $item['id']     = $user->uuid;
-        $item['class']  = $this->node_class;        
-        $item['add'] = $this->server;
-        $item['port'] = $custom_configs['offset_port_user'];
-        $item['aid'] = $custom_configs['alter_id'];
-        $item['net'] = $custom_configs['network'];
-        $item['tls'] = $custom_configs['security'] ?? '';
-        $item['path'] = $custom_configs['path'] ?? '';
-        $item['host'] = $custom_configs['host'] ?? '';
-        $item['sni'] = $custom_configs['host'] ?? '';
-        $item['headertype'] = $custom_configs['header']['type'] ?? '';
-        $item['servicename'] = $custom_configs['servicename'] ?? '';
-        $item['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
-        return $item;
+        $config['v']      = '2';      
+        $config['type']   = 'vmess';
+        $config['remark'] = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['uuid']     = $user->uuid;
+        $config['class']  = $this->node_class;        
+        $config['address'] = $this->server;
+        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['aid'] = $custom_configs['alter_id'];
+        $config['net'] = $custom_configs['network'];
+        $config['security'] = $custom_configs['security'] ?? '';
+        $config['flow'] = $custom_configs['flow'] ?? '';
+        $config['path'] = $custom_configs['path'] ?? '';
+        $config['host'] = $custom_configs['host'] ?? '';
+        $config['sni'] = $custom_configs['host'] ?? '';
+        $config['headertype'] = $custom_configs['header']['type'] ?? '';
+        $config['servicename'] = $custom_configs['servicename'] ?? '';
+        $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        return $config;
+    }
+
+    /**
+     * 获取 VLESS 节点
+     */
+    public function getVlessConfig(User $user, $custom_config, bool $emoji = false): array
+    {
+        $custom_configs = json_decode($custom_config, true);    
+        $config['type']   = 'vless';
+        $config['remark'] = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['uuid']     = $user->uuid;
+        $config['class']  = $this->node_class;        
+        $config['address'] = $this->server;
+        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['aid'] = $custom_configs['alter_id'];
+        $config['net'] = $custom_configs['network'];      
+        $config['security'] = $custom_configs['security'] ?? '';
+        $config['flow'] = $custom_configs['flow'] ?? '';
+        $config['path'] = $custom_configs['path'] ?? '';
+        $config['host'] = $custom_configs['host'] ?? '';
+        $config['sni'] = $custom_configs['host'] ?? '';
+        $config['headertype'] = $custom_configs['header']['type'] ?? '';
+        $config['servicename'] = $custom_configs['servicename'] ?? '';
+        $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        return $config;
     }
 
     /**
      * Trojan 节点
      */
-    public function getTrojanItem(User $user, $custom_config,  bool $emoji = false): array
+    public function getTrojanConfig(User $user, $custom_config,  bool $emoji = false): array
     {
         $custom_configs = json_decode($custom_config, true);
-        $item['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
-        $item['type']     = 'trojan';
-        $item['passwd']   = $user->uuid;
-        $item['address'] = $this->server;
-        $item['port'] = $custom_configs['offset_port_user'];
-        $item['host'] = $custom_configs['host'] ?? '';
-        if (array_key_exists('grpc', $custom_configs)) {
-            $item['net'] = $custom_configs['grpc'] == 1 ? 'grpc' : '';
-        } else {
-            $item['net'] = '';
-        }
-        $item['servicename'] = $custom_configs['servicename'] ?? '';
-        if (array_key_exists('enable_xtls', $custom_configs)) {
-            $item['tls'] = $custom_configs['enable_xtls'] == 1 ? 'xtls' : 'tls';
-        } else {
-            $item['tls'] = 'tls';
-        }
-        $item['flow'] = $custom_configs['flow'] ?? '';
+        $config['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['type']     = 'trojan';
+        $config['uuid']   = $user->uuid;
+        $config['address'] = $this->server;
+        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['trojan_port'];
+        $config['sni'] = $custom_configs['host'] ?? '';       
+        $config['security'] = $custom_configs['security'] ?? 'tls';
+        $config['flow'] = $custom_configs['flow'] ?? '';
         
-        return $item;
+        return $config;
     }
 }
