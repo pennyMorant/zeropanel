@@ -86,7 +86,7 @@
                                                                         <option value="none" {if $settings['alipay_payment'] == 'none'} selected{/if}>关闭</option>
                                                                         <option value="paybeaver" {if $settings['alipay_payment'] == 'paybeaver'} selected{/if}>海狸支付</option>
                                                                         <option value="paytaro" {if $settings['alipay_payment'] == 'paytaro'} selected{/if}>Paytaro</option>
-                                                                        <option value="stripe" {if $settings['alipay_payment'] == 'stripe'} selected{/if}>Stripe</option>
+                                                                        <!--<option value="stripe" {if $settings['alipay_payment'] == 'stripe'} selected{/if}>Stripe</option>-->
                                                                         <option value="epay" {if $settings['alipay_payment'] == 'epay'} selected{/if}>易支付</option>
                                                                     </select>
                                                                     <label class="form-label">微信</label>
@@ -94,7 +94,7 @@
                                                                         <option value="none" {if $settings['wechatpay_payment'] == 'none'} selected{/if}>关闭</option>
                                                                         <option value="paybeaver" {if $settings['wechatpay_payment'] == 'paybeaver'} selected{/if}>海狸支付</option>
                                                                         <option value="paytaro" {if $settings['wechatpay_payment'] == 'paytaro'} selected{/if}>Paytaro</option>
-                                                                        <option value="stripe" {if $settings['wechatpay_payment'] == 'stripe'} selected{/if}>Stripe</option>
+                                                                       <!-- <option value="stripe" {if $settings['wechatpay_payment'] == 'stripe'} selected{/if}>Stripe</option> -->
                                                                         <option value="epay" {if $settings['wechatpay_payment'] == 'epay'} selected{/if}>易支付</option>
                                                                     </select>
                                                                     
@@ -162,6 +162,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-xxl-6">
+                                                            <!--
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
                                                                     <div class="card-title">Stripe</div>
@@ -174,6 +175,21 @@
                                                                     <input class="form-control mb-5" placeholder="账号">
                                                                     <label class="form-label">密钥</label>
                                                                     <input class="form-control mb-5" placeholder="密钥">
+                                                                </div>
+                                                            </div>
+                                                            -->
+                                                            <div class="card card-bordered mb-5">
+                                                                <div class="card-header">
+                                                                    <div class="card-title">VMQPay</div>
+                                                                    <div class="card-toolbar">
+                                                                        <button class="btn btn-light-primary btn-sm fw-bold" type="button" onclick="updateAdminConfigSettings('vmqpay')">保存配置</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <label class="form-label">账号</label>
+                                                                    <input class="form-control mb-5" placeholder="账号" id="vmq_gateway" value="{$settings['vmq_gateway']}">
+                                                                    <label class="form-label">密钥</label>
+                                                                    <input class="form-control mb-5" placeholder="密钥" id="vmq_key" value="{$settings['vmq_key']}">
                                                                 </div>
                                                             </div>
                                                             <div class="card card-bordered">
@@ -819,6 +835,25 @@
                                 class: type,
                                 tronapipay_public_key: $('#tronapipay_public_key').val(),
                                 tronapipay_private_key: $('#tronapipay_private_key').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'vmqpay':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                vmq_gateway: $('#vmq_gateway').val(),
+                                vmq_key: $('#vmq_key').val()
                             },
                             success: function(data){
                                 if (data.ret === 1){

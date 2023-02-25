@@ -65,7 +65,7 @@ class SettingController extends AdminController
             case 'f2f_pay':
                 $list = array('f2f_pay_app_id', 'f2f_pay_pid', 'f2f_pay_public_key', 'f2f_pay_private_key', 'f2f_pay_notify_url');
                 break;
-            case 'vmq_pay':
+            case 'vmqpay':
                 $list = array('vmq_gateway', 'vmq_key');
                 break;
             case 'payjs_pay':
