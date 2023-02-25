@@ -192,7 +192,7 @@ class URL
     public static function getVmessURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getVmessConfig($user, $node->custom_config, $emoji);
-        $vmess = $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=auto&host=' . $node_config['host'] . '&path=' . $node_config['path'] . '&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&type=' . $node_config['net']  . '#' . rawurlencode($node_config['remark']);
+        $vmess = $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=auto&host=' . $node_config['host'] . '&path=' . $node_config['path'] . '&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&serviceName=' . $node_config['servicename'] . '&headerType=' . $node_config['headertype'] . '&type=' . $node_config['net']  . '#' . rawurlencode($node_config['remark']);
         return 'vmess://' . $vmess;
     }
 
@@ -203,7 +203,7 @@ class URL
     {
         $node_config = $node->getVlessConfig($user, $node->custom_config, $emoji);
         //$item['serviceName'] = $item['servicename'];
-        return 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
+        return 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
     }
     
     /**

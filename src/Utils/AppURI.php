@@ -35,11 +35,12 @@ class AppURI
                     'path' => $node_config['path'],
                     'tls' => $node_config['security'],
                     'sni' => $node_config['sni'],
+                    'serviceName' => $node_config['servicename'],
                 ];
                 $return = 'vmess://' . base64_encode(json_encode($node, 320));
                 break;
             case 'vless':
-                $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
+                $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . '&serviceName=' . $node_config['servicename'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
                 break;
             case 'trojan':
                 $return = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
@@ -421,46 +422,13 @@ class AppURI
                 $return = self::getShadowsocksURI($node_config);
                 break;				
             case 'vmess':
-                $return = ('vmess://' . $node_config['uuid'] ."@".$node_config['address'].":".$node_config['port']."?encryption=auto");
-                $return.="&type=".$node_config['net'];
-                $return.="&security=".$node_config['security'];
-                if($node_config['security'] == "xtls"){
-                   $return.="&flow=".$node_config['flow'];
-                }
-                if($node_config['host']!="")$return=$return."&host=". rawurlencode($node_config['host']);
-                if($node_config['host']!="")$return=$return."&sni=".$node_config['host'];	
-                if($node_config['path']!="")$return=$return."&path=".rawurlencode($node_config['path']);
-                if($node_config['net'] == "grpc"){
-                   if($node_config['net'] == "grpc")$return=$return."&mode=multi&serviceName=".$node_config['servicename'];
-                }else{
-                   if($node_config['headertype']!="")$return=$return."&headerType=".$node_config['headertype'];
-                }
-                if ($node_config['remark']!="")$return=$return."#". rawurlencode($node_config['remark']);
+                $return = 'vmess://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=auto&host=' . $node_config['host'] . '&path=' . $node_config['path'] . '&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&serviceName=' . $node_config['servicename'] . '&headerType=' . $node_config['headertype'] . '&type=' . $node_config['net']  . '#' . rawurlencode($node_config['remark']);
                 break;
             case 'trojan':
-                $return  = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'];
-                $return .= '?peer=' . $node_config['sni'] . '&sni=' . $node_config['sni'] ;
-                if($node_config['security'] == "xtls"){
-                   $return.='&security='.$node_config['tls'].'&flow='.$node_config['flow'];
-                }
-                $return.='#' .  rawurlencode($node_config['remark']);
+                'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
                 break;
             case 'vless':
-                $return = 'vless://' . $node_config['uuid'] .'@'.$node_config['address'].':'.$node_config['port'].'?encryption=none';
-                $return.="&type=".$node_config['net'];
-                $return.="&security=".$node_config['security'];
-                if($node_config['security'] == "xtls"){
-                   $return.="&flow=".$node_config['flow'];
-                }
-                if($node_config['host']!="")$return=$return."&host=". rawurlencode($node_config['host']);
-                if($node_config['host']!="")$return=$return."&sni=".$node_config['host'];	
-                if($node_config['path']!="")$return=$return."&path=".rawurlencode($node_config['path']);
-                if($node_config['net'] == "grpc"){
-                   if($node_config['net'] == "grpc")$return=$return."&mode=multi&serviceName=".$node_config['servicename'];
-                }else{
-                   if($node_config['headertype']!="")$return=$return."&headerType=".$node_config['headertype'];
-                }
-                if ($node_config['remark']!="")$return=$return."#". rawurlencode($node_config['remark']);
+                $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
                 break;
         }
         return $return;
