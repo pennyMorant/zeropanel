@@ -36,7 +36,7 @@ class AppURI
                     'tls' => $node_config['security'],
                     'sni' => $node_config['sni'],
                 ];
-                $return = 'vmess://' . json_encode($node, 320);
+                $return = 'vmess://' . base64_encode(json_encode($node, 320));
                 break;
             case 'vless':
                 $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
