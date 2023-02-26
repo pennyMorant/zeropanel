@@ -83,24 +83,12 @@ var KTSigninGeneral = function() {
                             data: datas,
                             success: function(data){
                                 if(data.ret == 1){
-                                    Swal.fire({
-                                        text: data.msg,
-                                        icon: "success",
-                                        buttonsStyling: !1,
-                                        confirmButtonText: "Ok",
-                                        customClass: {
-                                            confirmButton: "btn btn-primary"
-                                        }
-                                    }).then((function(result) {
-                                        if (result.isConfirmed) {
-                                            form.querySelector('[name="email"]').value= "";
-                                            form.querySelector('[name="password"]').value= ""; 
-                                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                            if (redirectUrl) {
-                                                location.href = redirectUrl;
-                                            }
-                                        }
-                                    }))
+                                    form.querySelector('[name="email"]').value= "";
+                                    form.querySelector('[name="password"]').value= ""; 
+                                    var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                    if (redirectUrl) {
+                                        location.href = redirectUrl;
+                                    };
                                 }else{
                                     Swal.fire({
                                         text: data.msg,
