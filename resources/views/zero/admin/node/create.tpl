@@ -62,7 +62,7 @@
                                                         <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">日本</option>
                                                         <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">新加坡</option>
                                                         <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg">韩国</option>
-                                                        <option value="australia" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg"}>澳大利亚</option>
+                                                        <option value="australia" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg">澳大利亚</option>
                                                         <option value="turkey" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg">土耳其</option>
                                                         <option value="argentina" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg">阿根廷</option>
                                                         <option value="brazil" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg">巴西</option>
