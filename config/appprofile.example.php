@@ -181,7 +181,7 @@ $_ENV['Clash_Profiles'] = [
         'Proxy' => [],
         'ProxyGroup' => [
             [
-                'name' => '🎯PORXY',
+                'name' => '🎯PROXY',
                 'type' => 'select',
                 'content' => [
                     'regex' => '(.*)',
