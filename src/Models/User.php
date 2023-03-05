@@ -488,10 +488,17 @@ class User extends Model
     public function productTrafficResetDate()
     {
         if ($this->reset_traffic_date != null) {
-            $d = $this->reset_traffic_date;
-            $ym = date('Y-m', strtotime('+1 month'));
-            $reset_date = $ym.'-'.$d;
-            return $reset_date;
+            if ($this->reset_traffic_date > date('d')) {
+                $d = $this->reset_traffic_date;
+                $ym = date('Y-m', strtotime('+1 month'));
+                $reset_date = $ym.'-'.$d;
+                return $reset_date;
+            } else if ($this->reset_traffic_date < date('d')) {
+                $d = $this->reset_traffic_date;
+                $ym = date('Y-m');
+                $reset_date = $ym.'-'.$d;
+                return $reset_date;
+            }          
         } else {
             return I18n::get()->t('no need to reset');
         }
