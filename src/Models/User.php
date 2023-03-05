@@ -494,7 +494,7 @@ class User extends Model
                 $ym = date('Y-m', strtotime('+1 month'));
                 $reset_date = $ym.'-'.$reset_d;
                 return $reset_date;
-            } else if ($today < $reset_d) {
+            } else if ($today <= $reset_d) {
                 $ym = date('Y-m');
                 $reset_date = $ym.'-'.$reset_d;
                 return $reset_date;
