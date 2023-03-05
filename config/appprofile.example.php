@@ -251,7 +251,7 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '📡SOICAL APP',
+                'name' => '📡SOCIAL APP',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [

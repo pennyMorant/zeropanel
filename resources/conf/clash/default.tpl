@@ -13,7 +13,7 @@
   - RULE-SET,music,🎸MUSIC
   - RULE-SET,googler,💡GOOGLE
   - RULE-SET,google,💡GOOGLE
-  - RULE-SET,socialapp,📡SOCAIL APP
+  - RULE-SET,socialapp,📡SOCIAL APP
   - RULE-SET,video,🚡VIDEO
   - RULE-SET,proxy,🎯PROXY
   - RULE-SET,direct,DIRECT
