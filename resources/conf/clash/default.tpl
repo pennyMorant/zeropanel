@@ -5,9 +5,9 @@
   - DOMAIN-KEYWORD,aria2,DIRECT
   - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
-  - RULE-SET,telegramcidr,✈️Telegram
-  - RULE-SET,youtube,🖥Youtube
-  - RULE-SET,netflix,📺Netflix
+  - RULE-SET,telegramcidr,✈️TELEGRAM
+  - RULE-SET,youtube,🖥YOUTUBE
+  - RULE-SET,netflix,📺NETFLIX
   - RULE-SET,icloud,📱APPLE
   - RULE-SET,apple,📱APPLE
   - RULE-SET,music,🎸MUSIC

@@ -201,7 +201,7 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '✈️Telegram',
+                'name' => '✈️TELEGRAM',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
@@ -211,7 +211,7 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '🖥Youtube',
+                'name' => '🖥YOUTUBE',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
@@ -221,7 +221,7 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '📺Netflix',
+                'name' => '📺NETFLIX',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
