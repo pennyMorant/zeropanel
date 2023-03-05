@@ -490,11 +490,11 @@ class User extends Model
         if ($this->reset_traffic_date != null) {
             $reset_d = $this->reset_traffic_date;
             $today = date('d');
-            if ($today > $reset_d) {               
+            if ($today >= $reset_d) {               
                 $ym = date('Y-m', strtotime('+1 month'));
                 $reset_date = $ym.'-'.$reset_d;
                 return $reset_date;
-            } else if ($today <= $reset_d) {
+            } else if ($today < $reset_d) {
                 $ym = date('Y-m');
                 $reset_date = $ym.'-'.$reset_d;
                 return $reset_date;
