@@ -181,7 +181,7 @@ $_ENV['Clash_Profiles'] = [
         'Proxy' => [],
         'ProxyGroup' => [
             [
-                'name' => '🎯国外流量',
+                'name' => '🎯PORXY',
                 'type' => 'select',
                 'content' => [
                     'regex' => '(.*)',
@@ -191,12 +191,12 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '🛺其他流量',
+                'name' => '🛺OTHERS',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量',
-                        '🚀直接连接'
+                        '🎯PROXY',
+                        '🚀DIRECT'
                     ]
                 ]
             ],
@@ -205,7 +205,7 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
@@ -215,7 +215,7 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
@@ -225,17 +225,7 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
-                    ],
-                    'regex' => '(.*)',
-                ]
-            ],
-            [
-                'name' => '🍳哔哩哔哩',
-                'type' => 'select',
-                'content' => [
-                    'left-proxies' => [
-                        '🚀直接连接'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
@@ -245,7 +235,7 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
@@ -255,13 +245,23 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
             ],
             [
-                'name' => '📡社交APP',
+                'name' => '📡SOICAL APP',
+                'type' => 'select',
+                'content' => [
+                    'left-proxies' => [
+                        '🎯PROXY'
+                    ],
+                    'regex' => '(.*)',
+                ]
+            ],
+            [
+                'name' => '🚡VIDEO',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
@@ -271,27 +271,17 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '🚡国外媒体',
+                'name' => '📱APPLE',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
-                    ],
-                    'regex' => '(.*)',
-                ]
-            ],
-            [
-                'name' => '📱苹果服务',
-                'type' => 'select',
-                'content' => [
-                    'left-proxies' => [
-                        '🚀直接连接',
-                        '🎯国外流量'
+                        '🚀DIRECT',
+                        '🎯PROXY'
                     ]
                 ]
             ],
             [
-                'name' => '🚀直接连接',
+                'name' => '🚀DIRECT',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
