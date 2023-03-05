@@ -186,7 +186,7 @@ $_ENV['Clash_Profiles'] = [
                 'content' => [
                     'regex' => '(.*)',
                     'right-proxies' => [
-                        '🚀直接连接'
+                        '🚀DIRECT'
                     ],
                 ]
             ],
@@ -265,7 +265,7 @@ $_ENV['Clash_Profiles'] = [
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
-                        '🎯国外流量'
+                        '🎯PROXY'
                     ],
                     'regex' => '(.*)',
                 ]
