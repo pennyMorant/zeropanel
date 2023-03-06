@@ -124,7 +124,7 @@ $_ENV['WebAPI'] = true;
 
 #杂项
 $_ENV['authDriver'] = 'cookie';            //不能更改此项
-$_ENV['pwdMethod'] = 'argoni';               //密码加密 可选 md5, sha256, bcrypt, argon2i, argon2id（argon2i需要至少php7.2）
+$_ENV['pwdMethod'] = 'argon2id';               //密码加密 可选 md5, sha256, bcrypt, argon2i, argon2id（argon2i需要至少php7.2）
 $_ENV['salt'] = '';                  //推荐配合 md5/sha256， bcrypt/argon2i/argon2id 会忽略此项
 
 $_ENV['sessionDriver']          = 'cookie';            //可选: cookie
