@@ -268,6 +268,7 @@ class OrderController extends BaseController
             }           
             $product->save();
             // 告罄补货通知
+            /*
             if ($product->stock - $product->sales == 5 || $product->stock - $product->sales == 0) {
                 $admin_users = User::where('is_admin', '1')->get();
                 foreach ($admin_users as $admin) {
@@ -278,7 +279,7 @@ class OrderController extends BaseController
                         ], []
                     );
                 }
-            }
+            }*/
         }
     }
 
