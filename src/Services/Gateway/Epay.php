@@ -12,10 +12,10 @@ namespace App\Services\Gateway;
 
 use App\Controllers\OrderController;
 use App\Models\Setting;
-use App\Services\Gateway\Epay\EpayNotify;
-use App\Services\Gateway\Epay\EpaySubmit;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use App\Services\Gateway\Epay\EpayNotify;
+use App\Services\Gateway\Epay\EpaySubmit;
 
 class Epay
 {
@@ -42,19 +42,19 @@ class Epay
         }
 
         //请求参数
-        $data = array(
+        $data = [
             "pid" => trim($this->epay['partner']),
-            "type" => $method == 'alipay' ? 'Alipay' : 'Wechat',
+            "type" => $method,
             "out_trade_no" => $order_no,
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
             "name" => Setting::obtain('website_url') . "充值" . $amount,
             "money" => $final_amount,
             "sitename" => Setting::obtain('website_url')
-        );
+        ];
         $alipaySubmit = new EpaySubmit($this->epay);
         $html_text = $alipaySubmit->buildRequestForm($data);
-        $result = array('code'=>$html_text,'ret'=>1,'tradeno' => $order_no, 'type'=> 'url' );
+        $result = ['code'=>$html_text,'ret'=>1,'tradeno' => $order_no, 'type'=> 'url'];
         return $result;
     }
 
