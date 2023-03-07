@@ -11,8 +11,7 @@ class Payment
     public static function notify($request, $response, $args)
     {
         $instance = new ZeroPay();
-        $instance->notify($request, $response, $args);
-        return ['errcode' => 1, 'errmsg' => '回调处理完成'];
+        return  $instance->notify($request, $response, $args);
     }
 
     public static function return($request, $response, $args)
