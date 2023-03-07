@@ -91,8 +91,8 @@ final class EpaySubmit
     public function buildRequestForm($para_temp, $method = 'POST')
     {
         //待请求参数数组
-        $para = $this->buildRequestPara($para_temp);
-        $url = http_build_query($this->alipay_gateway_new . 'method=' . $method . $para);
+        $para = http_build_query($this->buildRequestPara($para_temp));
+        $url = $this->alipay_gateway_new . 'method=' . $method . $para;
         return $url;
     }
 }
