@@ -54,7 +54,7 @@ class Epay
         ];
         $alipaySubmit = new EpaySubmit($this->epay);
         $html_text = $alipaySubmit->buildRequestForm($data);
-        $result = ['code'=>$html_text,'ret'=>1,'tradeno' => $order_no, 'type'=> 'url'];
+        $result = ['url'=>$html_text, 'ret'=>1, 'tradeno' => $order_no, 'type'=> 'url'];
         return $result;
     }
 
