@@ -64,28 +64,12 @@ class Epay
         $verify_result = $alipayNotify->verifyNotify();
         if ($verify_result) {
             $out_trade_no = $_GET['out_trade_no'];
-            $type = $_GET['type'];
-            switch ($type) {
-                case 'alipay':
-                    $type = 'Alipay';
-                    break;
-                case 'qqpay':
-                    $type = 'QQ';
-                    break;
-                case 'wxpay':
-                    $type = 'Wechat';
-                    // no break
-                case 'epusdt':
-                    $type = 'Epusdt';
-                    break;
-            }
             $trade_status = $_GET['trade_status'];
             if ($trade_status === 'TRADE_SUCCESS') {
-                orderController::execute($request->getParam('payId'));
-                return $response->withJson(['state' => 'success', 'msg' => '支付成功']);
+                orderController::execute($out_trade_no);
+                die('success');
             }
-            return $response->withJson(['state' => 'fail', 'msg' => '支付失败']);
         }
-        return $response->write('非法请求');
+        die('error');
     }
 }
