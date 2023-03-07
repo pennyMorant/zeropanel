@@ -7,7 +7,7 @@ use App\Services\Auth;
 use App\Models\Order;
 use App\Models\Setting;
 
-class PAYJS extends AbstractPayment
+class PAYJS
 {
     private $appSecret;
     private $gatewayUri;

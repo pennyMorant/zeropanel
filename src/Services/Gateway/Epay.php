@@ -14,7 +14,8 @@ use App\Controllers\OrderController;
 use App\Models\Setting;
 use App\Services\Gateway\Epay\EpayNotify;
 use App\Services\Gateway\Epay\EpaySubmit;
-use App\Services\View;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 class Epay
 {
