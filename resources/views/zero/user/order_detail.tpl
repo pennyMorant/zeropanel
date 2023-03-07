@@ -62,7 +62,7 @@
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="ms-5">
                                                                         <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 2}{$trans->t('add credit')}{elseif $order->order_type == 1}{$trans->t('purchase product')}: {$product->name}{/if}</a>
-                                                                        <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d h:i:s', $order->create_time)}</div>
+                                                                        <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d h:i:s', $order->created_time)}</div>
                                                                     </div>
                                                                     
                                                                 </div>
