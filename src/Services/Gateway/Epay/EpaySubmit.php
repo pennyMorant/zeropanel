@@ -88,21 +88,13 @@ final class EpaySubmit
      *
      * @return 提交表单HTML文本
      */
-    public function buildRequestForm($para_temp, $method = 'POST', $button_name = '正在跳转')
+    public function buildRequestForm($para_temp, $method = 'POST')
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
 
-        $sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->alipay_gateway_new."' method='".$method."'>";
-        foreach ($para as $key => $val) {
-            $sHtml .= "<input type='hidden' name='".$key."' value='".$val."'/>";
-        }
-
-        //submit按钮控件请不要含有name属性
-        $sHtml .= "<input type='submit' value='".$button_name."'></form>";
-
         $sHtml .= "<script>document.forms['alipaysubmit'].submit();</script>";
-
-        return $sHtml;
+        $url = $this->alipay_gateway_new . 'method=' . $method . $para;
+        return $url;
     }
 }
