@@ -233,6 +233,9 @@ class OrderController extends BaseController
 
             $order->execute_status = 1;
             $order->save();
+            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {
+                Payback::rebate($user->id, $order->order_total);
+            }
         }
     }
 
@@ -256,7 +259,7 @@ class OrderController extends BaseController
             $product->purchase($user, $order->product_price);           
 
             // 返利
-            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase' && $user->agent === 0) {
+            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
                 Payback::rebate($user->id, $order->order_total);
             }
 
