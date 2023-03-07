@@ -45,7 +45,7 @@ class StripePay
                 'currency'  => $configs['stripe_currency'],
                 'type'      => $type,
                 'redirect'  => [
-                    'return_url' => Setting::obtain('website_url') . '/user/payment/return',
+                'return_url' => Setting::obtain('website_url') . '/user/payment/return',
                 ],
             ]);
         } catch (\Stripe\Exception\InvalidRequestException $e) {
@@ -89,25 +89,6 @@ class StripePay
         return $total;
     }
 
-    public function purchase($request, $response, $args)
-    {
-        return 0;
-    }
-
-    public function notify($request, $response, $args)
-    {
-        return 0;
-    }
-
-    public function getPurchaseHTML()
-    {
-        return 1;
-    }
-
-    public function getReturnHTML($request, $response, $args)
-    {
-        return 0;
-    }
 
     public function getStatus($request, $response, $args)
     {

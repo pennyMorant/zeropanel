@@ -112,36 +112,6 @@ class PAYJS extends AbstractPayment
 
         return ['ret' => 1, 'url' => $url, 'tradeno' => $pl->tradeno, 'type' => 'qrcode'];
     }
-    public function purchase($request, $response, $args)
-    {
-        $price = $request->getParam('price');
-        $type = $request->getParam('type');
-        if ($price <= 0) {
-            return json_encode(['code' => -1, 'errmsg' => '非法的金额.']);
-        }
-        $user = Auth::getUser();
-        $pl = new Order();
-        $pl->userid = $user->id;
-        $pl->total = $price;
-        $pl->tradeno = self::generateGuid();
-        $pl->save();
-        //if ($type != 'alipay') {
-        //$type = '';
-        //}
-        $data['mchid'] = Setting::obtain('payjs_mchid');
-        //$data['type'] = $type;
-        $data['out_trade_no'] = $pl->tradeno;
-        $data['total_fee'] = (float) $price * 100;
-        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify?way=payjs';
-        //$data['callback_url'] = $_ENV['baseUrl'] . '/user/code';
-        $params = $this->prepareSign($data);
-        $data['sign'] = $this->sign($params);
-        $url = 'https://payjs.cn/api/cashier?' . http_build_query($data);
-        return json_encode(['code' => 0, 'url' => $url, 'pid' => $data['out_trade_no']]);
-        //$result = json_decode($this->post($data), true);
-        //$result['pid'] = $pl->tradeno;
-        //return json_encode($result);
-    }
     public function query($tradeNo)
     {
         $data['payjs_order_id'] = $tradeNo;
@@ -188,36 +158,6 @@ class PAYJS extends AbstractPayment
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
         return $this->post($data, 'refund');
-    }
-    public function getPurchaseHTML()
-    {
-        return 0;
-    }
-    public function getReturnHTML($request, $response, $args)
-    {
-        $pid = $_GET['merchantTradeNo'];
-        $p = Order::where('tradeno', '=', $pid)->first();
-        $money = $p->total;
-        if ($p->status == 1) {
-            $success = 1;
-        } else {
-            $data = $_POST;
-
-            $in_sign = $data['sign'];
-            unset($data['sign']);
-            $data = array_filter($data);
-            ksort($data);
-            $sign = strtoupper(md5(urldecode(http_build_query($data) . '&key=' . $this->appSecret)));
-            $resultVerify = $sign ? true : false;
-
-            if ($resultVerify) {
-                $this->postPayment($data['out_trade_no'], '微信支付');
-                $success = 1;
-            } else {
-                $success = 0;
-            }
-        }
-        return View::getSmarty()->assign('money', $money)->assign('success', $success)->fetch('user/pay_success.tpl');
     }
     public function getStatus($request, $response, $args)
     {
