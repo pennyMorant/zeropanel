@@ -48,9 +48,9 @@ class Epay
             "out_trade_no" => $order_no,
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
-            "name" => Setting::obtain('website_url') . "充值",
+            "name" => "充值",
             "money" => $final_amount,
-            "sitename" => Setting::obtain('website_url')
+            "sitename" => "test"
         ];
         $alipaySubmit = new EpaySubmit($this->epay);
         $html_text = $alipaySubmit->buildRequestForm($data);

@@ -88,7 +88,7 @@ final class EpaySubmit
     public function buildRequestForm($para_temp, $method = 'POST')
     {
         //待请求参数数组
-        $para = http_build_query($this->buildRequestPara($para_temp));
+        $para = $this->buildRequestPara($para_temp);
         $url = $this->gateway_header . 'method=' . $method . $para;
         return $url;
     }
