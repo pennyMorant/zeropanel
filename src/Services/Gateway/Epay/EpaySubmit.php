@@ -13,12 +13,9 @@ namespace App\Services\Gateway\Epay;
 final class EpaySubmit
 {
     private $alipay_config;
+    private $alipay_gateway_new;
 
-    /**
-     * Epay_submit constructor.
-     *
-     * @param $alipay_config
-     */
+    
     public function __construct($alipay_config)
     {
         $this->alipay_config = $alipay_config;
