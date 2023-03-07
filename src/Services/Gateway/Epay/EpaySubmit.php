@@ -92,9 +92,7 @@ final class EpaySubmit
     {
         //待请求参数数组
         $para = $this->buildRequestPara($para_temp);
-
-        $sHtml .= "<script>document.forms['alipaysubmit'].submit();</script>";
-        $url = $this->alipay_gateway_new . 'method=' . $method . $para;
+        $url = http_build_query($this->alipay_gateway_new . 'method=' . $method . $para);
         return $url;
     }
 }
