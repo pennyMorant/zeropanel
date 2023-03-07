@@ -6,13 +6,13 @@ namespace App\Services\Gateway\Epay;
 
 final class EpaySubmit
 {
-    private $alipay_config;
-    private $alipay_gateway_new;
+    private $config;
+    private $gateway_header;
 
-    public function __construct($alipay_config)
+    public function __construct($config)
     {
-        $this->alipay_config = $alipay_config;
-        $this->alipay_gateway_new = $this->alipay_config['apiurl'] . 'submit.php?';
+        $this->config = $config;
+        $this->gateway_header = $this->config['apiurl'] . 'submit.php?';
     }
 
     public function buildRequestMysign($para_sort)
@@ -20,7 +20,7 @@ final class EpaySubmit
         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         $prestr = EpayTool::createLinkstring($para_sort);
 
-        return EpayTool::md5Sign($prestr, $this->alipay_config['key']);
+        return EpayTool::md5Sign($prestr, $this->config['key']);
     }
 
     public function buildRequestPara($para_temp)
@@ -36,7 +36,7 @@ final class EpaySubmit
 
         //签名结果与签名方式加入请求提交参数组中
         $para_sort['sign'] = $mysign;
-        $para_sort['sign_type'] = strtoupper(trim($this->alipay_config['sign_type']));
+        $para_sort['sign_type'] = strtoupper(trim($this->config['sign_type']));
 
         return $para_sort;
     }
