@@ -64,9 +64,6 @@ return function (SlimApp $app) {
 
         $group->post('/code/f2fpay',             App\Services\Payment::class . ':purchase');
 
-        //Reconstructed Payment System
-        $group->post('/payment/purchase',        App\Services\Payment::class . ':purchase');
-        $group->get('/payment/return',           App\Services\Payment::class . ':returnHTML');
 
         # Zero
         
@@ -87,6 +84,8 @@ return function (SlimApp $app) {
     })->add(new Auth());
 
     $app->group('/payment', function (Group $group) {
+        //Reconstructed Payment System
+        $group->get('/return',                  App\Services\Payment::class . ':return')->add(new Auth());
         $group->get('/notify',                  App\Services\Payment::class . ':notify');
         $group->post('/notify',                 App\Services\Payment::class . ':notify');
         $group->get('/notify/{type}',           App\Services\Payment::class . ':notify');

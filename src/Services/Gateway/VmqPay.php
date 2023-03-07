@@ -49,7 +49,7 @@ class VmqPay
             'param' => $configs['vmq_key'],
             'isHtml' => '1',
             'notifyUrl' => Setting::obtain('website_url') . '/payment/notify/vmqpay',
-            'returnUrl' => Setting::obtain('website_url') . '/user/payment/return?tradeno=' . $order_no,
+            'returnUrl' => Setting::obtain('website_url') . '/payment/return?tradeno=' . $order_no,
         ];
         $url = $url_header . http_build_query($data);
         return ['ret' => 1, 'url' => $url, 'type' => 'url'];

@@ -15,7 +15,7 @@ class Payment
         return ['errcode' => 1, 'errmsg' => '回调处理完成'];
     }
 
-    public static function returnHTML($request, $response, $args)
+    public static function return($request, $response, $args)
     {
         $instance = new ZeroPay();
         return $instance->getReturnHTML($request, $response, $args);

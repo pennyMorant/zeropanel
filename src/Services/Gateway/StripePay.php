@@ -8,7 +8,7 @@ use App\Models\Setting;
 use Stripe\{ Stripe, Charge, Source };
 use Exception;
 
-class StripePay extends AbstractPayment
+class StripePay
 {
     public function __construct()
     {

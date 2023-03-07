@@ -107,45 +107,6 @@ class THeadPay extends AbstractPayment
         return ['errcode' => 0, 'url' => $params['data'], 'pid' => $pl->tradeno, 'type' => 'qrcode'];
     }
 
-
-    public function purchase($request, $response, $args)
-    {
-        $amount = (int)$request->getParam('amount');
-        $user = Auth::getUser();
-        if ($amount <= 0) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '订单金额错误：' . $amount
-            ]);
-        }
-
-        $pl = new Order();
-        $pl->userid = $user->id;
-        $pl->tradeno = self::generateGuid();
-        $pl->total = $amount;
-        $pl->save();
-
-        try {
-            $res = $this->pay([
-                'trade_no' => $pl->tradeno,
-                'total_fee' => $pl->total * 100,
-                'notify_url' => rtrim(Setting::obtain('website_url'), '/') . '/payment/notify',
-            ]);
-
-            return $response->withJson([
-                'ret' => 1,
-                'qrcode' => $res['data'],
-                'amount' => $pl->total,
-                'pid' => $pl->tradeno,
-            ]);
-        } catch (Exception $e) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '创建支付订单错误：' . $e->getMessage(),
-            ]);
-        }
-    }
-
     public function notify($request, $response, $args)
     {
         $inputString = file_get_contents('php://input', 'r');
@@ -161,16 +122,6 @@ class THeadPay extends AbstractPayment
         die('fail');
     }
 
-
-    public function getPurchaseHTML()
-    {
-        return View::getSmarty()->fetch('user/theadpay.tpl');
-    }
-
-    public function getReturnHTML($request, $response, $args)
-    {
-        return 0;
-    }
 
     public function getStatus($request, $response, $args)
     {

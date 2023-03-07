@@ -15,7 +15,7 @@ use App\Services\Auth;
 use App\Models\Order;
 use App\Models\Setting;
 
-class AopF2F extends AbstractPayment
+class AopF2F
 {
     private function createGateway()
     {
@@ -88,45 +88,6 @@ class AopF2F extends AbstractPayment
         return $return;
     }
 
-    public function purchase($request, $response, $args)
-    {
-        $amount = $request->getParam('amount');
-        $user = Auth::getUser();
-        if ($amount == '') {
-            $res['ret'] = 0;
-            $res['msg'] = '订单金额错误：' . $amount;
-            return $response->getBody()->write(json_encode($res));
-        }
-
-        $pl = new Order();
-        $pl->userid = $user->id;
-        $pl->tradeno = self::generateGuid();
-        $pl->total = $amount;
-        $pl->save();
-
-        $gateway = $this->createGateway();
-
-        $request = $gateway->purchase();
-        $request->setBizContent([
-            'subject' => $pl->tradeno,
-            'out_trade_no' => $pl->tradeno,
-            'total_amount' => $pl->total
-        ]);
-
-        /** @var \Omnipay\Alipay\Responses\AopTradePreCreateResponse $response */
-        $aliResponse = $request->send();
-
-        // 获取收款二维码内容
-        $qrCodeContent = $aliResponse->getQrCode();
-
-        $return['ret'] = 1;
-        $return['qrcode'] = $qrCodeContent;
-        $return['amount'] = $pl->total;
-        $return['pid'] = $pl->tradeno;
-
-        return json_encode($return);
-    }
-
     public function notify($request, $response, $args)
     {
         $gateway = $this->createGateway();
@@ -146,16 +107,6 @@ class AopF2F extends AbstractPayment
         }
     }
 
-
-    public function getPurchaseHTML()
-    {
-        return View::getSmarty()->fetch('user/aopf2f.tpl');
-    }
-
-    public function getReturnHTML($request, $response, $args)
-    {
-        return 0;
-    }
 
     public function getStatus($request, $response, $args)
     {

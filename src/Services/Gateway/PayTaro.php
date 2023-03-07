@@ -84,7 +84,7 @@ class PayTaro
             $data['total_amount'] = (int)($amount * 100);
         }
         $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify/paytaro';
-        $data['return_url'] = Setting::obtain('website_url') . '/user/payment/return?tradeno='.$order_no;
+        $data['return_url'] = Setting::obtain('website_url') . '/payment/return?tradeno='.$order_no;
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
     	$result = json_decode($this->post($data), true);

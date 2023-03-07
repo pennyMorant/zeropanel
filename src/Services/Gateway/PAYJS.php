@@ -104,7 +104,7 @@ class PAYJS extends AbstractPayment
             'out_trade_no'  => $pl->tradeno,
             'total_fee'     => (float) $pl->total * 100,
             'notify_url'    => Setting::obtain('website_url') . '/payment/notify/payjs',
-            'callback_url'  => Setting::obtain('website_url') . '/user/payment/return?tradeno='.$pl->tradeno,
+            'callback_url'  => Setting::obtain('website_url') . '/payment/return?tradeno='.$pl->tradeno,
         ];
         $params         = $this->prepareSign($data);
         $data['sign']   = $this->sign($params);
