@@ -221,18 +221,17 @@ class OrderController extends BaseController
 
     public static function executeAddCredit($order)
     {
-        if ($order->execute_status != '1') {
+        if ($order->execute_status !== 1) {
             $order->paid_time = time();
             $order->updated_time = time();
             $order->order_status = 2;
+            $order->execute_status = 1;
             $order->save();
 
             $user = User::find($order->user_id);
             $user->money += $order->order_total;
             $user->save();
 
-            $order->execute_status = 1;
-            $order->save();
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {
                 Payback::rebate($user->id, $order->order_total);
             }
