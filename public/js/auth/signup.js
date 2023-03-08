@@ -226,3 +226,10 @@ function getCookie(cname) {
     }
     return "";
 }
+if (getQueryVariable('code') != '') {
+    setCookie('code', getQueryVariable('code'), 30);
+    window.location.href = '/auth/signup';
+}
+if ((getCookie('code')) != '') {
+    $("#referral_code").val(getCookie('code'));
+}
