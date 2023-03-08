@@ -82,7 +82,7 @@ var KTSignupGeneral = function() {
                     email: $("#email").val(),
                     passwd: $("#passwd").val(),
                     repasswd: $("#repasswd").val(),
-                    code: $("#code").val(),
+                    code: $("#referral_code").val(),
                     turnstile: turnstile.getResponse()
                 };
             } else {
@@ -90,7 +90,7 @@ var KTSignupGeneral = function() {
                     email: $("#email").val(),
                     passwd: $("#passwd").val(),
                     repasswd: $("#repasswd").val(),
-                    code: $("#code").val() 
+                    code: $("#referral_code").val() 
                 };
             }
 
