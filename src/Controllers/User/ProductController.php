@@ -25,7 +25,7 @@ final class ProductController extends BaseController
     {
         $trans = I18n::get();
         $products = Product::where('status', '1')
-            ->orderBy('sort', 'asc')
+            ->orderBy('sort', 'desc')
             ->get();
         $product_tab_lists = [
             [
