@@ -138,7 +138,7 @@ class Analytics
         } else if ($num_2 === 0) {
             $percent = $num_1 * 100;
         } else {
-            $percent = ($num_1 - $num_2) / $num_2;
+            $percent = ($num_1 - $num_2) / $num_2 * 100;
         }
         return $percent;
     }
