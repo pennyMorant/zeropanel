@@ -42,7 +42,7 @@ class AgentController extends AdminController
             'total'           => '原始金额',
             'userid'   => '发起用户ID',
             'ref_by'     => '获利用户ID',
-            'commission'         => '佣金',
+            'ref_get'         => '佣金',
             'datetime'        => '时间'
         );
         $table_config_commission['ajax_url'] = '/admin/agent/commission/ajax';
