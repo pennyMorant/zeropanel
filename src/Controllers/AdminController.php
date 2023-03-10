@@ -47,7 +47,7 @@ class AdminController extends UserController
         $income_this_month = $sts->getIncome($start_time_this_month, $end_time_this_month);
         $new_users_this_month = $sts->getNewUsers(date("Y-m-d H:i:s", $start_time_this_month), date("Y-m-d H:i:s", $end_time_this_month));
         $increase_percentage_income = $sts->increase_percentage($income_this_month, $sts->getIncome($start_time_last_month, $end_time_last_month));
-        $increase_percentage_new_users = $sts->increase_percentage($new_users_this_month, $sts->getNewUsers($start_time_last_month, $end_time_last_month));
+        $increase_percentage_new_users = $sts->increase_percentage($new_users_this_month, $sts->getNewUsers(date('Y-m-d H:i:s', $start_time_last_month), date('Y-m-d H:i:s', $end_time_last_month)));
         $this->view()
             ->assign('income_this_month', $income_this_month)
             ->assign('new_users_this_month', $new_users_this_month)

@@ -113,8 +113,6 @@ class Analytics
     // admin
     public function getIncome($start_time, $end_time)
     {
-        $month_first_day = mktime(0,0,0,date('m'),1,date('Y'));
-        $month_end_day = mktime(23,59,59,date('m'),date('t'),date('Y'));
         $sum = Order::where('order_payment','!=', 'creditpay')->where('order_status', 2)->where('paid_time', '>=', $start_time)->where('paid_time', '<=', $end_time)->sum('order_total');
         if ($sum == null) {
           $sum = 0;
