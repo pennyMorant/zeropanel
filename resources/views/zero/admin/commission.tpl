@@ -28,12 +28,29 @@
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
 
-                                    <div class="card">
+                                    <div class="card mb-5">
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">提现管理</div>
                                         </div>
                                         <div class="card-body">
                                             {include file='table/table.tpl'}
+                                        </div>  
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title text-dark fs-3 fw-bolder">佣金记录</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_admin_commission_record">
+                                                <thead>
+                                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
+                                                        {foreach $table_config_commission['total_column'] as $key_commission => $value_commission}
+                                                            <th class="{$key_commission}">{$value_commission}</th>
+                                                        {/foreach}
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-gray-600 fw-semibold"></tbody>
+                                            </table>
                                         </div>  
                                     </div>
                                 </div>
@@ -49,6 +66,31 @@
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
             })
+        </script>
+        <script>
+            KTAdminCommissionRecord = $('#zero_admin_commission_record').DataTable({
+            ajax: {
+            url: '{$table_config_commission['ajax_url']}',
+            type: "POST"
+            },
+            processing: true,
+            serverSide: true,
+            order: [[ 0, 'desc' ]],
+            stateSave: true,
+            columnDefs: [
+                { width: '5%', targets: 0 },
+                { className: 'text-end', targets: -1 }
+            ],
+            columns: [
+            {foreach $table_config_commission['total_column'] as $key_commission => $value_commission}
+                { "data": "{$key_commission}" },
+            {/foreach}
+            ],
+            {include file='table/lang_chinese.tpl'}
+            })
+
+
+            var has_init = JSON.parse(localStorage.getItem(window.location.href + '-hasinit'));
         </script>
         <script>
             function zeroAdminUpdateWithdrawCommission(mode, id){

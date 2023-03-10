@@ -7,7 +7,8 @@ use App\Controllers\{
 };
 use App\Models\{
     User, 
-    Withdraw
+    Withdraw,
+    Payback
 };
 use App\Utils\{ 
     DatatablesHelper 
@@ -36,14 +37,25 @@ class AgentController extends AdminController
             'datetime' => '时间',
             'action' => '操作'
         );
+        $table_config_commission['total_column'] = array(
+            'id'              => 'ID',
+            'total'           => '原始金额',
+            'userid'   => '发起用户ID',
+            'ref_by'     => '获利用户ID',
+            'commission'         => '佣金',
+            'datetime'        => '时间'
+        );
+        $table_config_commission['ajax_url'] = '/admin/agent/commission/ajax';
 
         $table_config['ajax_url'] = '/admin/agent/withdraw/ajax';
-        $this->view()->assign('table_config', $table_config)->display('admin/commission.tpl');
+        $this->view()
+            ->assign('table_config', $table_config)
+            ->assign('table_config_commission', $table_config_commission)
+            ->display('admin/commission.tpl');
         return $response;
     }
 
     /**
-     * 后台公告页面 AJAX
      *
      * @param Request   $request
      * @param Response  $response
@@ -126,6 +138,32 @@ class AgentController extends AdminController
                 $res['msg'] = '退回成功';
                 return $response->withJson($res);
         }
+
     }
+
+    public function commissionAjax($request, $response, $args)
+    {
+        $query = Payback::getTableDataFromAdmin(
+            $request
+        );
+        $data = [];
+        foreach ($query['datas'] as $value) {
+            $tempdata                   = [];
+            $tempdata['id']             = $value->id;
+            $tempdata['total']          = $value->total;
+            $tempdata['userid']         = $value->userid;
+            $tempdata['ref_by']         = $value->ref_by;
+            $tempdata['ref_get']        = $value->ref_get;
+            $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
+            $data[] = $tempdata;
+        }
+        return $response->WithJson([
+            'draw'              => $request->getParam('draw'),
+            'recordsTotal'      => Payback::count(),
+            'recordsFiltered'   => $query['count'],
+            'data'              => $data
+        ]);
+    }
+    
 
 }

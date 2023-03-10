@@ -210,6 +210,7 @@ return function (SlimApp $app) {
             $group->get('/withdraw',             App\Controllers\Admin\AgentController::class . ':index');
             $group->put('/withdraw/update',   App\Controllers\Admin\AgentController::class . ':updateWithdrawCommission');
             $group->post('/withdraw/ajax',           App\Controllers\Admin\AgentController::class . ':withdrawAjax');
+            $group->post('/commission/ajax',           App\Controllers\Admin\AgentController::class . ':commissionAjax');
         });
     })->add(new Admin());
 
