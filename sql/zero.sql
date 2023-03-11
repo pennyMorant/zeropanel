@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-02-21 07:19:35
--- 服务器版本： 10.10.3-MariaDB
+-- 生成日期： 2023-03-11 13:08:24
+-- 服务器版本： 10.11.2-MariaDB
 -- PHP 版本： 8.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -177,7 +177,7 @@ CREATE TABLE `link` (
 CREATE TABLE `node` (
   `id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) NOT NULL COMMENT '是否显示',
   `server` varchar(128) NOT NULL,
   `custom_config` text NOT NULL,
   `flag` varchar(128) NOT NULL,
