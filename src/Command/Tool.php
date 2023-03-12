@@ -3,6 +3,8 @@
 namespace App\Command;
 use App\Utils\QQWry;
 use App\Models\Setting;
+use Telegram\Bot\Api;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use App\Utils\DatatablesHelper;
 
 class Tool extends Command
@@ -39,7 +41,7 @@ class Tool extends Command
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
             $WebhookUrl = (Setting::obtain('website_url') . '/telegram_callback?token=' . Setting::obtain('telegram_bot_request_token'));
-            $telegram = new \Telegram\Bot\Api(Setting::obtain('telegram_bot_token'));
+            $telegram = new Api(Setting::obtain('telegram_bot_token'));
             $telegram->removeWebhook();
             if ($telegram->setWebhook(['url' => $WebhookUrl])) {
                 echo ('New Bot @' . $telegram->getMe()->getUsername() . ' 设置成功！' . PHP_EOL);
