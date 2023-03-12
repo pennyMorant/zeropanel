@@ -104,7 +104,7 @@ class Job extends Command
             if ($user == null) {
                 continue;
             }
-            if ($product->reset_traffic_date != null) {               
+            if ($user->reset_traffic_date != null) {               
                 if (date('d') === $user->reset_traffic_date) {
                     echo('用户ID:' . $user->id . ' 重置流量为' . $user->reset_traffic_value . 'GB' . PHP_EOL);
                     $user->transfer_enable = Tools::toGB($user->reset_traffic_valuee);
