@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Utils\Telegram\Commands;
 
-use App\Models\{
-    User,
-    Setting
-};
+use App\Models\Setting;
+use App\Models\User;
 use App\Utils\Telegram\Reply;
-use App\Utils\Telegram\TelegramTools;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
+use function json_encode;
 
 /**
  * Class MyCommand.
  */
-class MyCommand extends Command
+final class MyCommand extends Command
 {
     /**
      * @var string Command Name
@@ -41,17 +41,9 @@ class MyCommand extends Command
         $ChatID = $Message->getChat()->getId();
 
         if ($ChatID < 0) {
-            // 群组
-            if ($_ENV['enable_delete_user_cmd'] === true) {
-                TelegramTools::DeleteMessage([
-                    'chatid'      => $ChatID,
-                    'messageid'   => $MessageID,
-                ]);
-            }
-            
-            if ($ChatID != Setting::obtain('telegram_group_id')) {
+            if ($ChatID !== Setting::obtain('telegram_group_id')) {
                 // 非我方群组
-                return;
+                return null;
             }
         }
 
@@ -60,40 +52,26 @@ class MyCommand extends Command
 
         // 触发用户
         $SendUser = [
-            'id'       => $Message->getFrom()->getId(),
-            'name'     => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
+            'id' => $Message->getFrom()->getId(),
+            'name' => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
             'username' => $Message->getFrom()->getUsername(),
         ];
 
         $User = User::where('telegram_id', $SendUser['id'])->first();
-        if ($User == null) {
-            // 回送信息
-            $response = $this->replyWithMessage(
-                [
-                    'text'                  => $_ENV['user_not_bind_reply'],
-                    'reply_to_message_id'   => $MessageID,
-                    'parse_mode'            => 'Markdown',
-                ]
-            );
-        } else {
+        
             if ($ChatID > 0) {
                 // 私人
                 $response = $this->triggerCommand('menu');
             } else {
                 // 群组
-                $response = $this->Group($User, $SendUser, $ChatID, $Message, $MessageID);
-                // 消息删除任务
-                TelegramTools::DeleteMessage([
-                    'chatid'      => $ChatID,
-                    'messageid'   => $response->getMessageId(),
-                ]);
+                $response = $this->group($User, $SendUser, $ChatID, $Message, $MessageID);
             }
-        }
+        
 
         return $response;
     }
 
-    public function Group($User, $SendUser, $ChatID, $Message, $MessageID)
+    public function group($User, $SendUser, $ChatID, $Message, $MessageID)
     {
         $text = Reply::getUserTitle($User);
         $text .= PHP_EOL . PHP_EOL;
@@ -103,20 +81,9 @@ class MyCommand extends Command
         // 回送信息
         return $this->replyWithMessage(
             [
-                'text'                  => $text,
-                'parse_mode'            => 'Markdown',
-                'reply_to_message_id'   => $MessageID,
-                'reply_markup'          => json_encode(
-                    [
-                        'inline_keyboard' => [
-                            [
-                                [
-                                    'callback_data' => 'user.checkin.' . $SendUser['id']
-                                ]
-                            ],
-                        ]
-                    ]
-                ),
+                'text' => $text,
+                'parse_mode' => 'Markdown',
+                'reply_to_message_id' => $MessageID,
             ]
         );
     }

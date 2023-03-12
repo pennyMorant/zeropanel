@@ -80,22 +80,22 @@ class Telegram
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
             
-                // 发送给非群组时使用异步
-                $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
-                $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
-                $sendMessage = [
-                    'chat_id'                   => $chat_id,
-                    'text'                      => $messageText,
-                    'parse_mode'                => '',
-                    'disable_web_page_preview'  => false,
-                    'reply_to_message_id'       => null,
-                    'reply_markup'              => null
-                ];
-                try {
-                    $bot->sendMessage($sendMessage);
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                }
+            // 发送给非群组时使用异步
+            $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
+            $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
+            $sendMessage = [
+                'chat_id'                   => $chat_id,
+                'text'                      => $messageText,
+                'parse_mode'                => '',
+                'disable_web_page_preview'  => false,
+                'reply_to_message_id'       => null,
+                'reply_markup'              => null
+            ];
+            try {
+                $bot->sendMessage($sendMessage);
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
         }
     }
 

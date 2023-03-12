@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Utils\Telegram\Commands;
 
-use App\Models\User;
-use App\Services\Config;
+use App\Models\Setting;
 use App\Utils\Telegram\TelegramTools;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
@@ -11,7 +12,7 @@ use Telegram\Bot\Commands\Command;
 /**
  * Class UnbindCommand.
  */
-class UnbindCommand extends Command
+final class UnbindCommand extends Command
 {
     /**
      * @var string Command Name
@@ -23,28 +24,19 @@ class UnbindCommand extends Command
      */
     protected $description = '[私聊]     解除账户绑定.';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function handle()
+    public function handle(): void
     {
         $Update = $this->getUpdate();
         $Message = $Update->getMessage();
-
-        // 消息 ID
-        $MessageID = $Message->getMessageId();
-
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
 
         // 触发用户
         $SendUser = [
-            'id'       => $Message->getFrom()->getId(),
-            'name'     => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
-            'username' => $Message->getFrom()->getUsername(),
+            'id' => $Message->getFrom()->getId(),
         ];
 
-        $User = User::where('telegram_id', $SendUser['id'])->first();
+        $User = TelegramTools::getUser($SendUser['id']);
 
         if ($ChatID > 0) {
             // 私人
@@ -52,11 +44,11 @@ class UnbindCommand extends Command
             // 发送 '输入中' 会话状态
             $this->replyWithChatAction(['action' => Actions::TYPING]);
 
-            if ($User == null) {
+            if ($User === null) {
                 // 回送信息
                 $this->replyWithMessage(
                     [
-                        'text'       => $_ENV['user_not_bind_reply'],
+                        'text' => Setting::obtain('user_not_bind_reply'),
                         'parse_mode' => 'Markdown',
                     ]
                 );
@@ -64,52 +56,42 @@ class UnbindCommand extends Command
             }
 
             // 消息内容
-            $MessageText = implode(' ', array_splice(explode(' ', trim($Message->getText())), 1));
+            $MessageText = explode(' ', trim($Message->getText()));
+            $MessageKey = array_splice($MessageText, -1)[0];
+            $text = '';
 
-            if ($MessageText == $User->email) {
-                $temp = $User->TelegramReset();
+            if ($MessageKey === $User->email) {
+                $temp = $User->telegramReset();
                 $text = $temp['msg'];
                 // 回送信息
                 $this->replyWithMessage(
                     [
-                        'text'          => $text,
-                        'parse_mode'    => 'Markdown',
+                        'text' => $text,
+                        'parse_mode' => 'Markdown',
                     ]
                 );
                 return;
             }
-
-            $text = $this->sendtext();
-            if ($MessageText != '') {
+            if ($MessageKey !== '') {
                 $text = '键入的 Email 地址与您的账户不匹配.';
+            }
+            if ($MessageKey === '/unbind') {
+                $text = $this->sendtext();
             }
 
             // 回送信息
             $this->replyWithMessage(
                 [
-                    'text'                  => $text,
-                    'parse_mode'            => 'Markdown',
+                    'text' => $text,
+                    'parse_mode' => 'Markdown',
                 ]
             );
-        } else {
-            if ($_ENV['enable_delete_user_cmd'] === true) {
-                TelegramTools::DeleteMessage([
-                    'chatid'      => $ChatID,
-                    'messageid'   => $MessageID,
-                ]);
-            }
         }
     }
 
-    public function sendtext()
+    public function sendtext(): string
     {
-        $text = '发送 **/unbind 账户邮箱** 进行解绑.';
-        /*
-        if (Config::getconfig('Telegram.bool.unbind_kick_member') === true) {
-            $text .= PHP_EOL . PHP_EOL . '根据管理员的设定，您解绑账户将会被自动移出用户群.';
-        }
-        */
-        $text .= PHP_EOL . PHP_EOL . '解绑成功';
+        $text = '以 `/unbind example@qq.com` 的形式发送进行解绑.';
         return $text;
     }
 }
