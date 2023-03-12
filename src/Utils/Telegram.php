@@ -3,8 +3,8 @@
 namespace App\Utils;
 
 use Exception;
-use TelegramBot\Api\BotApi;
 use Telegram\Bot\Api;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use App\Models\Setting;
 
 class Telegram
