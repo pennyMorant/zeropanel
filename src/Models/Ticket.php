@@ -42,14 +42,14 @@ class Ticket extends Model
     }
 
     /**
-     * 用户名
+     *用户邮箱
      */
-    public function name(): string
+    public function email(): string
     {
         if ($this->user() == null) {
             return '用户已不存在';
         }
-        return $this->user()->name;
+        return $this->user()->email;
     }
 
     /**
