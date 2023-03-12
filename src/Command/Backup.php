@@ -52,7 +52,7 @@ EOL;
             system('mysqldump --user=' . $_ENV['db_username'] . ' --password=' . $_ENV['db_password'] . ' --host=' . $db_address_array[0] . ' ' . (isset($db_address_array[1]) ? '-P ' . $db_address_array[1] : '') . ' ' . $_ENV['db_database'] . ' > /tmp/backup/database.sql');
         } else {
             system(
-                'mysqldump --user=' . $_ENV['db_username'] . ' --password=' . $_ENV['db_password'] . ' --host=' . $db_address_array[0] . ' ' . (isset($db_address_array[1]) ? '-P ' . $db_address_array[1] : '') . ' ' . $_ENV['db_database'] . ' announcement coupon link signin_ip payback shop user_invite_code node user_password_reset ticket user user_token email_verify order > /tmp/backup/database.sql',
+                'mysqldump --user=' . $_ENV['db_username'] . ' --password=' . $_ENV['db_password'] . ' --host=' . $db_address_array[0] . ' ' . (isset($db_address_array[1]) ? '-P ' . $db_address_array[1] : '') . ' ' . $_ENV['db_database'] . ' announcement coupon link signin_ip payback product user_invite_code node user_password_reset ticket user user_token email_verify order > /tmp/backup/database.sql',
                 $ret
             );
             system(
