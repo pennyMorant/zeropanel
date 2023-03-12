@@ -261,13 +261,13 @@
                                                                         <td>Telegram</td>
                                                                         <td>{if $user->telegram_id == null}{$trans->t('unbound')} Telegram{else}{$user->telegram_id}{/if}</td>
                                                                         <td class="text-end">
-                                                                            <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="绑定或者解绑">
+                                                                            <a href="https://t.me/{$telegram_bot_id}?start={$bind_token}" target="_blank" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="点击绑定telegram">
                                                                                 <span class="svg-icon svg-icon-3">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-diamond" viewBox="0 0 16 16">
                                                                                         <path d="M7.987 16a1.526 1.526 0 0 1-1.07-.448L.45 9.082a1.531 1.531 0 0 1 0-2.165L6.917.45a1.531 1.531 0 0 1 2.166 0l6.469 6.468A1.526 1.526 0 0 1 16 8.013a1.526 1.526 0 0 1-.448 1.07l-6.47 6.469A1.526 1.526 0 0 1 7.988 16zM7.639 1.17 4.766 4.044 8 7.278l3.234-3.234L8.361 1.17a.51.51 0 0 0-.722 0zM8.722 8l3.234 3.234 2.873-2.873c.2-.2.2-.523 0-.722l-2.873-2.873L8.722 8zM8 8.722l-3.234 3.234 2.873 2.873c.2.2.523.2.722 0l2.873-2.873L8 8.722zM7.278 8 4.044 4.766 1.17 7.639a.511.511 0 0 0 0 .722l2.874 2.873L7.278 8z"/>
                                                                                     </svg>
                                                                                 </span>
-                                                                            </button>
+                                                                            </a>
                                                                         </td>
 																	</tr>
                                                                     <tr>
