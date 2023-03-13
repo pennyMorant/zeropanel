@@ -234,14 +234,20 @@ class Node extends Model
 
     /**
      * 更新节点 IP
-     *
-     * @param string $server_name
      */
     public function changeNodeIp(string $server_name): bool
     {
-        $ip = gethostbyname($server_name);
-        if ($ip == '') {
-            return false;
+        $result = dns_get_record($server_name, DNS_A + DNS_AAAA);
+        $dns = [];
+        if (count($result) > 0) {
+            $dns = $result[0];
+        }
+        if (array_key_exists('ip', $dns)) {
+            $ip = $dns['ip'];
+        } elseif (array_key_exists('ipv6', $dns)) {
+            $ip = $dns['ipv6'];
+        } else {
+            $ip = $server_name;
         }
         $this->node_ip = $ip;
         return true;
@@ -255,14 +261,6 @@ class Node extends Model
         $node_ip_str   = $this->node_ip;
         $node_ip_array = explode(',', $node_ip_str);
         return $node_ip_array[0];
-    }
-
-    /**
-     * 获取出口地址 | 用于节点IP获取的地址
-     */
-    public function getOutAddress(): string
-    {
-        return $this->server;
     }
 
 
