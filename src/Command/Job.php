@@ -72,7 +72,7 @@ class Job extends Command
 
         // 重置节点流量
         echo '重置节点流量开始' . PHP_EOL;
-        Node::where('bandwidthlimit_resetday', date('d'))->update(['node_bandwidth' => 0]);
+        Node::where('node_traffic_reset_date', date('d'))->update(['node_bandwidth' => 0]);
         echo '重置节点流量结束;' . PHP_EOL;
 
         // 清理各表记录
@@ -437,7 +437,7 @@ class Job extends Command
                 $_ENV['email_queue']
             );
             $user->class = 0;
-            $user->node_connector = $configs['signup_default_ip_limit'];
+            $user->node_iplimit = $configs['signup_default_ip_limit'];
             $user->node_speedlimit = $configs['signup_default_speed_limit'];
             $user->reset_traffic_value = NULL;
             $user->reset_traffic_date = NULL;

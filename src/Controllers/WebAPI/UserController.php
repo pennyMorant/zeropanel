@@ -47,7 +47,7 @@ class UserController extends BaseController
         $node->save();
 
         // 节点流量耗尽则返回 null
-        if (($node->node_bandwidth_limit != 0) && $node->node_bandwidth_limit < $node->node_bandwidth) {
+        if (($node->node_traffic != 0) && $node->node_traffic < $node->node_bandwidth) {
             $users = null;
 
             return $response->withJson([
@@ -78,16 +78,16 @@ class UserController extends BaseController
         $users = array();
 
         if (in_array($node->sort, [11, 14, 15])) {
-            $key_list = array('node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'node_connector', 'uuid', 'alive_ip');
+            $key_list = array('node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'node_iplimit', 'uuid', 'alive_ip');
         } else {
             $key_list = array(
-                'node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'passwd', 'node_connector', 'alive_ip'
+                'node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'passwd', 'node_iplimit', 'alive_ip'
             );
         }
 
         $alive_ip = (new \App\Models\Ip)->getUserAliveIpCount();
         foreach ($users_raw as $user_raw) {
-            if (isset($alive_ip[strval($user_raw->id)]) && $user_raw->node_connector !== 0) {
+            if (isset($alive_ip[strval($user_raw->id)]) && $user_raw->node_iplimit !== 0) {
                 $user_raw->alive_ip = $alive_ip[strval($user_raw->id)];
             }
             if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {

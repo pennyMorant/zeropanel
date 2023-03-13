@@ -82,7 +82,7 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fw-bolder text-gray-800 fs-lg mb-1">
-																{$trans->t('online ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_connector === 0 }{$trans->t('unlimited')}{else}{$user->node_connector}{/if}
+																{$trans->t('online ip')}:&nbsp;{$user->online_ip_count()} / {if $user->node_iplimit === 0 }{$trans->t('unlimited')}{else}{$user->node_iplimit}{/if}
 															</a>
 															<span class="text-muted fw-semibold d-block">
 																{$trans->t('latest used date')}:&nbsp;{$user->lastUseTime()}

@@ -78,7 +78,7 @@
                                                     <label class="form-label required">用户速度</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$user->node_speedlimit}">
                                                     <label class="form-label required">用户IP数</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_connector" name="node_connector" type="text" value="{$user->node_connector}">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_iplimit" name="node_iplimit" type="text" value="{$user->node_iplimit}">
                                                 </div>
                                             </div>
                                         </div>  
@@ -111,7 +111,7 @@
                         ban_time: $('#ban_time').val(),
                         class: $('#class').val(),
                         class_expire: $('#class_expire').val(),
-                        node_connector: $('#node_connector').val()
+                        node_iplimit: $('#node_iplimit').val()
                     },
                     success: function(data){
                         if (data.ret === 1){

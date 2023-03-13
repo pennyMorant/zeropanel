@@ -105,7 +105,7 @@ class Product extends Model
             $user->class = $this->class;
 
             $user->node_speedlimit = $this->speed_limit;
-            $user->node_connector = $this->ip_limit;
+            $user->node_iplimit = $this->ip_limit;
             if ($this->user_group != null) {
                 $user->node_group = $this->user_group;
             }

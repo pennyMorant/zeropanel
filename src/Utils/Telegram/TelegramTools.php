@@ -78,7 +78,7 @@ class TelegramTools
             'class'             => $_ENV['remark_user_option_class'],
             'class_expire'      => $_ENV['remark_user_option_class_expire'],
             'node_speedlimit'   => $_ENV['remark_user_option_node_speedlimit'],
-            'node_connector'    => $_ENV['remark_user_option_node_connector'],
+            'node_iplimit'    => $_ENV['remark_user_option_node_iplimit'],
         ];
     }
 
@@ -226,7 +226,7 @@ class TelegramTools
                 // ##############
             case 'class':
             case 'node_group':
-            case 'node_connector':
+            case 'node_iplimit':
             case 'node_speedlimit':
                 $strArray = [
                     '// 参数值中不允许有空格',

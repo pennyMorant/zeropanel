@@ -329,7 +329,7 @@ class AuthController extends BaseController
 
         $user->class_expire     = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
         $user->class            = $configs['signup_default_class'];
-        $user->node_connector   = $configs['signup_default_ip_limit'];
+        $user->node_iplimit   = $configs['signup_default_ip_limit'];
         $user->node_speedlimit  = $configs['signup_default_speed_limit'];
         $user->signup_date      = date('Y-m-d H:i:s');
         $user->signup_ip        = $_SERVER['REMOTE_ADDR'];

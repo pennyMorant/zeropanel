@@ -105,8 +105,8 @@ class NodeController extends AdminController
         
         $node->node_class                 = $request->getParam('node_class');
         $node->node_sort                  = (int)$request->getParam('node_sort');
-        $node->node_bandwidth_limit       = $request->getParam('node_bandwidth_limit') * 1024 * 1024 * 1024;
-        $node->bandwidthlimit_resetday    = $request->getParam('bandwidthlimit_resetday');
+        $node->node_traffic       = $request->getParam('node_traffic') * 1024 * 1024 * 1024;
+        $node->node_traffic_reset_date    = $request->getParam('node_traffic_reset_date');
 
         $node->save();
 
@@ -180,8 +180,8 @@ class NodeController extends AdminController
         $node->flag                     = $request->getParam('flag');
         $node->node_class                 = $request->getParam('node_class');
         $node->node_sort                  = (int)$request->getParam('node_sort');
-        $node->node_bandwidth_limit       = $request->getParam('node_bandwidth_limit') * 1024 * 1024 * 1024;
-        $node->bandwidthlimit_resetday    = $request->getParam('bandwidthlimit_resetday');
+        $node->node_traffic       = $request->getParam('node_traffic') * 1024 * 1024 * 1024;
+        $node->node_traffic_reset_date    = $request->getParam('node_traffic_reset_date');
 
         $node->save();
 

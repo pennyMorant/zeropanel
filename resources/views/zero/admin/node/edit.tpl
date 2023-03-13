@@ -92,9 +92,9 @@
                                                     <label class="form-label">节点群组</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不分组" id="node_group" name="node_group" type="number" placeholder="节点群组" value="{$node->node_group}">
                                                     <label class="form-label">流量上限(GB)</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_bandwidth_limit" name="node_bandwidth_limit" type="text" value="{$node->node_bandwidth_limit/1024/1024/1024}" placeholder="流量上限">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_traffic" name="node_traffic" type="text" value="{$node->node_traffic/1024/1024/1024}" placeholder="流量上限">
                                                     <label class="form-label">流量上限清空日</label>
-                                                    <input class="form-control mb-5" id="bandwidthlimit_resetday" name="bandwidthlimit_resetday" type="text" value="{$node->bandwidthlimit_resetday}" placeholder="流量上限清空日">
+                                                    <input class="form-control mb-5" id="node_traffic_reset_date" name="node_traffic_reset_date" type="text" value="{$node->node_traffic_reset_date}" placeholder="流量上限清空日">
                                                     <label class="form-label">节点速度</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$node->node_speedlimit}" placeholder="节点速度">
                                                     <label class="form-label required">节点排序</label>
@@ -141,8 +141,8 @@
                         sort: $('#sort').val(),
                         node_class: $('#node_class').val(),
                         node_group: $('#node_group').val(),
-                        node_bandwidth_limit: $('#node_bandwidth_limit').val(),
-                        bandwidthlimit_resetday: $('#bandwidthlimit_resetday').val(),
+                        node_traffic: $('#node_traffic').val(),
+                        node_traffic_reset_date: $('#node_traffic_reset_date').val(),
                         node_speedlimit: $('#node_speedlimit').val(),
                         node_sort: $('#node_sort').val(),
                         custom_config: editor.get(),

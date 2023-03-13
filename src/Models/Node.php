@@ -221,7 +221,7 @@ class Node extends Model
      */
     public function isNodeTrafficOut(): bool
     {
-        return !($this->node_bandwidth_limit == 0 || $this->node_bandwidth < $this->node_bandwidth_limit);
+        return !($this->node_traffic == 0 || $this->node_bandwidth < $this->node_traffic);
     }
 
     /**
