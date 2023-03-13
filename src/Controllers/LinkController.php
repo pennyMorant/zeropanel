@@ -487,8 +487,10 @@ class LinkController extends BaseController
             'headerType' => 'none',
             'host' => '',
             'path' => '/',
-            'tls' => '',
+            'security' => '',
             'sni' => '',
+            'flow' => '',
+            'servicename' => '',
             'group' => Setting::obtain('website_name')
         ];
         if ($list == 'shadowrocket') {
