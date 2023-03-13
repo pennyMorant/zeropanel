@@ -19,7 +19,6 @@ class Telegram
     public static function SendTicket($userid, $title, $content, $mode = 'add')
     {
         $new_ticket = Ticket::where('userid', $userid)->where('title', $title)->orderBy('id', 'desc')->first();
-        $name = User::where('id', $userid)->value('name');
         if ($mode == 'update') {
             $text = '用户回复工单';
         } else if ($mode == 'add') {
@@ -28,7 +27,7 @@ class Telegram
             $text = '用户重启了工单';
         }
         $ticketId = $new_ticket->rootid === 0 ? $new_ticket->id : $new_ticket->rootid;
-        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户：' . $name . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $content;
+        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户：' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $content;
         $Keyboard = [
             [
                 [
@@ -53,14 +52,12 @@ class Telegram
     public static function SendPayment($user, $pl, $codeq)
     {
         if ($pl->shop == null) {
-            $type = '钱包充值';
+            $type = '余额充值';
         } else {
             $shopinfo = json_decode($pl->shop, true);
             if ($shopinfo['id'] != 0) {
                 $shopname = Product::where('id', $shopinfo['id'])->value('name');
                 $type = '购买套餐【' . $shopname . '】';
-            } elseif ($shopinfo['telegram']['the'] == 'code') {
-                $type = 'Telegram 钱包充值';
             } else {
                 $type = '钱包充值';
             }
