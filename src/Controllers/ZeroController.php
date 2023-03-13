@@ -345,10 +345,6 @@ class ZeroController extends BaseController
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
-                    
-                    if (isset($data[$logIp])) {
-                        continue;
-                    }
                     $tempdata['id']          = $value->id;
                     $tempdata['ip']          = $value->ip;
                     $tempdata['location']    = Tools::getIpInfo($value->ip);
@@ -365,9 +361,6 @@ class ZeroController extends BaseController
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
-                    if (isset($data[$logIp])) {
-                        continue;
-                    }
                     $tempdata['id']          = $value->id;
                     $tempdata['ip']          = $value->ip;
                     $tempdata['location']    = Tools::getIpInfo($value->ip);
