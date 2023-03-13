@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-11 13:08:24
--- 服务器版本： 10.11.2-MariaDB
+-- 生成日期： 2023-03-13 15:57:23
+-- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -187,6 +187,7 @@ CREATE TABLE `node` (
   `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00,
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
   `node_iplimit` int(11) NOT NULL DEFAULT 0,
+  `node_traffic` bigint(20) NOT NULL DEFAULT 0,
   `node_traffic_limit` bigint(20) NOT NULL DEFAULT 0,
   `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0,
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
