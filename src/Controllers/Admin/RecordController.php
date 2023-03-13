@@ -183,7 +183,7 @@ class RecordController extends AdminController
                     $tempdata['email']              = $value->email;
                     $tempdata['subscribe_type']     = $value->subscribe_type;
                     $tempdata['request_ip']         = $value->request_ip;
-                    $tempdata['location']           = Tools::getIpInfo($value->ip);
+                    $tempdata['location']           = Tools::getIpInfo($value->request_ip);
                     $tempdata['request_time']       = $value->request_time;
                     $tempdata['request_user_agent'] = $value->request_user_agent;
         
