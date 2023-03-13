@@ -211,7 +211,6 @@ class TicketController extends UserController
 
         if ($request->getParam('json') == 1) {
             foreach ($ticket_detail as $set) {
-                $set->username = $set->User()->name;
                 $set->datetime = $set->datetime();
             }
             return $response->withJson(
