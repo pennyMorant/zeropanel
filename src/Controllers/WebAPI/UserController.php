@@ -47,7 +47,7 @@ class UserController extends BaseController
         $node->save();
 
         // 节点流量耗尽则返回 null
-        if (($node->node_traffic != 0) && $node->node_traffic < $node->node_bandwidth) {
+        if (($node->node_traffic_limit != 0) && $node->node_traffic_limit < $node->node_traffic) {
             $users = null;
 
             return $response->withJson([
@@ -172,7 +172,7 @@ class UserController extends BaseController
             }
         }
 
-        $node->node_bandwidth += $this_time_total_bandwidth;
+        $node->node_traffic += $this_time_total_bandwidth;
         $node->save();
 
         $online_log = new NodeOnlineLog();

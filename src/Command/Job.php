@@ -72,7 +72,7 @@ class Job extends Command
 
         // 重置节点流量
         echo '重置节点流量开始' . PHP_EOL;
-        Node::where('node_traffic_reset_date', date('d'))->update(['node_bandwidth' => 0]);
+        Node::where('node_traffic_limit_reset_date', date('d'))->update(['node_traffic' => 0]);
         echo '重置节点流量结束;' . PHP_EOL;
 
         // 清理各表记录

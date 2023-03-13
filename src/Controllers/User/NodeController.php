@@ -75,8 +75,8 @@ class NodeController extends UserController
             $array_node['online_user']    = $node->getNodeOnlineUserCount();
             $array_node['online']         = $node->get_node_online_status();
             $array_node['latest_load']    = $node->get_node_latest_load_text();
-            $array_node['traffic_used']   = (int) Tools::flowToGB($node->node_bandwidth);
-            $array_node['traffic_limit']  = (int) Tools::flowToGB($node->node_traffic);
+            $array_node['traffic_used']   = (int) Tools::flowToGB($node->node_traffic);
+            $array_node['traffic_limit']  = (int) Tools::flowToGB($node->node_traffic_limit);
             $array_node['bandwidth']      = $node->get_node_speedlimit();
             $array_node['traffic_rate']   = $node->traffic_rate;
             $array_node['flag']         = $node->flag;
