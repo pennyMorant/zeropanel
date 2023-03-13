@@ -63,7 +63,6 @@ class DetectBan extends Command
                         $user->last_detect_ban_time         = $end_time;
                         $user->save();
                         $DetectBanLog                       = new DetectBanLog();
-                        $DetectBanLog->user_name            = $user->name;
                         $DetectBanLog->user_id              = $user->id;
                         $DetectBanLog->email                = $user->email;
                         $DetectBanLog->detect_number        = $detect_number;
@@ -93,7 +92,6 @@ class DetectBan extends Command
                             $user->last_detect_ban_time         = $end_time;
                             $user->save();
                             $DetectBanLog                       = new DetectBanLog();
-                            $DetectBanLog->user_name            = $user->name;
                             $DetectBanLog->user_id              = $user->id;
                             $DetectBanLog->email                = $user->email;
                             $DetectBanLog->detect_number        = $number;

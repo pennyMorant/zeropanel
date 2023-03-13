@@ -186,7 +186,6 @@ class UserController extends AdminController
             $end_time                           = date('Y-m-d H:i:s');
             $user->last_detect_ban_time         = $end_time;
             $DetectBanLog                       = new DetectBanLog();
-            $DetectBanLog->name            = $user->name;
             $DetectBanLog->user_id              = $user->id;
             $DetectBanLog->email                = $user->email;
             $DetectBanLog->detect_number        = '0';
