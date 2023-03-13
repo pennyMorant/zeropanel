@@ -76,9 +76,10 @@ http://zeroboard.top
     systemctl restart nginx
     systemctl restart php8.1-fpm
 #### 第六步，回到网站根目录执行下面命令
-    cp .config.example.php .config.php
-    cp .zeroconfig.example.php .zeroconfig.php
-    cp appprofile.example.php appprofile.php
+    cp config/.config.example.php .config.php
+    cp config/.zeroconfig.example.php .zeroconfig.php
+    cp config/appprofile.example.php appprofile.php
+    vim config/.config.php 填入数据库连接信息
     php xcat Tool importAllSettings
     php xcat Tool initQQWry
     php xcat User createAdmin
