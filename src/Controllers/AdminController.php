@@ -363,10 +363,10 @@ class AdminController extends UserController
                 $user = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->whereBetween('datetime', [$time_a, $time_b])->groupBy('user_id')->limit('10')->orderByRaw('total DESC')->get();
                 $datas = [];
                 foreach ($user as $value) {
-                    $traffic = Tools::flowToGB($value->total) < 0.00001 ? 0 : Tools::flowToGB($value->total);
+                    $traffic = $value->total < 107374 ? 0 : $value->total;
                     $datas[] = [
                         //'y' => $value->total,
-                        'y' => substr($traffic, 0, 5),
+                        'y' => substr(Tools::flowToGB($traffic), 0, 4),
                         'x' => "用户ID:" . $value->user_id,
                     ];
                 }
