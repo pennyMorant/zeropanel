@@ -57,10 +57,6 @@ class UserController extends BaseController
         }
 
 
-        /*
-         * 1. 请不要把管理员作为单端口承载用户
-         * 2. 请不要把真实用户作为单端口承载用户
-         */
         $users_raw = User::where(
             static function ($query) use ($node): void {
                 $query->where(
@@ -78,10 +74,10 @@ class UserController extends BaseController
         $users = array();
 
         if (in_array($node->sort, [11, 14, 15])) {
-            $key_list = array('node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'node_iplimit', 'uuid', 'alive_ip');
+            $key_list = array('node_speedlimit', 'id', 'node_iplimit', 'uuid', 'alive_ip');
         } else {
             $key_list = array(
-                'node_speedlimit', 'u', 'd', 'transfer_enable', 'id', 'passwd', 'node_iplimit', 'alive_ip'
+                'node_speedlimit', 'id', 'passwd', 'node_iplimit', 'alive_ip'
             );
         }
 
