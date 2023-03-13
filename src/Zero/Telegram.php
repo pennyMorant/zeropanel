@@ -133,8 +133,8 @@ class Telegram
     public static function Send($messageText, $chat_id, $keyboard = null)
     {
         // 发送给非群组时使用异步
-        $async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
-        $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
+        //$async = (!in_array($chat_id, (array)json_decode(Setting::obtain('telegram_admin_id'))));
+        $bot = new Api(Setting::obtain('telegram_bot_token'), true);
 
         if ($keyboard !== null) {
             $reply_markup = json_encode(
