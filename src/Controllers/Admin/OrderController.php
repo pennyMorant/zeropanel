@@ -53,8 +53,8 @@ class OrderController extends AdminController
         $query = Order::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['userid'])) {
-                    $order_field = 'userid';
+                if (in_array($order_field, ['order_payment'])) {
+                    $order_field = 'id';
                 }
             }
         );

@@ -131,7 +131,7 @@ class Node extends Model
      /**
      * 获取节点 5 分钟内最新的在线人数
      */
-    public function get_node_online_user_count(): int
+    public function getNodeOnlineUserCount(): int
     {
         if (in_array($this->sort, [9])) {
             return -1;

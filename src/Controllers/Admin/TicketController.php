@@ -186,7 +186,7 @@ class TicketController extends AdminController
                 if (in_array($order_field, ['action'])) {
                     $order_field = 'id';
                 }
-                if (in_array($order_field, ['user_id'])) {
+                if (in_array($order_field, ['title'])) {
                     $order_field = 'userid';
                 }
             },

@@ -239,8 +239,8 @@ class UserController extends AdminController
         $query = User::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if ($order_field == 'enable_traffic') {
-                    $order_field = 'transfer_enable';
+                if ($order_field == 'email') {
+                    $order_field = 'id';
                 } elseif ($order_field == 'action') {
                     $order_field = 'id';
                 }

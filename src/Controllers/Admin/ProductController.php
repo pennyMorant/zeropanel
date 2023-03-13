@@ -165,7 +165,7 @@ class ProductController extends AdminController
         $query = Product::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
-                if (in_array($order_field, ['action', 'period_sales'])) {
+                if (in_array($order_field, ['action', 'period_sales', 'name'])) {
                     $order_field = 'id';
                 }
             }

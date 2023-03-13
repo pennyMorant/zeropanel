@@ -224,8 +224,8 @@ class NodeController extends AdminController
                 if (in_array($order_field, ['action'])) {
                     $order_field = 'id';
                 }
-                if (in_array($order_field, ['outaddress'])) {
-                    $order_field = 'server';
+                if (in_array($order_field, ['name'])) {
+                    $order_field = 'id';
                 }
             }
         );
@@ -240,7 +240,7 @@ class NodeController extends AdminController
             $tempdata['id']                      = $value->id;
             $tempdata['online']                  = $value->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>';
             $tempdata['name']                    = $value->name;
-            $tempdata['onlineuser']              = $value->get_node_online_user_count();
+            $tempdata['onlineuser']              = $value->getNodeOnlineUserCount();
             $tempdata['sort']                    = $value->sort();
             $tempdata['node_ip']                 = $value->node_ip;
             $tempdata['node_class']              = $value->node_class;

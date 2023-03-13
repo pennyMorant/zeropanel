@@ -94,9 +94,6 @@ class RecordController extends AdminController
                 $query = Ip::getTableDataFromAdmin(
                     $request,
                     static function (&$order_field) {
-                        if (in_array($order_field, ['name'])) {
-                            $order_field = 'userid';
-                        }
                         if (in_array($order_field, ['node_name'])) {
                             $order_field = 'nodeid';
                         }
