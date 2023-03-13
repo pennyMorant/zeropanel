@@ -366,7 +366,7 @@ class AdminController extends UserController
                     $traffic = Tools::flowToGB($value->total) < 0.00001 ? 0 : Tools::flowToGB($value->total);
                     $datas[] = [
                         //'y' => $value->total,
-                        'y' => substr($traffic),
+                        'y' => substr($traffic, 0, 5),
                         'x' => "用户ID:" . $value->user_id,
                     ];
                 }
