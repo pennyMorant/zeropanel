@@ -344,14 +344,11 @@ class ZeroController extends BaseController
                 $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
-
-                $iplocation = new QQWry();
                 foreach ($query['datas'] as $value) {
                     
                     if (isset($data[$logIp])) {
                         continue;
                     }
-                    $location                = $iplocation->getlocation($logIp);
                     $tempdata['id']          = $value->id;
                     $tempdata['ip']          = $value->ip;
                     $tempdata['location']    = Tools::getIpInfo($value->ip);
@@ -367,12 +364,10 @@ class ZeroController extends BaseController
                 $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
-                $iplocation = new QQWry();
                 foreach ($query['datas'] as $value) {
                     if (isset($data[$logIp])) {
                         continue;
                     }
-                    $location                = $iplocation->getlocation($logIp);
                     $tempdata['id']          = $value->id;
                     $tempdata['ip']          = $value->ip;
                     $tempdata['location']    = Tools::getIpInfo($value->ip);
