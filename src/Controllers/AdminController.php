@@ -364,7 +364,8 @@ class AdminController extends UserController
                 $datas = [];
                 foreach ($user as $value) {
                     $datas[] = [
-                        'y' => substr(Tools::flowToGB($value->total), 0, 4),
+                        'y' => $value->total,
+                        //'y' => substr(Tools::flowToGB($value->total), 0, 4),
                         'x' => "用户ID:" . $value->user_id,
                     ];
                 }
