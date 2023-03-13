@@ -11,8 +11,18 @@ use App\Models\{
 use App\Services\Config;
 use DateTime;
 
-class Tools
+final class Tools
 {
+    /**
+     * 查询IP归属
+     */
+    public static function getIpInfo($ip): false|string
+    {
+        $iplocation = new QQWry();
+        $location = $iplocation->getlocation($ip);
+        return iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
+    }
+
     /**
      * 根据流量值自动转换单位输出
      */

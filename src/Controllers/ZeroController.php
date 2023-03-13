@@ -347,14 +347,14 @@ class ZeroController extends BaseController
 
                 $iplocation = new QQWry();
                 foreach ($query['datas'] as $value) {
-                    $logIp                  = $value->ip;
+                    
                     if (isset($data[$logIp])) {
                         continue;
                     }
                     $location                = $iplocation->getlocation($logIp);
                     $tempdata['id']          = $value->id;
-                    $tempdata['ip']          = $logIp;
-                    $tempdata['location']    = iconv("gbk", "utf-8//IGNORE", $location['country']) . iconv("gbk", "utf-8//IGNORE", $location['area']);;
+                    $tempdata['ip']          = $value->ip;
+                    $tempdata['location']    = Tools::getIpInfo($value->ip);
                     $tempdata['datetime']    = date('Y-m-d H:i:s', $value->datetime);
                     $data[]                  = $tempdata;
                     
@@ -369,14 +369,13 @@ class ZeroController extends BaseController
                 $data = [];
                 $iplocation = new QQWry();
                 foreach ($query['datas'] as $value) {
-                    $logIp                  = $value->ip;
                     if (isset($data[$logIp])) {
                         continue;
                     }
                     $location                = $iplocation->getlocation($logIp);
                     $tempdata['id']          = $value->id;
-                    $tempdata['ip']          = $logIp;
-                    $tempdata['location']    = iconv("gbk", "utf-8//IGNORE", $location['country']) . iconv("gbk", "utf-8//IGNORE", $location['area']);;
+                    $tempdata['ip']          = $value->ip;
+                    $tempdata['location']    = Tools::getIpInfo($value->ip);
                     $tempdata['datetime']    = date('Y-m-d H:i:s', $value->datetime);
                     $data[]                  = $tempdata;
                 }
@@ -387,13 +386,11 @@ class ZeroController extends BaseController
                 $querys = UserSubscribeLog::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
                 $query = User::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
-                $iplocation = new QQWry();
                 foreach ($query['datas'] as $value) {
-                    $location = $iplocation->getlocation($value->request_ip);
                     $tempdata['id'] = $value->id;
                     $tempdata['subscribe_type'] = $value->subscribe_type;
                     $tempdata['request_ip'] = $value->request_ip;
-                    $tempdata['location'] = iconv("gbk", "utf-8//IGNORE", $location['country']) . iconv("gbk", "utf-8//IGNORE", $location['area']);
+                    $tempdata['location'] = Tools::getIpInfo($value->request_ip);
                     $tempdata['request_time'] = $value->request_time;
                     $tempdata['request_user_agent'] = $value->request_user_agent;
                     $data[] = $tempdata;

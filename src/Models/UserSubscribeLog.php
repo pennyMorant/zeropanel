@@ -30,19 +30,6 @@ class UserSubscribeLog extends Model
     }
 
     /**
-     * 获取 IP 位置
-     *
-     * @param QQWry $QQWry
-     */
-    public function location(QQWry $QQWry = null)
-    {
-        if ($QQWry === null) {
-            $QQWry = new QQWry();
-        }
-        $location = $QQWry->getlocation($this->request_ip);
-        return iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
-    }
-    /**
      * 记录订阅日志
      *
      * @param User   $user 用户

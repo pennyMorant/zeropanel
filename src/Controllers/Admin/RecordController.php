@@ -117,7 +117,7 @@ class RecordController extends AdminController
                     $tempdata['nodeid']    = $value->nodeid;
                     $tempdata['node_name'] = $value->node_name();
                     $tempdata['ip']        = Tools::getRealIp($value->ip);
-                    $tempdata['location']  = $value->location($QQWry);
+                    $tempdata['location']  = Tools::getIpInfo(Tools::getRealIp($value->ip));
                     $tempdata['datetime']  = $value->datetime();
                     $data[] = $tempdata;
                     
@@ -138,7 +138,6 @@ class RecordController extends AdminController
                 );
         
                 $data  = [];
-                $QQWry = new QQWry();
                 foreach ($query['datas'] as $value) {
                     /** @var SigninIp $value */
         
@@ -150,7 +149,7 @@ class RecordController extends AdminController
                     $tempdata['id']        = $value->id;
                     $tempdata['userid']    = $value->userid;
                     $tempdata['ip']        = $value->ip;
-                    $tempdata['location']  = $value->location($QQWry);
+                    $tempdata['location']  = Tools::getIpInfo($value->ip);
                     $tempdata['datetime']  = $value->datetime();
                     $tempdata['type']      = $value->type();
         
@@ -171,7 +170,6 @@ class RecordController extends AdminController
                 );
         
                 $data  = [];
-                $QQWry = new QQWry();
                 foreach ($query['datas'] as $value) {
                     /** @var UserSubscribeLog $value */
         
@@ -185,7 +183,7 @@ class RecordController extends AdminController
                     $tempdata['email']              = $value->email;
                     $tempdata['subscribe_type']     = $value->subscribe_type;
                     $tempdata['request_ip']         = $value->request_ip;
-                    $tempdata['location']           = $value->location($QQWry);
+                    $tempdata['location']           = Tools::getIpInfo($value->ip);
                     $tempdata['request_time']       = $value->request_time;
                     $tempdata['request_user_agent'] = $value->request_user_agent;
         

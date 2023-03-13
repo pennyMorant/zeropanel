@@ -53,20 +53,6 @@ class Ip extends Model
     }
 
     /**
-     * 获取 IP 位置
-     *
-     * @param QQWry $QQWry
-     */
-    public function location(QQWry $QQWry = null): string
-    {
-        if ($QQWry === null) {
-            $QQWry = new QQWry();
-        }
-        $location = $QQWry->getlocation(Tools::getRealIp($this->ip));
-        return iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
-    }
-
-    /**
      * 时间
      */
     public function datetime(): string
