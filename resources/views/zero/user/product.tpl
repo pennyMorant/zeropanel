@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} Shop</title>
+        <title>{$config["appName"]} Product</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
