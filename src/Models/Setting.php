@@ -24,8 +24,7 @@ class Setting extends Model
         $configs = array();
         $all_configs = Setting::where('class', $class)->get();
 
-        foreach ($all_configs as $config)
-        {
+        foreach ($all_configs as $config) {
             if ($config->type === 'bool') {
                 $configs[$config->item] = (bool) $config->value;
             } elseif ($config->type === 'int') {
@@ -43,8 +42,7 @@ class Setting extends Model
         $configs = array();
         $all_configs = Setting::where('is_public', '1')->get();
 
-        foreach ($all_configs as $config)
-        {
+        foreach ($all_configs as $config) {
             if ($config->type === 'bool') {
                 $configs[$config->item] = (bool) $config->value;
             } elseif ($config->type === 'int') {

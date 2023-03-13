@@ -27,7 +27,7 @@ class Telegram
             $text = '用户重启了工单';
         }
         $ticketId = $new_ticket->rootid === 0 ? $new_ticket->id : $new_ticket->rootid;
-        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户：' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $content;
+        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $content;
         $Keyboard = [
             [
                 [
@@ -37,13 +37,11 @@ class Telegram
             ]
         ];
 
-        //$sendAdmins = 1;
-        //foreach ($sendAdmins as $sendAdmin) {
-            $admin_telegram_id = User::where('id', 1)->where('is_admin', '1')->value('telegram_id');
-            if ($admin_telegram_id != null) {
-                self::Send($messageText, $admin_telegram_id, $Keyboard);
-            }
-        //}
+        $sendAdmin = Setting::obtain('telegram_admin_id');
+        $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+        if ($admin_telegram_id != null) {
+            self::Send($messageText, $admin_telegram_id, $Keyboard);
+        }
     }
 
     /**
@@ -72,42 +70,11 @@ class Telegram
             '发起时间：' . date('Y-m-d H:i:s', $pl->datetime) . PHP_EOL .
             '到账时间：' . $codeq->usedatetime;
 
-        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
-        foreach ($sendAdmins as $sendAdmin) {
+        $sendAdmin = Setting::obtain('telegram_admin_id');
             $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             if ($admin_telegram_id != null) {
                 self::Send($messageText, $admin_telegram_id);
             }
-        }
-    }
-
-    /**
-     * 用户在TG进行充值的回调
-     */
-    public static function TelegramCode($user, $pl, $codeq)
-    {
-        if ($pl->shop == null || $user->telegram_id == null) {
-            return false;
-        } else {
-            $shopinfo = json_decode($pl->shop, true);
-            if (isset($shopinfo['telegram'])) {
-                if ($shopinfo['telegram']['the'] == 'code') {
-                    $type = 'Telegram 钱包充值';
-                }
-                $messageText = '您刚刚充值的 ' . $pl->total . ' 元 已到账，感谢使用.' . PHP_EOL;
-                $messageText .= '当前钱包余额：' . $user->money . ' 元';
-                self::SendPost(
-                    'deleteMessage',
-                    [
-                        'chat_id' => $shopinfo['telegram']['ChatID'],
-                        'message_id' => $shopinfo['telegram']['MessageID']
-                    ]
-                );
-                self::Send($messageText, $user->telegram_id);
-            }
-
-        }
-
     }
 
     /**

@@ -134,12 +134,10 @@ class ZeroController extends BaseController
             '提现类型：' . $type === 1 ? '提现到余额' : '提现到其他账户' . PHP_EOL .
             '提现金额：' . $commission . PHP_EOL .
             '提现时间：' . date('Y-m-d H:i:s', time());
-        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
-        foreach ($sendAdmins as $sendAdmin) {
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-            if ($admin_telegram_id != null) {
-                Telegram::PushToAdmin($text, $admin_telegram_id);
-            }
+        $sendAdmin = Setting::obtain('telegram_admin_id');
+        $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+        if ($admin_telegram_id != null) {
+            Telegram::PushToAdmin($text, $admin_telegram_id);
         }
 
         $res['ret'] = 1;

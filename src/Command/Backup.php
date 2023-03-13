@@ -79,12 +79,10 @@ EOL;
         system('rm -rf /tmp/backup', $ret);
         system('rm /tmp/backup.zip', $ret);
         if ($configs['auto_backup_notify'] == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
-            foreach ($sendAdmins as $sendAdmin) {
+            $sendAdmin = Setting::obtain('telegram_admin_id');
                 $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                 $messagetext = "备份工作已经完成";                
                 Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
-            }
         }
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
     }

@@ -157,16 +157,7 @@ class Message
                         'user_id'   => $Member['id'],
                     ]
                 );
-                if (count((array)json_decode(Setting::obtain('telegram_admin_id'))) >= 1) {
-                    foreach ((array)json_decode(Setting::obtain('telegram_admin_id')) as $id) {
-                        $this->bot->sendMessage(
-                            [
-                                'text'      => '根据您的设定，Bot 退出了一个群组.' . PHP_EOL . PHP_EOL . '群组名称：' . $this->Message->getChat()->getTitle(),
-                                'chat_id'   => $id
-                            ]
-                        );
-                    }
-                }
+                
             } else {
                 $this->replyWithMessage(
                     [

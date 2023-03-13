@@ -19,22 +19,20 @@ class SendDiaryMail extends Command
     {
         $sts = new Analytics();
         if (Setting::obtain('enable_push_system_report') == true) {
-            $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
-            foreach ($sendAdmins as $sendAdmin) {
-                $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-                $messagetext = str_replace(
-                    array(
-                        '%lastday_total%',
-                        '%getAliveNodes%'
-                    ),
-                    array(
-                        Tools::flowAutoShow($sts->getRawTodayTrafficUsage()),
-                        $sts->getAliveNodes(),
-                    ),
-                    Setting::obtain('diy_system_report_telegram_notify_content')
-                );                
-                Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
-            }           
+            $sendAdmin = Setting::obtain('telegram_admin_id');
+            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+            $messagetext = str_replace(
+                array(
+                    '%lastday_total%',
+                    '%getAliveNodes%'
+                ),
+                array(
+                    Tools::flowAutoShow($sts->getRawTodayTrafficUsage()),
+                    $sts->getAliveNodes(),
+                ),
+                Setting::obtain('diy_system_report_telegram_notify_content')
+            );                
+            Telegram::PushToAdmin($messagetext, $admin_telegram_id);                         
         }
     }
 }
