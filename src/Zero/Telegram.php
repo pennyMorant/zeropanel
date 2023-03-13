@@ -37,13 +37,13 @@ class Telegram
             ]
         ];
 
-        $sendAdmins = (array)json_decode(Setting::obtain('telegram_admin_id'));
-        foreach ($sendAdmins as $sendAdmin) {
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+        //$sendAdmins = 1;
+        //foreach ($sendAdmins as $sendAdmin) {
+            $admin_telegram_id = User::where('id', 1)->where('is_admin', '1')->value('telegram_id');
             if ($admin_telegram_id != null) {
                 self::Send($messageText, $admin_telegram_id, $Keyboard);
             }
-        }
+        //}
     }
 
     /**
