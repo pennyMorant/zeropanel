@@ -484,7 +484,7 @@ class LinkController extends BaseController
             'uuid' => $user->uuid,
             'aid' => 0,
             'net' => 'tcp',
-            'headerType' => 'none',
+            'headertype' => 'none',
             'host' => '',
             'path' => '/',
             'security' => '',
