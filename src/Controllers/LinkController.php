@@ -481,7 +481,7 @@ class LinkController extends BaseController
             'port' => 10086,
             'method' => 'aes-128-gcm',
             'passwd' => $user->passwd,
-            'id' => $user->uuid,
+            'uuid' => $user->uuid,
             'aid' => 0,
             'net' => 'tcp',
             'headerType' => 'none',
