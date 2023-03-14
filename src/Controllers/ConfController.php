@@ -1,11 +1,5 @@
 <?php
 
-/**
- * 应用自定义配置
- *
- * PHP version 7.2+
- */
-
 namespace App\Controllers;
 
 use App\Utils\ConfRender;
