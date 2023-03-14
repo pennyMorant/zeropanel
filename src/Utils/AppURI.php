@@ -122,7 +122,7 @@ class AppURI
                 // ;shadowsocks=example.com:80, method=aes-128-gcm, password=pwd, obfs=ws, fast-open=false, udp-relay=false, tag=ss-ws-01
                 // ;shadowsocks=example.com:80, method=aes-128-gcm, password=pwd, obfs=ws, obfs-uri=/ws, fast-open=false, udp-relay=false, tag=ss-ws-02
                 // ;shadowsocks=example.com:443, method=aes-128-gcm, password=pwd, obfs=wss, obfs-uri=/ws, fast-open=false, udp-relay=false, tag=ss-ws-tls
-                $return = ('shadowsocks=' . $node_config['address'] . ':' . $node_config['port'] . ', method=' . $node_config['method'] . ', password=' . $node_config['passwd']);
+                $return = (self::getShadowsocksURI($node_config));
                 break;
             case 'vmess':
                 // ;vmess=example.com:80, method=none, password=23ad6b10-8d1a-40f7-8ad0-e3e35cd32291, fast-open=false, udp-relay=false, tag=vmess-01
@@ -160,7 +160,7 @@ class AppURI
         $return = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = (self::getShadowsocksURI($node_config));
+                $return = ($node_config['remark'] . ' = shadowsocks, ' . $node_config['address'] . ', ' . $node_config['port'] . ', encrypt-method=' . $node_config['method'] . ', password=' . $node_config['passwd'] .  ', udp-relay=true');
                 break;
             case 'vmess':
                 if (!in_array($node_config['net'], ['ws', 'tcp'])) {
