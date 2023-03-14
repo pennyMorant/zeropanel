@@ -77,14 +77,12 @@ class FinanceMail extends Command
         }
 
         
-            $sendAdmin = Setting::obtain('telegram_admin_id');
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             $messagetext = 
                 '新鲜出炉的财务日报~' . PHP_EOL .
                 '昨日总收入笔数：' . $income_order . PHP_EOL .
                 '昨日总收入金额：' . $income_total . PHP_EOL .
                 '凌晨也在努力工作~';               
-            Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
+            Telegram::PushToAdmin($messagetext);               
         
     }
 
@@ -125,15 +123,12 @@ class FinanceMail extends Command
             }
         }
 
-        
-            $sendAdmin = Setting::obtain('telegram_admin_id');
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             $messagetext = 
                 '新鲜出炉的财务周报~' . PHP_EOL .
                 '上周总收入笔数：' . $income_order . PHP_EOL .
                 '上周总收入金额：' . $income_total . PHP_EOL .
                 '周末也在努力工作~';      
-            Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
+            Telegram::PushToAdmin($messagetext);               
         
     }
 
@@ -172,15 +167,12 @@ class FinanceMail extends Command
             }
         }
 
-        
-            $sendAdmin = Setting::obtain('telegram_admin_id');
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             $messagetext = 
                 '新鲜出炉的财务月报~' . PHP_EOL .
                 '上月总收入笔数：' . $income_order . PHP_EOL .
                 '上月总收入金额：' . $income_total . PHP_EOL .
                 '月初也在努力工作~';      
-            Telegram::PushToAdmin($messagetext, $admin_telegram_id);               
+            Telegram::PushToAdmin($messagetext);               
         
     }
 }

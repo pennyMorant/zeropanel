@@ -77,7 +77,7 @@ class Telegram
      * @param string $messageText
      * @param int    $chat_id
      */
-    public static function PushToAdmin($messageText, $keyBoard): void
+    public static function PushToAdmin($messageText, $keyBoard = null): void
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
             $admin = Setting::obtain('telegram_admin_id');

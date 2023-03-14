@@ -15,38 +15,6 @@ use League\HTMLToMarkdown\HtmlConverter;
 class Telegram
 {
     /**
-     *  工单通知
-     */
-    public static function SendTicket($userid, $title, $content, $mode = 'add')
-    {
-        $new_ticket = Ticket::where('userid', $userid)->where('title', $title)->orderBy('id', 'desc')->first();
-        if ($mode == 'update') {
-            $text = '用户回复工单';
-        } else if ($mode == 'add') {
-            $text = 'Hi，管理员, 有新工单需要您处理';
-        } else if ($mode == 'restart') {
-            $text = '用户重启了工单';
-        }
-        $ticketId = $new_ticket->rootid === 0 ? $new_ticket->id : $new_ticket->rootid;
-        $converter = new HtmlConverter();
-        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);;
-        $Keyboard = [
-            [
-                [
-                    'text' => '回复工单 #' . $ticketId,
-                    'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $ticketId 
-                ]
-            ]
-        ];
-
-        $sendAdmin = Setting::obtain('telegram_admin_id');
-        $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-        if ($admin_telegram_id != null) {
-            self::Send($messageText, $admin_telegram_id, $Keyboard);
-        }
-    }
-
-    /**
      *  用户充值 给管理员TG提醒
      */
     public static function pushTopUpResponse($user, $order)

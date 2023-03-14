@@ -130,10 +130,8 @@ class Job extends Command
          // ------- 发送每日系统运行报告
         
             echo '每日数据库清理成功报告发送开始' . PHP_EOL;
-            $sendAdmin = Setting::obtain('telegram_admin_id');
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
             $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
-            Telegram::PushToAdmin($messagetext, $admin_telegram_id);
+            Telegram::PushToAdmin($messagetext);
             echo '每日数据库清理成功报告发送结束' . PHP_EOL;
         
 
@@ -189,12 +187,8 @@ class Job extends Command
 						);
 					}
                     
-
-                    
-                        $sendAdmin = Setting::obtain('telegram_admin_id');
-                        $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-                        $messagetext = $notice_text;
-                        Telegram::PushToAdmin($messagetext, $admin_telegram_id);
+                    $messagetext = $notice_text;
+                    Telegram::PushToAdmin($messagetext);
                     
 
                     $node->online = false;
@@ -220,11 +214,8 @@ class Job extends Command
                         );
                     }
 
-                    
-                    $sendAdmin = Setting::obtain('telegram_admin_id');
-                    $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
                     $messagetext = $notice_text;
-                    Telegram::PushToAdmin($messagetext, $admin_telegram_id);          
+                    Telegram::PushToAdmin($messagetext);          
 
                     $node->online = true;
                     $node->save();
