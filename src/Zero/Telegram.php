@@ -32,7 +32,7 @@ class Telegram
             [
                 [
                     'text' => '回复工单 #' . $ticketId,
-                    'url' => Setting::obtain('website_url') . '/admin/ticket/' . $ticketId . '/view'
+                    'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $ticketId 
                 ]
             ]
         ];
