@@ -6,6 +6,7 @@ use Exception;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use App\Models\Setting;
+use App\Models\User;
 
 class Telegram
 {
