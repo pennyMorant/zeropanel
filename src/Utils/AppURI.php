@@ -160,7 +160,7 @@ class AppURI
         $return = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = ($node_config['remark'] . ' = shadowsocks, ' . $node_config['address'] . ', ' . $node_config['port'] . ', encrypt-method=' . $node_config['method'] . ', password=' . $node_config['passwd'] .  ', udp-relay=true');
+                $return = (self::getShadowsocksURI($node_config));
                 break;
             case 'vmess':
                 if (!in_array($node_config['net'], ['ws', 'tcp'])) {
