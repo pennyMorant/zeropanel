@@ -275,9 +275,9 @@ class ZeroController extends BaseController
                 for ($i=0; $i < 8 ; $i++) {
                     $time_a -= 86400;
                     $time_b -= 86400;
-                    $user = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->where('user_id', $user->id)->whereBetween('datetime', [$time_a, $time_b])->get();
+                    $traffic = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->where('user_id', $user->id)->whereBetween('datetime', [$time_a, $time_b])->get();
                     //$total2   = TrafficLog::where('user_id', $user->id)->where('datetime', '>', $time_a)->where('datetime', '<', $time_b)->sum('d');
-                    foreach ($user as $value) {
+                    foreach ($traffic as $value) {
                         $total = $value->total < 1073741 ? 0 : $value->total;
                         $datas[] = [
                             'x'  => date('Y-m-d', $time_a),
