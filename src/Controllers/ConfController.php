@@ -9,6 +9,7 @@
 namespace App\Controllers;
 
 use App\Utils\ConfRender;
+use App\Models\Setting;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
@@ -111,7 +112,7 @@ class ConfController extends BaseController
         $Rule = self::getRule($Configs['Rule']);
 
         $Conf = [
-            '#!MANAGED-CONFIG ' .((int)$_SERVER['SERVER_PORT'] == 443 ? 'https' : 'http') . '://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+            '#!MANAGED-CONFIG ' . Setting::obtain('website_url'),
             '',
             '#---------------------------------------------------#',
             '## 上次更新于：' . date("Y-m-d H:i:s"),
@@ -355,7 +356,7 @@ class ConfController extends BaseController
         );
 
         $Conf = [
-            '#!MANAGED-CONFIG ' .((int)$_SERVER['SERVER_PORT'] == 443 ? 'https' : 'http') . '://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+            '#!MANAGED-CONFIG ' . Setting::obtain('website_url'),
             '',
             '#---------------------------------------------------#',
             '## 上次更新于：' . date("Y-m-d H:i:s"),
