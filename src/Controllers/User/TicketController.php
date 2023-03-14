@@ -135,7 +135,6 @@ class TicketController extends UserController
         $id       = $args['id'];
         $content  = $request->getParam('content');
         $status   = $request->getParam('status');
-        $markdown = $request->getParam('markdown');
 
         if ($content == '' || $status == '') {
             return $response->withJson(
@@ -161,15 +160,6 @@ class TicketController extends UserController
             return $newResponse;
         }
 
-        if ($status == 1 && $ticket_main->status != $status) {
-            if (Setting::obtain('enable_push_ticket_message') == true) {
-                Telegram::SendTicket($this->user->id, $ticket_main->title, $content, 'restart');
-            }
-        } else {
-            if (Setting::obtain('enable_push_ticket_message') == true) {
-                Telegram::SendTicket($this->user->id, $ticket_main->title, $content, 'update');
-            }
-        }
 
         $antiXss              = new AntiXSS();
 
@@ -183,6 +173,20 @@ class TicketController extends UserController
 
         $ticket_main->save();
         $ticket->save();
+
+        if (Setting::obtain('enable_push_ticket_message') == true) {
+            $converter = new HtmlConverter();
+            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);
+            $keyBoard = [
+                [
+                    [
+                        'text' => '回复工单 #' . $id,
+                        'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $id 
+                    ]
+                ]
+            ];
+            Telegram::PushToAdmin($messageText, $keyBoard);
+        }
 
         return $response->withJson(
             [
