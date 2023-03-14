@@ -108,8 +108,8 @@ class TicketController extends UserController
             $keyBoard = [
                 [
                     [
-                        'text' => '回复工单 #' . $ticketId,
-                        'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $ticketId 
+                        'text' => '回复工单 #',
+                        'url' => Setting::obtain('website_url') . '/admin/ticket' 
                     ]
                 ]
             ];
