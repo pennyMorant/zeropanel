@@ -176,7 +176,7 @@ class TicketController extends UserController
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
             $converter = new HtmlConverter();
-            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);
+            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $ticket_main->title . PHP_EOL . '内容：' . $converter->convert($content);
             $keyBoard = [
                 [
                     [
