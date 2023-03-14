@@ -93,7 +93,6 @@ class TronapiPay
 
     public function notify($request, $response, $args)
     {
-        //file_put_contents(BASE_PATH . '/storage/paytaro.log', json_encode($request->getParams())."\r\n", FILE_APPEND);
     	$transaction_token = $request->getParam('transaction_token');
         $order_id = $request->getParam('order_id');
         $amount = $request->getParam('amount');
@@ -108,7 +107,7 @@ class TronapiPay
         if ($_signature != $signature) {
             die('FAIL');
         }
-    	OrderController::execute($request->getParam('out_trade_no'));
+    	OrderController::execute($order_id);
         $res = [
             'code' => '200',
             'data' => 'ok'
