@@ -365,7 +365,6 @@ class AdminController extends UserController
                 foreach ($user as $value) {
                     $traffic = $value->total < 107374 ? 0 : $value->total;
                     $datas[] = [
-                        //'y' => $value->total,
                         'y' => substr(Tools::flowToGB($traffic), 0, 4),
                         'x' => "用户ID:" . $value->user_id,
                     ];
