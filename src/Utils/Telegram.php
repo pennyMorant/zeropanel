@@ -76,20 +76,28 @@ class Telegram
      * @param string $messageText
      * @param int    $chat_id
      */
-    public static function PushToAdmin($messageText, $chat_id = 0): void
+    public static function PushToAdmin($messageText, $keyBoard): void
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
-            
-            // 发送给非群组时使用异步
-            
+            $admin = Setting::obtain('telegram_admin_id');
+            $chat_id = User::where('id', $admin)->where('is_admin', '1')->value('telegram_id');
             $bot = new Api(Setting::obtain('telegram_bot_token'), true);
+            if ($keyBoard !== null) {
+                $reply_markup = json_encode(
+                    [
+                        'inline_keyboard' => $keyBoard
+                    ]
+                );
+            } else {
+                $reply_markup = null;
+            }
             $sendMessage = [
                 'chat_id'                   => $chat_id,
                 'text'                      => $messageText,
                 'parse_mode'                => '',
                 'disable_web_page_preview'  => false,
                 'reply_to_message_id'       => null,
-                'reply_markup'              => null
+                'reply_markup'              => $reply_markup
             ];
             try {
                 $bot->sendMessage($sendMessage);

@@ -14,8 +14,9 @@ use Slim\Http\{
     Request,
     Response
 };
-use App\Zero\Telegram;
+use App\Utils\Telegram;
 use Pkly\I18Next\I18n;
+use League\HTMLToMarkdown\HtmlConverter;
 
 /**
  *  TicketController
@@ -72,13 +73,12 @@ class TicketController extends UserController
     {
         $title    = $request->getParam('title');
         $content  = $request->getParam('content');
-        $markdown = $request->getParam('markdown');
 
         if ($title == '' || $content == '') {
             return $response->withJson(
                 [
                     'ret' => 0,
-                    'msg' => I18n::get()->t('user.ticket.notify.error_0')
+                    'msg' => I18n::get()->t('request error')
                 ]
             );
         }
@@ -103,7 +103,17 @@ class TicketController extends UserController
         $ticket->save();
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
-            Telegram::SendTicket($this->user->id, $title, $content);
+            $converter = new HtmlConverter();
+            $messageText = '用户开启新工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);
+            $keyBoard = [
+                [
+                    [
+                        'text' => '回复工单 #' . $ticketId,
+                        'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $ticketId 
+                    ]
+                ]
+            ];
+            Telegram::PushToAdmin($messageText, $keyBoard);
         }
 
         return $response->withJson(

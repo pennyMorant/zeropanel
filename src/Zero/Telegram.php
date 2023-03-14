@@ -10,6 +10,7 @@ use App\Models\{
     Ticket, 
     Setting
 };
+use League\HTMLToMarkdown\HtmlConverter;
 
 class Telegram
 {
@@ -27,7 +28,8 @@ class Telegram
             $text = '用户重启了工单';
         }
         $ticketId = $new_ticket->rootid === 0 ? $new_ticket->id : $new_ticket->rootid;
-        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $content;
+        $converter = new HtmlConverter();
+        $messageText = $text . ' #'. $ticketId . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $userid . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);;
         $Keyboard = [
             [
                 [
@@ -47,34 +49,21 @@ class Telegram
     /**
      *  用户充值 给管理员TG提醒
      */
-    public static function SendPayment($user, $pl, $codeq)
+    public static function pushTopUpResponse($user, $order)
     {
-        if ($pl->shop == null) {
-            $type = '余额充值';
-        } else {
-            $shopinfo = json_decode($pl->shop, true);
-            if ($shopinfo['id'] != 0) {
-                $shopname = Product::where('id', $shopinfo['id'])->value('name');
-                $type = '购买套餐【' . $shopname . '】';
-            } else {
-                $type = '钱包充值';
-            }
-        }
+        $orders = Order::find($order);
 
         $messageText = '交易提醒' . PHP_EOL .
             '------------------------------' . PHP_EOL .
             '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
-            '交易类型：' . $type . PHP_EOL .
-            '充值金额：' . $pl->total . PHP_EOL .
-            '钱包余额：' . $user->money . PHP_EOL .
-            '发起时间：' . date('Y-m-d H:i:s', $pl->datetime) . PHP_EOL .
-            '到账时间：' . $codeq->usedatetime;
+            '充值金额：' . $orders->order_total . PHP_EOL .
+            '完成时间：' . $orders->updated_time . PHP_EOL .
 
         $sendAdmin = Setting::obtain('telegram_admin_id');
-            $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-            if ($admin_telegram_id != null) {
-                self::Send($messageText, $admin_telegram_id);
-            }
+        $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
+        if ($admin_telegram_id != null) {
+            self::Send($messageText, $admin_telegram_id);
+        }
     }
 
     /**
