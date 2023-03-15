@@ -65,5 +65,37 @@
                 table_1.search(e.target.value).draw();
             });
         </script>
+        <script>
+            function completeOrder(order_id) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/order/complete",
+                    dataType: "json",
+                    data: {
+                        order_id
+                    },
+                    success: function(data){
+                        getResult(data.msg, '', 'success');
+                        table_1.ajax.reload();
+                    }
+                });
+            }
+        </script>
+        <script>
+        function deleteOrder(order_id) {
+            $.ajax({
+                type: "DELETE",
+                url: "/admin/order/delete",
+                dataType: "json",
+                data: {
+                    order_id
+                },
+                success: function(data){
+                    getResult(data.msg, '', 'success');
+                    table_1.ajax.reload();
+                }
+            });
+        }
+    </script>
     </body>
 </html>

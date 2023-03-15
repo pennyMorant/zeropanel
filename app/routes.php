@@ -149,6 +149,8 @@ return function (SlimApp $app) {
         // order
         $group->get('/order',                   App\Controllers\Admin\OrderController::class . ':index');
         $group->post('/order/ajax',             App\Controllers\Admin\OrderController::class . ':ajaxOrder');
+        $group->delete('/order/delete',         App\Controllers\Admin\OrderController::class . ':deleteOrder');
+        $group->put('/order/complete',       App\Controllers\Admin\OrderController::class . ':completeOrder');
         
         // news
         $group->get('/news',             App\Controllers\Admin\AnnController::class . ':index');

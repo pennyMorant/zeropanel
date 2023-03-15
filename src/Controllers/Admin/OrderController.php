@@ -4,8 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\{
-    Order,
-    Code
+    Order
 };
 use Pkly\I18Next\I18n;
 use Slim\Http\{
@@ -24,14 +23,15 @@ class OrderController extends AdminController
     public function index($request, $response, $args)
     {
         $table_config['total_column'] = array(
-            'id'          => 'ID',
-            'user_id'      => '用户ID',
-            'order_total'       => '金额',
-            'order_status'      => '状态',
-            'no'      => '订单号',
-            'created_time'      => '时间',
-            'order_payment'  => '支付方式',
+            'id'            => 'ID',
+            'user_id'       => '用户ID',
+            'order_total'   => '金额',
+            'order_status'  => '状态',
+            'no'            => '订单号',
+            'created_time'  => '时间',
+            'order_payment' => '支付方式',
             'order_type'    => '订单类型',
+            'action'        => '操作',
         );
         $table_config['default_show_column'] = array_keys($table_config['total_column']);
         $table_config['ajax_url'] = 'order/ajax';
@@ -72,6 +72,12 @@ class OrderController extends AdminController
             $tempdata['created_time']         = date('Y-m-d H:i:s', $value->created_time);
             $tempdata['order_payment']        = $value->payment();
             $tempdata['order_type']           = $value->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit');
+            $tempdata['action']               = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" type="button" onclick="completeOrder(' . $value->id . ')">标记完成</a></li>
+                                                        <li><a class="dropdown-item" type="button" onclick="deleteOrder(' . $value->id . ')">删除</a></li>
+                                                    </ul>
+                                                </div>';
             
             $data[] = $tempdata;
         }
@@ -81,6 +87,29 @@ class OrderController extends AdminController
             'recordsTotal'    => Order::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    public function completeOrder($request, $response, $args)
+    {
+        $order_id = $request->getParam('order_id');
+        $order = Order::find($order_id);
+        $order_no = $order->no;
+        $order->finshOrder($order_no);
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => 'success'
+        ]);
+    }
+
+    public function deleteOrder($request, $response, $args)
+    {
+        $order_id = $request->getParam('order_id');
+        $order = Order::find($order_id);
+        $order->delete();
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => 'success'
         ]);
     }
 }

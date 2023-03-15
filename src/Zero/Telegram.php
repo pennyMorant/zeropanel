@@ -17,15 +17,15 @@ class Telegram
     /**
      *  用户充值 给管理员TG提醒
      */
-    public static function pushTopUpResponse($user, $order)
+    public static function pushTopUpResponse($user, $order_no)
     {
-        $orders = Order::find($order);
+        $order = Order::find($order_no);
 
         $messageText = '交易提醒' . PHP_EOL .
             '------------------------------' . PHP_EOL .
             '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
-            '充值金额：' . $orders->order_total . PHP_EOL .
-            '完成时间：' . $orders->updated_time . PHP_EOL .
+            '充值金额：' . $order->order_total . PHP_EOL .
+            '完成时间：' . $order->updated_time . PHP_EOL .
 
         $sendAdmin = Setting::obtain('telegram_admin_id');
         $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
