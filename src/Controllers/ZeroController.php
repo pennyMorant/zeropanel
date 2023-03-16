@@ -450,7 +450,7 @@ class ZeroController extends BaseController
                 break;
             case 'get_commission_log':
                 $querys = Payback::where('ref_by', '=', $user->id)->orderBy($sort_field, $sort);
-                $query = Paybackk::getTableDataFromAdmin($request, null, null, $querys);
+                $query = Payback::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 
                 foreach ($query['datas'] as $value) {
