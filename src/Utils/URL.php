@@ -50,25 +50,7 @@ class URL
         return $nodes;
     }
 
-    /**
-     * 获取全部节点
-     *
-     * ```
-     * $Rule = [
-     *      'type'    => 'all | ss | ssr | vmess | trojan',
-     *      'emoji'   => false,
-     *      'is_mu'   => 1,
-     *      'content' => [
-     *          'noclass' => [0, 1, 2],
-     *          'class'   => [0, 1, 2],
-     *          'regex'   => '.*香港.*HKBN.*',
-     *      ]
-     * ]
-     * ```
-     *
-     * @param User  $user 用户
-     * @param array $Rule 节点筛选规则
-     */
+    
     public static function getNew_AllItems(User $user, array $Rule): array
     {
         $emoji = (isset($Rule['emoji']) ? $Rule['emoji'] : false);
@@ -114,9 +96,7 @@ class URL
                     continue;
                 }
             }
-            // 筛选 End
-
-            // 其他类型单端口节点
+            
             if (in_array($node->sort, [0, 11, 14, 15])) {
                 $node_type = [
                     0  => 'getShadowsocksConfig',     // SS

@@ -14,9 +14,9 @@ use App\Models\{
 use App\Utils\{
     URL,
     Tools,
-    AppURI,
     ConfRender
 };
+use App\Controllers\SubController;
 use App\Zero\Zero;
 use voku\helper\AntiXSS;
 use Psr\Http\Message\ResponseInterface;
@@ -380,31 +380,31 @@ class LinkController extends BaseController
         $return = null;
         switch ($list) {
             case 'shadowsocks':
-                $return = AppURI::getShadowsocksURI($item);
+                $return = SubController::getShadowsocks($item);
                 break;
             case 'v2rayn':
-                $return = AppURI::getV2RayNURI($item);
+                $return = SubController::getV2RayN($item);
                 break;
             case 'trojan':
-                $return = AppURI::getTrojanURI($item);
+                $return = SubController::getTrojan($item);
                 break;
             case 'anxray':
-                $return = AppURI::getAnXrayURI($item);
+                $return = SubController::getAnXray($item);
                 break;
             case 'surge':
-                $return = AppURI::getSurgeURI($item);
+                $return = SubController::getSurge($item);
                 break;
             case 'kitsunebi':
-                $return = AppURI::getKitsunebiURI($item);
+                $return = SubController::getKitsunebi($item);
                 break;
             case 'quantumult':
-                $return = AppURI::getQuantumultURI($item);
+                $return = SubController::getQuantumult($item);
                 break;
             case 'quantumultx':
-                $return = AppURI::getQuantumultXURI($item);
+                $return = SubController::getQuantumultX($item);
                 break;
             case 'shadowrocket':
-                $return = AppURI::getShadowrocketURI($item);
+                $return = SubController::getShadowrocket($item);
                 break;
         }
         return $return;
@@ -532,7 +532,7 @@ class LinkController extends BaseController
         $Nodes = [];
         $All_Proxy = '';
         foreach ($items as $item) {
-            $out = AppURI::getSurgeURI($item, $surge);
+            $out = SubController::getSurge($item, $surge);
             if ($out !== null) {
                 $Nodes[] = $item;
                 $All_Proxy .= $out . PHP_EOL;
@@ -567,7 +567,7 @@ class LinkController extends BaseController
         $All_Proxy = '';
         $items = URL::getNew_AllItems($user, $Rule);
         foreach ($items as $item) {
-            $out = AppURI::getSurfboardURI($item);
+            $out = SubController::getSurfboard($item);
             if ($out !== null) {
                 $Nodes[] = $item;
                 $All_Proxy .= $out . PHP_EOL;
@@ -601,7 +601,7 @@ class LinkController extends BaseController
         $items = URL::getNew_AllItems($user, $Rule);
         $Proxys = [];
         foreach ($items as $item) {
-            $Proxy = AppURI::getClashURI($item, $ssr_support);
+            $Proxy = SubController::getClash($item, $ssr_support);
             if ($Proxy !== null) {
                 $Proxys[] = $Proxy;
             }
