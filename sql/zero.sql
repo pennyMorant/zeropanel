@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-13 15:57:23
+-- 生成日期： 2023-03-16 11:13:38
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.3
 
@@ -58,7 +58,7 @@ CREATE TABLE `config` (
   `item` text NOT NULL COMMENT '项',
   `value` text NOT NULL COMMENT '值',
   `class` varchar(128) NOT NULL DEFAULT 'default' COMMENT '配置分类',
-  `is_public` int(11) NOT NULL DEFAULT 0 COMMENT '是否为公共参数',
+  `is_public` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否为公共参数',
   `type` text NOT NULL COMMENT '值类型',
   `default` text NOT NULL COMMENT '默认值',
   `mark` text NOT NULL COMMENT '备注'
@@ -177,22 +177,22 @@ CREATE TABLE `link` (
 CREATE TABLE `node` (
   `id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
-  `status` int(11) NOT NULL COMMENT '是否显示',
-  `server` varchar(128) NOT NULL,
-  `custom_config` text NOT NULL,
-  `flag` varchar(128) NOT NULL,
-  `sort` int(11) NOT NULL,
-  `traffic_rate` float NOT NULL DEFAULT 1,
-  `node_class` int(11) NOT NULL DEFAULT 0,
-  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `status` tinyint(1) NOT NULL COMMENT '是否显示1显示0不显示',
+  `server` varchar(128) NOT NULL COMMENT '节点地址',
+  `custom_config` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '节点配置',
+  `flag` varchar(32) NOT NULL COMMENT '节点旗帜',
+  `sort` int(11) NOT NULL COMMENT '节点类型',
+  `traffic_rate` float NOT NULL DEFAULT 1 COMMENT '流量倍率',
+  `node_class` int(11) NOT NULL DEFAULT 0 COMMENT '节点等级',
+  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '速度限制',
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
-  `node_iplimit` int(11) NOT NULL DEFAULT 0,
+  `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `node_traffic` bigint(20) NOT NULL DEFAULT 0,
-  `node_traffic_limit` bigint(20) NOT NULL DEFAULT 0,
-  `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0,
+  `node_traffic_limit` bigint(20) NOT NULL DEFAULT 0 COMMENT '流量限制',
+  `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0 COMMENT '节点流量限制重置日期',
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
-  `node_ip` varchar(182) DEFAULT NULL,
-  `node_group` int(11) NOT NULL DEFAULT 0,
+  `node_ip` varchar(182) DEFAULT NULL COMMENT '节点IP',
+  `node_group` int(11) NOT NULL DEFAULT 0 COMMENT '节点群组',
   `online` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -239,14 +239,14 @@ CREATE TABLE `order` (
   `order_coupon` text DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) DEFAULT NULL COMMENT '订单金额',
   `credit_paid` int(11) DEFAULT NULL COMMENT '订单余额支付部分',
-  `order_status` int(11) DEFAULT NULL COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
+  `order_status` tinyint(1) DEFAULT NULL COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
   `created_time` int(11) DEFAULT NULL COMMENT '订单创建时间',
   `updated_time` int(11) DEFAULT NULL COMMENT '订单更新时间',
   `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
   `paid_time` int(11) DEFAULT NULL COMMENT '订单支付时间',
   `order_payment` text DEFAULT NULL COMMENT '订单支付方式',
   `paid_action` text DEFAULT NULL COMMENT '支付后操作',
-  `execute_status` int(11) DEFAULT NULL COMMENT '执行状态'
+  `execute_status` tinyint(1) DEFAULT NULL COMMENT '执行状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -286,7 +286,7 @@ CREATE TABLE `product` (
   `ip_limit` int(11) DEFAULT NULL COMMENT 'IP限制',
   `type` int(11) DEFAULT NULL COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
-  `status` int(11) NOT NULL DEFAULT 0 COMMENT '产品状态',
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '产品状态 1上架0下架',
   `stock` int(11) NOT NULL DEFAULT -1 COMMENT '库存',
   `sales` int(11) NOT NULL DEFAULT 0 COMMENT '销量'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -348,8 +348,8 @@ CREATE TABLE `telegram_tasks` (
 CREATE TABLE `ticket` (
   `id` bigint(20) NOT NULL,
   `title` longtext NOT NULL,
-  `content` longtext NOT NULL,
-  `rootid` bigint(20) NOT NULL,
+  `type` varchar(128) NOT NULL COMMENT '工单类型',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '‘’' COMMENT '工单内容',
   `userid` bigint(20) NOT NULL,
   `datetime` bigint(20) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1
@@ -386,7 +386,7 @@ CREATE TABLE `user` (
   `signup_ip` varchar(182) NOT NULL DEFAULT '127.0.0.1' COMMENT '注册IP',
   `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '端口速度',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
-  `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '是否是管理员',
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是管理员1是0不是',
   `last_day_t` bigint(20) NOT NULL DEFAULT 0,
   `class` int(11) NOT NULL DEFAULT 0 COMMENT '等级',
   `class_expire` datetime NOT NULL DEFAULT '1989-06-04 00:05:00' COMMENT '等级到期时间',
