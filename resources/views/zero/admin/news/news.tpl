@@ -123,7 +123,7 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-        <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+        <script src="/js/ckeditor.js"></script>
         <script>
             var create_news_editors;
             ClassicEditor

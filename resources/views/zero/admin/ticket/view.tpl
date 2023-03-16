@@ -41,7 +41,7 @@
 																<textarea id="zero_reply_ckeditor_classic" name="zero_reply_ckeditor_classic">
 																</textarea>
 																<div class="d-flex align-items-center mt-5">
-																	<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="zeroAdminUpdateTicket({$id}, 1)">
+																	<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="zeroAdminUpdateTicket({$ticket->id}, 1)">
 																		<span class="indicator-label">{$trans->t('submit')}</span>
 																		<span class="indicator-progress">{$trans->t('please wait')}
 																		<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -54,29 +54,29 @@
 												</div>
 											</div>
 												
-										{foreach $ticket_details as $ticket}
-                                            <div class="mb-9">
-                                                <div class="card card-bordered w-100">
-													
-                                                    <div class="card-body">
-                                                        <div class="w-100 d-flex flex-stack mb-8">
-                                                            <div class="d-flex align-itmes-center f">
-																<i class="bi bi-person-fill fs-3x me-3 {if $ticket->user()->is_admin == 1}text-primary {else}text-success{/if}"></i>
-                                                                <div class="d-flex flex-column fw-semibold fs-5 text-gray-600 text-dark">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <a class="text-gray-800 fw-bold text-hover-primary fs-5 me-3">{$ticket->email()}</a>
-                                                                        <span class="mb-0"></span>
+                                            {foreach $comments as $comment}
+                                                <div class="mb-9">
+                                                    <div class="card card-bordered w-100">
+                                                        
+                                                        <div class="card-body">
+                                                            <div class="w-100 d-flex flex-stack mb-8">
+                                                                <div class="d-flex align-itmes-center f">
+                                                                    <i class="bi bi-person-fill fs-3x me-3 {if $ticket->user()->is_admin == 1}text-primary {else}text-success{/if}"></i>
+                                                                    <div class="d-flex flex-column fw-semibold fs-5 text-gray-600 text-dark">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <a class="text-gray-800 fw-bold text-hover-primary fs-5 me-3">{$comment['commenter_email']}</a>
+                                                                            <span class="mb-0"></span>
+                                                                        </div>
+                                                                        <span class="text-muted fw-semibold fs-6">{date('Y-m-d H:i:s', $comment['datetime'])}</span>
                                                                     </div>
-                                                                    <span class="text-muted fw-semibold fs-6">{date('Y-m-d H:i:s', $ticket->datetime)}</span>
                                                                 </div>
                                                             </div>
+                                                            <div class="fw-normal fs-3 text-gray-700 m-0">{nl2br($comment['comment'])}</div>
                                                         </div>
-                                                        <p class="fw-normal fs-5 text-gray-700 m-0">{$ticket->content}</p>
+                                                        
                                                     </div>
-													
                                                 </div>
-                                            </div>
-										{/foreach}	
+                                            {/foreach}		
                                         </div>      
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-		<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+		<script src="/js/ckeditor.js"></script>
         <script>
             var editors;
             ClassicEditor
@@ -114,15 +114,13 @@
                         data: {
                             id,
                             status: ticket_status,
-                            content: text
+                            comment: text
                         },
                         success: function (data) {
                             if (data.ret == 1) {
-                                setTimeout(function() {
-                                    location.reload();
-                                    submitButton.removeAttribute('data-kt-indicator');
-                                    submitButton.disabled = false;
-                                }, 1500);
+                                location.reload();
+                                submitButton.removeAttribute('data-kt-indicator');
+                                submitButton.disabled = false;
                             } else {
                                 getResult(data.msg, '', 'error');
                                 submitButton.removeAttribute('data-kt-indicator');

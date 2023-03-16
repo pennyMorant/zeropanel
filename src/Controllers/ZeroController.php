@@ -44,6 +44,7 @@ use TelegramBot\Api\BotApi;
 use Ozdemir\Datatables\Datatables;
 use Exception;
 
+
 class ZeroController extends BaseController
 {
     /**
@@ -310,14 +311,20 @@ class ZeroController extends BaseController
 
         switch ($name) {
             case 'ticket':
-                $querys = Ticket::query()->where('userid', $user->id)->where('rootid', 0)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $querys = Ticket::query()->where('userid', $user->id)->orderBy($sort_field, $sort);
+                $query = Ticket::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
+                    $comments = json_decode($value->content, true);
+                    foreach ($comments as $comment) {
+                        $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
+                    }
                     $tempdata['id'] = $value->id;
+                    $tempdata['type'] = $value->type;
                     $tempdata['title'] = $value->title;
                     $tempdata['status'] = $value->status();
                     $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
+                    $tempdata['last_updated'] = $last_updated;
                     $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$value->id.'">' . $trans->t('details') . '</a>';
                     $data[] = $tempdata;
                 }
@@ -327,7 +334,7 @@ class ZeroController extends BaseController
                 break;
             case 'order':
                 $querys = Order::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = Order::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['no']                = $value->no;
@@ -346,7 +353,7 @@ class ZeroController extends BaseController
             case 'loginlog':
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;
                 $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = SigninIp::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['id']          = $value->id;
@@ -362,7 +369,7 @@ class ZeroController extends BaseController
             case 'uselog':
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;               
                 $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = Ip::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['id']          = $value->id;
@@ -376,7 +383,7 @@ class ZeroController extends BaseController
                 break;
             case 'sublog':
                 $querys = UserSubscribeLog::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = UserSubscribeLog::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
@@ -392,7 +399,7 @@ class ZeroController extends BaseController
                 break;
             case 'trafficlog':
                 $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = TrafficLog::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
@@ -408,7 +415,7 @@ class ZeroController extends BaseController
                 break;
             case 'user_baned_log':
                 $querys = DetectLog::query()->orderBy($sort_field, 'desc')->where('user_id', $user->id);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = DetectLog::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 foreach ($query['datas'] as $value) {
                     $tempdata['id'] = $value->id;
@@ -427,7 +434,7 @@ class ZeroController extends BaseController
                 break;               
             case 'ban_rule':
                 $querys = DetectRule::query()->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = DetectRule::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
 
                 foreach ($query['datas'] as $value) {
@@ -443,7 +450,7 @@ class ZeroController extends BaseController
                 break;
             case 'get_commission_log':
                 $querys = Payback::where('ref_by', '=', $user->id)->orderBy($sort_field, $sort);
-                $query = User::getTableDataFromAdmin($request, null, null, $querys);
+                $query = Paybackk::getTableDataFromAdmin($request, null, null, $querys);
                 $data = [];
                 
                 foreach ($query['datas'] as $value) {

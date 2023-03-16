@@ -20,7 +20,7 @@ $(document).ready(function (){
 });
 </script>
 <script>
-    function KTAdminDelete(type, id){
+    function zeroAdminDelete(type, id){
         switch (type) {
             case 'product':
                 $.ajax({
@@ -112,6 +112,23 @@ $(document).ready(function (){
                     }
                 });
                 break;
+            case 'ticket':
+            $.ajax({
+                    type: "DELETE",
+                    url: "/admin/ticket/delete",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function(data){
+                        if (data.ret === 1){
+                            getResult(data.msg, '', 'success');
+                            table_1.ajax.reload();
+                        }else{
+                            getResult('发生错误', '', 'error');
+                        }
+                    }
+                });
         }
     }
 </script>

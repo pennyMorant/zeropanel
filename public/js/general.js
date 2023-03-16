@@ -565,7 +565,7 @@ function KTUsersPayOrder(order_no) {
 }
 
 // ticket
-function KTUsersTicket(type, ticket_id, ticket_status) {
+function KTUsersTicket(type, id, status) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
@@ -575,17 +575,16 @@ function KTUsersTicket(type, ticket_id, ticket_status) {
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
-                    url: "/user/ticket",
+                    url: "/user/ticket/create",
                     dataType: "json",
                     data: {
                         title: $("#zero_create_ticket_title").val(),
-                        content: text
+                        comment: text,
+                        type: $("#zero_create_ticket_type").val()
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            setTimeout(function() {
-                                $(location).attr('href', '/user/ticket/view/'+data.id);
-                            }, 1500);
+                            $(location).attr('href', '/user/ticket/view/'+data.id);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -599,17 +598,16 @@ function KTUsersTicket(type, ticket_id, ticket_status) {
             setTimeout(function () {
                 $.ajax({
                     type: "PUT",
-                    url: "/user/ticket/"+ticket_id,
+                    url: "/user/ticket/update",
                     dataType: "json",
                     data: {
-                        status: ticket_status,
-                        content: text
+                        id,
+                        status,
+                        comment: text
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1500);
+                            location.reload();
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');

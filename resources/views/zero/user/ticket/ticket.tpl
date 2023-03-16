@@ -43,9 +43,11 @@
 												<thead>
 													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
 														<th>ID</th>
+														<th>{$trans->t('type')}</th>
 														<th>{$trans->t('subject')}</th>
 														<th>{$trans->t('status')}</th>
 														<th>{$trans->t('date')}</th>
+														<th>最后更新</th>
 														<th>{$trans->t('action')}</th>
 													</tr>
 												</thead>
@@ -69,7 +71,7 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
-		<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+		<script src="/js/ckeditor.js"></script>
 		<!-- create ticket modal -->
 		<div class="modal fade" id="zero_modal_create_ticket" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
@@ -97,6 +99,17 @@
 							<input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
 						</div>
 						<div class="d-flex flex-column mb-8">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+								<span class="required">工单类型</span>
+							</label>
+							<select id="zero_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
+								<option value="support">支持</option>
+								<option value="account">账户</option>
+								<option value="billing">账单</option>
+								<option value="sales">销售</option>
+							</select>
+						</div>
+						<div class="d-flex flex-column mb-8">
 							<label class="fs-6 fw-semibold mb-2">
 								<span class="required">{$trans->t('details')}</span>
 							</label>
@@ -118,7 +131,9 @@
 <script>
 var editors;
 ClassicEditor
-    .create(document.getElementById('zero_modal_create_ticket_ckeditor_classic'))
+    .create(document.getElementById('zero_modal_create_ticket_ckeditor_classic'), {
+		toolbar: [ 'heading', 'bold', 'italic', 'link', 'undo', 'redo']
+	})
     .then(editor => {
         editors = editor;
     })

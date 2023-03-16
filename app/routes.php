@@ -43,11 +43,10 @@ return function (SlimApp $app) {
 
         $group->get('/product',                  App\Controllers\User\ProductController::class . ':product');
 
-        $group->get('/ticket',                   App\Controllers\User\TicketController::class . ':ticket');
-        $group->get('/ticket/create',            App\Controllers\User\TicketController::class . ':ticketCreate');
-        $group->post('/ticket',                  App\Controllers\User\TicketController::class . ':ticketAdd');
-        $group->get('/ticket/view/{id}',         App\Controllers\User\TicketController::class . ':ticketView');
-        $group->put('/ticket/{id}',              App\Controllers\User\TicketController::class . ':ticketUpdate');
+        $group->get('/ticket',                   App\Controllers\User\TicketController::class . ':ticketIndex');
+        $group->post('/ticket/create',            App\Controllers\User\TicketController::class . ':createTicket');
+        $group->get('/ticket/view/{id}',         App\Controllers\User\TicketController::class . ':ticketViewIndex');
+        $group->put('/ticket/update',              App\Controllers\User\TicketController::class . ':updateTicket');
         
         $group->post('/update_profile/{type}',    App\Controllers\UserController::class . ':updateProfile');
         $group->post('/send',                    App\Controllers\AuthController::class . ':sendVerify');
@@ -120,21 +119,22 @@ return function (SlimApp $app) {
         $group->get('/',                         App\Controllers\AdminController::class . ':index');
 
         // Node Mange
-        $group->get('/node',                     App\Controllers\Admin\NodeController::class . ':index');
-        $group->get('/node/create',              App\Controllers\Admin\NodeController::class . ':createNodeIndex');
-        $group->post('/node/create',                    App\Controllers\Admin\NodeController::class . ':createNode');
-        $group->get('/node/update/{id}',           App\Controllers\Admin\NodeController::class . ':updateNodeIndex');
-        $group->put('/node/update',          App\Controllers\Admin\NodeController::class . ':updateNode');
-        $group->delete('/node/delete',                  App\Controllers\Admin\NodeController::class . ':deleteNode');
-        $group->post('/node/ajax',               App\Controllers\Admin\NodeController::class . ':nodeAjax');
-        $group->put('/node/update/status',      App\Controllers\Admin\NodeController::class . ':updateNodeStatus');
+        $group->get('/node',                        App\Controllers\Admin\NodeController::class . ':index');
+        $group->get('/node/create',                 App\Controllers\Admin\NodeController::class . ':createNodeIndex');
+        $group->post('/node/create',                App\Controllers\Admin\NodeController::class . ':createNode');
+        $group->get('/node/update/{id}',            App\Controllers\Admin\NodeController::class . ':updateNodeIndex');
+        $group->put('/node/update',                 App\Controllers\Admin\NodeController::class . ':updateNode');
+        $group->delete('/node/delete',              App\Controllers\Admin\NodeController::class . ':deleteNode');
+        $group->post('/node/ajax',                  App\Controllers\Admin\NodeController::class . ':nodeAjax');
+        $group->put('/node/update/status',          App\Controllers\Admin\NodeController::class . ':updateNodeStatus');
 
         //ticket
-        $group->get('/ticket',                   App\Controllers\Admin\TicketController::class . ':index');
+        $group->get('/ticket',                   App\Controllers\Admin\TicketController::class . ':ticketIndex');
         $group->post('/ticket/create',              App\Controllers\Admin\TicketController::class . ':createTicket');
-        $group->get('/ticket/update/{id}',         App\Controllers\Admin\TicketController::class . ':updateTicketIndex');
+        $group->get('/ticket/view/{id}',         App\Controllers\Admin\TicketController::class . ':ticketViewIndex');
         $group->put('/ticket/update',              App\Controllers\Admin\TicketController::class . ':updateTicket');
-        $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ajax');
+        $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ticketAjax');
+        $group->delete('/ticket/delete',             App\Controllers\Admin\TicketController::class . ':deleteTicket');
 
         // Product Mange
         $group->get('/product',                     App\Controllers\Admin\ProductController::class . ':index');

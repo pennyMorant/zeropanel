@@ -66,7 +66,7 @@ var KTDatatablesTicketSide = function () {
             serverSide: true,
             scrollX: true,
             scrollCollapse: true,
-            order: [[2, 'desc']],
+            order: [[3, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -79,9 +79,11 @@ var KTDatatablesTicketSide = function () {
             
             columns: [
                 { data: 'id' },
+                { data: 'type'},
                 { data: 'title' },
                 { data: 'status' },
                 { data: 'datetime' },
+                { data: 'last_updated'},
                 { data: 'action'},
             ],
             columnDefs: [

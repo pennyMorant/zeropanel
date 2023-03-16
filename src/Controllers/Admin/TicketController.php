@@ -24,14 +24,16 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function ticketIndex($request, $response, $args)
     {
         $table_config['total_column'] = array(
             'id'        => 'ID',
-            'datetime'  => '时间',
-            'title'     => '标题',
             'userid'    => '用户ID',
+            'type'      => '类型',
+            'title'     => '主题',
             'status'    => '状态',
+            'datetime'  => '时间',
+            'last_updated'  => '最后更新',                  
             'action'        => '操作',
         );
         $table_config['ajax_url'] = 'ticket/ajax';
@@ -100,42 +102,47 @@ class TicketController extends AdminController
      */
     public function updateTicket($request, $response, $args)
     {
-        $id      = $request->getParam('id');
-        $content = $request->getParam('content');
-        $status  = $request->getParam('status');
-        if ($content == '' || $status == '') {
+        $id = $request->getParam('id');
+        $comment = $request->getParam('comment');
+
+        if ($comment === '') {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '请填全'
+                'msg' => '非法输入',
             ]);
         }
-        if (strpos($content, 'admin') !== false || strpos($content, 'user') !== false) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '请求中有不正当的词语。'
-            ]);
+
+        $ticket = Ticket::where('id', $id)->first();
+
+        if ($ticket === null) {
+            return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
         }
-        $main = Ticket::find($id);
-        $user = User::find($main->userid);
+
+        $antiXss = new AntiXSS();
+
+        $content_old = json_decode($ticket->content, true);
+        $content_new = [
+            [
+                'comment_id' => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                'commenter_email' => 'Admin',
+                'comment' => $antiXss->xss_clean($comment),
+                'datetime' => time(),
+            ],
+        ];
+
+        $user = User::find($ticket->userid);
         $user->sendMail(
             Setting::obtain('website_name') . '-工单被回复',
             'news/warn.tpl',
             [
-                'text' => '您好，有人回复了<a href="' . Setting::obtain('website_url') . '/user/ticket/' . $main->id . '/view">工单</a>，请您查看。'
+                'text' => '您好，有人回复了<a href="' . Setting::obtain('website_url') . '/user/ticket/view/' . $ticket->id . '">工单</a>，请您查看。',
             ],
             []
         );
 
-        $antiXss                = new AntiXSS();
-        $ticket                 = new Ticket();
-        $ticket->title          = $antiXss->xss_clean($main->title);
-        $ticket->content        = $antiXss->xss_clean($content);
-        $ticket->rootid         = $main->id;
-        $ticket->userid         = $this->user->id;
-        $ticket->datetime       = time();
+        $ticket->content = json_encode(array_merge($content_old, $content_new));
+        $ticket->status = 1;
         $ticket->save();
-        $main->status           = $status;
-        $main->save();
 
         return $response->withJson([
             'ret' => 1,
@@ -150,24 +157,19 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateTicketIndex($request, $response, $args)
+    public function ticketViewIndex($request, $response, $args)
     {
-        $id            = $args['id'];
-        $ticket = Ticket::where('id','=', $id)->first();
-        if($ticket == null) {
+        $id = $args['id'];
+        $ticket = Ticket::where('id', '=', $id)->first();
+        $comments = json_decode($ticket->content, true);
+
+        if ($ticket === null) {
             return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
         }
-
-        $pageNum       = $request->getQueryParams()['page'] ?? 1;
-        $ticket_details     = Ticket::where('id', $id)->orWhere('rootid', '=', $id)->orderBy('datetime', 'desc')->paginate(5, ['*'], 'page', $pageNum);
-        $ticket_details->setPath('/admin/ticket/' . $id . '/view');
-
-        $render = Tools::paginate_render($ticket_details);
         $this->view()
-            ->assign('ticket_details', $ticket_details)
-            ->assign('id', $id)
-            ->assign('render', $render)
-            ->display('admin/ticket/update.tpl');
+            ->assign('ticket', $ticket)
+            ->assign('comments', $comments)
+            ->display('admin/ticket/view.tpl');
         return $response;
     }
 
@@ -178,7 +180,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax($request, $response, $args)
+    public function ticketAjax($request, $response, $args)
     {
         $query = Ticket::getTableDataFromAdmin(
             $request,
@@ -190,11 +192,9 @@ class TicketController extends AdminController
                     $order_field = 'userid';
                 }
             },
-            static function ($query) {
-                $query->where('rootid', 0);
-            },
         );
 
+        $type = "'ticket'";
         $data  = [];
         foreach ($query['datas'] as $value) {
             /** @var Ticket $value */
@@ -203,16 +203,22 @@ class TicketController extends AdminController
                 Ticket::user_is_null($value);
                 continue;
             }
+            $comments = json_decode($value->content, true);
+            foreach ($comments as $comment) {
+                $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
+            }
             $tempdata               = [];
             $tempdata['id']         = $value->id;
-            $tempdata['datetime']   = $value->datetime();
-            $tempdata['title']      = $value->title;
             $tempdata['userid']     = $value->userid;
+            $tempdata['type']       = $value->type;
+            $tempdata['title']      = $value->title;
             $tempdata['status']     = $value->status();
+            $tempdata['datetime']   = $value->datetime();
+            $tempdata['last_updated'] = $last_updated;
             $tempdata['action']     = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="/admin/ticket/update/'.$value->id.'">编辑</a></li>
-                                                <li><a class="dropdown-item" href="#" onclick="KTAdminNode("'.$value->id.'")>删除</a></li>
+                                                <li><a class="dropdown-item" href="/admin/ticket/view/'.$value->id.'">编辑</a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="zeroAdminDelete('. $type . ', ' . $value->id. ')">删除</a></li>
                                             </ul>
                                         </div>';
             $data[] = $tempdata;
@@ -223,6 +229,16 @@ class TicketController extends AdminController
             'recordsTotal'    => Ticket::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
+        ]);
+    }
+
+    public function deleteTicket($request, $response, $args)
+    {
+        $id = $request->getParam('id');
+        Ticket::find($id)->delete();
+        return $response->withJson([
+            'ret'   => 1,
+            'msg'   => 'success'
         ]);
     }
 }

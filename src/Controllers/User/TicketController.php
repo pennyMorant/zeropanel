@@ -28,25 +28,25 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticket($request, $response, $args)
+    public function ticketIndex($request, $response, $args)
     {
-        $pageNum = $request->getQueryParams()['page'] ?? 1;
-        $tickets = Ticket::where('userid', $this->user->id)->where('rootid', 0)->orderBy('datetime', 'desc')->paginate(15, ['*'], 'page', $pageNum);
-        $tickets_all = Ticket::where('userid', $this->user->id)->where('rootid', 0)->orderBy('datetime', 'desc')->get();
-        $tickets->setPath('/user/ticket');
+        $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
+        /*
+        foreach ($tickets as $ticket) {
+            $ticket->status = Tools::getTicketStatus($ticket);
+            $ticket->type = Tools::getTicketType($ticket);
+            $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
+        }*/
 
-        if ($request->getParam('json') == 1) {
-            return $response->withJson(
-                [
-                    'ret'     => 1,
-                    'tickets' => $tickets
-                ]
-            );
+        if ($request->getParam('json') === 1) {
+            return $response->withJson([
+                'ret' => 1,
+                'tickets' => $tickets,
+            ]);
         }
 
         $this->view()
             ->assign('tickets', $tickets)
-            ->assign('tickets_all', $tickets_all)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/ticket.tpl');
         return $response;
@@ -57,54 +57,41 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketCreate($request, $response, $args)
+    public function createTicket($request, $response, $args)
     {
-        $this->view() ->display('user/ticket_create.tpl');
-        return $response;
-
-    }
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ticketAdd($request, $response, $args)
-    {
-        $title    = $request->getParam('title');
-        $content  = $request->getParam('content');
-
-        if ($title == '' || $content == '') {
-            return $response->withJson(
-                [
-                    'ret' => 0,
-                    'msg' => I18n::get()->t('request error')
-                ]
-            );
+        $title = $request->getParam('title');
+        $comment = $request->getParam('comment');
+        $type = $request->getParam('type');
+        if ($title === '' || $comment === '') {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '非法输入',
+            ]);
         }
 
-        if (strpos($content, 'admin') != false || strpos($content, 'user') != false) {
-            return $response->withJson(
-                [
-                    'ret' => 0,
-                    'msg' => I18n::get()->t('request error')
-                ]
-            );
-        }
-
-        $ticket  = new Ticket();
         $antiXss = new AntiXSS();
 
-        $ticket->title    = $antiXss->xss_clean($title);
-        $ticket->content  = $antiXss->xss_clean($content);
-        $ticket->rootid   = 0;
-        $ticket->userid   = $this->user->id;
+        $content = [
+            [
+                'comment_id' => 0,
+                'commenter_email' => $this->user->email,
+                'comment' => $antiXss->xss_clean($comment),
+                'datetime' => time(),
+            ],
+        ];
+
+        $ticket = new Ticket();
+        $ticket->title = $antiXss->xss_clean($title);
+        $ticket->content = json_encode($content);
+        $ticket->userid = $this->user->id;
         $ticket->datetime = time();
+        $ticket->status = 1;
+        $ticket->type = $antiXss->xss_clean($type);
         $ticket->save();
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
             $converter = new HtmlConverter();
-            $messageText = '用户开启新工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($content);
+            $messageText = '用户开启新工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($comment);
             $keyBoard = [
                 [
                     [
@@ -130,53 +117,43 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketUpdate($request, $response, $args)
+    public function updateTicket($request, $response, $args)
     {
-        $id       = $args['id'];
-        $content  = $request->getParam('content');
-        $status   = $request->getParam('status');
+        $id = $request->getParam('id');
+        $comment = $request->getParam('comment');
 
-        if ($content == '' || $status == '') {
-            return $response->withJson(
-                [
-                    'ret' => 0,
-                    'msg' => I18n::get()->t('request error')
-                ]
-            );
+        if ($comment === '') {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => '非法输入',
+            ]);
         }
 
-        if (strpos($content, 'admin') != false || strpos($content, 'user') != false) {
-            return $response->withJson(
-                [
-                    'ret' => 0,
-                    'msg' => I18n::get()->t('request error')
-                ]
-            );
+        $ticket = Ticket::where('id', $id)->where('userid', $this->user->id)->first();
+
+        if ($ticket === null) {
+            return $response->withStatus(302)->withHeader('Location', '/user/ticket');
         }
 
-        $ticket_main = Ticket::where('id', '=', $id)->where('rootid', '=', 0)->first();
-        if ($ticket_main->userid != $this->user->id) {
-            $newResponse = $response->withStatus(302)->withHeader('Location', '/user/ticket');
-            return $newResponse;
-        }
+        $antiXss = new AntiXSS();
 
+        $content_old = json_decode($ticket->content, true);
+        $content_new = [
+            [
+                'comment_id' => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                'commenter_email' => $this->user->email,
+                'comment' => $antiXss->xss_clean($comment),
+                'datetime' => time(),
+            ],
+        ];
 
-        $antiXss              = new AntiXSS();
-
-        $ticket               = new Ticket();
-        $ticket->title        = $antiXss->xss_clean($ticket_main->title);
-        $ticket->content      = $antiXss->xss_clean($content);
-        $ticket->rootid       = $ticket_main->id;
-        $ticket->userid       = $this->user->id;
-        $ticket->datetime     = time();
-        $ticket_main->status  = $status;
-
-        $ticket_main->save();
+        $ticket->content = json_encode(array_merge($content_old, $content_new));
+        $ticket->status = 1;
         $ticket->save();
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
             $converter = new HtmlConverter();
-            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $ticket_main->title . PHP_EOL . '内容：' . $converter->convert($content);
+            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $ticket->title . PHP_EOL . '内容：' . $converter->convert($comment);
             $keyBoard = [
                 [
                     [
@@ -201,46 +178,31 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketView($request, $response, $args)
+    public function ticketViewIndex($request, $response, $args)
     {
-        $id           = $args['id'];
-        $ticket_main  = Ticket::where('id', '=', $id)->where('rootid', '=', 0)->first();
-        if ($ticket_main->userid != $this->user->id) {
-            if ($request->getParam('json') == 1) {
-                return $response->withJson(
-                    [
-                        'ret' => 0,
-                        'msg' => I18n::get()->t('user.ticket.notify.error_2')
-                    ]
-                );
+        $id = $args['id'];
+        $ticket = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
+        $comments = json_decode($ticket->content, true);
+
+        //$ticket->status = Tools::getTicketStatus($ticket);
+        //$ticket->type = Tools::getTicketType($ticket);
+        //$ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
+
+        if ($ticket === null) {
+            if ($request->getParam('json') === 1) {
+                return $response->withJson([
+                    'ret' => 0,
+                    'msg' => '无访问权限',
+                ]);
             }
-            $newResponse = $response->withStatus(302)->withHeader('Location', '/user/ticket');
-            return $newResponse;
-        }
-
-        $pageNum = $request->getQueryParams()['page'] ?? 1;
-
-        $ticket_detail = Ticket::where('id', $id)->orWhere('rootid', '=', $id)->orderBy('datetime', 'desc')->paginate(5, ['*'], 'page', $pageNum);
-        $ticket_detail->setPath('/user/ticket/' . $id . '/view');
-
-        if ($request->getParam('json') == 1) {
-            foreach ($ticket_detail as $set) {
-                $set->datetime = $set->datetime();
-            }
-            return $response->withJson(
-                [
-                    'ret'     => 1,
-                    'tickets' => $ticket_detail
-                ]
-            );
+            return $response->withStatus(302)->withHeader('Location', '/user/ticket');
         }
 
         $this->view()
-            ->assign('tickets', $ticket_main)
-            ->assign('ticket_detail', $ticket_detail)
-            ->assign('id', $id)
+            ->assign('ticket', $ticket)
+            ->assign('comments', $comments)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
-            ->display('user/ticket/ticket_detail.tpl');
+            ->display('user/ticket/view.tpl');
         return $response;  
     }
 }
