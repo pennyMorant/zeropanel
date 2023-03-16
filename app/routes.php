@@ -129,12 +129,13 @@ return function (SlimApp $app) {
         $group->put('/node/update/status',          App\Controllers\Admin\NodeController::class . ':updateNodeStatus');
 
         //ticket
-        $group->get('/ticket',                   App\Controllers\Admin\TicketController::class . ':ticketIndex');
-        $group->post('/ticket/create',              App\Controllers\Admin\TicketController::class . ':createTicket');
-        $group->get('/ticket/view/{id}',         App\Controllers\Admin\TicketController::class . ':ticketViewIndex');
-        $group->put('/ticket/update',              App\Controllers\Admin\TicketController::class . ':updateTicket');
-        $group->post('/ticket/ajax',             App\Controllers\Admin\TicketController::class . ':ticketAjax');
+        $group->get('/ticket',                       App\Controllers\Admin\TicketController::class . ':ticketIndex');
+        $group->post('/ticket/create',               App\Controllers\Admin\TicketController::class . ':createTicket');
+        $group->get('/ticket/view/{id}',             App\Controllers\Admin\TicketController::class . ':ticketViewIndex');
+        $group->put('/ticket/update',                App\Controllers\Admin\TicketController::class . ':updateTicket');
+        $group->post('/ticket/ajax',                 App\Controllers\Admin\TicketController::class . ':ticketAjax');
         $group->delete('/ticket/delete',             App\Controllers\Admin\TicketController::class . ':deleteTicket');
+        $group->put('/ticket/close',                 App\Controllers\Admin\TicketController::class . ':closeTicket');
 
         // Product Mange
         $group->get('/product',                     App\Controllers\Admin\ProductController::class . ':index');

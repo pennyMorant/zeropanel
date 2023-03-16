@@ -148,5 +148,21 @@
                 }, 2000);
             }
         </script>
+        <script>
+            function zeroAdminCloseTicket(id) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/admin/ticket/close",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function (data) {
+                        getResult(data.msg, '', 'success');
+                        table_1.ajax.reload();
+                    }
+                });
+            }
+    </script>
     </body>
 </html>
