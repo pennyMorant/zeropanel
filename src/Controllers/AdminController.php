@@ -331,7 +331,7 @@ class AdminController extends UserController
                 $earliest_paid_time = $earliest_order->paid_time ?? '-15 days';
                 $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
                 $time_b = $time_a + 86400;
-                $times = (strtotime(date("Y-m-d")) - strtotime($earliest_paid_time)) / 86400;
+                $times = (strtotime(date("Y-m-d")) - $earliest_paid_time) / 86400;
                 $datas = [];
                 for ($i=0; $i < $times ; $i++) {
                     $time_a -= 86400;
