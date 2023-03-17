@@ -310,9 +310,11 @@ class AdminController extends UserController
         $name = $args['name'];
         switch ($name) {
             case 'newusers':
+                $earliest_user = User::orderBy('signup_date', 'ASC')->limit('1')->first();
+                $earliest_signup_date = $earliest_user->signup_date ?? '-15 days';
                 $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
                 $time_b = $time_a + 86400;
-                $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
+                $times = (strtotime(date("Y-m-d")) - strtotime($earliest_signup_date)) / 86400;
                 $datas = [];
                 for ($i=0; $i < $times ; $i++) {
                     $time_a -= 86400;
@@ -325,9 +327,11 @@ class AdminController extends UserController
                 }
                 break;
             case 'income':
+                $earliest_order = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->orderBy('paid_time')->limit('1')->first();
+                $earliest_paid_time = $earliest_order->paid_time ?? '-15 days';
                 $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
                 $time_b = $time_a + 86400;
-                $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
+                $times = (strtotime(date("Y-m-d")) - strtotime($earliest_paid_time)) / 86400;
                 $datas = [];
                 for ($i=0; $i < $times ; $i++) {
                     $time_a -= 86400;

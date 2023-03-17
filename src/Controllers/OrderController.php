@@ -212,6 +212,7 @@ class OrderController extends BaseController
     public static function execute($order_no)
     {
         $order = Order::where('no', $order_no)->first();
+        
         if ($order->product_id == null) {
             return self::executeAddCredit($order);
         } else {
