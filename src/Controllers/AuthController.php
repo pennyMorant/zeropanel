@@ -62,10 +62,11 @@ class AuthController extends BaseController
      */
     public function signinHandle($request, $response, $args)
     {
-        $email = strtolower(trim($request->getParam('email')));
-        $passwd     = $request->getParam('passwd');
-        $code       = $request->getParam('code');
-        $rememberMe = $request->getParam('remember_me');
+        $data = $request->getParsedBody();
+        $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
+        $passwd     = $data['passwd'];
+        $code       = $data['code'];
+        $rememberMe = $data['remember_me'];
 
         $trans = I18n::get();
         try {
@@ -90,23 +91,18 @@ class AuthController extends BaseController
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $e->getMessage(),
-            ]);
+            ], 400);
         }
 
-        $time = 3600 * 24;
-        if ($rememberMe) {
-            $time = 3600 * 24 * ($_ENV['rememberMeDuration'] ?: 7);
-        }
-
-        Auth::login($user->id, $time);
         // 记录登录成功
-        $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
+        Auth::login($user->id, 3600 * 24 * ($_ENV['rememberMeDuration'] ?: 7));
+        
+        // 更新用户信息
         $user->last_signin_time = date('Y-m-d H:i:s');
-        $user->save();
-
-        return $response->withJson([
+        // 获取用户数组形式
+        return response()->withJson([
             'ret' => 1,
-            'msg' => $trans->t('signin success')
+            'msg' => trans()->t('signin success')
         ]);
     }
 
@@ -234,12 +230,11 @@ class AuthController extends BaseController
      */
     public function signUpHandle($request, $response, $args)
     {
-        $email = $request->getParam('email');
-        $email = trim($email);
-        $email = strtolower($email);
-        $passwd = $request->getParam('passwd');
-        $repasswd = $request->getParam('repasswd');
-        $code = trim($request->getParam('code'));
+        $data = $request->getParsedBody();
+        $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
+        $passwd     = $data['passwd'];
+        $repasswd = $data['repasswd'];
+        $code = $data['code'];
 
         $trans = I18n::get();
 
