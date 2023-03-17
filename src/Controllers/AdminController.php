@@ -24,6 +24,9 @@ use Slim\Http\{
     Request,
     Response
 };
+use Carbon\Carbon;
+use DB;
+
 
 /**
  *  Admin Controller
@@ -253,124 +256,118 @@ class AdminController extends UserController
             'msg' => '优惠码添加成功'
         ]);
     }
-
-    /**
-     * 后台销售收入统计
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function getIncome($request, $response, $args)
-    {
-        $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-        $time_b = $time_a + 86400;
-        $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
-        $datas = [];
-        for ($i=0; $i < $times ; $i++) {
-            $time_a -= 86400;
-            $time_b -= 86400;
-            $total   = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->where('paid_time', '>=', $time_a)->where('paid_time', '<=', $time_b)->sum('order_total');
-            $datas[] = [
-                'x'  => date('Y-m-d', $time_a),
-                'y' => $total ?? 0,
-            ];
-        }
-        return $response->withJson(array_reverse($datas));
-    }
-
-    /**
-     * 后台用户增加统计
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function newUsers($request, $response, $args)
-    {
-        $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-        $time_b = $time_a + 86400;
-        $times = (strtotime(date("Y-m-d")) - strtotime("2020-1-1")) / 86400;
-        $datas = [];
-        for ($i=0; $i < $times ; $i++) {
-            $time_a -= 86400;
-            $time_b -= 86400;
-            $total   = User::where('signup_date', '>=', date("Y-m-d",$time_a))->where('signup_date', '<', date("Y-m-d",$time_b))->count();
-            $datas[] = [
-                'x'  => date('Y-m-d', $time_a),
-                'y' => $total ?? 0,
-            ];
-        }
-
-        return $response->withJson(array_reverse($datas));
-    }
+    
 
     public function ajaxDataChart($request, $response, $args)
     {
         $name = $args['name'];
         switch ($name) {
             case 'newusers':
-                $earliest_user = User::orderBy('signup_date', 'ASC')->limit('1')->first();
-                $earliest_signup_date = $earliest_user->signup_date ?? '-7 days';
-                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-                $time_b = $time_a + 86400;
-                $times = (strtotime(date("Y-m-d")) - strtotime($earliest_signup_date)) / 86400 + 3;
-                $datas = [];
-                for ($i=0; $i < $times ; $i++) {
-                    $time_a -= 86400;
-                    $time_b -= 86400;
-                    $total   = User::where('signup_date', '>=', date("Y-m-d",$time_a))->where('signup_date', '<', date("Y-m-d",$time_b))->count();
-                    $datas[] = [
-                        'x'  => date('Y-m-d', $time_a),
-                        'y' => $total ?? 0,
-                    ];
-                }
+                // 获取最早注册用户的日期
+                $earliest_signup_date = User::orderBy('signup_date')->first()->signup_date ?? Carbon::now()->subDays(7);
+                $earliest_signup_date = Carbon::parse($earliest_signup_date);
+                // 获取当前日期
+                $today = Carbon::today();
+
+                // 获取查询结果集合
+                $users = User::whereBetween('signup_date', [$earliest_signup_date, $today])->pluck('signup_date');
+
+                // 对结果集合按照注册日期进行分组和统计
+                $datas = $users->groupBy(function ($user) {
+                    // 返回注册日期作为分组依据
+                    return $user->toDateString();
+                })->map(function ($group) {
+                    // 返回每个分组的数量作为统计值
+                    return $group->count();
+                });
+
+                // 填充缺失的日期和数量为 0 的数据并转换为 x y 数组格式
+                $datas = collect(range(0, $today->diffInDays($earliest_signup_date)))
+                    ->mapWithKeys(function ($day) use ($earliest_signup_date) {
+                        // 返回从最早注册日期开始递增的每一天作为键，并获取对应的统计值或默认为 0 
+                        return [$earliest_signup_date->copy()->addDays($day)->toDateString() => 0];
+                    })->merge($datas) // 合并两个集合，保留原有的统计值
+                    ->map(function ($value, $key) {
+                        // 将每一天的数据转换为一个数组并返回
+                        return [
+                            'x' => strval($key),
+                            'y' => intval($value)
+                        ];
+                    })->values(); // 返回一个索引数组
                 break;
             case 'income':
-                $earliest_order = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->orderBy('paid_time', 'ASC')->limit('1')->first();
-                $earliest_paid_time = date('Y-m-d', $earliest_order->paid_time) ?? '-7 days';
-                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-                $time_b = $time_a + 86400;
-                $times = (strtotime(date("Y-m-d")) - strtotime($earliest_paid_time)) / 86400 + 3;
-                $datas = [];
-                for ($i=0; $i < $times ; $i++) {
-                    $time_a -= 86400;
-                    $time_b -= 86400;
-                    $total   = Order::where('order_status', 2)->where('order_payment', '!=', 'creditpay')->where('paid_time', '>=', $time_a)->where('paid_time', '<=', $time_b)->sum('order_total');
-                    $datas[] = [
-                        'x'  => date('Y-m-d', $time_a),
-                        'y' => $total ?? 0,
-                    ];
+                // 获取最早付款日期
+                $earliest_paid_date = Order::where('order_status', 2)
+                    ->where('order_payment', '!=', 'creditpay')->orderBy('paid_time')->first()->paid_time ?: Carbon::now()->subDays(7);
+                $earliest_paid_date = Carbon::createFromTimestamp($earliest_paid_date)->startOfDay();
+
+                // 获取当前日期
+                $today = Carbon::today();
+
+                // 获取查询结果集合
+                $orders = Order::where('order_payment', '!=', 'creditpay')
+                    ->whereBetween('paid_time', [strtotime($earliest_paid_date), strtotime($today)])
+                    ->selectRaw('DATE_FORMAT(FROM_UNIXTIME(paid_time), "%Y-%m-%d") as date, sum(order_total) as amount')
+                    ->groupBy('date')->get();
+
+                if (isset($orders)) {
+                    // 对结果集合按照日期进行分组和统计
+                    $datas = $orders->mapWithKeys(function ($item) {
+                        // 返回每个分组的日期和金额作为键值对
+                        return [$item->date => $item->amount];
+                    });
+
+                    // 填充缺失的日期和金额为 0 的数据并转换为 x y 数组格式
+                    $datas = collect(range(0, $today->diffInDays($earliest_paid_date)))
+                        ->mapWithKeys(function ($day) use ($earliest_paid_date) {
+                            // 返回从最早付款日期开始递增的每一天作为键，并获取对应的金额或默认为 0 
+                            return [$earliest_paid_date->copy()->addDays($day)->format('Y-m-d') => 0];
+                        })->merge($datas) // 合并两个集合，保留原有的金额
+                        ->map(function ($value, $key) {
+                            // 将每一天的数据转换为一个数组并返回
+                            return [
+                                'x' => strval($key),
+                                'y' => intval($value)
+                            ];
+                        })->values(); // 返回一个索引数组
                 }
                 break;
             case 'traffic':
-                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-                $time_b = $time_a + 86400;
+                // 获取7天内的起始和结束时间戳
+                $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
+                $time_b = $time_a + 86400 * 7;
+                // 查询7天内按日期分组的流量数据，并转换成GB
+                $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
+                    ->groupByRaw('DATE(FROM_UNIXTIME(datetime))')
+                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM(u + d) / 1024 / 1024 / 1024, 2) as y')
+                    ->pluck('y', 'x');
+                // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
                 $datas = [];
-                for ($i=0; $i < 8 ; $i++) {
-                    $time_a -= 86400;
-                    $time_b -= 86400;
-                    $total1   = TrafficLog::whereBetween('datetime', [$time_a, $time_b])->sum('u');
-                    $total2   = TrafficLog::whereBetween('datetime', [$time_a, $time_b])->sum('d');
+                for ($i = 6; $i >= 0; $i--) {
+                    // 获取当天的日期
+                    $date = date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
+                    // 如果有流量数据，就取出来，否则设为0
+                    $flow = isset($traffic[$date]) ? (string)$traffic[$date] : '0';
+                    // 把日期和流量数据添加到数组中
                     $datas[] = [
-                        'x'  => date('Y-m-d', $time_a),
-                        'y' => substr(Tools::flowToGB($total1 + $total2), 0, 4),                      
+                        'x' => $date,
+                        'y' => $flow,
                         'name' => I18n::get()->t('traffic'),
                     ];
                 }
                 break;
             case 'user_traffic_ranking':
-                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-                $time_b = $time_a + 86400;
-                $time_a -= 86400;
-                $time_b -= 86400;
-                $user = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->whereBetween('datetime', [$time_a, $time_b])->groupBy('user_id')->limit('10')->orderByRaw('total DESC')->get();
+                $time_a = Carbon::today()->startOfDay()->timestamp;
+                $time_b = Carbon::today()->endOfDay()->timestamp;
+                $user = TrafficLog::selectRaw('user_id, SUM(u+d) as total')
+                    ->whereBetween('datetime', [$time_a, $time_b])->groupBy('user_id')
+                    ->limit(10)->orderByDesc('total')->pluck('total', 'user_id');
                 $datas = [];
-                foreach ($user as $value) {
-                    $traffic = $value->total < 107374 ? 0 : $value->total;
+                foreach ($user as $user_id => $traffic) {
+                    $traffic = $traffic < 107374 ? 0 : $traffic;
                     $datas[] = [
-                        'y' => substr(Tools::flowToGB($traffic), 0, 4),
-                        'x' => "用户ID:" . $value->user_id,
+                        'y' => number_format($traffic / (1024 * 1024 * 1024), 2),
+                        'x' => "用户ID:" . $user_id,
                     ];
                 }
                 break;

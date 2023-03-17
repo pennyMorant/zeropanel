@@ -32,7 +32,8 @@
         "geerlingguy/ping": "^1.2",
         "alpakaio/i18next-php": "*",
         "florianv/swap": "*",
-        "league/html-to-markdown": "5.1.0"
+        "league/html-to-markdown": "5.1.0",
+        "nesbot/carbon": "2.66.0"
     },
     "autoload": {
         "psr-4": {
