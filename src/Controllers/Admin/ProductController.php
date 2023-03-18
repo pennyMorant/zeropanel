@@ -20,7 +20,7 @@ class ProductController extends AdminController
             'sort'                  => '排序',   
             'name'                  => '商品名称',
             'type'                  => '产品类型',
-            'period_sales'          => '周期销量',
+            'sales'          => '周期销量',
             'status'                => '状态',
             'action'                => '操作'
         ];

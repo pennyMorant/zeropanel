@@ -175,10 +175,10 @@ class NodeController extends AdminController
                 'online'    => $rowData->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>',
                 'name'  =>  $rowData->name,
                 'onlineuser'    =>  $rowData->getNodeOnlineUserCount(),
-                'sort'  =>  $rowData->sort,
+                'sort'  =>  $rowData->sort(),
                 'node_ip'   =>  $rowData->node_ip,
                 'node_class'    =>  $rowData->node_class,
-                'node_speedlimit'   =>  $rowData->node_speedlimit,
+                'node_speedlimit'   =>  $rowData->node_speedlimit == 0 ? '无限制' : $rowData->node_speedlimit,
                 'status'    =>  $rowData->status(),
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">

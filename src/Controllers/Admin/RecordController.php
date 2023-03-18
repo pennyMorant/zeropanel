@@ -31,7 +31,6 @@ class RecordController extends AdminController
         $table_config_alive['total_column'] = [
             'id'        => 'ID',
             'userid'    => '用户ID',
-            'nodeid'    => '节点ID',
             'node_name' => '节点名',
             'ip'        => 'IP',
             'location'  => '归属地',
@@ -106,7 +105,6 @@ class RecordController extends AdminController
                     return [
                         'id'    =>  $rowData->id,
                         'userid'    =>  $rowData->userid,
-                        'nodeid'    =>  $rowData->nodeid,
                         'node_name' =>  $rowData->node_name(),
                         'ip'    =>  Tools::getRealIp($rowData->ip),
                         'location'  =>  Tools::getIpInfo(Tools::getRealIp($rowData->ip)),
@@ -156,7 +154,7 @@ class RecordController extends AdminController
                         'id'    =>  $rowData->id,
                         'user_id'   =>  $rowData->user_id,
                         'subscribe_type'    => $rowData->subscribe_type,
-                        'request_ip'    =>  $rowData->request_id,
+                        'request_ip'    =>  $rowData->request_ip,
                         'location'  =>  $rowData->Tools::getIpInfo($rowData->request_ip),
                         'request_time'  =>  $rowData->request_time,
                     ];
@@ -169,6 +167,7 @@ class RecordController extends AdminController
                     return [
                         'id'    =>  $rowData->id,
                         'user_id'   =>  $rowData->user_id,
+                        'node_name' =>  $rowData->node()->name,
                         'rate'  =>  $rowData->rate,
                         'origin_traffic'    =>   Tools::flowAutoShow($rowData->u + $rowData->d),
                         'traffic'   =>  $rowData->traffic,
