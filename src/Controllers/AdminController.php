@@ -307,7 +307,7 @@ class AdminController extends UserController
                 // 获取查询结果集合
                 $orders = Order::where('order_payment', '!=', 'creditpay')
                     ->whereBetween('paid_time', [strtotime($earliest_paid_date), strtotime($today)])
-                    ->selectRaw('DATE_FORMAT(FROM_UNIXTIME(paid_time), "%Y-%m-%d") as date, sum(order_total) as amount')
+                    ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, sum(order_total) as amount')
                     ->groupBy('date')->get();
 
                 if (isset($orders)) {
@@ -336,12 +336,10 @@ class AdminController extends UserController
                 // 获取7天内的起始和结束时间戳
                 $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
                 $time_b = $time_a + 86400 * 8;
-                // 查询7天内按日期分组的流量数据，并转换成GB
-               
+                // 查询7天内按日期分组的流量数据，并转换成GB              
                 $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
-                    ->groupByRaw('DATE(FROM_UNIXTIME(datetime))')
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
-                    ->pluck('y', 'x');
+                    ->groupBy('x')->pluck('y', 'x');
                 // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
                 $datas = [];
                 for ($i = 6; $i >= 0; $i--) {
