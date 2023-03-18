@@ -13,16 +13,9 @@ use Slim\Http\ServerRequest;
 
 class ProductController extends AdminController
 {
-    /**
-     * 后台商品页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             'id'                    => 'ID',
             'sort'                  => '排序',   
             'name'                  => '商品名称',
@@ -30,11 +23,8 @@ class ProductController extends AdminController
             'period_sales'          => '周期销量',
             'status'                => '状态',
             'action'                => '操作'
-        );
-        $table_config['default_show_column'] = array();
-        foreach ($table_config['total_column'] as $column => $value) {
-            $table_config['default_show_column'][] = $column;
-        }
+        ];
+    
         $table_config['ajax_url'] = 'product/ajax';
         $this->view()
             ->assign('table_config', $table_config)
@@ -42,26 +32,12 @@ class ProductController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台创建新商品页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function createProductIndex(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('admin/product/create.tpl');
         return $response;
     }
 
-    /**
-     * 后台添加新商品
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function createProduct(ServerRequest $request, Response $response, $args): Response
     {
         $product = new Product();
@@ -93,13 +69,6 @@ class ProductController extends AdminController
         ]);
     }
 
-    /**
-     * 后台编辑指定商品
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateProductIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
@@ -110,13 +79,6 @@ class ProductController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台更新指定商品内容
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateProduct(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
@@ -151,13 +113,6 @@ class ProductController extends AdminController
     }
 
 
-    /**
-     * 后台商品页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function productAjax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Product::getTableDataFromAdmin(
@@ -169,27 +124,23 @@ class ProductController extends AdminController
             }
         );
 
-        $type = "'product'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Shop $value */
-
-            $tempdata                         = [];
-            $tempdata['id']                   = $value->id;
-            $tempdata['sort']                 = $value->sort;
-            $tempdata['name']                 = $value->name;
-            $tempdata['type']                 = $value->type;
-            $tempdata['period_sales']         = $value->sales;
-            $tempdata['status']               = $value->status();
-            $tempdata['action']               = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="/admin/product/update/'.$value->id.'">编辑</a></li>
-                                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$value->id.')">删除</a></li>
-                                                    </ul>
-                                                </div>';
-
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            $type = "'product'";
+            return [
+                'id'    =>  $rowData->id,
+                'sort'  =>  $rowData->sort,
+                'name'  =>  $rowData->name,
+                'type'  =>  $rowData->type,
+                'sales' =>  $rowData->sales,
+                'status'    =>  $rowData->status(),
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/admin/product/update/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
@@ -199,12 +150,6 @@ class ProductController extends AdminController
         ]);
     }
 
-    /**
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateProductStatus(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
@@ -218,12 +163,6 @@ class ProductController extends AdminController
         ]);
     }
 
-    /**
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function deleteProduct(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');

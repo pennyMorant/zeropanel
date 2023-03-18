@@ -33,7 +33,7 @@ class UserController extends AdminController
      */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             
             'id'                    => 'ID',
             'email'                 => '邮箱',
@@ -44,9 +44,8 @@ class UserController extends AdminController
             'enable'                => '启用',
             'is_admin'              => '管理员',
             'action'                    => '操作',
-        );
-        $table_config['default_show_column'] = array('op', 'id', 'name', 'remark', 'email');
-        $table_config['ajax_url'] = 'user/ajax';
+        ];
+
         $products = Product::where('status', 1)->orderBy('name')->get();
         $this->view()
             ->assign('products', $products)
@@ -244,29 +243,26 @@ class UserController extends AdminController
                 }
             },
         );
-        
-        $type = "'user'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var User $value */
-            $tempdata['id']                     = $value->id;
-            $tempdata['email']                  = $value->email;
-            $tempdata['money']                  = $value->money;
-            $tempdata['class']                  = $value->class;
-            $tempdata['class_expire']           = $value->class_expire;
-            $tempdata['enable_traffic']         = Tools::flowToGB($value->transfer_enable).'GB';
-            $tempdata['is_admin']               = $value->is_admin();
-            $tempdata['enable']                 = $value->enable();
-            $tempdata['action']                   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="/admin/user/update/'.$value->id.'">编辑</a></li>
-                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$value->id.')">删除</a></li>
-                                                        </ul>
-                                                    </div>';
-
-
-            $data[] = $tempdata;
-        }
+              
+        $data = $query['datas']->map(function($rowData) {
+            $type = "'user'";
+            return [
+                'id'    =>  $rowData->id,
+                'email' =>  $rowData->email,
+                'money' =>  $rowData->money,
+                'class' =>  $rowData->class,
+                'class_expire'  =>  $rowData->class_expire,
+                'enable_traffic'    =>  Tools::flowToGB($rowData->transfer_enable).'GB',
+                'is_admin'  =>  $rowData->is_admin(),
+                'enable'    =>  $rowData->enable(),
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/admin/user/update/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
         
         return $response->withJson([
             'draw'            => $request->getParam('draw'),

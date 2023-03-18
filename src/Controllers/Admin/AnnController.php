@@ -24,13 +24,13 @@ class AnnController extends AdminController
      */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             
             'id'      => 'ID',
             'date'    => '日期',
             'content' => '内容',
             'action'      => '操作',
-        );
+        ];
         
         $table_config['ajax_url'] = 'news/ajax';
         $this->view()->assign('table_config', $table_config)->display('admin/news/news.tpl');
@@ -55,24 +55,22 @@ class AnnController extends AdminController
             }
         );
 
-        $type_1 = "'request'";
-        $type_2 = "'news'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Ann $value */
-
-            $tempdata            = [];
-            $tempdata['id']      = $value->id;
-            $tempdata['date']    = $value->date;
-            $tempdata['content'] = $value->content;
-            $tempdata['action']                   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateNews('.$type_1.', '.$value->id.')">编辑</a></li>
-                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type_2.', '.$value->id.')">删除</a></li>
-                                                        </ul>
-                                                    </div>';
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            $type_1 = "'request'";
+            $type_2 = "'news'";
+            
+            return [
+                'id'    =>  $rowData->id,
+                'date'  =>  $rowData->date,
+                'content'   =>  $rowData->content,
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateNews('.$type_1.', '.$rowData->id.')">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParsedBodyParam('draw'),

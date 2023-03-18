@@ -28,7 +28,7 @@ class RecordController extends AdminController
      */
     public function recordIndex(ServerRequest $request, Response $response, $args)
     {
-        $table_config_alive['total_column'] = array(
+        $table_config_alive['total_column'] = [
             'id'        => 'ID',
             'userid'    => '用户ID',
             'nodeid'    => '节点ID',
@@ -36,29 +36,27 @@ class RecordController extends AdminController
             'ip'        => 'IP',
             'location'  => '归属地',
             'datetime'  => '时间'
-        );
+    ];
         $table_config_alive['ajax_url'] = 'record/ajax/alive';
-        $table_config_signin['total_column'] = array(
+        $table_config_signin['total_column'] = [
             'id'        => 'ID',
             'userid'    => '用户ID',
             'ip'        => 'IP',
             'location'  => '归属地',
             'datetime'  => '时间',
             'type'      => '类型'
-        );
+        ];
         $table_config_signin['ajax_url'] = 'record/ajax/signin';
-        $table_config_subscribe['total_column'] = array(
+        $table_config_subscribe['total_column'] = [
             'id'                  => 'ID',
             'user_id'             => '用户ID',
-            'email'               => '用户邮箱',
             'subscribe_type'      => '类型',
             'request_ip'          => 'IP',
             'location'            => '归属地',
             'request_time'        => '时间',
-            'request_user_agent'  => 'User-Agent'
-        );
+        ];
         $table_config_subscribe['ajax_url'] = 'record/ajax/subscribe';
-        $table_config_traffic['total_column'] = array(
+        $table_config_traffic['total_column'] = [
             'id'              => 'ID',
             'user_id'         => '用户ID',
             'node_name'       => '使用节点',
@@ -66,7 +64,7 @@ class RecordController extends AdminController
             'origin_traffic'  => '实际使用流量',
             'traffic'         => '结算流量',
             'datetime'        => '记录时间'
-        );
+        ];
         $table_config_traffic['ajax_url'] = 'record/ajax/traffic';
         $this->view()
             ->assign('table_config_alive', $table_config_alive)
@@ -103,23 +101,18 @@ class RecordController extends AdminController
                         $query->where('datetime', '>=', time() - 60);
                     }
                 );
-        
-                $data  = [];
-                $QQWry = new QQWry();
-                foreach ($query['datas'] as $value) {
-                    /** @var Ip $value */
-        
-                    $tempdata              = [];
-                    $tempdata['id']        = $value->id;
-                    $tempdata['userid']    = $value->userid;
-                    $tempdata['nodeid']    = $value->nodeid;
-                    $tempdata['node_name'] = $value->node_name();
-                    $tempdata['ip']        = Tools::getRealIp($value->ip);
-                    $tempdata['location']  = Tools::getIpInfo(Tools::getRealIp($value->ip));
-                    $tempdata['datetime']  = $value->datetime();
-                    $data[] = $tempdata;
-                    
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'id'    =>  $rowData->id,
+                        'userid'    =>  $rowData->userid,
+                        'nodeid'    =>  $rowData->nodeid,
+                        'node_name' =>  $rowData->node_name(),
+                        'ip'    =>  Tools::getRealIp($rowData->ip),
+                        'location'  =>  Tools::getIpInfo(Tools::getRealIp($rowData->ip)),
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
                 $total = Ip::count();
                 break;
             case 'signin':
@@ -134,26 +127,17 @@ class RecordController extends AdminController
                         }
                     }
                 );
-        
-                $data  = [];
-                foreach ($query['datas'] as $value) {
-                    /** @var SigninIp $value */
-        
-                    if ($value->user() == null) {
-                        SigninIp::user_is_null($value);
-                        continue;
-                    }
-                    $tempdata              = [];
-                    $tempdata['id']        = $value->id;
-                    $tempdata['userid']    = $value->userid;
-                    $tempdata['ip']        = $value->ip;
-                    $tempdata['location']  = Tools::getIpInfo($value->ip);
-                    $tempdata['datetime']  = $value->datetime();
-                    $tempdata['type']      = $value->type();
-        
-                    $data[] = $tempdata;
-                    
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'id'    =>  $rowData->id,
+                        'userid'    =>  $rowData->userid,
+                        'ip'    =>  $rowData->ip,
+                        'location'  =>  Tools::getIpInfo($rowData->ip),
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'type'  =>  $rowData->type(),
+                    ];
+                })->toArray();
                 $total = SigninIp::count();
                 break;
             case "subscribe":
@@ -167,44 +151,30 @@ class RecordController extends AdminController
                     
                 );
         
-                $data  = [];
-                foreach ($query['datas'] as $value) {
-                    /** @var UserSubscribeLog $value */
-        
-                    if ($value->user() == null) {
-                        UserSubscribeLog::user_is_null($value);
-                        continue;
-                    }
-                    $tempdata                       = [];
-                    $tempdata['id']                 = $value->id;
-                    $tempdata['user_id']            = $value->user_id;
-                    $tempdata['email']              = $value->email;
-                    $tempdata['subscribe_type']     = $value->subscribe_type;
-                    $tempdata['request_ip']         = $value->request_ip;
-                    $tempdata['location']           = Tools::getIpInfo($value->request_ip);
-                    $tempdata['request_time']       = $value->request_time;
-                    $tempdata['request_user_agent'] = $value->request_user_agent;
-        
-                    $data[] = $tempdata;
-                    
-                }
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'id'    =>  $rowData->id,
+                        'user_id'   =>  $rowData->user_id,
+                        'subscribe_type'    => $rowData->subscribe_type,
+                        'request_ip'    =>  $rowData->request_id,
+                        'location'  =>  $rowData->Tools::getIpInfo($rowData->request_ip),
+                        'request_time'  =>  $rowData->request_time,
+                    ];
+                })->toArray();
                 $total = UserSubscribeLog::count();
                 break;
             case 'traffic':
                 $query = TrafficLog::getTableDataFromAdmin($request);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata                   = [];
-                    $tempdata['id']             = $value->id;
-                    $tempdata['user_id']        = $value->user_id;
-                    $tempdata['node_name']      = $value->node()->name;
-                    $tempdata['rate']           = $value->rate;
-                    $tempdata['origin_traffic'] = Tools::flowAutoShow($value->u + $value->d);
-                    $tempdata['traffic']        = $value->traffic;
-                    $tempdata['datetime']       = date('Y-m-d H', $value->datetime);
-                    $data[] = $tempdata;
-                    
-                }
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'id'    =>  $rowData->id,
+                        'user_id'   =>  $rowData->user_id,
+                        'rate'  =>  $rowData->rate,
+                        'origin_traffic'    =>   Tools::flowAutoShow($rowData->u + $rowData->d),
+                        'traffic'   =>  $rowData->traffic,
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
                 $total = TrafficLog::count();
                 break;
         }

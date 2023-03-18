@@ -57,6 +57,7 @@
 											<table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_user_get_commission_log_table">
 												<thead>
 													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+														<th>{$trans->t('total')}</th>
 														<th>{$trans->t('commission')}</th>
 														<th>{$trans->t('date')}</th>
 													</tr>

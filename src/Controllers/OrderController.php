@@ -92,7 +92,7 @@ class OrderController extends BaseController
                     }
 
                     $order = new Order();
-                    $order->no = self::createOrderNo();
+                    $order->order_no = self::createOrderNo();
                     $order->user_id = $user->id;
                     $order->product_id = $product->id;
                     $order->order_type = $type;
@@ -123,7 +123,7 @@ class OrderController extends BaseController
                         throw new \Exception(I18n::get()->t('amount should be greater than zero'));
                     }
                     $order = new Order();
-                    $order->no = self::createOrderNo();
+                    $order->order_no = self::createOrderNo();
                     $order->user_id = $user->id;
                     $order->order_total = $amount;
                     $order->order_type = $type;
@@ -145,7 +145,7 @@ class OrderController extends BaseController
         }
         return $response->withJson([
             'ret' => 1,
-            'order_id' => $order->no,
+            'order_id' => $order->order_no,
         ]);
     }
 
@@ -185,7 +185,7 @@ class OrderController extends BaseController
                 $order->save();
                 $user->money -= $order->order_total;
                 $user->save();
-                self::execute($order->no);
+                self::execute($order->order_no);
             } else {
                 // 计算结账金额
                 if ($order->credit_paid == 0) {
@@ -197,7 +197,7 @@ class OrderController extends BaseController
                 $order->order_payment = $payment;
                 $order->save();
                 // 提交订单
-                $result =  Payment::toPay($user->id, $payment, $order->no, $checkout_amount);
+                $result =  Payment::toPay($user->id, $payment, $order->order_no, $checkout_amount);
                 return $response->withJson($result);
             }
         } catch (\Exception $e) {

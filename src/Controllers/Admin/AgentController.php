@@ -35,14 +35,14 @@ class AgentController extends AdminController
             'datetime' => '时间',
             'action' => '操作'
         );
-        $table_config_commission['total_column'] = array(
+        $table_config_commission['total_column'] = [
             'id'              => 'ID',
             'total'           => '原始金额',
             'userid'   => '发起用户ID',
             'ref_by'     => '获利用户ID',
             'ref_get'         => '佣金',
             'datetime'        => '时间'
-        );
+        ];
         $table_config_commission['ajax_url'] = '/admin/agent/commission/ajax';
 
         $table_config['ajax_url'] = '/admin/agent/withdraw/ajax';
@@ -69,27 +69,25 @@ class AgentController extends AdminController
                 }
             }
         );
-        $mark_done = "'mark_done'";
-        $go_back = "'go_back'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Ann $value */
-
-            $tempdata            = [];
-            $tempdata['id']      = $value->id;
-            $tempdata['userid']    = $value->userid;
-            $tempdata['total'] = $value->total;
-            $tempdata['type'] = $value->type == 1 ? '提现至余额' : '提现至USDT';
-            $tempdata['status'] = $value->status();
-            $tempdata['datetime'] = date('Y-m-d H:i:s', $value->datetime);
-            $tempdata['action']                   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$value->id.')">完成</a></li>
-                                                            <li><a class="dropdown-item" href="#" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$value->id.')">拒绝</a></li>
-                                                        </ul>
-                                                    </div>';
-            $data[] = $tempdata;
-        }
+        
+        $data = $query['datas']->map(function($rowData) {
+            $mark_done = "'mark_done'";
+            $go_back = "'go_back'";
+            return [
+                'id'    => $rowData->id,
+                'userid'    =>  $rowData->userid,
+                'total' =>  $rowData->total,
+                'type'  =>  $rowData->type === 1 ? '提现至余额' : '提现至USDT',
+                'status'    =>  $rowData->status(),
+                'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$rowData->id.')">完成</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$rowData->id.')">拒绝</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
@@ -144,17 +142,17 @@ class AgentController extends AdminController
         $query = Payback::getTableDataFromAdmin(
             $request
         );
-        $data = [];
-        foreach ($query['datas'] as $value) {
-            $tempdata                   = [];
-            $tempdata['id']             = $value->id;
-            $tempdata['total']          = $value->total;
-            $tempdata['userid']         = $value->userid;
-            $tempdata['ref_by']         = $value->ref_by;
-            $tempdata['ref_get']        = $value->ref_get;
-            $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            return [
+                'id'    =>  $rowData->id,
+                'total' =>  $rowData->total,
+                'userid'    =>  $rowData->userid,
+                'ref_by'    =>  $rowData->ref_by,
+                'ref_get'   =>  $rowData->ref_get,
+                'datetime'  =>  $rowData->date('Y-m-d H:i:s', $rowData->datetime),
+            ];
+        })->toArray();
+
         return $response->WithJson([
             'draw'              => $request->getParam('draw'),
             'recordsTotal'      => Payback::count(),

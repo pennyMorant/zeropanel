@@ -21,7 +21,7 @@ class BanController extends AdminController
      */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             
             'id'    => 'ID',
             'name'  => '名称',
@@ -29,8 +29,8 @@ class BanController extends AdminController
             'regex' => '正则表达式',
             'type'  => '类型',
             'action'    => '操作',
-        );
-        $table_config_ban_record['total_column'] = array(
+        ];
+        $table_config_ban_record['total_column'] = [
             'id'                => 'ID',
             'user_id'           => '用户ID',
             'detect_number'     => '违规次数',
@@ -38,14 +38,14 @@ class BanController extends AdminController
             'end_time'          => '封禁开始时间',
             'ban_end_time'      => '封禁结束时间',
             'all_detect_number' => '累计违规次数'
-        );
-        $table_config_detect_record['total_column'] = array(
+        ];
+        $table_config_detect_record['total_column'] = [
             'id'          => 'ID',
             'user_id'     => '用户ID',
             'node_id'     => '节点ID',
             'list_id'     => '规则ID',
             'datetime'    => '时间'
-        );
+        ];
         $table_config_detect_record['ajax_url'] = 'ban/detect/record/ajax';
         $table_config_ban_record['ajax_url'] = 'ban/record/ajax';
         $table_config['ajax_url'] = 'ban/rule/ajax';
@@ -74,26 +74,23 @@ class BanController extends AdminController
             }
         );
 
-        $type_1 = "'request'";
-        $type_2 = "'ban_rule'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var DetectRule $value */
-
-            $tempdata             = [];
-            $tempdata['id']       = $value->id;
-            $tempdata['name']     = $value->name;
-            $tempdata['text']     = $value->text;
-            $tempdata['regex']    = $value->regex;
-            $tempdata['type']     = $value->type();
-            $tempdata['action']   = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type_1.', '.$value->id.')">编辑</a></li>
-                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type_2.', '.$value->id.')">删除</a></li>
-                                        </ul>
-                                    </div>';
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            $type_1 = "'request'";
+            $type_2 = "'ban_rule'";
+            return [
+                'id'    =>  $rowData->id,
+                'name'  =>  $rowData->name,
+                'text'  =>  $rowData->text,
+                'regex' =>  $rowData->regex,
+                'type'  =>  $rowData->type(),
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" onclick="zeroAdminUpdateBanRule('.$type_1.', '.$rowData->id.')">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
@@ -191,44 +188,17 @@ class BanController extends AdminController
     {
         $query = DetectLog::getTableDataFromAdmin(
             $request,
-            static function (&$order_field) {
-                if (in_array($order_field, ['node_id'])) {
-                    $order_field = 'node_id';
-                }
-                if (in_array($order_field, ['list_id'])) {
-                    $order_field = 'list_id';
-                }
-                if (in_array($order_field, ['user_id'])) {
-                    $order_field = 'user_id';
-                }
-            }
         );
 
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var DetectLog $value */
-
-            if ($value->rule() == null) {
-                DetectLog::rule_is_null($value);
-                continue;
-            }
-            if ($value->node() == null) {
-                DetectLog::node_is_null($value);
-                continue;
-            }
-            if ($value->user() == null) {
-                DetectLog::user_is_null($value);
-                continue;
-            }
-            $tempdata               = [];
-            $tempdata['id']         = $value->id;
-            $tempdata['user_id']    = $value->user_id;
-            $tempdata['node_id']    = $value->node_id;
-            $tempdata['list_id']    = $value->list_id;
-            $tempdata['datetime']   = $value->datetime();
-
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            return [
+                'id'    =>  $rowData->id,
+                'user_id'   =>  $rowData->user_id,
+                'node_id'   =>  $rowData->node_id,
+                'list_id'   =>  $rowData->list_id,
+                'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
@@ -256,25 +226,17 @@ class BanController extends AdminController
             }
         );
 
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var DetectBanLog $value */
-
-            if ($value->user() == null) {
-                DetectBanLog::user_is_null($value);
-                continue;
-            }
-            $tempdata                         = [];
-            $tempdata['id']                   = $value->id;
-            $tempdata['user_id']              = $value->user_id;
-            $tempdata['detect_number']        = $value->detect_number;
-            $tempdata['ban_time']             = $value->ban_time;
-            $tempdata['end_time']             = $value->end_time();
-            $tempdata['ban_end_time']         = $value->ban_end_time();
-            $tempdata['all_detect_number']    = $value->all_detect_number;
-
-            $data[] = $tempdata;
-        }
+        $data = $query['datas']->map(function($rowData) {
+            return [
+                'id'    =>  $rowData->id,
+                'user_id'   =>  $rowData->user_id,
+                'detect_number' =>  $rowData->detect_number,
+                'ban_time'  =>  $rowData->ban_time,
+                'end_time'  =>  date('Y-m-d H:i:s', $rowData->end_time),
+                'ban_end_time'  =>  date('Y-m-d H:i:s', $rowData->end_time + $rowData->ban_time*60),
+                'all_detect_number' =>  $rowData->all_detect_number,
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),

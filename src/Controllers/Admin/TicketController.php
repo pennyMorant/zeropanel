@@ -24,7 +24,7 @@ class TicketController extends AdminController
      */
     public function ticketIndex(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             'id'        => 'ID',
             'userid'    => '用户ID',
             'type'      => '类型',
@@ -33,7 +33,7 @@ class TicketController extends AdminController
             'datetime'  => '时间',
             'last_updated'  => '最后更新',                  
             'action'        => '操作',
-        );
+        ];
         $table_config['ajax_url'] = 'ticket/ajax';
         $this->view()
             ->assign('table_config', $table_config)
@@ -192,36 +192,29 @@ class TicketController extends AdminController
             },
         );
 
-        $type = "'ticket'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Ticket $value */
-
-            if ($value->user() == null) {
-                Ticket::user_is_null($value);
-                continue;
-            }
-            $comments = json_decode($value->content, true);
+        $data = $query['datas']->map(function($rowData) {
+            $type = "'ticket'";
+            $comments = json_decode($rowData->content, true);
             foreach ($comments as $comment) {
                 $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
             }
-            $tempdata               = [];
-            $tempdata['id']         = $value->id;
-            $tempdata['userid']     = $value->userid;
-            $tempdata['type']       = $value->type;
-            $tempdata['title']      = $value->title;
-            $tempdata['status']     = $value->status();
-            $tempdata['datetime']   = $value->datetime();
-            $tempdata['last_updated'] = $last_updated;
-            $tempdata['action']     = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="/admin/ticket/view/'.$value->id.'">编辑</a></li>
-                                                <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('. $type . ', ' . $value->id. ')">删除</a></li>
-                                                <li><a class="dropdown-item" type="button" onclick="zeroAdminCloseTicket(' . $value->id . ')">关闭</a></li>
-                                            </ul>
-                                        </div>';
-            $data[] = $tempdata;
-        }
+            return [
+                'id'    => $rowData->id,
+                'userid'    =>  $rowData->userid,
+                'type'  =>  $rowData->type,
+                'title' =>  $rowData->title,
+                'status'    =>  $rowData->status(),
+                'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                'last_updated'  =>  $last_updated,
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/admin/ticket/view/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('. $type . ', ' . $rowData->id. ')">删除</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminCloseTicket(' . $rowData->id . ')">关闭</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
         return $response->withJson([
             'draw'            => $request->getParam('draw'),

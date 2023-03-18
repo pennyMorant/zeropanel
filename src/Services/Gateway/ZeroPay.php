@@ -237,7 +237,7 @@ class ZeroPay
         $order_no = $_GET['tradeno'];
         $order = Order::where('no', $order_no)->first();
         if ($order->order_status == 2) {
-            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->no);
+            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
         }
     }
 

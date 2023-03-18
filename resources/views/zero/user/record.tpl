@@ -89,7 +89,6 @@
                                                         <th>{$trans->t('type')}</th>
                                                         <th>IP</th>
                                                         <th>{$trans->t('address')}</th>
-                                                        <th>{$trans->t('client')}</th>
                                                         <th>{$trans->t('date')}</th>
                                                     </tr>
                                                 </thead>

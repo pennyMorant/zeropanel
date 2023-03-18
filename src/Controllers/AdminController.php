@@ -93,16 +93,14 @@ class AdminController extends UserController
      */
     public function invite(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             'id'              => 'ID',
             'total'           => '原始金额',
             'userid'   => '发起用户ID',
             'ref_by'     => '获利用户ID',
             'ref_get'         => '获利金额',
             'datetime'        => '时间'
-        );
-        $table_config['default_show_column'] = array();
-        $table_config['default_show_column'] = array_keys($table_config['total_column']);
+        ];
         $table_config['ajax_url'] = 'payback/ajax';
         $this->view()->assign('table_config', $table_config)->display('admin/invite.tpl');
         return $response;
@@ -120,24 +118,7 @@ class AdminController extends UserController
         $query = Payback::getTableDataFromAdmin(
             $request
         );
-        $data = [];
-        foreach ($query['datas'] as $value) {
-            $tempdata                   = [];
-            $tempdata['id']             = $value->id;
-            $tempdata['total']          = $value->total;
-            $tempdata['userid']         = $value->userid;
-            $tempdata['ref_by']         = $value->ref_by;
-            $tempdata['ref_get']        = $value->ref_get;
-            $tempdata['datetime']       = date('Y-m-d H:i:s', $value->datetime);
-            $data[] = $tempdata;
-        }
-        return $response->WithJson([
-            'draw'              => $request->getParam('draw'),
-            'recordsTotal'      => Payback::count(),
-            'recordsFiltered'   => $query['count'],
-            'data'              => $data
-        ]);
-        return $response;
+        
     }
 
     /**
@@ -149,7 +130,7 @@ class AdminController extends UserController
      */
     public function coupon(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             'id'        => 'ID',
             'code'      => '优惠码',
             'expire'    => '过期时间',
@@ -157,7 +138,7 @@ class AdminController extends UserController
             'discount'    => '额度',
             'per_use_count'   => '每个用户次数',
             'total_use_count' => '优惠码总使用次数'
-        );
+        ];
         $table_config['default_show_column'] = array();
         foreach ($table_config['total_column'] as $column => $value) {
             $table_config['default_show_column'][] = $column;
@@ -179,25 +160,25 @@ class AdminController extends UserController
         $query = Coupon::getTableDataFromAdmin(
             $request
         );
-        $data = [];
-        foreach ($query['datas'] as $value) {
-            $tempdata['id'] = $value->id;
-            $tempdata['code'] = $value->code;
-            $tempdata['expire'] = date('Y-m-d H:i:s', $value->expire);
-            $tempdata['limited_product'] = $value->limited_product == '' ? '无限制' : $value->limited_product;
-            $tempdata['discount'] = $value->discount;
-            $tempdata['per_use_count'] = $value->per_use_count == '-1' ? '无限次使用' : $value->per_use_count;
-            $tempdata['total_use_count'] = $value->total_use_count == '-1' ? '无限次使用' : $value->total_use_count;
+        $data = $query['datas']->map(function($rowData) {
+            return [
+                'id' => $rowData->id,
+                'code' => $rowData->code,
+                'expire' => date('Y-m-d H:i:s', $rowData->expire),
+                'limited_product' => $rowData->limited_product == '' ? '无限制' : $rowData->limited_product,
+                'discount' => $rowData->discount,
+                'per_use_count' => $rowData->per_use_count == '-1' ? '无限次使用' : $rowData->per_use_count,
+                'total_use_count' => $rowData->total_use_count == '-1' ? '无限次使用' : $rowData->total_use_count,
+            ];
+        })->toArray();
 
-            $data[] = $tempdata;
-        }
         return $response->WithJson([
             'draw'              => $request->getParam('draw'),
             'recordsTotal'      => Coupon::count(),
             'recordsFiltered'   => $query['count'],
             'data'              => $data
         ]);
-        return $response;
+        
     }
 
        /**

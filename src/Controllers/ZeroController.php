@@ -323,21 +323,23 @@ class ZeroController extends BaseController
             case 'ticket':
                 $querys = Ticket::query()->where('userid', $user->id)->orderBy($sort_field, $sort);
                 $query = Ticket::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $comments = json_decode($value->content, true);
+                
+                $data = $query['datas']->map(function($rowData) {
+                    $type = "'ticket'";
+                    $comments = json_decode($rowData->content, true);
                     foreach ($comments as $comment) {
                         $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
                     }
-                    $tempdata['id'] = $value->id;
-                    $tempdata['type'] = $value->type;
-                    $tempdata['title'] = $value->title;
-                    $tempdata['status'] = $value->status();
-                    $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
-                    $tempdata['last_updated'] = $last_updated;
-                    $tempdata['action'] = '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$value->id.'">' . $trans->t('details') . '</a>';
-                    $data[] = $tempdata;
-                }
+                    return [
+                        'id'    => $rowData->id,
+                        'type'  =>  $rowData->type,
+                        'title' =>  $rowData->title,
+                        'status'    =>  $rowData->status(),
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'last_updated'  =>  $last_updated,
+                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$rowData->id.'">' . $trans->t('details') . '</a>',
+                    ];
+                })->toArray();
 
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
@@ -345,17 +347,18 @@ class ZeroController extends BaseController
             case 'order':
                 $querys = Order::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
                 $query = Order::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['no']                = $value->no;
-                    $tempdata['order_total']       = $value->order_total;
-                    $tempdata['order_status']      = $value->status();
-                    $tempdata['order_type']        = $value->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit');
-                    $tempdata['created_time']      = date('Y-m-d H:i:s', $value->created_time);
-                    $tempdata['expired_time']      = $value->expired_time;
-                    $tempdata['action']            = '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$value->no.'">' . $trans->t('details') . '</a>';
-                    $data[]                        = $tempdata;
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+
+                    return [
+                        'order_total'   =>  $rowData->order_total,
+                        'order_status'  =>  $rowData->status(),
+                        'order_no'  =>  $rowData->order_no,
+                        'created_time'  =>  $rowData->created_time,
+                        'order_type'    =>  $rowData->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit'),
+                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$value->no.'">' . $trans->t('details') . '</a>',
+                    ];
+                })->toArray();
 
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
@@ -364,15 +367,14 @@ class ZeroController extends BaseController
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;
                 $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
                 $query = SigninIp::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id']          = $value->id;
-                    $tempdata['ip']          = $value->ip;
-                    $tempdata['location']    = Tools::getIpInfo($value->ip);
-                    $tempdata['datetime']    = date('Y-m-d H:i:s', $value->datetime);
-                    $data[]                  = $tempdata;
-                    
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'ip'    =>  $rowData->ip,
+                        'location'  =>  Tools::getIpInfo($rowData->ip),
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
@@ -380,96 +382,88 @@ class ZeroController extends BaseController
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;               
                 $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
                 $query = Ip::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id']          = $value->id;
-                    $tempdata['ip']          = $value->ip;
-                    $tempdata['location']    = Tools::getIpInfo($value->ip);
-                    $tempdata['datetime']    = date('Y-m-d H:i:s', $value->datetime);
-                    $data[]                  = $tempdata;
-                }
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'ip'    =>  $rowData->ip,
+                        'location'  =>  Tools::getIpInfo($rowData->ip),
+                        'datetime'  => date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
+
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'sublog':
                 $querys = UserSubscribeLog::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
                 $query = UserSubscribeLog::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id'] = $value->id;
-                    $tempdata['subscribe_type'] = $value->subscribe_type;
-                    $tempdata['request_ip'] = $value->request_ip;
-                    $tempdata['location'] = Tools::getIpInfo($value->request_ip);
-                    $tempdata['request_time'] = $value->request_time;
-                    $tempdata['request_user_agent'] = $value->request_user_agent;
-                    $data[] = $tempdata;
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'subscribe_type'    => $rowData->subscribe_type,
+                        'request_ip'    =>  $rowData->request_id,
+                        'location'  =>  $rowData->Tools::getIpInfo($rowData->request_ip),
+                        'request_time'  =>  $rowData->request_time,
+                    ];
+                })->toArray();
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'trafficlog':
                 $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400)->orderBy($sort_field, $sort);
                 $query = TrafficLog::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id'] = $value->id;
-                    $tempdata['node_id'] = $value->node_id;
-                    $tempdata['node_name'] = $value->node()->name;
-                    $tempdata['rate'] = $value->rate;
-                    $tempdata['traffic'] = $value->traffic;
-                    $tempdata['datetime'] = date('Y-m-d H:i:s', $value->date_time);
-                    $data[] = $tempdata;
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'node_name'   =>  $rowData->node()->name,
+                        'traffic'   =>  $rowData->traffic,
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
+
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'user_baned_log':
                 $querys = DetectLog::query()->orderBy($sort_field, 'desc')->where('user_id', $user->id);
                 $query = DetectLog::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id'] = $value->id;
-                    $tempdata['node_id'] = $value->node_id;
-                    $tempdata['node_name'] = $value->Node()->name;
-                    $tempdata['list_id'] = $value->list_id;
-                    $tempdata['rule_name'] = $value->DetectRule()->name;
-                    $tempdata['rule_text'] = $value->DetectRule()->text;
-                    $tempdata['rule_regex'] = $value->DetectRule()->regex;
-                    $tempdata['rule_type'] = ($value->DetectRule()->type === 1 ? $trans->t('packet plaintext match') : ($value->DetectRule()->type === 2 ? $trans->t('packet hex match') : '未知'));
-                    $tempdata['datetime'] = date('Y-m-d H:i:s',$value->datetime);
-                    $data[] = $tempdata;
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'node_name' =>  $rowData->node()->name,
+                        'rule_name' =>  $rowData->detectRule()->name,
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
+
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;               
             case 'ban_rule':
                 $querys = DetectRule::query()->orderBy($sort_field, $sort);
                 $query = DetectRule::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
 
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id'] = $value->id;
-                    $tempdata['name'] = $value->name;
-                    $tempdata['text'] = $value->text;
-                    $tempdata['regex'] = $value->regex;
-                    $tempdata['type'] = ($value->type === 1 ? $trans->t('packet plaintext match') : ($value->type === 2 ? $trans->t('packet plaintext match') : '未知'));
-                    $data[] = $tempdata;
-                }
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'name'  =>  $rowData->name,
+                        'text'  =>  $rowData->text,
+                    ];
+                })->toArray();
+
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'get_commission_log':
                 $querys = Payback::where('ref_by', '=', $user->id)->orderBy($sort_field, $sort);
                 $query = Payback::getTableDataFromAdmin($request, null, null, $querys);
-                $data = [];
-                
-                foreach ($query['datas'] as $value) {
-                    $tempdata['id'] = $value->id;
-                    $tempdata['userid'] = $value->userid;
-                    $tempdata['ref_get'] = $value->ref_get;
-                    $tempdata['datetime'] = date('Y-m-d h:i:s', $value->datetime);
-                    $data[] = $tempdata;
-                }
+
+                $data = $query['datas']->map(function($rowData) {
+                    return [
+                        'total'     =>  $rowData->total,
+                        'ref_get'   =>  $rowData->ref_get,
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                    ];
+                })->toArray();
+
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;

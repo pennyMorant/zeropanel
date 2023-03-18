@@ -32,7 +32,7 @@
                                         
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h2>{$trans->t('order')} #{$order->no}</h2>
+                                                <h2>{$trans->t('order')} #{$order->order_no}</h2>
                                             </div>
                                         </div>
                                         
@@ -80,7 +80,7 @@
 															{if $order->order_status == '2'}
 																<td class="text-end">{$payment}</td>
 															{/if}
-                                                            <td class="text-end">{$order->no}</td>                                                           
+                                                            <td class="text-end">{$order->order_no}</td>                                                           
                                                             <td class="text-end">1</td>
                                                             <td class="text-end">{$order->order_total}</td>                                                           
                                                             <td class="text-end">{$order->order_total}</td>                                                           
@@ -167,7 +167,7 @@
 												</div>
 											</div>
 											<div class="text-center pt-15">
-												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->no}')">
+												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
 													<span class="indicator-label">{$trans->t('submit')}</span>
 													<span class="indicator-progress">{$trans->t('please wait')}
 													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

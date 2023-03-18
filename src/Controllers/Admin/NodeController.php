@@ -16,16 +16,9 @@ use Slim\Http\ServerRequest;
 
 class NodeController extends AdminController
 {
-    /**
-     * 后台节点页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array(
+        $table_config['total_column'] = [
             
             'id'                      => 'ID',
             'online'                  => 'Online',
@@ -37,8 +30,7 @@ class NodeController extends AdminController
             'node_speedlimit'         => '速度',
             'status'                    => '显示与隐藏',
             'action'                  => '操作',
-        );
-        $table_config['default_show_column'] = array('op', 'id', 'name', 'sort');
+        ];
         $table_config['ajax_url'] = 'node/ajax';
 
         $this->view()
@@ -47,26 +39,12 @@ class NodeController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台创建节点页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function createNodeIndex(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
     }
 
-    /**
-     * 后台添加节点
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function createNode(ServerRequest $request, Response $response, $args): Response
     {
         $node                   = new Node();
@@ -119,13 +97,6 @@ class NodeController extends AdminController
         ]);
     }
 
-    /**
-     * 后台编辑节点页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateNodeIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
@@ -136,13 +107,6 @@ class NodeController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台更新节点页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateNode(ServerRequest $request, Response $response, $args): Response
     {
         $id                     = $request->getParam('id');
@@ -190,30 +154,6 @@ class NodeController extends AdminController
         
     }
 
-    /**
-     * 后台删除节点
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function deleteNode(ServerRequest $request, Response $response, $args)
-    {
-        $id = $request->getParam('id');
-        $node = Node::find($id);
-        $node->delete();
-        return $response->withJson([
-            'ret' => 1,
-            'msg' => '删除成功'
-        ]);
-    }
-
-    /**
-     * 后台节点页面AJAX
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function nodeAjax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Node::getTableDataFromAdmin(
@@ -228,30 +168,27 @@ class NodeController extends AdminController
             }
         );
 
-        $type = "'node'";
-        $data  = [];
-        foreach ($query['datas'] as $value) {
-            /** @var Node $value */
+        $data = $query['datas']->map(function($rowData) {
+            $type = "'node'";
+            return [
+                'id'    => $rowData->id,
+                'online'    => $rowData->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>',
+                'name'  =>  $rowData->name,
+                'onlineuser'    =>  $rowData->getNodeOnlineUserCount(),
+                'sort'  =>  $rowData->sort,
+                'node_ip'   =>  $rowData->node_ip,
+                'node_class'    =>  $rowData->node_class,
+                'node_speedlimit'   =>  $rowData->node_speedlimit,
+                'status'    =>  $rowData->status(),
+                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/admin/node/update/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                                    </ul>
+                                </div>',
+            ];
+        })->toArray();
 
-            $tempdata                            = [];
-            
-            $tempdata['id']                      = $value->id;
-            $tempdata['online']                  = $value->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>';
-            $tempdata['name']                    = $value->name;
-            $tempdata['onlineuser']              = $value->getNodeOnlineUserCount();
-            $tempdata['sort']                    = $value->sort();
-            $tempdata['node_ip']                 = $value->node_ip;
-            $tempdata['node_class']              = $value->node_class;
-            $tempdata['node_speedlimit']         = $value->node_speedlimit == 0 ? '不限速' : $value->node_speedlimit . 'Mbps';
-            $tempdata['status']                  = $value->status();
-            $tempdata['action']                  = '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="/admin/node/update/'.$value->id.'">编辑</a></li>
-                                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$value->id.')">删除</a></li>
-                                                        </ul>
-                                                    </div>';
-            $data[] = $tempdata;
-        }
         return $response->withJson([
             'draw'            => $request->getParam('draw'),
             'recordsTotal'    => Node::count(),
@@ -260,12 +197,6 @@ class NodeController extends AdminController
         ]);
     }
 
-    /**
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateNodeStatus(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
@@ -278,4 +209,16 @@ class NodeController extends AdminController
             'msg'   => 'success'
         ]);
     }
+
+    public function deleteNode(ServerRequest $request, Response $response, $args)
+    {
+        $id = $request->getParam('id');
+        $node = Node::find($id);
+        $node->delete();
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '删除成功'
+        ]);
+    }
+
 }

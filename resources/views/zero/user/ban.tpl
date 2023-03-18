@@ -43,7 +43,6 @@
                                                         
                                                         <th>{$trans->t('name')}</th>
                                                         <th>{$trans->t('details')}</th>
-                                                        <th>{$trans->t('type')}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-gray-600 fw-semibold"></tbody>

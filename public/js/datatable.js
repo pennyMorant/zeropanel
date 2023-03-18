@@ -222,7 +222,7 @@ var KTDatatablesSubscribeLogSide = function () {
             serverSide: true,
             scrollX: true,
             scrollCollapse: true,
-            order: [[4, 'desc']],
+            order: [[3, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -237,7 +237,6 @@ var KTDatatablesSubscribeLogSide = function () {
                 { data: 'subscribe_type' },
                 { data: 'request_ip' },
                 { data: 'location'},
-                { data: 'request_user_agent'},
                 { data: 'request_time' },
             ],
             columnDefs: [
@@ -331,7 +330,7 @@ var KTDatatablesBanRuleSide = function () {
             serverSide: true,
             scrollX: true,
             scrollCollapse: true,
-            order: [[2, 'desc']],
+            order: [[0, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -343,8 +342,7 @@ var KTDatatablesBanRuleSide = function () {
             },
             columns: [
                 { data: 'name' },
-                { data: 'regex' },
-                { data: 'type' },
+                { data: 'text' },
             ],
 
             columnDefs: [
@@ -429,7 +427,7 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             serverSide: true,
             scrollX: true,
             scrollCollapse: true,
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -441,8 +439,9 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             },
             
             columns: [
+                { data: 'total' },
                 { data: 'ref_get' },
-                { data: 'datetime'},
+                { data: 'datetime' },
             ],
 
             columnDefs: [
