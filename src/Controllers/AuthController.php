@@ -87,7 +87,7 @@ class AuthController extends BaseController
             return $response->withJson([
                 'ret' => 0,
                 'msg' => $e->getMessage(),
-            ], 400);
+            ]);
         }
 
         // 记录登录成功

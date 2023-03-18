@@ -36,17 +36,24 @@ class OrderController extends BaseController
             ->first();
         $product = Product::find($order->product_id);
 
-        if ($order->order_payment == 'creditpay') {
-            $payment = I18n::get()->t('credit');
-        } else if ($order->order_payment == 'alipay') {
-            $payment = I18n::get()->t('alipay');
-        } else if ($order->order_payment == 'wechatpay') {
-            $payment = I18n::get()->t('wechat');
-        } else if ($order->order_payment == 'cryptopay') {
-            $payment = I18n::get()->t('crypto');
-        } else {
-            $payment = '未知';
+        switch ($order->order_payment) {
+            case 'creditpay':
+                $payment = 'credit';
+                break;
+            case 'alipay':
+                $payment = 'alipay';
+                break;
+            case 'wechatpay':
+                $payment = 'wechat';
+                break;
+            case 'cryptopay':
+                $payment = 'crypto';
+                break;
+            default:
+                $payment = '未知';
+                break;
         }
+        $payment = I18n::get()->t($payment);
         $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
