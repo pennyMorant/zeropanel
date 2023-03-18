@@ -44,7 +44,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax(ServerRequest $request, Response $response, $args)
+    public function ajax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Ann::getTableDataFromAdmin(
             $request,
@@ -89,7 +89,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNews(ServerRequest $request, Response $response, $args)
+    public function createNews(ServerRequest $request, Response $response, $args): Response
     {
         $postdata = $request->getParsedBody();
         $issend   = $postdata['issend'];
@@ -152,7 +152,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNews(ServerRequest $request, Response $response, $args)
+    public function updateNews(ServerRequest $request, Response $response, $args): Response
     {   
         $ann           = Ann::find($request->getParam('id'));
         $ann->content  = $request->getParam('content');
@@ -181,7 +181,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteNews(ServerRequest $request, Response $response, $args)
+    public function deleteNews(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $ann = Ann::find($id);
@@ -192,7 +192,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    public function requestNews(ServerRequest $request, Response $response, $args)
+    public function requestNews(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $news = Ann::find($id);

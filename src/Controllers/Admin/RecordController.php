@@ -84,7 +84,7 @@ class RecordController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function recordAjax(ServerRequest $request, Response $response, $args)
+    public function recordAjax(ServerRequest $request, Response $response, $args): Response
     {
         $type = $args['type'];
         switch ($type) {

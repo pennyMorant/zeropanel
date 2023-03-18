@@ -150,7 +150,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateUser(ServerRequest $request, Response $response, $args)
+    public function updateUser(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $user = User::find($id);
@@ -213,7 +213,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteUser(ServerRequest $request, Response $response, $args)
+    public function deleteUser(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $user = User::find($id);
@@ -231,7 +231,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax(ServerRequest $request, Response $response, $args)
+    public function ajax(ServerRequest $request, Response $response, $args): Response
     {
         $configs = Setting::getClass('invite');
         $query = User::getTableDataFromAdmin(
@@ -276,7 +276,7 @@ class UserController extends AdminController
         ]);
     }
 
-    public function updateUserStatus(ServerRequest $request, Response $response, $args)
+    public function updateUserStatus(ServerRequest $request, Response $response, $args): Response
     {
         $type = $args['type'];
         $id = $request->getParam('id');

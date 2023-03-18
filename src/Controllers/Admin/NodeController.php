@@ -67,7 +67,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNode(ServerRequest $request, Response $response, $args)
+    public function createNode(ServerRequest $request, Response $response, $args): Response
     {
         $node                   = new Node();
         $node->name             = $request->getParam('name');
@@ -143,7 +143,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNode(ServerRequest $request, Response $response, $args)
+    public function updateNode(ServerRequest $request, Response $response, $args): Response
     {
         $id                     = $request->getParam('id');
         $node                   = Node::find($id);
@@ -214,7 +214,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function nodeAjax(ServerRequest $request, Response $response, $args)
+    public function nodeAjax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Node::getTableDataFromAdmin(
             $request,
@@ -266,7 +266,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNodeStatus(ServerRequest $request, Response $response, $args)
+    public function updateNodeStatus(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $status = $request->getParam('status');

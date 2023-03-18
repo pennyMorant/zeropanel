@@ -62,7 +62,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createProduct(ServerRequest $request, Response $response, $args)
+    public function createProduct(ServerRequest $request, Response $response, $args): Response
     {
         $product = new Product();
         $product->name = $request->getParam('name');
@@ -117,7 +117,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateProduct(ServerRequest $request, Response $response, $args)
+    public function updateProduct(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $product = Product::find($id);
@@ -158,7 +158,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function productAjax(ServerRequest $request, Response $response, $args)
+    public function productAjax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Product::getTableDataFromAdmin(
             $request,
@@ -205,7 +205,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateProductStatus(ServerRequest $request, Response $response, $args)
+    public function updateProductStatus(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $status = $request->getParam('status');
@@ -224,7 +224,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteProduct(ServerRequest $request, Response $response, $args)
+    public function deleteProduct(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $product = Product::find($id);

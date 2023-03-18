@@ -48,7 +48,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createTicket(ServerRequest $request, Response $response, $args)
+    public function createTicket(ServerRequest $request, Response $response, $args): Response
     {
         $title    = $request->getParam('title');
         $content  = $request->getParam('content');
@@ -98,7 +98,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateTicket(ServerRequest $request, Response $response, $args)
+    public function updateTicket(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $comment = $request->getParam('comment');
@@ -178,7 +178,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketAjax(ServerRequest $request, Response $response, $args)
+    public function ticketAjax(ServerRequest $request, Response $response, $args): Response
     {
         $query = Ticket::getTableDataFromAdmin(
             $request,
@@ -231,7 +231,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function deleteTicket(ServerRequest $request, Response $response, $args)
+    public function deleteTicket(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         Ticket::find($id)->delete();
@@ -241,7 +241,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function closeTicket(ServerRequest $request, Response $response, $args)
+    public function closeTicket(ServerRequest $request, Response $response, $args): Response
     {
         $id = $request->getParam('id');
         $ticket = Ticket::find($id);

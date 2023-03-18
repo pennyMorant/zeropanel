@@ -45,7 +45,7 @@ class OrderController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxOrder(ServerRequest $request, Response $response, $args)
+    public function ajaxOrder(ServerRequest $request, Response $response, $args): Response
     {
         $trans = I18n::get();
         $query = Order::getTableDataFromAdmin(
@@ -88,7 +88,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function completeOrder(ServerRequest $request, Response $response, $args)
+    public function completeOrder(ServerRequest $request, Response $response, $args): Response
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);
@@ -100,7 +100,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function deleteOrder(ServerRequest $request, Response $response, $args)
+    public function deleteOrder(ServerRequest $request, Response $response, $args): Response
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);

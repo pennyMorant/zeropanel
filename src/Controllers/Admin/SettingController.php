@@ -48,7 +48,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function save(ServerRequest $request, Response $response, $args)
+    public function save(ServerRequest $request, Response $response, $args): Response
     {
         $class = $request->getParam('class');
 
