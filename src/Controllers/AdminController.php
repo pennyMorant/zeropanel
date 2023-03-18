@@ -335,11 +335,12 @@ class AdminController extends UserController
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
                 $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
-                $time_b = $time_a + 86400 * 7;
+                $time_b = $time_a + 86400 * 8;
                 // 查询7天内按日期分组的流量数据，并转换成GB
+               
                 $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
                     ->groupByRaw('DATE(FROM_UNIXTIME(datetime))')
-                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM(u + d) / 1024 / 1024 / 1024, 2) as y')
+                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->pluck('y', 'x');
                 // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
                 $datas = [];
