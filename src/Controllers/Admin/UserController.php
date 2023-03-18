@@ -45,7 +45,7 @@ class UserController extends AdminController
             'is_admin'              => '管理员',
             'action'                    => '操作',
         ];
-
+        $table_config['ajax_url'] = 'user/ajax';
         $products = Product::where('status', 1)->orderBy('name')->get();
         $this->view()
             ->assign('products', $products)
