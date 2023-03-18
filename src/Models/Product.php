@@ -89,6 +89,7 @@ class Product extends Model
                 $type = 'best product';
             
         }
+        return $type;
     }
     
 
