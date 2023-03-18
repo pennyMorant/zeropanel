@@ -32,7 +32,7 @@ class OrderController extends BaseController
     {
         $order_no = $args['no'];
         $order = Order::where('user_id', $this->user->id)
-            ->where('no', $order_no)
+            ->where('order_no', $order_no)
             ->first();
         $product = Product::find($order->product_id);
 
@@ -152,7 +152,7 @@ class OrderController extends BaseController
     public function orderStatus(ServerRequest $request, Response $response, $args)
     {
         $order_no = $args['no'];
-        $order = Order::where('no', $order_no)->first();
+        $order = Order::where('order_no', $order_no)->first();
 
         return $response->withJson([
             'ret' => 1,
@@ -166,7 +166,7 @@ class OrderController extends BaseController
         $payment = $request->getParam('method');
         $order_no = $request->getParam('order_no');
 
-        $order = Order::where('user_id', $user->id)->where('no', $order_no)->first();
+        $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
         try {
             if (time() > $order->expired_time) {
                 throw new \Exception(I18n::get()->t('order has expired'));
@@ -216,7 +216,7 @@ class OrderController extends BaseController
 
     public static function execute($order_no)
     {
-        $order = Order::where('no', $order_no)->first();
+        $order = Order::where('order_no', $order_no)->first();
         
         if ($order->product_id == null) {
             return self::executeAddCredit($order);

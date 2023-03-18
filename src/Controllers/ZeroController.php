@@ -349,6 +349,7 @@ class ZeroController extends BaseController
                 $query = Order::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
+                    $trans = I18n::get();
 
                     return [
                         'order_total'   =>  $rowData->order_total,
@@ -356,7 +357,7 @@ class ZeroController extends BaseController
                         'order_no'  =>  $rowData->order_no,
                         'created_time'  =>  $rowData->created_time,
                         'order_type'    =>  $rowData->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit'),
-                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$value->no.'">' . $trans->t('details') . '</a>',
+                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$rowData->order_no.'">' . $trans->t('details') . '</a>',
                     ];
                 })->toArray();
 
