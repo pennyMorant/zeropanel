@@ -209,9 +209,9 @@ class AdminController extends UserController
      */
     public function addCoupon(ServerRequest $request, Response $response, $args)
     {
-        $datas = $request->getParam();
-        $generate_type = $datas['generate_type'];
-        $final_code    = $datas['code'];
+        $postdata = $request->getParsedBody();
+        $generate_type = $postdata['generate_type'];
+        $final_code    = $postdata['code'];
         if (empty($final_code) && in_array($generate_type, [1, 3])) {
             return $response->withJson([
                 'ret' => 0,
@@ -241,12 +241,12 @@ class AdminController extends UserController
             }
         }
         $code          = new Coupon();
-        $code->per_use_count = $datas['per_use_count'];
-        $code->total_use_count = $datas['total_use_count'];
+        $code->per_use_count = $postdata['per_use_count'];
+        $code->total_use_count = $postdata['total_use_count'];
         $code->code    = $final_code;
-        $code->expire  = time() + $datas['expire'] * 3600;
-        $code->limited_product    = $datas['limited_product'];
-        $code->discount  = $datas['discount'];
+        $code->expire  = time() + $postdata['expire'] * 3600;
+        $code->limited_product    = $postdata['limited_product'];
+        $code->discount  = $postdata['discount'];
 
         $code->save();
 
@@ -356,19 +356,22 @@ class AdminController extends UserController
                 }, array_keys($trafficData), $trafficData);
                 break;
             case 'user_traffic_ranking':
-                $time_a = Carbon::today()->startOfDay()->timestamp;
-                $time_b = Carbon::today()->endOfDay()->timestamp;
-                $user = TrafficLog::selectRaw('user_id, SUM(u+d) as total')
-                    ->whereBetween('datetime', [$time_a, $time_b])->groupBy('user_id')
-                    ->limit(10)->orderByDesc('total')->pluck('total', 'user_id');
-                $datas = [];
-                foreach ($user as $user_id => $traffic) {
-                    $traffic = $traffic < 107374 ? 0 : $traffic;
-                    $datas[] = [
+                $startOfDay = Carbon::today()->startOfDay()->timestamp;
+                $endOfDay = Carbon::today()->endOfDay()->timestamp;
+
+                $user = TrafficLog::selectRaw('user_id, COALESCE(SUM(u+d), 0) as total')
+                    ->whereBetween('datetime', [$startOfDay, $endOfDay])
+                    ->groupBy('user_id')
+                    ->orderByDesc('total')
+                    ->limit(10)
+                    ->pluck('total', 'user_id');
+
+                $datas = $user->map(function ($traffic, $user_id) {
+                    return [
                         'y' => number_format($traffic / (1024 * 1024 * 1024), 2),
-                        'x' => "用户ID:" . $user_id,
+                        'x' => "用户ID: $user_id",
                     ];
-                }
+                })->values();
                 break;
         }
         return $response->withJson($datas);
