@@ -231,7 +231,7 @@ CREATE TABLE `node_online_log` (
 
 CREATE TABLE `order` (
   `id` bigint(20) NOT NULL COMMENT 'AUTO_INCREMENT',
-  `no` text DEFAULT NULL COMMENT '订单号',
+  `order_no` text DEFAULT NULL COMMENT '订单号',
   `order_type` int(11) DEFAULT NULL COMMENT '订单类型1购买产品2账户充值',
   `user_id` int(11) DEFAULT NULL COMMENT '提交用户',
   `product_id` int(11) DEFAULT NULL COMMENT '订单商品',
