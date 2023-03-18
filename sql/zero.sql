@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-16 11:13:38
+-- 生成日期： 2023-03-18 15:46:10
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
--- PHP 版本： 8.2.3
+-- PHP 版本： 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,8 +31,8 @@ CREATE TABLE `alive_ip` (
   `id` bigint(20) NOT NULL,
   `nodeid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
-  `ip` varchar(182) NOT NULL,
-  `datetime` bigint(20) NOT NULL
+  `ip` varchar(39) NOT NULL,
+  `datetime` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -72,10 +72,10 @@ CREATE TABLE `config` (
 
 CREATE TABLE `coupon` (
   `id` bigint(20) NOT NULL,
-  `code` text NOT NULL COMMENT '优惠码',
+  `code` varchar(20) NOT NULL COMMENT '优惠码',
   `per_use_count` int(11) NOT NULL COMMENT '每个用户使用次数',
-  `expire` bigint(20) NOT NULL COMMENT '到期时间',
-  `limited_product` mediumtext NOT NULL COMMENT '限定产品使用',
+  `expire` int(11) NOT NULL COMMENT '到期时间',
+  `limited_product` varchar(20) NOT NULL COMMENT '限定产品使用',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
   `total_use_count` int(11) NOT NULL COMMENT '总使用次数'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -88,12 +88,12 @@ CREATE TABLE `coupon` (
 
 CREATE TABLE `detect_ban_log` (
   `id` int(11) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL COMMENT '用户 ID',
+  `user_id` int(10) UNSIGNED NOT NULL COMMENT '用户 ID',
   `email` varchar(32) NOT NULL COMMENT '用户邮箱',
   `detect_number` int(11) NOT NULL COMMENT '本次违规次数',
   `ban_time` int(11) NOT NULL COMMENT '本次封禁时长',
-  `start_time` bigint(20) NOT NULL COMMENT '统计开始时间',
-  `end_time` bigint(20) NOT NULL COMMENT '统计结束时间',
+  `start_time` int(11) NOT NULL COMMENT '统计开始时间',
+  `end_time` int(11) NOT NULL COMMENT '统计结束时间',
   `all_detect_number` int(11) NOT NULL COMMENT '累计违规次数'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='审计封禁日志';
 
@@ -118,10 +118,10 @@ CREATE TABLE `detect_list` (
 --
 
 CREATE TABLE `detect_log` (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `list_id` bigint(20) NOT NULL,
-  `datetime` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `list_id` int(11) NOT NULL,
+  `datetime` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -133,7 +133,7 @@ CREATE TABLE `detect_log` (
 --
 
 CREATE TABLE `email_queue` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `to_email` varchar(32) NOT NULL,
   `subject` longtext NOT NULL,
   `template` longtext NOT NULL,
@@ -149,10 +149,10 @@ CREATE TABLE `email_queue` (
 
 CREATE TABLE `email_verify` (
   `id` bigint(20) NOT NULL,
-  `email` mediumtext NOT NULL,
-  `ip` varchar(182) NOT NULL,
-  `code` mediumtext NOT NULL,
-  `expire_in` bigint(20) NOT NULL
+  `email` varchar(32) NOT NULL,
+  `ip` varchar(39) NOT NULL,
+  `code` varchar(39) NOT NULL,
+  `expire_in` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -162,9 +162,9 @@ CREATE TABLE `email_verify` (
 --
 
 CREATE TABLE `link` (
-  `id` bigint(20) NOT NULL,
-  `token` varchar(128) NOT NULL,
-  `userid` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `userid` int(11) NOT NULL,
   `filter` mediumtext DEFAULT NULL COMMENT '节点筛选'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -188,10 +188,10 @@ CREATE TABLE `node` (
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `node_traffic` bigint(20) NOT NULL DEFAULT 0,
-  `node_traffic_limit` bigint(20) NOT NULL DEFAULT 0 COMMENT '流量限制',
+  `node_traffic_limit` int(11) NOT NULL DEFAULT 0 COMMENT '流量限制',
   `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0 COMMENT '节点流量限制重置日期',
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
-  `node_ip` varchar(182) DEFAULT NULL COMMENT '节点IP',
+  `node_ip` varchar(39) DEFAULT NULL COMMENT '节点IP',
   `node_group` int(11) NOT NULL DEFAULT 0 COMMENT '节点群组',
   `online` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -231,12 +231,12 @@ CREATE TABLE `node_online_log` (
 
 CREATE TABLE `order` (
   `id` bigint(20) NOT NULL COMMENT 'AUTO_INCREMENT',
-  `order_no` text DEFAULT NULL COMMENT '订单号',
+  `order_no` varchar(30) DEFAULT NULL COMMENT '订单号',
   `order_type` int(11) DEFAULT NULL COMMENT '订单类型1购买产品2账户充值',
   `user_id` int(11) DEFAULT NULL COMMENT '提交用户',
   `product_id` int(11) DEFAULT NULL COMMENT '订单商品',
   `product_price` decimal(12,2) DEFAULT NULL COMMENT '商品售价',
-  `order_coupon` text DEFAULT NULL COMMENT '订单优惠码',
+  `order_coupon` varchar(20) DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) DEFAULT NULL COMMENT '订单金额',
   `credit_paid` int(11) DEFAULT NULL COMMENT '订单余额支付部分',
   `order_status` tinyint(1) DEFAULT NULL COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
@@ -244,7 +244,7 @@ CREATE TABLE `order` (
   `updated_time` int(11) DEFAULT NULL COMMENT '订单更新时间',
   `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
   `paid_time` int(11) DEFAULT NULL COMMENT '订单支付时间',
-  `order_payment` text DEFAULT NULL COMMENT '订单支付方式',
+  `order_payment` varchar(15) DEFAULT NULL COMMENT '订单支付方式',
   `paid_action` text DEFAULT NULL COMMENT '支付后操作',
   `execute_status` tinyint(1) DEFAULT NULL COMMENT '执行状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -256,12 +256,12 @@ CREATE TABLE `order` (
 --
 
 CREATE TABLE `payback` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `total` decimal(12,2) NOT NULL,
-  `userid` bigint(20) NOT NULL,
-  `ref_by` bigint(20) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `ref_by` int(11) NOT NULL,
   `ref_get` decimal(12,2) NOT NULL,
-  `datetime` bigint(20) NOT NULL
+  `datetime` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -271,18 +271,18 @@ CREATE TABLE `payback` (
 --
 
 CREATE TABLE `product` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(512) DEFAULT NULL COMMENT '产品名称',
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL COMMENT '产品名称',
   `month_price` decimal(12,2) DEFAULT NULL COMMENT '产品价格',
   `quarter_price` decimal(12,2) DEFAULT NULL,
   `half_year_price` decimal(12,2) DEFAULT NULL,
   `year_price` decimal(12,2) DEFAULT NULL,
   `two_year_price` decimal(12,2) DEFAULT NULL,
-  `traffic` bigint(20) DEFAULT NULL COMMENT '产品包含的流量',
+  `traffic` int(11) DEFAULT NULL COMMENT '产品包含的流量',
   `user_group` int(11) DEFAULT NULL COMMENT '用户群组',
   `class` int(11) DEFAULT NULL COMMENT '产品等级',
   `reset_traffic_cycle` int(11) DEFAULT NULL COMMENT '流量重置周期[0-一次性, 1-订单日重置, 2-每月一号重置]',
-  `speed_limit` bigint(20) DEFAULT NULL COMMENT '速度限制',
+  `speed_limit` int(11) DEFAULT NULL COMMENT '速度限制',
   `ip_limit` int(11) DEFAULT NULL COMMENT 'IP限制',
   `type` int(11) DEFAULT NULL COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
@@ -298,10 +298,10 @@ CREATE TABLE `product` (
 --
 
 CREATE TABLE `signin_ip` (
-  `id` bigint(20) NOT NULL,
-  `userid` bigint(20) NOT NULL,
-  `ip` varchar(182) NOT NULL,
-  `datetime` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `ip` varchar(39) NOT NULL,
+  `datetime` int(11) NOT NULL,
   `type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -346,13 +346,13 @@ CREATE TABLE `telegram_tasks` (
 --
 
 CREATE TABLE `ticket` (
-  `id` bigint(20) NOT NULL,
-  `title` longtext NOT NULL,
-  `type` varchar(128) NOT NULL COMMENT '工单类型',
+  `id` int(11) NOT NULL,
+  `title` longtext NOT NULL COMMENT '工单主题',
+  `type` varchar(30) NOT NULL COMMENT '工单类型',
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '‘’' COMMENT '工单内容',
-  `userid` bigint(20) NOT NULL,
-  `datetime` bigint(20) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1
+  `userid` int(11) NOT NULL COMMENT '用户ID',
+  `datetime` int(11) NOT NULL COMMENT '创建时间',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态0关闭1活跃'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -366,7 +366,7 @@ CREATE TABLE `user` (
   `email` varchar(32) NOT NULL COMMENT '注册邮箱',
   `password` varchar(256) NOT NULL COMMENT '登录密码',
   `passwd` varchar(256) DEFAULT NULL COMMENT 'SS 密码',
-  `uuid` varchar(146) DEFAULT NULL COMMENT 'VMESS/TROJAN UUID',
+  `uuid` varchar(36) DEFAULT NULL COMMENT 'VMESS/TROJAN UUID',
   `t` int(11) NOT NULL DEFAULT 0,
   `u` bigint(20) NOT NULL,
   `d` bigint(20) NOT NULL,
@@ -374,7 +374,7 @@ CREATE TABLE `user` (
   `reset_traffic_value` int(11) DEFAULT NULL COMMENT '重置流量的值',
   `reset_traffic_date` int(11) DEFAULT NULL COMMENT '重置流量日期',
   `transfer_enable` bigint(20) NOT NULL COMMENT '总流量',
-  `enable` tinyint(4) NOT NULL DEFAULT 1 COMMENT '是否启用',
+  `enable` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否启用',
   `detect_ban` int(11) NOT NULL DEFAULT 0 COMMENT '是否被封禁',
   `last_detect_ban_time` datetime DEFAULT '1989-06-04 00:05:00' COMMENT '最后封禁时间',
   `all_detect_number` int(11) NOT NULL DEFAULT 0 COMMENT '累计违规次数',
@@ -383,21 +383,21 @@ CREATE TABLE `user` (
   `money` decimal(12,2) NOT NULL COMMENT '金钱',
   `notify_type` varchar(32) DEFAULT NULL COMMENT '接收通知的的方式',
   `ref_by` int(11) NOT NULL DEFAULT 0 COMMENT '推荐人',
-  `signup_ip` varchar(182) NOT NULL DEFAULT '127.0.0.1' COMMENT '注册IP',
+  `signup_ip` varchar(39) NOT NULL DEFAULT '127.0.0.1' COMMENT '注册IP',
   `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '端口速度',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `is_admin` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是管理员1是0不是',
   `last_day_t` bigint(20) NOT NULL DEFAULT 0,
   `class` int(11) NOT NULL DEFAULT 0 COMMENT '等级',
   `class_expire` datetime NOT NULL DEFAULT '1989-06-04 00:05:00' COMMENT '等级到期时间',
-  `theme` varchar(128) NOT NULL,
-  `remark` mediumtext DEFAULT NULL COMMENT '备注',
+  `theme` varchar(30) NOT NULL,
+  `remark` varchar(30) DEFAULT NULL COMMENT '备注',
   `node_group` int(11) NOT NULL DEFAULT 0 COMMENT '分组',
   `telegram_id` bigint(20) DEFAULT NULL,
   `traffic_notified` tinyint(1) DEFAULT 0,
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
-  `withdraw_account` varchar(256) DEFAULT NULL
+  `withdraw_account` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -408,7 +408,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `user_invite_code` (
   `id` int(11) NOT NULL,
-  `code` varchar(128) NOT NULL,
+  `code` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '2016-06-01 00:00:00'
@@ -423,7 +423,7 @@ CREATE TABLE `user_invite_code` (
 CREATE TABLE `user_password_reset` (
   `id` int(11) NOT NULL,
   `email` varchar(32) NOT NULL,
-  `token` varchar(128) NOT NULL,
+  `token` varchar(50) NOT NULL,
   `init_time` int(11) NOT NULL,
   `expire_time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -435,12 +435,12 @@ CREATE TABLE `user_password_reset` (
 --
 
 CREATE TABLE `user_subscribe_log` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT '用户 ID',
   `email` varchar(32) NOT NULL COMMENT '用户邮箱',
   `subscribe_type` varchar(20) NOT NULL COMMENT '获取的订阅类型',
-  `request_ip` varchar(182) NOT NULL COMMENT '请求 IP',
-  `request_time` datetime NOT NULL COMMENT '请求时间',
+  `request_ip` varchar(39) NOT NULL COMMENT '请求 IP',
+  `request_time` int(11) NOT NULL COMMENT '请求时间',
   `request_user_agent` text DEFAULT NULL COMMENT '请求 UA 信息'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户订阅日志';
 
@@ -465,7 +465,7 @@ CREATE TABLE `user_token` (
 --
 
 CREATE TABLE `user_traffic_log` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `user_id` int(11) NOT NULL,
   `u` bigint(20) NOT NULL,
   `d` bigint(20) NOT NULL,
@@ -707,13 +707,13 @@ ALTER TABLE `detect_list`
 -- 使用表AUTO_INCREMENT `detect_log`
 --
 ALTER TABLE `detect_log`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `email_queue`
 --
 ALTER TABLE `email_queue`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `email_verify`
@@ -725,7 +725,7 @@ ALTER TABLE `email_verify`
 -- 使用表AUTO_INCREMENT `link`
 --
 ALTER TABLE `link`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `node`
@@ -755,19 +755,19 @@ ALTER TABLE `order`
 -- 使用表AUTO_INCREMENT `payback`
 --
 ALTER TABLE `payback`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `signin_ip`
 --
 ALTER TABLE `signin_ip`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `telegram_session`
@@ -785,7 +785,7 @@ ALTER TABLE `telegram_tasks`
 -- 使用表AUTO_INCREMENT `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `user`
@@ -806,12 +806,6 @@ ALTER TABLE `user_password_reset`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `user_subscribe_log`
---
-ALTER TABLE `user_subscribe_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `user_token`
 --
 ALTER TABLE `user_token`
@@ -821,7 +815,7 @@ ALTER TABLE `user_token`
 -- 使用表AUTO_INCREMENT `user_traffic_log`
 --
 ALTER TABLE `user_traffic_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `withdraw_log`
