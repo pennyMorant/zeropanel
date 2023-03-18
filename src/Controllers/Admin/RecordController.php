@@ -155,7 +155,7 @@ class RecordController extends AdminController
                         'user_id'   =>  $rowData->user_id,
                         'subscribe_type'    => $rowData->subscribe_type,
                         'request_ip'    =>  $rowData->request_ip,
-                        'location'  =>  $rowData->Tools::getIpInfo($rowData->request_ip),
+                        'location'  =>  Tools::getIpInfo($rowData->request_ip),
                         'request_time'  =>  $rowData->request_time,
                     ];
                 })->toArray();
