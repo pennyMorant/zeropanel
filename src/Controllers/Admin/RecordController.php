@@ -14,10 +14,8 @@ use App\Utils\{
     QQWry,
     Tools
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class RecordController extends AdminController
 {
@@ -28,7 +26,7 @@ class RecordController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function recordIndex($request, $response, $args)
+    public function recordIndex(ServerRequest $request, Response $response, $args)
     {
         $table_config_alive['total_column'] = array(
             'id'        => 'ID',
@@ -86,7 +84,7 @@ class RecordController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function recordAjax($request, $response, $args)
+    public function recordAjax(ServerRequest $request, Response $response, $args)
     {
         $type = $args['type'];
         switch ($type) {

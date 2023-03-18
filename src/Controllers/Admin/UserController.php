@@ -19,10 +19,8 @@ use App\Utils\{
     QQWry,
     Cookie
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Exception;
 use Ramsey\Uuid\Uuid;
 
@@ -33,7 +31,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             
@@ -64,7 +62,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNewUser($request, $response, $args)
+    public function createNewUser(ServerRequest $request, Response $response, $args)
     {
         $email   = strtolower(trim($request->getParam('email')));
         $money   = (int) trim($request->getParam('balance'));
@@ -137,7 +135,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateUserIndex($request, $response, $args)
+    public function updateUserIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
         $user = User::find($id);
@@ -152,7 +150,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateUser($request, $response, $args)
+    public function updateUser(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $user = User::find($id);
@@ -215,7 +213,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteUser($request, $response, $args)
+    public function deleteUser(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $user = User::find($id);
@@ -233,7 +231,7 @@ class UserController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax($request, $response, $args)
+    public function ajax(ServerRequest $request, Response $response, $args)
     {
         $configs = Setting::getClass('invite');
         $query = User::getTableDataFromAdmin(
@@ -278,7 +276,7 @@ class UserController extends AdminController
         ]);
     }
 
-    public function updateUserStatus($request, $response, $args)
+    public function updateUserStatus(ServerRequest $request, Response $response, $args)
     {
         $type = $args['type'];
         $id = $request->getParam('id');

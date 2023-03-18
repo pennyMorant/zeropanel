@@ -8,10 +8,8 @@ use App\Models\{
     Bought,
     Order
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class ProductController extends AdminController
 {
@@ -22,7 +20,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             'id'                    => 'ID',
@@ -51,7 +49,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createProductIndex($request, $response, $args)
+    public function createProductIndex(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('admin/product/create.tpl');
         return $response;
@@ -64,7 +62,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createProduct($request, $response, $args)
+    public function createProduct(ServerRequest $request, Response $response, $args)
     {
         $product = new Product();
         $product->name = $request->getParam('name');
@@ -102,7 +100,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateProductIndex($request, $response, $args)
+    public function updateProductIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
         $product = Product::find($id);
@@ -119,7 +117,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateProduct($request, $response, $args)
+    public function updateProduct(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $product = Product::find($id);
@@ -160,7 +158,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function productAjax($request, $response, $args)
+    public function productAjax(ServerRequest $request, Response $response, $args)
     {
         $query = Product::getTableDataFromAdmin(
             $request,
@@ -207,7 +205,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateProductStatus($request, $response, $args)
+    public function updateProductStatus(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $status = $request->getParam('status');
@@ -226,7 +224,7 @@ class ProductController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteProduct($request, $response, $args)
+    public function deleteProduct(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $product = Product::find($id);

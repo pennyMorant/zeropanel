@@ -19,10 +19,8 @@ use App\Services\{
     Mail,
     Captcha
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
 use voku\helper\AntiXSS;
 use Exception;
@@ -38,7 +36,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signInIndex($request, $response, $args)
+    public function signInIndex(ServerRequest $request, Response $response, $args)
     {
         $captcha = [];
 
@@ -60,18 +58,16 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signinHandle($request, $response, $args)
+    public function signinHandle(ServerRequest $request, Response $response, $args)
     {
-        $data = $request->getParsedBody();
-        $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-        $passwd     = $data['passwd'];
-        $code       = $data['code'];
-        $rememberMe = $data['remember_me'];
+        $postdata = (array)$request->getParsedBody();
+        $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
+        $passwd = $postdata['passwd'];
 
         $trans = I18n::get();
         try {
             if (Setting::obtain('enable_signin_captcha') == true) {
-                $ret = Captcha::verify($request->getParams());
+                $ret = Captcha::verify($postdata);
                 if (!$ret) {
                     throw new \Exception($trans->t('captcha failed'));
                 }
@@ -100,9 +96,9 @@ class AuthController extends BaseController
         // 更新用户信息
         $user->last_signin_time = date('Y-m-d H:i:s');
         // 获取用户数组形式
-        return response()->withJson([
+        return $response->withJson([
             'ret' => 1,
-            'msg' => trans()->t('signin success')
+            'msg' => $trans->t('signin success')
         ]);
     }
 
@@ -111,7 +107,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function sendVerify($request, $response, $next)
+    public function sendVerify(ServerRequest $request, Response $response, $next)
     {
 
         $trans = I18n::get();
@@ -196,7 +192,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signUpIndex($request, $response, $args)
+    public function signUpIndex(ServerRequest $request, Response $response, $args)
     {
         if (Setting::obtain('reg_mode') == 'close') {
             $this->view()->display('auth/soon.tpl');
@@ -228,19 +224,19 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function signUpHandle($request, $response, $args)
+    public function signUpHandle(ServerRequest $request, Response $response, $args)
     {
-        $data = $request->getParsedBody();
-        $email = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-        $passwd     = $data['passwd'];
-        $repasswd = $data['repasswd'];
-        $code = $data['code'];
+        $postdata = $request->getParsedBody();
+        $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
+        $passwd     = $postdata['passwd'];
+        $repasswd = $postdata['repasswd'];
+        $code = $request->getParsedBodyParam('code');
 
         $trans = I18n::get();
 
         try {
             if (Setting::obtain('enable_signup_captcha') == true) {
-                $ret = Captcha::verify($request->getParams());
+                $ret = Captcha::verify($request->getParsedBody());
                 if (!$ret) {
                     throw new \Exception($trans->t('captcha failed'));
                 }
@@ -259,7 +255,7 @@ class AuthController extends BaseController
             }
 
             if (Setting::obtain('reg_email_verify')) {
-                $email_code = trim($request->getParam('emailcode'));
+                $email_code = trim($postdata['emailcode']);
                 $mailcount = EmailVerify::where('email', '=', $email)
                     ->where('code', '=', $email_code)
                     ->where('expire_in', '>', time())
@@ -345,7 +341,7 @@ class AuthController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function logout($request, $response, $next)
+    public function logout(ServerRequest $request, Response $response, $next)
     {
         Auth::logout();
         return $response

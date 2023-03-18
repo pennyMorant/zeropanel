@@ -20,10 +20,8 @@ use App\Controllers\SubController;
 use App\Zero\Zero;
 use voku\helper\AntiXSS;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 /**
  *  LinkController
  */
@@ -64,7 +62,7 @@ class LinkController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public static function GetContent($request, $response, $args)
+    public static function GetContent(ServerRequest $request, Response $response, $args)
     {
 
         $token = $args['token'];

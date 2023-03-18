@@ -90,7 +90,7 @@ class StripePay
     }
 
 
-    public function getStatus($request, $response, $args)
+    public function getStatus(ServerRequest $request, Response $response, $args)
     {
         $p = Order::where('id', $_POST['pid'])->first();
         $return['ret'] = 1;

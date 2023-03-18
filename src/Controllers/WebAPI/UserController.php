@@ -12,10 +12,8 @@ use App\Models\{
     DetectLog,
 };
 use App\Utils\Tools;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class UserController extends BaseController
 {
@@ -28,7 +26,7 @@ class UserController extends BaseController
      *
      * @return \Slim\Http\Response
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $node_id = $request->getQueryParam('node_id', '0');
 
@@ -111,7 +109,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addTraffic($request, $response, $args)
+    public function addTraffic(ServerRequest $request, Response $response, $args)
     {
         $params = $request->getQueryParams();
 
@@ -189,7 +187,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addAliveIp($request, $response, $args)
+    public function addAliveIp(ServerRequest $request, Response $response, $args)
     {
         $params = $request->getQueryParams();
 
@@ -234,7 +232,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addDetectLog($request, $response, $args)
+    public function addDetectLog(ServerRequest $request, Response $response, $args)
     {
         $params = $request->getQueryParams();
 

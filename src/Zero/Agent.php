@@ -22,10 +22,8 @@ use App\Utils\{
 use App\Zero\{
     Zero
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Ramsey\Uuid\Uuid;
 
 class Agent extends \App\Controllers\BaseController
@@ -35,7 +33,7 @@ class Agent extends \App\Controllers\BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxDatatable($request, $response, $args)
+    public function ajaxDatatable(ServerRequest $request, Response $response, $args)
     {
         $name = $args['name'];                        # 得到表名
         $user = $this->user;                          # 得到用户
@@ -109,7 +107,7 @@ class Agent extends \App\Controllers\BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxChart($request, $response, $args)
+    public function ajaxChart(ServerRequest $request, Response $response, $args)
     {
         $name = $args['name'];
         $user = $this->user;

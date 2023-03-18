@@ -8,10 +8,8 @@ use App\Models\{
     Setting,
     Ann,
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
 
 final class ProductController extends BaseController
@@ -21,7 +19,7 @@ final class ProductController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function product($request, $response, $args)
+    public function product(ServerRequest $request, Response $response, $args)
     {
         $trans = I18n::get();
         $products = Product::where('status', '1')

@@ -35,10 +35,8 @@ use Pkly\I18Next\I18n;
 use App\Zero\{
     Zero
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use voku\helper\AntiXSS;
 use TelegramBot\Api\BotApi;
 use Ozdemir\Datatables\Datatables;
@@ -52,7 +50,7 @@ class ZeroController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function withdrawCommission($request, $response, $args)
+    public function withdrawCommission(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
         if ($user == null || !$user->isLogin) {
@@ -153,7 +151,7 @@ class ZeroController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function withdrawAccountSettings($request, $response, $args)
+    public function withdrawAccountSettings(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
         if ($user == null || !$user->isLogin) {
@@ -189,7 +187,7 @@ class ZeroController extends BaseController
      * @param Response   $response
      * @param array      $args
      */
-    public function nodeInfo($request, $response, $args)
+    public function nodeInfo(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
         $emoji = (bool)Setting::obtain('enable_subscribe_emoji');
@@ -264,7 +262,7 @@ class ZeroController extends BaseController
      * @param Response   $response
      * @param array      $args
      */
-    public function ajaxDataChart($request, $response, $args)
+    public function ajaxDataChart(ServerRequest $request, Response $response, $args)
     {
         $name = $args['name'];
         $user = $this->user;
@@ -296,7 +294,7 @@ class ZeroController extends BaseController
      * @param Response   $response
      * @param array      $args
      */
-    public function ajaxDatatable($request, $response, $args)
+    public function ajaxDatatable(ServerRequest $request, Response $response, $args)
     {
         $name = $args['name'];                        # 得到表名
         $user = $this->user;                          # 得到用户
@@ -482,7 +480,7 @@ class ZeroController extends BaseController
      * @param Response   $response
      * @param array      $args
      */
-    public function ajaxDatatableDelete($request, $response, $args)
+    public function ajaxDatatableDelete(ServerRequest $request, Response $response, $args)
     {
         $name = $request->getParam('name');
         $id = $request->getParam('id');

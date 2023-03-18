@@ -20,10 +20,8 @@ use App\Services\{
 use Pkly\I18Next\I18n;
 use Countable;
 use Ozdemir\Datatables\Datatables;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Carbon\Carbon;
 use DB;
 
@@ -40,7 +38,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $sts = new Analytics();
         $start_time_this_month = mktime(0,0,0,date('m'),1,date('Y'));
@@ -67,7 +65,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function node($request, $response, $args)
+    public function node(ServerRequest $request, Response $response, $args)
     {
         $this->view()->assign('nodes', Node::all())->display('admin/node.tpl');
         return $response;
@@ -80,7 +78,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function sys($request, $response, $args)
+    public function sys(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('admin/index.tpl');
         return $response;
@@ -93,7 +91,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function invite($request, $response, $args)
+    public function invite(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             'id'              => 'ID',
@@ -117,7 +115,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxPayBack($request, $response, $args)
+    public function ajaxPayBack(ServerRequest $request, Response $response, $args)
     {
         $query = Payback::getTableDataFromAdmin(
             $request
@@ -149,7 +147,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function coupon($request, $response, $args)
+    public function coupon(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             'id'        => 'ID',
@@ -176,7 +174,7 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxCoupon($request, $response, $args)
+    public function ajaxCoupon(ServerRequest $request, Response $response, $args)
     {
         $query = Coupon::getTableDataFromAdmin(
             $request
@@ -209,10 +207,11 @@ class AdminController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function addCoupon($request, $response, $args)
+    public function addCoupon(ServerRequest $request, Response $response, $args)
     {
-        $generate_type = (int) $request->getParam('generate_type');
-        $final_code    = $request->getParam('code');
+        $datas = $request->getParam();
+        $generate_type = $datas['generate_type'];
+        $final_code    = $datas['code'];
         if (empty($final_code) && in_array($generate_type, [1, 3])) {
             return $response->withJson([
                 'ret' => 0,
@@ -242,12 +241,12 @@ class AdminController extends UserController
             }
         }
         $code          = new Coupon();
-        $code->per_use_count = $request->getParam('per_use_count');
-        $code->total_use_count = $request->getParam('total_use_count');
+        $code->per_use_count = $datas['per_use_count'];
+        $code->total_use_count = $datas['total_use_count'];
         $code->code    = $final_code;
-        $code->expire  = time() + $request->getParam('expire') * 3600;
-        $code->limited_product    = $request->getParam('limited_product');
-        $code->discount  = $request->getParam('discount');
+        $code->expire  = time() + $datas['expire'] * 3600;
+        $code->limited_product    = $datas['limited_product'];
+        $code->discount  = $datas['discount'];
 
         $code->save();
 
@@ -258,7 +257,7 @@ class AdminController extends UserController
     }
     
 
-    public function ajaxDataChart($request, $response, $args)
+    public function ajaxDataChart(ServerRequest $request, Response $response, $args)
     {
         $name = $args['name'];
         switch ($name) {

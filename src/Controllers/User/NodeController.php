@@ -13,10 +13,8 @@ use App\Utils\{
     Tools,
     DatatablesHelper
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use App\Zero\Zero;
 
 /**
@@ -29,7 +27,7 @@ class NodeController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function node($request, $response, $args)
+    public function node(ServerRequest $request, Response $response, $args)
     {
         $user        = $this->user;
 

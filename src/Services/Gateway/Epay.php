@@ -12,7 +12,7 @@ namespace App\Services\Gateway;
 
 use App\Controllers\OrderController;
 use App\Models\Setting;
-use Slim\Http\Request;
+use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 use App\Services\Gateway\Epay\EpayNotify;
 use App\Services\Gateway\Epay\EpaySubmit;
@@ -58,7 +58,7 @@ class Epay
         return $result;
     }
 
-    public function notify($request, $response, $args)
+    public function notify(ServerRequest $request, Response $response, $args)
     {
         $alipayNotify = new EpayNotify($this->epay);
         $verify_result = $alipayNotify->verifyNotify();

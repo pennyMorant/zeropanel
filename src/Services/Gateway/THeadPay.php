@@ -107,7 +107,7 @@ class THeadPay extends AbstractPayment
         return ['errcode' => 0, 'url' => $params['data'], 'pid' => $pl->tradeno, 'type' => 'qrcode'];
     }
 
-    public function notify($request, $response, $args)
+    public function notify(ServerRequest $request, Response $response, $args)
     {
         $inputString = file_get_contents('php://input', 'r');
         $inputStripped = str_replace(array("\r", "\n", "\t", "\v"), '', $inputString);
@@ -123,7 +123,7 @@ class THeadPay extends AbstractPayment
     }
 
 
-    public function getStatus($request, $response, $args)
+    public function getStatus(ServerRequest $request, Response $response, $args)
     {
         $p = Order::where('tradeno', $_POST['pid'])->first();
         return $response->withJson([

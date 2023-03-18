@@ -7,10 +7,8 @@ use App\Models\DetectLog;
 use App\Models\DetectRule;
 use App\Models\DetectBanLog;
 use App\Utils\Telegram;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class BanController extends AdminController
 {
@@ -21,7 +19,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             
@@ -65,7 +63,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function banRuleAjax($request, $response, $args)
+    public function banRuleAjax(ServerRequest $request, Response $response, $args)
     {
         $query = DetectRule::getTableDataFromAdmin(
             $request,
@@ -112,7 +110,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createBanRule($request, $response, $args)
+    public function createBanRule(ServerRequest $request, Response $response, $args)
     {
         $rule = new DetectRule();
         $rule->name = $request->getParam('name');
@@ -141,7 +139,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateBanRule($request, $response, $args)
+    public function updateBanRule(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);
@@ -170,7 +168,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteBanRule($request, $response, $args)
+    public function deleteBanRule(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);
@@ -189,7 +187,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function detectRuleRecordAjax($request, $response, $args)
+    public function detectRuleRecordAjax(ServerRequest $request, Response $response, $args)
     {
         $query = DetectLog::getTableDataFromAdmin(
             $request,
@@ -247,7 +245,7 @@ class BanController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function banRecordAjax($request, $response, $args)
+    public function banRecordAjax(ServerRequest $request, Response $response, $args)
     {
         $query = DetectBanLog::getTableDataFromAdmin(
             $request,
@@ -286,7 +284,7 @@ class BanController extends AdminController
         ]);
     }
 
-    public function requestBanRule($request, $response, $args)
+    public function requestBanRule(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);

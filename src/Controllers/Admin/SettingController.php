@@ -6,10 +6,8 @@ use App\Controllers\AdminController;
 use App\Models\{
     Setting
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use App\Services\{
     Mail
 };
@@ -22,7 +20,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $config = array();
         $settings = Setting::get(['item', 'value', 'type']);
@@ -50,7 +48,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function save($request, $response, $args)
+    public function save(ServerRequest $request, Response $response, $args)
     {
         $class = $request->getParam('class');
 
@@ -182,7 +180,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function test($request, $response, $args)
+    public function test(ServerRequest $request, Response $response, $args)
     {
         $to = $request->getParam('recipient');
 
@@ -231,7 +229,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function payment($request, $response, $args)
+    public function payment(ServerRequest $request, Response $response, $args)
     {
         $gateway_in_use = array();
         $payment_gateways = self::return_gateways_list();

@@ -9,10 +9,8 @@ use App\Models\{
 };
 use App\Utils\Hash;
 use App\Services\Password;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
 /***
  * Class Password
@@ -26,7 +24,7 @@ class PasswordController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function reset($request, $response, $args)
+    public function reset(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('password/reset.tpl');
         return $response;
@@ -37,7 +35,7 @@ class PasswordController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function handleReset($request, $response, $args)
+    public function handleReset(ServerRequest $request, Response $response, $args)
     {
         $email = strtolower($request->getParam('email'));
         $user  = User::where('email', $email)->first();
@@ -63,7 +61,7 @@ class PasswordController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function token($request, $response, $args)
+    public function token(ServerRequest $request, Response $response, $args)
     {
         $token = PasswordReset::where('token', $args['token'])->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
         if ($token == null) return $response->withStatus(302)->withHeader('Location', '/password/reset');
@@ -77,7 +75,7 @@ class PasswordController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function handleToken($request, $response, $args)
+    public function handleToken(ServerRequest $request, Response $response, $args)
     {
         $tokenStr = $args['token'];
         $password = $request->getParam('password');

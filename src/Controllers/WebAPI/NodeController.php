@@ -9,10 +9,8 @@ use App\Models\{
     NodeInfoLog
 };
 use App\Services\Config;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use App\Utils\Tools;
 
 class NodeController extends BaseController
@@ -22,7 +20,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function info($request, $response, $args)
+    public function info(ServerRequest $request, Response $response, $args)
     {
         $node_id = $args['id'];
         if ($node_id == '0') {
@@ -55,7 +53,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getInfo($request, $response, $args)
+    public function getInfo(ServerRequest $request, Response $response, $args)
     {
         $node_id = $args['id'];
         if ($node_id == '0') {
@@ -96,7 +94,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getAllInfo($request, $response, $args)
+    public function getAllInfo(ServerRequest $request, Response $response, $args)
     {
         $nodes = Node::where('node_ip', '<>', null)->where(
             static function ($query) {
@@ -114,7 +112,7 @@ class NodeController extends BaseController
         return $response->withJson($res);
     }
 
-    public function getConfig($request, $response, $args)
+    public function getConfig(ServerRequest $request, Response $response, $args)
     {
         $data = $request->getParsedBody();
         switch ($data['type']) {

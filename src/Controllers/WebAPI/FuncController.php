@@ -7,10 +7,8 @@ use App\Models\{
     Node,
     DetectRule
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class FuncController extends BaseController
 {
@@ -19,7 +17,7 @@ class FuncController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getDetectLogs($request, $response, $args)
+    public function getDetectLogs(ServerRequest $request, Response $response, $args)
     {
         $rules = DetectRule::all();
 
@@ -35,7 +33,7 @@ class FuncController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ping($request, $response, $args)
+    public function ping(ServerRequest $request, Response $response, $args)
     {
         $res = [
             'ret' => 1,

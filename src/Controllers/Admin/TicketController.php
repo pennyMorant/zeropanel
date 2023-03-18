@@ -10,10 +10,8 @@ use App\Models\{
 };
 use App\Utils\Tools;
 use voku\helper\AntiXSS;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class TicketController extends AdminController
 {
@@ -24,7 +22,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketIndex($request, $response, $args)
+    public function ticketIndex(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             'id'        => 'ID',
@@ -50,7 +48,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createTicket($request, $response, $args)
+    public function createTicket(ServerRequest $request, Response $response, $args)
     {
         $title    = $request->getParam('title');
         $content  = $request->getParam('content');
@@ -100,7 +98,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateTicket($request, $response, $args)
+    public function updateTicket(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $comment = $request->getParam('comment');
@@ -157,7 +155,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketViewIndex($request, $response, $args)
+    public function ticketViewIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
         $ticket = Ticket::where('id', '=', $id)->first();
@@ -180,7 +178,7 @@ class TicketController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketAjax($request, $response, $args)
+    public function ticketAjax(ServerRequest $request, Response $response, $args)
     {
         $query = Ticket::getTableDataFromAdmin(
             $request,
@@ -233,7 +231,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function deleteTicket($request, $response, $args)
+    public function deleteTicket(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         Ticket::find($id)->delete();
@@ -243,7 +241,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function closeTicket($request, $response, $args)
+    public function closeTicket(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $ticket = Ticket::find($id);

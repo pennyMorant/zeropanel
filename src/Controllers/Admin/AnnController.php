@@ -10,10 +10,8 @@ use App\Models\{
 };
 use App\Utils\Telegram;
 use League\HTMLToMarkdown\HtmlConverter;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class AnnController extends AdminController
 {
@@ -24,7 +22,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             
@@ -46,7 +44,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajax($request, $response, $args)
+    public function ajax(ServerRequest $request, Response $response, $args)
     {
         $query = Ann::getTableDataFromAdmin(
             $request,
@@ -77,7 +75,7 @@ class AnnController extends AdminController
         }
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Ann::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -91,10 +89,11 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNews($request, $response, $args)
+    public function createNews(ServerRequest $request, Response $response, $args)
     {
-        $issend   = $request->getParam('issend');
-        $content  = $request->getParam('content');
+        $postdata = $request->getParsedBody();
+        $issend   = $postdata['issend'];
+        $content  = $postdata['content'];
         $subject  = Setting::obtain('website_name') . '-公告';
 
 
@@ -110,7 +109,7 @@ class AnnController extends AdminController
         }
 
         if ($issend == 1) {
-            $beginSend = ($request->getParam('page') - 1) * $_ENV['sendPageLimit'];
+            $beginSend = ($datas['page'] - 1) * $_ENV['sendPageLimit'];
             $users     = User::where('class', '>=', 0)->skip($beginSend)->limit($_ENV['sendPageLimit'])->get();
             foreach ($users as $user) {
                 $user->sendMail(
@@ -127,12 +126,12 @@ class AnnController extends AdminController
             if (count($users) == $_ENV['sendPageLimit']) {
                 return $response->withJson([
                     'ret' => 2,
-                    'msg' => $request->getParam('page') + 1
+                    'msg' => $datas['page'] + 1
                 ]);
             }
         }
         $converter = new HtmlConverter();
-        $html = $request->getParam('content');
+        $html = $postdata['content'];
         $markdown = $converter->convert($html);
         Telegram::PushToChanel($markdown);
         if ($issend == 1) {
@@ -153,12 +152,11 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNews($request, $response, $args)
+    public function updateNews(ServerRequest $request, Response $response, $args)
     {   
-        
         $ann           = Ann::find($request->getParam('id'));
         $ann->content  = $request->getParam('content');
-        //$ann->markdown = $request->getParam('markdown');
+        //$ann->markdown = $datas['markdown');
         $ann->date     = date('Y-m-d H:i:s');
         if (!$ann->save()) {
             return $response->withJson([
@@ -167,7 +165,7 @@ class AnnController extends AdminController
             ]);
         }
         $converter = new HtmlConverter();
-        $html = $request->getParam('content');
+        $html = $datas['content'];
         $markdown = $converter->convert($html);
         Telegram::PushToChanel('公告更新：' . PHP_EOL . $markdown);
         return $response->withJson([
@@ -183,7 +181,7 @@ class AnnController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteNews($request, $response, $args)
+    public function deleteNews(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $ann = Ann::find($id);
@@ -194,7 +192,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    public function requestNews($request, $response, $args)
+    public function requestNews(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $news = Ann::find($id);

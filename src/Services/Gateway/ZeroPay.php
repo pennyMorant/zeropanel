@@ -8,6 +8,8 @@ use App\Models\{
 };
 use Omnipay\Omnipay;
 use App\Services\View;
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class ZeroPay
 {
@@ -113,7 +115,7 @@ class ZeroPay
         }
     }
 
-    public function notify($request, $response, $args)
+    public function notify(ServerRequest $request, Response $response, $args)
     {
         $path = $request->getUri()->getPath();
         file_put_contents(BASE_PATH . '/storage/pay.log', json_encode(file_get_contents("php://input")) . "\r\n", FILE_APPEND);
@@ -223,14 +225,14 @@ class ZeroPay
                 return;
             case ('tronapipay'):
                 $tronapipay = new TronapiPay();
-                $tronapipay->notify($request, $response, $args);
+                $tronapipay->notify(request, $response, $args);
                 return;
             default:
                 return 'failed';
         }
     }
 
-    public function getReturnHTML ($request, $response, $args)
+    public function getReturnHTML (ServerRequest $request, Response $response, $args)
     {
         $order_no = $_GET['tradeno'];
         $order = Order::where('no', $order_no)->first();

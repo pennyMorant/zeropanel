@@ -12,17 +12,15 @@ use App\Models\{
     Payback,
     Ann,
 };
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use App\Services\Payment;
 use App\Services\Mail;
 use Pkly\I18Next\I18n;
 
 class OrderController extends BaseController
 {
-    public function order($request, $response, $args)
+    public function order(ServerRequest $request, Response $response, $args)
     {
         $this->view()
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
@@ -30,7 +28,7 @@ class OrderController extends BaseController
         return $response;
     }
 
-    public function orderDetails($request, $response, $args)
+    public function orderDetails(ServerRequest $request, Response $response, $args)
     {
         $order_no = $args['no'];
         $order = Order::where('user_id', $this->user->id)
@@ -60,7 +58,7 @@ class OrderController extends BaseController
         return $response;   
     }
 
-    public function createOrder($request, $response, $args)
+    public function createOrder(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
         $coupon_code = $request->getParam('coupon_code');
@@ -144,7 +142,7 @@ class OrderController extends BaseController
         ]);
     }
 
-    public function orderStatus($request, $response, $args)
+    public function orderStatus(ServerRequest $request, Response $response, $args)
     {
         $order_no = $args['no'];
         $order = Order::where('no', $order_no)->first();
@@ -155,7 +153,7 @@ class OrderController extends BaseController
         ]);
     }
 
-    public function processOrder($request, $response, $args)
+    public function processOrder(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
         $payment = $request->getParam('method');
@@ -286,7 +284,7 @@ class OrderController extends BaseController
         }
     }
 
-    public function verifyCoupon($request, $response, $args)
+    public function verifyCoupon(ServerRequest $request, Response $response, $args)
     {
         $coupon = $request->getParam('coupon_code');
         $coupon = trim($coupon);

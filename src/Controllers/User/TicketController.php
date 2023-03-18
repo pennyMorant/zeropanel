@@ -10,10 +10,8 @@ use App\Models\{
     Ann
 };
 use voku\helper\AntiXSS;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 use App\Utils\Telegram;
 use Pkly\I18Next\I18n;
 use League\HTMLToMarkdown\HtmlConverter;
@@ -28,7 +26,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketIndex($request, $response, $args)
+    public function ticketIndex(ServerRequest $request, Response $response, $args)
     {
         $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
         /*
@@ -57,7 +55,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function createTicket($request, $response, $args)
+    public function createTicket(ServerRequest $request, Response $response, $args)
     {
         $title = $request->getParam('title');
         $comment = $request->getParam('comment');
@@ -117,7 +115,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateTicket($request, $response, $args)
+    public function updateTicket(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $comment = $request->getParam('comment');
@@ -178,7 +176,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketViewIndex($request, $response, $args)
+    public function ticketViewIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
         $ticket = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();

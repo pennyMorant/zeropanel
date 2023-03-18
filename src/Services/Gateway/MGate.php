@@ -113,7 +113,7 @@ class MGate
         return ['url' => $result['data']['pay_url'], 'errcode' => 0, 'pid' => $pl->tradeno, 'type' => 'url'];
     }
 
-    public function notify($request, $response, $args)
+    public function notify(ServerRequest $request, Response $response, $args)
     {
 //        file_put_contents(BASE_PATH . '/storage/mgate.log', json_encode($request->getParams()) . "\r\n", FILE_APPEND);
         if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
@@ -123,7 +123,7 @@ class MGate
         die('SUCCESS');
     }
 
-    public function getStatus($request, $response, $args)
+    public function getStatus(ServerRequest $request, Response $response, $args)
     {
         $return = [];
         $p = Order::where('tradeno', $_POST['pid'])->first();

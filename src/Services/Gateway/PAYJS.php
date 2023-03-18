@@ -119,7 +119,7 @@ class PAYJS
         $data['sign'] = $this->sign($params);
         return json_decode($this->post($data, $type = 'query'), true);
     }
-    public function notify($request, $response, $args)
+    public function notify(ServerRequest $request, Response $response, $args)
     {
         $data = $_POST;
 
@@ -159,7 +159,7 @@ class PAYJS
         $data['sign'] = $this->sign($params);
         return $this->post($data, 'refund');
     }
-    public function getStatus($request, $response, $args)
+    public function getStatus(ServerRequest $request, Response $response, $args)
     {
         $return = [];
         $p = Order::where('tradeno', $_POST['pid'])->first();

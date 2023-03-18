@@ -11,10 +11,8 @@ use App\Utils\{
 };
 use App\Services\Config;
 use Exception;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class NodeController extends AdminController
 {
@@ -25,7 +23,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             
@@ -56,7 +54,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNodeIndex($request, $response, $args)
+    public function createNodeIndex(ServerRequest $request, Response $response, $args)
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
@@ -69,7 +67,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function createNode($request, $response, $args)
+    public function createNode(ServerRequest $request, Response $response, $args)
     {
         $node                   = new Node();
         $node->name             = $request->getParam('name');
@@ -128,7 +126,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNodeIndex($request, $response, $args)
+    public function updateNodeIndex(ServerRequest $request, Response $response, $args)
     {
         $id = $args['id'];
         $node = Node::find($id);
@@ -145,7 +143,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNode($request, $response, $args)
+    public function updateNode(ServerRequest $request, Response $response, $args)
     {
         $id                     = $request->getParam('id');
         $node                   = Node::find($id);
@@ -198,7 +196,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function deleteNode($request, $response, $args)
+    public function deleteNode(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $node = Node::find($id);
@@ -216,7 +214,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function nodeAjax($request, $response, $args)
+    public function nodeAjax(ServerRequest $request, Response $response, $args)
     {
         $query = Node::getTableDataFromAdmin(
             $request,
@@ -268,7 +266,7 @@ class NodeController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateNodeStatus($request, $response, $args)
+    public function updateNodeStatus(ServerRequest $request, Response $response, $args)
     {
         $id = $request->getParam('id');
         $status = $request->getParam('status');

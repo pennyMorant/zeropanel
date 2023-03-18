@@ -7,10 +7,8 @@ use App\Models\{
     Order
 };
 use Pkly\I18Next\I18n;
-use Slim\Http\{
-    Request,
-    Response
-};
+use Slim\Http\Response;
+use Slim\Http\ServerRequest;
 
 class OrderController extends AdminController
 {
@@ -20,7 +18,7 @@ class OrderController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function index($request, $response, $args)
+    public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = array(
             'id'            => 'ID',
@@ -47,7 +45,7 @@ class OrderController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxOrder($request, $response, $args)
+    public function ajaxOrder(ServerRequest $request, Response $response, $args)
     {
         $trans = I18n::get();
         $query = Order::getTableDataFromAdmin(
@@ -90,7 +88,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function completeOrder($request, $response, $args)
+    public function completeOrder(ServerRequest $request, Response $response, $args)
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);
@@ -102,7 +100,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function deleteOrder($request, $response, $args)
+    public function deleteOrder(ServerRequest $request, Response $response, $args)
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);
