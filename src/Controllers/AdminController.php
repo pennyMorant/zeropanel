@@ -267,7 +267,7 @@ class AdminController extends UserController
                 $earliest_signup_date = User::orderBy('signup_date')->first()->signup_date ?? Carbon::now()->subDays(7);
                 $earliest_signup_date = Carbon::parse($earliest_signup_date);
                 // 获取当前日期
-                $today = Carbon::today();
+                $today = Carbon::tomorrow();
 
                 // 获取查询结果集合
                 $users = User::whereBetween('signup_date', [$earliest_signup_date, $today])->pluck('signup_date');
