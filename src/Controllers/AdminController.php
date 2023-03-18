@@ -340,19 +340,20 @@ class AdminController extends UserController
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->groupBy('x')->pluck('y', 'x');
                 // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
-                $datas = [];
-                for ($i = 6; $i >= 0; $i--) {
-                    // 获取当天的日期
-                    $date = date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
-                    // 如果有流量数据，就取出来，否则设为0
-                    $flow = isset($traffic[$date]) ? (string)$traffic[$date] : '0';
-                    // 把日期和流量数据添加到数组中
-                    $datas[] = [
+                $dates = array_map(function ($i) {
+                    return date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
+                }, range(6, 0));
+
+                $trafficData = array_fill_keys($dates, '0');
+                $trafficData = array_replace($trafficData, $traffic->toArray());
+
+                $datas = array_map(function ($date, $flow) {
+                    return [
                         'x' => $date,
                         'y' => $flow,
                         'name' => I18n::get()->t('traffic'),
                     ];
-                }
+                }, array_keys($trafficData), $trafficData);
                 break;
             case 'user_traffic_ranking':
                 $time_a = Carbon::today()->startOfDay()->timestamp;

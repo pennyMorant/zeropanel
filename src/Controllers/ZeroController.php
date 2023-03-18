@@ -41,6 +41,8 @@ use voku\helper\AntiXSS;
 use TelegramBot\Api\BotApi;
 use Ozdemir\Datatables\Datatables;
 use Exception;
+use \DateTime;
+use \DB;
 
 
 class ZeroController extends BaseController
@@ -267,24 +269,34 @@ class ZeroController extends BaseController
         $name = $args['name'];
         $user = $this->user;
         switch ($name) {
-            case "traffic":
-                $time_a = strtotime(date('Y-m-d',$_SERVER['REQUEST_TIME'])) + 86400;
-                $time_b = $time_a + 86400;
-                $datas = [];
-                for ($i=0; $i < 8 ; $i++) {
-                    $time_a -= 86400;
-                    $time_b -= 86400;
-                    $traffic = TrafficLog::select('*', TrafficLog::raw('SUM(u+d) as total'))->where('user_id', $user->id)->whereBetween('datetime', [$time_a, $time_b])->get();
-                    foreach ($traffic as $value) {
-                        $total = $value->total < 1073741 ? 0 : $value->total;
-                        $datas[] = [
-                            'x'  => date('Y-m-d', $time_a),
-                            'y' => substr(Tools::flowToGB($total), 0, 4),                      
-                            'name' => I18n::get()->t('traffic'),
-                        ];
-                    }
-                }
-                return $response->withJson(array_reverse($datas));
+            case "traffic":               
+                 // 获取7天内的起始和结束时间戳
+                 $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
+                 $time_b = $time_a + 86400 * 8;
+                // 查询7天内按日期分组的流量数据，并转换成GB 
+                $traffic = TrafficLog::where('user_id', $user->id)
+                    ->whereBetween('datetime', [$time_a, $time_b])
+                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
+                    ->groupBy('x')->pluck('y', 'x');
+                // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
+                $dates = array_map(function ($i) {
+                    return date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
+                }, range(6, 0));
+
+                $trafficData = array_fill_keys($dates, '0');
+                $trafficData = array_replace($trafficData, $traffic->toArray());
+
+                $datas = array_map(function ($date, $flow) {
+                    return [
+                        'x' => $date,
+                        'y' => $flow,
+                        'name' => I18n::get()->t('traffic'),
+                    ];
+                }, array_keys($trafficData), $trafficData);
+                return $response->withJson($datas);
+                break;
+            default:
+                return 0;
         }
     }
 
