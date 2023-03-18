@@ -16,13 +16,13 @@ class ProductController extends AdminController
     public function index(ServerRequest $request, Response $response, $args)
     {
         $table_config['total_column'] = [
-            'id'                    => 'ID',
-            'sort'                  => '排序',   
-            'name'                  => '商品名称',
-            'type'                  => '产品类型',
-            'sales'          => '周期销量',
-            'status'                => '状态',
-            'action'                => '操作'
+            'id'        => 'ID',
+            'sort'      => '排序',   
+            'name'      => '商品名称',
+            'type'      => '产品类型',
+            'sales'     => '周期销量',
+            'status'    => '状态',
+            'action'    => '操作'
         ];
     
         $table_config['ajax_url'] = 'product/ajax';
@@ -130,7 +130,7 @@ class ProductController extends AdminController
                 'id'    =>  $rowData->id,
                 'sort'  =>  $rowData->sort,
                 'name'  =>  $rowData->name,
-                'type'  =>  $rowData->type,
+                'type'  =>  $rowData->type(),
                 'sales' =>  $rowData->sales,
                 'status'    =>  $rowData->status(),
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>

@@ -72,6 +72,24 @@ class Product extends Model
         }
         return $status;
     }
+
+    public function type()
+    {
+        switch ($this->type) {
+            case 1:
+                $type = '周期产品';
+                break;
+            case 2:
+                $type = '流量产品';
+                break;
+            case 3:
+                $type = '其他产品';
+                break;
+            default:
+                $type = 'best product';
+            
+        }
+    }
     
 
     public function purchase($user, $price)
