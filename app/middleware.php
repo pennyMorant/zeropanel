@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Slim\App;
-use App\Error\HtmlError;
+use App\Middleware\Error;
 
 return static function (App $app) {
     if ($_ENV['debug'] == true) {
@@ -12,6 +12,6 @@ return static function (App $app) {
         $errorMiddleware = $app->addErrorMiddleware(false, true, true);
         // Get the default error handler and register my custom error renderer.
         $errorHandler = $errorMiddleware->getDefaultErrorHandler();
-        $errorHandler->registerErrorRenderer('text/html', HtmlError::class);
+        $errorHandler->registerErrorRenderer('text/html', Error::class);
     }
 };
