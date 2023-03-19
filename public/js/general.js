@@ -388,62 +388,104 @@ function KTUsersResetSubLink() {
 
 // show configure product modal 
 function kTUserConfigureProductModal(id, currency) {
-    the_product_id = id;
-    const html = $('#zero_product_'+id).html();
-    const name = $('#zero_product_name_'+id).html();
-    const month_price = $('#zero_product_price_'+id).html();
-    const quarter_price = $('#zero_product_price_'+id).attr('data-price-quarter');
-    const half_year_price = $('#zero_product_price_'+id).attr('data-price-half-year');
-    const year_price = $('#zero_product_price_'+id).attr('data-price-year');
-    const submitButton = document.querySelector('[data-kt-users-action="submit"]');
-    if (!!month_price) {
-        $('#zero_modal_configure_product_month_price').html('<a class="btn btn-outline btn-active-light-primary active" data-bs-toggle="pill">月付</a>');
-        $('#zero_modal_configure_product_month_price').attr('onclick', 'KTUsersChangePlan("'+month_price+'", ' +id+ ', "month", "'+currency+'")');
+    function getProductData() {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                type: "POST",
+                url: "/user/product/getinfo",
+                dataType: "json",
+                data: {
+                    id
+                },
+                success: function(data){
+                    resolve(data);
+                }
+            });
+        })
     }
-    if (!!quarter_price) {
-        $('#zero_modal_configure_product_quarter_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">季付</a>');
-        $('#zero_modal_configure_product_quarter_price').attr('onclick', 'KTUsersChangePlan("'+quarter_price+'", ' +id+ ', "quarter", "'+currency+'")');
-    }
-    if (!!half_year_price) {
-        $('#zero_modal_configure_product_half_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">半年付</a>');
-        $('#zero_modal_configure_product_half_year_price').attr('onclick', 'KTUsersChangePlan("'+half_year_price+'", ' +id+ ', "half_year", "'+currency+'")');
-    }
-    if (!!year_price) {
-        $('#zero_modal_configure_product_year_price').html('<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">年付</a>');
-        $('#zero_modal_configure_product_year_price').attr('onclick', 'KTUsersChangePlan("'+year_price+'", ' +id+ ', "year", "'+currency+'")');
-    }
-    $('#zero_modal_configure_product_inner_html').html(html);
-    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;月付');
-    $('#zero_modal_configure_product_price').html(month_price + currency);
-    $('#zero_modal_configure_product_total').html(month_price + currency);
-    submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +month_price+ '", ' +id+ ')');
-    $("#zero_modal_configure_product").modal("show");
+    getProductData().then(function(data) {
+        const product_info = data;
+        const html = $('#zero_product_'+id).html();
+        const name = product_info.name;
+        const month_price = product_info.month_price;
+        const quarter_price = product_info.quarter_price;
+        const half_year_price = product_info.half_year_price;
+        const year_price = product_info.year_price;
+        const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+        if (product_info.type == 1) {
+            const all_prices = {
+                month_price: {
+                  label: '月付',
+                  value: month_price
+                },
+                quarter_price: {
+                  label: '季付',
+                  value: quarter_price
+                },
+                half_year_price: {
+                  label: '半年付',
+                  value: half_year_price
+                },
+                year_price: {
+                  label: '年付',
+                  value: year_price
+                }
+              };
+              
+              Object.entries(all_prices).forEach(([key, { label, value }]) => {
+                if (value) {
+                  $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
+                  $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value}", ${id}, "${key}", "${currency}")`);
+                  if (key === 'month_price') {
+                    $('#zero_modal_configure_product_' + key + ' a').addClass('active');
+                  }
+                }
+              });
+        }
+        var modalInnerHtml = $('#zero_modal_configure_product_inner_html');
+        var modalName = $('#zero_modal_configure_product_name');
+        var modalPrice = $('#zero_modal_configure_product_price');
+        var modalTotal = $('#zero_modal_configure_product_total');
+        var modalCoupon = $('#zero_modal_configure_coupon');
+        var modalCouponHtml = $('#zero_modal_configure_coupon_html');
+
+        modalInnerHtml.html(html);
+        product_info.type == 3 ? modalCouponHtml.hide() : false;
+        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;月付' : name);
+        modalPrice.html(month_price + currency);
+        modalTotal.html(month_price + currency);
+        modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+id+')');
+        submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +month_price+ '", ' +id+ ')');
+
+        $("#zero_modal_configure_product").modal("show");
+    });
+    
 }
 
 function KTUsersChangePlan(price, id, type, currency) {
-    const planMap = {
-        'month': '月付',
-        'quarter': '季付',
-        'half_year': '半年付',
-        'year': '年付'
+    const productPlanMap = {
+        'month_price': '月付',
+        'quarter_price': '季付',
+        'half_year_price': '半年付',
+        'year_price': '年付'
         };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
-    $('#zero_modal_configure_product_name').html(`${name} X ${planMap[type]}`);
+    $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
     $('#zero_modal_configure_product_price').html(`${price}${currency}`);
     $('#zero_modal_configure_product_total').html(`${price}${currency}`);
     submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
 }
 
 // verify coupon
-function KTUserVerifyCoupon() {
+function KTUserVerifyCoupon(product_id) {
     $.ajax({
         type: "POST",
         url: "/user/verify_coupon",
         dataType: "json",
         data: {
             coupon_code: $("#zero_coupon_code").val(),
-            product_id: the_product_id
+            product_id
         },
         success: function (data) {
             if (data.ret == 1) {
@@ -473,9 +515,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            setTimeout(function() {
-                                $(location).attr('href', '/user/order/' + data.order_id);
-                            }, 1500);
+                            $(location).attr('href', '/user/order/' + data.order_id);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -496,9 +536,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            setTimeout(function() {
-                                $(location).attr('href', '/user/order/' + data.order_id);
-                            }, 1500);
+                            $(location).attr('href', '/user/order/' + data.order_id);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -516,29 +554,25 @@ function KTUsersPayOrder(order_no) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
-    setTimeout(function () {
+    let paymentMethod = $("#payment_method a.active").attr("data-name");
+    let orderNo = order_no;
+    
+    setTimeout(() => {
         $.ajax({
             type: "POST",
             url: "/user/order/pay_order",
             dataType: "json",
-            data: {
-                method: $("#payment_method a.active").attr("data-name"),
-                order_no: order_no
-            },
+            data: {method: paymentMethod, order_no: orderNo},
             success: function (data) {
                 if (data.ret == 1) {
-                    setTimeout(function() {
-                        $(location).attr('href', data.url);
-                    }, 1500);
+                    $(location).attr('href', data.url);
                 } else if (data.ret == 2){
                     Swal.fire({
                         text: data.msg,
                         icon: "success",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
+                        customClass: {confirmButton: "btn btn-primary"}
                     }).then(function (result) {
                         if (result.isConfirmed) {
                             location.reload();
@@ -553,7 +587,7 @@ function KTUsersPayOrder(order_no) {
                 }
             }
         });
-    }, 2000);
+    }, 2000)  
 }
 
 // ticket
@@ -626,88 +660,95 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 			data: {},
 			success: function(data) {
 				if (data.ret == 1){
+                    const info = data.info;
+                    const qrcodeHtml = '<div class="pb-3" align="center" id="qrcode' + nodeid + '"></div>';
                     var content = data.url;
                     switch (data.sort) {
-                        case 11:
-                            $("#zero_modal_vmess_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_vmess_node_info_address").html(data.info.address);
-                            $("#zero_modal_vmess_node_info_port").html(data.info.port);
-                            $("#zero_modal_vmess_node_info_aid").html(data.info.aid);
-                            $("#zero_modal_vmess_node_info_uuid").html(data.info.uuid);
-                            $("#zero_modal_vmess_node_info_net").html(data.info.net);
-                            $("#zero_modal_vmess_node_info_path").html(data.info.path);
-                            $("#zero_modal_vmess_node_info_host").html(data.info.host);
-                            $("#zero_modal_vmess_node_info_servicename").html(data.info.servicename);
-                            $("#zero_modal_vmess_node_info_type").html(data.info.type);
-                            $("#zero_modal_vmess_node_info_security").html(data.info.security);
-                            $("#zero_modal_vmess_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-                            $("#qrcode"  + nodeid).qrcode({
-                                width: 200,
-                                height: 200,
-                                render: "canvas",
-                                text: content
-                            });
-                            Swal.close();
-                            $("#zero_modal_vmess_node_info").modal('show');
+                        case 11:                           
+                            // 循环设置HTML内容
+                            const selectors_11 = {
+                                '#zero_modal_vmess_node_info_remark': 'remark',
+                                '#zero_modal_vmess_node_info_address': 'address',
+                                '#zero_modal_vmess_node_info_port': 'port',
+                                '#zero_modal_vmess_node_info_aid': 'aid',
+                                '#zero_modal_vmess_node_info_uuid': 'uuid',
+                                '#zero_modal_vmess_node_info_net': 'net',
+                                '#zero_modal_vmess_node_info_path': 'path',
+                                '#zero_modal_vmess_node_info_host': 'host',
+                                '#zero_modal_vmess_node_info_servicename': 'servicename', 
+                                '#zero_modal_vmess_node_info_type': 'type',
+                                '#zero_modal_vmess_node_info_security': 'security'
+                            }
+                            
+                            for (let selector in selectors_11) {
+                                $(selector).html(info[selectors_11[selector]]);
+                              }
+                            // 生成QRCode
+                            $('#zero_modal_vmess_node_info_qrcode').html(qrcodeHtml);                           
+                            $("#zero_modal_vmess_node_info").modal('show'); 
                             break;
                         case 14:
-                            $("#zero_modal_trojan_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_trojan_node_info_address").html(data.info.address);
-                            $("#zero_modal_trojan_node_info_port").html(data.info.port);						
-                            $("#zero_modal_trojan_node_info_uuid").html(data.info.uuid);
-                            $("#zero_modal_trojan_node_info_sni").html(data.info.sni);
-                            $("#zero_modal_trojan_node_info_security").html(data.info.security);
-                            $("#zero_modal_trojan_node_info_flow").html(data.info.flow);
-                            $("#zero_modal_trojan_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-                            $("#qrcode"  + nodeid).qrcode({
-                                width: 200,
-                                height: 200,
-                                render: "canvas",
-                                text: content
-                            });
-                            Swal.close();
+                            const selectors_14 = {
+                                '#zero_modal_trojan_node_info_remark': 'remark', 
+                                '#zero_modal_trojan_node_info_address': 'address',
+                                '#zero_modal_trojan_node_info_port': 'port',
+                                '#zero_modal_trojan_node_info_uuid': 'uuid',
+                                '#zero_modal_trojan_node_info_sni': 'sni',
+                                '#zero_modal_trojan_node_info_security': 'security',
+                                '#zero_modal_trojan_node_info_flow': 'flow',
+                            };
+                            
+                            for (let selector in selectors_14) {
+                                $(selector).html(info[selectors_14[selector]]);
+                              }
+                            $("#zero_modal_trojan_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_trojan_node_info").modal('show');
                             break;
                         case 15:
-                            $("#zero_modal_vless_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_vless_node_info_address").html(data.info.address);
-                            $("#zero_modal_vless_node_info_port").html(data.info.port);
-                            $("#zero_modal_vless_node_info_uuid").html(data.info.uuid);
-                            $("#zero_modal_vless_node_info_net").html(data.info.net);
-                            $("#zero_modal_vless_node_info_path").html(data.info.path);
-                            $("#zero_modal_vless_node_info_host").html(data.info.host);
-                            $("#zero_modal_vless_node_info_servicename").html(data.info.servicename);
-                            $("#zero_modal_vless_node_info_type").html(data.info.type);
-                            $("#zero_modal_vless_node_info_security").html(data.info.security);
-                            $("#zero_modal_vless_node_info_flow").html(data.info.flow);
-                            $("#zero_modal_vless_node_info_sni").html(data.info.sni);
-                            $("#zero_modal_vless_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-                            $("#qrcode"  + nodeid).qrcode({
-                                width: 200,
-                                height: 200,
-                                render: "canvas",
-                                text: content
-                            });
-                            Swal.close();
+                            const selectors_15 = {
+                                '#zero_modal_vless_node_info_remark': 'remark',
+                                '#zero_modal_vless_node_info_address': 'address',
+                                '#zero_modal_vless_node_info_port': 'port',
+                                '#zero_modal_vless_node_info_uuid': 'uuid',
+                                '#zero_modal_vless_node_info_net': 'net',
+                                '#zero_modal_vless_node_info_path': 'path',
+                                '#zero_modal_vless_node_info_host': 'host',
+                                '#zero_modal_vless_node_info_servicename': 'servicename',
+                                '#zero_modal_vless_node_info_type': 'type',
+                                '#zero_modal_vless_node_info_security': 'security',
+                                '#zero_modal_vless_node_info_flow': 'flow',
+                                '#zero_modal_vless_node_info_sni': 'sni',
+                              }
+                              
+                            for (let selector in selectors_15) {
+                            $(selector).html(info[selectors_15[selector]]);
+                            }
+                            $("#zero_modal_vless_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_vless_node_info").modal('show');
                             break;
                         case 0:
-                            $("#zero_modal_shadowsocks_node_info_remark").html(data.info.remark);
-                            $("#zero_modal_shadowsocks_node_info_address").html(data.info.address);
-                            $("#zero_modal_shadowsocks_node_info_port").html(data.info.port);
-                            $("#zero_modal_shadowsocks_node_info_method").html(data.info.method);
-                            $("#zero_modal_shadowsocks_node_info_passwd").html(data.info.passwd);
-                            $("#zero_modal_shadowsocks_node_info_qrcode").html('<div class="pb-3" align="center" id="qrcode'+nodeid+'"></div>');
-                            $("#qrcode"  + nodeid).qrcode({
-                                width: 200,
-                                height: 200,
-                                render: "canvas",
-                                text: content
-                            });
-                            Swal.close();
+                            const selectors_0 = {
+                                '#zero_modal_shadowsocks_node_info_remark': 'remark',
+                                '#zero_modal_shadowsocks_node_info_address': 'address',
+                                '#zero_modal_shadowsocks_node_info_port': 'port',
+                                '#zero_modal_shadowsocks_node_info_method': 'method',
+                                '#zero_modal_shadowsocks_node_info_passwd': 'passwd',
+                            }
+
+                            for (let selector in selectors_0) {
+                                $(selector).html(info[selectors_0[selector]]);
+                            }
+                            $("#zero_modal_shadowsocks_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_shadowsocks_node_info").modal('show');
                             break;
                     }
+                    $("#qrcode"  + nodeid).qrcode({
+                        width: 200,
+                        height: 200,
+                        render: "canvas",
+                        text: content
+                    });
+                    Swal.close();
 				} else {                   
 					getResult(data.msg, "", "error");
 				}
@@ -722,40 +763,22 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 function KTUsersWithdrawCommission(type){
     switch (type) {
         case 1:
-            $.ajax({
-                type: "POST",
-                url: "/user/withdraw_commission",
-                dataType: "json",
-                data: {
-                    commission: $('#withdraw_commission_amount').val(),
-                    type: $("#withdraw_type a.active").attr("data-type")
-                },
-                success: function(data){
-                    if(data.ret == 1) {
-                        getResult(data.msg, '', 'success');
-                    }else{
-                        getResult(data.msg, '', 'error');
-                    }
-                }
-            });
+            $.post("/user/withdraw_commission", {
+                commission: $('#withdraw_commission_amount').val(),
+                type: $("#withdraw_type a.active").attr("data-type")
+                }, function(data) {
+                getResult(data.msg, '', (data.ret == 1) ? 'success' : 'error');
+                }, "json");
             break;
         case 2:
-            $.ajax({
-                type: "POST",
-                url: "/user/withdraw_account_setting",
-                dataType: "json",
-                data: {
-                    acc: $('#withdraw_account_value').val(),
-                    method: $('#withdraw_method').val()
-                },
-                success: function(data){
-                    if(data.ret == 1) {
-                        getResult(data.msg, '', 'success');
-                    }else{
-                        getResult(data.msg, '', 'error');
-                    }
-                }
-            });
+            $.post("/user/withdraw_account_setting", {
+                acc: $('#withdraw_account_value').val(),
+                method: $('#withdraw_method').val()
+                }, function(data) {
+                getResult(data.msg, '', (data.ret == 1) ? 'success' : 'error');
+                }, "json");
+        default:
+            0;
     }
 }
 

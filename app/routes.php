@@ -42,6 +42,7 @@ return function (SlimApp $app) {
         $group->get('/node',                     App\Controllers\User\NodeController::class . ':node');
 
         $group->get('/product',                  App\Controllers\User\ProductController::class . ':product');
+        $group->post('/product/getinfo',      App\Controllers\User\ProductController::class . ':getProductInfo');
 
         $group->get('/ticket',                   App\Controllers\User\TicketController::class . ':ticketIndex');
         $group->post('/ticket/create',            App\Controllers\User\TicketController::class . ':createTicket');
@@ -146,6 +147,7 @@ return function (SlimApp $app) {
         $group->put('/product/update',                App\Controllers\Admin\ProductController::class . ':updateProduct');
         $group->delete('/product/delete',                  App\Controllers\Admin\ProductController::class . ':deleteProduct');
         $group->put('/product/update/status',      App\Controllers\Admin\ProductController::class . ':updateProductStatus');
+        $group->post('/product/getinfo',      App\Controllers\Admin\ProductController::class . ':getProductInfo');
 
         // order
         $group->get('/order',                   App\Controllers\Admin\OrderController::class . ':index');

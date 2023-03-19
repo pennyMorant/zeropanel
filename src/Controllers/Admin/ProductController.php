@@ -49,7 +49,7 @@ class ProductController extends AdminController
         $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
-        $product->traffic = $request->getParam('traffic');
+        $product->traffic = (empty($request->getParam('traffic'))) ? NULL : $request->getParam('traffic');
         $product->user_group = $request->getParam('group');
         $product->class = $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
@@ -92,7 +92,7 @@ class ProductController extends AdminController
         $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
-        $product->traffic = $request->getParam('traffic');
+        $product->traffic = (empty($request->getParam('traffic'))) ? NULL : $request->getParam('traffic');
 
         $product->user_group = $request->getParam('node_group');
         $product->class = $request->getParam('class');
@@ -173,5 +173,20 @@ class ProductController extends AdminController
             'ret' => 1,
             'msg' => '删除成功'
         ]);
+    }
+
+    public function getProductInfo(ServerRequest $request, Response $response, $args): Response
+    {
+        $id = $request->getParam('id');
+        $product = Product::find($id);
+        $data = [
+            'name' => $product->name,
+            'month_price'   =>  $product->month_price,
+            'quarter_price' =>  $product->quarter_price,
+            'half_year_price'   =>  $product->half_year_price,
+            'year_price'    =>  $product->year_price,
+            'type'  =>  $product->type,
+        ];
+        return $response->withJson($data);
     }
 }

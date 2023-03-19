@@ -63,4 +63,19 @@ final class ProductController extends BaseController
         return $response;
     }
 
+    public function getProductInfo(ServerRequest $request, Response $response, $args): Response
+    {
+        $id = $request->getParam('id');
+        $product = Product::find($id);
+        $data = [
+            'name' => $product->name,
+            'month_price'   =>  $product->month_price,
+            'quarter_price' =>  $product->quarter_price,
+            'half_year_price'   =>  $product->half_year_price,
+            'year_price'    =>  $product->year_price,
+            'type'  =>  $product->type,
+        ];
+        return $response->withJson($data);
+    }
+
 }

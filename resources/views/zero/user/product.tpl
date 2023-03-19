@@ -56,6 +56,17 @@
 																						</div>
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
+																						{if $product->type == 3}
+																						<div class="d-flex align-items-center mb-5">
+																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">此产品购买后需联系客服</span>
+																							<span class="svg-icon svg-icon-1 svg-icon-success">
+																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																								</svg>
+																							</span>
+																						</div>
+																						{else}
 																						<div class="d-flex align-items-center mb-5">
 																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
 																							<span class="svg-icon svg-icon-1 svg-icon-success">
@@ -131,11 +142,12 @@
 																								</svg>
 																							</span>
 																						</div>
+																						{/if}
 																					</div>
 																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal('{$product->id}', '{$currency_unit}')">{$trans->t('purchase')}</button>
+																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">{$trans->t('purchase')}</button>
 																					{/if}
 																				</div>
 																			</div>
@@ -199,11 +211,11 @@
 									</div>
 								</div>
 								<div class="col-lg-5 mt-5">
-									<div class="card card-dashed">
+									<div class="card card-dashed" id="zero_modal_configure_coupon_html">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<input class="form-control me-3" placeholder={$trans->t('promo code')} type="text" id="zero_coupon_code">
-												<button id="zero" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">{$trans->t('verify')}</button>
+												<button id="zero_modal_configure_coupon" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">{$trans->t('verify')}</button>
 											</div>
 										</div>
 									</div>
@@ -258,6 +270,15 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$("#zero_modal_configure_product").on('hidden.bs.modal', function () {
+				$("#zero_modal_configure_product_month_price").html('');
+				$("#zero_modal_configure_product_quarter_price").html('');
+				$("#zero_modal_configure_product_half_year_price").html('');
+				$("#zero_modal_configure_product_year_price").html('');
+				console.log('clean success');
+			});
+		</script>
     </body>
 </html>
                                             
