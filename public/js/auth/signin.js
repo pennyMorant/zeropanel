@@ -29,9 +29,36 @@ var KTSigninGeneral = function() {
                         validators: {
                             notEmpty: {
                                 message: 'The password is required'
+                            },
+                        }
+                    },
+                    'cf-turnstile-response': {
+                        validators:{
+                            callback: {
+                                message: "CF need to valid",
+                                callback: function() {
+                                    if (!turnstile.getResponse()) {
+                                        return {
+                                            valid: false,
+                                        }
+
+                                    } else {
+                                        return {
+                                            valid: true,
+                                        }
+                                    }
+                                }
+                            },
+                            condition: {
+                                message: 'CF is disabled',
+                                enabled: true,
+                                // 根据条件判断是否启用验证
+                                callback: function(value, validator, $field) {
+                                    return $('div').is('.cf-turnstile') == true;
+                                }
                             }
                         }
-                    } 
+                    }
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
