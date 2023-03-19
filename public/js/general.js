@@ -421,25 +421,17 @@ function kTUserConfigureProductModal(id, currency) {
 }
 
 function KTUsersChangePlan(price, id, type, currency) {
-    switch (type) {
-        case 'month':
-            plan = '月付';
-            break;
-        case 'quarter':
-            plan = '季付';
-            break;
-        case 'half_year':
-            plan = '半年付';
-            break;
-        case 'year':
-            plan = '年付';
-            break;
-    }
+    const planMap = {
+        'month': '月付',
+        'quarter': '季付',
+        'half_year': '半年付',
+        'year': '年付'
+        };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
-    $('#zero_modal_configure_product_name').html(name + '&nbsp;X&nbsp;' + plan);
-    $('#zero_modal_configure_product_price').html(price + currency);
-    $('#zero_modal_configure_product_total').html(price + currency);
+    $('#zero_modal_configure_product_name').html(`${name} X ${planMap[type]}`);
+    $('#zero_modal_configure_product_price').html(`${price}${currency}`);
+    $('#zero_modal_configure_product_total').html(`${price}${currency}`);
     submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
 }
 

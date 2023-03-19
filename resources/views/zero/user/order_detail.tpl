@@ -117,54 +117,53 @@
                                                 
                                             </div>
 											{if $order->order_status == '1'}
-											<div class="form-group row form-group-marginless">
-												<label class="col-lg-12 col-form-label kt-font-boldest"><strong>{$trans->t('payment method')}: </strong></label>
-												<div class="col-lg-12">
-													<ul class="nav nav-pills nav-justified row" role="tablist" id="payment_method">
+                                            <div class="col-lg-12">
+												<label class="col-form-label kt-font-boldest"><strong>{$trans->t('payment method')}: </strong></label>
+												
+													<ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
 													
 														{if $payment_gateway['alipay_payment'] != 'none'}
-														<li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
-															<a class="btn btn-outline btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-name="alipay">
+														<li class="nav-item mb-3">
+															<a class="btn btn-outline btn-active-light-primary d-flex flex-column active" data-bs-toggle="pill" data-name="alipay">
 																<span class="nav-icon py-2 w-auto">
-																	<i class="fab fa-alipay fs-2hx text-primary"></i>
+																	<i class="fab fa-alipay fs-3hx text-primary"></i>
 																</span>
-																<span class="nav-text fs-5 py-2 text-center">{$trans->t('alipay')}</span>
+																<span class="text-primary fs-3 py-2 fw-bold">{$trans->t('alipay')}</span>
 															</a>
 														</li>
 														{/if}
 														{if $payment_gateway['wechatpay_payment'] != 'none'}
-														<li class="nav-wxpay nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
-															<a class="btn btn-outline btn-active-light-success text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="wechatpay">
-																<span class="nav-icon py-2 w-auto">
-																	<i class="fab fa-weixin fs-2hx text-success"></i>
+														<li class="nav-item mb-3">
+															<a class="btn btn-outline btn-active-light-success d-flex flex-column" data-bs-toggle="pill" data-name="wechatpay">
+																<span class="nav-icon py-2">
+																	<i class="fab fa-weixin fs-3hx text-success"></i>
 																</span>
-																<span class="nav-text fs-5 py-2 text-center">{$trans->t('wechat')}</span>
+																<span class="fs-3 py-2 fw-bold text-success">{$trans->t('wechat')}</span>
 															</a>
 														</li>
 														{/if}
 														{if $payment_gateway['cryptopay_payment'] != 'none'}
-														<li class="nav-crypto nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
-															<a class="btn btn-outline btn-active-light-warning text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="cryptopay">
-																<span class="nav-icon py-2 w-auto">
-																	<i class="fab fa-bitcoin fs-2hx text-warning"></i>
+														<li class="nav-item mb-3">
+															<a class="btn btn-outline btn-active-light-warning d-flex flex-column" data-bs-toggle="pill" data-name="cryptopay">
+																<span class="nav-icon py-2">
+																	<i class="fab fa-bitcoin fs-3hx text-warning"></i>
 																</span>
-																<span class="nav-text fs-5 py-2 text-center">{$trans->t('crypto')}</span>
+																<span class="fs-3 py-2 fw-bold text-warning">{$trans->t('crypto')}</span>
 															</a>
 														</li>
 														{/if}
 													
 														{if $order->order_type != 2}
-														<li class="nav-wallet nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
-															<a class="btn btn-outline btn-active-light-info text-start d-flex flex-grow-1 flex-column align-items-center" data-bs-toggle="pill" data-name="creditpay">
-																<span class="nav-icon py-2 w-auto">
-																	<i class="bi bi-wallet fs-2hx text-info"></i>
+														<li class="nav-item mb-3">
+															<a class="btn btn-outline btn-active-light-info d-flex flex-column" data-bs-toggle="pill" data-name="creditpay">
+																<span class="nav-icon py-2">
+																	<i class="bi bi-wallet fs-3hx text-info"></i>
 																</span>
-																<span class="nav-text fs-5 py-2 text-center">{$trans->t('credit')}</span>
+																<span class="fs-3 py-2 fw-bold text-info">{$trans->t('credit')}</span>
 															</a>
 														</li>
 														{/if}
 													</ul>
-												</div>
 											</div>
 											<div class="text-center pt-15">
 												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
