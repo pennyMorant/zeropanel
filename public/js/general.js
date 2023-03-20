@@ -2,7 +2,7 @@
 //clipboard
 var clipboard = new ClipboardJS('.copy-text');
 clipboard.on('success', function(e) {
-    getResult(i18next.t('success'), "", "success");
+    getResult(i18next.t('copy success'), "", "success");
 });
 
 // get result 
