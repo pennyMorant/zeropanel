@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-18 15:46:10
+-- 生成日期： 2023-03-20 06:15:04
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -71,7 +71,7 @@ CREATE TABLE `config` (
 --
 
 CREATE TABLE `coupon` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `code` varchar(20) NOT NULL COMMENT '优惠码',
   `per_use_count` int(11) NOT NULL COMMENT '每个用户使用次数',
   `expire` int(11) NOT NULL COMMENT '到期时间',
@@ -104,7 +104,7 @@ CREATE TABLE `detect_ban_log` (
 --
 
 CREATE TABLE `detect_list` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `name` longtext NOT NULL,
   `text` longtext NOT NULL,
   `regex` longtext NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE `email_queue` (
 --
 
 CREATE TABLE `email_verify` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(32) NOT NULL,
   `ip` varchar(39) NOT NULL,
   `code` varchar(39) NOT NULL,
@@ -230,7 +230,7 @@ CREATE TABLE `node_online_log` (
 --
 
 CREATE TABLE `order` (
-  `id` bigint(20) NOT NULL COMMENT 'AUTO_INCREMENT',
+  `id` int(11) NOT NULL COMMENT 'AUTO_INCREMENT',
   `order_no` varchar(30) DEFAULT NULL COMMENT '订单号',
   `order_type` int(11) DEFAULT NULL COMMENT '订单类型1购买产品2账户充值',
   `user_id` int(11) DEFAULT NULL COMMENT '提交用户',
@@ -397,7 +397,8 @@ CREATE TABLE `user` (
   `traffic_notified` tinyint(1) DEFAULT 0,
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
-  `withdraw_account` varchar(50) DEFAULT NULL
+  `withdraw_account` varchar(50) DEFAULT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT '账户是否被验证'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -643,7 +644,7 @@ ALTER TABLE `user_password_reset`
 -- 表的索引 `user_subscribe_log`
 --
 ALTER TABLE `user_subscribe_log`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- 表的索引 `user_token`
@@ -689,7 +690,7 @@ ALTER TABLE `config`
 -- 使用表AUTO_INCREMENT `coupon`
 --
 ALTER TABLE `coupon`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `detect_ban_log`
@@ -701,7 +702,7 @@ ALTER TABLE `detect_ban_log`
 -- 使用表AUTO_INCREMENT `detect_list`
 --
 ALTER TABLE `detect_list`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `detect_log`
@@ -719,7 +720,7 @@ ALTER TABLE `email_queue`
 -- 使用表AUTO_INCREMENT `email_verify`
 --
 ALTER TABLE `email_verify`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `link`
@@ -749,7 +750,7 @@ ALTER TABLE `node_online_log`
 -- 使用表AUTO_INCREMENT `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'AUTO_INCREMENT';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'AUTO_INCREMENT';
 
 --
 -- 使用表AUTO_INCREMENT `payback`
@@ -803,6 +804,12 @@ ALTER TABLE `user_invite_code`
 -- 使用表AUTO_INCREMENT `user_password_reset`
 --
 ALTER TABLE `user_password_reset`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `user_subscribe_log`
+--
+ALTER TABLE `user_subscribe_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
