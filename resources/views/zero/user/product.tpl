@@ -236,19 +236,19 @@
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<ul class="nav nav-pills nav-fill">
-													<li class="nav-item" id="zero_modal_configure_product_month_price">
+													<li class="nav-item mb-3" id="zero_modal_configure_product_month_price">
 														
 													</li>
 													
-													<li class="nav-item" id="zero_modal_configure_product_quarter_price">
+													<li class="nav-item mb-3" id="zero_modal_configure_product_quarter_price">
 														
 													</li>
 													
-													<li class="nav-item" id="zero_modal_configure_product_half_year_price">
+													<li class="nav-item mb-3" id="zero_modal_configure_product_half_year_price">
 														
 													</li>
 													
-													<li class="nav-item" id="zero_modal_configure_product_year_price">
+													<li class="nav-item mb-3" id="zero_modal_configure_product_year_price">
 														
 													</li>
 												</ul>
