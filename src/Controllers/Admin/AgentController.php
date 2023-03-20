@@ -26,7 +26,7 @@ class AgentController extends AdminController
      */
     public function index(ServerRequest $request, Response $response, $args)
     {
-        $table_config['total_column'] = array( 
+        $table_config['total_column'] = [
             'id' => 'ID',
             'type' => '提现类型', 
             'userid' => '用户', 
@@ -34,7 +34,7 @@ class AgentController extends AdminController
             'status' => '状态',
             'datetime' => '时间',
             'action' => '操作'
-        );
+        ];
         $table_config_commission['total_column'] = [
             'id'              => 'ID',
             'total'           => '原始金额',
