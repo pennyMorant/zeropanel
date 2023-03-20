@@ -402,7 +402,7 @@ class ZeroController extends BaseController
                     return [
                         'subscribe_type'    => $rowData->subscribe_type,
                         'request_ip'    =>  $rowData->request_id,
-                        'location'  =>  $rowData->Tools::getIpInfo($rowData->request_ip),
+                        'location'  =>  Tools::getIpInfo($rowData->request_ip),
                         'request_time'  =>  $rowData->request_time,
                     ];
                 })->toArray();
