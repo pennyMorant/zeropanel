@@ -67,6 +67,9 @@
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
 		<script src="/js/auth/signin.min.js"></script>
+		<script src="/js/i18nextBrowserLanguageDetector.min.js"></script>
+		<script src="/js/i18next.min.js"></script>
+		<script src="/js/language.js"></script>
 		{if $config['enable_signin_captcha'] === true && $config['captcha_provider'] === 'turnstile'}
 			<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 		{/if}

@@ -19,20 +19,20 @@ var KTSignupGeneral = function() {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'The value is not a valid email address',
+                                message: i18next.t('the value is not a valid email address')
                             },
 							notEmpty: {
-								message: 'Email address is required'
+								message: i18next.t('email address is required')
 							}
 						}
 					},
                     'password': {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
+                                message: i18next.t('password is required')
                             },
                             callback: {
-                                message: 'Please enter valid password',
+                                message: i18next.t('please enter valid password'),
                                 callback: function(input) {
                                     if (input.value.length < 8) {
                                         return validatePassword();
@@ -44,13 +44,13 @@ var KTSignupGeneral = function() {
                     'confirm-password': {
                         validators: {
                             notEmpty: {
-                                message: 'The password confirmation is required'
+                                message: i18next.t('password confirmation is required')
                             },
                             identical: {
                                 compare: function() {
                                     return form.querySelector('[name="password"]').value;
                                 },
-                                message: 'The password and its confirm are not the same'
+                                message: i18next.t('password and its confirm are not the same')
                             }
                         }
                     },
@@ -156,7 +156,7 @@ var KTSignupGeneral = function() {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: i18next.t('sorry looks like there are some errors detected, please try again'),
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",

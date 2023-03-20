@@ -2,7 +2,7 @@
 //clipboard
 var clipboard = new ClipboardJS('.copy-text');
 clipboard.on('success', function(e) {
-    getResult("复制成功", "", "success");
+    getResult(i18next.t('success'), "", "success");
 });
 
 // get result 
@@ -415,19 +415,19 @@ function kTUserConfigureProductModal(id, currency) {
         if (product_info.type == 1) {
             const all_prices = {
                 month_price: {
-                  label: '月付',
+                  label: i18next.t('monthly fee'),
                   value: month_price
                 },
                 quarter_price: {
-                  label: '季付',
+                  label: i18next.t('quarterly fee'),
                   value: quarter_price
                 },
                 half_year_price: {
-                  label: '半年付',
+                  label: i18next.t('semi annua fee'),
                   value: half_year_price
                 },
                 year_price: {
-                  label: '年付',
+                  label: i18next.t('annual fee'),
                   value: year_price
                 }
               };
@@ -451,7 +451,7 @@ function kTUserConfigureProductModal(id, currency) {
 
         modalInnerHtml.html(html);
         product_info.type == 3 ? modalCouponHtml.hide() : false;
-        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;月付' : name);
+        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + i18next.t('monthly fee') : name);
         modalPrice.html(month_price + currency);
         modalTotal.html(month_price + currency);
         modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+id+')');
@@ -464,10 +464,10 @@ function kTUserConfigureProductModal(id, currency) {
 
 function KTUsersChangePlan(price, id, type, currency) {
     const productPlanMap = {
-        'month_price': '月付',
-        'quarter_price': '季付',
-        'half_year_price': '半年付',
-        'year_price': '年付'
+        'month_price': i18next.t('monthly fee'),
+        'quarter_price': i18next.t('quarterly fee'),
+        'half_year_price': i18next.t('semi annua fee'),
+        'year_price':i18next.t('annual fee')
         };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
@@ -793,7 +793,7 @@ function oneclickImport(client, subLink) {
       sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
     }
     Swal.fire({
-        title: "Whether to import subscription links",
+        title: i18next.t('confirm importing subscription link'),
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Submit",
