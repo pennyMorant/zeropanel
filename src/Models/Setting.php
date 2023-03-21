@@ -15,6 +15,8 @@ class Setting extends Model
             return (bool) $config->value;
         } elseif ($config->type === 'int') {
             return (int) $config->value;
+        } else if ($config->type === 'array'){
+            return $config->value;
         }
         return (string) $config->value;
     }
@@ -39,7 +41,7 @@ class Setting extends Model
 
     public static function getPublicConfig()
     {
-        $configs = array();
+        $configs = [];
         $all_configs = Setting::where('is_public', '1')->get();
 
         foreach ($all_configs as $config) {
@@ -47,6 +49,8 @@ class Setting extends Model
                 $configs[$config->item] = (bool) $config->value;
             } elseif ($config->type === 'int') {
                 $configs[$config->item] = (int) $config->value;
+            } else if ($config->type === 'array') {
+                $configs[$config->item] = $config->value;
             } else {
                 $configs[$config->item] = (string) $config->value;
             }

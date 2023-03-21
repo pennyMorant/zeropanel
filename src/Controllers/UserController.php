@@ -50,6 +50,7 @@ class UserController extends BaseController
         }
         $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
         $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
+
         $this->view()
             ->assign('sub_token', $this->user->getSublink())
             ->assign('class_left_days', $class_left_days)

@@ -99,7 +99,7 @@ class ProductController extends AdminController
         $product->reset_traffic_cycle = $request->getParam('reset');
         $product->speed_limit = $request->getParam('speed_limit');
         $product->ip_limit = $request->getParam('ip_limit');
-        $product->stock = $request->getParam('stock') - $product->sales;
+        $product->stock = $request->getParam('stock');
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,

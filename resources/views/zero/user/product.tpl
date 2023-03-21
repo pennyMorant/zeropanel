@@ -44,6 +44,7 @@
 														<div class="row g-10">                                               
 															{if $count[$key] != '0'}
 																{foreach $products as $product}
+																	{assign var="product_permission" value=$permission_group[$product->class]|default: "unknown"}
 																	{if $product->type == $key}
 																		<div class="col-xl-4">
 																			<div class="d-flex h-100 align-items-center">
@@ -57,91 +58,69 @@
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
 																						{if $product->type == 3}
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">此产品购买后需联系客服</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						{else}
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->connector()} == '0' }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->connector()}IPs{/if}&nbsp;{$trans->t('online ip')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speedlimit()} == '0' }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->speedlimit()} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$trans->t('no rule')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Lv1 {$trans->t('access permission')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						{if $product->class > 1}
 																							<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">lv2 {$trans->t('access permission')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-success">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">此产品购买后需联系客服</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
 																						{else}
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-400 flex-grow-1 pe-3">Lv2 {$trans->t('access permission')}</span>
-																							<span class="svg-icon svg-icon-1">
-																								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																									<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
-																									<rect x="7" y="15.3137" width="12" height="2" rx="1" transform="rotate(-45 7 15.3137)" fill="currentColor" />
-																									<rect x="8.41422" y="7" width="12" height="2" rx="1" transform="rotate(45 8.41422 7)" fill="currentColor" />
-																								</svg>
-																							</span>
-																						</div>
-																						{/if}
-																						<div class="d-flex align-items-center mb-5">
-																							<span class="fw-semibold fs-6 text-gray-800 flex-grow-1">{$trans->t('only owner use')}</span>
-																							<span class="svg-icon svg-icon-1 svg-icon-warning">
-																								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-																									<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-																								</svg>
-																							</span>
-																						</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->ip_limit} == null }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->connector()}IPs{/if}&nbsp;{$trans->t('online ip')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speed_limit} == null }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->speedlimit()} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{$trans->t('no rule')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product_permission}</span>{$trans->t('access permission')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-success">
+																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
+																										<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor" />
+																									</svg>
+																								</span>
+																							</div>
+																							<div class="d-flex align-items-center mb-5">
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1">{$trans->t('only owner use')}</span>
+																								<span class="svg-icon svg-icon-1 svg-icon-warning">
+																									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+																										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+																									</svg>
+																								</span>
+																							</div>
 																						{/if}
 																					</div>
 																					{if $product->stock != 0 && $product->stock - $product->sales == 0}

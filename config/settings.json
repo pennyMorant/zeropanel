@@ -1230,5 +1230,25 @@
         "type": "string",
         "default": "none",
         "mark": "虚拟币支付渠道"
+    },
+    {
+        "id": null,
+        "item": "enable_permission_group",
+        "value": "0",
+        "class": "permission_group",
+        "is_public": 0,
+        "type": "bool",
+        "default": "0",
+        "mark": "开启权限组"
+    },
+    {
+        "id": null,
+        "item": "permission_group_detail",
+        "value": "{}",
+        "class": "permission_group",
+        "is_public": 0,
+        "type": "array",
+        "default": "{}",
+        "mark": "权限组详细"
     }
 ]

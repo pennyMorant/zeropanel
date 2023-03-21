@@ -81,7 +81,7 @@ class OrderController extends BaseController
                     if ($product == null) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    $all_price = array($product->month_price, $product->quarter_price, $product->half_year_price, $product->year_price);
+                    $all_price = [$product->month_price, $product->quarter_price, $product->half_year_price, $product->year_price];
                     if (!in_array($product_price, $all_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }

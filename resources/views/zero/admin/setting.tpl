@@ -19,6 +19,8 @@
         <link href="/theme/zero/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
         <link href="/theme/zero/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
         <link href="/theme/zero/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+        <script src="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.js"></script>
         <link href="/favicon.png" rel="shortcut icon">
         <link href="/apple-touch-icon.png" rel="apple-touch-icon">
     </head>
@@ -43,7 +45,7 @@
                                             </nav>
                                             <div class="tab-content" id="nav-tabContent">
                                                 <div class="tab-pane fade show active" id="zero_admin_nav_website" role="tabpanel" aria-labelledby="zero_admin_nav_website_tab" tabindex="0">
-                                                    <div class="card card-bordered">
+                                                    <div class="card card-bordered mb-5">
                                                         <div class="card-header">
                                                             <div class="card-title">基础配置</div>
                                                             <div class="card-toolbar">
@@ -65,6 +67,29 @@
                                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="随意填写,尽可能的复杂" id="website_security_token" name="website_security_token" type="text" placeholder="TOKEN" value="{$settings['website_security_token']}" />
                                                                     <label class="form-label">后端TOKEN</label>
                                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="请输入安全的密钥" id="website_backend_token" name="website_backend_token" type="text" placeholder="token" value="{$settings['website_backend_token']}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card card-bordered">
+                                                        <div class="card-header">
+                                                            <div class="card-title">权限组自定义</div>
+                                                            <div class="card-toolbar">
+                                                                <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">保存配置</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row g-5">
+                                                                <div class="col-xxl-6">
+                                                                    <label class="form-label">开启权限组自定义</label>
+                                                                    <select class="form-select" id="enable_permission_group" data-control="select2" data-hide-search="true">
+                                                                        <option {if $settings['enable_permission_group'] == 0} selected{/if} value="0">关闭</option>
+                                                                        <option {if $settings['enable_permission_group'] == 1} selected{/if} value="1">开启</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-xxl-6">
+                                                                    <label class="form-label">权限组名称设置</label>
+                                                                    <div id="permission_group_detail"></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -717,6 +742,19 @@
                 templateResult: optionFormatCountry
             });
         </script>
+
+        <script>
+            const container = document.getElementById('permission_group_detail');
+            var options = {
+                mode: 'text',
+                modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+                onModeChange: function (newMode, oldMode) {
+                    console.log('Mode switched from', oldMode, 'to', newMode)
+                }
+            };
+            const permission_group_editor = new JSONEditor(container, options);
+            permission_group_editor.set({$settings['permission_group_detail']})
+        </script>
                                                                 
         <script>
             var optionFormatCommission = function(item) {
@@ -760,6 +798,25 @@
                                 website_security_token: $('#website_security_token').val(),
                                 website_request_token: $('#website_request_token').val(),
                                 website_backend_token: $('#website_backend_token').val()
+                            },
+                            success: function(data){
+                                if (data.ret === 1){
+                                    getResult(data.msg, '', 'success');
+                                }else{
+                                    getResult(data.msg, '', 'error');
+                                }
+                            }
+                        });
+                        break;
+                    case 'permission_group':
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/setting',
+                            dataType: "json",
+                            data: {
+                                class: type,
+                                enable_permission_group: $('#enable_permission_group').val(),
+                                permission_group_detail: permission_group_editor.get()
                             },
                             success: function(data){
                                 if (data.ret === 1){

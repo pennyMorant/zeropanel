@@ -36,7 +36,7 @@
                                                         </div>
                                                         <a class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">{$user->email}</a>
                                                         <div class="mb-9">
-                                                            <div class="badge badge-lg badge-light-primary d-inline">LV-{$user->class}</div>
+                                                            <div class="badge badge-lg badge-light-primary d-inline">权限组:&nbsp; {$user_permission}</div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-stack fs-4 py-3">

@@ -55,7 +55,10 @@ class SettingController extends AdminController
         switch ($class) {
             case 'website':
                 $list = ['website_url', 'website_name', 'website_landing_index', 'website_security_token','website_backend_token'];
-                break;          
+                break;
+            case 'permission_group':
+                $list = ['enable_permission_group', 'permission_group_detail'];
+                break;         
             // 支付
             case 'payment_gateway':
                 $list = ['alipay_payment', 'wechatpay_payment', 'cryptopay_payment'];
