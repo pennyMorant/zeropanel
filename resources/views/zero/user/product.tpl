@@ -69,7 +69,7 @@
 																							</div>
 																						{else}
 																							<div class="d-flex align-items-center mb-5">
-																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$product->bandwidth()}GB</span> {$trans->t('traffic')}</span>
 																								<span class="svg-icon svg-icon-1 svg-icon-success">
 																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -78,7 +78,7 @@
 																								</span>
 																							</div>
 																							<div class="d-flex align-items-center mb-5">
-																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{if {$product->ip_limit} == null }{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}{$trans->t('online ip')}</span></span>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{if {$product->ip_limit} == null }{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}&nbsp;{$trans->t('online ip')}</span></span>
 																								<span class="svg-icon svg-icon-1 svg-icon-success">
 																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -87,7 +87,7 @@
 																								</span>
 																							</div>
 																							<div class="d-flex align-items-center mb-5">
-																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speed_limit} == null }<span class="badge badge-success fw-bold">{$trans->t('unlimited')}</span>{else}{$product->speedlimit()} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speed_limit} == null }<span class="badge badge-success fw-bold fs-6">{$trans->t('unlimited')}</span>{else}{$product->speedlimit()} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
 																								<span class="svg-icon svg-icon-1 svg-icon-success">
 																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -105,7 +105,7 @@
 																								</span>
 																							</div>
 																							<div class="d-flex align-items-center mb-5">
-																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold">{$product_permission}&nbsp;{$trans->t('access permission')}</span></span>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$product_permission}&nbsp;{$trans->t('access permission')}</span></span>
 																								<span class="svg-icon svg-icon-1 svg-icon-success">
 																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
