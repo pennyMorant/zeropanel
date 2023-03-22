@@ -54,7 +54,19 @@ final class ProductController extends BaseController
         if (Setting::obtain('enable_permission_group') == true) {
             $permission_group = json_decode(Setting::obtain('permission_group_detail'), true);
         } else {
-            $permission_group = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            $permission_group = [
+                0   =>  'LV-0',
+                1   =>  'LV-1', 
+                2   =>  'LV-2', 
+                3   =>  'LV-3', 
+                4   =>  'LV-4', 
+                5   =>  'LV-5', 
+                6   =>  'LV-6', 
+                7   =>  'LV-7',
+                8   =>  'LV-8', 
+                9   =>  'LV-9', 
+                10  =>  'LV-10',
+            ];
         }
         $currency_unit = Setting::obtain('currency_unit');
         $this->view()
