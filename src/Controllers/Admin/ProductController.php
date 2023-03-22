@@ -53,9 +53,9 @@ class ProductController extends AdminController
         $product->user_group = $request->getParam('group');
         $product->class = $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = $request->getParam('speed_limit');
-        $product->ip_limit = $request->getParam('ip_limit');
-        $product->stock = $request->getParam('stock');
+        $product->speed_limit = (empty($request->getParam('speed_limit'))) ? NULL : $request->getParam('speed_limit');
+        $product->ip_limit = (empty($request->getParam('ip_limit'))) ? NULL : $request->getParam('ip_limit');
+        $product->stock = (empty($request->getParam('stock'))) ? NULL : $request->getParam('stock');
         $product->status = 0;
         if (!$product->save()) {
             return $response->withJson([
@@ -94,12 +94,12 @@ class ProductController extends AdminController
         $product->sort = $request->getParam('sort');
         $product->traffic = (empty($request->getParam('traffic'))) ? NULL : $request->getParam('traffic');
 
-        $product->user_group = $request->getParam('node_group');
+        $product->user_group = (empty($request->getParam('group'))) ? NULL : $request->getParam('group');
         $product->class = $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = $request->getParam('speed_limit');
-        $product->ip_limit = $request->getParam('ip_limit');
-        $product->stock = $request->getParam('stock');
+        $product->speed_limit = (empty($request->getParam('speed_limit'))) ? NULL : $request->getParam('speed_limit');
+        $product->ip_limit = (empty($request->getParam('ip_limit'))) ? NULL : $request->getParam('ip_limit');
+        $product->stock = (empty($request->getParam('stock'))) ? NULL : $request->getParam('stock');
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,

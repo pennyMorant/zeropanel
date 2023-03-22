@@ -61,7 +61,7 @@
                                                         <option value="3" {if $product->type == 3}selected{/if}>其他产品</option>
                                                     </select>
                                                     <label class="form-label required">产品流量(GB)</label>
-                                                    <input class="form-control mb-5" id="traffic" name="traffic" type="number" placeholder="产品流量" value="{$product->traffic}">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时,可留空" id="traffic" name="traffic" type="number" placeholder="产品流量" value="{$product->traffic}">
                                                     <label class="form-label required">产品等级</label>
                                                     <input class="form-control mb-5" id="class" name="class" type="number" placeholder="产品等级" value="{$product->class}">
                                                     <label class="form-label">产品群组</label>
