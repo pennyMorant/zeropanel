@@ -33,7 +33,8 @@
                                                 
                                                 <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
                                                     {foreach $class as $grade}
-                                                    <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $grade['node_class'] == $min_node_class}active{/if}" data-bs-toggle="tab" data-bs-target="#node_show_{$grade['node_class']}">LV-{$grade['node_class']}</button>
+                                                        {assign var="node_permission" value=$permission_group[$grade['node_class']]|default: "unknown"}
+                                                        <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $grade['node_class'] == $min_node_class}active{/if}" data-bs-toggle="tab" data-bs-target="#node_show_{$grade['node_class']}">{$node_permission}</button>
                                                     {/foreach}
                                                 </div>
                                                       
