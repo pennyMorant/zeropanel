@@ -127,25 +127,23 @@ class Product extends Model
                             $user->reset_traffic_date = 1;
                             $user->reset_traffic_value = $this->traffic;
                         }
-                        $user->save();
                         break;
                     case 3:
                         $user->class_expire = data('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
                         if ($time = 30) {                            
                             $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
                         }                          
-                        $user->save();
                         break;
                     case 4:
                         break;
                 }
             case 2:
                 $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
-                $user->save();
                 break;    
             case 3:
                 break;
         }
+        $user->save();
     }
 
 }
