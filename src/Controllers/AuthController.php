@@ -60,7 +60,7 @@ class AuthController extends BaseController
      */
     public function signinHandle(ServerRequest $request, Response $response, $args)
     {
-        $postdata = (array)$request->getParsedBody();
+        $postdata = $request->getParsedBody();
         $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
         $passwd = $postdata['passwd'];
 

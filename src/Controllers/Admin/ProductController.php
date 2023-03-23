@@ -40,23 +40,24 @@ class ProductController extends AdminController
 
     public function createProduct(ServerRequest $request, Response $response, $args): Response
     {
+        $postdata = $request->getParsedBody();
         $product = new Product();
-        $product->name = $request->getParam('name');
-        $product->month_price = $request->getParam('month_price') == '' ? NULL : $request->getParam('month_price');
-        $product->quarter_price = $request->getParam('quarter_price') == '' ? NULL : $request->getParam('quarter_price');
-        $product->half_year_price = $request->getParam('half_year_price') == '' ? NULL : $request->getParam('half_year_price');
-        $product->year_price = $request->getParam('year_price') == '' ? NULL : $request->getParam('year_price');
-        $product->two_year_price = $request->getParam('two_year_price') == '' ? NULL : $request->getParam('two_year_price');
-        $product->onetime_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
-        $product->type = $request->getParam('type');
-        $product->sort = $request->getParam('sort');
-        $product->traffic = $request->getParam('traffic');
-        $product->user_group = $request->getParam('group');
-        $product->class = $request->getParam('class');
-        $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = $request->getParam('speed_limit');
-        $product->ip_limit = $request->getParam('ip_limit');
-        $product->stock = $request->getParam('stock');
+        $product->name = $postdata['name'];
+        $product->month_price = $postdata['month_price'] == '' ? NULL : $postdata['month_price'];
+        $product->quarter_price = $postdata['quarter_price'] == '' ? NULL : $postdata['quarter_price'];
+        $product->half_year_price = $postdata['half_year_price'] == '' ? NULL : $postdata['half_year_price'];
+        $product->year_price = $postdata['year_price'] == '' ? NULL : $postdata['year_price'];
+        $product->two_year_price = $postdata['two_year_price'] == '' ? NULL : $postdata['two_year_price'];
+        $product->onetime_price = $postdata['onetime_price'] == '' ? NULL : $postdata['onetime_price'];
+        $product->type = $postdata['type'];
+        $product->sort = $postdata['sort'];
+        $product->traffic = $postdata['traffic'];
+        $product->user_group = $postdata['group'];
+        $product->class = $postdata['class'];
+        $product->reset_traffic_cycle = $postdata['reset'];
+        $product->speed_limit = $postdata['speed_limit'];
+        $product->ip_limit = $postdata['ip_limit'];
+        $product->stock = $postdata['stock'];
         $product->status = 0;
         if (!$product->save()) {
             return $response->withJson([
