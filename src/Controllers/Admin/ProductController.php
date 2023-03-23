@@ -84,7 +84,7 @@ class ProductController extends AdminController
     public function updateProduct(ServerRequest $request, Response $response, $args): Response
     {
         $putdata = $request->getParsedBody();
-        $id = $put['id'];
+        $id = $putdata['id'];
         $product = Product::find($id);
 
         $product->name = $putdata['name'];
