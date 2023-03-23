@@ -494,7 +494,7 @@ class LinkController extends BaseController
         }
         foreach ($info_array as $remark) {
             $Extend['remark'] = $remark;
-            if (in_array($list, ['kitsunebi', 'quantumult', 'v2ray', 'anxray'])) {
+            if (in_array($list, ['kitsunebi', 'quantumult', 'v2rayn', 'anxray'])) {
                 $Extend['type'] = 'vmess';
                 $out = self::getListItem($Extend, $list);
             } elseif ($list == 'trojan') {
