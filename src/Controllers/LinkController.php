@@ -44,7 +44,7 @@ class LinkController extends BaseController
     public static function GenerateSubCode(int $userid): string
     {
         $Elink = Link::where('userid', $userid)->first();
-        if ($Elink != null) {
+        if (!is_null($Elink)) {
             return $Elink->token;
         }
         $NLink         = new Link();
@@ -424,7 +424,7 @@ class LinkController extends BaseController
         }
         foreach ($items as $item) {
             $out = self::getListItem($item, $list);
-            if ($out != null) {
+            if (!is_null($out)) {
                 $return[] = $out;
             }
         }

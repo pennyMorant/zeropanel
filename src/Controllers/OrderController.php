@@ -85,10 +85,9 @@ class OrderController extends BaseController
                     if (!in_array($product_price, $all_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    if ($user->class == $product->class) {
-                        if ($product->reset_traffic_cycle != $user->userTrafficResetCycle() || $user->reset_traffic_value != $product->traffic) {
-                            throw new \Exception('The product attribute is different from the user current product attribute, and the product cannot be purchased');
-                        }
+                    
+                    if ($user->product_id == $product->id) {                      
+                        throw new \Exception('已有该产品，不可新购');
                     }
 
                     $order = new Order();
@@ -261,7 +260,7 @@ class OrderController extends BaseController
                 $coupon->save();
             }
 
-            $product->purchase($user, $order->product_price);           
+            $product->purchase($user, $order->product_price, $order_type);           
 
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
@@ -364,8 +363,6 @@ class OrderController extends BaseController
     }
 
     public static function createOrderNo(){
-        //$order_date = date('Y-m-d');
-
         $order_id_main = date('YmdHis') . rand(10000000,99999999);
         $order_id_len = strlen($order_id_main);
         $order_id_sum = 0;

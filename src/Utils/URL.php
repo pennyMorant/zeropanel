@@ -107,7 +107,7 @@ class URL
                 $custom_config = $node->custom_config;
                 $type = $node_type[$node->sort];
                 $item = $node->$type($user, $custom_config, $emoji);
-                if ($item != null) {
+                if (!is_null($item)) {
                     $return_array[] = $item;
                 }
                 continue;

@@ -29,7 +29,7 @@ class Telegram
 
         $sendAdmin = Setting::obtain('telegram_admin_id');
         $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-        if ($admin_telegram_id != null) {
+        if (!is_null($admin_telegram_id)) {
             self::Send($messageText, $admin_telegram_id);
         }
     }

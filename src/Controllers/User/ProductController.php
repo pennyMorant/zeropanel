@@ -7,7 +7,9 @@ use App\Models\{
     Product,
     Setting,
     Ann,
+    Order
 };
+use App\Controllers\OrderController;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
@@ -94,6 +96,29 @@ final class ProductController extends BaseController
             'type'  =>  $product->type,
         ];
         return $response->withJson($data);
+    }
+
+    public function renewalProduct(ServerRequest $request, Response $response, $args): Response
+    {
+        $user = $this->user;
+        $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)->where('order_type', 1)->where('product_id', '!=', NULL)->latest('paid_time')->first();
+        $order = new Order;
+        $order->order_no = OrderController::createOrderNo();
+        $order->order_type = 3;
+        $order->user_id = $user->id;
+        $order->product_id = $latest_order->product_id;
+        $order->product_price = $latest_order->product_price;
+        $order->order_total = $latest_order->order_total;
+        $order->order_status = 1;
+        $order->created_time = time();
+        $order->updated_time = time();
+        $order->expired_time = time() + 600;
+        $order->execute_status = 0;
+        $order->save();
+        return $response->withJson([
+            'ret' => 1,
+            'order_no' => $order->order_no,
+        ]);
     }
 
 }

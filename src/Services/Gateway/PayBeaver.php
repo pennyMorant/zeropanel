@@ -55,7 +55,7 @@ class PayBeaver
         $data['app_id'] = $configs['paybeaver_app_id'];
         $data['out_trade_no'] = $order_no;
         
-        if ($currency['enable_currency'] == true && $currency['currency_exchange_rate'] != null) {
+        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
             $data['total_amount'] = (int)($amount * 100 * $currency['currency_exchange_rate']);
         } else {
             $data['total_amount'] = (int)($amount * 100);

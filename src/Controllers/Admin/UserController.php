@@ -68,7 +68,7 @@ class UserController extends AdminController
         $shop_id = (int) $request->getParam('product');
 
         $user = User::where('email', $email)->first();
-        if ($user != null) {
+        if (!is_null($user)) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '邮箱已经被注册了'

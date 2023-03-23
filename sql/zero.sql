@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-20 06:15:04
+-- 生成日期： 2023-03-22 14:40:32
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -287,7 +287,7 @@ CREATE TABLE `product` (
   `type` int(11) DEFAULT NULL COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '产品状态 1上架0下架',
-  `stock` int(11) NOT NULL DEFAULT -1 COMMENT '库存',
+  `stock` int(11) DEFAULT NULL COMMENT '库存',
   `sales` int(11) NOT NULL DEFAULT 0 COMMENT '销量'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

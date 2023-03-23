@@ -54,7 +54,7 @@ class TronapiPay
     {
         $currency = Setting::getClass('currency');
         
-        if ($currency['enable_currency'] == true && $currency['currency_exchange_rate'] != null) {
+        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
             $final_amount = $amount * $currency['currency_exchange_rate'];
         } else {
             $final_amount = $amount;

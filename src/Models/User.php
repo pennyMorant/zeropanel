@@ -415,7 +415,7 @@ class User extends Model
     public function relieve_time(): string
     {
         $logs = DetectBanLog::where('user_id', $this->id)->orderBy('id', 'desc')->first();
-        if ($this->enable == 0 && $logs != null) {
+        if ($this->enable == 0 && !is_null($logs)) {
             $time = ($logs->end_time + $logs->ban_time * 60);
             return date('Y-m-d H:i:s', $time);
         } else {
@@ -488,7 +488,7 @@ class User extends Model
      */
     public function productTrafficResetDate()
     {
-        if ($this->reset_traffic_date != null) {
+        if (!is_null($this->reset_traffic_date)) {
             $reset_d = $this->reset_traffic_date;
             $today = date('d');
             if ($today >= $reset_d) {               

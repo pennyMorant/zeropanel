@@ -42,20 +42,21 @@ class ProductController extends AdminController
     {
         $product = new Product();
         $product->name = $request->getParam('name');
-        $product->month_price = (empty($request->getParam('month_price'))) ? NULL : $request->getParam('month_price');
-        $product->quarter_price = (empty($request->getParam('quarter_price'))) ? NULL : $request->getParam('quarter_price');
-        $product->half_year_price = (empty($request->getParam('half_year_price'))) ? NULL : $request->getParam('half_year_price');
-        $product->year_price = (empty($request->getParam('year_price'))) ? NULL : $request->getParam('year_price');
-        $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
+        $product->month_price = $request->getParam('month_price') == '' ? NULL : $request->getParam('month_price');
+        $product->quarter_price = $request->getParam('quarter_price') == '' ? NULL : $request->getParam('quarter_price');
+        $product->half_year_price = $request->getParam('half_year_price') == '' ? NULL : $request->getParam('half_year_price');
+        $product->year_price = $request->getParam('year_price') == '' ? NULL : $request->getParam('year_price');
+        $product->two_year_price = $request->getParam('two_year_price') == '' ? NULL : $request->getParam('two_year_price');
+        $product->two_year_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
-        $product->traffic = (empty($request->getParam('traffic'))) ? NULL : $request->getParam('traffic');
-        $product->user_group = $request->getParam('group');
-        $product->class = $request->getParam('class');
+        $product->traffic = $request->getParam('traffic') == '' ? NULL : $request->getParam('traffic');
+        $product->user_group = $request->getParam('group') == '' ? NULL : $request->getParam('group');
+        $product->class = $request->getParam('class') == '' ? NULL : $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = (empty($request->getParam('speed_limit'))) ? NULL : $request->getParam('speed_limit');
-        $product->ip_limit = (empty($request->getParam('ip_limit'))) ? NULL : $request->getParam('ip_limit');
-        $product->stock = (empty($request->getParam('stock'))) ? NULL : $request->getParam('stock');
+        $product->speed_limit = $request->getParam('speed_limit') == '' ? NULL : $request->getParam('speed_limit');
+        $product->ip_limit = $request->getParam('ip_limit') == '' ? NULL : $request->getParam('ip_limit');
+        $product->stock = $request->getParam('stock') == '' ? NULL : $request->getParam('stock');
         $product->status = 0;
         if (!$product->save()) {
             return $response->withJson([
@@ -85,21 +86,21 @@ class ProductController extends AdminController
         $product = Product::find($id);
 
         $product->name = $request->getParam('name');
-        $product->month_price = (empty($request->getParam('month_price'))) ? NULL : $request->getParam('month_price');
-        $product->quarter_price = (empty($request->getParam('quarter_price'))) ? NULL : $request->getParam('quarter_price');
-        $product->half_year_price = (empty($request->getParam('half_year_price'))) ? NULL : $request->getParam('half_year_price');
-        $product->year_price = (empty($request->getParam('year_price'))) ? NULL : $request->getParam('year_price');
-        $product->two_year_price = (empty($request->getParam('two_year_price'))) ? NULL : $request->getParam('two_year_price');
+        $product->month_price = $request->getParam('month_price') == '' ? NULL : $request->getParam('month_price');
+        $product->quarter_price = $request->getParam('quarter_price') == '' ? NULL : $request->getParam('quarter_price');
+        $product->half_year_price = $request->getParam('half_year_price') == '' ? NULL : $request->getParam('half_year_price');
+        $product->year_price = $request->getParam('year_price') == '' ? NULL : $request->getParam('year_price');
+        $product->two_year_price = $request->getParam('two_year_price') == '' ? NULL : $request->getParam('two_year_price');
+        $product->two_year_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
-        $product->traffic = (empty($request->getParam('traffic'))) ? NULL : $request->getParam('traffic');
-
-        $product->user_group = (empty($request->getParam('group'))) ? NULL : $request->getParam('group');
-        $product->class = $request->getParam('class');
+        $product->traffic = $request->getParam('traffic') == '' ? NULL : $request->getParam('traffic');
+        $product->user_group = $request->getParam('group') == '' ? NULL : $request->getParam('group');
+        $product->class = $request->getParam('class') == '' ? NULL : $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = (empty($request->getParam('speed_limit'))) ? NULL : $request->getParam('speed_limit');
-        $product->ip_limit = (empty($request->getParam('ip_limit'))) ? NULL : $request->getParam('ip_limit');
-        $product->stock = (empty($request->getParam('stock'))) ? NULL : $request->getParam('stock');
+        $product->speed_limit = $request->getParam('speed_limit') == '' ? NULL : $request->getParam('speed_limit');
+        $product->ip_limit = $request->getParam('ip_limit') == '' ? NULL : $request->getParam('ip_limit');
+        $product->stock = $request->getParam('stock') == '' ? NULL : $request->getParam('stock');
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,

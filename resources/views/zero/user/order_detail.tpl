@@ -91,7 +91,7 @@
                                                         </tr>
                                                         
                                                         
-														{if $order->order_coupon != null}
+														{if !is_null($order->order_coupon)}
                                                         <tr>
                                                             <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('discount')}</td>
                                                             <td class="text-end">{$order->product_price - $order->order_total}</td>

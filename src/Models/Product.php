@@ -93,9 +93,9 @@ class Product extends Model
     }
     
 
-    public function purchase($user, $price)
+    public function purchase($user, $price, $order_type)
     {
-        $type = $this->type;
+        $product_type = $this->type;
         $price_to_time = [
             $this->month_price => 30,
             $this->quarter_price => 90,
@@ -106,39 +106,45 @@ class Product extends Model
             $time = $price_to_time[$price];
         }
         
-        switch ($type) {
+        switch ($product_type) {  // 产品类型
             case 2:
                 $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
                 $user->save();
                 break;      
-            case 1:         
-                $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
-                $user->u = 0;
-                $user->d = 0;
-                $user->last_day_t = 0;
-                
-                if ($user->class == $this->class && $user->reset_traffic_value == $this->traffic && $user->userTrafficResetCycle() == $this->reset_traffic_cycle) {
-                    $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
-                } else {
-                    $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
+            case 1:
+                switch ($order_type) { // 判定订单类型
+                    case 1:
+                        $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
+                        $user->u = 0;
+                        $user->d = 0;
+                        $user->last_day_t = 0;             
+                        $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
+                        $user->class = $this->class;
+                        $user->node_speedlimit = $this->speed_limit;
+                        $user->node_iplimit = $this->ip_limit;
+                        if (!is_null($this->user_group)) {
+                            $user->node_group = $this->user_group;
+                        }
+                        $user->product_id = $this->id;
+                        if ($this->reset_traffic_cycle === 1 && $time > 30) {
+                            $user->reset_traffic_date = date('d');
+                            $user->reset_traffic_value = $this->traffic;
+                        } else if ($this->reset_traffic_cycle === 2 && $time > 30) {
+                            $user->reset_traffic_date = 1;
+                            $user->reset_traffic_value = $this->traffic;
+                        }
+                        $user->save();
+                        break;
+                    case 3:
+                        $user->class_expire = data('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
+                        if ($time = 30) {                            
+                            $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
+                        }                          
+                        $user->save();
+                        break;
+                    case 4:
+                        break;
                 }
-                $user->class = $this->class;
-
-                $user->node_speedlimit = $this->speed_limit;
-                $user->node_iplimit = $this->ip_limit;
-                if ($this->user_group != null) {
-                    $user->node_group = $this->user_group;
-                }
-                $user->product_id = $this->id;
-                if ($this->reset_traffic_cycle === 1 && $time > 30) {
-                    $user->reset_traffic_date = date('d');
-                    $user->reset_traffic_value = $this->traffic;
-                } else if ($this->reset_traffic_cycle === 2 && $time > 30) {
-                    $user->reset_traffic_date = 1;
-                    $user->reset_traffic_value = $this->traffic;
-                }
-                $user->save();
-                break;
             case 3:
                 break;
         }

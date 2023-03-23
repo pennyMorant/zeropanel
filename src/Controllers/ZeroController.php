@@ -139,7 +139,7 @@ class ZeroController extends BaseController
             '提现时间：' . date('Y-m-d H:i:s', time());
         $sendAdmin = Setting::obtain('telegram_admin_id');
         $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
-        if ($admin_telegram_id != null) {
+        if (!is_null($admin_telegram_id)) {
             Telegram::PushToAdmin($text, $admin_telegram_id);
         }
 

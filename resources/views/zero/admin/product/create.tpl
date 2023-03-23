@@ -53,6 +53,12 @@
                                                         <div class="col-3">
                                                             <input class="form-control mb-5" id="year_price" name="year_price" type="number" placeholder="年付" value="">
                                                         </div>
+                                                        <div class="col-4">
+                                                            <input class="form-control mb-5" id="two_price" name="two_price" type="number" placeholder="两年付" value="">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input class="form-control mb-5" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="">
+                                                        </div>
                                                     </div>
                                                     <label class="form-label required">产品类型</label>
                                                     <select class="form-select mb-5" id="type" data-control="select2" data-hide-search="true">
@@ -63,7 +69,7 @@
                                                     <label class="form-label required">产品流量(GB)</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时,可留空" id="traffic" name="traffic" type="number" placeholder="产品流量" value="">
                                                     <label class="form-label required">产品等级</label>
-                                                    <input class="form-control mb-5" id="class" name="class" type="number" placeholder="产品等级" value="">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时,可留空" id="class" name="class" type="number" placeholder="产品等级" value="">
                                                     <label class="form-label">产品群组</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="留空为不分组" id="group" name="group" type="number" placeholder="产品群组" value="">
                                                 </div>

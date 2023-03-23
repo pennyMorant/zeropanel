@@ -32,6 +32,11 @@
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
 													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>
+													{if $user->class >= 1}
+														<div class="card-toolbar">
+															<button class="btn btn-light-primary btn-sm" onclick="zeroUserRenewalProduct()">续费</button>
+														</div>
+													{/if}
 												</div>     
 												<div class="card-body pt-0">
 													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
@@ -45,7 +50,7 @@
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fs-lg fw-bolder text-gray-800 mb-1">
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	<span class="counter">{$trans->t('time')}:&nbsp;{$class_left_days}&nbsp;{$trans->t('day')}</span>
+																	<span class="counter">{$trans->t('time')}:&nbsp;<span id="user_class_expired_time"></span></span>
 																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
 																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('no product')}</span>
 																{else}<span class="counter">No product</span>
@@ -53,7 +58,7 @@
 															</a>					   
 															<span class="text-muted fw-semibold d-block">
 																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	{$trans->t('expired date')}:&nbsp;{substr($user->class_expire, 0, 10)}
+																	{$trans->t('expired date')}:&nbsp;{$user->class_expire}
 																{/if}
 															</span>
 														</div>
@@ -360,6 +365,26 @@
             </div>
         </div>
 		{include file='include/global/scripts.tpl'}
-		{include file='include/index/news.tpl'}										
+		{include file='include/index/news.tpl'}
+		<script>var user_class_expired_time = "{$user->class_expire}";</script>
+		<script>
+			function zeroUserRenewalProduct() {
+				$.ajax({
+					type: "POST",
+					url: "/user/product/renewal",
+					dataType: "json",
+					data: {},
+					success: function(data){
+						if (data.ret == 1) {
+                            $(location).attr('href', '/user/order/' + data.order_no);
+                        } else {
+                            getResult(data.msg, '', 'error');
+                            //submitButton.removeAttribute('data-kt-indicator');
+                            //submitButton.disabled = false;
+                        }
+					}
+				})
+			}
+		</script>									
 	</body>
 </html>

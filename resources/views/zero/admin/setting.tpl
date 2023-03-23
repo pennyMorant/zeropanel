@@ -71,25 +71,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card card-bordered">
-                                                        <div class="card-header">
-                                                            <div class="card-title">权限组自定义</div>
-                                                            <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">保存配置</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="row g-5">
-                                                                <div class="col-xxl-6">
+                                                    <div class="row g-5">
+                                                        <div class="col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-header">
+                                                                    <div class="card-title">权限组自定义</div>
+                                                                    <div class="card-toolbar">
+                                                                        <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">保存配置</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">                                                                  
                                                                     <label class="form-label">开启权限组自定义</label>
-                                                                    <select class="form-select" id="enable_permission_group" data-control="select2" data-hide-search="true">
+                                                                    <select class="form-select mb-5" id="enable_permission_group" data-control="select2" data-hide-search="true">
                                                                         <option {if $settings['enable_permission_group'] == 0} selected{/if} value="0">关闭</option>
                                                                         <option {if $settings['enable_permission_group'] == 1} selected{/if} value="1">开启</option>
                                                                     </select>
-                                                                </div>
-                                                                <div class="col-xxl-6">
                                                                     <label class="form-label">权限组名称设置</label>
-                                                                    <div id="permission_group_detail"></div>
+                                                                    <div id="permission_group_detail"></div>                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>

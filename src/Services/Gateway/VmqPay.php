@@ -35,7 +35,7 @@ class VmqPay
         $currency = Setting::getClass('currency');
         $type = $method === 'alipay' ? 2 : 1;
         $url_header = $configs['vmq_gateway'] . '/createOrder?';
-        if ($currency['enable_currency'] == true && $currency['currency_exchange_rate'] != null) {
+        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
             $final_amount = $amount * $currency['currency_exchange_rate'];
         } else {
             $final_amount = $amount;

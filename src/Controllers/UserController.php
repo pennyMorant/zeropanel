@@ -216,7 +216,7 @@ class UserController extends BaseController
                         throw new \Exception((string)$check_res);
                     }
                     
-                    if ($otheruser != null) {
+                    if (!is_null($otheruser)) {
                         throw new \Exception(I18n::get()->t('email has been registered'));
                     }
                     

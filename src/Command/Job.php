@@ -353,7 +353,7 @@ class Job extends Command
             // 审计封禁解封
             if ($user->enable == 0) {
                 $logs = DetectBanLog::where('user_id', $user->id)->orderBy('id', 'desc')->first();
-                if ($logs != null) {
+                if (!is_null($logs)) {
                     if (($logs->end_time + $logs->ban_time * 60) <= time()) {
                         $user->enable = 1;
                     }
@@ -432,10 +432,8 @@ class Job extends Command
             $user->node_speedlimit = $configs['signup_default_speed_limit'];
             $user->reset_traffic_value = NULL;
             $user->reset_traffic_date = NULL;
+            $user->product_id = NULL;
             $user->save();
-            $product = Product::where('id', $user->product_id)->where('stock', '!=', -1)->first();
-            $product->sales -= 1;
-            $product->save();
         }
         echo '用户等级过期检测结束' . PHP_EOL;
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;

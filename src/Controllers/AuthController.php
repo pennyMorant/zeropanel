@@ -123,7 +123,7 @@ class AuthController extends BaseController
             }
 
             $user = User::where('email', $email)->first();
-            if ($user != null) {
+            if (!is_null($user)) {
                 return $response->withJson([
                     'ret' => 0,
                     'msg' => $trans->t('email has been registered')
@@ -250,7 +250,7 @@ class AuthController extends BaseController
 
             // check email
             $user = User::where('email', $email)->first();
-            if ($user != null) {
+            if (!is_null($user)) {
                 throw new \Exception($trans->t('email has been registered'));
             }
 
@@ -308,7 +308,7 @@ class AuthController extends BaseController
 
         //dumplin：填写邀请人，写入邀请奖励
         $user->ref_by = 0;
-        if ($c != null && $c->user_id != 0) {
+        if (!is_null($c) && $c->user_id != 0) {
             $invitation = Setting::getClass('invite');
             // 设置新用户
             $user->ref_by = $c->user_id;
