@@ -81,7 +81,14 @@ class OrderController extends BaseController
                     if ($product == null) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    $all_price = [$product->month_price, $product->quarter_price, $product->half_year_price, $product->year_price];
+                    $all_price = [
+                        $product->month_price, 
+                        $product->quarter_price, 
+                        $product->half_year_price, 
+                        $product->year_price, 
+                        $product->two_year_price, 
+                        $product->onetime_price
+                    ];
                     if (!in_array($product_price, $all_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
@@ -260,7 +267,7 @@ class OrderController extends BaseController
                 $coupon->save();
             }
 
-            $product->purchase($user, $order->product_price, $order_type);           
+            $product->purchase($user, $order->product_price, $order->order_type);           
 
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {

@@ -13,6 +13,7 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'quarterly fee': 'Quarterly Fee',
             'semi annua fee': 'Semi-annua Fee',
             'annual fee': 'Annua Fee',
+            'biennial fee': 'Biennial Fee',
             'insufficient permissions': 'Insufficient permissions',
             'confirm importing subscription link': 'Confirm importing subscription link?',
             'the value is not a valid email address': 'The value is not a valid email address',
@@ -27,10 +28,11 @@ i18next.use(i18nextBrowserLanguageDetector).init({
         zh: {
           translation: {
             'copy success': '复制成功',
-            'monthly fee': '月费',
-            'quarterly fee': '季费',
-            'semi annua fee': '半年费',
-            'annual fee': '年费',
+            'monthly fee': '月付',
+            'quarterly fee': '季付',
+            'semi annua fee': '半年付',
+            'annual fee': '年付',
+            'biennial fee': '两年付',
             'insufficient permissions': '权限不足',
             'confirm importing subscription link': '确定导入订阅链接？',
             'the value is not a valid email address': '该值不是有效的电子邮件地址',

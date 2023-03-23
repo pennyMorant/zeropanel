@@ -47,7 +47,7 @@ class ProductController extends AdminController
         $product->half_year_price = $request->getParam('half_year_price') == '' ? NULL : $request->getParam('half_year_price');
         $product->year_price = $request->getParam('year_price') == '' ? NULL : $request->getParam('year_price');
         $product->two_year_price = $request->getParam('two_year_price') == '' ? NULL : $request->getParam('two_year_price');
-        $product->two_year_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
+        $product->onetime_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
         $product->traffic = $request->getParam('traffic') == '' ? NULL : $request->getParam('traffic');
@@ -91,7 +91,7 @@ class ProductController extends AdminController
         $product->half_year_price = $request->getParam('half_year_price') == '' ? NULL : $request->getParam('half_year_price');
         $product->year_price = $request->getParam('year_price') == '' ? NULL : $request->getParam('year_price');
         $product->two_year_price = $request->getParam('two_year_price') == '' ? NULL : $request->getParam('two_year_price');
-        $product->two_year_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
+        $product->onetime_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
         $product->traffic = $request->getParam('traffic') == '' ? NULL : $request->getParam('traffic');

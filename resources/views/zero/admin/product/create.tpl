@@ -41,23 +41,23 @@
                                                     <input class="form-control mb-5" id="name" name="name" type="text" placeholder="产品名称" value="">
                                                     <label class="form-label required">产品价格</label>
                                                     <div class="row">
-                                                        <div class="col-3">
+                                                        <div class="col-4">
                                                             <input class="form-control mb-5" id="month_price" name="month_price" type="number" placeholder="月付" value="">
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-4">
                                                             <input class="form-control mb-5" id="quarter_price" name="quarter_price" type="number" placeholder="季付" value="">
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-4">
                                                             <input class="form-control mb-5" id="half_year_price" name="half_year_price" type="number" placeholder="半年付" value="">
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-4">
                                                             <input class="form-control mb-5" id="year_price" name="year_price" type="number" placeholder="年付" value="">
                                                         </div>
                                                         <div class="col-4">
-                                                            <input class="form-control mb-5" id="two_price" name="two_price" type="number" placeholder="两年付" value="">
+                                                            <input class="form-control mb-5" id="two_year_price" name="two_year_price" type="number" placeholder="两年付" value="">
                                                         </div>
-                                                        <div class="col-3">
-                                                            <input class="form-control mb-5" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="">
+                                                        <div class="col-4">
+                                                            <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时,请设置一次性价格" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="">
                                                         </div>
                                                     </div>
                                                     <label class="form-label required">产品类型</label>
@@ -113,6 +113,8 @@
                         quarter_price: $('#quarter_price').val(),
                         half_year_price: $('#half_year_price').val(),
                         year_price: $('#year_price').val(),
+                        two_year_price: $('#two_year_price').val(),
+                        onetime_price: $('#onetime_price').val(),
                         type: $('#type').val(),
                         traffic: $('#traffic').val(),
                         class: $('#class').val(),

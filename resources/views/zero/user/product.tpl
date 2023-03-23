@@ -53,13 +53,17 @@
 																						<h1 class="text-dark mb-5 fw-bolder" id="zero_product_name_{$product->id}">{$product->name}</h1>
 																						<div class="text-center">
 																							<span class="mb-2 text-primary fw-bold">{$currency_unit}</span>
-																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}" data-price-quarter="{$product->quarter_price}" data-price-half-year="{$product->half_year_price}" data-price-year="{$product->year_price}">{$product->month_price}</span>
+																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}">
+																								{if $product->type == 1}{$product->month_price}{else}{$product->onetime_price}{/if}
+																							</span>
 																						</div>
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
-																						{if $product->type == 3}
+																						{if $product->type == 3 || $product->type == 2}
 																							<div class="d-flex align-items-center mb-5">
-																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">此产品购买后需联系客服</span>
+																								<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">
+																									{if $product->type == 3}此产品购买后需联系客服{elseif $product->type == 2}增加{$product->traffic}GB流量{/if}
+																								</span>
 																								<span class="svg-icon svg-icon-1 svg-icon-success">
 																									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																										<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />

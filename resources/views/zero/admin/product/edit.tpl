@@ -54,10 +54,10 @@
                                                             <input class="form-control mb-5" id="year_price" name="year_price" type="number" placeholder="年付" value="{$product->year_price}">
                                                         </div>
                                                         <div class="col-4">
-                                                            <input class="form-control mb-5" id="two_price" name="two_price" type="number" placeholder="两年付" value="">
+                                                            <input class="form-control mb-5" id="two_year_price" name="two_year_price" type="number" placeholder="两年付" value="{$product->two_year_price}">
                                                         </div>
                                                         <div class="col-4">
-                                                            <input class="form-control mb-5" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="">
+                                                            <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时以及流量产品,请设置一次性价格" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="{$product->onetime_price}">
                                                         </div>
                                                     </div>
                                                     <label class="form-label required">产品类型</label>
@@ -114,6 +114,8 @@
                         quarter_price: $('#quarter_price').val(),
                         half_year_price: $('#half_year_price').val(),
                         year_price: $('#year_price').val(),
+                        two_year_price: $('#two_year_price').val(),
+                        onetime_price: $('#onetime_price').val(),
                         type: $('#type').val(),
                         traffic: $('#traffic').val(),
                         class: $('#class').val(),

@@ -107,10 +107,6 @@ class Product extends Model
         }
         
         switch ($product_type) {  // 产品类型
-            case 2:
-                $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
-                $user->save();
-                break;      
             case 1:
                 switch ($order_type) { // 判定订单类型
                     case 1:
@@ -145,6 +141,10 @@ class Product extends Model
                     case 4:
                         break;
                 }
+            case 2:
+                $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
+                $user->save();
+                break;    
             case 3:
                 break;
         }
