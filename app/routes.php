@@ -145,7 +145,7 @@ return function (SlimApp $app) {
         $group->get('/product/create',              App\Controllers\Admin\ProductController::class . ':createProductIndex');
         $group->post('/product/create',                    App\Controllers\Admin\ProductController::class . ':createProduct');
         $group->get('/product/update/{id}',           App\Controllers\Admin\ProductController::class . ':updateProductIndex');
-        $group->post('/product/update',                App\Controllers\Admin\ProductController::class . ':updateProduct');
+        $group->put('/product/update',                App\Controllers\Admin\ProductController::class . ':updateProduct');
         $group->delete('/product/delete',                  App\Controllers\Admin\ProductController::class . ':deleteProduct');
         $group->put('/product/update/status',      App\Controllers\Admin\ProductController::class . ':updateProductStatus');
         $group->post('/product/getinfo',      App\Controllers\Admin\ProductController::class . ':getProductInfo');

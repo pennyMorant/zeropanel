@@ -23,6 +23,7 @@ $container = $containerBuilder->build();
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
 
 /** @var closure $middleware */
 $middleware = require __DIR__ . '/../app/middleware.php';
