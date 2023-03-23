@@ -137,6 +137,7 @@ class Product extends Model
                     case 4:
                         break;
                 }
+                break;
             case 2:
                 $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
                 break;    
