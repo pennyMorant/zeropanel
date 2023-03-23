@@ -50,13 +50,13 @@ class ProductController extends AdminController
         $product->onetime_price = $request->getParam('onetime_price') == '' ? NULL : $request->getParam('onetime_price');
         $product->type = $request->getParam('type');
         $product->sort = $request->getParam('sort');
-        $product->traffic = $request->getParam('traffic') == '' ? NULL : $request->getParam('traffic');
-        $product->user_group = $request->getParam('group') == '' ? NULL : $request->getParam('group');
-        $product->class = $request->getParam('class') == '' ? NULL : $request->getParam('class');
+        $product->traffic = $request->getParam('traffic');
+        $product->user_group = $request->getParam('group');
+        $product->class = $request->getParam('class');
         $product->reset_traffic_cycle = $request->getParam('reset');
-        $product->speed_limit = $request->getParam('speed_limit') == '' ? NULL : $request->getParam('speed_limit');
-        $product->ip_limit = $request->getParam('ip_limit') == '' ? NULL : $request->getParam('ip_limit');
-        $product->stock = $request->getParam('stock') == '' ? NULL : $request->getParam('stock');
+        $product->speed_limit = $request->getParam('speed_limit');
+        $product->ip_limit = $request->getParam('ip_limit');
+        $product->stock = $request->getParam('stock');
         $product->status = 0;
         if (!$product->save()) {
             return $response->withJson([
