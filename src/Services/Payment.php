@@ -33,7 +33,7 @@ class Payment
 
     public static function excuteAction($order_no)
     {
-        Payment::excuteAction($order_no);
+        OrderController::excute($order_no);
 
         $order = Order::find($order_no);
         $user = User::find($order->user_id);
