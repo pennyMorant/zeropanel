@@ -35,8 +35,8 @@ class Payment
     {
         OrderController::execute($order_no);
 
-        $order = Order::find($order_no);
-        $user = User::where('id', $order->user_id);
+        $order = Order::where('order_no', $order_no)->first();
+        $user = User::find($order->user_id);
         if (Setting::obtain('enable_push_top_up_message') == true) {
             $messageText = '交易提醒' . PHP_EOL .
                             '------------------------------' . PHP_EOL .
