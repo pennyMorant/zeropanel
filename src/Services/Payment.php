@@ -40,9 +40,9 @@ class Payment
         if (Setting::obtain('enable_push_top_up_message') == true) {
             $messageText = '交易提醒' . PHP_EOL .
                             '------------------------------' . PHP_EOL .
-                            '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
-                            '充值金额：' . $order->order_total . PHP_EOL .
-                            '完成时间：' . $order->paid_time;
+                            '用户：' . $user->email . PHP_EOL .
+                            '金额：' . $order->order_total . PHP_EOL .
+                            '订单：' . $order->order_no;
             Telegram::PushToAdmin($messageText);
         }
     }
