@@ -129,7 +129,7 @@ class Product extends Model
                         }
                         break;
                     case 3:
-                        $user->class_expire = data('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
+                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
                         if ($time = 30) {                            
                             $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
                         }                          

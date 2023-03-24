@@ -102,21 +102,33 @@ final class ProductController extends BaseController
 
     public function renewalProduct(ServerRequest $request, Response $response, $args): Response
     {
-        $user = $this->user;
-        $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)->where('order_type', 1)->where('product_id', '!=', NULL)->latest('paid_time')->first();
-        $order = new Order;
-        $order->order_no = OrderController::createOrderNo();
-        $order->order_type = 3;
-        $order->user_id = $user->id;
-        $order->product_id = $latest_order->product_id;
-        $order->product_price = $latest_order->product_price;
-        $order->order_total = $latest_order->order_total;
-        $order->order_status = 1;
-        $order->created_time = time();
-        $order->updated_time = time();
-        $order->expired_time = time() + 600;
-        $order->execute_status = 0;
-        $order->save();
+        try {
+            $user = $this->user;
+            $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)
+                ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_time')->first();
+            $product = Product::find($user->product_id);
+            if (is_null($product)) {
+                throw new \Exception('改产品已经被删除, 续费失败');
+            }
+            $order = new Order;
+            $order->order_no = OrderController::createOrderNo();
+            $order->order_type = 3;
+            $order->user_id = $user->id;
+            $order->product_id = $latest_order->product_id;
+            $order->product_price = $latest_order->product_price;
+            $order->order_total = $latest_order->order_total;
+            $order->order_status = 1;
+            $order->created_time = time();
+            $order->updated_time = time();
+            $order->expired_time = time() + 600;
+            $order->execute_status = 0;
+            $order->save();
+        } catch (\Exception $e){
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => $e->getMessage(),
+            ]);
+        }
         return $response->withJson([
             'ret' => 1,
             'order_no' => $order->order_no,
