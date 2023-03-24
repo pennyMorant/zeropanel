@@ -42,7 +42,7 @@ class Payment
                             '------------------------------' . PHP_EOL .
                             '用户：' . $user->email . '  #' . $user->id . PHP_EOL .
                             '充值金额：' . $order->order_total . PHP_EOL .
-                            '完成时间：' . $order->paid_time . PHP_EOL .
+                            '完成时间：' . $order->paid_time;
             Telegram::PushToAdmin($messageText);
         }
     }
