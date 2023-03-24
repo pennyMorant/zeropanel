@@ -47,6 +47,16 @@ class Order extends Model
         return $payment;
     }
 
+    public function orderType() {
+        $order_type = [
+            1   =>  '新购产品',
+            2   =>  '账户充值',
+            3   =>  '续费产品',
+            4   =>  '升级产品',
+        ];
+        return $order_type[$this->order_type];
+    }
+
     public function finshOrder($order_no) {
         orderController::execute($order_no);
     }

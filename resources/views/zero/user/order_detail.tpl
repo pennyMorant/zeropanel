@@ -46,7 +46,9 @@
                                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                             <th class="min-w-175px">{$trans->t('type')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('status')}</th>
-															{if $order->order_status == '2'}<th class="min-w-70px text-end">{$trans->t('payment method')}</th>{/if}
+															{if $order->order_status == '2'}
+                                                                <th class="min-w-70px text-end">{$trans->t('payment method')}</th>
+                                                            {/if}
                                                             <th class="min-w-100px text-end">{$trans->t('order number')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('quantity')}</th>
                                                             <th class="min-w-100px text-end">{$trans->t('price')}</th>
@@ -61,7 +63,7 @@
                                                             <td>
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="ms-5">
-                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{if $order->order_type == 2}{$trans->t('add credit')}{elseif $order->order_type == 1}{$trans->t('purchase product')}: {$product->name}{/if}</a>
+                                                                        <a class="fw-bold text-gray-600 text-hover-primary">{$order_type[$order->order_type]}</a>
                                                                         <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d H:i:s', $order->created_time)}</div>
                                                                     </div>
                                                                     
@@ -78,7 +80,7 @@
                                                                 {/if}   
                                                             </td>
 															{if $order->order_status == '2'}
-																<td class="text-end">{$payment}</td>
+																<td class="text-end">{$trans->t($payment)}</td>
 															{/if}
                                                             <td class="text-end">{$order->order_no}</td>                                                           
                                                             <td class="text-end">1</td>

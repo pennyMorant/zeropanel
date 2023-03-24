@@ -34,7 +34,13 @@ class OrderController extends BaseController
         $order = Order::where('user_id', $this->user->id)
             ->where('order_no', $order_no)
             ->first();
-        $product = Product::find($order->product_id);
+        if (!is_null($order->product_id)) {
+            $product = Product::find($order->product_id);
+            $product_name = $product->name;
+        } else {
+            $product_name = '';
+            $product = [];
+        }
 
         switch ($order->order_payment) {
             case 'creditpay':
@@ -53,13 +59,21 @@ class OrderController extends BaseController
                 $payment = '未知';
                 break;
         }
-        $payment = I18n::get()->t($payment);
+
+        $order_type = [
+            1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name,
+            2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
+            3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
+            4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
+        ];
+        
         $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
                 ->assign('payment', $payment)
+                ->assign('order_type', $order_type)
                 ->assign('payment_gateway', $payment_gateway)
                 ->display('user/order_detail.tpl');
         return $response;   

@@ -356,7 +356,7 @@ class ZeroController extends BaseController
                         'order_status'  =>  $rowData->status(),
                         'order_no'  =>  $rowData->order_no,
                         'created_time'  =>  date('Y-m-d H:i:s', $rowData->created_time),
-                        'order_type'    =>  $rowData->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit'),
+                        'order_type'    =>  $rowData->orderType(),
                         'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$rowData->order_no.'">' . $trans->t('details') . '</a>',
                     ];
                 })->toArray();

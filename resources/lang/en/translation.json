@@ -5,6 +5,8 @@
     "price": "Price",
     "add credit": "Add Credit",
     "purchase product": "Purchase Product",
+    "renewal product": "Renewal Product",
+    "upgrade product": "Upgrade Product",
     "date": "Date",
     "paid": "Paid",
     "invalid": "Invalid",
