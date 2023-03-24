@@ -70,7 +70,7 @@ class VmqPay
         if ($_sign != $sign) {
             die('error_sign');//sign校验不通过
         }
-        Payment::excuteAction($request->getParam('payId'));
+        Payment::executeAction($request->getParam('payId'));
     	die('success');
     }
 

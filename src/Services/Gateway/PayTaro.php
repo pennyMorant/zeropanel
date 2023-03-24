@@ -103,7 +103,7 @@ class PayTaro
     	if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
     		die('FAIL');
     	}
-    	Payment::excuteAction($request->getParam('out_trade_no'));
+    	Payment::executeAction($request->getParam('out_trade_no'));
     	die('SUCCESS');
     }
 

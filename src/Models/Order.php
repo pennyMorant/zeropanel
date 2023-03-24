@@ -58,7 +58,7 @@ class Order extends Model
     }
 
     public function finshOrder($order_no) {
-        Payment::excuteAction($order_no);
+        Payment::executeAction($order_no);
     }
 }
 

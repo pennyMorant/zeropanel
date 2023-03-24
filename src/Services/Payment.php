@@ -31,9 +31,9 @@ class Payment
        return $instance->purchase($user_id, $method, $order_no, $amount);
     }
 
-    public static function excuteAction($order_no)
+    public static function executeAction($order_no)
     {
-        OrderController::excute($order_no);
+        OrderController::execute($order_no);
 
         $order = Order::find($order_no);
         $user = User::find($order->user_id);

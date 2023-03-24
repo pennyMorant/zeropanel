@@ -107,7 +107,7 @@ class TronapiPay
         if ($_signature != $signature) {
             die('FAIL');
         }
-    	Payment::excuteAction($order_id);
+    	Payment::executeAction($order_id);
         $res = [
             'code' => '200',
             'data' => 'ok'

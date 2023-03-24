@@ -66,7 +66,7 @@ class Epay
             $out_trade_no = $_GET['out_trade_no'];
             $trade_status = $_GET['trade_status'];
             if ($trade_status === 'TRADE_SUCCESS') {
-                Payment::excuteAction($out_trade_no);
+                Payment::executeAction($out_trade_no);
                 die('success');
             }
         }
