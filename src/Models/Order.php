@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Pkly\I18Next\I18n;
-use App\Controllers\OrderController;
+use App\Services\Payment;
 
 class Order extends Model
 {
@@ -58,7 +58,7 @@ class Order extends Model
     }
 
     public function finshOrder($order_no) {
-        orderController::execute($order_no);
+        Payment::excuteAction($order_no);
     }
 }
 

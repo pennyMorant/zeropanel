@@ -3,7 +3,7 @@
 
 namespace App\Services\Gateway;
 
-use App\Controllers\OrderController;
+use App\Services\Payment;
 use App\Models\Setting;
 use Slim\Http\Serverequest;
 use Slim\Http\Response;
@@ -70,7 +70,7 @@ class VmqPay
         if ($_sign != $sign) {
             die('error_sign');//sign校验不通过
         }
-        OrderController::execute($request->getParam('payId'));
+        Payment::excuteAction($request->getParam('payId'));
     	die('success');
     }
 

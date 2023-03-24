@@ -3,7 +3,9 @@
 namespace App\Services\Gateway;
 
 use App\Models\Setting;
-use App\Controllers\OrderController;
+use App\Services\Payment;
+use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
 class PayBeaver
 {
@@ -78,7 +80,7 @@ class PayBeaver
     	if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
     		die('FAIL');
     	}
-        OrderController::execute($request->getParam('out_trade_no'));
+        Payment::excuteAction($request->getParam('out_trade_no'));
     	die('SUCCESS');
     }
 

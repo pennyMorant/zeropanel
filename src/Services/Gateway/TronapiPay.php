@@ -4,7 +4,7 @@
 namespace App\Services\Gateway;
 
 use App\Models\Setting;
-use App\Controllers\OrderController;
+use App\Services\Payment;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
@@ -107,7 +107,7 @@ class TronapiPay
         if ($_signature != $signature) {
             die('FAIL');
         }
-    	OrderController::execute($order_id);
+    	Payment::excuteAction($order_id);
         $res = [
             'code' => '200',
             'data' => 'ok'

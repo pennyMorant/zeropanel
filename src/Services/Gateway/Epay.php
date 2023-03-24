@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace App\Services\Gateway;
 
-use App\Controllers\OrderController;
+use App\Services\Payment;
 use App\Models\Setting;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
@@ -66,7 +66,7 @@ class Epay
             $out_trade_no = $_GET['out_trade_no'];
             $trade_status = $_GET['trade_status'];
             if ($trade_status === 'TRADE_SUCCESS') {
-                orderController::execute($out_trade_no);
+                Payment::excuteAction($out_trade_no);
                 die('success');
             }
         }
