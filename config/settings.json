@@ -54,7 +54,7 @@
         "item": "website_auth_background_image",
         "value": "",
         "class": "website",
-        "is_public": 0,
+        "is_public": 1,
         "type": "string",
         "default": "",
         "mark": "登陆页背景图片"
