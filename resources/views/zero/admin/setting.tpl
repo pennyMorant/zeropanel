@@ -67,6 +67,8 @@
                                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="随意填写,尽可能的复杂" id="website_security_token" name="website_security_token" type="text" placeholder="TOKEN" value="{$settings['website_security_token']}" />
                                                                     <label class="form-label">后端TOKEN</label>
                                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="请输入安全的密钥" id="website_backend_token" name="website_backend_token" type="text" placeholder="token" value="{$settings['website_backend_token']}" />
+                                                                    <label class="form-label">登陆页背景图片</label>
+                                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="不更改保持默认" id="website_auth_background_image" name="website_auth_background_image" type="text" placeholder="" value="{$settings['website_auth_background_image']}" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -795,7 +797,8 @@
                                 website_landing_index: $('#website_landing_index').val(),
                                 website_security_token: $('#website_security_token').val(),
                                 website_request_token: $('#website_request_token').val(),
-                                website_backend_token: $('#website_backend_token').val()
+                                website_backend_token: $('#website_backend_token').val(),
+                                website_auth_background_image: $('#website_auth_background_image').val()
                             },
                             success: function(data){
                                 if (data.ret === 1){

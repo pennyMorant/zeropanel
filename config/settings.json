@@ -51,6 +51,16 @@
     },
     {
         "id": null,
+        "item": "website_auth_background_image",
+        "value": "",
+        "class": "website",
+        "is_public": 0,
+        "type": "string",
+        "default": "",
+        "mark": "登陆页背景图片"
+    },
+    {
+        "id": null,
         "item": "payment_gateway",
         "value": "[]",
         "class": "pay",

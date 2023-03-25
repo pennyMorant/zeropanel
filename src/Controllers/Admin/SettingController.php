@@ -54,7 +54,7 @@ class SettingController extends AdminController
 
         switch ($class) {
             case 'website':
-                $list = ['website_url', 'website_name', 'website_landing_index', 'website_security_token','website_backend_token'];
+                $list = ['website_url', 'website_name', 'website_landing_index', 'website_security_token','website_backend_token', 'website_auth_background_image'];
                 break;
             case 'permission_group':
                 $list = ['enable_permission_group', 'permission_group_detail'];
