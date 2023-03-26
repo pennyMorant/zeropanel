@@ -234,9 +234,11 @@ class UserController extends BaseController
                 break;
             case 'passwd':
                 $user->createShadowsocksPasswd();
+                $user->save();
                 break;
             case 'sub_token':
                 $user->createSubToken();
+                $user->save();
                 break;
             case 'referral_code':
                 $user->clear_inviteCodes();

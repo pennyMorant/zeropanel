@@ -76,6 +76,7 @@ class User extends Command
         $users = ModelsUser::all();
         foreach ($users as $user) {
             $user->createSubToken();
+            $user->save();
         }
         echo 'create subscription token successful' . PHP_EOL;
     }
@@ -115,8 +116,6 @@ class User extends Command
             echo 'start create admin account';
             $current_timestamp          = time();
             // create admin user
-            $configs = Setting::getClass('register');
-            // do reg user
             $user                   = new ModelsUser();
             $user->email            = $email;
             $user->password         = Hash::passwordHash($passwd);
@@ -133,7 +132,7 @@ class User extends Command
             $user->class            = 0;
             $user->node_speedlimit  = 0;
             $user->theme            = $_ENV['theme'];
-            $$user->subscription_token  = $user->createShadowsocksPasswd();
+            $user->subscription_token  = $user->createSubToken();
 
             if ($user->save()) {
                 echo '创建成功，请在主页登录' . PHP_EOL;

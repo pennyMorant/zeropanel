@@ -607,18 +607,18 @@ class User extends Model
 
     public function createSubToken()
     { 
-        $token = bin2hex(openssl_random_pseudo_bytes(16 / 2));
-        $is_token_used = User::where('subscription_token', $token)->first();
-        if ($is_token_used == null) {
-            $this->subscription_token = $token;
-            return $this->save();
+        for ($i = 0; $i < 10; $i++) {
+            $token = bin2hex(openssl_random_pseudo_bytes(16 / 2));
+            $is_token_used = User::where('subscription_token', $token)->first();
+            if (is_null($is_token_used)) {               
+                return $token;
+            }
         }
     }
 
     public function createShadowsocksPasswd() 
     {
         $passwd = base64_encode(openssl_random_pseudo_bytes(16));
-        $this->passwd = $passwd;
-        return $this->save();
+        return $passwd;
     }
 }
