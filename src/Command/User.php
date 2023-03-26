@@ -15,11 +15,10 @@ class User extends Command
     public $description = ''
         . '├─=: php xcat User [选项]' . PHP_EOL
         . '│ ├─ getCookie               - 获取指定用户的 Cookie' . PHP_EOL
-        . '│ ├─ resetPort               - 重置单个用户端口' . PHP_EOL
         . '│ ├─ createAdmin             - 创建管理员帐号' . PHP_EOL
-        . '│ ├─ resetAllPort            - 重置所有用户端口' . PHP_EOL
         . '│ ├─ resetTraffic            - 重置所有用户流量' . PHP_EOL
-        . '│ ├─ generateUUID            - 为所有用户生成新的 UUID' . PHP_EOL;
+        . '│ ├─ generateUUID            - 为所有用户生成新的 UUID' . PHP_EOL
+        . '│ ├─ createSubToken          - 为所有用户生成新的 Sub token' . PHP_EOL;
 
     public function boot()
     {
@@ -72,6 +71,15 @@ class User extends Command
         echo 'generate UUID successful' . PHP_EOL;
     }
 
+    public function createSubToken()
+    {
+        $users = ModelsUser::all();
+        foreach ($users as $user) {
+            $user->createSubToken();
+        }
+        echo 'create subscription token successful' . PHP_EOL;
+    }
+
     /**
      * 创建 Admin 账户
      *
@@ -112,7 +120,7 @@ class User extends Command
             $user                   = new ModelsUser();
             $user->email            = $email;
             $user->password         = Hash::passwordHash($passwd);
-            $user->passwd           = Tools::genRandomChar(16);
+            $user->passwd           = $user->createShadowsocksPasswd();
             $user->uuid             = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
             $user->t                = 0;
             $user->u                = 0;
@@ -125,6 +133,7 @@ class User extends Command
             $user->class            = 0;
             $user->node_speedlimit  = 0;
             $user->theme            = $_ENV['theme'];
+            $$user->subscription_token  = $user->createShadowsocksPasswd();
 
             if ($user->save()) {
                 echo '创建成功，请在主页登录' . PHP_EOL;

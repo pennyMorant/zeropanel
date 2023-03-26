@@ -298,7 +298,7 @@ class AuthController extends BaseController
         $current_timestamp          = time();
         $user->email                = $email;
         $user->password             = Hash::passwordHash($passwd);
-        $user->passwd               = Tools::genRandomChar(16);
+        $user->passwd               = $user->createShadowsocksPasswd();
         $user->uuid                 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
         $user->t                    = 0;
         $user->u                    = 0;
@@ -326,6 +326,7 @@ class AuthController extends BaseController
         $user->signup_ip        = $_SERVER['REMOTE_ADDR'];
         $user->theme            = $_ENV['theme'];
         $user->node_group       = 0;
+        $user->subscription_token   = $user->createSubToken();
         $user->save();
         Auth::login($user->id, 3600);
         $user->collectSigninIp($_SERVER['REMOTE_ADDR']);

@@ -108,9 +108,6 @@ class PasswordController extends BaseController
         } else {
             $rs['ret'] = 1;
             $rs['msg'] = I18n::get()->t('success');
-            
-           
-            $user->clean_link();
 
             // 禁止链接多次使用
             $token->expire_time = time();

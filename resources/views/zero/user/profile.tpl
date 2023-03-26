@@ -245,7 +245,7 @@
 																	</tr>
                                                                     <tr>
                                                                         <td>{$trans->t('subscription token')}</td>
-                                                                        <td>{$sub_token}</td>
+                                                                        <td>{$user->subscription_token}</td>
                                                                         <td class="text-end">
                                                                             <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="tooltip" data-bs-title="click reset" onclick="KTUsersResetSubLink()">
                                                                                 <span class="svg-icon svg-icon-3">

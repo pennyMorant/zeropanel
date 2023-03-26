@@ -52,7 +52,6 @@ class UserController extends BaseController
         $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
 
         $this->view()
-            ->assign('sub_token', $this->user->getSublink())
             ->assign('class_left_days', $class_left_days)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('invite_url', $invite_url)
@@ -97,15 +96,12 @@ class UserController extends BaseController
     public function profile(ServerRequest $request, Response $response, $args)
     {
         $bind_token = TelegramSessionManager::add_bind_session($this->user);
-        $config_service = new Config();
 
         $this->view()
             ->assign('user', $this->user)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
-            ->assign('sub_token', $this->user->getSublink())
             ->assign('bind_token', $bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
-            ->assign('config_service', $config_service)
             ->registerClass('URL', URL::class)
             ->display('user/profile.tpl');
         return $response;
@@ -188,9 +184,6 @@ class UserController extends BaseController
                         'msg' => $e->getMessage(),
                     ]);
                 }
-
-                
-                $user->clean_link();
                 break;
             case 'email':
                 $newemail = $request->getParam('newemail');
@@ -240,12 +233,10 @@ class UserController extends BaseController
                 $user->save();
                 break;
             case 'passwd':
-                $passwd = Tools::genRandomChar(16);
-                $user->passwd = $passwd;
-                $user->save();
+                $user->createShadowsocksPasswd();
                 break;
             case 'sub_token':
-                $user->clean_link();
+                $user->createSubToken();
                 break;
             case 'referral_code':
                 $user->clear_inviteCodes();

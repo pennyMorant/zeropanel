@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\{
-    Link,
     Node, 
     User, 
     UserSubscribeLog,
@@ -25,36 +24,6 @@ use Slim\Http\ServerRequest;
  */
 class LinkController extends BaseController
 {
-    public static function GenerateRandomLink()
-    {
-        for ($i = 0; $i < 10; $i++) {
-            $token = Tools::genRandomChar(16);
-            $Elink = Link::where('token', $token)->first();
-            if ($Elink == null) {
-                return $token;
-            }
-        }
-
-        return "couldn't alloc token";
-    }
-
-    /**
-     * @param int $userid
-     */
-    public static function GenerateSubCode(int $userid): string
-    {
-        $Elink = Link::where('userid', $userid)->first();
-        if (!is_null($Elink)) {
-            return $Elink->token;
-        }
-        $NLink         = new Link();
-        $NLink->userid = $userid;
-        $NLink->token  = self::GenerateRandomLink();
-        $NLink->save();
-
-        return $NLink->token;
-    }
-
     /**
      * @param Request   $request
      * @param Response  $response
@@ -62,19 +31,8 @@ class LinkController extends BaseController
      */
     public static function GetContent(ServerRequest $request, Response $response, $args)
     {
-
         $token = $args['token'];
-
-        $Elink = Link::where('token', $token)->first();
-        if ($Elink == null) {
-            return null;
-        }
-
-        $user = $Elink->getUser();
-        if ($user == null) {
-            return null;
-        }
-
+        $user = User::where('subscription_token', $token)->first();
         $opts = $request->getQueryParams();
 
         // 筛选节点部分
@@ -344,7 +302,7 @@ class LinkController extends BaseController
         if ($int == 0) {
             $int = '';
         }
-        $userapiUrl = Setting::obtain('subscribe_address_url') . '/link/' . self::GenerateSubCode($user->id);
+        $userapiUrl = Setting::obtain('subscribe_address_url') . '/link/' . $user->subscription_token;
         $return_info = [
             'link' => '',
             // sub

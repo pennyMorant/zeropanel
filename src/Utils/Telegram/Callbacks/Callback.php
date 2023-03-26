@@ -578,7 +578,7 @@ class Callback
         switch ($op_2) {
             case 'update_link':
                 // 重置订阅链接
-                $this->User->clean_link();
+                $this->User->createSubToken();
                 $this->answerCallbackQuery([
                     'text'       => '订阅链接重置成功，请在下方重新更新订阅.',
                     'show_alert' => true,
@@ -597,7 +597,7 @@ class Callback
                 break;
             case 'update_passwd':
                 // 重置链接密码
-                $this->User->passwd = Tools::genRandomChar(8);
+                $this->User->passwd = $this->User->createShadowsocksPasswd();
                 if ($this->User->save()) {
                     $answerCallbackQuery = '连接密码更新成功，请在下方重新更新订阅.';
                     $temp                = $this->getUserSubscribeKeyboard();

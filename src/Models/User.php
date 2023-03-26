@@ -262,22 +262,6 @@ class User extends Model
     }
 
     /**
-     * 删除用户的订阅链接
-     */
-    public function clean_link()
-    {
-        Link::where('userid', $this->id)->delete();
-    }
-    
-    /**
-     * 获取用户的订阅链接
-     */
-    public function getSublink()
-    {
-        return LinkController::GenerateSubCode($this->id);
-    }
-
-    /**
      * 删除用户的邀请码
      */
     public function clear_inviteCodes()
@@ -318,7 +302,6 @@ class User extends Model
         EmailVerify::where('email', $email)->delete();
         InviteCode::where('user_id', '=', $uid)->delete();
         Ip::where('userid', '=', $uid)->delete();
-        Link::where('userid', '=', $uid)->delete();
         SigninIp::where('userid', '=', $uid)->delete();
         PasswordReset::where('email', '=', $email)->delete();
         TelegramSession::where('user_id', '=', $uid)->delete();
@@ -620,5 +603,22 @@ class User extends Model
                 break;
         }
         return $is_admin;
+    }
+
+    public function createSubToken()
+    { 
+        $token = bin2hex(openssl_random_pseudo_bytes(16 / 2));
+        $is_token_used = User::where('subscription_token', $token)->first();
+        if ($is_token_used == null) {
+            $this->subscription_token = $token;
+            return $this->save();
+        }
+    }
+
+    public function createShadowsocksPasswd() 
+    {
+        $passwd = base64_encode(openssl_random_pseudo_bytes(16));
+        $this->passwd = $passwd;
+        return $this->save();
     }
 }

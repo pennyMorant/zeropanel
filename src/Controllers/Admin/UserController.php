@@ -89,7 +89,7 @@ class UserController extends AdminController
         $current_timestamp          = time();
         $user->password             = Hash::passwordHash($pass);
         $user->email                = $email;
-        $user->passwd               = Tools::genRandomChar(16);
+        $user->passwd               = $user->createShadowsocksPasswd();
         $user->uuid                 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
         $user->t                    = 0;
         $user->u                    = 0;
@@ -162,7 +162,6 @@ class UserController extends AdminController
 
         if ($request->getParam('password') != '') {
             $user->password = Hash::passwordHash($request->getParam('password'));
-            $user->clean_link();
         }
 
 
