@@ -107,7 +107,7 @@ class AnnController extends AdminController
         }
 
         if ($issend == 1) {
-            $beginSend = ($datas['page'] - 1) * $_ENV['sendPageLimit'];
+            $beginSend = ($postdata['page'] - 1) * $_ENV['sendPageLimit'];
             $users     = User::where('class', '>=', 0)->skip($beginSend)->limit($_ENV['sendPageLimit'])->get();
             foreach ($users as $user) {
                 $user->sendMail(
@@ -124,7 +124,7 @@ class AnnController extends AdminController
             if (count($users) == $_ENV['sendPageLimit']) {
                 return $response->withJson([
                     'ret' => 2,
-                    'msg' => $datas['page'] + 1
+                    'msg' => $postdata['page'] + 1
                 ]);
             }
         }
