@@ -401,9 +401,9 @@ class ZeroController extends BaseController
                 $data = $query['datas']->map(function($rowData) {
                     return [
                         'subscribe_type'    => $rowData->subscribe_type,
-                        'request_ip'    =>  $rowData->request_id,
+                        'request_ip'    =>  $rowData->request_ip,
                         'location'  =>  Tools::getIpInfo($rowData->request_ip),
-                        'request_time'  =>  $rowData->request_time,
+                        'request_time'  =>  date('Y-m-d H:i:s', $rowData->request_time),
                     ];
                 })->toArray();
                 $recordsTotal = $query['count'];

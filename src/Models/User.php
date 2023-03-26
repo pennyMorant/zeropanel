@@ -560,13 +560,13 @@ class User extends Model
      */
     public function collectSigninIp(string $ip, int $type = 0): bool
     {
-        $SigninIp           = new SigninIp();
-        $SigninIp->ip       = $ip;
-        $SigninIp->userid   = $this->id;
-        $SigninIp->datetime = time();
-        $SigninIp->type     = $type;
+        $signin           = new SigninIp();
+        $signin->ip       = $ip;
+        $signin->userid   = $this->id;
+        $signin->datetime = time();
+        $signin->type     = $type;
 
-        return $SigninIp->save();
+        return $signin->save();
     }
 
     public function enable()
