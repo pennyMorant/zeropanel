@@ -146,7 +146,10 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">海狸支付</div>
+                                                                    <div class="card-title d-flex flex-column">
+                                                                        <span class="fw-bold">海狸支付</span>
+                                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">申请地址: https://merchant.paybeaver.com</span>
+                                                                    </div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm fw-bold" type="button" onclick="updateAdminConfigSettings('paybeaver')">保存配置</button>
                                                                     </div>
@@ -161,7 +164,10 @@
                                                             </div>
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">PayTaro</div>
+                                                                    <div class="card-title d-flex flex-column">
+                                                                        <span class="fw-bold">PayTaro</span>
+                                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">申请地址: https://v1.paytaro.com</span>
+                                                                    </div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm fw-bold" type="button" onclick="updateAdminConfigSettings('paytaro')">保存配置</button>
                                                                     </div>
@@ -175,7 +181,10 @@
                                                             </div>
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">TronapiPay</div>
+                                                                    <div class="card-title d-flex flex-column">
+                                                                        <span class="fw-bold">TronapiPay</span>
+                                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">申请地址: https://pro.tronapi.com</span>
+                                                                    </div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm fw-bold" type="button" onclick="updateAdminConfigSettings('tronapipay')">保存配置</button>
                                                                     </div>
@@ -207,7 +216,10 @@
                                                             -->
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">VMQPay</div>
+                                                                    <div class="card-title d-flex flex-column">
+                                                                        <span class="fw-bold">VMQPay</span>
+                                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">申请地址: https://github.com/szvone/vmqphp</span>
+                                                                    </div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm fw-bold" type="button" onclick="updateAdminConfigSettings('vmqpay')">保存配置</button>
                                                                     </div>
@@ -492,7 +504,10 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">货币配置</div>
+                                                                    <div class="card-title d-flex flex-column">
+                                                                        <span class="fw-bold">货币配置</span>
+                                                                        <span class="text-gray-400 pt-1 fw-semibold fs-6">API申请地址: https://app.abstractapi.com</span>
+                                                                    </div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('currency')">保存配置</button>
                                                                     </div>
