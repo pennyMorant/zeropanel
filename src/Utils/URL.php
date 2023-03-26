@@ -161,8 +161,8 @@ class URL
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
-        $shadowsocks = $node_config['method'] . ':' . $node_config['passwd'] . '@' . $node_config['address'] . ':' . $node_config['port'];
-        return 'ss://'. base64_encode($shadowsocks) . '#' . rawurlencode($node_config['remark']);
+        $shadowsocks = base64_encode($node_config['method'] . ':' . $node_config['passwd']) . '@' . $node_config['address'] . ':' . $node_config['port'];
+        return 'ss://'. $shadowsocks . '#' . rawurlencode($node_config['remark']);
     }
 
 

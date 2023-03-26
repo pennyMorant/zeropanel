@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-23 15:23:57
+-- 生成日期： 2023-03-26 11:28:55
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -153,19 +153,6 @@ CREATE TABLE `email_verify` (
   `ip` varchar(39) NOT NULL,
   `code` varchar(39) NOT NULL,
   `expire_in` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `link`
---
-
-CREATE TABLE `link` (
-  `id` int(11) NOT NULL,
-  `token` varchar(40) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `filter` mediumtext DEFAULT NULL COMMENT '节点筛选'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -367,10 +354,10 @@ CREATE TABLE `user` (
   `email` varchar(32) NOT NULL COMMENT '注册邮箱',
   `password` varchar(256) NOT NULL COMMENT '登录密码',
   `passwd` varchar(256) DEFAULT NULL COMMENT 'SS 密码',
-  `uuid` varchar(36) DEFAULT NULL COMMENT 'VMESS/TROJAN UUID',
+  `uuid` varchar(36) NOT NULL COMMENT 'VMESS/TROJAN UUID',
   `t` int(11) NOT NULL DEFAULT 0,
-  `u` bigint(20) NOT NULL,
-  `d` bigint(20) NOT NULL,
+  `u` bigint(20) NOT NULL DEFAULT 0,
+  `d` bigint(20) NOT NULL DEFAULT 0,
   `product_id` int(11) DEFAULT NULL COMMENT '用户当前产品ID',
   `reset_traffic_value` int(11) DEFAULT NULL COMMENT '重置流量的值',
   `reset_traffic_date` int(11) DEFAULT NULL COMMENT '重置流量日期',
@@ -399,7 +386,8 @@ CREATE TABLE `user` (
   `rebate` int(11) NOT NULL DEFAULT -1 COMMENT '返利百分比',
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
   `withdraw_account` varchar(50) DEFAULT NULL,
-  `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT '账户是否被验证'
+  `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT '账户是否被验证',
+  `subscription_token` varchar(20) NOT NULL COMMENT '订阅token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -550,12 +538,6 @@ ALTER TABLE `email_queue`
 -- 表的索引 `email_verify`
 --
 ALTER TABLE `email_verify`
-  ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `link`
---
-ALTER TABLE `link`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -721,12 +703,6 @@ ALTER TABLE `email_queue`
 -- 使用表AUTO_INCREMENT `email_verify`
 --
 ALTER TABLE `email_verify`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `link`
---
-ALTER TABLE `link`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
