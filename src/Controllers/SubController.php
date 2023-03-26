@@ -262,7 +262,7 @@ final class SubController
         $return = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                    $return = (self::getShadowsocks($node_config));
+                    $return = self::getShadowsocks($node_config);
                 break;
             case 'vmess':
                 if (!in_array($node_config['net'], ['tcp', 'ws', 'http', 'h2'])) {
