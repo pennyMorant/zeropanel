@@ -85,7 +85,6 @@ class Job extends Command
         Ip::where('datetime', '<', time() - 300)->delete();
         TelegramSession::where('datetime', '<', time() - 900)->delete();
         SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
-        IP::where('datetime', '<', time() - 86400 * 7)->delete();
         TrafficLog::where('datetime', '<', time() - 86400 * 10)->delete();
         NodeOnlineLog::where('log_time', '<', time() - 86400 * 3)->delete();
         NodeInfoLog::where('log_time', '<', time() - 86400 * 3)->delete();
