@@ -86,6 +86,7 @@ class Job extends Command
         TelegramSession::where('datetime', '<', time() - 900)->delete();
         SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
         IP::where('datetime', '<', time() - 86400 * 7)->delete();
+        TraffilLog::where('datetime' < time() - 86400 * 15)->delete();
         echo '清理数据库各表结束;' . PHP_EOL;
 
         // ------- 重置自增 ID
