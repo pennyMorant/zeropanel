@@ -86,7 +86,9 @@ class Job extends Command
         TelegramSession::where('datetime', '<', time() - 900)->delete();
         SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
         IP::where('datetime', '<', time() - 86400 * 7)->delete();
-        TraffilLog::where('datetime' < time() - 86400 * 15)->delete();
+        TrafficLog::where('datetime', '<', time() - 86400 * 10)->delete();
+        NodeOnlineLog::where('log_time', '<', time() - 86400 * 3)->delete();
+        NodeInfoLog::where('log_time', '<', time() - 86400 * 3)->delete();
         echo '清理数据库各表结束;' . PHP_EOL;
 
         // ------- 重置自增 ID
@@ -96,6 +98,7 @@ class Job extends Command
         $tools->reset_auto_increment($db, 'user_traffic_log');
         $tools->reset_auto_increment($db, 'node_online_log');
         $tools->reset_auto_increment($db, 'node_info');
+        $tools->reset_auto_increment($db, 'alive_ip');
 
         //auto reset
         echo '重置用户流量开始' . PHP_EOL;
@@ -134,10 +137,6 @@ class Job extends Command
             $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
             Telegram::PushToAdmin($messagetext);
             echo '每日数据库清理成功报告发送结束' . PHP_EOL;
-        
-
-        $this->ZeroTask();
-
 
         $configs = Setting::getClass('currency');
         if ($configs['enable_currency'] == true && is_null($configs['currency_exchange_rate'])) {
@@ -264,47 +263,6 @@ class Job extends Command
             $Task->delete();
         }
         echo '删除telegram无用消息结束' . PHP_EOL;
-    }
-
-    public function ZeroTask()
-    {
-        echo '关闭工单任务开始' . PHP_EOL;
-        if (ZeroConfig::get('auto_close_ticket') === true) {
-            $tickets = Ticket::where('status', '=', 1)->where('rootid', '=', 0)->get();
-
-            foreach ($tickets as $ticket) {
-                $tk = Ticket::where('rootid', '=', $ticket->id)->orderBy('datetime', 'desc')->first();
-                $tk_userid = $tk ? $tk->userid : $ticket->userid;
-
-                $user = User::find($tk_userid);
-                if ($user === null) {
-                    continue;
-                }
-                if ($user->is_admin != 1) {
-                    continue;
-                }
-
-                $time = ZeroConfig::get('close_ticket_time') * 86400;
-                if (time() - $tk->datetime < $time) {
-                    continue;
-                }
-
-                $ticket->status = 0;
-                $ticket->save();
-                echo('关闭工单ID:' . $ticket->id . PHP_EOL);
-            }
-        }
-
-        if (ZeroConfig::get('del_user_ticket') === true) {
-            $del_tickets = Ticket::all();
-            foreach ($del_tickets as $del_ticket) {
-                $del_user = User::find($del_ticket->userid);
-                if ($del_user === null) {
-                    $del_ticket->delete();
-                }
-            }
-        }
-        echo '关闭工单任务结束' . PHP_EOL;
     }
 
     /**

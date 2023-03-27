@@ -136,8 +136,3 @@ $_ZC['client_ios'] = [
         'down'    => 'https://apps.apple.com/us/app/surge-4/id1442620678'
     ),
 ];
-
-# 自动关闭工单
-$_ZC['auto_close_ticket'] = true;       // 自动关闭用户没有回复的工单
-$_ZC['close_ticket_time'] = 3;          // 用户多久(天)没有回复的工单自动关闭
-$_ZC['del_user_ticket']   = true;       // 清理用户不存在的工单
