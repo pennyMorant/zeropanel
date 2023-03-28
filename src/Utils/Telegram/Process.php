@@ -3,8 +3,7 @@
 namespace App\Utils\Telegram;
 
 use Telegram\Bot\Api;
-use App\Models\Setting;
-use Exception;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class Process
 {
@@ -19,9 +18,8 @@ class Process
                     Commands\UnbindCommand::class,
                 ]
             );
-            $update = $bot->commandsHandler(false, ['timeout' => 30]);
+            $update = $bot->commandsHandler(true);
             $Message = $update->getMessage();
-//            file_put_contents(BASE_PATH . '/storage/telegram.log', json_encode(file_get_contents("php://input")) . "\r\n", FILE_APPEND);
             
             if ($update->getCallbackQuery() !== null) {
                 new Callbacks\Callback($bot, $update->getCallbackQuery());
