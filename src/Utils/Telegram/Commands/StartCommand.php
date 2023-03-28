@@ -24,7 +24,7 @@ final class StartCommand extends Command
     /**
      * @var string Command Description
      */
-    protected $description = '[群组/私聊] Bot 初始命令.';
+    protected $description = 'Bot 初始命令.';
 
     public function handle(): void
     {
@@ -34,50 +34,42 @@ final class StartCommand extends Command
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
 
-        if ($ChatID > 0) {
-            // 私人会话
 
-            // 发送 '输入中' 会话状态
-            $this->replyWithChatAction(['action' => Actions::TYPING]);
+        // 发送 '输入中' 会话状态
+        $this->replyWithChatAction(['action' => Actions::TYPING]);
 
-            // 触发用户
-            $SendUser = [
-                'id' => $Message->getFrom()->getId(),
-                'name' => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
-                'username' => $Message->getFrom()->getUsername(),
-            ];
-            // 消息内容
-            $MessageText = explode(' ', trim($Message->getText()));
-            $MessageKey = array_splice($MessageText, -1)[0];
-            if (
-                $MessageKey !== ''
-                && TelegramTools::getUser($SendUser['id']) === null
-                && strlen($MessageKey) === 16
-            ) {
-                // 新用户绑定
-                $this->bindingAccount($SendUser, $MessageKey);
-            }
-            // 回送信息
-            $this->replyWithMessage(
-                [
-                    'text' => '发送 /help 获取帮助',
-                    'parse_mode' => 'Markdown',
-                ]
-            );
-        } else {
-            
-            // 发送 '输入中' 会话状态
-            $this->replyWithChatAction(['action' => Actions::TYPING]);
-            // 回送信息
-            $this->replyWithMessage(
-                [
-                    'text' => '喵喵喵.',
-                    'parse_mode' => 'Markdown',
-                    'reply_to_message_id' => $Message->getMessageId(),
-                ]
-            );
-            
+        // 触发用户
+        $SendUser = [
+            'id' => $Message->getFrom()->getId(),
+            'name' => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
+            'username' => $Message->getFrom()->getUsername(),
+        ];
+        // 消息内容
+        $MessageText = explode(' ', trim($Message->getText()));
+        $MessageKey = array_splice($MessageText, -1)[0];
+        if (
+            $MessageKey !== ''
+            && TelegramTools::getUser($SendUser['id']) === null
+            && strlen($MessageKey) === 16
+        ) {
+            // 新用户绑定
+            $this->bindingAccount($SendUser, $MessageKey);
         }
+
+        $reply_markup = json_encode(
+            [
+                'inline_keyboard' => '绑定账号'
+            ]
+        );
+
+        // 回送信息
+        $this->replyWithMessage(
+            [
+                'text' => 'Hello',
+                'parse_mode' => 'Markdown',
+                'reply_markup'              => $reply_markup,
+            ]
+        );
     }
 
     public function bindingAccount($SendUser, $MessageText): void
