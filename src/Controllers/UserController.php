@@ -26,7 +26,6 @@ use App\Utils\{
 };
 use Exception;
 use voku\helper\AntiXSS;
-use Ramsey\Uuid\Uuid;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
@@ -228,8 +227,7 @@ class UserController extends BaseController
                 break;
             case 'uuid':
                 $current_timestamp = time();
-                $new_uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $user->email . '|' . $current_timestamp);
-                $user->uuid = $new_uuid;
+                $user->uuid = $user->createUUID($current_timestamp);
                 $user->save();
                 break;
             case 'passwd':               

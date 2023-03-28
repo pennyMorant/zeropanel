@@ -17,7 +17,7 @@ class User extends Command
         . '│ ├─ getCookie               - 获取指定用户的 Cookie' . PHP_EOL
         . '│ ├─ createAdmin             - 创建管理员帐号' . PHP_EOL
         . '│ ├─ resetTraffic            - 重置所有用户流量' . PHP_EOL
-        . '│ ├─ generateUUID            - 为所有用户生成新的 UUID' . PHP_EOL
+        . '│ ├─ createUUID            - 为所有用户生成新的 UUID' . PHP_EOL
         . '│ ├─ createSubToken          - 为所有用户生成新的 Sub token' . PHP_EOL;
 
     public function boot()
@@ -60,13 +60,14 @@ class User extends Command
      *
      * @return void
      */
-    public function generateUUID()
+    public function createUUID()
     {
         $users = ModelsUser::all();
         $current_timestamp = time();
         foreach ($users as $user) {
             /** @var ModelsUser $user */
-            $user->generateUUID($current_timestamp);
+            $user->uuid = $user->createUUID($current_timestamp);
+            $user->save();
         }
         echo 'generate UUID successful' . PHP_EOL;
     }

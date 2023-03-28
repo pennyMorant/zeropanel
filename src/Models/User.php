@@ -102,18 +102,6 @@ class User extends Model
             }
         }
     }
-    
-    /**
-     * 生成新的UUID
-     */
-    public function generateUUID($s): bool
-    {
-        $this->uuid = Uuid::uuid5(
-            Uuid::NAMESPACE_DNS,
-            $this->email . '|' . $s
-        );
-        return $this->save();
-    }
 
     /*
      * 总流量[自动单位]
@@ -605,10 +593,10 @@ class User extends Model
         return $is_admin;
     }
 
-    public function createSubToken()
+    public function createSubToken($length = 16)
     { 
         for ($i = 0; $i < 10; $i++) {
-            $token = bin2hex(openssl_random_pseudo_bytes(16 / 2));
+            $token = bin2hex(openssl_random_pseudo_bytes($length / 2));
             $is_token_used = User::where('subscription_token', $token)->first();
             if (is_null($is_token_used)) {               
                 return $token;
@@ -616,9 +604,15 @@ class User extends Model
         }
     }
 
-    public function createShadowsocksPasswd() 
+    public function createShadowsocksPasswd($length = 16) 
     {
-        $passwd = base64_encode(openssl_random_pseudo_bytes(16));
+        $passwd = base64_encode(openssl_random_pseudo_bytes($length));
         return $passwd;
+    }
+
+    public function createUUID($current_timestamp)
+    {
+        $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $this->email . '|' . $current_timestamp);
+        return $uuid;
     }
 }
