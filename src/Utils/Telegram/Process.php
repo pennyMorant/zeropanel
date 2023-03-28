@@ -19,7 +19,7 @@ class Process
                     Commands\UnbindCommand::class,
                 ]
             );
-            $update = $bot->commandsHandler(true);
+            $update = $bot->commandsHandler(false, ['timeout' => 30]);
             $Message = $update->getMessage();
 //            file_put_contents(BASE_PATH . '/storage/telegram.log', json_encode(file_get_contents("php://input")) . "\r\n", FILE_APPEND);
             
