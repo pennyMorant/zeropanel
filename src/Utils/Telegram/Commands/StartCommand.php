@@ -25,7 +25,7 @@ final class StartCommand extends Command
      */
     protected $description = 'Bot 初始命令.';
 
-    public function handle(): void
+    public function handle()
     {
         $Update = $this->getUpdate();
         $Message = $Update->getMessage();
@@ -47,7 +47,6 @@ final class StartCommand extends Command
             [
                 'text' => 'Hello',
                 'parse_mode' => 'Markdown',
-                'reply_markup'              => $reply_markup,
             ]
         );
     }
