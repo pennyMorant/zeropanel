@@ -75,7 +75,7 @@ class User extends Command
     {
         $users = ModelsUser::all();
         foreach ($users as $user) {
-            $user->createSubToken();
+            $user->subscription_token = $user->createSubToken();
             $user->save();
         }
         echo 'create subscription token successful' . PHP_EOL;
