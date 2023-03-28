@@ -10,7 +10,6 @@ use App\Utils\TelegramSessionManager;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
-use Telegram\Bot\Exceptions\TelegramResponseException;
 
 /**
  * Class StratCommand.
