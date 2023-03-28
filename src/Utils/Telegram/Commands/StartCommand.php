@@ -25,7 +25,7 @@ final class StartCommand extends Command
      */
     protected $description = 'Bot 初始命令.';
 
-    public function handle()
+    public function handle($arguments)
     {
         $Update = $this->getUpdate();
         $Message = $Update->getMessage();
