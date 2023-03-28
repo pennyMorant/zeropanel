@@ -4,7 +4,7 @@
 namespace App\Utils\Telegram\Callbacks;
 
 
-use App\Zero\Telegram;
+use App\Utils\Telegram;
 use App\Models\{
     Ticket,
     User,
@@ -90,7 +90,7 @@ class ReplayTicket
             $ticket_main->status  = 1;
             $ticket_main->save();
             $ticket->save();
-            Telegram::Send("# {$ticketId} 的工单已回复成功", $this->ChatID);
+            Telegram::pushToAdmin("# {$ticketId} 的工单已回复成功", $this->ChatID);
         }
     }
 }
