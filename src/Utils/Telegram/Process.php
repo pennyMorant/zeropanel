@@ -3,7 +3,6 @@
 namespace App\Utils\Telegram;
 
 use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
 use Exception;
 
 class Process
