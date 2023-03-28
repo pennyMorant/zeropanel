@@ -32,7 +32,7 @@ final class StartCommand extends Command
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         $replyMarkup = $this->buildReplyKeyboardMarkup([
-            ['绑定账号'],
+            ['绑定账号', '解除绑定'],
         ]);
 
         // 回送信息
