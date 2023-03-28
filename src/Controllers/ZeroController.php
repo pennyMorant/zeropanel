@@ -316,15 +316,14 @@ class ZeroController extends BaseController
         if ($user == null || !$user->isLogin) {
             return 0;
         }
-
-        $trans = I18n::get();
-
+        
         switch ($name) {
             case 'ticket':
                 $querys = Ticket::query()->where('userid', $user->id)->orderBy($sort_field, $sort);
                 $query = Ticket::getTableDataFromAdmin($request, null, null, $querys);
                 
                 $data = $query['datas']->map(function($rowData) {
+                    $trans = I18n::get();
                     $type = "'ticket'";
                     $comments = json_decode($rowData->content, true);
                     foreach ($comments as $comment) {
