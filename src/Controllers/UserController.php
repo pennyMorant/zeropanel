@@ -94,7 +94,7 @@ class UserController extends BaseController
      */
     public function profile(ServerRequest $request, Response $response, $args)
     {
-        $bind_token = TelegramSessionManager::add_bind_session($this->user);
+        $bind_token = TelegramSessionManager::addBindSession($this->user);
 
         $this->view()
             ->assign('user', $this->user)
