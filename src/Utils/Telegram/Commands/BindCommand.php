@@ -62,16 +62,7 @@ final class BindCommand extends Command
         }
         $user->telegram_id = $chatId;
         $user->save();
-        
-        if ($user->is_admin >= 1) {
-            $text = '当前绑定邮箱为： ' . $user->email;
-        } else {
-            if ($user->class >= 1) {
-                $text = '恭喜您绑定成功，当前绑定邮箱为： ' . $user->email;
-            } else {
-                $text = '绑定成功了，您的邮箱为：' . $user->email;
-            }
-        }
+        $text = '绑定成功了，您的邮箱为：' . $user->email;
 
         // 回送信息
         $this->replyWithMessage(
