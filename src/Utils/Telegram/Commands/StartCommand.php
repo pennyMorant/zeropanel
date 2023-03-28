@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Utils\TelegramSessionManager;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Keyboard\Keyboard;
 
 /**
  * Class StratCommand.
