@@ -32,16 +32,15 @@ final class StartCommand extends Command
 
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-
+/*
         $replyMarkup = $this->buildReplyKeyboardMarkup([
             ['绑定账号', '解除绑定'],
         ]);
-
+*/
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => '请选择以下选项之一：',
-                'reply_markup' => $replyMarkup,
+                'text' => '发送消息: /bind "telegram token"',
                 'chat_id' => $chatId,
             ]
         );
