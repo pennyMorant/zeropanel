@@ -28,8 +28,6 @@ final class Process
             if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
                 new Callbacks\ReplayTicket($bot, $Message, $match[1]);
             }
-        } else if ($Message !== null) {
-            new Message($bot, $update->getMessage());
         }
     }
 }
