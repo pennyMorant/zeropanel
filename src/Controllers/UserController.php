@@ -232,12 +232,12 @@ class UserController extends BaseController
                 $user->uuid = $new_uuid;
                 $user->save();
                 break;
-            case 'passwd':
-                $user->createShadowsocksPasswd();
+            case 'passwd':               
+                $user->passwd = $user->createShadowsocksPasswd();
                 $user->save();
                 break;
             case 'sub_token':
-                $user->createSubToken();
+                $user->subscription_token = $user->createSubToken();
                 $user->save();
                 break;
             case 'referral_code':
