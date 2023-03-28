@@ -21,23 +21,20 @@ final class PingCommand extends Command
      */
     protected $description = '获取我的唯一ID';
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle()
     {
-        $Update = $this->getUpdate();
-        $Message = $Update->getMessage();
+        //$Update = $this->getUpdate();
+        //$Message = $Update->getMessage();
 
         // 消息会话 ID
-        $ChatID = $Message->getChat()->getId();
+        //$ChatID = $Message->getChat()->getId();
 
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         $text = [
             'Pong！',
-            '这个群组的 ID 是 ' . $ChatID . '.',
+            '这个群组的 ID 是 ',
         ];
 
         // 回送信息
