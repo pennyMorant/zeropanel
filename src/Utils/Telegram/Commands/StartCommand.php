@@ -40,6 +40,7 @@ final class StartCommand extends Command
             [
                 'text' => '请选择以下选项之一：',
                 'reply_markup' => $replyMarkup,
+                'chat_id' => $chatId,
             ]
         );
     }
