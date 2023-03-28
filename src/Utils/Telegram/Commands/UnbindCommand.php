@@ -5,6 +5,7 @@ namespace App\Utils\Telegram\Commands;
 
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
+use App\Models\User;
 
 /**
  * Class UnbindCommand.
