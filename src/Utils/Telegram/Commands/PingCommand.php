@@ -21,7 +21,7 @@ final class PingCommand extends Command
      */
     protected $description = '获取我的唯一ID';
 
-    public function handle($arguments)
+    public function handle()
     {
         $Update = $this->getUpdate();
         $Message = $Update->getMessage();
