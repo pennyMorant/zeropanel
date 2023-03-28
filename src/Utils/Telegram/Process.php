@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Utils\Telegram;
 
@@ -6,7 +7,7 @@ use Telegram\Bot\Api;
 use App\Models\Setting;
 use Exception;
 
-class Process
+final class Process
 {
     public static function commandBot()
     {
