@@ -40,7 +40,7 @@ final class StartCommand extends Command
             [
                 'text' => 'Hello',
                 'reply_markup' => $replyMarkup,
-                'parse_mode' => 'MarkdownV2',
+                'parse_mode' => 'Markdown',
             ]
         );
     }
