@@ -4,7 +4,6 @@ namespace App\Utils\Telegram\Commands;
 
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
-use App\Models\Setting;
 
 /**
  * Class PingCommand.
@@ -24,10 +23,10 @@ class PingCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function handle(): void
+    public function handle()
     {
-        $Update = $this->getUpdate();
-        $Message = $Update->getMessage();
+        //$Update = $this->getUpdate();
+        //$Message = $Update->getMessage();
 
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
