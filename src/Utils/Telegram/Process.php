@@ -5,7 +5,7 @@ namespace App\Utils\Telegram;
 
 use Telegram\Bot\Api;
 use App\Models\Setting;
-use Exception;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 
 final class Process
 {
@@ -28,6 +28,53 @@ final class Process
             if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
                 new Callbacks\ReplayTicket($bot, $Message, $match[1]);
             }
+        }
+    }
+
+    /**
+     * Handle a Telegram update.
+     *
+     * @param array $update
+     *
+     * @return void
+     * @throws TelegramResponseException
+     */
+    public function handleUpdate($update)
+    {
+        $message = $update['message'];
+
+        if (isset($message['text'])) {
+            $this->handleMessage($message);
+        }
+    }
+
+    /**
+     * Handle an incoming message.
+     *
+     * @param array $message
+     *
+     * @return void
+     */
+    public function handleMessage($message)
+    {
+        $chatId = $message->getChat()->getId();
+        $text = $message->getText();
+        
+        switch ($text) {
+            case '绑定账号':
+                // 处理绑定帐户命令
+                $this->replyWithMessage([
+                    'text' => '请输入您的帐户信息。',
+                    'chat_id' => $chatId,
+                ]);
+                break;
+            default:
+                // 处理其他消息
+                $this->replyWithMessage([
+                    'text' => '您选择的是: ' . $text,
+                    'chat_id' => $chatId,
+                ]);
+                break;
         }
     }
 }
