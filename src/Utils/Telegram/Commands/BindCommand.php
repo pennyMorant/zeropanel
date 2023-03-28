@@ -20,14 +20,14 @@ final class BindCommand extends Command
      */
     protected $description = '绑定账户';
 
-    public function handle($arguments)
+    public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
+        $message = $this->getUpdate()->getMessage()->getText();
+        $args = explode(' ', $message);
+        $token = $args[1];
 
-        $args = explode(' ', $arguments);
-        $token = $args[0];
-
-        //$message = $this->getUpdate()->getMessage();
+        
         if (is_null($token)) {
             $this->replyWithMessage(
                 [
