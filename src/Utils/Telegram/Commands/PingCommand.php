@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Utils\Telegram\Commands;
 
@@ -8,7 +9,7 @@ use Telegram\Bot\Commands\Command;
 /**
  * Class PingCommand.
  */
-class PingCommand extends Command
+final class PingCommand extends Command
 {
     /**
      * @var string Command Name
