@@ -28,12 +28,8 @@ final class StartCommand extends Command
 
     public function handle()
     {
-        $Update = $this->getUpdate();
-        $Message = $Update->getMessage();
+        $chatId = $this->getUpdate()->getMessage()->getChat()->getId();
 
-        // 消息会话 ID
-        $ChatID = $Message->getChat()->getId();
-        
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
