@@ -22,7 +22,16 @@ final class BindCommand extends Command
 
     public function handle()
     {
-        $Uid = TelegramSessionManager::verifyBindSession($this->getUpdate()->getMessage());
+        $message = $this->getUpdate()->getMessage();
+        if (is_null($message)) {
+            $this->replyWithMessage(
+                [
+                    'text' => '请输入telegram token',
+                ]
+            );
+            return;
+        }
+        $Uid = TelegramSessionManager::verifyBindSession($message);
 
         $BinsUser = User::where('id', $Uid)->first();
         $BinsUser->telegram_id = $this->getUpdate()->getMessage()->getChat()->getId();
