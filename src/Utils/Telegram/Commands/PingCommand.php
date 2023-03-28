@@ -39,7 +39,6 @@ final class PingCommand extends Command
         $this->replyWithMessage(
             [
                 'text'       => $text,
-                'parse_mode' => 'Markdown',
             ]
         );
         
