@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Utils\Telegram\Commands;
 
-use App\Models\Setting;
 use App\Models\User;
-use App\Utils\TelegramSessionManager;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
@@ -40,7 +38,7 @@ final class StartCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => '发送消息: /bind "telegram token"',
+                'text' => '绑定账户命令: /bind "telegram token"',
                 'chat_id' => $chatId,
             ]
         );
