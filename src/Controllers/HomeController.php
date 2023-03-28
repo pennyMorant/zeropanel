@@ -40,7 +40,7 @@ class HomeController extends BaseController
         $token = $request->getQueryParam('token');
         if ($token == Setting::obtain('telegram_bot_request_token')) {
            
-            Process::index();
+            Process::commandBot();
             
             $result = '1';
         } else {

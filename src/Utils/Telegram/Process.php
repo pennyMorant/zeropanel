@@ -7,7 +7,7 @@ use Exception;
 
 class Process
 {
-    public static function index()
+    public static function commandBot()
     {
       
         $bot = new Api(Setting::obtain('telegram_bot_token'));
