@@ -32,15 +32,14 @@ final class PingCommand extends Command
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         $text = [
-            'Pong！',
             '您的 ID 是 ' . $ChatID . '.',
         ];
 
         // 回送信息
         $this->replyWithMessage(
             [
-                'text'       => implode(PHP_EOL, $text),
-                'parse_mode' => 'MarkdownV2',
+                'text'       => $text,
+                'parse_mode' => 'Markdown',
             ]
         );
         

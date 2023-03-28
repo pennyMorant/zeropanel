@@ -31,30 +31,26 @@ final class StartCommand extends Command
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
-        $replyMarkup = $this->buildInlineKeyboardMarkup([
+        $replyMarkup = $this->buildReplyKeyboardMarkup([
             ['绑定账号'],
         ]);
 
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => 'Hello:\n'.$replyMarkup,
-                'parse_mode' => 'MarkdownV2',
+                'text' => 'Hello',
+                'reply_markup' => $replyMarkup,
             ]
         );
     }
 
-    protected function buildInlineKeyboardMarkup($buttons)
+    protected function buildReplyKeyboardMarkup($buttons)
     {
-        $result = '';
-        foreach ($buttons as $row) {
-            $buttonRow = '';
-            foreach ($row as $button) {
-                $buttonRow .= "[$button] ";
-            }
-            $result .= rtrim($buttonRow) . "\n";
-        }
-        return $result;
+        return Keyboard::make([
+            'keyboard' => $buttons,
+            'resize_keyboard' => true,
+            'one_time_keyboard' => true,
+        ]);
     }
 
     public function bindingAccount($SendUser, $MessageText): void
