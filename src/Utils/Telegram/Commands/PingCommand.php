@@ -40,7 +40,7 @@ final class PingCommand extends Command
         $this->replyWithMessage(
             [
                 'text'       => implode(PHP_EOL, $text),
-                'parse_mode' => 'Markdown',
+                'parse_mode' => 'MarkdownV2',
             ]
         );
         
