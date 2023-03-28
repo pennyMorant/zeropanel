@@ -78,7 +78,7 @@ class ReplayTicket
             return;
         }
         if ($ticketId){
-            $ticket_main = Ticket::where('id', $ticketId)->where('rootid', 0)->first();
+            $ticket_main = Ticket::where('id', $ticketId)->first();
             $content = $Message->getText();
             $antiXss              = new AntiXSS();
             $ticket               = new Ticket();
