@@ -15,7 +15,6 @@ class Process
                 [
                     Commands\PingCommand::class,
                     Commands\StartCommand::class,
-                    Commands\UnbindCommand::class,
                 ]
             );
             $update = $bot->commandsHandler(true);
