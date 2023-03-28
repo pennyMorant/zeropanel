@@ -32,13 +32,13 @@ final class PingCommand extends Command
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         $text = [
-            '您的 ID 是 ' . $ChatID . '.',
+            '您的 ID 是: ' . $ChatID,
         ];
 
         // 回送信息
         $this->replyWithMessage(
             [
-                'text'       => $text,
+                'text'  =>  $text,
             ]
         );
         
