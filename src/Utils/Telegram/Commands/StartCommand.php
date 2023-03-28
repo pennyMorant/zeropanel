@@ -38,7 +38,7 @@ final class StartCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => 'Hello:\n{$replyMarkup}',
+                'text' => 'Hello:\n'.$replyMarkup,
                 'parse_mode' => 'MarkdownV2',
             ]
         );
