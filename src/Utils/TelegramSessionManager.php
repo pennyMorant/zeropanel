@@ -35,7 +35,7 @@ class TelegramSessionManager
         return "couldn't alloc token";
     }
 
-    public static function add_bind_session($user)
+    public static function addBindSession($user)
     {
         $Elink = TelegramSession::where('type', '=', 0)->where('user_id', '=', $user->id)->first();
         if ($Elink != null) {
@@ -55,7 +55,7 @@ class TelegramSessionManager
         return $NLink->session_content;
     }
 
-    public static function verify_bind_session($token)
+    public static function verifyBindSession($token)
     {
         $Elink = TelegramSession::where('type', '=', 0)->where('session_content', $token)->where('datetime', '>', time() - 600)->orderBy('datetime', 'desc')->first();
         if ($Elink != null) {
@@ -95,17 +95,6 @@ class TelegramSessionManager
         if ($Elink != null) {
             $Elink->user_id = $uid;
             $Elink->save();
-            return $uid;
-        }
-        return 0;
-    }
-
-    public static function step2_verify_login_session($token, $number)
-    {
-        $Elink = TelegramSession::where('type', '=', 1)->where('session_content', $token . '|' . $number)->where('datetime', '>', time() - 90)->orderBy('datetime', 'desc')->first();
-        if ($Elink != null) {
-            $uid = $Elink->user_id;
-            $Elink->delete();
             return $uid;
         }
         return 0;
