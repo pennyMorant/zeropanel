@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Utils\Telegram\Commands;
 
-use App\Models\User;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
