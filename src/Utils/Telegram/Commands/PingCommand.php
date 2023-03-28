@@ -51,37 +51,6 @@ class PingCommand extends Command
                     'parse_mode' => 'Markdown',
                 ]
             );
-        } else {
-            // 群组
-
-            if ($_ENV['enable_delete_user_cmd'] === true) {
-                TelegramTools::DeleteMessage([
-                    'chatid'      => $ChatID,
-                    'messageid'   => $Message->getMessageId(),
-                ]);
-            }
-
-
-            // 发送 '输入中' 会话状态
-            $this->replyWithChatAction(['action' => Actions::TYPING]);
-
-            $text = [
-                'Pong！',
-                '您的 ID 是 ' . $Message->getFrom()->getId() . '.',
-                '这个群组的 ID 是 ' . $ChatID . '.',
-            ];
-
-            // 回送信息
-            $response = $this->replyWithMessage(
-                [
-                    'text' => implode(PHP_EOL, $text),
-                ]
-            );
-            // 消息删除任务
-            TelegramTools::DeleteMessage([
-                'chatid'      => $ChatID,
-                'messageid'   => $response->getMessageId(),
-            ]);
         }
     }
 }
