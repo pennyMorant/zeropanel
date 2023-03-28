@@ -2,7 +2,6 @@
 
 namespace App\Utils\Telegram\Commands;
 
-use App\Utils\Telegram\TelegramTools;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use App\Models\Setting;
@@ -33,24 +32,21 @@ class PingCommand extends Command
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
 
-        if ($ChatID > 0) {
-            // 私人会话
+        // 发送 '输入中' 会话状态
+        $this->replyWithChatAction(['action' => Actions::TYPING]);
 
-            // 发送 '输入中' 会话状态
-            $this->replyWithChatAction(['action' => Actions::TYPING]);
+        $text = [
+            'Pong！',
+            '这个群组的 ID 是 ' . $ChatID . '.',
+        ];
 
-            $text = [
-                'Pong！',
-                '这个群组的 ID 是 ' . $ChatID . '.',
-            ];
-
-            // 回送信息
-            $this->replyWithMessage(
-                [
-                    'text'       => implode(PHP_EOL, $text),
-                    'parse_mode' => 'Markdown',
-                ]
-            );
-        }
+        // 回送信息
+        $this->replyWithMessage(
+            [
+                'text'       => implode(PHP_EOL, $text),
+                'parse_mode' => 'Markdown',
+            ]
+        );
+        
     }
 }
