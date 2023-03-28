@@ -32,13 +32,13 @@ final class StartCommand extends Command
         $this->replyWithChatAction(['action' => Actions::TYPING]);
 
         $replyMarkup = $this->buildReplyKeyboardMarkup([
-            ['text' =>  '绑定账号', 'callback_data' => '/bind_account'],
+            ['绑定账号'],
         ]);
 
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => 'Hello',
+                'text' => '请选择以下选项之一：',
                 'reply_markup' => $replyMarkup,
             ]
         );
@@ -51,6 +51,29 @@ final class StartCommand extends Command
             'resize_keyboard' => true,
             'one_time_keyboard' => true,
         ]);
+    }
+
+    public function handleMessage($message)
+    {
+        $chatId = $message->getChat()->getId();
+        $text = $message->getText();
+        
+        switch ($text) {
+            case '绑定账号':
+                // 处理绑定帐户命令
+                $this->replyWithMessage([
+                    'text' => '请输入您的帐户信息。',
+                    'chat_id' => $chatId,
+                ]);
+                break;
+            default:
+                // 处理其他消息
+                $this->replyWithMessage([
+                    'text' => '您选择的是: ' . $text,
+                    'chat_id' => $chatId,
+                ]);
+                break;
+        }
     }
 
     public function bindingAccount($SendUser, $MessageText): void
