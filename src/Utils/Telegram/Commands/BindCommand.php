@@ -40,10 +40,10 @@ final class BindCommand extends Command
             );
             return;
         }
-        $Uid = TelegramSessionManager::verifyBindSession($token);
+        $id = TelegramSessionManager::verifyBindSession($token);
 
-        $user = User::where('id', $Uid)->first();
-        if ($user->telegram_id == $chatId) {
+        $user = User::where('id', $id)->first();
+        if (!is_null($user->telegram_id) == $chatId) {
             $this->replyWithMessage(
                 [
                     'text' => '已经绑定了账号，无需再次绑定. 如需绑定其他账号，请先解除绑定。',
