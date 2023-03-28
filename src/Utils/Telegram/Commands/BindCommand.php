@@ -26,6 +26,7 @@ final class BindCommand extends Command
         $message = $this->getUpdate()->getMessage();
         $text = $message->getText();
         $messageId = $message->getMessageId();
+        $chatId = $message->getChat()->getId();
         $args = explode(' ', $text);
         $token = $args[1];
 
@@ -41,17 +42,26 @@ final class BindCommand extends Command
         }
         $Uid = TelegramSessionManager::verifyBindSession($token);
 
-        $BinsUser = User::where('id', $Uid)->first();
-        $BinsUser->telegram_id = $this->getUpdate()->getMessage()->getChat()->getId();
-        $BinsUser->save();
+        $user = User::where('id', $Uid)->first();
+        if ($user->telegram_id == $chatId) {
+            $this->replyWithMessage(
+                [
+                    'text' => '已经绑定了账号，无需再次绑定. 如需绑定其他账号，请先解除绑定。',
+                    'reply_to_message_id' => $messageId,
+                ]
+            );
+            return;
+        }
+        $user->telegram_id = $chatId;
+        $user->save();
         
-        if ($BinsUser->is_admin >= 1) {
-            $text = '当前绑定邮箱为： ' . $BinsUser->email;
+        if ($user->is_admin >= 1) {
+            $text = '当前绑定邮箱为： ' . $user->email;
         } else {
-            if ($BinsUser->class >= 1) {
-                $text = '恭喜您绑定成功，当前绑定邮箱为： ' . $BinsUser->email;
+            if ($user->class >= 1) {
+                $text = '恭喜您绑定成功，当前绑定邮箱为： ' . $user->email;
             } else {
-                $text = '绑定成功了，您的邮箱为：' . $BinsUser->email;
+                $text = '绑定成功了，您的邮箱为：' . $user->email;
             }
         }
 
