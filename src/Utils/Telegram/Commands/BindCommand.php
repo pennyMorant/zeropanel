@@ -20,12 +20,15 @@ final class BindCommand extends Command
      */
     protected $description = '绑定账户';
 
-    public function handle()
+    public function handle($arguments)
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-        
-        $message = $this->getUpdate()->getMessage();
-        if (is_null($message)) {
+
+        $args = explode(' ', $arguments);
+        $token = $args[0];
+
+        //$message = $this->getUpdate()->getMessage();
+        if (is_null($token)) {
             $this->replyWithMessage(
                 [
                     'text' => '请输入telegram token',
@@ -33,7 +36,7 @@ final class BindCommand extends Command
             );
             return;
         }
-        $Uid = TelegramSessionManager::verifyBindSession($message);
+        $Uid = TelegramSessionManager::verifyBindSession($token);
 
         $BinsUser = User::where('id', $Uid)->first();
         $BinsUser->telegram_id = $this->getUpdate()->getMessage()->getChat()->getId();
