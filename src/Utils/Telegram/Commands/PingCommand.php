@@ -23,27 +23,28 @@ final class PingCommand extends Command
 
     public function handle()
     {
-        //$Update = $this->getUpdate();
-        //$Message = $Update->getMessage();
+        $Update = $this->getUpdate();
+        $Message = $Update->getMessage();
 
         // 消息会话 ID
-        //$ChatID = $Message->getChat()->getId();
+        $ChatID = $Message->getChat()->getId();
+        if ($ChatID > 0) {
+            // 发送 '输入中' 会话状态
+            $this->replyWithChatAction(['action' => Actions::TYPING]);
 
-        // 发送 '输入中' 会话状态
-        $this->replyWithChatAction(['action' => Actions::TYPING]);
+            $text = [
+                'Pong！',
+                '这个群组的 ID 是 ',
+            ];
 
-        $text = [
-            'Pong！',
-            '这个群组的 ID 是 ',
-        ];
-
-        // 回送信息
-        $this->replyWithMessage(
-            [
-                'text'       => implode(PHP_EOL, $text),
-                'parse_mode' => 'Markdown',
-            ]
-        );
+            // 回送信息
+            $this->replyWithMessage(
+                [
+                    'text'       => implode(PHP_EOL, $text),
+                    'parse_mode' => 'Markdown',
+                ]
+            );
+        }
         
     }
 }
