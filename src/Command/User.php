@@ -17,8 +17,9 @@ class User extends Command
         . '│ ├─ getCookie               - 获取指定用户的 Cookie' . PHP_EOL
         . '│ ├─ createAdmin             - 创建管理员帐号' . PHP_EOL
         . '│ ├─ resetTraffic            - 重置所有用户流量' . PHP_EOL
-        . '│ ├─ createUUID            - 为所有用户生成新的 UUID' . PHP_EOL
-        . '│ ├─ createSubToken          - 为所有用户生成新的 Sub token' . PHP_EOL;
+        . '│ ├─ createUUID              - 为所有用户生成新的 UUID' . PHP_EOL
+        . '│ ├─ createSubToken          - 为所有用户生成新的 Sub token' . PHP_EOL
+        . '│ ├─ createShadowsocksPasswd          - 为所有用户生成新的 createShadowsocksPasswd' . PHP_EOL;
 
     public function boot()
     {
@@ -80,6 +81,16 @@ class User extends Command
             $user->save();
         }
         echo 'create subscription token successful' . PHP_EOL;
+    }
+
+    public function createShadowsocksPasswd()
+    {
+        $users = ModelsUser::all();
+        foreach ($users as $user) {
+            $user->passwd = $user->createShadowsocksPasswd();
+            $user->save();
+        }
+        echo 'create shadowsocks passwd successful' . PHP_EOL;
     }
 
     /**

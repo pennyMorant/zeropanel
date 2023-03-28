@@ -522,23 +522,6 @@ class User extends Model
         return $result;
     }
 
-    /**
-     * 发送 Telegram 讯息
-     *
-     * @param string $text
-     */
-    public function sendTelegram(string $text): bool
-    {
-        $result = false;
-        if ($this->telegram_id > 0) {
-            Telegram::Send(
-                $text,
-                $this->telegram_id
-            );
-            $result = true;
-        }
-        return $result;
-    }
     
     /**
      * 记录登录 IP
