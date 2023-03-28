@@ -10,6 +10,7 @@ use App\Utils\TelegramSessionManager;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 
 /**
  * Class StratCommand.
@@ -56,6 +57,30 @@ final class StartCommand extends Command
         ]);
     }
 
+    /**
+     * Handle a Telegram update.
+     *
+     * @param array $update
+     *
+     * @return void
+     * @throws TelegramResponseException
+     */
+    public function handleUpdate($update)
+    {
+        $message = $update['message'];
+
+        if (isset($message['text'])) {
+            $this->handleMessage($message);
+        }
+    }
+
+    /**
+     * Handle an incoming message.
+     *
+     * @param array $message
+     *
+     * @return void
+     */
     public function handleMessage($message)
     {
         $chatId = $message->getChat()->getId();
