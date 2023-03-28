@@ -22,6 +22,8 @@ final class BindCommand extends Command
 
     public function handle()
     {
+        $this->replyWithChatAction(['action' => Actions::TYPING]);
+        
         $message = $this->getUpdate()->getMessage();
         if (is_null($message)) {
             $this->replyWithMessage(
@@ -36,7 +38,7 @@ final class BindCommand extends Command
         $BinsUser = User::where('id', $Uid)->first();
         $BinsUser->telegram_id = $this->getUpdate()->getMessage()->getChat()->getId();
         $BinsUser->save();
-        $this->replyWithChatAction(['action' => Actions::TYPING]);
+        
         if ($BinsUser->is_admin >= 1) {
             $text = '当前绑定邮箱为： ' . $BinsUser->email;
         } else {
