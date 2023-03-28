@@ -18,15 +18,15 @@ class PingCommand extends Command
     /**
      * @var string Command Description
      */
-    protected $description = '[群组/私聊] 获取我或者群组的唯一 ID.';
+    protected $description = '获取我或者群组的唯一 ID.';
 
     /**
      * {@inheritdoc}
      */
     public function handle()
     {
-        //$Update = $this->getUpdate();
-        //$Message = $Update->getMessage();
+        $Update = $this->getUpdate();
+        $Message = $Update->getMessage();
 
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
