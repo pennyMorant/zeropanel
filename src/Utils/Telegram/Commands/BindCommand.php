@@ -41,7 +41,15 @@ final class BindCommand extends Command
             return;
         }
         $id = TelegramSessionManager::verifyBindSession($token);
-
+        if ($id == 0) {
+            $this->replyWithMessage(
+                [
+                    'text' => '当前token已经失效，请刷新网页重新获取token',
+                    'reply_to_message_id' => $messageId,
+                ]
+            );
+            return;
+        }
         $user = User::where('id', $id)->first();
         if (!is_null($user->telegram_id) == $chatId) {
             $this->replyWithMessage(
