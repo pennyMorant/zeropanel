@@ -27,7 +27,7 @@ final class BindCommand extends Command
         $text = $message->getText();
         $messageId = $message->getMessageId();
         $chatId = $message->getChat()->getId();
-        $args = explode('', $text);
+        $args = explode(' ', $text);
         $token = $args[1];
 
         
