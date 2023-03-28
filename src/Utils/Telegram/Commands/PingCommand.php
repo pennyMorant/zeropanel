@@ -23,7 +23,7 @@ class PingCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function handle()
+    public function handle($arguments)
     {
         $Update = $this->getUpdate();
         $Message = $Update->getMessage();
