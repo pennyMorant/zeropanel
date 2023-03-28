@@ -23,8 +23,10 @@ final class BindCommand extends Command
     public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-        $message = $this->getUpdate()->getMessage()->getText();
-        $args = explode(' ', $message);
+        $message = $this->getUpdate()->getMessage();
+        $text = $message->getText();
+        $messageId = $message->getMessageId();
+        $args = explode(' ', $text);
         $token = $args[1];
 
         
@@ -32,6 +34,7 @@ final class BindCommand extends Command
             $this->replyWithMessage(
                 [
                     'text' => '请输入telegram token',
+                    'reply_to_message_id' => $messageId,
                 ]
             );
             return;
