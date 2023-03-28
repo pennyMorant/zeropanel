@@ -6,7 +6,6 @@ namespace App\Utils\Telegram\Commands;
 
 use App\Models\Setting;
 use App\Models\User;
-use App\Utils\Telegram\TelegramTools;
 use App\Utils\TelegramSessionManager;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
@@ -34,27 +33,8 @@ final class StartCommand extends Command
         // 消息会话 ID
         $ChatID = $Message->getChat()->getId();
 
-
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-
-        // 触发用户
-        $SendUser = [
-            'id' => $Message->getFrom()->getId(),
-            'name' => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
-            'username' => $Message->getFrom()->getUsername(),
-        ];
-        // 消息内容
-        $MessageText = explode(' ', trim($Message->getText()));
-        $MessageKey = array_splice($MessageText, -1)[0];
-        if (
-            $MessageKey !== ''
-            && TelegramTools::getUser($SendUser['id']) === null
-            && strlen($MessageKey) === 16
-        ) {
-            // 新用户绑定
-            $this->bindingAccount($SendUser, $MessageKey);
-        }
 
         $reply_markup = json_encode(
             [
