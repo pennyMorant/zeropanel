@@ -14,14 +14,9 @@ class Process
             $bot = new Api(Setting::obtain('telegram_bot_token'));
             $bot->addCommands(
                 [
-                    Commands\MyCommand::class,
-                    Commands\HelpCommand::class,
-                    Commands\InfoCommand::class,
-                    Commands\MenuCommand::class,
                     Commands\PingCommand::class,
                     Commands\StartCommand::class,
                     Commands\UnbindCommand::class,
-                    Commands\SetuserCommand::class,
                 ]
             );
             $update = $bot->commandsHandler(true);

@@ -10,48 +10,6 @@ use App\Models\User;
 final class Reply
 {
     /**
-     * 用户的流量使用讯息
-     */
-    public static function getUserTrafficInfo(User $user): string
-    {
-        $text = [
-            '您当前的流量状况：',
-            '',
-            '今日已使用 ' . $user->todayUsedTrafficPercent() . '% ：' . $user->todayUsedTraffic(),
-            '之前已使用 ' . $user->lastUsedTrafficPercent() . '% ：' . $user->lastUsedTraffic(),
-            '流量约剩余 ' . $user->unusedTrafficPercent() . '% ：' . $user->unusedTraffic(),
-        ];
-        return implode(PHP_EOL, $text);
-    }
-
-    /**
-     * 用户基本讯息
-     */
-    public static function getUserInfo(User $user): string
-    {
-        $text = [
-            '当前余额：' . $user->money,
-            '在线设备：' . ($user->node_iplimit !== 0 ? $user->onlineIpCount() . ' / ' . $user->node_iplimit : $user->onlineIpCount() . ' / 不限制'),
-            '端口速率：' . ($user->node_speedlimit !== 0 ? $user->node_speedlimit . 'Mbps' : '无限制'),
-            '过期时间：' . $user->class_expire,
-        ];
-        return implode(PHP_EOL, $text);
-    }
-
-    /**
-     * 获取用户或管理的尊称
-     */
-    public static function getUserTitle(User $user): string
-    {
-        if ($user->class > 0) {
-            $text = '尊敬的 VIP ' . $user->class . ' 您好：';
-        } else {
-            $text = '尊敬的用户您好：';
-        }
-        return $text;
-    }
-
-    /**
      * [admin]获取用户信息
      */
     public static function getUserInfoFromAdmin(User $user, int $ChatID): string
