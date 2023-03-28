@@ -18,7 +18,7 @@ class Process
                 Commands\StartCommand::class,
             ]
         );
-        $update = $bot->commandsHandler();
+        $update = $bot->commandsHandler(true);
         $Message = $update->getMessage();
         
         if ($update->getCallbackQuery() !== null) {

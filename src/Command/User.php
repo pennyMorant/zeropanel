@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\Models\User as ModelsUser;
 use App\Models\Setting;
-use App\Utils\GA;
 use App\Utils\Hash;
 use App\Utils\Tools;
 use Exception;
