@@ -18,7 +18,7 @@ class PingCommand extends Command
     /**
      * @var string Command Description
      */
-    protected $description = '获取我或者群组的唯一 ID.';
+    protected $description = '获取我的唯一ID';
 
     /**
      * {@inheritdoc}
