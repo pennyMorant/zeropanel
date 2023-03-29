@@ -29,7 +29,7 @@ class AnnController extends AdminController
             'id'      => 'ID',
             'date'    => '日期',
             'content' => '内容',
-            'action'      => '操作',
+            'action'  => '操作',
         ];
         
         $table_config['ajax_url'] = 'news/ajax';
