@@ -51,6 +51,7 @@ final class MyCommand extends Command
         $this->replyWithMessage(
             [
                 'text' => implode(PHP_EOL, $text),
+                'chat_id' => $chatId,
                 'parse_mode' => 'Markdown',
             ]
         );

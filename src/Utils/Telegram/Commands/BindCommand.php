@@ -68,6 +68,7 @@ final class BindCommand extends Command
         $this->replyWithMessage(
             [
                 'text' => $text,
+                'chat_id' => $chatId,
                 'parse_mode' => 'Markdown',
             ]
         );

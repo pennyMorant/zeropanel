@@ -46,6 +46,7 @@ final class UnbindCommand extends Command
         $this->replyWithMessage(
             [
                 'text' => '您已经解除绑定',
+                'chat_id' => $chatId,
             ]
         );
     }
