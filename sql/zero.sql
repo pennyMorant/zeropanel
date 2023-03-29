@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-26 11:28:55
+-- 生成日期： 2023-03-29 07:31:31
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -167,14 +167,14 @@ CREATE TABLE `node` (
   `status` tinyint(1) NOT NULL COMMENT '是否显示1显示0不显示',
   `server` varchar(128) NOT NULL COMMENT '节点地址',
   `custom_config` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '节点配置',
-  `flag` varchar(32) NOT NULL COMMENT '节点旗帜',
-  `sort` int(11) NOT NULL COMMENT '节点类型',
+  `node_flag` varchar(16) NOT NULL COMMENT '节点旗帜',
+  `node_type` int(11) NOT NULL COMMENT '节点类型:1SS,2VMESS,3VLESS,4TROJAN,5SS-PLUGINS',
   `traffic_rate` float NOT NULL DEFAULT 1 COMMENT '流量倍率',
   `node_class` int(11) NOT NULL DEFAULT 0 COMMENT '节点等级',
   `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '速度限制',
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
-  `node_traffic` bigint(20) NOT NULL DEFAULT 0,
+  `node_traffic` bigint(20) NOT NULL DEFAULT 0 COMMENT '节点流量',
   `node_traffic_limit` int(11) NOT NULL DEFAULT 0 COMMENT '流量限制',
   `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0 COMMENT '节点流量限制重置日期',
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
