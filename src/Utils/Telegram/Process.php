@@ -19,6 +19,7 @@ final class Process
                 Commands\StartCommand::class,
                 Commands\BindCommand::class,
                 Commands\UnbindCommand::class,
+                Commands\MyCommand::class,
             ]
         );
         $update = $bot->commandsHandler(true);
