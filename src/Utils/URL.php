@@ -118,25 +118,7 @@ class URL
         return $return_array;
     }
 
-    /**
-     * 获取全部节点 Url
-     *
-     * ```
-     *  $Rule = [
-     *      'type'    => 'ss | ssr | vmess',
-     *      'emoji'   => false,
-     *      'is_mu'   => 1,
-     *      'content' => [
-     *          'noclass' => [0, 1, 2],
-     *          'class'   => [0, 1, 2],
-     *          'regex'   => '.*香港.*HKBN.*',
-     *      ]
-     *  ]
-     * ```
-     *
-     * @param User  $user 用户
-     * @param array $Rule 节点筛选规则
-     */
+    
     public static function get_NewAllUrl(User $user, array $Rule): string
     {
         $return_url = '';
