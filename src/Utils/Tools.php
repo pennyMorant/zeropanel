@@ -9,18 +9,27 @@ use App\Models\{
     Setting
 };
 use App\Services\Config;
+use GeoIp2\Exception\AddressNotFoundException;
+use MaxMind\Db\Reader\InvalidDatabaseException;
 use DateTime;
 
 final class Tools
 {
-    /**
-     * 查询IP归属
-     */
-    public static function getIpInfo($ip): false|string
+    public static function getIPLocation($ip): string
     {
-        $iplocation = new QQWry();
-        $location = $iplocation->getlocation($ip);
-        return iconv('gbk', 'utf-8//IGNORE', $location['country'] . $location['area']);
+        $geoip = new GeoIP2();
+        try {
+            $city = $geoip->getCity($ip);
+            $country = $geoip->getCountry($ip);
+        } catch (AddressNotFoundException|InvalidDatabaseException $e) {
+            return '未知';
+        }
+
+        if ($city !== null) {
+            return $city . ', ' . $country;
+        }
+
+        return $country;
     }
 
     /**

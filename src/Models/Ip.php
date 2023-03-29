@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Utils\QQWry;
 use App\Utils\Tools;
 use App\Utils\DatatablesHelper;
 

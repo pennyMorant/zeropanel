@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Utils\QQWry;
 use voku\helper\AntiXSS;
 
 class UserSubscribeLog extends Model

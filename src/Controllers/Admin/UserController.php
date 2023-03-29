@@ -16,7 +16,6 @@ use App\Services\{
 use App\Utils\{
     Hash,
     Tools,
-    QQWry,
     Cookie
 };
 use Slim\Http\Response;

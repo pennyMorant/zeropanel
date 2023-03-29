@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Command;
-use App\Utils\QQWry;
+use tronovav\GeoIP2Update\Client;
+use const BASE_PATH;
 use App\Models\Setting;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -11,7 +12,7 @@ class Tool extends Command
 {
     public $description = ''
         . '├─=: php xcat Tool [选项]' . PHP_EOL
-        . '│ ├─ initQQWry               - 下载 IP 解析库' . PHP_EOL
+        . '│ ├─ updateGeoIP             - 下载 IP 解析库' . PHP_EOL
         . '│ ├─ setTelegram             - 设置 Telegram 机器人' . PHP_EOL
         . '│ ├─ detectConfigs           - 检查数据库内新增的配置' . PHP_EOL
         . '│ ├─ resetAllSettings        - 使用默认值覆盖设置中心设置' . PHP_EOL
@@ -54,40 +55,16 @@ class Tool extends Command
      *
      * @return void
      */
-    public function initQQWry()
+    public function updateGeoIP()
     {
-        echo ('正在下载或更新纯真ip数据库...') . PHP_EOL;
-        $stream_opts = [
-            "ssl" => [
-            "verify_peer"=>false,
-            "verify_peer_name"=>false,
-            ]
-        ];  
-        $path  = BASE_PATH . '/storage/qqwry.dat';
-        $qqwry = file_get_contents('https://raw.githubusercontent.com/out0fmemory/qqwry.dat/master/qqwry_lastest.dat', false, stream_context_create($stream_opts));
-        if ($qqwry != '') {
-            if (is_file($path)) {
-                rename($path, $path . '.bak');
-            }
-            $fp = fopen($path, 'wb');
-            if ($fp) {
-                fwrite($fp, $qqwry);
-                fclose($fp);
-                echo ('纯真ip数据库下载成功.') . PHP_EOL;
-                $iplocation   = new QQWry();
-                $location     = $iplocation->getlocation('8.8.8.8');
-                $Userlocation = $location['country'];
-                if (iconv('gbk', 'utf-8//IGNORE', $Userlocation) !== '美国') {
-                    unlink($path);
-                    if (is_file($path . '.bak')) {
-                        rename($path . '.bak', $path);
-                    }
-                }
-            } else {
-                echo ('纯真ip数据库保存失败，请检查权限') . PHP_EOL;
-            }
-        } else {
-            echo ('纯真ip数据库下载失败，请检查下载地址') . PHP_EOL;
+        if ($_ENV['maxmind_license_key'] !== '') {
+            echo "正在更新 GeoLite2 数据库...\n";
+            $client = new Client(array(
+                'license_key' => $_ENV['maxmind_license_key'],
+                'dir' => BASE_PATH . '/storage/',
+                'editions' => array('GeoLite2-City'),
+            ));
+            $client->run();
         }
     }
     

@@ -16,7 +16,6 @@ use App\Models\{
     Payback,
     Setting
 };
-use App\Utils\QQWry;
 
 class Zero
 {

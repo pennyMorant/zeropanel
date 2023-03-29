@@ -25,8 +25,7 @@ use App\Models\{
 };
 use App\Utils\{
     URL, 
-    Hash, 
-    QQWry, 
+    Hash,
     Check, 
     Tools,
     DatatablesHelper
@@ -371,7 +370,7 @@ class ZeroController extends BaseController
                 $data = $query['datas']->map(function($rowData) {
                     return [
                         'ip'    =>  $rowData->ip,
-                        'location'  =>  Tools::getIpInfo($rowData->ip),
+                        'location'  =>  Tools::getIPLocation($rowData->ip),
                         'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
@@ -385,7 +384,7 @@ class ZeroController extends BaseController
                 $data = $query['datas']->map(function($rowData) {
                     return [
                         'ip'    =>  $rowData->ip,
-                        'location'  =>  Tools::getIpInfo($rowData->ip),
+                        'location'  =>  Tools::getIPLocation($rowData->ip),
                         'datetime'  => date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
@@ -401,7 +400,7 @@ class ZeroController extends BaseController
                     return [
                         'subscribe_type'    => $rowData->subscribe_type,
                         'request_ip'    =>  $rowData->request_ip,
-                        'location'  =>  Tools::getIpInfo($rowData->request_ip),
+                        'location'  =>  Tools::getIPLocation($rowData->request_ip),
                         'request_time'  =>  date('Y-m-d H:i:s', $rowData->request_time),
                     ];
                 })->toArray();

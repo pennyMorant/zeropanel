@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Utils\QQWry;
-
 /**
  * Ip Model
  */
