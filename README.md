@@ -64,7 +64,6 @@ http://zeroboard.top
     cp config/appprofile.example.php appprofile.php
     vim config/.config.php 填入数据库连接信息
     php xcat Tool importAllSettings
-    php xcat Tool initQQWry
     php xcat User createAdmin
 #### 第七步，配置定时任务
     crontab -e

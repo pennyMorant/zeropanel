@@ -388,39 +388,6 @@ class User extends Model
     }
 
     /**
-     * 解绑 Telegram
-     */
-    public function unbindTelegram(): array
-    {
-        $return = [
-            'ok'  => true,
-            'msg' => '解绑成功.'
-        ];
-        $telegram_id = $this->telegram_id;
-        $this->telegram_id = 0;
-        if ($this->save()) {
-            if (
-                Setting::obtain('enable_telegram_bot') == true && !$this->is_admin
-            ) {
-                \App\Utils\Telegram\TelegramTools::SendPost(
-                    'kickChatMember',
-                    [
-                        'chat_id'   => Setting::obtain('telegram_group_id'),
-                        'user_id'   => $telegram_id,
-                    ]
-                );
-            }
-        } else {
-            $return = [
-                'ok'  => false,
-                'msg' => '解绑失败.'
-            ];
-        }
-
-        return $return;
-    }
-
-    /**
      * 当前用户产品流量重置周期
      */
     public function userTrafficResetCycle()

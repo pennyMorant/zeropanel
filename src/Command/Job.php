@@ -8,7 +8,6 @@ use App\Models\Node;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Token;
-use App\Models\Bought;
 use App\Models\Ticket;
 use App\Models\SigninIp;
 use App\Models\TrafficLog;
@@ -16,7 +15,6 @@ use App\Models\EmailVerify;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\PasswordReset;
-use App\Models\TelegramTasks;
 use App\Models\TelegramSession;
 use App\Models\UserSubscribeLog;
 use App\Models\Setting;
@@ -27,7 +25,6 @@ use App\Models\DetectBanLog;
 use App\Models\DetectLog;
 use App\Services\Mail;
 use App\Services\ZeroConfig;
-use App\Utils\Telegram\TelegramTools;
 use App\Utils\Tools;
 use App\Utils\Telegram;
 use App\Utils\DatatablesHelper;
@@ -242,27 +239,7 @@ class Job extends Command
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
     }
 
-    /**
-     * Telegram 任务
-     */
-    public function Telegram(): void
-    {
-        # 删除 tg 消息
-        echo '删除telegram无用消息开始' . PHP_EOL;
-        $TelegramTasks = TelegramTasks::where('type', 1)->where('executetime', '<', time())->get();
-        foreach ($TelegramTasks as $Task) {
-            TelegramTools::SendPost(
-                'deleteMessage',
-                ['chat_id' => $Task->chatid, 'message_id' => $Task->messageid]
-            );
-            TelegramTasks::where('chatid', $Task->chatid)->where('type', '<>', 1)->where(
-                'messageid',
-                $Task->messageid
-            )->delete();
-            $Task->delete();
-        }
-        echo '删除telegram无用消息结束' . PHP_EOL;
-    }
+    
 
     /**
      * 用户账户相关任务，每小时
