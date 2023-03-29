@@ -50,8 +50,8 @@ final class MyCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => $text,
-                //'parse_mode' => 'Markdown',
+                'text' => implode(PHP_EOL, $text),
+                'parse_mode' => 'Markdown',
             ]
         );
     }
