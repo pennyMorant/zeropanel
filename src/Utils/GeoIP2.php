@@ -38,6 +38,6 @@ final class GeoIP2
     public function getCountry(string $ip): ?string
     {
         $record = $this->country_reader->country($ip);
-        return $record->country->names;
+        return $record->country->name;
     }
 }
