@@ -54,24 +54,24 @@
                                                     <input class="form-control mb-5" id="traffic_rate" name="traffic_rate" type="text" placeholder="流量比例" value="{$node->traffic_rate}">
                                                     <label class="form-label required">节点旗帜</label>
                                                     <select class="form-select mb-5" id="node_flag">
-                                                        <option value="united-states" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg" {if $node->flag == 'united-states'}selected{/if}>美国</option>
-                                                        <option value="united-kingdom" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg" {if $node->flag == 'united-kingdom'}selected{/if}>英国</option>
-                                                        <option value="canada" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg" {if $node->flag == 'canada'}selected{/if}>加拿大</option>
-                                                        <option value="russia" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg" {if $node->flag == 'russia'}selected{/if}>俄罗斯</option>
-                                                        <option value="hong-kong" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg" {if $node->flag == 'hong-kong'}selected{/if}>香港</option>
-                                                        <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg" {if $node->flag == 'japan'}selected{/if}>日本</option>
-                                                        <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg" {if $node->flag == 'singapore'}selected{/if}>新加坡</option>
-                                                        <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg" {if $node->flag == 'south-korea'}selected{/if}>韩国</option>
-                                                        <option value="australia" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg" {if $node->flag == 'australia'}selected{/if}>澳大利亚</option>
-                                                        <option value="turkey" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg" {if $node->flag == 'turkey'}selected{/if}>土耳其</option>
-                                                        <option value="argentina" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg" {if $node->flag == 'argentina'}selected{/if}>阿根廷</option>
-                                                        <option value="brazil" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg" {if $node->flag == 'brazil'}selected{/if}>巴西</option>
-                                                        <option value="germany" data-kt-select2-country="/theme/zero/assets/media/flags/germany.svg" {if $node->flag == 'germany'}selected{/if}>德国</option>
-                                                        <option value="france" data-kt-select2-country="/theme/zero/assets/media/flags/france.svg" {if $node->flag == 'france'}selected{/if}>法国</option>
-                                                        <option value="ireland" data-kt-select2-country="/theme/zero/assets/media/flags/ireland.svg" {if $node->flag == 'ireland'}selected{/if}>爱尔兰</option>
-                                                        <option value="thailand" data-kt-select2-country="/theme/zero/assets/media/flags/thailand.svg" {if $node->flag == 'thailand'}selected{/if}>泰国</option>
-                                                        <option value="philippines" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg" {if $node->flag == 'philippines'}selected{/if}>菲律宾</option>
-                                                        <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg" {if $node->flag == 'malaysia'}selected{/if}>马来西亚</option>
+                                                        <option value="united-states" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg" {if $node->node_flag == 'united-states'}selected{/if}>美国</option>
+                                                        <option value="united-kingdom" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg" {if $node->node_flag == 'united-kingdom'}selected{/if}>英国</option>
+                                                        <option value="canada" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg" {if $node->node_flag == 'canada'}selected{/if}>加拿大</option>
+                                                        <option value="russia" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg" {if $node->node_flag == 'russia'}selected{/if}>俄罗斯</option>
+                                                        <option value="hong-kong" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg" {if $node->node_flag == 'hong-kong'}selected{/if}>香港</option>
+                                                        <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg" {if $node->node_flag == 'japan'}selected{/if}>日本</option>
+                                                        <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg" {if $node->node_flag == 'singapore'}selected{/if}>新加坡</option>
+                                                        <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg" {if $node->node_flag == 'south-korea'}selected{/if}>韩国</option>
+                                                        <option value="australia" data-kt-select2-country="/theme/zero/assets/media/flags/australia.svg" {if $node->node_flag == 'australia'}selected{/if}>澳大利亚</option>
+                                                        <option value="turkey" data-kt-select2-country="/theme/zero/assets/media/flags/turkey.svg" {if $node->node_flag == 'turkey'}selected{/if}>土耳其</option>
+                                                        <option value="argentina" data-kt-select2-country="/theme/zero/assets/media/flags/argentina.svg" {if $node->node_flag == 'argentina'}selected{/if}>阿根廷</option>
+                                                        <option value="brazil" data-kt-select2-country="/theme/zero/assets/media/flags/brazil.svg" {if $node->node_flag == 'brazil'}selected{/if}>巴西</option>
+                                                        <option value="germany" data-kt-select2-country="/theme/zero/assets/media/flags/germany.svg" {if $node->node_flag == 'germany'}selected{/if}>德国</option>
+                                                        <option value="france" data-kt-select2-country="/theme/zero/assets/media/flags/france.svg" {if $node->node_flag == 'france'}selected{/if}>法国</option>
+                                                        <option value="ireland" data-kt-select2-country="/theme/zero/assets/media/flags/ireland.svg" {if $node->node_flag == 'ireland'}selected{/if}>爱尔兰</option>
+                                                        <option value="thailand" data-kt-select2-country="/theme/zero/assets/media/flags/thailand.svg" {if $node->node_flag == 'thailand'}selected{/if}>泰国</option>
+                                                        <option value="philippines" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg" {if $node->node_flag == 'philippines'}selected{/if}>菲律宾</option>
+                                                        <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg" {if $node->node_flag == 'malaysia'}selected{/if}>马来西亚</option>
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
                                                     <select class="form-select mb-5" id="node_type" data-control="select2" data-hide-search="true">
