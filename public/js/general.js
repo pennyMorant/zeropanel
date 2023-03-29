@@ -15,7 +15,7 @@ function countdown(date, dom) {
             const hours = Math.floor((distance % (1000 * 3600 * 24)) / (1000 * 3600));
             const minutes = Math.floor((distance % (1000 * 3600)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            const countdown = `${days}${i18next.t('day')}${hours}${i18next.t('hour')}${minutes}${i18next.t('minute')}${seconds}${i18next.t('second')}`;
+            const countdown = `${days}${i18next.t('day')} ${hours}:${minutes}:${seconds}`;
             document.getElementById(dom).innerHTML = countdown;
         }
     } 
