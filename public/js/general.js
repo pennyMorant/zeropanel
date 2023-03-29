@@ -2,25 +2,27 @@
 
 //get left date
 function countdown(date, dom) {
-    return new Promise(function(resolve, reject) {
-      let target = new Date(date).getTime();
-      let timer = setInterval(function() {
-        let now = new Date().getTime();
-        let distance = target - now;
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    let timerInterval = null;
 
+    function updateTimer() {
+        const endDate = new Date(date);
+        const now = new Date().getTime();
+        const distance = endDate.getTime() - now;
         if (distance <= 0) {
-          clearInterval(timer);
-          resolve();
+        clearInterval(timerInterval);
         } else {
-          let countdown = `${days}${i18next.t('day')}${hours}${i18next.t('hour')}${minutes}${i18next.t('minute')}${seconds}${i18next.t('second')}`;
-          document.getElementById(dom).innerHTML = countdown;
+            const days = Math.floor(distance / (1000 * 3600 * 24));
+            const hours = Math.floor((distance % (1000 * 3600 * 24)) / (1000 * 3600));
+            const minutes = Math.floor((distance % (1000 * 3600)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const countdown = `${days}${i18next.t('day')}${hours}${i18next.t('hour')}${minutes}${i18next.t('minute')}${seconds}${i18next.t('second')}`;
+            document.getElementById(dom).innerHTML = countdown;
         }
-      }, 1000);
-    });
+    } 
+    // 初始状态
+    updateTimer();
+    // 开启计时器
+    timerInterval = setInterval(updateTimer, 1000);
 }
 
 //clipboard

@@ -23,10 +23,10 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'please enter valid password': 'Please enter valid password',
             'password confirmation is required': 'Password confirmation is required',
             'password and its confirm are not the same': 'Password and its confirm are not the same',
-            'day': 'D',
-            'minute': 'M',
-            'hour': 'H',
-            'second': "S"
+            'day': 'Day',
+            'minute': 'Minute',
+            'hour': 'Hour',
+            'second': "Second"
           }
         },
         zh: {
