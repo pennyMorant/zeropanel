@@ -244,8 +244,8 @@ class AdminController extends UserController
         switch ($name) {
             case 'newusers':
                 // 获取最早注册用户的日期
-                $earliest_signup_date = User::orderBy('signup_date')->first()->signup_date ?? Carbon::now()->subDays(7);
-                $earliest_signup_date = Carbon::parse($earliest_signup_date)->startOfDay();
+                $earliest_signup= User::orderBy('signup_date')->first()->signup_date ?? Carbon::now()->subDays(7);
+                $earliest_signup_date = Carbon::parse($earliest_signup)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 
@@ -255,7 +255,7 @@ class AdminController extends UserController
                 // 对结果集合按照注册日期进行分组和统计
                 $datas = $users->groupBy(function ($user) {
                     // 返回注册日期作为分组依据
-                    return $user->toDateString();
+                    return Carbon::parse($user)->toDateString();
                 })->map(function ($group) {
                     // 返回每个分组的数量作为统计值
                     return $group->count();
