@@ -66,47 +66,6 @@ $_ENV['auto_detect_ban'] = [
 ];
 //--------------------------------------------------------------------------------------------------------------------------
 
-
-//Bot 设置--------------------------------------------------------------------------------------------
-# Telegram BOT 其他选项
-$_ENV['allow_to_join_new_groups'] = true;         //允许 Bot 加入下方配置之外的群组
-$_ENV['group_id_allowed_to_join'] = [];           //允许加入的群组 ID，格式为 PHP 数组
-$_ENV['enable_not_admin_reply'] = true;         //非管理员操作管理员功能是否回复
-$_ENV['not_admin_reply_msg'] = '!';          //非管理员操作管理员功能的回复内容
-$_ENV['no_user_found'] = '!';          //管理员操作时，找不到用户的回复
-$_ENV['no_search_value_provided'] = '!';          //管理员操作时，没有提供用户搜索值的回复
-$_ENV['data_method_not_found'] = '!';          //管理员操作时，修改数据的字段没有找到的回复
-$_ENV['delete_message_time'] = 180;          //在以下时间后删除用户命令触发的 bot 回复，单位：秒，删除时间可能会因为定时任务而有差异，为 0 代表不开启此功能
-$_ENV['delete_admin_message_time'] = 86400;        //在以下时间后删除管理命令触发的 bot 回复，单位：秒，删除时间可能会因为定时任务而有差异，为 0 代表不开启此功能
-$_ENV['enable_delete_user_cmd'] = false;        //自动删除群组中用户发送的命令，使用 delete_message_time 配置的时间，删除时间可能会因为定时任务而有差异
-$_ENV['help_any_command'] = false;        //允许任意未知的命令触发 /help 的回复
-
-$_ENV['remark_user_search_email'] = ['邮箱'];                     //用户搜索字段 email 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_search_port'] = ['端口'];                     //用户搜索字段 port 的别名，可多个，格式为 PHP 数组
-
-$_ENV['remark_user_option_is_admin'] = ['管理员'];                   //用户搜索字段 is_admin 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_enable'] = ['用户启用'];                  //用户搜索字段 enable 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_money'] = ['金钱', '余额'];             //用户搜索字段 money 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_port'] = ['端口'];                     //用户搜索字段 port 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_transfer_enable'] = ['流量'];                     //用户搜索字段 transfer_enable 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_passwd'] = ['连接密码'];                 //用户搜索字段 passwd 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_method'] = ['加密'];                     //用户搜索字段 method 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_protocol'] = ['协议'];                     //用户搜索字段 protocol 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_protocol_param'] = ['协参', '协议参数'];         //用户搜索字段 protocol_param 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_obfs'] = ['混淆'];                     //用户搜索字段 obfs 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_obfs_param'] = ['混参', '混淆参数'];         //用户搜索字段 obfs_param 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_node_group'] = ['用户组', '用户分组'];       //用户搜索字段 node_group 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_class'] = ['等级'];                     //用户搜索字段 class 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_class_expire'] = ['等级过期时间'];             //用户搜索字段 class_expire 的别名，可多个，格式为 PHP 数组
-
-$_ENV['remark_user_option_node_speedlimit'] = ['限速'];                    //用户搜索字段 node_speedlimit 的别名，可多个，格式为 PHP 数组
-$_ENV['remark_user_option_node_iplimit'] = ['连接数', '客户端'];         //用户搜索字段 node_iplimit 的别名，可多个，格式为 PHP 数组
-
-$_ENV['enable_user_email_group_show'] = false;                      //开启在群组搜寻用户信息时显示用户完整邮箱，关闭则会对邮箱中间内容打码，如 g****@gmail.com
-$_ENV['user_not_bind_reply'] = '您未绑定本站账号，您可以进入网站的 **资料编辑**，在右下方绑定您的账号.';                      //未绑定账户的回复
-$_ENV['telegram_general_pricing'] = '产品介绍.';                  //面向游客的产品介绍
-$_ENV['telegram_general_terms'] = '服务条款.';                  //面向游客的服务条款
-
 #后台商品列表 销量统计
 $_ENV['sales_period'] = 30;             //统计指定周期内的销量，值为【expire/任意大于0的整数】
 
