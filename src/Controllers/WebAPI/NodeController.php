@@ -79,7 +79,7 @@ class NodeController extends BaseController
             'server' => $node_server,
             'custom_config' => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
             'type' => 'SSPanel-UIM',
-            'version' => '2021.11'
+            'version' => '2023-3-1'
         ];
 
         $res = [
@@ -98,11 +98,11 @@ class NodeController extends BaseController
     {
         $nodes = Node::where('node_ip', '<>', null)->where(
             static function ($query) {
-                $query->where('sort', '=', 0)
-                    ->orWhere('sort', '=', 11)
-                    ->orWhere('sort', '=', 13)
-                    ->orWhere('sort', '=', 14)
-                    ->orWhere('sort', '=', 15);
+                $query->where('node_type', '=', 1)
+                    ->orWhere('node_type', '=', 2)
+                    ->orWhere('node_type', '=', 3)
+                    ->orWhere('node_type', '=', 4)
+                    ->orWhere('node_type', '=', 5);
             }
         )->get();
         $res = [
