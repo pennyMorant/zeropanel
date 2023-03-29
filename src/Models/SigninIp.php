@@ -18,16 +18,6 @@ class SigninIp extends Model
     ];
 
     /**
-     * [静态方法] 删除不存在的用户的记录
-     *
-     * @param SigninIp $SigninIp
-     */
-    public static function user_is_null($SigninIp): void
-    {
-        self::where('userid', $SigninIp->userid)->delete();
-    }
-
-    /**
      * 登录用户
      */
     public function user(): ?User

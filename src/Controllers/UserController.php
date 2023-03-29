@@ -239,7 +239,7 @@ class UserController extends BaseController
                 $user->save();
                 break;
             case 'referral_code':
-                $user->clear_inviteCodes();
+                $user->clearInviteCode();
                 break;
             case 'unbind_telegram':
                 $user->unbindTelegram();

@@ -13,48 +13,6 @@ class Product extends Model
     protected $connection = 'default';
 
     protected $table = 'product';
-    
-    protected $casts = [
-        'content' => 'array',
-    ];
-
-
-    public function bandwidth()
-    {
-        return $this->traffic ?? 0;
-    }
-
-    
-
-    public function reset()
-    {
-        return $this->reset_traffic_cycle ?? 0;
-    }
-
-    public function user_class()
-    {
-        return $this->class ?? 0;
-    }
-
-    public function class_expire()
-    {
-        return $this->time ?? 0;
-    }
-
-    public function speedlimit()
-    {
-        return $this->speed_limit ?? 0;
-    }
-
-    public function connector()
-    {
-        return $this->ip_limit ?? 0;
-    }
-    
-    public function node_group()
-    {
-        return $this->user_group ?? -1;
-    }
 
     public function status()
     {

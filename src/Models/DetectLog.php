@@ -29,16 +29,6 @@ class DetectLog extends Model
     }
 
     /**
-     * [静态方法] 删除不存在的用户的记录
-     *
-     * @param DetectLog $DetectLog
-     */
-    public static function user_is_null($DetectLog): void
-    {
-        self::where('user_id', $DetectLog->user_id)->delete();
-    }
-
-    /**
      * 用户
      */
     public function user(): ?User

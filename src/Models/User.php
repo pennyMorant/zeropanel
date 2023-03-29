@@ -220,39 +220,15 @@ class User extends Model
     /**
      * 获取用户的邀请码
      */
-    public function getInviteCodes(): ?InviteCode
+    public function getInviteCode()
     {
         return InviteCode::where('user_id', $this->id)->first();
-    }
-    
-    /**
-     * 用户的邀请人
-     */
-    public function ref_by_user(): ?User
-    {
-        return self::find($this->ref_by);
-    }
-
-    /**
-     * 用户邀请人的用户名
-     */
-    public function ref_by_name(): string
-    {
-        if ($this->ref_by == 0) {
-            return '系统邀请';
-        } else {
-            if (is_null($this->ref_by_user())) {
-                return '邀请人已经被删除';
-            } else {
-                return $this->ref_by_user()->name;
-            }
-        }
     }
 
     /**
      * 删除用户的邀请码
      */
-    public function clear_inviteCodes()
+    public function clearInviteCode()
     {
         InviteCode::where('user_id', $this->id)->delete();
     }
@@ -260,7 +236,7 @@ class User extends Model
     /**
      * 在线 IP 个数
      */
-    public function online_ip_count(): int
+    public function onlineIPCount(): int
     {
         // 根据 IP 分组去重
         $total = Ip::where('datetime', '>=', time() - 90)->where('userid', $this->id)->orderBy('userid', 'desc')->groupBy('ip')->get();
@@ -305,7 +281,7 @@ class User extends Model
     /**
      * 累计充值金额
      */
-    public function get_top_up(): float
+    public function getTotalIncome(): float
     {
         $number = Order::where('user_id', $this->id)->where('order_status', 2)->where('order_payment', '!=', 'creditpay')->sum('order_total');
         return is_null($number) ? 0.00 : round($number, 2);

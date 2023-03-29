@@ -84,14 +84,6 @@ class Node extends Model
         return $type;
     }
     
-    /**
-     * 节点最后活跃时间
-     */
-    public function node_heartbeat(): string
-    {
-        return date('Y-m-d H:i:s', $this->node_heartbeat);
-    }
-    
     public function getLastNodeInfoLog()
     {
         $log = NodeInfoLog::where('node_id', $this->id)->orderBy('id', 'desc')->first();
@@ -151,16 +143,6 @@ class Node extends Model
         }
 
         return Tools::flowAutoShow($traffic);
-    }
-
-    /**
-     * 获取节点在线状态
-     *
-     * @return int 0 = new node OR -1 = offline OR 1 = online
-     */
-    public function get_node_online_status(): int
-    {
-        return $this->node_heartbeat + 300 > time() ? 1 : -1;
     }
     
     /**

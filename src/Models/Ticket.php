@@ -12,20 +12,6 @@ class Ticket extends Model
     protected $table = 'ticket';
 
     /**
-     * [静态方法] 删除不存在的用户的记录
-     *
-     * @param Ticket $Ticket
-     */
-    public static function user_is_null($Ticket): void
-    {
-        $tickets = Ticket::where('userid', $Ticket->userid)->where('rootid', 0)->get();
-        foreach ($tickets as $ticket) {
-            self::where('rootid', $ticket->id)->delete();
-            $ticket->delete();
-        }
-    }
-
-    /**
      * 时间
      */
     public function datetime(): string

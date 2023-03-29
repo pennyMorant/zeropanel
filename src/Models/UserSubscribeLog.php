@@ -12,16 +12,6 @@ class UserSubscribeLog extends Model
     protected $table = 'user_subscribe_log';
 
     /**
-     * [静态方法] 删除不存在的用户的记录
-     *
-     * @param UserSubscribeLog $UserSubscribeLog
-     */
-    public static function user_is_null($UserSubscribeLog): void
-    {
-        self::where('user_id', $UserSubscribeLog->user_id)->delete();
-    }
-
-    /**
      * 用户
      */
     public function user(): ?User
