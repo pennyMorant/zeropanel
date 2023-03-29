@@ -41,7 +41,7 @@ final class MyCommand extends Command
         }
         
         $text = [
-            '订阅到期时间: ' . $user->class_expired,
+            '订阅到期时间: ' . $user->class_expire,
             '订阅流量: ' . $user->usedTraffic() . '/' . $user->enableTrafficInGB(),
             '流量下次重置时间: ' . productTrafficResetDate(),
             '账户余额: ' . $user->money,
