@@ -51,7 +51,7 @@ final class MyCommand extends Command
         $this->replyWithMessage(
             [
                 'text' => $text,
-                'parse_mode' => 'Markdown',
+                //'parse_mode' => 'Markdown',
             ]
         );
     }
