@@ -366,7 +366,7 @@
         </div>
 		{include file='include/global/scripts.tpl'}
 		{include file='include/index/news.tpl'}
-		<script>var user_class_expired_time = "{$user->class_expire}";</script>
+		<script>countdown('{$user->class_expire}', 'user_class_expired_time')</script>
 		<script>
 			function zeroUserRenewalProduct() {
 				$.ajax({

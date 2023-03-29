@@ -23,6 +23,10 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'please enter valid password': 'Please enter valid password',
             'password confirmation is required': 'Password confirmation is required',
             'password and its confirm are not the same': 'Password and its confirm are not the same',
+            'day': 'D',
+            'minute': 'M',
+            'hour': 'H',
+            'second': "S"
           }
         },
         zh: {
@@ -42,6 +46,10 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'please enter valid password': '请输入有效的密码',
             'password confirmation is required': '确认密码不能为空',
             'password and its confirm are not the same': '密码和确认密码不匹配',
+            'day': '天',
+            'minute': '分钟',
+            'hour': '小时',
+            'second': "秒"
           }
         }
       }

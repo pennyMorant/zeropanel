@@ -1,25 +1,27 @@
 //"use strict";
 
 //get left date
-var showtime = function () {
-    var nowtime = new Date(),  //获取当前时间
-        endtime = new Date(user_class_expired_time);  //定义结束时间
-    var lefttime = endtime.getTime() - nowtime.getTime(),  //距离结束时间的毫秒数
-        leftd = Math.floor(lefttime/(1000*60*60*24)),  //计算天数
-        lefth = Math.floor(lefttime/(1000*60*60)%24),  //计算小时数
-        leftm = Math.floor(lefttime/(1000*60)%60),  //计算分钟数
-        lefts = Math.floor(lefttime/1000%60);  //计算秒数
-   
-    return leftd + "天 " + lefth + "小时 " + leftm + "分 " + lefts + "秒";  //返回倒计时的字符串
+function countdown(date, dom) {
+    return new Promise(function(resolve, reject) {
+      let target = new Date(date).getTime();
+      let timer = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = target - now;
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (distance <= 0) {
+          clearInterval(timer);
+          resolve();
+        } else {
+          let countdown = `${days}${i18next.t('day')}${hours}${i18next.t('hour')}${minutes}${i18next.t('minute')}${seconds}${i18next.t('second')}`;
+          document.getElementById(dom).innerHTML = countdown;
+        }
+      }, 1000);
+    });
 }
-$(document).ready(function(){
-var div = document.getElementById("user_class_expired_time");
-    if (div){
-        setInterval (function () {
-            div.innerHTML = showtime();
-        }, 1000);  //反复执行函数本身
-    }
-});
 
 //clipboard
 var clipboard = new ClipboardJS('.copy-text');
