@@ -162,18 +162,18 @@ class Model extends EloquentMedel
         $order_column = $request->getParam('order')[0]['column'];
         //根据排序字段的下标得到排序字段
         $order_field  = $request->getParam('columns')[$order_column]['data'];
-        if ($callback !== null) {
+        if (!is_null($callback)) {
             call_user_func_array($callback, [&$order_field]);
         }
         $limit_start  = $request->getParam('start');
         $limit_length = $request->getParam('length');
         $search       = $request->getParam('search')['value'];
-        if ($querys == null) {
+        if (is_null($querys)) {
             $query = self::query();
         } else {
             $query = $querys;
         }
-        if ($precondition !== null) {
+        if (is_null($precondition)) {
             call_user_func($precondition, $query);
         }
         if ($search) {

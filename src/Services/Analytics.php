@@ -114,7 +114,7 @@ class Analytics
     public function getIncome($start_time, $end_time)
     {
         $sum = Order::where('order_payment','!=', 'creditpay')->where('order_status', 2)->where('paid_time', '>=', $start_time)->where('paid_time', '<=', $end_time)->sum('order_total');
-        if ($sum == null) {
+        if (is_null($sum)) {
           $sum = 0;
         }
         return $sum;
@@ -125,7 +125,7 @@ class Analytics
         $users = User::where('signup_date', '>=', $start_time)
         ->where('signup_date', '<', $end_time)
         ->count();
-        if ($users == null) {
+        if (is_null($users)) {
             $users = 0;
         }
         return $users;

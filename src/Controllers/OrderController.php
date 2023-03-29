@@ -92,7 +92,7 @@ class OrderController extends BaseController
         switch ($type) {
             case 1:
                 try {
-                    if ($product == null) {
+                    if (is_null($product)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
                     $all_price = [
@@ -238,7 +238,7 @@ class OrderController extends BaseController
     {
         $order = Order::where('order_no', $order_no)->first();
         
-        if ($order->product_id == null) {
+        if (is_null($order->product_id)) {
             return self::executeAddCredit($order);
         } else {
             return self::executeProduct($order);
@@ -327,7 +327,7 @@ class OrderController extends BaseController
 
         $product = Product::where('id', $product_id)->where('status', 1)->first();
 
-        if ($product == null) {
+        if (is_null($product)) {
             $res['ret'] = 0;
             $res['msg'] = I18n::get()->t('error request');
             return $response->withJson($res);
@@ -335,7 +335,7 @@ class OrderController extends BaseController
 
         $coupons = Coupon::where('code', $coupon)->first();
 
-        if ($coupons == null) {
+        if (is_null($coupons)) {
             $res['ret'] = 0;
             $res['msg'] = I18n::get()->t('promo code invalid');
             return $response->withJson($res);

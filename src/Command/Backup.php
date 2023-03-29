@@ -41,7 +41,7 @@ EOL;
 
         ini_set('memory_limit', '-1');
         $to = $configs['auto_backup_email'];
-        if ($to === null) {
+        if (is_null($to)) {
             return false;
         }
         if (! mkdir('/tmp/backup/') && ! is_dir('/tmp/backup/')) {

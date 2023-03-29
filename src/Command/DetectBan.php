@@ -38,7 +38,7 @@ class DetectBan extends Command
             foreach ($user_logs as $userid => $value) {
                 // 执行封禁
                 $user = User::find($userid);
-                if ($user == null) {
+                if (is_null($user)) {
                     continue;
                 }
                 $user->all_detect_number += $value;
@@ -54,7 +54,7 @@ class DetectBan extends Command
 
                 if ($_ENV['auto_detect_ban_type'] == 1) {
                     $last_DetectBanLog      = DetectBanLog::where('user_id', $userid)->orderBy('id', 'desc')->first();
-                    $last_all_detect_number = ($last_DetectBanLog == null ? 0 : (int) $last_DetectBanLog->all_detect_number);
+                    $last_all_detect_number = (is_null($last_DetectBanLog) ? 0 : (int) $last_DetectBanLog->all_detect_number);
                     $detect_number          = ($user->all_detect_number - $last_all_detect_number);
                     if ($detect_number >= $_ENV['auto_detect_ban_number']) {
                         $last_detect_ban_time               = $user->last_detect_ban_time;

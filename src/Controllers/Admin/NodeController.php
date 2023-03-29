@@ -57,7 +57,7 @@ class NodeController extends AdminController
         $node->flag             = $request->getParam('flag');
         $node->sort             = $request->getParam('sort');
 
-        if ($request->getParam('custom_config') !== null) {
+        if (is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));
         } else {
             $node->custom_config = '{}';

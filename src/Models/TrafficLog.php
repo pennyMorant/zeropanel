@@ -13,7 +13,7 @@ class TrafficLog extends Model
     public function node()
     {
         $node = Node::where('id', $this->attributes['node_id'])->first();
-        if ($node == null) {
+        if (is_null($node)) {
             self::where('id', '=', $this->attributes['id'])->delete();
             return null;
         }
@@ -24,7 +24,7 @@ class TrafficLog extends Model
     public function user()
     {
         $user = User::where('id', $this->attributes['user_id'])->first();
-        if ($user == null) {
+        if (is_null($user)) {
             self::where('id', '=', $this->attributes['id'])->delete();
             return null;
         }

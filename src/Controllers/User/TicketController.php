@@ -129,7 +129,7 @@ class TicketController extends UserController
 
         $ticket = Ticket::where('id', $id)->where('userid', $this->user->id)->first();
 
-        if ($ticket === null) {
+        if (is_null($ticket)) {
             return $response->withStatus(302)->withHeader('Location', '/user/ticket');
         }
 
@@ -186,7 +186,7 @@ class TicketController extends UserController
         //$ticket->type = Tools::getTicketType($ticket);
         //$ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
 
-        if ($ticket === null) {
+        if (is_null($ticket)) {
             if ($request->getParam('json') === 1) {
                 return $response->withJson([
                     'ret' => 0,

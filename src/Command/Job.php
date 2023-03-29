@@ -104,7 +104,7 @@ class Job extends Command
         
         $users = User::where('class','>=', '1')->get();
         foreach ($users as $user) {
-            if ($user == null) {
+            if (is_null($user)) {
                 continue;
             }
             if (!is_null($user->reset_traffic_date)) {               

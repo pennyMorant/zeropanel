@@ -12,7 +12,7 @@ class TelegramSessionManager
         for ($i = 0; $i < 10; $i++) {
             $token = Tools::genRandomChar(16);
             $Elink = TelegramSession::where('session_content', '=', $token)->first();
-            if ($Elink == null) {
+            if (is_null($Elink)) {
                 return $token;
             }
         }
@@ -27,7 +27,7 @@ class TelegramSessionManager
             $token = Tools::genRandomChar(16);
             $number = random_int(100000, 999999);
             $Elink = TelegramSession::where('session_content', 'LIKE', $token . '|%')->orWhere('session_content', 'LIKE', '%|' . $number)->first();
-            if ($Elink == null) {
+            if (is_null($Elink)) {
                 return $token . '|' . $number;
             }
         }

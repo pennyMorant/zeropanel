@@ -39,7 +39,7 @@ class PasswordController extends BaseController
     {
         $email = strtolower($request->getParam('email'));
         $user  = User::where('email', $email)->first();
-        if ($user == null) {
+        if (is_null($user)) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => I18n::get()->t('email does not exist')
@@ -64,7 +64,7 @@ class PasswordController extends BaseController
     public function token(ServerRequest $request, Response $response, $args)
     {
         $token = PasswordReset::where('token', $args['token'])->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
-        if ($token == null) return $response->withStatus(302)->withHeader('Location', '/password/reset');
+        if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
         
         $this->view()->display('password/token.tpl');
         return $response;
@@ -83,7 +83,7 @@ class PasswordController extends BaseController
 
         // check token
         $token = PasswordReset::where('token', $tokenStr)->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
-        if ($token == null) {
+        if (is_null($token)) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => I18n::get()->t('link is dead')
@@ -91,7 +91,7 @@ class PasswordController extends BaseController
         }
         /** @var PasswordReset $token */
         $user = $token->getUser();
-        if ($user == null) {
+        if (is_null($user)) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => I18n::get()->t('link is dead')

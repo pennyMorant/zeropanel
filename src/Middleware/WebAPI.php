@@ -14,7 +14,7 @@ class WebAPI
     {
 
         $key = $request->getParam('key');  
-        if ($key === null) {
+        if (is_null($key)) {
             // 未提供 key
             $response = new Response();
             $response->getBody()->write(json_encode([
@@ -47,7 +47,7 @@ class WebAPI
         if ($_ENV['checkNodeIp'] === true) {
             if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
                 $node = Node::where('node_ip', 'LIKE', $_SERVER['REMOTE_ADDR'] . '%')->first();
-                if ($node === null) {
+                if (is_null($node)) {
                     $response = new Response();
                     $response->getBody()->write(json_encode([
                         'ret'  => 0,

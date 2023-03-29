@@ -37,7 +37,7 @@ class Cookie extends Base
         $user = new User();
         $user->isLogin = false;
 
-        if ($uid == null) {
+        if (is_null($uid)) {
             return $user;
         }
 
@@ -47,7 +47,7 @@ class Cookie extends Base
 
         $user = User::find($uid);
 
-        if ($user == null) {
+        if (is_null($user)) {
             $user = new User();
             $user->isLogin = false;
             return $user;

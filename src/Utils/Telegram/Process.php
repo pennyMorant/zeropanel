@@ -25,9 +25,9 @@ final class Process
         $update = $bot->commandsHandler(true);
         $Message = $update->getMessage();
         
-        if ($update->getCallbackQuery() !== null) {
+        if (!is_null($update->getCallbackQuery())) {
             new Callbacks\Callback($bot, $update->getCallbackQuery());
-        } else if ($Message->getReplyToMessage() != null) {
+        } else if (!is_null($Message->getReplyToMessage())) {
             if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
                 new Callbacks\ReplayTicket($bot, $Message, $match[1]);
             }

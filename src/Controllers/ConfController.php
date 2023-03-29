@@ -189,7 +189,7 @@ class ConfController extends BaseController
                 }
                 foreach ($Nodes as $item) {
                     $item = self::getMatchProxy($item, $ProxyGroup);
-                    if ($item !== null && !in_array($item['remark'], $proxies)) {
+                    if (!is_null($item) && !in_array($item['remark'], $proxies)) {
                         $proxies[] = $item['remark'];
                     }
                 }
@@ -391,7 +391,7 @@ class ConfController extends BaseController
                 foreach ($Nodes as $item) {
                     $item['remark'] = $item['name'];
                     $item = self::getMatchProxy($item, $ProxyGroup);
-                    if ($item !== null && !in_array($item['name'], $proxies)) {
+                    if (!is_null($item) && !in_array($item['name'], $proxies)) {
                         $proxies[] = $item['name'];
                     }
                 }

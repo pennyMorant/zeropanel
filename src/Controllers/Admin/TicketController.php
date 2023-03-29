@@ -112,7 +112,7 @@ class TicketController extends AdminController
 
         $ticket = Ticket::where('id', $id)->first();
 
-        if ($ticket === null) {
+        if (is_null($ticket)) {
             return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
         }
 
@@ -161,7 +161,7 @@ class TicketController extends AdminController
         $ticket = Ticket::where('id', '=', $id)->first();
         $comments = json_decode($ticket->content, true);
 
-        if ($ticket === null) {
+        if (is_null($ticket)) {
             return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
         }
         $this->view()

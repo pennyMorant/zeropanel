@@ -105,16 +105,12 @@ class User extends Command
             fwrite(STDOUT, '(1/3)/输入管理员邮箱: ') . PHP_EOL;
             // get input
             $email = strtolower(trim(fgets(STDIN)));
-            if ($email == null) {
-                die("必须输入管理员邮箱.\r\n");
-            }
+            $email ?? die("必须输入管理员邮箱.\r\n");
             
             // write input back
             fwrite(STDOUT, "(2/3) 请输入管理员账户密码：") . PHP_EOL;
             $passwd = trim(fgets(STDIN));
-            if ($passwd == null) {
-                die("必须输入管理员密码.\r\n");
-            }
+            $passwd ?? die("必须输入管理员密码.\r\n");
             
             fwrite(STDOUT, "(3/3) 按 Y 或 y 确认创建：");
             $y = trim(fgets(STDIN));

@@ -43,7 +43,7 @@ class UserController extends BaseController
     public function index(ServerRequest $request, Response $response, $args)
     {       
         $code = InviteCode::where('user_id', $this->user->id)->first();
-        if ($code == null) {
+        if (is_null($code)) {
             $this->user->addInviteCode();
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
@@ -114,7 +114,7 @@ class UserController extends BaseController
     public function referral(ServerRequest $request, Response $response, $args)
     {
         $code = InviteCode::where('user_id', $this->user->id)->first();
-        if ($code == null) {
+        if (is_null($code)) {
             $this->user->addInviteCode();
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
@@ -143,7 +143,7 @@ class UserController extends BaseController
             $res['ret'] = 0;
             $res['msg'] = '系统未启用Telegram Bot';
             return $response->withJson($res);
-        } else if ($type == 'telegram' && $user->telegram_id == null) {
+        } else if ($type == 'telegram' && is_null($user->telegram_id)) {
             $res['ret'] = 0;
             $res['msg'] = '您还未绑定telegram账户';
             return $response->withJson($res);
@@ -193,7 +193,7 @@ class UserController extends BaseController
                     if (Setting::obtain('reg_email_verify')) {
                         $emailcode = $request->getParam('emailcode');
                         $mailcount = EmailVerify::where('email', '=', $newemail)->where('code', '=', $emailcode)->where('expire_in', '>', time())->first();
-                        if ($mailcount == null) {
+                        if (is_null($mailcount)) {
 
                             throw new \Exception(I18n::get()->t('email verification code error'));
                         }

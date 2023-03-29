@@ -81,8 +81,8 @@ class URL
         foreach ($nodes as $node) {
             if (isset($Rule['content']['regex']) && $Rule['content']['regex'] != '') {
                 // 节点名称筛选
-                if (
-                    ConfController::getMatchProxy(
+                if (                  
+                    is_null(ConfController::getMatchProxy(
                         [
                             'remark' => $node->name
                         ],
@@ -91,7 +91,7 @@ class URL
                                 'regex' => $Rule['content']['regex']
                             ]
                         ]
-                    ) === null
+                    ))
                 ) {
                     continue;
                 }
@@ -148,7 +148,7 @@ class URL
             } else {
                 $out = LinkController::getListItem($item, $Rule['type']);
             }
-            if ($out !== null) {
+            if (!is_null($out)) {
                 $return_url .= $out . PHP_EOL;
             }
         }

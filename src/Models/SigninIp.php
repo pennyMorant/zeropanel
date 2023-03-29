@@ -36,17 +36,6 @@ class SigninIp extends Model
     }
 
     /**
-     * 登录用户
-     */
-    public function name(): string
-    {
-        if ($this->user() == null) {
-            return '用户已不存在';
-        }
-        return $this->user()->name;
-    }
-
-    /**
      * 登录时间
      */
     public function datetime(): string

@@ -55,7 +55,7 @@ class ZeroController extends BaseController
     public function withdrawCommission(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
-        if ($user == null || !$user->isLogin) {
+        if (is_null($user) || !$user->isLogin) {
             return $response->withJson([
                 'ret' => -1
             ]);
@@ -156,7 +156,7 @@ class ZeroController extends BaseController
     public function withdrawAccountSettings(ServerRequest $request, Response $response, $args)
     {
         $user = $this->user;
-        if ($user == null || !$user->isLogin) {
+        if (is_null($user) || !$user->isLogin) {
             $res['ret'] = -1;
             return $response->withJson($res);
         }
@@ -200,7 +200,7 @@ class ZeroController extends BaseController
 
         $id   = $args['id'];
         $node = Node::find($id);
-        if ($node == null) {
+        if (is_null($node)) {
             $res = ['ret' => 0, 'msg' => '节点错误,请刷新页面重新获取'];
             return $response->withJson($res);
         }
@@ -313,7 +313,7 @@ class ZeroController extends BaseController
         $sort = $request->getParam('order')[0]['dir'];             # 得到排序方法
         $field = $request->getParam('order')[0]['column'];            
         $sort_field = $request->getParam('columns')[$field]['data'];                                             # 得到排序字段
-        if ($user == null || !$user->isLogin) {
+        if (is_null($user) || !$user->isLogin) {
             return 0;
         }
         

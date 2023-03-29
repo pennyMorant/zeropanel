@@ -61,7 +61,7 @@ class NodeController extends BaseController
             $node_id = $node->id;
         }
         $node = Node::find($node_id);
-        if ($node == null) {
+        if (is_null($node)) {
             $res = [
                 'ret' => 0
             ];

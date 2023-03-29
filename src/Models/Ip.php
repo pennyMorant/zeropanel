@@ -23,17 +23,6 @@ class Ip extends Model
     }
 
     /**
-     * 用户名
-     */
-    public function name(): string
-    {
-        if ($this->user() == null) {
-            return '用户已不存在';
-        }
-        return $this->user()->name;
-    }
-
-    /**
      * 节点
      */
     public function node(): ?Node
@@ -46,7 +35,7 @@ class Ip extends Model
      */
     public function node_name(): string
     {
-        if ($this->node() == null) {
+        if (is_null($this->node())) {
             return '节点已不存在';
         }
         return $this->node()->name;

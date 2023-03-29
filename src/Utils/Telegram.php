@@ -83,7 +83,7 @@ class Telegram
             $admin = Setting::obtain('telegram_admin_id');
             $chat_id = User::where('id', $admin)->where('is_admin', '1')->value('telegram_id');
             $bot = new Api(Setting::obtain('telegram_bot_token'), true);
-            if ($keyBoard !== null) {
+            if (!is_null($keyBoard)) {
                 $reply_markup = json_encode(
                     [
                         'inline_keyboard' => $keyBoard

@@ -18,7 +18,7 @@ class TelegramSession extends Model
     public function User()
     {
         $user = User::where('id', $this->attributes['user_id'])->first();
-        if ($user == null) {
+        if (is_null($user)) {
             Ticket::where('id', '=', $this->attributes['id'])->delete();
             return null;
         }

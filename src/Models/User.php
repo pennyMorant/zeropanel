@@ -89,7 +89,7 @@ class User extends Model
     {
         while (true) {
             $temp_code = Tools::genRandomChar(10);
-            if (InviteCode::where('code', $temp_code)->first() == null) {
+            if (is_null(InviteCode::where('code', $temp_code)->first())) {
                 if (InviteCode::where('user_id', $this->id)->count() == 0) {
                     $code          = new InviteCode();
                     $code->code    = $temp_code;
@@ -241,7 +241,7 @@ class User extends Model
         if ($this->ref_by == 0) {
             return '系统邀请';
         } else {
-            if ($this->ref_by_user() == null) {
+            if (is_null($this->ref_by_user())) {
                 return '邀请人已经被删除';
             } else {
                 return $this->ref_by_user()->name;

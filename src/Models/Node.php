@@ -95,7 +95,7 @@ class Node extends Model
     public function getLastNodeInfoLog()
     {
         $log = NodeInfoLog::where('node_id', $this->id)->orderBy('id', 'desc')->first();
-        if ($log == null) {
+        if (is_null($log)) {
             return null;
         }
         return $log;
@@ -104,7 +104,7 @@ class Node extends Model
     public function getNodeUptime()
     {
         $log = $this->getLastNodeInfoLog();
-        if ($log == null) {
+        if (is_null($log)) {
             return '暂无数据';
         }
         return Tools::secondsToTime((int) $log->uptime);
@@ -137,7 +137,7 @@ class Node extends Model
             return -1;
         }
         $log = NodeOnlineLog::where('node_id', $this->id)->where('log_time', '>', time() - 300)->orderBy('id', 'desc')->first();
-        if ($log == null) {
+        if (is_null($log)) {
             return 0;
         }
         return $log->online_user;
@@ -168,41 +168,6 @@ class Node extends Model
             return 0;
         }
         return $this->node_heartbeat + 300 > time() ? 1 : -1;
-    }
-
-    /**
-     * 获取节点最新负载
-     */
-    public function get_node_latest_load(): int
-    {
-        $log = NodeInfoLog::where('node_id', $this->id)->where('log_time', '>', time() - 300)->orderBy('id', 'desc')->first();
-        if ($log == null) {
-            return -1;
-        }
-        return (explode(' ', $log->load))[0] * 100;
-    }
-
-    /**
-     * 获取节点最新负载文本信息
-     */
-    public function get_node_latest_load_text(): string
-    {
-        $load = $this->get_node_latest_load();
-        return $load == -1 ? 'N/A' : $load . '%';
-    }
-
-    /**
-     * 获取节点速率文本信息
-     */
-    public function get_node_speedlimit(): string
-    {
-        if ($this->node_speedlimit == 0.0) {
-            return 0;
-        } elseif ($this->node_speedlimit >= 1024.00) {
-            return round($this->node_speedlimit / 1024.00, 1) . 'Gbps';
-        } else {
-            return $this->node_speedlimit . 'Mbps';
-        }
     }
     
     /**

@@ -47,17 +47,6 @@ class DetectLog extends Model
     }
 
     /**
-     * 用户名
-     */
-    public function name(): string
-    {
-        if ($this->user() == null) {
-            return '用户已不存在';
-        }
-        return $this->user()->name;
-    }
-
-    /**
      * 节点
      */
     public function node(): ?Node
@@ -70,7 +59,7 @@ class DetectLog extends Model
      */
     public function node_name(): string
     {
-        if ($this->node() == null) {
+        if (is_null($this->node())) {
             return '节点已不存在';
         }
         return $this->node()->name;
@@ -89,7 +78,7 @@ class DetectLog extends Model
      */
     public function rule_name(): string
     {
-        if ($this->rule() == null) {
+        if (is_null($this->rule())) {
             return '规则已不存在';
         }
         return $this->rule()->name;
@@ -100,7 +89,7 @@ class DetectLog extends Model
      */
     public function rule_text(): string
     {
-        if ($this->rule() == null) {
+        if (is_null($this->rule())) {
             return '规则已不存在';
         }
         return $this->rule()->text;
@@ -111,7 +100,7 @@ class DetectLog extends Model
      */
     public function rule_regex(): string
     {
-        if ($this->rule() == null) {
+        if (is_null($this->rule())) {
             return '规则已不存在';
         }
         return $this->rule()->regex;
@@ -122,7 +111,7 @@ class DetectLog extends Model
      */
     public function rule_type(): string
     {
-        if ($this->rule() == null) {
+        if (is_null($this->rule())) {
             return '规则已不存在';
         }
         return $this->rule()->type();

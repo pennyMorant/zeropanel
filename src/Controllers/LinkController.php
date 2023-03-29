@@ -134,7 +134,7 @@ class LinkController extends BaseController
                 ];
                 break;
             case 'clash':
-                if ($value !== null) {                   
+                if (!is_null($value)) {                   
                     $return = self::getSubscribeExtend('clash');
                     $return['class'] = 'Clash';
                 } else {
@@ -146,7 +146,7 @@ class LinkController extends BaseController
                 }
                 break;
             case 'surge':
-                if ($value !== null) {
+                if (!is_null($value)) {
                     $return = [
                         'filename' => 'Surge',
                         'suffix' => 'conf',
@@ -211,7 +211,7 @@ class LinkController extends BaseController
                     'suffix' => 'txt',
                     'class' => 'Lists'
                 ];
-                if ($value !== null) {
+                if (!is_null($value)) {
                     $return['class'] = 'QuantumultX';
                 }
                 break;
@@ -463,7 +463,7 @@ class LinkController extends BaseController
                 $out = self::getListItem($Extend, $list);
                 
             }
-            if ($out !== null) $return[] = $out;
+            if (!is_null($out)) $return[] = $out;
         }
         return $return;
     }
@@ -487,7 +487,7 @@ class LinkController extends BaseController
         $All_Proxy = '';
         foreach ($items as $item) {
             $out = SubController::getSurge($item, $surge);
-            if ($out !== null) {
+            if (!is_null($out)) {
                 $Nodes[] = $item;
                 $All_Proxy .= $out . PHP_EOL;
             }
@@ -522,7 +522,7 @@ class LinkController extends BaseController
         $items = URL::getNew_AllItems($user, $Rule);
         foreach ($items as $item) {
             $out = SubController::getSurfboard($item);
-            if ($out !== null) {
+            if (!is_null($out)) {
                 $Nodes[] = $item;
                 $All_Proxy .= $out . PHP_EOL;
             }
@@ -556,7 +556,7 @@ class LinkController extends BaseController
         $Proxys = [];
         foreach ($items as $item) {
             $Proxy = SubController::getClash($item, $ssr_support);
-            if ($Proxy !== null) {
+            if (!is_null($Proxy)) {
                 $Proxys[] = $Proxy;
             }
         }

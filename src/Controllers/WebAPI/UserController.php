@@ -35,7 +35,7 @@ class UserController extends BaseController
             $node_id = $node->id;
         } else {
             $node = Node::where('id', '=', $node_id)->first();
-            if ($node == null) {
+            if (is_null($node)) {
                 return $response->withJson([
                     'ret' => 0,
                 ]);
@@ -122,7 +122,7 @@ class UserController extends BaseController
         }
         $node = Node::find($node_id);
 
-        if ($node == null) {
+        if (is_null($node)) {
             $res = [
                 'ret' => 0
             ];
@@ -137,7 +137,7 @@ class UserController extends BaseController
 
                 $user = User::find($user_id);
 
-                if ($user == null) {
+                if (is_null($user)) {
                     continue;
                 }
 
@@ -199,7 +199,7 @@ class UserController extends BaseController
         }
         $node = Node::find($node_id);
 
-        if ($node == null) {
+        if (is_null($node)) {
             $res = [
                 'ret' => 0
             ];
@@ -244,7 +244,7 @@ class UserController extends BaseController
         }
         $node = Node::find($node_id);
 
-        if ($node == null) {
+        if (is_null($node)) {
             $res = [
                 'ret' => 0
             ];

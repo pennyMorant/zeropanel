@@ -74,7 +74,7 @@ class AuthController extends BaseController
             }
 
             $user = User::where('email', $email)->first();
-            if ($user == null) {
+            if (is_null($user)) {
                 throw new \Exception($trans->t('email does not exist'));
             }
 
@@ -261,7 +261,7 @@ class AuthController extends BaseController
                     ->where('code', '=', $email_code)
                     ->where('expire_in', '>', time())
                     ->first();
-                if ($mailcount == null) {
+                if (is_null($mailcount)) {
                     throw new \Exception($trans->t('email verification code error'));
                 }
             }
@@ -276,11 +276,11 @@ class AuthController extends BaseController
 
             $c = InviteCode::where('code', $code)->first();
             if ($code !== '') {
-                if ($c == null) {
+                if (is_null($c)) {
                     throw new \Exception($trans->t('referral code does not exist'));
                 } else if ($c->user_id != 0) {
                     $gift_user = User::where('id', $c->user_id)->first();
-                    if ($gift_user == null) {
+                    if (is_null($gift_user)) {
                         throw new \Exception ($trans->t('referral code has expired'));
                     }
                 }

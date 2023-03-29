@@ -46,7 +46,7 @@ class Ticket extends Model
      */
     public function email(): string
     {
-        if ($this->user() == null) {
+        if (is_null($this->user())) {
             return '用户已不存在';
         }
         return $this->user()->email;
