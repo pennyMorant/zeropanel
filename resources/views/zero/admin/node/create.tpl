@@ -75,11 +75,10 @@
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
                                                     <select class="form-select mb-5" id="sort" data-control="select2" data-hide-search="true">
-                                                        <option value="0">Shadowsocks</option>
-                                                        <option value="11">VMESS</option>
-                                                        <option value="13">Shadowsocks V2Ray-Plugin&Obfs</option>
-                                                        <option value="14">TROJAN</option>
-                                                        <option value="15">VLESS</option>
+                                                <option value="1">Shadowsocks</option>
+                                                <option value="2">VMESS</option>
+                                                <option value="4">TROJAN</option>
+                                                <option value="3">VLESS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -134,8 +133,8 @@
                         server: $('#server').val(),
                         node_ip: $('#node_ip').val(),
                         traffic_rate: $('#traffic_rate').val(),
-                        flag: $('#node_flag').val(),
-                        sort: $('#sort').val(),
+                        node_flag: $('#node_flag').val(),
+                        node_type: $('#node_type').val(),
                         node_class: $('#node_class').val(),
                         node_group: $('#node_group').val(),
                         node_traffic_limit: $('#node_traffic_limit').val(),

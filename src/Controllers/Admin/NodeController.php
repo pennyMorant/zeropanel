@@ -23,8 +23,8 @@ class NodeController extends AdminController
             'id'                      => 'ID',
             'online'                  => 'Online',
             'name'                    => '节点名称',
-            'onlineuser'              => '在线人数',           
-            'sort'                    => '类型',
+            'online_user'              => '在线人数',           
+            'type'                    => '类型',
             'node_ip'                 => '节点IP',
             'node_class'              => '节点等级',
             'node_speedlimit'         => '速度',
@@ -54,8 +54,8 @@ class NodeController extends AdminController
         $node->status           = 0;
         $node->node_group       = $request->getParam('node_group');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->flag             = $request->getParam('flag');
-        $node->sort             = $request->getParam('sort');
+        $node->node_flag             = $request->getParam('node_flag');
+        $node->node_type             = $request->getParam('node_type');
 
         if (is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));
@@ -116,7 +116,7 @@ class NodeController extends AdminController
         $node->server           = trim($request->getParam('server'));
         $node->traffic_rate     = $request->getParam('traffic_rate');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->sort             = $request->getParam('sort');
+        $node->node_type             = $request->getParam('node_type');
 
         if (!is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));
@@ -139,7 +139,7 @@ class NodeController extends AdminController
                 'msg' => '更新节点IP失败，请检查您输入的节点地址是否正确！',
             ]);
         }
-        $node->flag                     = $request->getParam('flag');
+        $node->node_flag                     = $request->getParam('node_flag');
         $node->node_class                 = $request->getParam('node_class');
         $node->node_sort                  = (int)$request->getParam('node_sort');
         $node->node_traffic_limit       = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
@@ -174,8 +174,8 @@ class NodeController extends AdminController
                 'id'    => $rowData->id,
                 'online'    => $rowData->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>',
                 'name'  =>  $rowData->name,
-                'onlineuser'    =>  $rowData->getNodeOnlineUserCount(),
-                'sort'  =>  $rowData->sort(),
+                'online_user'    =>  $rowData->getNodeOnlineUserCount(),
+                'type'  =>  $rowData->nodeType(),
                 'node_ip'   =>  $rowData->node_ip,
                 'node_class'    =>  $rowData->node_class,
                 'node_speedlimit'   =>  $rowData->node_speedlimit == 0 ? '无限制' : $rowData->node_speedlimit,

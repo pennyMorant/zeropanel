@@ -71,7 +71,7 @@ class UserController extends BaseController
 
         $users = array();
 
-        if (in_array($node->sort, [11, 14, 15])) {
+        if (in_array($node->node_type, [2, 3, 4])) {
             $key_list = array('node_speedlimit', 'id', 'node_iplimit', 'uuid', 'alive_ip');
         } else {
             $key_list = array(

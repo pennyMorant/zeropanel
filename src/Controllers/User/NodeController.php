@@ -35,13 +35,11 @@ class NodeController extends UserController
         $user_group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);
         if ($user->is_admin == 0) {
             $servers = Node::where('status' ,1)
-            ->where('sort', '!=', '9') // 我也不懂为什么
             ->whereIn('node_group', $user_group) // 筛选用户所在分组的服务器
             ->orderBy('name', 'asc')
             ->get();
         } else if ($user->is_admin == 1) {
             $servers = Node::where('status' ,1)
-            ->where('sort', '!=', '9') // 我也不懂为什么
             ->orderBy('name', 'asc')
             ->get();
         }
@@ -72,33 +70,11 @@ class NodeController extends UserController
                 10  =>  'LV-10',
             ];
         }
-        $nodes = Node::where('status', 1)->orderBy('node_class')->orderBy('name')->get();
-
-        $array_nodes = [];
-
-        foreach ($nodes as $node) {
-            if ($user->is_admin == 0 && $node->node_group != $user->node_group && $node->node_group != 0) {
-                continue;
-            }
-
-            $array_node               = [];
-            $array_node['raw_node']   = $node;
-            $array_node['id']         = $node->id;
-            $array_node['class']      = $node->node_class;
-            $array_node['name']       = $node->name;
-            $array_node['sort']       = $node->sort;
-            $array_node['group']      = $node->node_group;
-            $array_node['online']     = $node->get_node_online_status();
-            $array_node['flag']       = $node->flag;
-
-            $array_nodes[] = $array_node;
-        }
 
         $this->view()
             ->assign('class', $class)
             ->assign('servers', $servers)
             ->assign('min_node_class', $min_node_class)
-            ->assign('nodes', $array_nodes)
             ->assign('user', $user)
             ->assign('permission_group', $permission_group)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())

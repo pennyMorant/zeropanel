@@ -74,12 +74,11 @@
                                                         <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg" {if $node->flag == 'malaysia'}selected{/if}>马来西亚</option>
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
-                                                    <select class="form-select mb-5" id="sort" data-control="select2" data-hide-search="true">
-                                                        <option value="0" {if $node->sort==0}selected{/if}>Shadowsocks</option>
-                                                        <option value="11" {if $node->sort==11}selected{/if}>VMESS</option>
-                                                        <option value="13" {if $node->sort==13}selected{/if}>Shadowsocks V2Ray-Plugin&Obfs</option>
-                                                        <option value="14" {if $node->sort==14}selected{/if}>TROJAN</option>
-                                                        <option value="15" {if $node->sort==15}selected{/if}>VLESS</option>
+                                                    <select class="form-select mb-5" id="node_type" data-control="select2" data-hide-search="true">
+                                                        <option value="1" {if $node->node_type==1}selected{/if}>Shadowsocks</option>
+                                                        <option value="2" {if $node->node_type==2}selected{/if}>VMESS</option>
+                                                        <option value="4" {if $node->node_type==4}selected{/if}>TROJAN</option>
+                                                        <option value="3" {if $node->node_type==3}selected{/if}>VLESS</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -137,8 +136,8 @@
                         server: $('#server').val(),
                         node_ip: $('#node_ip').val(),
                         traffic_rate: $('#traffic_rate').val(),
-                        flag: $('#node_flag').val(),
-                        sort: $('#sort').val(),
+                        node_flag: $('#node_flag').val(),
+                        node_type: $('#node_type').val(),
                         node_class: $('#node_class').val(),
                         node_group: $('#node_group').val(),
                         node_traffic_limit: $('#node_traffic_limit').val(),

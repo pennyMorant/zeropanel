@@ -209,41 +209,41 @@ class ZeroController extends BaseController
             return $response->withJson($res);
         }
 
-        switch ($node->sort) {
-            case '0':
+        switch ($node->node_type) {
+            case '1':
                 $info = $node->getShadowsocksConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
-                    'sort' => (int) $node->sort,
+                    'type' => 1,
                     'info' => $info,
                     'url' => URL::getShadowsocksURL($user, $node, $emoji)
                 ];
                 break;
-            case '11':
+            case '2':
                 $info = $node->getVmessConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
-                    'sort' => (int) $node->sort,
+                    'type' => 2,
                     'info' => $info,
                     'url' => URL::getVmessURL($user, $node, $emoji),
                 ];
                 break;
-            case '14':
-                $info = $node->getTrojanConfig($user, $node->custom_config);
-                $res = [
-                    'ret' => 1,
-                    'sort' => 14,
-                    'info' => $info,
-                    'url' => URL::getTrojanURL($user, $node, $emoji),
-                ];
-                break;
-            case '15':
+            case '3':
                 $info = $node->getVlessConfig($user, $node->custom_config);
                 $res = [
                     'ret' => 1,
-                    'sort' => (int) $node->sort,
+                    'type' => 3,
                     'info' => $info,
                     'url' => URL::getVlessURL($user, $node, $emoji),
+                ];
+                break;
+            case '4':
+                $info = $node->getTrojanConfig($user, $node->custom_config);
+                $res = [
+                    'ret' => 1,
+                    'type' => 4,
+                    'info' => $info,
+                    'url' => URL::getTrojanURL($user, $node, $emoji),
                 ];
                 break;
             default:

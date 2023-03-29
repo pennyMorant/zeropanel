@@ -21,13 +21,13 @@ class URL
      * @param mixed $sort  数值或数组
      * @param array $rules 节点筛选规则
      */
-    public static function getNodes(User $user, $sort, array $rules = []): \Illuminate\Database\Eloquent\Collection
+    public static function getNodes(User $user, $node_type, array $rules = []): \Illuminate\Database\Eloquent\Collection
     {
         $query = Node::query();
-        if (is_array($sort)) {
-            $query->whereIn('sort', $sort);
+        if (is_array($node_type)) {
+            $query->whereIn('node_type', $node_type);
         } else {
-            $query->where('sort', $sort);
+            $query->where('node_type', $node_type);
         }
         if (!$user->is_admin) {
             $group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);
@@ -57,25 +57,25 @@ class URL
 
         switch ($Rule['type']) {
             case 'shadowsocks':
-                $sort = [0];
+                $node_type = [1];
                 break;
             case 'vmess':
-                $sort = [11];
+                $node_type = [2];
                 break;
             case 'trojan':
-                $sort = [14];
+                $node_type = [4];
                 break;
             case 'vless':
-                $sort = [15];
+                $node_type = [3];
                 break;
             default:
                 $Rule['type'] = 'all';
-                $sort = [0, 11, 14, 15];
+                $node_type = [1, 2, 3, 4, 5];
                 break;
         }
 
         // 获取节点
-        $nodes = self::getNodes($user, $sort, $Rule);
+        $nodes = self::getNodes($user, $node_type, $Rule);
 
         $return_array = [];
         foreach ($nodes as $node) {
@@ -97,15 +97,15 @@ class URL
                 }
             }
             
-            if (in_array($node->sort, [0, 11, 14, 15])) {
+            if (in_array($node->node_type, [1, 2, 3, 4, 5])) {
                 $node_type = [
-                    0  => 'getShadowsocksConfig',     // SS
-                    11 => 'getVmessConfig',           // V2Ray
-                    14 => 'getTrojanConfig',          // Trojan
-                    15 => 'getVlessConfig'
+                    1  => 'getShadowsocksConfig',     // SS
+                    2 => 'getVmessConfig',           // V2Ray
+                    4 => 'getTrojanConfig',          // Trojan
+                    3 => 'getVlessConfig'
                 ];
                 $custom_config = $node->custom_config;
-                $type = $node_type[$node->sort];
+                $type = $node_type[$node->node_type];
                 $item = $node->$type($user, $custom_config, $emoji);
                 if (!is_null($item)) {
                     $return_array[] = $item;

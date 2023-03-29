@@ -692,8 +692,8 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                     const info = data.info;
                     const qrcodeHtml = '<div class="pb-3" align="center" id="qrcode' + nodeid + '"></div>';
                     var content = data.url;
-                    switch (data.sort) {
-                        case 11:                           
+                    switch (data.type) {
+                        case 2:                           
                             // 循环设置HTML内容
                             const selectors_11 = {
                                 '#zero_modal_vmess_node_info_remark': 'remark',
@@ -716,7 +716,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             $('#zero_modal_vmess_node_info_qrcode').html(qrcodeHtml);                           
                             $("#zero_modal_vmess_node_info").modal('show'); 
                             break;
-                        case 14:
+                        case 4:
                             const selectors_14 = {
                                 '#zero_modal_trojan_node_info_remark': 'remark', 
                                 '#zero_modal_trojan_node_info_address': 'address',
@@ -733,7 +733,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             $("#zero_modal_trojan_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_trojan_node_info").modal('show');
                             break;
-                        case 15:
+                        case 3:
                             const selectors_15 = {
                                 '#zero_modal_vless_node_info_remark': 'remark',
                                 '#zero_modal_vless_node_info_address': 'address',
@@ -755,7 +755,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             $("#zero_modal_vless_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_vless_node_info").modal('show');
                             break;
-                        case 0:
+                        case 1:
                             const selectors_0 = {
                                 '#zero_modal_shadowsocks_node_info_remark': 'remark',
                                 '#zero_modal_shadowsocks_node_info_address': 'address',

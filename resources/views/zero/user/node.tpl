@@ -45,14 +45,14 @@
                                                             {foreach $servers as $server} 
                                                             {if $server->node_class == $grade['node_class']}                     
 															<div class="col-xl-4">
-																<div class="d-flex h-100 align-items-center flex-wrap" type="button" onclick="KTUsersShowNodeInfo({$server['id']}, {$user->class}, {$server['node_class']})">
+																<div class="d-flex h-100 align-items-center flex-wrap" type="button" onclick="KTUsersShowNodeInfo({$server->id}, {$user->class}, {$server->node_class})">
 																	<div class="w-100 rounded-3 bg-light bg-opacity-75 px-10 py-5 d-flex flex-wrap">                                                      
                                                                         <div class="d-flex flex-column flex-grow-1">
                                                                             <img alt="image" class="rounded-circle" width="35"
-                                                                                src="/theme/zero/assets/media/flags/{$server['flag']}.svg">
+                                                                                src="/theme/zero/assets/media/flags/{$server->node_flag}.svg">
                                                                         </div>
                                                                         <div class="fw-bold fs-5">
-                                                                            {$server['name']}
+                                                                            {$server->name}
                                                                         </div>
                                                                         
 																	</div>

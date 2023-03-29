@@ -12,7 +12,7 @@ namespace App\Models;
  * @property        string  $method     Crypt method @deprecated
  * @property        string  $info       Infomation
  * @property        string  $status     Status description
- * @property        int     $sort       Node type @todo Correct column name to `type`
+ * @property        int     $node_type       Node type
  * @property        int     $custom_method  Customs node crypt @deprecated
  * @property        float   $traffic_rate   Node traffic rate
  * @todo More property
@@ -32,8 +32,8 @@ class Node extends Model
     protected $casts = [
         'node_speedlimit' => 'float',
         'traffic_rate'    => 'float',
-        'sort'            => 'int',
-        'type'            => 'bool',
+        'node_type'            => 'int',
+        'status'            => 'bool',
         'node_heartbeat'  => 'int',
     ];
 
@@ -60,28 +60,28 @@ class Node extends Model
     /**
      * 节点类型
      */
-    public function sort(): string
+    public function nodeType(): string
     {
-        switch ($this->sort) {
-            case 0:
-                $sort = 'Shadowsocks';
+        switch ($this->node_type) {
+            case 1:
+                $type = 'Shadowsocks';
                 break;
-            case 11:
-                $sort = 'VMESS';
+            case 2:
+                $type = 'VMESS';
                 break;
-            case 13:
-                $sort = 'Shadowsocks - V2Ray-Plugin&Obfs';
+            case 5:
+                $type = 'Shadowsocks - V2Ray-Plugin&Obfs';
                 break;
-            case 14:
-                $sort = 'TROJAN';
+            case 4:
+                $type = 'TROJAN';
                 break;
-            case 15:
-                $sort = 'VLESS';
+            case 3:
+                $type = 'VLESS';
                 break;
             default:
-                $sort = '系统保留';
+                $type = '系统保留';
         }
-        return $sort;
+        return $type;
     }
     
     /**
@@ -133,9 +133,6 @@ class Node extends Model
      */
     public function getNodeOnlineUserCount(): int
     {
-        if (in_array($this->sort, [9])) {
-            return -1;
-        }
         $log = NodeOnlineLog::where('node_id', $this->id)->where('log_time', '>', time() - 300)->orderBy('id', 'desc')->first();
         if (is_null($log)) {
             return 0;
@@ -163,10 +160,6 @@ class Node extends Model
      */
     public function get_node_online_status(): int
     {
-         // 类型 9 或者心跳为 0
-        if ($this->node_heartbeat == 0 || in_array($this->sort, [9])) {
-            return 0;
-        }
         return $this->node_heartbeat + 300 > time() ? 1 : -1;
     }
     
