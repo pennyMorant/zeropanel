@@ -173,7 +173,7 @@ class Model extends EloquentMedel
         } else {
             $query = $querys;
         }
-        if (is_null($precondition)) {
+        if (!is_null($precondition)) {
             call_user_func($precondition, $query);
         }
         if ($search) {
