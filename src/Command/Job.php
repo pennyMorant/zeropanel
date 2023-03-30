@@ -6,9 +6,7 @@ use App\Models\EmailQueue;
 use App\Models\Ip;
 use App\Models\Node;
 use App\Models\User;
-use App\Models\Product;
 use App\Models\Token;
-use App\Models\Ticket;
 use App\Models\SigninIp;
 use App\Models\TrafficLog;
 use App\Models\EmailVerify;
@@ -18,18 +16,14 @@ use App\Models\PasswordReset;
 use App\Models\TelegramSession;
 use App\Models\UserSubscribeLog;
 use App\Models\Setting;
-use App\Models\Withdraw;
 use App\Models\Order;
-use App\Models\Payback;
 use App\Models\DetectBanLog;
 use App\Models\DetectLog;
 use App\Services\Mail;
-use App\Services\ZeroConfig;
 use App\Utils\Tools;
 use App\Utils\Telegram;
 use App\Utils\DatatablesHelper;
 use Swap\Builder;
-use ArrayObject;
 use Exception;
 
 class Job extends Command
