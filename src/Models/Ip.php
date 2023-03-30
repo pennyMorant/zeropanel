@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Utils\Tools;
-use App\Utils\DatatablesHelper;
-
 /**
  * Ip Model
  */
@@ -48,23 +45,15 @@ class Ip extends Model
         return date('Y-m-d H:i:s', $this->datetime);
     }
     
-    /**
-     * 是否为中转连接
-     */
-    /*
-    public function is_node(): string
-    {
-        return Node::where('node_ip', Tools::getRealIp($this->ip))->first() ? '是' : '否';
-    }
-*/
     public function getUserAliveIpCount()
     {
-        $db = new DatatablesHelper();
-        $res = [];
-        foreach ($db->query('SELECT `userid`, COUNT(DISTINCT `ip`) AS `count` FROM `alive_ip` WHERE `datetime` >= UNIX_TIMESTAMP(NOW()) - 60 GROUP BY `userid`') as $line) {
-            $res[strval($line['userid'])] = $line['count'];
-        }
-        return $res;
+        $total_ip = IP::selectRaw('userid, COUNT(DISTINCT ip) AS count')
+            ->whereRaw('datetime', '>=', 'UNIX_TIMESTAMP(NOW()) - 60')
+            ->groupBy('userid')
+            ->get()
+            ->pluck('count', 'userid')
+            ->toArray();
+        return $total_ip;
     }
 
     public function ip()

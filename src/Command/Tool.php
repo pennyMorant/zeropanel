@@ -3,8 +3,6 @@
 namespace App\Command;
 use App\Models\Setting;
 use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use App\Utils\DatatablesHelper;
 
 class Tool extends Command
 {

@@ -1,14 +1,7 @@
 <?php
 
 namespace App\Utils;
-
-use App\Models\{
-    Link,
-    User,
-    Node,
-    Setting
-};
-use App\Services\Config;
+use Illuminate\Support\Facades\DB;
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use DateTime;
@@ -509,21 +502,12 @@ final class Tools
             closedir($handle);
         }
     }
-
-    /**
-     * 重置自增列 ID
-     *
-     * @param DatatablesHelper  $db
-     * @param string $table
-     */
-    public static function reset_auto_increment($db, $table)
+/*
+    public function reset_auto_increment($table_name)
     {
-        $maxid = $db->query("SELECT `auto_increment` AS `maxid` FROM `information_schema`.`tables` WHERE `table_schema` = '" . $_ENV['db_database'] . "' AND `table_name` = '". $table ."'")[0]['maxid'];
-        if ($maxid >= 2000000000) {
-            $db->query('ALTER TABLE `' . $table . '` auto_increment = 1');
-        }
+        DB::statement("ALTER TABLE $table_name AUTO_INCREMENT = 1;");
     }
-    
+*/   
     /**
      * Eloquent 分页链接渲染
      *

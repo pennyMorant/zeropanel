@@ -10,13 +10,11 @@ use App\Models\{
     DetectBanLog
 };
 use App\Services\{
-    Auth,
     Mail,
 };
 use App\Utils\{
     Hash,
     Tools,
-    Cookie
 };
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;

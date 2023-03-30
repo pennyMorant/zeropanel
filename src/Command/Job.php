@@ -22,7 +22,6 @@ use App\Models\DetectLog;
 use App\Services\Mail;
 use App\Utils\Tools;
 use App\Utils\Telegram;
-use App\Utils\DatatablesHelper;
 use Swap\Builder;
 use Exception;
 
@@ -81,15 +80,6 @@ class Job extends Command
         NodeInfoLog::where('log_time', '<', time() - 86400 * 3)->delete();
         echo '清理数据库各表结束;' . PHP_EOL;
 
-        // ------- 重置自增 ID
-        $db = new DatatablesHelper();
-
-        $tools = new Tools();
-        $tools->reset_auto_increment($db, 'user_traffic_log');
-        $tools->reset_auto_increment($db, 'node_online_log');
-        $tools->reset_auto_increment($db, 'node_info');
-        $tools->reset_auto_increment($db, 'alive_ip');
-
         //auto reset
         echo '重置用户流量开始' . PHP_EOL;
         
@@ -121,6 +111,11 @@ class Job extends Command
         }
     
         echo '重置用户流量结束' . PHP_EOL;
+
+        echo '每日数据库清理成功报告发送开始' . PHP_EOL;
+        $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
+        Telegram::PushToAdmin($messagetext);
+        echo '每日数据库清理成功报告发送结束' . PHP_EOL;
 
         $configs = Setting::getClass('currency');
         if ($configs['enable_currency'] == true && is_null($configs['currency_exchange_rate'])) {
