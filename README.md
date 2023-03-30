@@ -12,7 +12,7 @@ http://zeroboard.top
 ## 安装教程（基于debian11）
 #### 安装环境(如何安装最新环境请google)
 1.nginx最新版  
-2.php8.1  
+2.php8.1 (最低php8.1)  
 3.mariadb最新版
 #### 第一步，创建网站文件目录
     cd /var/www
