@@ -105,14 +105,22 @@
         </div>
         {include file='admin/script.tpl'}
         <script>
-            getDay = function(day) {
+            getDay = function() {
                 var now = new Date();
-                var date = new Date(now.getTime() - day * 24 * 3600 * 1000);
+                var date = new Date(now.getTime());
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var day = date.getDate();
                 var result = year + '-' + month + '-' + day;
                 return result;
+            }
+            getMonthFirstDay = function() {
+                const today = new Date(); // 获取当前日期
+                const year = today.getFullYear(); // 获取年份
+                const month = today.getMonth(); // 获取月份（0-11）
+                const startOfMonth = new Date(year, month, 1); // 获取月份的第一天
+                const start_date = year + '-' + month + '-1';
+                return start_date;
             }
             var url = '/admin/ajax_data/chart/income';
             var date = new Date();
@@ -159,7 +167,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(30)).getTime(),
+                    min: new Date(getMonthFirstDay()).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -235,7 +243,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(30)).getTime(),
+                    min: new Date(getMonthFirstDay()).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
