@@ -4,7 +4,6 @@ namespace App\Controllers\User;
 
 use App\Controllers\UserController;
 use App\Models\{
-    User,
     Ticket,
     Setting,
     Ann

@@ -121,12 +121,6 @@ class Job extends Command
         }
     
         echo '重置用户流量结束' . PHP_EOL;
-         // ------- 发送每日系统运行报告
-        
-            echo '每日数据库清理成功报告发送开始' . PHP_EOL;
-            $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
-            Telegram::PushToAdmin($messagetext);
-            echo '每日数据库清理成功报告发送结束' . PHP_EOL;
 
         $configs = Setting::getClass('currency');
         if ($configs['enable_currency'] == true && is_null($configs['currency_exchange_rate'])) {
