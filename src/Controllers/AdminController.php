@@ -244,7 +244,7 @@ class AdminController extends UserController
         switch ($name) {
             case 'newusers':
                 // get current month 
-                $start_date = Carbon::now()->startOfMonth();
+                $start_date = Carbon::now()->subDays(7);
                 $start_month_date = Carbon::parse($start_date)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
@@ -276,7 +276,7 @@ class AdminController extends UserController
                     })->values(); // 返回一个索引数组
                 break;
             case 'income':
-                $start_date = Carbon::now()->startOfMonth()->startOfDay();
+                $start_date = Carbon::now()->subDays(7)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 

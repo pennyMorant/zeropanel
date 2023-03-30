@@ -105,9 +105,9 @@
         </div>
         {include file='admin/script.tpl'}
         <script>
-            getDay = function() {
+            getDay = function(day) {
                 var now = new Date();
-                var date = new Date(now.getTime());
+                var date = new Date(now.getTime() - day * 24 * 3600 * 1000);
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var day = date.getDate();
@@ -167,7 +167,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getMonthFirstDay()).getTime(),
+                    min: new Date(getDay(7)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -243,7 +243,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getMonthFirstDay()).getTime(),
+                    min: new Date(getDay(7)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
