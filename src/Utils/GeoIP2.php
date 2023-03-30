@@ -19,7 +19,6 @@ final class GeoIP2
     {
         $this->city_reader = new Reader(BASE_PATH . '/storage/GeoLite2-City/GeoLite2-City.mmdb');
         $this->country_reader = new Reader(BASE_PATH . '/storage/GeoLite2-Country/GeoLite2-Country.mmdb');
-        $this->isp_reader = new Reader(BASE_PATH . '/storage/GeoLite2-ASN/GeoLite2-ASN.mmdb');
     }
 
     /**
@@ -42,14 +41,5 @@ final class GeoIP2
         return $record->country->name;
     }
 
-    /**
-     * @throws AddressNotFoundException
-     * @throws InvalidDatabaseException
-     */
-    public function getISP(string $ip): ?string
-    {
-        $record = $this->isp_reader->isp($ip);
-        return $record->isp;
-    }
 
 }
