@@ -220,9 +220,6 @@ class Job extends Command
             echo '节点掉线检测结束' . PHP_EOL;
         }
 
-        if (Setting::obtain('enable_telegram_bot') == true) {
-            $this->Telegram();
-        }
 
         //更新节点 IP，每分钟
         echo '更新节点IP开始' . PHP_EOL;
@@ -337,8 +334,7 @@ class Job extends Command
     {
         $configs = Setting::getClass('register');
         echo '用户等级过期检测开始' . PHP_EOL;
-        $users = User::query()
-            ->where('class_expire', '<', date('Y-m-d H:i:s', time()))
+        $users = User::where('class_expire', '<', date('Y-m-d H:i:s', time()))
             ->where('class', '!=', 0)
             //->where('is_admin', '!=', 1)
             ->get();
