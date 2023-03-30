@@ -213,7 +213,6 @@ class Job extends Command
         echo '更新节点IP开始' . PHP_EOL;
         $nodes = Node::get();
         foreach ($nodes as $node) {
-            /** @var Node $node */
             $server = $node->server;
             if (!Tools::isIPv4($server) && $node->changeNodeIp($server)) {
                 $node->save();
