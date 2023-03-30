@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Command;
-use tronovav\GeoIP2Update\Client;
-use const BASE_PATH;
 use App\Models\Setting;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -49,24 +47,6 @@ class Tool extends Command
             }
         }
     }
-
-    /**
-     * 下载 IP 库
-     *
-     * @return void
-     */
-    public function updateGeoIP()
-    {
-        if ($_ENV['maxmind_license_key'] !== '') {
-            echo "正在更新 GeoLite2 数据库...\n";
-            $client = new Client(array(
-                'license_key' => $_ENV['maxmind_license_key'],
-                'dir' => BASE_PATH . '/storage/',
-                'editions' => array('GeoLite2-City'),
-            ));
-            $client->run();
-        }
-    }
     
     public function resetAllSettings()
     {
@@ -101,38 +81,50 @@ class Tool extends Command
 
     public function importAllSettings()
     {
-        $db = new DatatablesHelper();
-
         $json_settings = file_get_contents('./config/settings.json');
-        $settings      = json_decode($json_settings, true);
-        $number        = count($settings);
-        $counter       = '0';
+        $settings = json_decode($json_settings, true);
+        $config = [];
+        $add_counter = 0;
+        $del_counter = 0;
 
-        for ($i = 0; $i < $number; $i++)
-        {
-            $item = $settings[$i]['item'];
+        // 检查新增
+        foreach ($settings as $item) {
+            $config[] = $item['item'];
+            $item_name = $item['item'];
+            $query = Setting::where('item', '=', $item['item'])->first();
 
-            if (is_null($db->query("SELECT id FROM config WHERE item = '$item'"))) {
-                $new_item            = new Setting;
-                $new_item->id        = null;
-                $new_item->item      = $settings[$i]['item'];
-                $new_item->value     = $settings[$i]['value'];
-                $new_item->class     = $settings[$i]['class'];
-                $new_item->is_public = $settings[$i]['is_public'];
-                $new_item->type      = $settings[$i]['type'];
-                $new_item->default   = $settings[$i]['default'];
-                $new_item->mark      = $settings[$i]['mark'];
+            if ($query === null) {
+                $new_item = new Setting();
+                $new_item->id = null;
+                $new_item->item = $item['item'];
+                $new_item->value = $item['value'];
+                $new_item->class = $item['class'];
+                $new_item->is_public = $item['is_public'];
+                $new_item->type = $item['type'];
+                $new_item->default = $item['default'];
+                $new_item->mark = $item['mark'];
                 $new_item->save();
 
-                echo "添加新设置：$item" . PHP_EOL;
-                $counter += 1;
+                echo "添加新数据库设置：{$item_name}" . PHP_EOL;
+                $add_counter += 1;
+            }
+        }
+        // 检查移除
+        $db_settings = Setting::all();
+        foreach ($db_settings as $db_setting) {
+            if (! in_array($db_setting->item, $config)) {
+                $db_setting->delete();
+                $del_counter += 1;
             }
         }
 
-        if ($counter != '0') {
-            echo "总计添加了 $counter 条新设置." . PHP_EOL;
+        if ($add_counter !== 0) {
+            echo "总计添加了 {$add_counter} 项新数据库设置" . PHP_EOL;
         } else {
-            echo "没有任何新设置需要添加." . PHP_EOL;
+            echo '没有任何新数据库设置项需要添加' . PHP_EOL;
+        }
+        if ($del_counter !== 0) {
+            echo "总计移除了 {$del_counter} 项数据库设置" . PHP_EOL;
         }
     }
 }

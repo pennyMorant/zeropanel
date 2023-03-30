@@ -243,14 +243,14 @@ class AdminController extends UserController
         $name = $args['name'];
         switch ($name) {
             case 'newusers':
-                // 获取最早注册用户的日期
-                $earliest_signup= User::orderBy('signup_date')->first()->signup_date ?? Carbon::now()->subDays(7);
-                $earliest_signup_date = Carbon::parse($earliest_signup)->startOfDay();
+                // get current month 
+                $start_date = Carbon::now()->startOfMonth();
+                $start_month_date = Carbon::parse($start_date)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 
                 // 获取查询结果集合
-                $users = User::whereBetween('signup_date', [$earliest_signup_date, $today])->pluck('signup_date');
+                $users = User::whereBetween('signup_date', [$start_month_date, $today])->pluck('signup_date');
 
                 // 对结果集合按照注册日期进行分组和统计
                 $datas = $users->groupBy(function ($user) {
@@ -262,10 +262,10 @@ class AdminController extends UserController
                 });
 
                 // 填充缺失的日期和数量为 0 的数据并转换为 x y 数组格式
-                $datas = collect(range(0, $today->diffInDays($earliest_signup_date)))
-                    ->mapWithKeys(function ($day) use ($earliest_signup_date) {
+                $datas = collect(range(0, $today->diffInDays($start_month_date)))
+                    ->mapWithKeys(function ($day) use ($start_month_date) {
                         // 返回从最早注册日期开始递增的每一天作为键，并获取对应的统计值或默认为 0 
-                        return [$earliest_signup_date->copy()->addDays($day)->toDateString() => 0];
+                        return [$start_month_date->copy()->addDays($day)->toDateString() => 0];
                     })->merge($datas) // 合并两个集合，保留原有的统计值
                     ->map(function ($value, $key) {
                         // 将每一天的数据转换为一个数组并返回
@@ -276,17 +276,13 @@ class AdminController extends UserController
                     })->values(); // 返回一个索引数组
                 break;
             case 'income':
-                // 获取最早付款日期
-                $earliest_paid_date = Order::where('order_status', 2)
-                    ->where('order_payment', '!=', 'creditpay')->orderBy('paid_time')->first()->paid_time ?: Carbon::now()->subDays(7);
-                $earliest_paid_date = Carbon::createFromTimestamp($earliest_paid_date)->startOfDay();
-
+                $start_date = Carbon::now()->startOfMonth()->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 
                 // 获取查询结果集合
                 $orders = Order::where('order_payment', '!=', 'creditpay')
-                    ->whereBetween('paid_time', [strtotime($earliest_paid_date), strtotime($today)])
+                    ->whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
                     ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, sum(order_total) as amount')
                     ->groupBy('date')->get();
 
@@ -298,10 +294,10 @@ class AdminController extends UserController
                     });
 
                     // 填充缺失的日期和金额为 0 的数据并转换为 x y 数组格式
-                    $datas = collect(range(0, $today->diffInDays($earliest_paid_date)))
-                        ->mapWithKeys(function ($day) use ($earliest_paid_date) {
+                    $datas = collect(range(0, $today->diffInDays($start_date)))
+                        ->mapWithKeys(function ($day) use ($start_date) {
                             // 返回从最早付款日期开始递增的每一天作为键，并获取对应的金额或默认为 0 
-                            return [$earliest_paid_date->copy()->addDays($day)->format('Y-m-d') => 0];
+                            return [$start_date->copy()->addDays($day)->format('Y-m-d') => 0];
                         })->merge($datas) // 合并两个集合，保留原有的金额
                         ->map(function ($value, $key) {
                             // 将每一天的数据转换为一个数组并返回

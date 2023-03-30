@@ -48,13 +48,6 @@
                                                         </div>
                                                         <span class="text-gray-400 pt-1 fw-semibold fs-6">本月收入</span>
                                                     </div>
-                                                    <div class="card-toolbar" id="zero_admin_income_trend">
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_all">所有</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_year">年度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="income_month">月度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1 active" id="income_week">一周</a>
-                                                        
-													</div>
 												</div>     
 												<div class="card-body pt-0">
                                                     <div id="income_day"></div>
@@ -87,13 +80,6 @@
                                                         </div>
                                                         <span class="text-gray-400 pt-1 fw-semibold fs-6">本月新增用户</span>
                                                     </div>
-                                                    <div class="card-toolbar" id="zero_admin_signup_trend">
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_all">所有</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_year">年度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1" id="signup_month">月度</a>
-                                                        <a class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4 me-1 active" id="signup_week">一周</a>
-                                                        
-													</div>
 												</div>     
 												<div class="card-body pt-0">
                                                     <div id="signup_day"></div>
@@ -173,7 +159,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
+                    min: new Date(getDay(30)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -201,56 +187,6 @@
     
             var chartincomeday = new ApexCharts(document.querySelector("#income_day"), options);           
             chartincomeday.render();
-            var resetIncomeCssClasses = function(activeEl) {
-                var element = document.getElementById('zero_admin_income_trend');
-                var els = element.querySelectorAll('a');
-                Array.prototype.forEach.call(els, function(el) {
-                    el.classList.remove('active')
-                });
-                
-                activeEl.target.classList.add('active')
-                };
-                
-                document
-                .querySelector('#income_month')
-                .addEventListener('click', function(e) {
-                    resetIncomeCssClasses(e)
-                    var days = getDay(30);
-                    chartincomeday.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#income_week')
-                .addEventListener('click', function(e) {
-                    resetIncomeCssClasses(e)
-                    var days = getDay(7);
-                    chartincomeday.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#income_year')
-                .addEventListener('click', function(e) {
-                    resetIncomeCssClasses(e)
-                    var days = getDay(365);
-                    chartincomeday.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#income_all')
-                .addEventListener('click', function(e) {
-                    resetIncomeCssClasses(e)
-                    var days = getDay(30);
-                    chartincomeday.zoomX(
-                    new Date("2020-01-02").getTime(),
-                    new Date().getTime(),
-                    )
-                });
         </script>
             
         <script> 
@@ -299,7 +235,7 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
+                    min: new Date(getDay(30)).getTime(),
                     tickAmount: 6,
                 },
                 tooltip: {
@@ -318,56 +254,6 @@
         
             var chartusers = new ApexCharts(document.querySelector("#signup_day"), options);
             chartusers.render();
-            var resetSignupCssClasses = function(activeEl) {
-                var element = document.getElementById('zero_admin_signup_trend');
-                var els = element.querySelectorAll('a')
-                Array.prototype.forEach.call(els, function(el) {
-                    el.classList.remove('active')
-                });
-                
-                activeEl.target.classList.add('active')
-                }
-                
-                document
-                .querySelector('#signup_month')
-                .addEventListener('click', function(e) {
-                    resetSignupCssClasses(e)
-                    var days = getDay(30);
-                    chartusers.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#signup_week')
-                .addEventListener('click', function(e) {
-                    resetSignupCssClasses(e)
-                    var days = getDay(7);
-                    chartusers.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#signup_year')
-                .addEventListener('click', function(e) {
-                    resetSignupCssClasses(e)
-                    var days = getDay(365);
-                    chartusers.zoomX(
-                    new Date(days).getTime(),
-                    new Date().getTime(),
-                    )
-                });
-                document
-                .querySelector('#signup_all')
-                .addEventListener('click', function(e) {
-                    resetSignupCssClasses(e)
-                    var days = getDay(30);
-                    chartusers.zoomX(
-                    new Date("2020-01-02").getTime(),
-                    new Date().getTime(),
-                    )
-                });
         </script>
 
         <script> 
