@@ -10,21 +10,12 @@ use App\Models\{
     Withdraw,
     Payback
 };
-use App\Utils\{ 
-    DatatablesHelper 
-};
-use Ozdemir\Datatables\Datatables;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
 class AgentController extends AdminController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id' => 'ID',
@@ -53,13 +44,7 @@ class AgentController extends AdminController
         return $response;
     }
 
-    /**
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function withdrawAjax(ServerRequest $request, Response $response, $args)
+    public function withdrawAjax(ServerRequest $request, Response $response, array $args)
     {
         $query = Withdraw::getTableDataFromAdmin(
             $request,
@@ -97,12 +82,7 @@ class AgentController extends AdminController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateWithdrawCommission(ServerRequest $request, Response $response, $args)
+    public function updateWithdrawCommission(ServerRequest $request, Response $response, array $args)
     {
         $mode = $request->getParam('mode');
         $id   = $request->getParam('id');
@@ -137,7 +117,7 @@ class AgentController extends AdminController
 
     }
 
-    public function commissionAjax(ServerRequest $request, Response $response, $args)
+    public function commissionAjax(ServerRequest $request, Response $response, array $args)
     {
         $query = Payback::getTableDataFromAdmin(
             $request

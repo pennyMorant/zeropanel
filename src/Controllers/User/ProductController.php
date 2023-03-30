@@ -21,7 +21,7 @@ final class ProductController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function product(ServerRequest $request, Response $response, $args)
+    public function product(ServerRequest $request, Response $response, array $args)
     {
         $trans = I18n::get();
         $products = Product::where('status', '1')
@@ -83,7 +83,7 @@ final class ProductController extends BaseController
         return $response;
     }
 
-    public function getProductInfo(ServerRequest $request, Response $response, $args): Response
+    public function getProductInfo(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $product = Product::find($id);
@@ -100,7 +100,7 @@ final class ProductController extends BaseController
         return $response->withJson($data);
     }
 
-    public function renewalProduct(ServerRequest $request, Response $response, $args): Response
+    public function renewalProduct(ServerRequest $request, Response $response, array $args): Response
     {
         try {
             $user = $this->user;

@@ -91,7 +91,7 @@ class TronapiPay
         return ['ret' => 1, 'url' => $result['data']['cashier_url'], 'type' => 'url'];
     }
 
-    public function notify(ServerRequest $request, Response $response, $args)
+    public function notify(ServerRequest $request, Response $response, array $args)
     {
     	$transaction_token = $request->getParam('transaction_token');
         $order_id = $request->getParam('order_id');

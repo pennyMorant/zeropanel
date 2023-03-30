@@ -144,7 +144,7 @@ class Model extends EloquentMedel
     /**
      * 获取表数据
      *
-     * @param \Slim\Http\Request $request
+     * @param \Slim\Http\ServerRequest $request
      * @param callable           $callback
      * @param callable           $precondition
      *

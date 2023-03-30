@@ -13,13 +13,13 @@ use Slim\Http\ServerRequest;
 
 class Payment
 {
-    public static function notify(ServerRequest $request, Response $response, $args)
+    public static function notify(ServerRequest $request, Response $response, array $args)
     {
         $instance = new ZeroPay();
         return  $instance->notify($request, $response, $args);
     }
 
-    public static function return(ServerRequest $request, Response $response, $args)
+    public static function return(ServerRequest $request, Response $response, array $args)
     {
         $instance = new ZeroPay();
         return $instance->getReturnHTML($request, $response, $args);

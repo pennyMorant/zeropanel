@@ -20,7 +20,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function info(ServerRequest $request, Response $response, $args)
+    public function info(ServerRequest $request, Response $response, array $args)
     {
         $node_id = $args['id'];
         if ($node_id == '0') {
@@ -53,7 +53,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getInfo(ServerRequest $request, Response $response, $args)
+    public function getInfo(ServerRequest $request, Response $response, array $args)
     {
         $node_id = $args['id'];
         if ($node_id == '0') {
@@ -94,7 +94,7 @@ class NodeController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getAllInfo(ServerRequest $request, Response $response, $args)
+    public function getAllInfo(ServerRequest $request, Response $response, array $args)
     {
         $nodes = Node::where('node_ip', '<>', null)->where(
             static function ($query) {
@@ -112,7 +112,7 @@ class NodeController extends BaseController
         return $response->withJson($res);
     }
 
-    public function getConfig(ServerRequest $request, Response $response, $args)
+    public function getConfig(ServerRequest $request, Response $response, array $args)
     {
         $data = $request->getParsedBody();
         switch ($data['type']) {

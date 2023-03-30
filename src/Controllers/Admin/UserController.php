@@ -25,12 +25,7 @@ use Ramsey\Uuid\Uuid;
 
 class UserController extends AdminController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             
@@ -42,7 +37,7 @@ class UserController extends AdminController
             'enable_traffic'        => '总流量',
             'enable'                => '启用',
             'is_admin'              => '管理员',
-            'action'                    => '操作',
+            'action'                => '操作',
         ];
         $table_config['ajax_url'] = 'user/ajax';
         $products = Product::where('status', 1)->orderBy('name')->get();
@@ -53,18 +48,10 @@ class UserController extends AdminController
         return $response;
     }
     
-    /**
-     * 后台生成新用户
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function createNewUser(ServerRequest $request, Response $response, $args)
+    public function createNewUser(ServerRequest $request, Response $response, array $args)
     {
         $email   = strtolower(trim($request->getParam('email')));
         $money   = (int) trim($request->getParam('balance'));
-        $shop_id = (int) $request->getParam('product');
 
         $user = User::where('email', $email)->first();
         if (!is_null($user)) {
@@ -126,14 +113,7 @@ class UserController extends AdminController
         ]);
     }
     
-    /**
-     * 后台编辑用户按钮
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateUserIndex(ServerRequest $request, Response $response, $args)
+    public function updateUserIndex(ServerRequest $request, Response $response, array $args)
     {
         $id = $args['id'];
         $user = User::find($id);
@@ -141,28 +121,15 @@ class UserController extends AdminController
         return $response;
     }
     
-    /**
-     * 后台编辑用户
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateUser(ServerRequest $request, Response $response, $args): Response
+    public function updateUser(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $user = User::find($id);
-
-        $email1 = $user->email;
-
         $user->email = $request->getParam('email');
-
-        $email2 = $request->getParam('email');
 
         if ($request->getParam('password') != '') {
             $user->password = Hash::passwordHash($request->getParam('password'));
         }
-
 
         $user->transfer_enable  = Tools::toGB($request->getParam('transfer_enable'));
         $user->node_speedlimit  = $request->getParam('node_speedlimit');
@@ -203,14 +170,7 @@ class UserController extends AdminController
         ]);
     }
 
-    /**
-     * 后台删除用户
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function deleteUser(ServerRequest $request, Response $response, $args): Response
+    public function deleteUser(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $user = User::find($id);
@@ -220,17 +180,9 @@ class UserController extends AdminController
             'msg' => '删除成功'
         ]);
     }
-    
-    /**
-     * 后台用户AJAX
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajax(ServerRequest $request, Response $response, $args): Response
+
+    public function ajax(ServerRequest $request, Response $response, array $args): Response
     {
-        $configs = Setting::getClass('invite');
         $query = User::getTableDataFromAdmin(
             $request,
             static function (&$order_field) {
@@ -270,7 +222,7 @@ class UserController extends AdminController
         ]);
     }
 
-    public function updateUserStatus(ServerRequest $request, Response $response, $args): Response
+    public function updateUserStatus(ServerRequest $request, Response $response, array $args): Response
     {
         $type = $args['type'];
         $id = $request->getParam('id');

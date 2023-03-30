@@ -55,7 +55,7 @@ class VmqPay
         return ['ret' => 1, 'url' => $url, 'type' => 'url'];
     }
 
-    public function notify(ServerRequest $request, Response $response, $args)
+    public function notify(ServerRequest $request, Response $response, array $args)
     {
         ini_set("error_reporting", "E_ALL & ~E_NOTICE");
         $key = Setting::obtain('vmq_key');//通讯密钥

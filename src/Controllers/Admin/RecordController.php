@@ -18,14 +18,7 @@ use Slim\Http\ServerRequest;
 
 class RecordController extends AdminController
 {
-    /**
-     * 后台在线 IP 页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function recordIndex(ServerRequest $request, Response $response, $args)
+    public function recordIndex(ServerRequest $request, Response $response, array $args)
     {
         $table_config_alive['total_column'] = [
             'id'        => 'ID',
@@ -73,14 +66,7 @@ class RecordController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台在线 IP 页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function recordAjax(ServerRequest $request, Response $response, $args): Response
+    public function recordAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $type = $args['type'];
         switch ($type) {

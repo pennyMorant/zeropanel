@@ -31,12 +31,7 @@ use Ramsey\Uuid\Uuid;
  */
 class AuthController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function signInIndex(ServerRequest $request, Response $response, $args)
+    public function signInIndex(ServerRequest $request, Response $response, array $args)
     {
         $captcha = [];
 
@@ -51,14 +46,7 @@ class AuthController extends BaseController
         return $response;
     }
 
-    
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function signinHandle(ServerRequest $request, Response $response, $args)
+    public function signinHandle(ServerRequest $request, Response $response, array $args)
     {
         $postdata = $request->getParsedBody();
         $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
@@ -103,11 +91,6 @@ class AuthController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function sendVerify(ServerRequest $request, Response $response, $next)
     {
 
@@ -188,12 +171,7 @@ class AuthController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function signUpIndex(ServerRequest $request, Response $response, $args)
+    public function signUpIndex(ServerRequest $request, Response $response, array $args)
     {
         if (Setting::obtain('reg_mode') == 'close') {
             $this->view()->display('auth/soon.tpl');
@@ -220,12 +198,7 @@ class AuthController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function signUpHandle(ServerRequest $request, Response $response, $args)
+    public function signUpHandle(ServerRequest $request, Response $response, array $args)
     {
         $postdata = $request->getParsedBody();
         $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
@@ -338,11 +311,6 @@ class AuthController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function logout(ServerRequest $request, Response $response, $next)
     {
         Auth::logout();

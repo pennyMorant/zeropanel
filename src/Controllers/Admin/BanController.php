@@ -12,14 +12,7 @@ use Slim\Http\ServerRequest;
 
 class BanController extends AdminController
 {
-    /**
-     * 后台审计规则
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             
@@ -57,13 +50,7 @@ class BanController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台审计规则AJAX
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function banRuleAjax(ServerRequest $request, Response $response, $args): Response
+    public function banRuleAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = DetectRule::getTableDataFromAdmin(
             $request,
@@ -100,14 +87,7 @@ class BanController extends AdminController
         ]);
     }
 
-    /**
-     * 后台增加审计规则页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function createBanRule(ServerRequest $request, Response $response, $args): Response
+    public function createBanRule(ServerRequest $request, Response $response, array $args): Response
     {
         $rule = new DetectRule();
         $rule->name = $request->getParam('name');
@@ -129,14 +109,7 @@ class BanController extends AdminController
         ]);
     }
 
-    /**
-     * 后台编辑审计规则页面
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateBanRule(ServerRequest $request, Response $response, $args): Response
+    public function updateBanRule(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);
@@ -159,13 +132,7 @@ class BanController extends AdminController
         ]);
     }
 
-    /**
-     * 后台删除审计规则
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function deleteBanRule(ServerRequest $request, Response $response, $args): Response
+    public function deleteBanRule(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);
@@ -176,15 +143,7 @@ class BanController extends AdminController
         ]);
     }
 
-
-    /**
-     * 后台用户触发审计规则AJAX
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function detectRuleRecordAjax(ServerRequest $request, Response $response, $args): Response
+    public function detectRuleRecordAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = DetectLog::getTableDataFromAdmin(
             $request,
@@ -208,14 +167,7 @@ class BanController extends AdminController
         ]);
     }
 
-    /**
-     * 后台审计封禁AJAX
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function banRecordAjax(ServerRequest $request, Response $response, $args): Response
+    public function banRecordAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = DetectBanLog::getTableDataFromAdmin(
             $request,
@@ -246,7 +198,7 @@ class BanController extends AdminController
         ]);
     }
 
-    public function requestBanRule(ServerRequest $request, Response $response, $args): Response
+    public function requestBanRule(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $rule = DetectRule::find($id);

@@ -115,7 +115,7 @@ class ZeroPay
         }
     }
 
-    public function notify(ServerRequest $request, Response $response, $args)
+    public function notify(ServerRequest $request, Response $response, array $args)
     {
         $path = $request->getUri()->getPath();
         file_put_contents(BASE_PATH . '/storage/pay.log', json_encode(file_get_contents("php://input")) . "\r\n", FILE_APPEND);
@@ -232,7 +232,7 @@ class ZeroPay
         }
     }
 
-    public function getReturnHTML (ServerRequest $request, Response $response, $args)
+    public function getReturnHTML (ServerRequest $request, Response $response, array $args)
     {
         $order_no = $_GET['tradeno'];
         $order = Order::where('no', $order_no)->first();

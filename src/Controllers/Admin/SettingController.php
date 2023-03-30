@@ -15,12 +15,7 @@ use Exception;
 
 class SettingController extends AdminController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $config = [];
         $settings = Setting::get(['item', 'value', 'type']);
@@ -43,12 +38,7 @@ class SettingController extends AdminController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function save(ServerRequest $request, Response $response, $args): Response
+    public function save(ServerRequest $request, Response $response, array $args): Response
     {
         $class = $request->getParam('class');
 
@@ -183,7 +173,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function test(ServerRequest $request, Response $response, $args)
+    public function test(ServerRequest $request, Response $response, array $args)
     {
         $to = $request->getParam('recipient');
 

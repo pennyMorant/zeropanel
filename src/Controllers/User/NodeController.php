@@ -28,7 +28,7 @@ class NodeController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function node(ServerRequest $request, Response $response, $args)
+    public function node(ServerRequest $request, Response $response, array $args)
     {
         $user        = $this->user;
 

@@ -15,14 +15,7 @@ use Slim\Http\ServerRequest;
 
 class TicketController extends AdminController
 {
-    /**
-     * 后台工单页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ticketIndex(ServerRequest $request, Response $response, $args)
+    public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id'        => 'ID',
@@ -41,14 +34,7 @@ class TicketController extends AdminController
         return $response;
     }
 
-    /**
-     * 後臺創建新工單
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function createTicket(ServerRequest $request, Response $response, $args): Response
+    public function createTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $title    = $request->getParam('title');
         $content  = $request->getParam('content');
@@ -91,14 +77,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    /**
-     * 后台 更新工单内容
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateTicket(ServerRequest $request, Response $response, $args): Response
+    public function updateTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $comment = $request->getParam('comment');
@@ -148,14 +127,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    /**
-     * 后台 查看指定工单
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ticketViewIndex(ServerRequest $request, Response $response, $args)
+    public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
         $id = $args['id'];
         $ticket = Ticket::where('id', '=', $id)->first();
@@ -171,14 +143,7 @@ class TicketController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台工单页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ticketAjax(ServerRequest $request, Response $response, $args): Response
+    public function ticketAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Ticket::getTableDataFromAdmin(
             $request,
@@ -224,7 +189,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function deleteTicket(ServerRequest $request, Response $response, $args): Response
+    public function deleteTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         Ticket::find($id)->delete();
@@ -234,7 +199,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function closeTicket(ServerRequest $request, Response $response, $args): Response
+    public function closeTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $ticket = Ticket::find($id);

@@ -26,7 +26,7 @@ class UserController extends BaseController
      *
      * @return \Slim\Http\Response
      */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $node_id = $request->getQueryParam('node_id', '0');
 
@@ -109,7 +109,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addTraffic(ServerRequest $request, Response $response, $args)
+    public function addTraffic(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
 
@@ -187,7 +187,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addAliveIp(ServerRequest $request, Response $response, $args)
+    public function addAliveIp(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
 
@@ -232,7 +232,7 @@ class UserController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function addDetectLog(ServerRequest $request, Response $response, $args)
+    public function addDetectLog(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
 

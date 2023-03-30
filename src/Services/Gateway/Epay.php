@@ -58,7 +58,7 @@ class Epay
         return $result;
     }
 
-    public function notify(ServerRequest $request, Response $response, $args)
+    public function notify(ServerRequest $request, Response $response, array $args)
     {
         $alipayNotify = new EpayNotify($this->epay);
         $verify_result = $alipayNotify->verifyNotify();

@@ -17,7 +17,7 @@ class FuncController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function getDetectLogs(ServerRequest $request, Response $response, $args)
+    public function getDetectLogs(ServerRequest $request, Response $response, array $args)
     {
         $rules = DetectRule::all();
 
@@ -33,7 +33,7 @@ class FuncController extends BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ping(ServerRequest $request, Response $response, $args)
+    public function ping(ServerRequest $request, Response $response, array $args)
     {
         $res = [
             'ret' => 1,

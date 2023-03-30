@@ -26,7 +26,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketIndex(ServerRequest $request, Response $response, $args)
+    public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
         $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
         /*
@@ -55,7 +55,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function createTicket(ServerRequest $request, Response $response, $args)
+    public function createTicket(ServerRequest $request, Response $response, array $args)
     {
         $title = $request->getParam('title');
         $comment = $request->getParam('comment');
@@ -115,7 +115,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function updateTicket(ServerRequest $request, Response $response, $args)
+    public function updateTicket(ServerRequest $request, Response $response, array $args)
     {
         $id = $request->getParam('id');
         $comment = $request->getParam('comment');
@@ -176,7 +176,7 @@ class TicketController extends UserController
      * @param Response  $response
      * @param array     $args
      */
-    public function ticketViewIndex(ServerRequest $request, Response $response, $args)
+    public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
         $id = $args['id'];
         $ticket = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();

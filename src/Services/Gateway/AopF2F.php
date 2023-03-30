@@ -88,7 +88,7 @@ class AopF2F
         return $return;
     }
 
-    public function notify(ServerRequest $request, Response $response, $args)
+    public function notify(ServerRequest $request, Response $response, array $args)
     {
         $gateway = $this->createGateway();
         $aliRequest = $gateway->completePurchase();
@@ -108,7 +108,7 @@ class AopF2F
     }
 
 
-    public function getStatus(ServerRequest $request, Response $response, $args)
+    public function getStatus(ServerRequest $request, Response $response, array $args)
     {
         $p = Order::where('tradeno', $_POST['pid'])->first();
         $return['ret'] = 1;

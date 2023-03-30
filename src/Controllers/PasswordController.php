@@ -12,30 +12,16 @@ use App\Services\Password;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
-/***
- * Class Password
- * @package App\Controllers
- * 密码重置
- */
+
 class PasswordController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function reset(ServerRequest $request, Response $response, $args)
+    public function reset(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->display('password/reset.tpl');
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function handleReset(ServerRequest $request, Response $response, $args)
+    public function handleReset(ServerRequest $request, Response $response, array $args)
     {
         $email = strtolower($request->getParam('email'));
         $user  = User::where('email', $email)->first();
@@ -56,12 +42,7 @@ class PasswordController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function token(ServerRequest $request, Response $response, $args)
+    public function token(ServerRequest $request, Response $response, array $args)
     {
         $token = PasswordReset::where('token', $args['token'])->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
         if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
@@ -70,12 +51,7 @@ class PasswordController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function handleToken(ServerRequest $request, Response $response, $args)
+    public function handleToken(ServerRequest $request, Response $response, array $args)
     {
         $tokenStr = $args['token'];
         $password = $request->getParam('password');
@@ -89,7 +65,7 @@ class PasswordController extends BaseController
                 'msg' => I18n::get()->t('link is dead')
             ]);
         }
-        /** @var PasswordReset $token */
+
         $user = $token->getUser();
         if (is_null($user)) {
             return $response->withJson([

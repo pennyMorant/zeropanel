@@ -14,22 +14,14 @@ use App\Utils\{
     ConfRender
 };
 use App\Controllers\SubController;
-use App\Zero\Zero;
 use voku\helper\AntiXSS;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-/**
- *  LinkController
- */
+
 class LinkController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public static function GetContent(ServerRequest $request, Response $response, $args)
+    public static function GetContent(ServerRequest $request, Response $response, array $args)
     {
         $token = $args['token'];
         $user = User::where('subscription_token', $token)->first();

@@ -2,16 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Services\{ 
-    Config, 
-    ZeroConfig
-};
 use App\Models\{
     Ip, 
     Node,
-    Product,
     User,
-    Link,
     Ticket,
     Order,
     Payback,
@@ -25,33 +19,17 @@ use App\Models\{
 };
 use App\Utils\{
     URL, 
-    Hash,
-    Check, 
     Tools,
-    DatatablesHelper
+    Telegram
 };
 use Pkly\I18Next\I18n;
-use App\Zero\{
-    Zero
-};
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use voku\helper\AntiXSS;
-use TelegramBot\Api\BotApi;
-use Ozdemir\Datatables\Datatables;
 use Exception;
-use \DateTime;
-use \DB;
-
 
 class ZeroController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function withdrawCommission(ServerRequest $request, Response $response, $args)
+    public function withdrawCommission(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
         if (is_null($user) || !$user->isLogin) {
@@ -147,12 +125,7 @@ class ZeroController extends BaseController
         return $response->withJson($res);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function withdrawAccountSettings(ServerRequest $request, Response $response, $args)
+    public function withdrawAccountSettings(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
         if (is_null($user) || !$user->isLogin) {
@@ -182,13 +155,7 @@ class ZeroController extends BaseController
         ]);
     }
 
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
-    public function nodeInfo(ServerRequest $request, Response $response, $args)
+    public function nodeInfo(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
         $emoji = (bool)Setting::obtain('enable_subscribe_emoji');
@@ -257,13 +224,7 @@ class ZeroController extends BaseController
 
     }
 
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
-    public function ajaxDataChart(ServerRequest $request, Response $response, $args)
+    public function ajaxDataChart(ServerRequest $request, Response $response, array $args)
     {
         $name = $args['name'];
         $user = $this->user;
@@ -299,13 +260,7 @@ class ZeroController extends BaseController
         }
     }
 
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
-    public function ajaxDatatable(ServerRequest $request, Response $response, $args)
+    public function ajaxDatatable(ServerRequest $request, Response $response, array $args)
     {
         $name = $args['name'];                        # 得到表名
         $user = $this->user;                          # 得到用户
@@ -479,13 +434,7 @@ class ZeroController extends BaseController
         ]);
     }
 
-    /**
-     *
-     * @param Request    $request
-     * @param Response   $response
-     * @param array      $args
-     */
-    public function ajaxDatatableDelete(ServerRequest $request, Response $response, $args)
+    public function ajaxDatatableDelete(ServerRequest $request, Response $response, array $args)
     {
         $name = $request->getParam('name');
         $id = $request->getParam('id');

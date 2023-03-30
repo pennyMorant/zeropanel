@@ -12,13 +12,7 @@ use Slim\Http\ServerRequest;
 
 class OrderController extends AdminController
 {
-    /**
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id'            => 'ID',
@@ -38,13 +32,7 @@ class OrderController extends AdminController
         return $response;
     }
 
-    /**
-     * 
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajaxOrder(ServerRequest $request, Response $response, $args): Response
+    public function ajaxOrder(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Order::getTableDataFromAdmin(
             $request,
@@ -83,7 +71,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function completeOrder(ServerRequest $request, Response $response, $args): Response
+    public function completeOrder(ServerRequest $request, Response $response, array $args): Response
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);
@@ -95,7 +83,7 @@ class OrderController extends AdminController
         ]);
     }
 
-    public function deleteOrder(ServerRequest $request, Response $response, $args): Response
+    public function deleteOrder(ServerRequest $request, Response $response, array $args): Response
     {
         $order_id = $request->getParam('order_id');
         $order = Order::find($order_id);

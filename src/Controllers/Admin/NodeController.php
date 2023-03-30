@@ -16,7 +16,7 @@ use Slim\Http\ServerRequest;
 
 class NodeController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             
@@ -39,13 +39,13 @@ class NodeController extends AdminController
         return $response;
     }
 
-    public function createNodeIndex(ServerRequest $request, Response $response, $args)
+    public function createNodeIndex(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
     }
 
-    public function createNode(ServerRequest $request, Response $response, $args): Response
+    public function createNode(ServerRequest $request, Response $response, array $args): Response
     {
         $node                   = new Node();
         $node->name             = $request->getParam('name');
@@ -97,7 +97,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function updateNodeIndex(ServerRequest $request, Response $response, $args)
+    public function updateNodeIndex(ServerRequest $request, Response $response, array $args)
     {
         $id = $args['id'];
         $node = Node::find($id);
@@ -107,7 +107,7 @@ class NodeController extends AdminController
         return $response;
     }
 
-    public function updateNode(ServerRequest $request, Response $response, $args): Response
+    public function updateNode(ServerRequest $request, Response $response, array $args): Response
     {
         $id                     = $request->getParam('id');
         $node                   = Node::find($id);
@@ -154,7 +154,7 @@ class NodeController extends AdminController
         
     }
 
-    public function nodeAjax(ServerRequest $request, Response $response, $args): Response
+    public function nodeAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Node::getTableDataFromAdmin(
             $request,
@@ -197,7 +197,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function updateNodeStatus(ServerRequest $request, Response $response, $args): Response
+    public function updateNodeStatus(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $status = $request->getParam('status');
@@ -210,7 +210,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function deleteNode(ServerRequest $request, Response $response, $args)
+    public function deleteNode(ServerRequest $request, Response $response, array $args)
     {
         $id = $request->getParam('id');
         $node = Node::find($id);

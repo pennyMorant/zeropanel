@@ -33,7 +33,7 @@ class Agent extends \App\Controllers\BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxDatatable(ServerRequest $request, Response $response, $args)
+    public function ajaxDatatable(ServerRequest $request, Response $response, array $args)
     {
         $name = $args['name'];                        # 得到表名
         $user = $this->user;                          # 得到用户
@@ -107,7 +107,7 @@ class Agent extends \App\Controllers\BaseController
      * @param Response  $response
      * @param array     $args
      */
-    public function ajaxChart(ServerRequest $request, Response $response, $args)
+    public function ajaxChart(ServerRequest $request, Response $response, array $args)
     {
         $name = $args['name'];
         $user = $this->user;

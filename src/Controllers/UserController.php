@@ -30,17 +30,9 @@ use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
 
-/**
- *  HomeController
- */
 class UserController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {       
         $code = InviteCode::where('user_id', $this->user->id)->first();
         if (is_null($code)) {
@@ -60,12 +52,7 @@ class UserController extends BaseController
         return $response;
     }
     
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function tutorial(ServerRequest $request, Response $response, $args)
+    public function tutorial(ServerRequest $request, Response $response, array $args)
     {
         $opts = $request->getQueryParams();
         if ($opts['os'] == 'faq') {
@@ -87,12 +74,7 @@ class UserController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function profile(ServerRequest $request, Response $response, $args)
+    public function profile(ServerRequest $request, Response $response, array $args)
     {
         $bind_token = TelegramSessionManager::addBindSession($this->user);
 
@@ -106,12 +88,7 @@ class UserController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function referral(ServerRequest $request, Response $response, $args)
+    public function referral(ServerRequest $request, Response $response, array $args)
     {
         $code = InviteCode::where('user_id', $this->user->id)->first();
         if (is_null($code)) {
@@ -129,12 +106,7 @@ class UserController extends BaseController
         return $response;
     }
     
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function enableNotify(ServerRequest $request, Response $response, $args)
+    public function enableNotify(ServerRequest $request, Response $response, array $args)
     {
         $type = $request->getParam('notify_type');
        
@@ -155,13 +127,7 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateProfile(ServerRequest $request, Response $response, $args)
+    public function updateProfile(ServerRequest $request, Response $response, array $args)
     {
         $type = $args['type'];
         $user = $this->user;
@@ -255,12 +221,7 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function getUserTrafficUsage(ServerRequest $request, Response $response, $args)
+    public function getUserTrafficUsage(ServerRequest $request, Response $response, array $args)
     {   
         $res['unflowtraffic'] = $this->user->transfer_enable;
         $res['traffic'] = Tools::flowAutoShow($this->user->transfer_enable);
@@ -275,12 +236,7 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function handleKill(ServerRequest $request, Response $response, $args)
+    public function handleKill(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
 
@@ -302,23 +258,13 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function disable(ServerRequest $request, Response $response, $args)
+    public function disable(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->display('user/disable.tpl');
         return $response;
     }
     
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function record(ServerRequest $request, Response $response, $args)
+    public function record(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
         $this->view()
@@ -327,12 +273,7 @@ class UserController extends BaseController
         return $response;
     }
     
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ban(ServerRequest $request, Response $response, $args)
+    public function ban(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
         $this->view()
@@ -341,12 +282,7 @@ class UserController extends BaseController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function logout(ServerRequest $request, Response $response, $args)
+    public function logout(ServerRequest $request, Response $response, array $args)
     {
         Auth::logout();
         return $response

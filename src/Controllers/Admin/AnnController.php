@@ -15,14 +15,7 @@ use Slim\Http\ServerRequest;
 
 class AnnController extends AdminController
 {
-    /**
-     * 后台公告页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             
@@ -37,14 +30,7 @@ class AnnController extends AdminController
         return $response;
     }
 
-    /**
-     * 后台公告页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajax(ServerRequest $request, Response $response, $args): Response
+    public function ajax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Ann::getTableDataFromAdmin(
             $request,
@@ -80,14 +66,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    /**
-     * 后台添加公告
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function createNews(ServerRequest $request, Response $response, $args): Response
+    public function createNews(ServerRequest $request, Response $response, array $args): Response
     {
         $postdata = $request->getParsedBody();
         $issend   = $postdata['issend'];
@@ -143,14 +122,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    /**
-     * 后台编辑公告提交
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function updateNews(ServerRequest $request, Response $response, $args): Response
+    public function updateNews(ServerRequest $request, Response $response, array $args): Response
     {   
         $ann           = Ann::find($request->getParam('id'));
         $ann->content  = $request->getParam('content');
@@ -163,7 +135,7 @@ class AnnController extends AdminController
             ]);
         }
         $converter = new HtmlConverter();
-        $html = $datas['content'];
+        $html = $request->getParam('content');
         $markdown = $converter->convert($html);
         Telegram::PushToChanel('公告更新：' . PHP_EOL . $markdown);
         return $response->withJson([
@@ -172,14 +144,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    /**
-     * 后台删除公告
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function deleteNews(ServerRequest $request, Response $response, $args): Response
+    public function deleteNews(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $ann = Ann::find($id);
@@ -190,7 +155,7 @@ class AnnController extends AdminController
         ]);
     }
 
-    public function requestNews(ServerRequest $request, Response $response, $args): Response
+    public function requestNews(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParam('id');
         $news = Ann::find($id);

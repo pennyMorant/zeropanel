@@ -25,20 +25,9 @@ use Slim\Http\ServerRequest;
 use Carbon\Carbon;
 use DB;
 
-
-/**
- *  Admin Controller
- */
 class AdminController extends UserController
 {
-    /**
-     * 后台首页
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function index(ServerRequest $request, Response $response, $args)
+    public function index(ServerRequest $request, Response $response, array $args)
     {
         $sts = new Analytics();
         $start_time_this_month = mktime(0,0,0,date('m'),1,date('Y'));
@@ -58,40 +47,19 @@ class AdminController extends UserController
         return $response;
     }
 
-    /**
-     * 节点列表
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function node(ServerRequest $request, Response $response, $args)
+    public function node(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->assign('nodes', Node::all())->display('admin/node.tpl');
         return $response;
     }
  
-    /**
-     * 统计信息
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function sys(ServerRequest $request, Response $response, $args)
+    public function sys(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->display('admin/index.tpl');
         return $response;
     }
 
-    /**
-     * 后台邀请返利页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function invite(ServerRequest $request, Response $response, $args)
+    public function invite(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id'              => 'ID',
@@ -106,29 +74,7 @@ class AdminController extends UserController
         return $response;
     }
 
-    /**
-     * 后台邀请返利页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajaxPayBack(ServerRequest $request, Response $response, $args)
-    {
-        $query = Payback::getTableDataFromAdmin(
-            $request
-        );
-        
-    }
-
-    /**
-     * 后台商品优惠码页面
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function coupon(ServerRequest $request, Response $response, $args)
+    public function coupon(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id'        => 'ID',
@@ -147,15 +93,8 @@ class AdminController extends UserController
         $this->view()->assign('table_config', $table_config)->display('admin/coupon.tpl');
         return $response;
     }
-    
-    /**
-     * 后台商品优惠码页面 AJAX
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function ajaxCoupon(ServerRequest $request, Response $response, $args)
+
+    public function ajaxCoupon(ServerRequest $request, Response $response, array $args)
     {
         $query = Coupon::getTableDataFromAdmin(
             $request
@@ -181,14 +120,7 @@ class AdminController extends UserController
         
     }
 
-       /**
-     * 添加优惠码
-     *
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
-    public function addCoupon(ServerRequest $request, Response $response, $args)
+    public function addCoupon(ServerRequest $request, Response $response, array $args)
     {
         $postdata = $request->getParsedBody();
         $generate_type = $postdata['generate_type'];
@@ -238,7 +170,7 @@ class AdminController extends UserController
     }
     
 
-    public function ajaxDataChart(ServerRequest $request, Response $response, $args)
+    public function ajaxDataChart(ServerRequest $request, Response $response, array $args)
     {
         $name = $args['name'];
         switch ($name) {
