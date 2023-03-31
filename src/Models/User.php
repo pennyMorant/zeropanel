@@ -2,19 +2,13 @@
 
 namespace App\Models;
 
-use App\Controllers\LinkController;
 use App\Utils\{
     Tools,
-    Hash,
-    GA,
-    Telegram,
-    URL
 };
 use App\Services\{
-    Config, 
     Mail, 
-    ZeroConfig
 };
+use App\Models\Ip;
 use Pkly\I18Next\I18n;
 use Ramsey\Uuid\Uuid;
 use Exception;
@@ -238,19 +232,14 @@ class User extends Model
      */
     public function onlineIPCount(): int
     {
-        // 根据 IP 分组去重
-        $total = Ip::where('datetime', '>=', time() - 90)->where('userid', $this->id)->orderBy('userid', 'desc')->groupBy('ip')->get();
-        $ip_list = [];
-        foreach ($total as $single_record) {
-            $ip = Tools::getRealIp($single_record->ip);
-            /*
-            if (Node::where('node_ip', $ip)->first() != null) {
-                continue;
-            }
-            */
-            $ip_list[] = $ip;
-        }
-        return count($ip_list);
+        $total_ip = IP::selectRaw('userid, COUNT(DISTINCT ip) AS count')
+            ->where('datetime', '>=', time() - 180)
+            ->where('userid', $this->id)
+            ->groupBy('userid')
+            ->first();
+
+        $res = $total_ip->count ?? 0;
+        return $res;
     }
 
     /**
