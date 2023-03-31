@@ -82,7 +82,7 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->selectRaw('ip, MAX(datetime) AS latest_datetime')->where('datetime', '>=', time() - 300)->groupBy('ip');
+                        $query->selectRaw('*, MAX(datetime) AS latest_datetime')->where('datetime', '>=', time() - 300)->groupBy('ip');
                     }
                 );
 
