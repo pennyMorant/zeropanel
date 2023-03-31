@@ -13,9 +13,9 @@ use App\Models\{
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
-class AgentController extends AdminController
+class CommissionController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function commissionIndex(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
             'id' => 'ID',
@@ -34,9 +34,9 @@ class AgentController extends AdminController
             'ref_get'         => '佣金',
             'datetime'        => '时间'
         ];
-        $table_config_commission['ajax_url'] = '/admin/agent/commission/ajax';
+        $table_config_commission['ajax_url'] = '/admin/commission/ajax';
 
-        $table_config['ajax_url'] = '/admin/agent/withdraw/ajax';
+        $table_config['ajax_url'] = '/admin/commission/withdraw/ajax';
         $this->view()
             ->assign('table_config', $table_config)
             ->assign('table_config_commission', $table_config_commission)

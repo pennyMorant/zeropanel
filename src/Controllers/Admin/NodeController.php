@@ -9,8 +9,6 @@ use App\Utils\{
     Telegram,
     CloudflareDriver
 };
-use App\Services\Config;
-use Exception;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
@@ -23,12 +21,12 @@ class NodeController extends AdminController
             'id'                      => 'ID',
             'online'                  => 'Online',
             'name'                    => '节点名称',
-            'online_user'              => '在线人数',           
+            'online_user'             => '在线人数',           
             'type'                    => '类型',
             'node_ip'                 => '节点IP',
             'node_class'              => '节点等级',
             'node_speedlimit'         => '速度',
-            'status'                    => '显示与隐藏',
+            'status'                  => '显示与隐藏',
             'action'                  => '操作',
         ];
         $table_config['ajax_url'] = 'node/ajax';
@@ -54,8 +52,8 @@ class NodeController extends AdminController
         $node->status           = 0;
         $node->node_group       = $request->getParam('node_group');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->node_flag             = $request->getParam('node_flag');
-        $node->node_type             = $request->getParam('node_type');
+        $node->node_flag        = $request->getParam('node_flag');
+        $node->node_type        = $request->getParam('node_type');
 
         if (is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));
@@ -79,9 +77,9 @@ class NodeController extends AdminController
             ]);
         }
         
-        $node->node_class                 = $request->getParam('node_class');
-        $node->node_sort                  = (int)$request->getParam('node_sort');
-        $node->node_traffic_limit       = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
+        $node->node_class                       = $request->getParam('node_class');
+        $node->node_sort                        = (int)$request->getParam('node_sort');
+        $node->node_traffic_limit               = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
         $node->node_traffic_limit_reset_date    = $request->getParam('node_traffic_limit_reset_date');
 
         $node->save();
@@ -116,7 +114,7 @@ class NodeController extends AdminController
         $node->server           = trim($request->getParam('server'));
         $node->traffic_rate     = $request->getParam('traffic_rate');
         $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->node_type             = $request->getParam('node_type');
+        $node->node_type        = $request->getParam('node_type');
 
         if (!is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));

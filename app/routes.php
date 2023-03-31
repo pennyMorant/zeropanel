@@ -190,9 +190,9 @@ return function (SlimApp $app) {
         $group->put('/user/update/status/{type}', App\Controllers\Admin\UserController::class . ':updateUserStatus');
 
 
-        $group->get('/coupon',                   App\Controllers\AdminController::class . ':coupon');
-        $group->post('/coupon',                  App\Controllers\AdminController::class . ':addCoupon');
-        $group->post('/coupon/ajax',             App\Controllers\AdminController::class . ':ajaxCoupon');
+        $group->get('/coupon',                   App\Controllers\Admin\CouponController::class . ':couponIndex');
+        $group->post('/coupon/create',                  App\Controllers\Admin\CouponController::class . ':createCoupon');
+        $group->post('/coupon/ajax',             App\Controllers\Admin\CouponController::class . ':couponAjax');
 
         $group->get('/profile',                  App\Controllers\AdminController::class . ':profile');
         $group->get('/invite',                   App\Controllers\AdminController::class . ':invite');
@@ -211,13 +211,11 @@ return function (SlimApp $app) {
         // admin 增加收入和新用户统计
         $group->post('/ajax_data/chart/{name}',        App\Controllers\AdminController::class . ':AjaxDataChart');
 
-        // Agent
-        $group->group('/agent', function (Group $group) {
-            $group->get('/withdraw',             App\Controllers\Admin\AgentController::class . ':index');
-            $group->put('/withdraw/update',   App\Controllers\Admin\AgentController::class . ':updateWithdrawCommission');
-            $group->post('/withdraw/ajax',           App\Controllers\Admin\AgentController::class . ':withdrawAjax');
-            $group->post('/commission/ajax',           App\Controllers\Admin\AgentController::class . ':commissionAjax');
-        });
+      
+        $group->get('/commission',             App\Controllers\Admin\CommissionController::class . ':commissionIndex');
+        $group->put('/commission/withdraw/update',   App\Controllers\Admin\CommissionController::class . ':updateWithdrawCommission');
+        $group->post('/commission/withdraw/ajax',           App\Controllers\Admin\CommissionController::class . ':withdrawAjax');
+        $group->post('/commission/ajax',           App\Controllers\Admin\CommissionController::class . ':commissionAjax');
     })->add(new Admin());
 
     // webapi

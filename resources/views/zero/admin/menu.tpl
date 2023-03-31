@@ -294,7 +294,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/agent/withdraw">
+									<a class="menu-link" href="/admin/commission">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
 												<path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
