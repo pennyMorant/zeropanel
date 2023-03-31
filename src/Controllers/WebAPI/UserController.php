@@ -19,17 +19,12 @@ class UserController extends BaseController
 {
     public function index(ServerRequest $request, Response $response, array $args)
     {
-        $postData = $request->getQueryParams();
-        $node_id = $postData['node_id'];
+        $getData = $request->getQueryParams();
+        $node_id = $getData['node_id'];
         $node = Node::find($node_id);
-        return $response->withJson([
-            'ret' => 0,
-            'msg'   => $node_id,
-        ]);
         if (is_null($node)) {
             return $response->withJson([
                 'ret' => 0,
-                'msg'   => $node_id,
             ]);
         }
         $node->node_heartbeat = time();
