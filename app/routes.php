@@ -236,16 +236,5 @@ return function (SlimApp $app) {
 
     $app->group('/link', function (Group $group) {
         $group->get('/{token}',          App\Controllers\LinkController::class . ':GetContent');
-    });
-
-    $app->group('/user', function (Group $group) {
-        $group->post('/doiam',           App\Services\Payment::class . ':purchase');
-    })->add(new Auth());
-
-    $app->group('/doiam', function (Group $group) {
-        $group->post('/callback/{type}', App\Services\Payment::class . ':notify');
-        $group->get('/return/alipay',    App\Services\Payment::class . ':returnHTML');
-        $group->post('/status',          App\Services\Payment::class . ':getStatus');
-    });
-    
+    });  
 };
