@@ -49,8 +49,7 @@ class Epay
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
             "name" => "充值",
-            "money" => $final_amount,
-            "sitename" => "test"
+            "money" => $final_amount
         ];
         $paySubmit = new EpaySubmit($this->epay);
         $html_text = $paySubmit->buildRequestForm($data);

@@ -6,7 +6,6 @@ use App\Controllers\AdminController;
 use App\Models\DetectLog;
 use App\Models\DetectRule;
 use App\Models\DetectBanLog;
-use App\Utils\Telegram;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
