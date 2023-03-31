@@ -42,10 +42,9 @@ class Epay
         }
 
         //请求参数
-        $method == 'wechatpay' ? 'wxpay' : $method;
         $data = [
             "pid" => trim($this->epay['partner']),
-            "type" => $method,
+            "type" => $method == 'wechatpay' ? 'wxpay' : $method,
             "out_trade_no" => $order_no,
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
