@@ -82,7 +82,7 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->where('datetime', '>=', time() - 300)->distinct('ip');
+                        $query->selectRaw('ip, MAX(datetime) AS latest_datetime')->where('datetime', '>=', time() - 300)->groupBy('ip');
                     }
                 );
 
@@ -93,7 +93,7 @@ class RecordController extends AdminController
                         'node_name' =>  $rowData->node_name(),
                         'ip'    =>  Tools::getRealIp($rowData->ip),
                         'location'  =>  Tools::getIPLocation(Tools::getRealIp($rowData->ip)),
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->latest_datetime),
                     ];
                 })->toArray();
                 $total = Ip::count();
