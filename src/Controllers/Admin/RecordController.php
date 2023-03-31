@@ -81,16 +81,16 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->selectRaw('*, MAX(datetime) AS latest_datetime')->where('datetime', '>=', time() - 300)->groupBy('ip');
+                        $query->selectRaw('*, MAX(datetime) AS latest_datetime')->where('datetime', '>=', time() - 180)->groupBy('ip');
                     }
                 );
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'id'    =>  $rowData->id,
+                        'id'        =>  $rowData->id,
                         'userid'    =>  $rowData->userid,
                         'node_name' =>  $rowData->node_name(),
-                        'ip'    =>  Tools::getRealIp($rowData->ip),
+                        'ip'        =>  Tools::getRealIp($rowData->ip),
                         'location'  =>  Tools::getIPLocation(Tools::getRealIp($rowData->ip)),
                         'datetime'  =>  date('Y-m-d H:i:s', $rowData->latest_datetime),
                     ];
