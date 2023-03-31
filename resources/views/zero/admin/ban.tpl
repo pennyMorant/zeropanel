@@ -276,7 +276,7 @@
                 submitButton.disabled = true;
                 $.ajax({
                     type: "POST",
-                    url: "ban/create/rule",
+                    url: "ban/rule/create",
                     dataType: "json",
                     data: {
                         name: $('#zero_create_ban_rule_name').val(),
@@ -286,11 +286,9 @@
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            setTimeout(function() {
-                                submitButton.removeAttribute('data-kt-indicator');
-                                submitButton.disabled = false;
-                                location.reload();
-                            }, 1500);
+                            submitButton.removeAttribute('data-kt-indicator');
+                            submitButton.disabled = false;
+                            location.reload();
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');

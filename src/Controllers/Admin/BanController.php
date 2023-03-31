@@ -102,7 +102,6 @@ class BanController extends AdminController
             ]);
         }
 
-        Telegram::SendMarkdown('有新的审计规则：' . $rule->name);
         return $response->withJson([
             'ret' => 1,
             'msg' => '添加成功'
@@ -125,7 +124,7 @@ class BanController extends AdminController
                 'msg' => '修改失败'
             ]);
         }
-        Telegram::SendMarkdown('规则更新：' . PHP_EOL . $request->getParam('name'));
+
         return $response->withJson([
             'ret' => 1,
             'msg' => '修改成功'
