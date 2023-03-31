@@ -74,11 +74,11 @@
                                                         <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
                                                     </select>
                                                     <label class="form-label required">节点类型</label>
-                                                    <select class="form-select mb-5" id="sort" data-control="select2" data-hide-search="true">
-                                                <option value="1">Shadowsocks</option>
-                                                <option value="2">VMESS</option>
-                                                <option value="4">TROJAN</option>
-                                                <option value="3">VLESS</option>
+                                                    <select class="form-select mb-5" id="node_type" data-control="select2" data-hide-search="true">
+                                                        <option value="1">Shadowsocks</option>
+                                                        <option value="2">VMESS</option>
+                                                        <option value="4">TROJAN</option>
+                                                        <option value="3">VLESS</option>
                                                     </select>
                                                 </div>
                                             </div>
