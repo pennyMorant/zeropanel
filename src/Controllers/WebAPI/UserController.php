@@ -20,7 +20,7 @@ class UserController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args)
     {
         $getData = $request->getQueryParams();
-        $node_id = $getData('node_id');
+        $node_id = $getData['node_id']??'';
         $node = Node::find($node_id);
         if (is_null($node)) {
             return $response->withJson([
