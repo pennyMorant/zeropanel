@@ -6,7 +6,8 @@ use App\Services\{ Auth, View, ZeroConfig };
 use App\Models\Order;
 use App\Models\Setting;
 use Stripe\{ Stripe, Charge, Source };
-use Exception;
+use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
 class StripePay
 {

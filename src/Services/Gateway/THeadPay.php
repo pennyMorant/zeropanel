@@ -9,11 +9,10 @@ namespace App\Services\Gateway;
 use App\Models\Order;
 use App\Models\Setting;
 use App\Services\Auth;
-use App\Services\Config;
-use App\Services\View;
-use Exception;
+use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
-class THeadPay extends AbstractPayment
+class THeadPay
 {
     protected $config;
 

@@ -5,7 +5,7 @@ namespace App\Services\Gateway;
 
 use App\Services\Payment;
 use App\Models\Setting;
-use Slim\Http\Serverequest;
+use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
 class VmqPay

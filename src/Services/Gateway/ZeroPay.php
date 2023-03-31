@@ -212,10 +212,6 @@ class ZeroPay
                         exit();
                 }
                 return http_response_code(200);
-            case ('mgate'):
-                $mgate = new MGate();
-                $mgate->notify($request, $response, $args);
-                return;
             case ('theadpay'):
                 $theadpay = new THeadPay();
                 $theadpay->notify($request, $response, $args);
@@ -226,7 +222,7 @@ class ZeroPay
                 return;
             case ('tronapipay'):
                 $tronapipay = new TronapiPay();
-                $tronapipay->notify(request, $response, $args);
+                $tronapipay->notify($request, $response, $args);
                 return;
             default:
                 return 'failed';

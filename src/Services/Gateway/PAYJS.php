@@ -2,10 +2,11 @@
 
 namespace App\Services\Gateway;
 
-use App\Services\View;
 use App\Services\Auth;
 use App\Models\Order;
 use App\Models\Setting;
+use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
 class PAYJS
 {
