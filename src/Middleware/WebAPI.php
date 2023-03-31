@@ -12,12 +12,7 @@ class WebAPI
 {
     public function __invoke(Request $request, RequestHandler $handler)
     {
-        if ($request->getMethod() == 'POST') {
-            $getData = $request->getParsedBody();
-        } else { 
-            $getData = $request->getQueryParams();
-        }
-        $key = $getData['key'] ?? null;
+        $key = $request->getParam('key');
         if (is_null($key)) {
             // 未提供 key
             $response = new Response();
