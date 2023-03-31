@@ -90,6 +90,7 @@ class ZeroPay
                     return $result;
                 case ('epay'):
                     $epay = new Epay();
+                    $method = 'wechat';
                     $result = $epay->ZeroPay($user_id, $method, $order_no, $amount);
                     return $result;
                 default:
