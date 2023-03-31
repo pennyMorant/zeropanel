@@ -39,45 +39,42 @@ class UserController extends BaseController
                 'data' => $users
             ]);
         }
-
-
+        // 判断用户
         $users_raw = User::where(
-            static function ($query) use ($node): void {
-                $query->where(
-                    static function ($query1) use ($node): void {
-                        if ($node->node_group !== 0) {
-                            $query1->where('class', '>=', $node->node_class)->where('node_group', '=', $node->node_group);
-                        } else {
-                            $query1->where('class', '>=', $node->node_class);
-                        }
-                    }
-                )->orwhere('is_admin', 1);
-            }
-        )->where('enable', 1)->get();
+            fn($query) => $query->where(
+                fn($query1) => $query1->where('class', '>=', $node->node_class)
+                    ->when($node->node_group !== 0, fn($query1) => $query1->where('node_group', '=', $node->node_group))
+            )->orWhere('is_admin', 1)
+            )->where('enable', 1)
+        ->get();
 
-        $users = [];
-
+        // 下发的数据 
+        $common_key_list = ['node_speedlimit', 'id', 'node_iplimit', 'alive_ip'];
         if (in_array($node->node_type, [2, 3, 4])) {
-            $key_list = array('node_speedlimit', 'id', 'node_iplimit', 'uuid', 'alive_ip');
+            $extra_key_list = ['uuid'];
         } else {
-            $key_list = array(
-                'node_speedlimit', 'id', 'passwd', 'node_iplimit', 'alive_ip'
-            );
-        }
-
+            $extra_key_list = ['passwd'];
+        }      
+        $key_list = array_merge($common_key_list, $extra_key_list);       
+        
+        //判断在线IP
         $alive_ip = (new \App\Models\Ip)->getUserAliveIpCount();
-        foreach ($users_raw as $user_raw) {
-            if (isset($alive_ip[strval($user_raw->id)]) && $user_raw->node_iplimit !== 0) {
-                $user_raw->alive_ip = $alive_ip[strval($user_raw->id)];
-            }
-
-            if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {
-                continue;
-            }
-            
-            $user_raw = Tools::keyFilter($user_raw, $key_list);
-            $users[] = $user_raw;
-        }
+        
+        $users = collect($users_raw)
+                ->filter(
+                    static function ($user_raw) use ($alive_ip, $key_list): bool {
+                        if (isset($alive_ip[strval($user_raw->id)]) && $user_raw->node_iplimit !== 0) {
+                            $user_raw->alive_ip = $alive_ip[strval($user_raw->id)];
+                        }
+                        if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {
+                            return false;
+                        }
+                        $user_raw = Tools::keyFilter($user_raw, $key_list);
+                        return true;
+                    }
+                )
+                ->values()
+                ->all();
 
 
         return $response->withJson([
@@ -152,11 +149,10 @@ class UserController extends BaseController
         $online_log->log_time = time();
         $online_log->save();
 
-        $res = [
+        return $response->withJson([
             'ret' => 1,
             'data' => 'ok',
-        ];
-        return $response->withJson($res);
+        ]);   
     }
 
     public function addAliveIp(ServerRequest $request, Response $response, array $args)
@@ -172,10 +168,9 @@ class UserController extends BaseController
         $node = Node::find($node_id);
 
         if (is_null($node)) {
-            $res = [
+            return $response->withJson([
                 'ret' => 0
-            ];
-            return $response->withJson($res);
+            ]);
         }
         if (count($data) > 0) {
             foreach ($data as $log) {
@@ -192,11 +187,10 @@ class UserController extends BaseController
             }
         }
 
-        $res = [
+        return $response->withJson([
             'ret' => 1,
             'data' => 'ok',
-        ];
-        return $response->withJson($res);
+        ]);
     }
 
     public function addDetectLog(ServerRequest $request, Response $response, array $args)
@@ -212,10 +206,9 @@ class UserController extends BaseController
         $node = Node::find($node_id);
 
         if (is_null($node)) {
-            $res = [
+            return $response->withJson([
                 'ret' => 0
-            ];
-            return $response->withJson($res);
+            ]);
         }
 
         if (count($data) > 0) {
@@ -233,10 +226,9 @@ class UserController extends BaseController
             }
         }
 
-        $res = [
+        return $response->withJson([
             'ret' => 1,
             'data' => 'ok',
-        ];
-        return $response->withJson($res);
+        ]);
     }
 }

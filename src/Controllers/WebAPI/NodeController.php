@@ -35,17 +35,16 @@ class NodeController extends BaseController
         $log->uptime = $uptime;
         $log->log_time = time();
         if (!$log->save()) {
-            $res = [
+            return $response->withJson([
                 'ret' => 0,
                 'data' => 'update failed',
-            ];
-            return $response->withJson($res);
+            ]);
         }
-        $res = [
+        
+        return $response->withJson([
             'ret' => 1,
             'data' => 'ok',
-        ];
-        return $response->withJson($res);
+        ]);
     }
     
     /**
@@ -62,10 +61,9 @@ class NodeController extends BaseController
         }
         $node = Node::find($node_id);
         if (is_null($node)) {
-            $res = [
+            return $response->withJson([
                 'ret' => 0
-            ];
-            return $response->withJson($res);
+            ]);           
         }
         
         $node_server = $node->server;
@@ -82,11 +80,11 @@ class NodeController extends BaseController
             'version' => '2023-3-1'
         ];
 
-        $res = [
+        return $response->withJson([
             'ret' => 1,
             'data' => $data
-        ];
-        return $response->withJson($res);
+        ]);
+        
     }
 
     /**
@@ -96,20 +94,11 @@ class NodeController extends BaseController
      */
     public function getAllInfo(ServerRequest $request, Response $response, array $args)
     {
-        $nodes = Node::where('node_ip', '<>', null)->where(
-            static function ($query) {
-                $query->where('node_type', '=', 1)
-                    ->orWhere('node_type', '=', 2)
-                    ->orWhere('node_type', '=', 3)
-                    ->orWhere('node_type', '=', 4)
-                    ->orWhere('node_type', '=', 5);
-            }
-        )->get();
-        $res = [
+        $nodes = Node::whereNotNull('node_ip')->whereIn('node_type', [1, 2, 3, 4, 5])->get();
+        return $response->withJson([
             'ret' => 1,
             'data' => $nodes
-        ];
-        return $response->withJson($res);
+        ]);
     }
 
     public function getConfig(ServerRequest $request, Response $response, array $args)
@@ -119,16 +108,12 @@ class NodeController extends BaseController
             case ('database'):
                 $db_config = Config::getDbConfig();
                 $db_config['host'] = $this->getServerIP();
-                $res = [
+                return $response->withJson([
                     'ret' => 1,
                     'data' => $db_config,
-                ];
+                ]);
                 break;
-            case ('webapi'):
-                $webapiConfig = [];
-                #todo
         }
-        return $response->withJson($res);
     }
 
     private function getServerIP()

@@ -21,11 +21,10 @@ class FuncController extends BaseController
     {
         $rules = DetectRule::all();
 
-        $res = [
+        return $response->withJson([
             'ret' => 1,
-            'data' => $rules
-        ];
-        return $response->withJson($res);
+            'data' => $rules,
+        ]);
     }
     
     /**
@@ -35,10 +34,9 @@ class FuncController extends BaseController
      */
     public function ping(ServerRequest $request, Response $response, array $args)
     {
-        $res = [
+        return $response->withJson([
             'ret' => 1,
-            'data' => 'pong'
-        ];
-        return $response->withJson($res);
+            'data' => 'pong',
+        ]);
     }
 }
