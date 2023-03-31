@@ -17,29 +17,14 @@ use Slim\Http\ServerRequest;
 
 class UserController extends BaseController
 {
-    /**
-     * User List
-     *
-     * @param \Slim\Http\Request    $request
-     * @param \Slim\Http\Response   $response
-     * @param array                 $args
-     *
-     * @return \Slim\Http\Response
-     */
     public function index(ServerRequest $request, Response $response, array $args)
     {
-        $node_id = $request->getQueryParam('node_id', '0');
-
-        if ($node_id == '0') {
-            $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
-            $node_id = $node->id;
-        } else {
-            $node = Node::where('id', '=', $node_id)->first();
-            if (is_null($node)) {
-                return $response->withJson([
-                    'ret' => 0,
-                ]);
-            }
+        $node_id = $request->getQueryParam('node_id');
+        $node = Node::where('id', '=', $node_id)->first();
+        if (is_null($node)) {
+            return $response->withJson([
+                'ret' => 0,
+            ]);
         }
         $node->node_heartbeat = time();
         $node->save();
@@ -104,11 +89,6 @@ class UserController extends BaseController
         ]);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function addTraffic(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
@@ -182,11 +162,6 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function addAliveIp(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
@@ -227,11 +202,6 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function addDetectLog(ServerRequest $request, Response $response, array $args)
     {
         $params = $request->getQueryParams();
