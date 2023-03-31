@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-						<a href="/admin" class="d-lg-none fs-1 text-dark fw-bolder">
+						<a href="/admin/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
 							{$config['appName']}
 						</a>
 					</div>

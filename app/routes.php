@@ -22,8 +22,7 @@ return function (SlimApp $app) {
 
     // User Center
     $app->group('/user', function (Group $group) {
-        $group->get('',                          App\Controllers\UserController::class . ':index');
-        $group->get('/',                         App\Controllers\UserController::class . ':index');
+        $group->get('/dashboard',                App\Controllers\UserController::class . ':index');
 
         $group->post('/getusertrafficinfo',      App\Controllers\UserController::class . ':getUserTrafficUsage');
         $group->get('/tutorial',                 App\Controllers\UserController::class . ':tutorial');
@@ -117,9 +116,7 @@ return function (SlimApp $app) {
 
     // Admin
     $app->group('/admin', function (Group $group) {
-        $group->get('',                          App\Controllers\AdminController::class . ':index');
-        $group->get('/',                         App\Controllers\AdminController::class . ':index');
-
+        $group->get('/dashboard',                   App\Controllers\AdminController::class . ':index');
         // Node Mange
         $group->get('/node',                        App\Controllers\Admin\NodeController::class . ':index');
         $group->get('/node/create',                 App\Controllers\Admin\NodeController::class . ':createNodeIndex');
@@ -191,16 +188,8 @@ return function (SlimApp $app) {
 
 
         $group->get('/coupon',                   App\Controllers\Admin\CouponController::class . ':couponIndex');
-        $group->post('/coupon/create',                  App\Controllers\Admin\CouponController::class . ':createCoupon');
+        $group->post('/coupon/create',           App\Controllers\Admin\CouponController::class . ':createCoupon');
         $group->post('/coupon/ajax',             App\Controllers\Admin\CouponController::class . ':couponAjax');
-
-        $group->get('/profile',                  App\Controllers\AdminController::class . ':profile');
-        $group->get('/invite',                   App\Controllers\AdminController::class . ':invite');
-        $group->post('/invite',                  App\Controllers\AdminController::class . ':addInvite');
-        $group->post('/chginvite',               App\Controllers\AdminController::class . ':chgInvite');
-        $group->get('/sys',                      App\Controllers\AdminController::class . ':sys');
-        $group->get('/logout',                   App\Controllers\AdminController::class . ':logout');
-        $group->post('/payback/ajax',            App\Controllers\AdminController::class . ':ajaxPayBack');
        
         // 设置中心
         $group->get('/setting',                  App\Controllers\Admin\SettingController::class . ':index');
@@ -212,10 +201,10 @@ return function (SlimApp $app) {
         $group->post('/ajax_data/chart/{name}',        App\Controllers\AdminController::class . ':AjaxDataChart');
 
       
-        $group->get('/commission',             App\Controllers\Admin\CommissionController::class . ':commissionIndex');
-        $group->put('/commission/withdraw/update',   App\Controllers\Admin\CommissionController::class . ':updateWithdrawCommission');
-        $group->post('/commission/withdraw/ajax',           App\Controllers\Admin\CommissionController::class . ':withdrawAjax');
-        $group->post('/commission/ajax',           App\Controllers\Admin\CommissionController::class . ':commissionAjax');
+        $group->get('/commission',                      App\Controllers\Admin\CommissionController::class . ':commissionIndex');
+        $group->put('/commission/withdraw/update',      App\Controllers\Admin\CommissionController::class . ':updateWithdrawCommission');
+        $group->post('/commission/withdraw/ajax',       App\Controllers\Admin\CommissionController::class . ':withdrawAjax');
+        $group->post('/commission/ajax',                App\Controllers\Admin\CommissionController::class . ':commissionAjax');
     })->add(new Admin());
 
     // webapi

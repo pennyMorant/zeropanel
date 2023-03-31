@@ -22,7 +22,7 @@
 				<div class="d-flex flex-center w-lg-50 p-10">
 					<div class="card rounded-3 w-md-550px">
 						<div class="card-body p-10 p-lg-20">
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/user" action="#">
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="/user/dashboard" action="#">
 								<div class="text-center mb-11">
 									<h1 class="text-dark fw-bolder mb-6">{$trans->t('signup')}</h1>
 								</div>
