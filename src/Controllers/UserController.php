@@ -2,16 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Services\{
-    Auth,
-    Config,
-    Captcha
-};
+use App\Services\Auth;
 use App\Models\{
     Ann,
-    Code,
     User,
-    Payback,
     Setting,
     InviteCode,
     EmailVerify
@@ -21,10 +15,8 @@ use App\Utils\{
     URL,
     Hash,
     Tools,
-    Cookie,
     TelegramSessionManager
 };
-use Exception;
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;

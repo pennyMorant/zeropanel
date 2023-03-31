@@ -15,16 +15,8 @@ use App\Utils\{
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
-/**
- *  User NodeController
- */
 class NodeController extends UserController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function node(ServerRequest $request, Response $response, array $args)
     {
         $user        = $this->user;

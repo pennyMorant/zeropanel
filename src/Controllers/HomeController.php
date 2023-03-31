@@ -2,12 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\{
-    Setting,
-};
-use App\Utils\{
-    Telegram\Process
-};
+use App\Models\Setting;
+use App\Utils\Telegram\Process;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 

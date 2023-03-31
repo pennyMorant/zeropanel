@@ -11,8 +11,7 @@ use App\Models\{
 use App\Utils\{
     Hash,
     Check,
-    Tools,
-    TelegramSessionManager
+    Tools
 };
 use App\Services\{
     Auth,

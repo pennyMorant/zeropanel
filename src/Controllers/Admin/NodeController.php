@@ -6,7 +6,6 @@ use App\Controllers\AdminController;
 use App\Models\Node;
 use App\Utils\{
     Tools,
-    Telegram,
     CloudflareDriver
 };
 use Slim\Http\Response;

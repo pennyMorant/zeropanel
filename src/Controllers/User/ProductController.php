@@ -16,11 +16,6 @@ use Pkly\I18Next\I18n;
 
 final class ProductController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function product(ServerRequest $request, Response $response, array $args)
     {
         $trans = I18n::get();

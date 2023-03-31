@@ -8,7 +8,6 @@ use App\Models\{
     Ticket,
     Setting
 };
-use App\Utils\Tools;
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;

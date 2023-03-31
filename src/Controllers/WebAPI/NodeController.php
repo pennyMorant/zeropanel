@@ -11,15 +11,9 @@ use App\Models\{
 use App\Services\Config;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use App\Utils\Tools;
 
 class NodeController extends BaseController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function info(ServerRequest $request, Response $response, array $args)
     {
         $node_id = $args['id'];
@@ -47,11 +41,6 @@ class NodeController extends BaseController
         ]);
     }
     
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function getInfo(ServerRequest $request, Response $response, array $args)
     {
         $node_id = $args['id'];
@@ -87,11 +76,6 @@ class NodeController extends BaseController
         
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function getAllInfo(ServerRequest $request, Response $response, array $args)
     {
         $nodes = Node::whereNotNull('node_ip')->whereIn('node_type', [1, 2, 3, 4, 5])->get();

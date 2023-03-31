@@ -3,11 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
-use App\Models\{
-    Product,
-    Bought,
-    Order
-};
+use App\Models\Product;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 

@@ -3,9 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
-use App\Models\{
-    Order
-};
+use App\Models\Order;
 use Pkly\I18Next\I18n;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;

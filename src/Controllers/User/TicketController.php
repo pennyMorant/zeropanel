@@ -15,16 +15,8 @@ use App\Utils\Telegram;
 use Pkly\I18Next\I18n;
 use League\HTMLToMarkdown\HtmlConverter;
 
-/**
- *  TicketController
- */
 class TicketController extends UserController
 {
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
         $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
@@ -49,11 +41,6 @@ class TicketController extends UserController
         return $response;
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function createTicket(ServerRequest $request, Response $response, array $args)
     {
         $title = $request->getParam('title');
@@ -109,11 +96,6 @@ class TicketController extends UserController
         );
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function updateTicket(ServerRequest $request, Response $response, array $args)
     {
         $id = $request->getParam('id');
@@ -170,11 +152,6 @@ class TicketController extends UserController
         );
     }
 
-    /**
-     * @param Request   $request
-     * @param Response  $response
-     * @param array     $args
-     */
     public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
         $id = $args['id'];
