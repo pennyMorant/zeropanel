@@ -42,7 +42,7 @@ class Epay
         }
 
         //请求参数
-        $final_method = $method == 'wechatpay' ? 'wechat' : $method;
+        $final_method = $method == 'wechatpay' ? 'wxpay' : $method;
         $data = [
             "pid" => trim($this->epay['partner']),
             "type" => $final_method,
