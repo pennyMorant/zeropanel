@@ -82,7 +82,7 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->where('datetime', '>=', time() - 300);
+                        $query->where('datetime', '>=', time() - 300)->distinct('ip');
                     }
                 );
 
