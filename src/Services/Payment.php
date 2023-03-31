@@ -37,7 +37,7 @@ class Payment
 
         $order = Order::where('order_no', $order_no)->first();
         $user = User::find($order->user_id);
-        if (Setting::obtain('enable_push_top_up_message') == true) {
+        if (Setting::obtain('enable_push_top_up_message') == true && $order->order_payment !== 'creditpay') {
             $messageText = '交易提醒' . PHP_EOL .
                             '------------------------------' . PHP_EOL .
                             '用户：' . $user->email . PHP_EOL .
