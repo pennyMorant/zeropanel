@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Controllers\ZeroController;
-use App\Controllers\HomeController;
 use Slim\App as SlimApp;
+use App\Models\Setting;
 use App\Middleware\{Guest, Admin, Auth, WebAPI};
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
@@ -110,7 +109,8 @@ return function (SlimApp $app) {
     })->add(new Guest());
 
     // Admin
-    $app->group('/admin', function (Group $group) {
+    $admin_path = Setting::obtain('website_admin_path');
+    $app->group('/' . $admin_path, function (Group $group) {
         $group->get('/dashboard',                   App\Controllers\AdminController::class . ':index');
         // Node Mange
         $group->get('/node',                        App\Controllers\Admin\NodeController::class . ':index');

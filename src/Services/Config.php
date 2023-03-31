@@ -59,6 +59,7 @@ class Config
             'telegram_group_url'  => $public_configs['telegram_group_url'],
             'telegram_channel_id'     => $public_configs['telegram_channel_id'],
             'website_auth_background_image' =>  $public_configs['website_auth_background_image'],
+            'website_admin_path'    => $public_configs['website_admin_path']
         ];
     }
 

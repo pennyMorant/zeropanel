@@ -8,7 +8,8 @@ use App\Controllers\{
 use App\Models\{
     User, 
     Withdraw,
-    Payback
+    Payback,
+    Setting
 };
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -34,9 +35,9 @@ class CommissionController extends AdminController
             'ref_get'         => '佣金',
             'datetime'        => '时间'
         ];
-        $table_config_commission['ajax_url'] = '/admin/commission/ajax';
+        $table_config_commission['ajax_url'] = 'commission/ajax';
 
-        $table_config['ajax_url'] = '/admin/commission/withdraw/ajax';
+        $table_config['ajax_url'] = 'commission/withdraw/ajax';
         $this->view()
             ->assign('table_config', $table_config)
             ->assign('table_config_commission', $table_config_commission)
@@ -68,7 +69,7 @@ class CommissionController extends AdminController
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$rowData->id.')">完成</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$rowData->id.')">拒绝</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateWithdrawCommission('.$go_back.', '.$rowData->id.')">拒绝</a></li>
                                     </ul>
                                 </div>',
             ];

@@ -61,6 +61,8 @@
                                                                     <input class="form-control mb-5" id="website_name" name="website_name" type="text" placeholder="网站名称" value="{$settings['website_name']}" />
                                                                     <label class="form-label">LANDING INDEX</label>
                                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="不懂请保持默认" id="website_landing_index" name="website_landing_index" type="text" placeholder="" value="{$settings['website_landing_index']}" />
+                                                                    <label class="form-label">自定义管理页面路径</label>
+                                                                    <input class="form-control mb-5" id="website_admin_path" name="website_admin_path" type="text" placeholder="管理页面路径" value="{$settings['website_admin_path']}" />
                                                                 </div>
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">安全TOKEN</label>
@@ -803,7 +805,7 @@
                     case 'website':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -813,11 +815,13 @@
                                 website_security_token: $('#website_security_token').val(),
                                 website_request_token: $('#website_request_token').val(),
                                 website_backend_token: $('#website_backend_token').val(),
-                                website_auth_background_image: $('#website_auth_background_image').val()
+                                website_auth_background_image: $('#website_auth_background_image').val(),
+                                website_admin_path: $('#website_admin_path').val()
                             },
                             success: function(data){
                                 if (data.ret === 1){
                                     getResult(data.msg, '', 'success');
+                                    setTimeout(() => window.location.href = '/'+$("#website_admin_path").val()+'/setting', 1000);
                                 }else{
                                     getResult(data.msg, '', 'error');
                                 }
@@ -827,7 +831,7 @@
                     case 'permission_group':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -846,7 +850,7 @@
                     case 'payment_gateway':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -866,7 +870,7 @@
                     case 'paybeaver':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -885,7 +889,7 @@
                     case 'paytaro':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -904,7 +908,7 @@
                     case 'tronapipay':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -923,7 +927,7 @@
                     case 'vmqpay':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -942,7 +946,7 @@
                     case 'epay':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -962,7 +966,7 @@
                     case 'mail':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -980,7 +984,7 @@
                     case 'backup':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1000,7 +1004,7 @@
                     case 'sendgrid':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1020,7 +1024,7 @@
                     case 'smtp':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1044,7 +1048,7 @@
                     case 'mailgun':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1064,7 +1068,7 @@
                     case 'ses':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1083,7 +1087,7 @@
                     case 'telegram':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1104,7 +1108,7 @@
                     case 'telegram_bot':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1128,7 +1132,7 @@
                     case 'subscribe':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1154,7 +1158,7 @@
                     case 'currency':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1175,7 +1179,7 @@
                     case 'withdraw':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1195,7 +1199,7 @@
                     case 'register':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1221,7 +1225,7 @@
                     case 'captcha':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1243,7 +1247,7 @@
                     case 'live_chat':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,
@@ -1265,7 +1269,7 @@
                     case 'invite':
                         $.ajax({
                             type: 'POST',
-                            url: '/admin/setting',
+                            url: location.pathname,
                             dataType: "json",
                             data: {
                                 class: type,

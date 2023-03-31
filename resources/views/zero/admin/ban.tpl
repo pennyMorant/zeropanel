@@ -219,7 +219,7 @@
                     case 'request':
                         $.ajax({
                             type: "POST",
-                            url: "/admin/ban/rule/request",
+                            url: "ban/rule/request",
                             dataType: "json",
                             data:{
                                 id,
@@ -240,7 +240,7 @@
                         setTimeout(function () {
                             $.ajax({
                                 type: "PUT",
-                                url: "/admin/ban/rule/update",
+                                url: "ban/rule/update",
                                 dataType: "json",
                                 data: {
                                     name: $('#zero_update_ban_rule_name').val(),
@@ -276,7 +276,7 @@
                 submitButton.disabled = true;
                 $.ajax({
                     type: "POST",
-                    url: "/admin/ban/create/rule",
+                    url: "ban/create/rule",
                     dataType: "json",
                     data: {
                         name: $('#zero_create_ban_rule_name').val(),

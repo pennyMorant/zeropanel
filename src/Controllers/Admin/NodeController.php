@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Node;
+use App\Models\Setting;
 use App\Utils\{
     Tools,
     CloudflareDriver
@@ -179,7 +180,7 @@ class NodeController extends AdminController
                 'status'    =>  $rowData->status(),
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/admin/node/update/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" href="node/update/'.$rowData->id.'">编辑</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
                                     </ul>
                                 </div>',

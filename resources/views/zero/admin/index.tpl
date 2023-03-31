@@ -122,7 +122,7 @@
                 const start_date = year + '-' + month + '-1';
                 return start_date;
             }
-            var url = '/admin/ajax_data/chart/income';
+            var url = 'ajax_data/chart/income';
             var date = new Date();
             $.ajax({
                 dataType: "json",
@@ -198,7 +198,7 @@
         </script>
             
         <script> 
-            var url = '/admin/ajax_data/chart/newusers';
+            var url = 'ajax_data/chart/newusers';
             $.ajax({
                 dataType: "json",
                 url: url,
@@ -267,7 +267,7 @@
         <script> 
             $.ajax({
                 dataType: "json",
-                url: '/admin/ajax_data/chart/traffic',
+                url: 'ajax_data/chart/traffic',
                 type: "POST",
                 data: {},
                 success: function(data) {
@@ -335,7 +335,7 @@
         <script>
             $.ajax({
                 dataType: "json",
-                url: '/admin/ajax_data/chart/user_traffic_ranking',
+                url: 'ajax_data/chart/user_traffic_ranking',
                 type: "POST",
                 data: {},
                 success: function(data) {

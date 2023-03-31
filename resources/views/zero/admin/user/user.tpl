@@ -72,7 +72,7 @@
                         }
                         $.ajax({
                             type: "PUT",
-                            url: "/admin/user/update/status/enable",
+                            url: "user/update/status/enable",
                             dataType: "JSON",
                             data: {
                                 enable,
@@ -89,7 +89,7 @@
                         }
                         $.ajax({
                             type: "PUT",
-                            url: "/admin/user/update/status/is_admin",
+                            url: "user/update/status/is_admin",
                             dataType: "JSON",
                             data: {
                                 is_admin,

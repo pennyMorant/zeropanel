@@ -95,9 +95,7 @@ $_ENV['rememberMeDuration'] = 7;           //登录时记住账号时长天数
 
 $_ENV['timeZone'] = 'PRC';                 //PRC 天朝时间  UTC 格林时间
 $_ENV['theme'] = 'zero';            //默认主题
-$_ENV['jump_delay'] = 1200;                  //跳转延时，单位ms，不建议太长
 
-$_ENV['checkNodeIp'] = false;                 //是否webapi验证节点ip
 $_ENV['muKeyList'] = [];                   //多 key 列表
 
 #aws

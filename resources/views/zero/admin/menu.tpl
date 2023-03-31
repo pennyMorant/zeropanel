@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-						<a href="/admin/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
+						<a href="dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
 							{$config['appName']}
 						</a>
 					</div>
@@ -143,7 +143,7 @@
 			<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
 				<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 					<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-						<a href="/admin/dashboard" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
+						<a href="dashboard" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
 							{$config['appName']}
 						</a>
 						<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
@@ -159,7 +159,7 @@
 						<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
 							<div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/dashboard">
+									<a class="menu-link" href="dashboard">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +174,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/setting">
+									<a class="menu-link" href="setting">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -187,7 +187,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/order">
+									<a class="menu-link" href="order">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -202,7 +202,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/node">
+									<a class="menu-link" href="node">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
@@ -215,7 +215,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="/admin/product">
+									<a class="menu-link" href="product">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
 												<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -227,7 +227,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="/admin/user">
+									<a class="menu-link" href="user">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +241,7 @@
 								</div>
 								
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/record">
+									<a class="menu-link" href="record">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
@@ -255,7 +255,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="/admin/ban">
+									<a class="menu-link" href="ban">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bandaid" viewBox="0 0 16 16">
@@ -269,7 +269,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="/admin/ticket">
+									<a class="menu-link" href="ticket">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated" viewBox="0 0 16 16">
@@ -283,7 +283,7 @@
 								</div>
 								
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/news">
+									<a class="menu-link" href="news">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
 												<path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z"/>
@@ -294,7 +294,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/commission">
+									<a class="menu-link" href="commission">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
 												<path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
@@ -305,7 +305,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="/admin/coupon">
+									<a class="menu-link" href="coupon">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16">
 												<path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>

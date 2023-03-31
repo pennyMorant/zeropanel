@@ -96,7 +96,7 @@
             function zeroAdminUpdateWithdrawCommission(mode, id){
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/commission/withdraw/update",
+                    url: "commission/withdraw/update",
                     dataType: "json",
                     data: {
                         mode,

@@ -126,7 +126,7 @@
             function zeroAdminCreateNode() {
                 $.ajax({
                     type: "POST",
-                    url: "/admin/node/create",
+                    url: "node/create",
                     dataType: "JSON",
                     data: {
                         name: $('#name').val(),

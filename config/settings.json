@@ -1260,5 +1260,15 @@
         "type": "array",
         "default": "{}",
         "mark": "权限组详细"
+    },
+    {
+        "id": null,
+        "item": "website_admin_path",
+        "value": "admin",
+        "class": "website",
+        "is_public": 1,
+        "type": "string",
+        "default": "admin",
+        "mark": "自定义管理员路径"
     }
 ]

@@ -90,10 +90,6 @@ class TicketController extends AdminController
 
         $ticket = Ticket::where('id', $id)->first();
 
-        if (is_null($ticket)) {
-            return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
-        }
-
         $antiXss = new AntiXSS();
 
         $content_old = json_decode($ticket->content, true);
@@ -132,9 +128,6 @@ class TicketController extends AdminController
         $ticket = Ticket::where('id', '=', $id)->first();
         $comments = json_decode($ticket->content, true);
 
-        if (is_null($ticket)) {
-            return $response->withStatus(302)->withHeader('Location', '/admin/ticket');
-        }
         $this->view()
             ->assign('ticket', $ticket)
             ->assign('comments', $comments)
@@ -172,7 +165,7 @@ class TicketController extends AdminController
                 'last_updated'  =>  $last_updated,
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/admin/ticket/view/'.$rowData->id.'">编辑</a></li>
+                                        <li><a class="dropdown-item" href="ticket/view/'.$rowData->id.'">编辑</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('. $type . ', ' . $rowData->id. ')">删除</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminCloseTicket(' . $rowData->id . ')">关闭</a></li>
                                     </ul>

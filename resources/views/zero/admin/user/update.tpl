@@ -96,7 +96,7 @@
             function updateUser(id) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/user/update",
+                    url: "user/update",
                     dataType: "JSON",
                     data: {
                         id,

@@ -80,7 +80,7 @@ class TicketController extends UserController
                 [
                     [
                         'text' => '回复工单 #',
-                        'url' => Setting::obtain('website_url') . '/admin/ticket' 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket' 
                     ]
                 ]
             ];
@@ -137,7 +137,7 @@ class TicketController extends UserController
                 [
                     [
                         'text' => '回复工单 #' . $id,
-                        'url' => Setting::obtain('website_url') . '/admin/ticket/update/' . $id 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/update/' . $id 
                     ]
                 ]
             ];

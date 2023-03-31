@@ -18,7 +18,7 @@ class Admin
         }
         if (!$user->is_admin) {
             $response = new Response();
-            return $response->withStatus(302)->withHeader('Location', '/user');
+            return $response->withStatus(302)->withHeader('Location', '/user/dashboard');
         }
         return $handler->handle($request);
     }

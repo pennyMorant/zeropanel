@@ -25,7 +25,7 @@ $(document).ready(function (){
             case 'product':
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/product/delete",
+                    url: "product/delete",
                     dataType: "json",
                     data: {
                         id
@@ -43,7 +43,7 @@ $(document).ready(function (){
             case 'node':
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/node/delete",
+                    url: "node/delete",
                     dataType: "json",
                     data: {
                         id
@@ -61,7 +61,7 @@ $(document).ready(function (){
             case 'user':
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/user/delete",
+                    url: "user/delete",
                     dataType: "json",
                     data: {
                         id
@@ -79,7 +79,7 @@ $(document).ready(function (){
             case 'ban_rule':
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/ban/rule/delete",
+                    url: "ban/rule/delete",
                     dataType: "json",
                     data: {
                         id
@@ -97,7 +97,7 @@ $(document).ready(function (){
             case 'news':
                 $.ajax({
                     type: "DELETE",
-                    url: "/admin/news/delete",
+                    url: "news/delete",
                     dataType: "json",
                     data: {
                         id
@@ -115,7 +115,7 @@ $(document).ready(function (){
             case 'ticket':
             $.ajax({
                     type: "DELETE",
-                    url: "/admin/ticket/delete",
+                    url: "ticket/delete",
                     dataType: "json",
                     data: {
                         id

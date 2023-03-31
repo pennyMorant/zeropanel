@@ -105,7 +105,7 @@
             function zeroAdminUpdateProduct(id) {
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/product/update",
+                    url: "product/update",
                     dataType: "JSON",
                     data: {
                         id,

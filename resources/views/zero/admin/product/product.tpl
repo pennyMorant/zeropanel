@@ -32,7 +32,7 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">产品列表</div>
                                             <div class="card-toolbar">
-                                                <a class="btn btn-primary btn-sm fw-bold" href="/admin/product/create">创建产品</a>
+                                                <a class="btn btn-primary btn-sm fw-bold" href="product/create">创建产品</a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -62,7 +62,7 @@
                 }
                 $.ajax({
                     type: "PUT",
-                    url: "/admin/product/update/status",
+                    url: "product/update/status",
                     dataType: "JSON",
                     data: {
                         status,
