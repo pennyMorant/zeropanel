@@ -13,7 +13,7 @@ class Guest
         $user = AuthService::getUser();
         if ($user->isLogin) {
             $response = new Response();
-            return $response->withStatus(302)->withHeader('Location', '/user');
+            return $response->withStatus(302)->withHeader('Location', '/user/dashboard');
         } 
         return $handler->handle($request);
     }
