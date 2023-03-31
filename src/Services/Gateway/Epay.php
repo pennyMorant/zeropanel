@@ -43,7 +43,7 @@ class Epay
 
         //请求参数
         $data = [
-            "pid" => trim($this->epay['partner']),
+            "pid" => $this->epay['partner'],
             "type" => $method == 'wechatpay' ? 'wxpay' : $method,
             "out_trade_no" => $order_no,
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
