@@ -20,7 +20,7 @@ final class EpaySubmit
         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
         $prestr = EpayTool::createLinkstring($para_sort);
 
-        return EpayTool::md5Sign($prestr, $this->config['key']);
+        return EpayTool::md5Sign($prestr, trim($this->config['key']));
     }
 
     public function buildRequestPara($para_temp)
