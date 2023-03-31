@@ -42,9 +42,10 @@ class Epay
         }
 
         //请求参数
+        $final_method = $method == 'wechatpay' ? 'wechat' : $method;
         $data = [
             "pid" => trim($this->epay['partner']),
-            "type" => $method,
+            "type" => $final_method,
             "out_trade_no" => $order_no,
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
@@ -52,8 +53,8 @@ class Epay
             "money" => $final_amount,
             "sitename" => "test"
         ];
-        $alipaySubmit = new EpaySubmit($this->epay);
-        $html_text = $alipaySubmit->buildRequestForm($data);
+        $paySubmit = new EpaySubmit($this->epay);
+        $html_text = $paySubmit->buildRequestForm($data);
         $result = ['url'=>$html_text, 'ret'=>1, 'tradeno' => $order_no, 'type'=> 'url'];
         return $result;
     }
