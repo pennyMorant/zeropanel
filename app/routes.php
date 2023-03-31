@@ -61,11 +61,6 @@ return function (SlimApp $app) {
 
         // getUserAllURL
         $group->get('/getUserAllURL',            App\Controllers\UserController::class . ':getUserAllURL');
-
-        $group->post('/code/f2fpay',             App\Services\Payment::class . ':purchase');
-
-
-        # Zero
         
         $group->get('/nodeinfo/{id}',            App\Controllers\ZeroController::class . ':nodeInfo');
         $group->get('/money',                    App\Controllers\ZeroController::class . ':getmoney');
