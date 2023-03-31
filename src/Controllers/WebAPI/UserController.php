@@ -20,7 +20,7 @@ class UserController extends BaseController
     public function index(ServerRequest $request, Response $response, array $args)
     {
         $getData = $request->getQueryParams();
-        $node_id = $getData['node_id']??'';
+        $node_id = $getData['node_id'] ?? '';
         $node = Node::find($node_id);
         if (is_null($node)) {
             return $response->withJson([
@@ -55,7 +55,7 @@ class UserController extends BaseController
             }
         )->where('enable', 1)->get();
 
-        $users = array();
+        $users = [];
 
         if (in_array($node->node_type, [2, 3, 4])) {
             $key_list = array('node_speedlimit', 'id', 'node_iplimit', 'uuid', 'alive_ip');
@@ -70,13 +70,9 @@ class UserController extends BaseController
             if (isset($alive_ip[strval($user_raw->id)]) && $user_raw->node_iplimit !== 0) {
                 $user_raw->alive_ip = $alive_ip[strval($user_raw->id)];
             }
+
             if ($user_raw->transfer_enable <= $user_raw->u + $user_raw->d) {
-                if ($_ENV['keep_connect'] === true) {
-                    // 流量耗尽用户限速至 1Mbps
-                    $user_raw->node_speedlimit = 1;
-                } else {
-                    continue;
-                }
+                continue;
             }
             
             $user_raw = Tools::keyFilter($user_raw, $key_list);

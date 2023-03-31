@@ -99,7 +99,6 @@ $_ENV['jump_delay'] = 1200;                  //跳转延时，单位ms，不建�
 
 $_ENV['checkNodeIp'] = false;                 //是否webapi验证节点ip
 $_ENV['muKeyList'] = [];                   //多 key 列表
-$_ENV['keep_connect'] = false;               // 流量耗尽用户限速至 1Mbps
 
 #aws
 $_ENV['aws_access_key_id'] = '';
