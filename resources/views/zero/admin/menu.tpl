@@ -15,7 +15,7 @@
 						</div>
 					</div>
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-						<a href="dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
+						<a href="/{$config['website_admin_path']}/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
 							{$config['appName']}
 						</a>
 					</div>
@@ -159,7 +159,7 @@
 						<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
 							<div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="dashboard">
+									<a class="menu-link" href="/{$config['website_admin_path']}/dashboard">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +174,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="setting">
+									<a class="menu-link" href="/{$config['website_admin_path']}/setting">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -187,7 +187,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="order">
+									<a class="menu-link" href="/{$config['website_admin_path']}/order">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -202,7 +202,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="node">
+									<a class="menu-link" href="/{$config['website_admin_path']}/node">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
@@ -215,7 +215,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="product">
+									<a class="menu-link" href="/{$config['website_admin_path']}/product">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
 												<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -227,7 +227,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="user">
+									<a class="menu-link" href="/{$config['website_admin_path']}/user">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +241,7 @@
 								</div>
 								
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="record">
+									<a class="menu-link" href="/{$config['website_admin_path']}/record">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-record-circle" viewBox="0 0 16 16">
@@ -255,7 +255,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="ban">
+									<a class="menu-link" href="/{$config['website_admin_path']}/ban">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bandaid" viewBox="0 0 16 16">
@@ -269,7 +269,7 @@
 								</div>
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
-									<a class="menu-link" href="ticket">
+									<a class="menu-link" href="/{$config['website_admin_path']}/ticket">
 										<span class="menu-icon">
 											<span class="svg-icon svg-icon-2">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-perforated" viewBox="0 0 16 16">
@@ -283,7 +283,7 @@
 								</div>
 								
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="news">
+									<a class="menu-link" href="/{$config['website_admin_path']}/news">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
 												<path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z"/>
@@ -294,7 +294,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="commission">
+									<a class="menu-link" href="/{$config['website_admin_path']}/commission">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
 												<path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
@@ -305,7 +305,7 @@
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
-									<a class="menu-link" href="coupon">
+									<a class="menu-link" href="/{$config['website_admin_path']}/coupon">
 										<span class="menu-icon">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16">
 												<path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>

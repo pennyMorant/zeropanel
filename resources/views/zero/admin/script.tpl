@@ -16,7 +16,16 @@ function getResult(titles, texts, icons) {
     });
 }
 $(document).ready(function (){
-    $("a.menu-link[href='"+window.location.pathname+"']").addClass('active');
+    // 获取当前 URL 路径
+    var path = window.location.pathname;
+
+    // 使用 split() 切割路径字符串
+    var parts = path.split('/');
+
+    // 访问最后一个元素
+    var target2 = parts[2];
+    var target1 = parts[1];
+    $("a.menu-link[href='/"+target1+"/"+target2+"']").addClass('active');
 });
 </script>
 <script>
