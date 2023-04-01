@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use App\Models\User;
 class Auth
 {
 
@@ -22,7 +22,7 @@ class Auth
      *
      * @return \App\Models\User
      */
-    public static function getUser()
+    public static function getUser(): User
     {
         global $user;
         if (is_null($user)) {
