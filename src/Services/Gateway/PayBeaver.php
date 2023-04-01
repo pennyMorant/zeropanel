@@ -8,7 +8,10 @@ use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
 class PayBeaver
-{
+{   
+    protected $appSecret;
+    protected $gatewayUri;
+
     public function __construct() {
         $configs = Setting::getClass('paybeaver');
         $this->appSecret = $configs['paybeaver_app_secret'];
@@ -68,9 +71,16 @@ class PayBeaver
         $data['sign'] = $this->sign($params);
     	$result = json_decode($this->post($data), true);
     	if (!isset($result['data']['pay_url'])) {
-    		return ['ret' => 0, 'msg' => '支付网关处理失败'];
+    		return [
+                'ret' => 0, 
+                'msg' => '支付网关处理失败'
+            ];
     	}
-        return ['url' => $result['data']['pay_url'], 'ret' => 1, 'type' => 'url'];
+        return [
+            'url' => $result['data']['pay_url'], 
+            'ret' => 1, 
+            'type' => 'url'
+        ];
     }
 
 

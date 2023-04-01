@@ -91,9 +91,16 @@ class PayTaro
         $data['sign'] = $this->sign($params);
     	$result = json_decode($this->post($data), true);
     	if (!isset($result['data']['pay_url'])) {
-    		return ['ret' => 0, 'msg' => '支付网关处理失败'];
+    		return [
+                'ret' => 0, 
+                'msg' => '支付网关处理失败'
+            ];
     	}
-        return ['url' => $result['data']['pay_url'], 'ret' => 0, 'type' => 'url'];
+        return [
+            'url' => $result['data']['pay_url'], 
+            'ret' => 0, 
+            'type' => 'url'
+        ];
     }
 
 

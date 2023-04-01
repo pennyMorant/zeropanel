@@ -10,10 +10,6 @@ use Slim\Http\Response;
 
 class VmqPay
 {
-    /**
-     * @name    生成签名
-     * @param sourceData
-     */
     public function sign($payId, $type, $price)
     {
         $configs = Setting::getClass('vmq');
@@ -23,12 +19,6 @@ class VmqPay
         return md5($payId . $vmq_param . $type . $price . $vmq_secret);
     }
 
-    /**
-     * @param $type
-     * @param $price
-     * @param $buyshop
-     * @param int $order_id
-     */
     public function ZeroPay($user_id, $method, $order_no, $amount)
     {
         $configs = Setting::getClass('vmq');

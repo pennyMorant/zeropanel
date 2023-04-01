@@ -7,7 +7,6 @@ use App\Models\{
     Setting
 };
 use Omnipay\Omnipay;
-use App\Services\View;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
@@ -15,9 +14,7 @@ class ZeroPay
 {
     public function purchase($user_id, $method, $order_no, $amount)
     {        
-
         if ($method == 'alipay') {
-            # 支付宝
             $payment = Setting::obtain('alipay_payment');
             switch ($payment) {
                 case ('paytaro'):
@@ -57,7 +54,6 @@ class ZeroPay
             }
 
         } else if ($method == 'wechatpay') {
-            # 微信支付
             $payment = Setting::obtain('wechatpay_payment');
             switch ($payment) {
                 case ('paytaro'):

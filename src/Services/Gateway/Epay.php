@@ -49,11 +49,23 @@ class Epay
             "notify_url" => Setting::obtain('website_url') . "/payment/notify/epay",
             "return_url" => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order_no,
             "name" => "Purchase",
+            "clientip"  =>  "192.168.1.100",
             "money" => $final_amount
         ];
         $paySubmit = new EpaySubmit($this->epay);
-        $html_text = $paySubmit->buildRequestForm($data);
-        $result = ['url'=>$html_text, 'ret'=>1, 'tradeno' => $order_no, 'type'=> 'url'];
+        $payData = $paySubmit->buildRequestPost($data);
+        if ($payData['code'] != 1) {
+            return [
+                'ret'   =>  0,
+                'msg'   =>  '支付网关处理失败'
+            ];
+        }
+        $result = [
+            'url'       =>  $payData['payurl'], 
+            'ret'       =>  1, 
+            'tradeno'   =>  $order_no, 
+            'type'      =>  'url'
+        ];
         return $result;
     }
 

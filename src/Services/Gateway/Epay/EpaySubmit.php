@@ -57,4 +57,12 @@ final class EpaySubmit
         $url = $this->gateway_header . $para;
         return $url;
     }
+
+    public function buildRequestPost($para_temp)
+    {
+        $para = $this->buildRequestPara($para_temp);
+        $url = $this->config['apiurl'] . 'mapi.php';
+        $result = EpayTool::getHttpResponsePOST($url, $para);
+        return json_decode($result, true);
+    }
 }

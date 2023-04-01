@@ -10,6 +10,10 @@ use Slim\Http\Response;
 
 class TronapiPay
 {
+    protected $public_key;
+    protected $private_key;
+    protected $gatewayUri;
+
     public function __construct()
     {
         $configs = Setting::getClass('tronapipay');
@@ -86,9 +90,16 @@ class TronapiPay
 
         $result = json_decode($this->post($data), true);
         if (!isset($result['data']['cashier_url'])) {        
-            return ['ret' => 0, 'msg' => '支付网关处理失败'];
+            return [
+                'ret' => 0, '
+                msg' => '支付网关处理失败'
+            ];
         }
-        return ['ret' => 1, 'url' => $result['data']['cashier_url'], 'type' => 'url'];
+        return [
+            'ret' => 1, 
+            'url' => $result['data']['cashier_url'], 
+            'type' => 'url'
+        ];
     }
 
     public function notify(ServerRequest $request, Response $response, array $args)
