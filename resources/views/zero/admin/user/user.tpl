@@ -65,14 +65,10 @@
             function updateUserStatus(type, id){
                 switch (type){
                     case 'enable':
-                        if ($("#user_enable_"+id).prop("checked")) {
-                            var enable = 1;
-                        } else {
-                            var enable = 0;
-                        }
+                        var enable = $("#user_enable_"+id).prop("checked") ? 1 : 0;
                         $.ajax({
                             type: "PUT",
-                            url: "user/update/status/enable",
+                            url: "/{$config['website_admin_path']}/user/update/status/enable",
                             dataType: "JSON",
                             data: {
                                 enable,
@@ -81,15 +77,11 @@
                             success: function(data){}
                         });
                         break;
-                    case 'is_admin':
-                        if ($("#user_is_admin_"+id).prop("checked")) {
-                            var is_admin = 1;
-                        } else {
-                            var is_admin = 0;
-                        }
+                    case 'is_admin':                      
+                        var is_admin = $("#user_is_admin_"+id).prop("checked") ? 1 : 0;
                         $.ajax({
                             type: "PUT",
-                            url: "user/update/status/is_admin",
+                            url: "/{$config['website_admin_path']}/user/update/status/is_admin",
                             dataType: "JSON",
                             data: {
                                 is_admin,

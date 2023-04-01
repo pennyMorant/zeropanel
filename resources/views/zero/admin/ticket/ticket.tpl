@@ -124,7 +124,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "POST",
-                        url: "ticket/create",
+                        url: "/{$config['website_admin_path']}/ticket/create",
                         dataType: "json",
                         data: {
                             title: $("#zero_admin_create_ticket_title").val(),
@@ -152,7 +152,7 @@
             function zeroAdminCloseTicket(id) {
                 $.ajax({
                     type: "PUT",
-                    url: "ticket/close",
+                    url: "/{$config['website_admin_path']}/ticket/close",
                     dataType: "json",
                     data: {
                         id

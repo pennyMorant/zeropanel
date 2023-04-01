@@ -69,7 +69,7 @@
             function completeOrder(order_id) {
                 $.ajax({
                     type: "PUT",
-                    url: "order/complete",
+                    url: "/{$config['website_admin_path']}/order/complete",
                     dataType: "json",
                     data: {
                         order_id
@@ -85,7 +85,7 @@
         function deleteOrder(order_id) {
             $.ajax({
                 type: "DELETE",
-                url: "order/delete",
+                url: "/{$config['website_admin_path']}/order/delete",
                 dataType: "json",
                 data: {
                     order_id

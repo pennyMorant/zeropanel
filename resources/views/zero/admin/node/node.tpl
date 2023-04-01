@@ -71,7 +71,7 @@
             }
             $.ajax({
                 type: "PUT",
-                url: "node/update/status",
+                url: "/{$config['website_admin_path']}/node/update/status",
                 dataType: "JSON",
                 data: {
                     status,

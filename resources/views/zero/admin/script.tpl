@@ -34,7 +34,7 @@ $(document).ready(function (){
             case 'product':
                 $.ajax({
                     type: "DELETE",
-                    url: "product/delete",
+                    url: "/{$config['website_admin_path']}/product/delete",
                     dataType: "json",
                     data: {
                         id
@@ -52,7 +52,7 @@ $(document).ready(function (){
             case 'node':
                 $.ajax({
                     type: "DELETE",
-                    url: "node/delete",
+                    url: "/{$config['website_admin_path']}/node/delete",
                     dataType: "json",
                     data: {
                         id
@@ -70,7 +70,7 @@ $(document).ready(function (){
             case 'user':
                 $.ajax({
                     type: "DELETE",
-                    url: "user/delete",
+                    url: "/{$config['website_admin_path']}/user/delete",
                     dataType: "json",
                     data: {
                         id
@@ -88,7 +88,7 @@ $(document).ready(function (){
             case 'ban_rule':
                 $.ajax({
                     type: "DELETE",
-                    url: "ban/rule/delete",
+                    url: "/{$config['website_admin_path']}/ban/rule/delete",
                     dataType: "json",
                     data: {
                         id
@@ -106,7 +106,7 @@ $(document).ready(function (){
             case 'news':
                 $.ajax({
                     type: "DELETE",
-                    url: "news/delete",
+                    url: "/{$config['website_admin_path']}/news/delete",
                     dataType: "json",
                     data: {
                         id
@@ -124,7 +124,7 @@ $(document).ready(function (){
             case 'ticket':
             $.ajax({
                     type: "DELETE",
-                    url: "ticket/delete",
+                    url: "/{$config['website_admin_path']}/ticket/delete",
                     dataType: "json",
                     data: {
                         id

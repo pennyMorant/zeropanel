@@ -109,7 +109,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "PUT",
-                        url: "ticket/update",
+                        url: "/{$config['website_admin_path']}/ticket/update",
                         dataType: "json",
                         data: {
                             id,

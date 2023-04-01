@@ -105,7 +105,7 @@
             function zeroAdminCreateProduct() {
                 $.ajax({
                     type: "POST",
-                    url: "product/create",
+                    url: "/{$config['website_admin_path']}/product/create",
                     dataType: "JSON",
                     data: {
                         name: $('#name').val(),

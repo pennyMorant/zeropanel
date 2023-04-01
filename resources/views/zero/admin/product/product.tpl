@@ -55,14 +55,10 @@
         </script>
         <script>
             function updateProductStatus(id) {
-                if ($("#product_status_"+id).prop("checked")) {
-                    var status = 1;
-                } else {
-                    var status = 0;
-                }
+                var status = $("#product_status_"+id).prop("checked") ? 1 : 0;
                 $.ajax({
                     type: "PUT",
-                    url: "product/update/status",
+                    url: "/{$config['website_admin_path']}/product/update/status",
                     dataType: "JSON",
                     data: {
                         status,

@@ -219,7 +219,7 @@
                     case 'request':
                         $.ajax({
                             type: "POST",
-                            url: "ban/rule/request",
+                            url: "/{$config['website_admin_path']}/ban/rule/request",
                             dataType: "json",
                             data:{
                                 id,
@@ -276,7 +276,7 @@
                 submitButton.disabled = true;
                 $.ajax({
                     type: "POST",
-                    url: "ban/rule/create",
+                    url: "/{$config['website_admin_path']}/ban/rule/create",
                     dataType: "json",
                     data: {
                         name: $('#zero_create_ban_rule_name').val(),

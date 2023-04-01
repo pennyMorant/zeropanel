@@ -136,7 +136,7 @@
                 submitButton.disabled = true;
                 $.ajax({
                     type: "POST",
-                    url: "coupon/create",
+                    url: "/{$config['website_admin_path']}/coupon/create",
                     dataType: "json",
                     data: {
                         code: $('#zero_create_coupon_code').val(),

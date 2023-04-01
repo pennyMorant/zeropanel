@@ -160,7 +160,7 @@
                 setTimeout(function () {
                     $.ajax({
                         type: "POST",
-                        url: "news/create",
+                        url: "/{$config['website_admin_path']}/news/create",
                         dataType: "json",
                         data: {
                             content: text,
@@ -191,7 +191,7 @@
                     case 'request':
                         $.ajax({
                             type: "POST",
-                            url: "news/request",
+                            url: "/{$config['website_admin_path']}/news/request",
                             dataType: "json",
                             data:{
                                 id,
@@ -210,7 +210,7 @@
                         setTimeout(function () {
                             $.ajax({
                                 type: "PUT",
-                                url: "news/update",
+                                url: "/{$config['website_admin_path']}/news/update",
                                 dataType: "json",
                                 data: {
                                     content: text,

@@ -128,7 +128,7 @@
             function zeroAdminUpdateNode(id) {
                 $.ajax({
                     type: "PUT",
-                    url: "node/update",
+                    url: "/{$config['website_admin_path']}/node/update",
                     dataType: "JSON",
                     data: {
                         id,
