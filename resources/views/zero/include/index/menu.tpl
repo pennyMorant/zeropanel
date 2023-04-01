@@ -243,7 +243,7 @@
                                                     </svg>
                                                 </span>
                                             </span>
-                                            <span class="menu-title">{$trans->t('user center')}</span>
+                                            <span class="menu-title">{$trans->t('profile')}</span>
                                         </a>
                                     </div>
                                     
@@ -286,7 +286,7 @@
                                                     </svg>
                                                 </span>
                                             </span>
-                                            <span class="menu-title">{$trans->t('referral plan')}</span>
+                                            <span class="menu-title">{$trans->t('referral')}</span>
                                         </a>
                                     </div>
                                     {if $user->is_admin == '1'}
