@@ -14,16 +14,13 @@ class Cookie extends Base
         $user = User::find($uid);
         $expire_in = $time + time();
         $key = Hash::cookieHash($user->password, $expire_in);
-        $info = [
-            'uid' => $uid,
+        Utils\Cookie::set([
+            'uid' => strval($uid),
             'email' => $user->email,
             'key' => $key,
-            'ip' => md5($_SERVER['REMOTE_ADDR'] . Setting::obtain('website_security_token') . $uid . $expire_in),
-            'expire_in' => $expire_in
-        ];
-        Utils\Cookie::set($info, $expire_in);
-        if (!session_id()) session_start();
-        $_SESSION['userInfo'] = $info;
+            //'ip' => Hash::ipHash($_SERVER['REMOTE_ADDR'], $uid, $expire_in),
+            'expire_in' => strval($expire_in),
+        ], $expire_in);
     }
 
     public function getUser()
@@ -73,9 +70,9 @@ class Cookie extends Base
     {
         $time = time() - 1000;
         Utils\Cookie::set([
-            'uid' => null,
-            'email' => null,
-            'key' => null
+            'uid' => '',
+            'email' => '',
+            'key' => '',
         ], $time);
     }
 }
