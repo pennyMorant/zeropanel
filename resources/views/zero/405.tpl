@@ -21,7 +21,7 @@
                         请返回重试
                     </p>
                     <div>
-                        <a href="/user" class="btn btn-light">返回主页</a>
+                        <a href="/user/dashboard" class="btn btn-light">返回主页</a>
                     </div>
                 </div>
             </div>

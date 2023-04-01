@@ -45,7 +45,7 @@
 							
 							
 							<div class="mb-0">
-								<a href="/user" class="btn btn-sm btn-primary">Return Home</a>
+								<a href="/user/dashboard" class="btn btn-sm btn-primary">Return Home</a>
 							</div>
 							
 						</div>
