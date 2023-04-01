@@ -50,9 +50,6 @@ class Config
             'enable_sales_agent'      => $public_configs['enable_sales_agent'],
             'purchase_sales_agent_price' => $public_configs['purchase_sales_agent_price'],
             'sales_agent_commission_ratio'  => $public_configs['sales_agent_commission_ratio'],
-            'jump_delay'              => $_ENV['jump_delay'],
-            //'enable_reg_im'           => $_ENV['enable_reg_im'],
-            // tg
             'subscribe_log_keep_time' => $public_configs['subscribe_log_keep_time'],
             'enable_telegram_bot'     => $public_configs['enable_telegram_bot'],
             'telegram_bot_id'         => $public_configs['telegram_bot_id'],
