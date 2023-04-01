@@ -7,8 +7,6 @@ use App\Services\{
     Auth,
     View
 };
-use Slim\Http\Response;
-use Psr\Http\Message\ResponseInterface;
 use Smarty;
 
 /**
@@ -35,27 +33,8 @@ class BaseController
         $this->user = Auth::getUser();
     }
 
-    /**
-     * Get smarty
-     *
-     * @return Smarty
-     */
     public function view()
     {
         return $this->view;
-    }
-
-    // TODO: remove
-    /**
-     * Output JSON
-     *
-     * @param Response      $response
-     * @param array|object  $resource
-     *
-     * @return ResponseInterface
-     */
-    public function echoJson($response, $resource)
-    {
-        return $response->withJson($resource);
     }
 }

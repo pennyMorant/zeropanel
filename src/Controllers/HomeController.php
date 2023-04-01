@@ -3,13 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Setting;
-use App\Utils\Telegram\Process;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
-/**
- *  HomeController
- */
 class HomeController extends BaseController
 {
     public function index(ServerRequest $request, Response $response, array $args)
@@ -19,19 +15,6 @@ class HomeController extends BaseController
         return $response;
     }
 
-    public function telegram(ServerRequest $request, Response $response, array $args)
-    {
-        $token = $request->getQueryParam('token');
-        if ($token == Setting::obtain('telegram_bot_request_token')) {
-           
-            Process::commandBot();
-            
-            $result = '1';
-        } else {
-            $result = '0';
-        }
-        return $response->write($result);
-    }
 
     public function page404(ServerRequest $request, Response $response, array $args)
     {
