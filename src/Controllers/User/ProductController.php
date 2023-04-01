@@ -9,6 +9,7 @@ use App\Models\{
     Ann,
     Order
 };
+use App\Utils\Cookie;
 use App\Controllers\OrderController;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -124,6 +125,7 @@ final class ProductController extends BaseController
                 'msg' => $e->getMessage(),
             ]);
         }
+
         return $response->withJson([
             'ret' => 1,
             'order_no' => $order->order_no,
