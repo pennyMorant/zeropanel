@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use App\Models\User;
+
 class Auth
 {
 
@@ -17,15 +18,10 @@ class Auth
         self::getDriver()->login($uid, $time);
     }
 
-    /**
-     * Get current user(cached)
-     *
-     * @return \App\Models\User
-     */
     public static function getUser(): User
     {
         global $user;
-        if ($user === null) {
+        if (is_null($user)) {
             $user = self::getDriver()->getUser();
         }
         return $user;
