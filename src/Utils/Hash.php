@@ -37,6 +37,11 @@ class Hash
         return substr(hash('sha256', $passHash . Setting::obtain('website_security_token') . $expire_in), 5, 45);
     }
 
+    public static function ipHash($ip, $uid, $expire_in): string
+    {
+        return substr(hash('sha256', $ip . Setting::obtain('website_security_token') . $uid . $expire_in), 5, 45);
+    }
+
     public static function md5WithSalt($pwd)
     {
         $salt = $_ENV['salt'];

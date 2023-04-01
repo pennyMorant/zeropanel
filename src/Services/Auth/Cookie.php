@@ -19,7 +19,7 @@ class Cookie extends Base
             'uid' => strval($uid),
             'email' => $user->email,
             'key' => $key,
-            //'ip' => Hash::ipHash($_SERVER['REMOTE_ADDR'], $uid, $expire_in),
+            'ip' => Hash::ipHash($_SERVER['REMOTE_ADDR'], $uid, $expire_in),
             'expire_in' => strval($expire_in),
         ], $expire_in);
     }
@@ -29,12 +29,13 @@ class Cookie extends Base
         $uid = Utils\Cookie::get('uid');
         $email = Utils\Cookie::get('email');
         $key = Utils\Cookie::get('key');
-        //$ipHash = Utils\Cookie::get('ip');
+        $ipHash = Utils\Cookie::get('ip');
         $expire_in = Utils\Cookie::get('expire_in');
+
         $user = new User();
         $user->isLogin = false;
 
-        if ($uid == null) {
+        if ($uid === null) {
             return $user;
         }
 
@@ -43,25 +44,22 @@ class Cookie extends Base
         }
 
         $user = User::find($uid);
-
-        if ($user == null) {
+        if ($user === null) {
             $user = new User();
             $user->isLogin = false;
             return $user;
         }
 
-        if ($user->email != $email) {
+        if ($user->email !== $email) {
             $user = new User();
             $user->isLogin = false;
         }
 
-
-        if (Hash::cookieHash($user->password, $expire_in) != $key) {
+        if (Hash::cookieHash($user->password, $expire_in) !== $key) {
             $user = new User();
             $user->isLogin = false;
             return $user;
         }
-
 
         $user->isLogin = true;
         return $user;
