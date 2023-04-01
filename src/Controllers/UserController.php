@@ -250,11 +250,6 @@ class UserController extends BaseController
         return $response->withJson($res);
     }
 
-    public function disable(ServerRequest $request, Response $response, array $args)
-    {
-        $this->view()->display('user/disable.tpl');
-        return $response;
-    }
     
     public function record(ServerRequest $request, Response $response, array $args)
     {

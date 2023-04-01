@@ -310,12 +310,4 @@ class AuthController extends BaseController
             'msg'   => $trans->t('signup success'),
         ]);
     }
-
-    public function logout(ServerRequest $request, Response $response, $next)
-    {
-        Auth::logout();
-        return $response
-            ->withStatus(302)
-            ->withHeader('Location', '/');
-    }
 }

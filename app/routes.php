@@ -96,7 +96,6 @@ return function (SlimApp $app) {
         $group->get('/signup',           App\Controllers\AuthController::class . ':signUpIndex');
         $group->post('/signup',        App\Controllers\AuthController::class . ':signUpHandle');
         $group->post('/send',            App\Controllers\AuthController::class . ':sendVerify');
-        $group->get('/logout',           App\Controllers\AuthController::class . ':logout');
 
     })->add(new Guest());
 
