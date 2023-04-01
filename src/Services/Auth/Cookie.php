@@ -13,7 +13,7 @@ class Cookie extends Base
     public function login($uid, $time)
     {
         $user = User::find($uid);
-        $expire_in = $time + time();
+        $expire_in = time() + $time;
         $key = Hash::cookieHash($user->password, $expire_in);
         Utils\Cookie::set([
             'uid' => strval($uid),
