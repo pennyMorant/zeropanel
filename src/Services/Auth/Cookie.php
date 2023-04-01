@@ -32,7 +32,7 @@ class Cookie extends Base
         $uid = Utils\Cookie::get('uid');
         $email = Utils\Cookie::get('email');
         $key = Utils\Cookie::get('key');
-        $ipHash = Utils\Cookie::get('ip');
+        //$ipHash = Utils\Cookie::get('ip');
         $expire_in = Utils\Cookie::get('expire_in');
         $user = new User();
         $user->isLogin = false;

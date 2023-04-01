@@ -25,16 +25,10 @@ use Exception;
 class User extends Model
 {
     protected $connection = 'default';
-
     protected $table = 'user';
     protected $dates = ['signup_date'];
 
-    /**
-     * 已登录
-     *
-     * @var bool
-     */
-    public $isLogin;
+    public bool $isLogin;
 
     /**
      * 强制类型转换
