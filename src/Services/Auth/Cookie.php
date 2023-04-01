@@ -3,9 +3,10 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
-use App\Models\Setting;
 use App\Utils;
 use App\Utils\Hash;
+use function strval;
+use function time;
 
 class Cookie extends Base
 {
@@ -23,7 +24,7 @@ class Cookie extends Base
         ], $expire_in);
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         $uid = Utils\Cookie::get('uid');
         $email = Utils\Cookie::get('email');
