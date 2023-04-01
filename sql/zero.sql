@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-03-29 07:31:31
+-- 生成日期： 2023-04-01 17:06:06
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -310,26 +310,6 @@ CREATE TABLE `telegram_session` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `telegram_tasks`
---
-
-CREATE TABLE `telegram_tasks` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `type` int(11) NOT NULL COMMENT '任务类型',
-  `status` int(11) NOT NULL DEFAULT 0 COMMENT '任务状态',
-  `chatid` varchar(128) NOT NULL DEFAULT '0' COMMENT 'Telegram Chat ID',
-  `messageid` varchar(128) NOT NULL DEFAULT '0' COMMENT 'Telegram Message ID',
-  `content` text DEFAULT NULL COMMENT '任务详细内容',
-  `process` varchar(32) DEFAULT NULL COMMENT '临时任务进度',
-  `userid` int(11) NOT NULL DEFAULT 0 COMMENT '网站用户 ID',
-  `tguserid` varchar(32) NOT NULL DEFAULT '0' COMMENT 'Telegram User ID',
-  `executetime` bigint(20) NOT NULL COMMENT '任务执行时间',
-  `datetime` bigint(20) NOT NULL COMMENT '任务产生时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Telegram 任务列表';
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `ticket`
 --
 
@@ -591,12 +571,6 @@ ALTER TABLE `telegram_session`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `telegram_tasks`
---
-ALTER TABLE `telegram_tasks`
-  ADD PRIMARY KEY (`id`);
-
---
 -- 表的索引 `ticket`
 --
 ALTER TABLE `ticket`
@@ -752,12 +726,6 @@ ALTER TABLE `signin_ip`
 --
 ALTER TABLE `telegram_session`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `telegram_tasks`
---
-ALTER TABLE `telegram_tasks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `ticket`
