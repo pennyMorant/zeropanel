@@ -47,7 +47,7 @@
                                                 <div class="tab-pane fade show active" id="zero_admin_nav_website" role="tabpanel" aria-labelledby="zero_admin_nav_website_tab" tabindex="0">
                                                     <div class="card card-bordered mb-5">
                                                         <div class="card-header">
-                                                            <div class="card-title">基础配置</div>
+                                                            <div class="card-title fw-bold">基础配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('website')">保存配置</button>
                                                             </div>
@@ -79,7 +79,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">权限组自定义</div>
+                                                                    <div class="card-title fw-bold">权限组自定义</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">保存配置</button>
                                                                     </div>
@@ -100,7 +100,7 @@
                                                 <div class="tab-pane fade" id="zero_admin_nav_payment" role="tabpanel" aria-labelledby="zero_admin_nav_payment_tab" tabindex="0">
                                                     <div class="card card-bordered">
                                                         <div class="card-header">
-                                                            <div class="card-title">支付配置</div>
+                                                            <div class="card-title fw-bold">支付配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('payment_gateway')">保存配置</button>
                                                             </div>
@@ -257,7 +257,7 @@
                                                         <div class="col-xxl-6">                                                   
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">邮件配置</div>
+                                                                    <div class="card-title fw-bold">邮件配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mail')">保存配置</button>
                                                                     </div>
@@ -275,7 +275,7 @@
                                                             </div>
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">邮件备份</div>
+                                                                    <div class="card-title fw-bold">邮件备份</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('backup')">保存配置</button>
                                                                     </div>
@@ -296,7 +296,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">邮件测试</div>
+                                                                    <div class="card-title fw-bold">邮件测试</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm">测试</button>
                                                                     </div>
@@ -308,7 +308,7 @@
                                                             </div>
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">SENDGRID 配置</div>
+                                                                    <div class="card-title fw-bold">SENDGRID 配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('sendgrid')">保存配置</button>
                                                                     </div>
@@ -329,7 +329,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">SMTP 配置</div>
+                                                                    <div class="card-title fw-bold">SMTP 配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('smtp')">保存配置</button>
                                                                     </div>
@@ -363,7 +363,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered mb-5">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">MAILGUN 配置</div>
+                                                                    <div class="card-title fw-bold">MAILGUN 配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mailgun')">保存配置</button>
                                                                     </div>
@@ -379,7 +379,7 @@
                                                             </div>
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">SES 配置</div>
+                                                                    <div class="card-title fw-bold">SES 配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('ses')">保存配置</button>
                                                                     </div>
@@ -399,7 +399,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">Telegram 配置</div>
+                                                                    <div class="card-title fw-bold">Telegram 配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram')">保存配置</button>
                                                                     </div>
@@ -419,7 +419,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">Telegram BOT</div>
+                                                                    <div class="card-title fw-bold">Telegram BOT</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram_bot')">保存配置</button>
                                                                     </div>
@@ -459,7 +459,7 @@
                                                 <div class="tab-pane fade" id="zero_admin_nav_sub" role="tabpanel" aria-labelledby="zero_admin_nav_sub_tab" tabindex="0">                                                   
                                                     <div class="card card-bordered">
                                                         <div class="card-header">
-                                                            <div class="card-title">订阅配置</div>
+                                                            <div class="card-title fw-bold">订阅配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('subscribe')">保存配置</button>
                                                             </div>
@@ -541,7 +541,7 @@
                                                         <div class="col-xxl-6">
                                                             <div class="card card-bordered">
                                                                 <div class="card-header">
-                                                                    <div class="card-title">提现配置</div>
+                                                                    <div class="card-title fw-bold">提现配置</div>
                                                                     <div class="card-toolbar">
                                                                         <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('withdraw')">保存配置</button>
                                                                     </div>
@@ -566,7 +566,7 @@
                                                 <div class="tab-pane fade" id="zero_admin_nav_account" role="tabpanel" aria-labelledby="zero_admin_nav_account_tab" tabindex="0">
                                                     <div class="card card-bordered mb-5">
                                                         <div class="card-header">
-                                                            <div class="card-title">注册配置</div>
+                                                            <div class="card-title fw-bold">注册配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('register')">保存配置</button>
                                                             </div>
@@ -607,7 +607,7 @@
                                                     </div>
                                                     <div class="card card-bordered mb-5">
                                                         <div class="card-header">
-                                                            <div class="card-title">验证配置</div>
+                                                            <div class="card-title fw-bold">验证配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('captcha')">保存配置</button>
                                                             </div>
@@ -641,7 +641,7 @@
                                                     </div>
                                                     <div class="card card-bordered">
                                                         <div class="card-header">
-                                                            <div class="card-title">客服配置</div>
+                                                            <div class="card-title fw-bold">客服配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('live_chat')">保存配置</button>
                                                             </div>
@@ -675,7 +675,7 @@
                                                 <div class="tab-pane fade" id="zero_admin_nav_referral" role="tabpanel" aria-labelledby="zero_admin_nav_referral_tab" tabindex="0">
                                                     <div class="card card-bordered">
                                                         <div class="card-header">
-                                                            <div class="card-title">模式配置</div>
+                                                            <div class="card-title fw-bold">模式配置</div>
                                                             <div class="card-toolbar">
                                                                 <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('invite')">保存配置</button>
                                                             </div>
