@@ -90,9 +90,6 @@ $_ENV['sessionDriver']          = 'cookie';            //可选: cookie
 $_ENV['cacheDriver']            = 'cookie';            //可选: cookie
 $_ENV['tokenDriver']            = 'db';                //可选: db
 
-
-$_ENV['rememberMeDuration'] = 7;           //登录时记住账号时长天数
-
 $_ENV['timeZone'] = 'PRC';                 //PRC 天朝时间  UTC 格林时间
 $_ENV['theme'] = 'zero';            //默认主题
 

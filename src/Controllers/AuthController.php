@@ -78,7 +78,9 @@ class AuthController extends BaseController
         }
 
         // 记录登录成功
-        Auth::login($user->id, 3600 * 24 * ($_ENV['rememberMeDuration'] ?: 7));
+        
+        Auth::login($user->id, 3600 * 24 * 7 );
+
         $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
         
         // 更新用户信息

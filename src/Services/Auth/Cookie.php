@@ -3,7 +3,6 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
-use App\Models\Node;
 use App\Models\Setting;
 use App\Utils;
 use App\Utils\Hash;
@@ -37,7 +36,7 @@ class Cookie extends Base
         $user = new User();
         $user->isLogin = false;
 
-        if (is_null($uid)) {
+        if ($uid === null) {
             return $user;
         }
 
@@ -47,7 +46,7 @@ class Cookie extends Base
 
         $user = User::find($uid);
 
-        if (is_null($user)) {
+        if ($user === null) {
             $user = new User();
             $user->isLogin = false;
             return $user;
