@@ -32,7 +32,7 @@ class UserController extends AdminController
             'money'                 => '金钱',
             'class'                 => '等级',
             'class_expire'          => '等级过期时间',
-            'enable_traffic'        => '总流量',
+            'traffic'               => '流量',
             'enable'                => '启用',
             'is_admin'              => '管理员',
             'action'                => '操作',
@@ -195,15 +195,15 @@ class UserController extends AdminController
         $data = $query['datas']->map(function($rowData) {
             $type = "'user'";
             return [
-                'id'    =>  $rowData->id,
-                'email' =>  $rowData->email,
-                'money' =>  $rowData->money,
-                'class' =>  $rowData->class,
+                'id'            =>  $rowData->id,
+                'email'         =>  $rowData->email,
+                'money'         =>  $rowData->money,
+                'class'         =>  $rowData->class,
                 'class_expire'  =>  $rowData->class_expire,
-                'enable_traffic'    =>  Tools::flowToGB($rowData->transfer_enable).'GB',
-                'is_admin'  =>  $rowData->is_admin(),
-                'enable'    =>  $rowData->enable(),
-                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                'traffic'       =>  $rowData->usedTraffic() . '/' . Tools::flowToGB($rowData->transfer_enable).'GB',
+                'is_admin'      =>  $rowData->is_admin(),
+                'enable'        =>  $rowData->enable(),
+                'action'        =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="user/update/'.$rowData->id.'">编辑</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
