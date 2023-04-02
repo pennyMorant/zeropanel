@@ -43,7 +43,7 @@ class Payment
                             '用户：' . $user->email . PHP_EOL .
                             '金额：' . $order->order_total . PHP_EOL .
                             '订单：' . $order->order_no;
-            Telegram::PushToAdmin($messageText);
+            Telegram::pushToAdmin($messageText);
         }
     }
 }

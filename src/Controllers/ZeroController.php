@@ -117,7 +117,7 @@ class ZeroController extends BaseController
         $sendAdmin = Setting::obtain('telegram_admin_id');
         $admin_telegram_id = User::where('id', $sendAdmin)->where('is_admin', '1')->value('telegram_id');
         if (!is_null($admin_telegram_id)) {
-            Telegram::PushToAdmin($text, $admin_telegram_id);
+            Telegram::pushToAdmin($text, $admin_telegram_id);
         }
 
         $res['ret'] = 1;

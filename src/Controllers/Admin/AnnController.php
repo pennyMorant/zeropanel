@@ -110,7 +110,7 @@ class AnnController extends AdminController
         $converter = new HtmlConverter();
         $html = $postdata['content'];
         $markdown = $converter->convert($html);
-        Telegram::PushToChanel($markdown);
+        Telegram::pushToChannel($markdown);
         if ($issend == 1) {
             $msg = '公告添加成功，邮件发送成功';
         } else {
@@ -137,7 +137,7 @@ class AnnController extends AdminController
         $converter = new HtmlConverter();
         $html = $request->getParam('content');
         $markdown = $converter->convert($html);
-        Telegram::PushToChanel('公告更新：' . PHP_EOL . $markdown);
+        Telegram::pushToChannel('公告更新：' . PHP_EOL . $markdown);
         return $response->withJson([
             'ret' => 1,
             'msg' => '修改成功'

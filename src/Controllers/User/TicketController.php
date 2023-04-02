@@ -84,7 +84,7 @@ class TicketController extends UserController
                     ]
                 ]
             ];
-            Telegram::PushToAdmin($messageText, $keyBoard);
+            Telegram::pushToAdmin($messageText, $keyBoard);
         }
 
         return $response->withJson(
@@ -141,7 +141,7 @@ class TicketController extends UserController
                     ]
                 ]
             ];
-            Telegram::PushToAdmin($messageText, $keyBoard);
+            Telegram::pushToAdmin($messageText, $keyBoard);
         }
 
         return $response->withJson(

@@ -114,7 +114,7 @@ class Job extends Command
 
         echo '每日数据库清理成功报告发送开始' . PHP_EOL;
         $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
-        Telegram::PushToAdmin($messagetext);
+        Telegram::pushToAdmin($messagetext);
         echo '每日数据库清理成功报告发送结束' . PHP_EOL;
 
         $configs = Setting::getClass('currency');
@@ -154,7 +154,7 @@ class Job extends Command
                 }
                 
                 $messagetext = $notice_text;
-                Telegram::PushToAdmin($messagetext);
+                Telegram::pushToAdmin($messagetext);
                 $node->online = false;
                 $node->save();
             } elseif ($node->isNodeOnline() === true && $node->online == false) {
@@ -166,7 +166,7 @@ class Job extends Command
                     );
                 }
                 $messagetext = $notice_text;
-                Telegram::PushToAdmin($messagetext);          
+                Telegram::pushToAdmin($messagetext);          
 
                 $node->online = true;
                 $node->save();

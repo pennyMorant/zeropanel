@@ -71,7 +71,7 @@ EOL;
         system('rm /tmp/backup.zip', $ret);
         if ($configs['auto_backup_notify'] == true) {           
             $messagetext = "备份工作已经完成";                
-            Telegram::PushToAdmin($messagetext);               
+            Telegram::pushToAdmin($messagetext);               
         }
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
     }
