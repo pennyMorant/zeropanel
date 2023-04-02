@@ -8,6 +8,8 @@
     7. 自定义landing页面
     8. 自定义权限组
     9. 自定义管理页面路径
+## Demo
+http://zeroboard.top
 ## 交流
 https://t.me/zero_panel_group
     欢迎各位大佬PR，以及参与测试提交问题
