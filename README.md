@@ -10,6 +10,8 @@
     9. 自定义管理页面路径
 ## Demo
 http://zeroboard.top
+账号：admin@qq.com
+密码：123456789
 ## 交流
 https://t.me/zero_panel_group
     欢迎各位大佬PR，以及参与测试提交问题
