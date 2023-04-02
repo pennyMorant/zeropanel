@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-01 17:06:06
+-- 生成日期： 2023-04-02 07:02:35
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -175,7 +175,7 @@ CREATE TABLE `node` (
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `node_traffic` bigint(20) NOT NULL DEFAULT 0 COMMENT '节点流量',
-  `node_traffic_limit` int(11) NOT NULL DEFAULT 0 COMMENT '流量限制',
+  `node_traffic_limit` bigint(20) NOT NULL DEFAULT 0 COMMENT '流量限制',
   `node_traffic_limit_reset_date` int(11) NOT NULL DEFAULT 0 COMMENT '节点流量限制重置日期',
   `node_heartbeat` bigint(20) NOT NULL DEFAULT 0,
   `node_ip` varchar(39) DEFAULT NULL COMMENT '节点IP',
