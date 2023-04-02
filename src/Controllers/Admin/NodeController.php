@@ -55,7 +55,7 @@ class NodeController extends AdminController
         $node->node_flag        = $request->getParam('node_flag');
         $node->node_type        = $request->getParam('node_type');
 
-        if (is_null($request->getParam('custom_config'))) {
+        if (!is_null($request->getParam('custom_config'))) {
             $node->custom_config = json_encode($request->getParam('custom_config'));
         } else {
             $node->custom_config = '{}';
