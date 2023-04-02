@@ -5,6 +5,9 @@ namespace App\Middleware;
 use Slim\Interfaces\ErrorRendererInterface;
 use Throwable;
 use App\Services\View;
+use Slim\Exception\HttpNotFoundException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpBadRequestException;
 
 class Error implements ErrorRendererInterface
 {

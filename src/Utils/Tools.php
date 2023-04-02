@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Utils;
-use Illuminate\Support\Facades\DB;
+
 use GeoIp2\Exception\AddressNotFoundException;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use DateTime;
