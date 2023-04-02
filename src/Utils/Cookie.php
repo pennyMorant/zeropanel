@@ -7,7 +7,7 @@ final class Cookie
     public static function set($arg, $time): void
     {
         foreach ($arg as $key => $value) {
-            setcookie((string) $key, (string) $value, (int) $time, '/', '', true, true);
+            setcookie((string) $key, (string) $value, (int) $time, '/', '', false, true);
         }
     }
 

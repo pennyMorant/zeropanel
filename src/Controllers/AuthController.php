@@ -12,7 +12,6 @@ use App\Utils\{
     Hash,
     Check,
     Tools,
-    Cookie
 };
 use App\Services\{
     Auth,
@@ -26,9 +25,6 @@ use voku\helper\AntiXSS;
 use Exception;
 use Ramsey\Uuid\Uuid;
 
-/**
- *  AuthController
- */
 class AuthController extends BaseController
 {
     public function signInIndex(ServerRequest $request, Response $response, array $args)
@@ -77,7 +73,6 @@ class AuthController extends BaseController
                 'msg' => $e->getMessage(),
             ]);
         }
-        // 记录登录成功
         
         Auth::login($user->id, 3600 * 24 * 7);
         $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
