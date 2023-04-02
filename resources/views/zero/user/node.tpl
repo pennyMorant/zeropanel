@@ -30,14 +30,16 @@
                                     <div class="card" id="kt_pricing">
                                         <div class="card-body p-lg-17">
                                             <div class="d-flex flex-column">
-                                                
-                                                <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
-                                                    {foreach $class as $grade}
-                                                        {assign var="node_permission" value=$permission_group[$grade['node_class']]|default: "unknown"}
-                                                        <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $grade['node_class'] == $min_node_class}active{/if}" data-bs-toggle="tab" data-bs-target="#node_show_{$grade['node_class']}">{$node_permission}</button>
-                                                    {/foreach}
-                                                </div>
-                                                      
+                                                {if !$class->isEmpty()}
+                                                    <div class="nav-group nav-group-outline mx-auto mb-15 nav" data-kt-buttons="true">
+                                                        {foreach $class as $grade}
+                                                            {assign var="node_permission" value=$permission_group[$grade['node_class']]|default: "unknown"}
+                                                            <button class="btn btn-color-gray-400 btn-active btn-active-secondary px-6 py-3 me-2 {if $grade['node_class'] == $min_node_class}active{/if}" data-bs-toggle="tab" data-bs-target="#node_show_{$grade['node_class']}">{$node_permission}</button>
+                                                        {/foreach}
+                                                    </div>
+                                                {else}
+                                                    <span class="fw-bold fs-3 text-center">对不起，系统中没有任何节点</span>     
+                                                {/if}
 												<div class="tab-content">
                                                     {foreach $class as $grade}
 													<div class="tab-pane fade show {if $grade['node_class'] == $min_node_class}active show{/if}" id="node_show_{$grade['node_class']}">
