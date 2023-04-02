@@ -58,7 +58,6 @@ return function (SlimApp $app) {
         $group->put('/ticket/update',                   App\Controllers\User\TicketController::class . ':updateTicket');
         
         $group->post('/update_profile/{type}',          App\Controllers\UserController::class . ':updateProfile');
-        $group->post('/send',                           App\Controllers\AuthController::class . ':sendVerify');
         $group->post('/mail',                           App\Controllers\UserController::class . ':updateMail');
         $group->post('/enable_notify',                  App\Controllers\UserController::class . ':enableNotify');
         $group->get('/trafficlog',                      App\Controllers\UserController::class . ':trafficLog');
@@ -104,8 +103,6 @@ return function (SlimApp $app) {
         $group->post('/signin',             App\Controllers\AuthController::class . ':signInHandle');
         $group->get('/signup',              App\Controllers\AuthController::class . ':signUpIndex');
         $group->post('/signup',             App\Controllers\AuthController::class . ':signUpHandle');
-        $group->post('/send',               App\Controllers\AuthController::class . ':sendVerify');
-
     })->add(new Guest());
 
     // Password

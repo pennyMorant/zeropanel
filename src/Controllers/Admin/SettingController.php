@@ -209,9 +209,6 @@ class SettingController extends AdminController
             case 'register':
                 $list = [
                     'reg_mode', 
-                    'reg_email_verify', 
-                    'email_verify_ttl', 
-                    'email_verify_ip_limit', 
                     'signup_default_traffic', 
                     'signup_default_class', 
                     'signup_default_class_time', 

@@ -282,11 +282,11 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">接收备份的邮箱</label>
-                                                                    <input class="form-control" id="auto_backup_email" value="{$settings['auto_backup_email']}" type="text" placeholder="邮箱" />
+                                                                    <input class="form-control mb-5" id="auto_backup_email" value="{$settings['auto_backup_email']}" type="text" placeholder="邮箱" />
                                                                     <label class="form-label">备份的压缩密码</label>
-                                                                    <input class="form-control" id="auto_backup_password" value="{$settings['auto_backup_password']}" type="text" placeholder="密码" />
+                                                                    <input class="form-control mb-5" id="auto_backup_password" value="{$settings['auto_backup_password']}" type="text" placeholder="密码" />
                                                                     <label class="form-label">备份成功推送TG消息</label>
-                                                                    <select class="form-select" id="auto_backup_notify" data-control="select2" data-hide-search="true">
+                                                                    <select class="form-select mb-5" id="auto_backup_notify" data-control="select2" data-hide-search="true">
                                                                         <option value="0" {if $settings['auto_backup_notify'] == false} selected{/if}>关闭</option>
                                                                         <option value="1" {if $settings['auto_backup_notify'] == true} selected{/if}>开启</option>
                                                                     </select>
@@ -315,11 +315,11 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">密钥</label>
-                                                                    <input class="form-control" id="sendgrid_key" value="{$settings['sendgrid_key']}" type="text" placeholder="密钥" />
+                                                                    <input class="form-control mb-5" id="sendgrid_key" value="{$settings['sendgrid_key']}" type="text" placeholder="密钥" />
                                                                     <label class="form-label">发信邮箱</label>
-                                                                    <input class="form-control" id="sendgrid_sender" value="{$settings['sendgrid_sender']}" type="text" placeholder="邮箱" />
+                                                                    <input class="form-control mb-5" id="sendgrid_sender" value="{$settings['sendgrid_sender']}" type="text" placeholder="邮箱" />
                                                                     <label class="form-label">发信名称</label>
-                                                                    <input class="form-control" id="sendgrid_name" value="{$settings['sendgrid_name']}" type="text" placeholder="发信名称" />
+                                                                    <input class="form-control mb-5" id="sendgrid_name" value="{$settings['sendgrid_name']}" type="text" placeholder="发信名称" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -370,11 +370,11 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">密钥</label>
-                                                                    <input class="form-control" id="mailgun_key" value="{$settings['mailgun_key']}" type="text" placeholder="密钥">
+                                                                    <input class="form-control mb-5" id="mailgun_key" value="{$settings['mailgun_key']}" type="text" placeholder="密钥">
                                                                     <label class="form-label">域名</label>
-                                                                    <input class="form-control" id="mailgun_domain" value="{$settings['mailgun_domain']}" type="text" placeholder="域名">
+                                                                    <input class="form-control mb-5" id="mailgun_domain" value="{$settings['mailgun_domain']}" type="text" placeholder="域名">
                                                                     <label class="form-label">发信名称</label>
-                                                                    <input class="form-control" id="mailgun_sender" value="{$settings['mailgun_sender']}" type="text" placeholder="发信名称">
+                                                                    <input class="form-control mb-5" id="mailgun_sender" value="{$settings['mailgun_sender']}" type="text" placeholder="发信名称">
                                                                 </div>
                                                             </div>
                                                             <div class="card card-bordered">
@@ -386,9 +386,9 @@
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">密钥 ID</label>
-                                                                    <input class="form-control" id="aws_access_key_id" value="{$settings['aws_access_key_id']}" type="text" placeholder="密钥 ID" />
+                                                                    <input class="form-control mb-5" id="aws_access_key_id" value="{$settings['aws_access_key_id']}" type="text" placeholder="密钥 ID" />
                                                                     <label class="form-label">密钥 KEY</label>
-                                                                    <input class="form-control" id="aws_secret_access_key" value="{$settings['aws_secret_access_key']}" type="text" placeholder="密钥 KEY" />
+                                                                    <input class="form-control mb-5" id="aws_secret_access_key" value="{$settings['aws_secret_access_key']}" type="text" placeholder="密钥 KEY" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -580,21 +580,12 @@
                                                                         <option value="open" {if $settings['reg_mode'] == 'open'} selected{/if}>开启注册</option>
                                                                         <option value="invite" {if $settings['reg_mode'] == 'invite'} selected{/if}>仅限邀请注册</option>
                                                                     </select>
-                                                                    <label class="form-label">注册邮箱验证</label>
-                                                                    <select class="form-select mb-5" id="reg_email_verify" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['reg_email_verify'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['reg_email_verify'] == true} selected{/if}>开启</option>
-                                                                    </select>
-                                                                    <label class="form-label">邮箱验证码有效时间(秒)</label>
-                                                                    <input class="form-control mb-5" id="email_verify_ttl" value="{$settings['email_verify_ttl']}" type="text" placeholder="有效时间" />
-                                                                    <label class="form-label">验证码有效期内单个ip可请求的发信次数</label>
-                                                                    <input class="form-control" id="email_verify_ip_limit" value="{$settings['email_verify_ip_limit']}" type="text" placeholder="发信次数" />
-                                                                </div>
-                                                                <div class="col-xxl-6">
                                                                     <label class="form-label">默认等级</label>
                                                                     <input class="form-control mb-5" id="signup_default_class" value="{$settings['signup_default_class']}" type="text" placeholder="默认等级" />
                                                                     <label class="form-label">默认等级时长</label>
                                                                     <input class="form-control mb-5" id="signup_default_class_time" value="{$settings['signup_default_class_time']}" type="text" placeholder="等级时长" />
+                                                                </div>
+                                                                <div class="col-xxl-6">
                                                                     <label class="form-label">默认流量</label>
                                                                     <input class="form-control mb-5" id="signup_default_traffic" value="{$settings['signup_default_traffic']}" type="text" placeholder="默认流量" />
                                                                     <label class="form-label">默认IP限制</label>
@@ -1204,9 +1195,6 @@
                             data: {
                                 class: type,
                                 reg_mode: $('#reg_mode').val(),
-                                reg_email_verify: $('#reg_email_verify').val(),
-                                email_verify_ttl: $('#email_verify_ttl').val(),
-                                email_verify_ip_limit: $('#email_verify_ip_limit').val(),
                                 signup_default_class: $('#signup_default_class').val(),
                                 signup_default_class_time: $('#signup_default_class_time').val(),
                                 signup_default_traffic: $('#signup_default_traffic').val(),

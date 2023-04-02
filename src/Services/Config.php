@@ -37,7 +37,6 @@ class Config
             'enable_signin_captcha'    => $public_configs['enable_signin_captcha'],
             // 注册
             'register_mode'           => $public_configs['reg_mode'],
-            'enable_email_verify'     => $public_configs['reg_email_verify'],
             // 邀请
             'invite_get_money'        => $public_configs['invitation_to_signup_credit_reward'],
             'invite_gift'             => $public_configs['invitation_to_signup_traffic_reward'],
@@ -79,11 +78,5 @@ class Config
             'collation'     => $_ENV['db_collation'],
             'prefix'        => $_ENV['db_prefix'],
         ];
-    }
-
-    public static function getMuKey()
-    {
-        $muKeyList = array_key_exists('muKeyList', $_ENV) ? $_ENV['muKeyList'] : ['　'];
-        return array_merge(explode(',', Setting::obtain('website_backend_token')), $muKeyList);
     }
 }

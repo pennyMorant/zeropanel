@@ -20,7 +20,6 @@ class NodeController extends UserController
     public function node(ServerRequest $request, Response $response, array $args)
     {
         $user        = $this->user;
-
         $user_group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);
         if ($user->is_admin == 0) {
             $servers = Node::where('status' ,1)
@@ -37,7 +36,7 @@ class NodeController extends UserController
         ->orderBy('node_class', 'asc')
         ->distinct()
         ->get();
-        if (isset($class)) {
+        if (!is_null($class)) {
             $min_node_class = min($class->toArray())['node_class'];
         } else {
             $min_node_class = 0;

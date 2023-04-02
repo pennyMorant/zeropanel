@@ -11,7 +11,6 @@ use App\Models\{
     EmailVerify
 };
 use App\Utils\{
-    Check,
     URL,
     Hash,
     Tools,
@@ -146,24 +145,9 @@ class UserController extends BaseController
                 $newemail = $request->getParam('newemail');
                 $oldemail = $user->email;
                 $otheruser = User::where('email', $newemail)->first();
-                try {
-                    
-                    if (Setting::obtain('reg_email_verify')) {
-                        $emailcode = $request->getParam('emailcode');
-                        $mailcount = EmailVerify::where('email', '=', $newemail)->where('code', '=', $emailcode)->where('expire_in', '>', time())->first();
-                        if (is_null($mailcount)) {
-
-                            throw new \Exception(I18n::get()->t('email verification code error'));
-                        }
-                    }
-                    
-                    if ($newemail == '') {
+                try {                 
+                    if (empty($newemail)) {
                         throw new \Exception(I18n::get()->t('blank is not allowed'));
-                    }
-                    
-                    $check_res = Check::isEmailLegal($newemail);
-                    if ($check_res['ret'] == 0) {
-                        throw new \Exception((string)$check_res);
                     }
                     
                     if (!is_null($otheruser)) {

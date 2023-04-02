@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Smarty;
-use App\Utils;
 use App\Models\Setting;
 use Pkly\I18Next\I18n;
 

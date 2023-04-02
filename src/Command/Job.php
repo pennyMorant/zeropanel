@@ -139,71 +139,40 @@ class Job extends Command
     public function CheckJob()
     {
         //节点掉线检测
-        if ($_ENV['enable_detect_offline'] == true) {
-            echo '节点掉线检测开始' . PHP_EOL;
-            $adminUser = User::where('is_admin', '=', '1')->get();
-            $nodes = Node::all();
-            foreach ($nodes as $node) {
-                if ($node->isNodeOnline() === false && $node->online == true) {
-                    
-					foreach ($adminUser as $user) {
-					    if ($_ENV['sendemail'] === true) {
-							echo 'Send offline mail to user: ' . $user->id . PHP_EOL;
-							$user->sendMail(
-								Setting::obtain('website_name') . '-系统警告',
-								'news/warn.tpl',
-								[
-									'text' => '管理员您好，系统发现节点 ' . $node->name . ' 掉线了，请您及时处理。'
-								],
-								[],
-								$_ENV['email_queue']
-							);
-					    }
-						$notice_text = str_replace(
-							'%node_name%',
-							$node->name,
-							Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
-						);
-					}
-                    
-                    $messagetext = $notice_text;
-                    Telegram::PushToAdmin($messagetext);
-                    
-
-                    $node->online = false;
-                    $node->save();
-                } elseif ($node->isNodeOnline() === true && $node->online == false) {
-                    foreach ($adminUser as $user) {
-                        if ($_ENV['sendemail'] === true) {
-                            echo 'Send offline mail to user: ' . $user->id . PHP_EOL;
-                            $user->sendMail(
-                                Setting::obtain('website_name') . '-系统提示',
-                                'news/warn.tpl',
-                                [
-                                    'text' => '管理员您好，系统发现节点 ' . $node->name . ' 恢复上线了。'
-                                ],
-                                [],
-                                $_ENV['email_queue']
-                            );
-                        }
-                        $notice_text = str_replace(
-                            '%node_name%',
-                            $node->name,
-                            Setting::obtain('diy_system_node_online_report_telegram_notify_content')
-                        );
-                    }
-
-                    $messagetext = $notice_text;
-                    Telegram::PushToAdmin($messagetext);          
-
-                    $node->online = true;
-                    $node->save();
+        
+        echo '节点掉线检测开始' . PHP_EOL;
+        $adminUser = User::where('is_admin', '=', '1')->get();
+        $nodes = Node::all();
+        foreach ($nodes as $node) {
+            if ($node->isNodeOnline() === false && $node->online == true) {              
+                foreach ($adminUser as $user) {
+                    $notice_text = str_replace(
+                        '%node_name%',
+                        $node->name,
+                        Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
+                    );
                 }
+                
+                $messagetext = $notice_text;
+                Telegram::PushToAdmin($messagetext);
+                $node->online = false;
+                $node->save();
+            } elseif ($node->isNodeOnline() === true && $node->online == false) {
+                foreach ($adminUser as $user) {
+                    $notice_text = str_replace(
+                        '%node_name%',
+                        $node->name,
+                        Setting::obtain('diy_system_node_online_report_telegram_notify_content')
+                    );
+                }
+                $messagetext = $notice_text;
+                Telegram::PushToAdmin($messagetext);          
+
+                $node->online = true;
+                $node->save();
             }
-            echo '节点掉线检测结束' . PHP_EOL;
         }
-
-
+        echo '节点掉线检测结束' . PHP_EOL;
         //更新节点 IP，每分钟
         echo '更新节点IP开始' . PHP_EOL;
         $nodes = Node::get();
@@ -228,42 +197,7 @@ class Job extends Command
     public function UserJob()
     {
         $users = User::all();
-        foreach ($users as $user) {
-           
-                echo '用户订阅余量检测开始' . PHP_EOL;
-                $user_traffic_left = $user->transfer_enable - $user->u - $user->d;
-                $under_limit = false;
-
-                if ($user->transfer_enable != 0 && $user->class != 0) {
-                    if (
-                        Tools::flowToMB($user_traffic_left) < 1000
-                    ) {
-                        $under_limit = true;
-                        $unit_text = 'MB';
-                    }
-                }
-
-                if ($under_limit == true && $user->traffic_notified == false) {
-                    $result = $user->sendMail(
-                        Setting::obtain('website_name') . '-您的剩余流量过低',
-                        'news/warn.tpl',
-                        [
-                            'text' => '您好，系统发现您剩余流量已经低于 ' . 1000 . $unit_text . ' 。'
-                        ],
-                        [],
-                        $_ENV['email_queue']
-                    );
-                    if ($result) {
-                        $user->traffic_notified = true;
-                        $user->save();
-                    }
-                } elseif ($under_limit == false && $user->traffic_notified == true) {
-                    $user->traffic_notified = false;
-                    $user->save();
-                }
-                echo '用户订阅余量检测结束' . PHP_EOL;
-            
-
+        foreach ($users as $user) {          
             // 审计封禁解封
             if ($user->enable == 0) {
                 $logs = DetectBanLog::where('user_id', $user->id)->orderBy('id', 'desc')->first();
@@ -273,7 +207,6 @@ class Job extends Command
                     }
                 }
             }
-
             $user->save();
         }
     }
@@ -322,17 +255,13 @@ class Job extends Command
             ->get();
 
         foreach ($users as $user) {
-            $text = '您好，系统发现您的账号等级已经过期了。';
-            $reset_traffic = 0;
-            if ($reset_traffic >= 0) {
-                $user->transfer_enable = Tools::toGB($reset_traffic);
-                $user->u = 0;
-                $user->d = 0;
-                $user->last_day_t = 0;
-                $text .= '流量已经被重置为' . $reset_traffic . 'GB';
-            }
+            $text = '您好，您的订阅产品已到期。';
+            $user->transfer_enable = 0;
+            $user->u = 0;
+            $user->d = 0;
+            $user->last_day_t = 0;
             $user->sendMail(
-                Setting::obtain('website_name') . '-您的账户等级已经过期了',
+                Setting::obtain('website_name'),
                 'news/warn.tpl',
                 [
                     'text' => $text

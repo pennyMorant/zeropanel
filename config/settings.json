@@ -573,36 +573,6 @@
     },
     {
         "id": null,
-        "item": "reg_email_verify",
-        "value": "0",
-        "class": "register",
-        "is_public": 1,
-        "type": "bool",
-        "default": "0",
-        "mark": "邮箱验证"
-    },
-    {
-        "id": null,
-        "item": "email_verify_ttl",
-        "value": "3600",
-        "class": "register",
-        "is_public": 0,
-        "type": "int",
-        "default": "3600",
-        "mark": "邮箱验证码有效期"
-    },
-    {
-        "id": null,
-        "item": "email_verify_ip_limit",
-        "value": "5",
-        "class": "register",
-        "is_public": 0,
-        "type": "int",
-        "default": "5",
-        "mark": "验证码有效期内单个ip可请求的发信次数"
-    },
-    {
-        "id": null,
         "item": "signup_default_traffic",
         "value": "20",
         "class": "register",

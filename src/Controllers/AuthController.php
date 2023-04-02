@@ -8,14 +8,9 @@ use App\Models\{
     InviteCode,
     EmailVerify
 };
-use App\Utils\{
-    Hash,
-    Check,
-    Tools,
-};
+use App\Utils\Hash;
 use App\Services\{
     Auth,
-    Mail,
     Captcha
 };
 use Slim\Http\Response;
@@ -37,7 +32,6 @@ class AuthController extends BaseController
 
         $this->view()
             ->assign('captcha', $captcha)
-            ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
             ->display('auth/signin.tpl');
         return $response;
     }
@@ -73,96 +67,15 @@ class AuthController extends BaseController
                 'msg' => $e->getMessage(),
             ]);
         }
-        
         Auth::login($user->id, 3600 * 24 * 7);
         $user->collectSigninIp($_SERVER['REMOTE_ADDR']);
         
         // 更新用户信息
         $user->last_signin_time = date('Y-m-d H:i:s');
-        // 获取用户数组形式
+
         return $response->withJson([
             'ret' => 1,
             'msg' => $trans->t('signin success')
-        ]);
-    }
-
-    public function sendVerify(ServerRequest $request, Response $response, $next)
-    {
-
-        $trans = I18n::get();
-
-        if (Setting::obtain('reg_email_verify')) {
-            $email = trim($request->getParam('email'));
-            $email = strtolower($email);
-            
-            // check email format
-            $check_res = Check::isEmailLegal($email);
-            if ($check_res['ret'] == 0) {
-                return $response->withJson($check_res);
-            }
-
-            $user = User::where('email', $email)->first();
-            if (!is_null($user)) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('email has been registered')
-                ]);
-            }
-
-            $ipcount = EmailVerify::where('ip', '=', $_SERVER['REMOTE_ADDR'])
-                ->where('expire_in', '>', time())
-                ->count();
-            if ($ipcount >= Setting::obtain('email_verify_ip_limit')) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('too many current ip requests')
-                ]);
-            }
-
-            $mailcount = EmailVerify::where('email', '=', $email)
-            ->where('expire_in', '>', time())
-            ->count();
-            if ($mailcount >= 3) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('this email requests frequently will try later')
-                ]);
-            }
-
-            $code          = Tools::genRandomNum(6);
-            $ev            = new EmailVerify();
-            $ev->expire_in = time() + Setting::obtain('email_verify_ttl');
-            $ev->ip        = $_SERVER['REMOTE_ADDR'];
-            $ev->email     = $email;
-            $ev->code      = $code;
-            $ev->save();
-
-            try {
-                Mail::send(
-                    $email,
-                    Setting::obtain('website_name') . '- 验证邮件',
-                    'auth/verify.tpl',
-                    [
-                        'code' => $code,
-                        'expire' => date('Y-m-d H:i:s', time() + Setting::obtain('email_verify_ttl'))
-                    ],
-                    []
-                );
-            } catch (Exception $e) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => $trans->t('email sending failed')
-                ]);
-            }
-
-            return $response->withJson([
-                'ret' => 1,
-                'msg' => $trans->t('email sending success')
-            ]);
-        }
-        return $response->withJson([
-            'ret' => 0,
-            'msg' => ''
         ]);
     }
 
@@ -187,7 +100,6 @@ class AuthController extends BaseController
                 ->assign('code', $code)
                 ->assign('base_url', Setting::obtain('website_url'))
                 ->assign('captcha', $captcha)
-                ->assign('enable_email_verify', Setting::obtain('reg_email_verify'))
                 ->display('auth/signup.tpl');
         }
         return $response;
@@ -198,7 +110,6 @@ class AuthController extends BaseController
         $postdata = $request->getParsedBody();
         $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
         $passwd     = $postdata['passwd'];
-        $repasswd = $postdata['repasswd'];
         $code = $request->getParsedBodyParam('code');
 
         $trans = I18n::get();
@@ -211,39 +122,18 @@ class AuthController extends BaseController
                 }
             }
 
-            // check email format
-            $check_res = Check::isEmailLegal($email);
-            if ($check_res['ret'] == 0) {
-                return $response->withJson($check_res);
-            }
-
             // check email
             $user = User::where('email', $email)->first();
             if (!is_null($user)) {
                 throw new \Exception($trans->t('email has been registered'));
             }
 
-            if (Setting::obtain('reg_email_verify')) {
-                $email_code = trim($postdata['emailcode']);
-                $mailcount = EmailVerify::where('email', '=', $email)
-                    ->where('code', '=', $email_code)
-                    ->where('expire_in', '>', time())
-                    ->first();
-                if (is_null($mailcount)) {
-                    throw new \Exception($trans->t('email verification code error'));
-                }
-            }
-
-            if (Setting::obtain('reg_email_verify')) {
-                EmailVerify::where('email', $email)->delete();
-            }
-
-            if ($code == '' && Setting::obtain('reg_mode') === 'invite') {
+            if (empty($code) && Setting::obtain('reg_mode') === 'invite') {
                 throw new \Exception($trans->t('referral code must be filled in'));
             }
 
             $c = InviteCode::where('code', $code)->first();
-            if ($code !== '') {
+            if (!empty($code)) {
                 if (is_null($c)) {
                     throw new \Exception($trans->t('referral code does not exist'));
                 } else if ($c->user_id != 0) {
@@ -265,14 +155,14 @@ class AuthController extends BaseController
         $user                       = new User();
         $antiXss                    = new AntiXSS();
         $current_timestamp          = time();
-        $user->email                = $email;
+        $user->email                = $antiXss->xss_clean($email);
         $user->password             = Hash::passwordHash($passwd);
         $user->passwd               = $user->createShadowsocksPasswd();
         $user->uuid                 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->transfer_enable      = Tools::toGB($configs['signup_default_traffic']);
+        $user->transfer_enable      = $configs['signup_default_traffic'];
         $user->money                = 0;
 
         //dumplin：填写邀请人，写入邀请奖励
@@ -289,7 +179,7 @@ class AuthController extends BaseController
 
         $user->class_expire     = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
         $user->class            = $configs['signup_default_class'];
-        $user->node_iplimit   = $configs['signup_default_ip_limit'];
+        $user->node_iplimit     = $configs['signup_default_ip_limit'];
         $user->node_speedlimit  = $configs['signup_default_speed_limit'];
         $user->signup_date      = date('Y-m-d H:i:s');
         $user->signup_ip        = $_SERVER['REMOTE_ADDR'];

@@ -2,8 +2,7 @@
 
 namespace App\Middleware;
 
-use App\Services\Config;
-use App\Models\Node;
+use App\Models\Setting;
 use Slim\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
@@ -22,8 +21,8 @@ class WebAPI
             ]));
             return $response;
         }
-
-        if (!in_array($key, Config::getMuKey())) {
+        $backend_token = Setting::obtain('website_backend_token');
+        if ($key != $backend_token) {
             // key 不存在
             $response = new Response();
             $response->getBody()->write(json_encode([
@@ -41,20 +40,6 @@ class WebAPI
                 'data' => 'WebAPI is disabled.'
             ]));
             return $response;
-        }
-
-        if ($_ENV['checkNodeIp'] === true) {
-            if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-                $node = Node::where('node_ip', 'LIKE', $_SERVER['REMOTE_ADDR'] . '%')->first();
-                if (is_null($node)) {
-                    $response = new Response();
-                    $response->getBody()->write(json_encode([
-                        'ret'  => 0,
-                        'data' => 'IP is invalid. Now, your IP address is ' . $_SERVER['REMOTE_ADDR']
-                    ]));
-                    return $response;
-                }
-            }
         }
         return $handler->handle($request);
     }

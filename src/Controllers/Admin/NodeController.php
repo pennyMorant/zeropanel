@@ -84,11 +84,6 @@ class NodeController extends AdminController
 
         $node->save();
 
-        if ($_ENV['cloudflare_enable'] == true) {
-            $domain_name = explode('.' . $_ENV['cloudflare_name'], $node->server);
-            CloudflareDriver::updateRecord($domain_name[0], $node->node_ip);
-        }
-
         return $response->withJson([
             'ret' => 1,
             'msg' => '节点添加成功'
