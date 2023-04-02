@@ -26,7 +26,7 @@ return function (SlimApp $app) {
     $app->get('/500',       App\Controllers\HomeController::class . ':page500');
 
     // Telegram
-    $app->post('/telegram_callback',    App\Controllers\HomeController::class . ':telegram');
+    $app->post('/telegram_callback',                    App\Controllers\HomeController::class . ':telegram');
 
     // User Center
     $app->group('/user', function (Group $group) {

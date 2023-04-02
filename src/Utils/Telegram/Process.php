@@ -11,7 +11,6 @@ final class Process
 {
     public static function commandBot()
     {
-      
         $bot = new Api(Setting::obtain('telegram_bot_token'));
         $bot->addCommands(
             [
@@ -24,10 +23,8 @@ final class Process
         );
         $update = $bot->commandsHandler(true);
         $Message = $update->getMessage();
-        
-        if (!is_null($update->getCallbackQuery())) {
-            new Callbacks\Callback($bot, $update->getCallbackQuery());
-        } else if (!is_null($Message->getReplyToMessage())) {
+   
+        if (!is_null($Message->getReplyToMessage())) {
             if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
                 new Callbacks\ReplayTicket($bot, $Message, $match[1]);
             }
