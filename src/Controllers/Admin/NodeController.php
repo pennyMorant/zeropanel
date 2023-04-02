@@ -7,7 +7,6 @@ use App\Models\Node;
 use App\Models\Setting;
 use App\Utils\{
     Tools,
-    CloudflareDriver
 };
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -63,14 +62,14 @@ class NodeController extends AdminController
         
         $req_node_ip = trim($request->getParam('node_ip'));
         $success = true;
-        $server_list = explode(';', $node->server);
-        if (Tools::isIPv4($req_node_ip)) {
+        
+        if (Tools::isIP($req_node_ip)) {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
-            $success = $node->changeNodeIp($server_list[0]);
+            $success = $node->changeNodeIp($node->server);
         }
 
-        if (! $success) {
+        if (!$success) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '获取节点IP失败，请检查您输入的节点地址是否正确！',
@@ -78,10 +77,9 @@ class NodeController extends AdminController
         }
         
         $node->node_class                       = $request->getParam('node_class');
-        $node->node_sort                        = (int)$request->getParam('node_sort');
+        $node->node_sort                        = $request->getParam('node_sort');
         $node->node_traffic_limit               = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
         $node->node_traffic_limit_reset_date    = $request->getParam('node_traffic_limit_reset_date');
-
         $node->save();
 
         return $response->withJson([
@@ -121,7 +119,7 @@ class NodeController extends AdminController
 
         $success = true;
         $server_list = explode(';', $node->server);
-        if (Tools::isIPv4($req_node_ip)) {
+        if (Tools::isIP($req_node_ip)) {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
             $success = $node->changeNodeIp($server_list[0]);
@@ -132,10 +130,10 @@ class NodeController extends AdminController
                 'msg' => '更新节点IP失败，请检查您输入的节点地址是否正确！',
             ]);
         }
-        $node->node_flag                     = $request->getParam('node_flag');
-        $node->node_class                 = $request->getParam('node_class');
-        $node->node_sort                  = (int)$request->getParam('node_sort');
-        $node->node_traffic_limit       = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
+        $node->node_flag                        = $request->getParam('node_flag');
+        $node->node_class                       = $request->getParam('node_class');
+        $node->node_sort                        = $request->getParam('node_sort');
+        $node->node_traffic_limit               = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
         $node->node_traffic_limit_reset_date    = $request->getParam('node_traffic_limit_reset_date');
 
         $node->save();

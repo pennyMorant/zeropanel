@@ -225,17 +225,9 @@ final class Tools
         return true;
     }
 
-    public static function isIPv4($input)
+    public static function isIP($ip)
     {
-        if (filter_var($input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
-            return false;
-        }
-        return true;
-    }
-
-    public static function isIPv6($input)
-    {
-        if (filter_var($input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6) === false) {
             return false;
         }
         return true;
