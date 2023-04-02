@@ -4,6 +4,17 @@ declare(strict_types=1);
 
 use Slim\App as SlimApp;
 use App\Models\Setting;
+use App\Controllers\Admin\NodeController;
+use App\Controllers\Admin\TicketController;
+use App\Controllers\Admin\ProductController;
+use App\Controllers\Admin\OrderController;
+use App\Controllers\Admin\AnnController;
+use App\Controllers\Admin\BanController;
+use App\Controllers\Admin\RecordController;
+use App\Controllers\Admin\UserController;
+use App\Controllers\Admin\CouponController;
+use App\Controllers\Admin\SettingController;
+use App\Controllers\Admin\CommissionController;
 use App\Middleware\{Guest, Admin, Auth, WebAPI};
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
@@ -14,60 +25,58 @@ return function (SlimApp $app) {
     $app->get('/405',       App\Controllers\HomeController::class . ':page405');
     $app->get('/500',       App\Controllers\HomeController::class . ':page500');
 
-    $app->post('/notify',               App\Controllers\HomeController::class . ':notify');
-
     // Telegram
     $app->post('/telegram_callback',    App\Controllers\HomeController::class . ':telegram');
 
     // User Center
     $app->group('/user', function (Group $group) {
-        $group->get('/dashboard',                App\Controllers\UserController::class . ':index');
+        $group->get('/dashboard',                       App\Controllers\UserController::class . ':index');
 
-        $group->post('/getusertrafficinfo',      App\Controllers\UserController::class . ':getUserTrafficUsage');
-        $group->get('/tutorial',                 App\Controllers\UserController::class . ':tutorial');
-        $group->get('/referral',                 App\Controllers\UserController::class . ':referral');
-        $group->get('/profile',                  App\Controllers\UserController::class . ':profile');
-        $group->get('/record',                   App\Controllers\UserController::class . ':record');
-        $group->get('/ban',                      App\Controllers\UserController::class . ':ban');
+        $group->post('/getusertrafficinfo',             App\Controllers\UserController::class . ':getUserTrafficUsage');
+        $group->get('/tutorial',                        App\Controllers\UserController::class . ':tutorial');
+        $group->get('/referral',                        App\Controllers\UserController::class . ':referral');
+        $group->get('/profile',                         App\Controllers\UserController::class . ':profile');
+        $group->get('/record',                          App\Controllers\UserController::class . ':record');
+        $group->get('/ban',                             App\Controllers\UserController::class . ':ban');
         // 订单系统
         $group->get('/order',                           App\Controllers\OrderController::class . ':order');
         $group->get('/order/{no}',                      App\Controllers\OrderController::class . ':orderDetails');
-        $group->post('/order/create_order/{type}',       App\Controllers\OrderController::class . ':createOrder');
+        $group->post('/order/create_order/{type}',      App\Controllers\OrderController::class . ':createOrder');
         $group->post('/order/pay_order',                App\Controllers\OrderController::class . ':processOrder');
-        $group->post('/verify_coupon',            App\Controllers\OrderController::class . ':verifyCoupon');
+        $group->post('/verify_coupon',                  App\Controllers\OrderController::class . ':verifyCoupon');
 
-        $group->get('/disable',                  App\Controllers\UserController::class . ':disable');
-        $group->get('/node',                     App\Controllers\User\NodeController::class . ':node');
+        $group->get('/disable',                         App\Controllers\UserController::class . ':disable');
+        $group->get('/node',                            App\Controllers\User\NodeController::class . ':node');
 
-        $group->get('/product',                  App\Controllers\User\ProductController::class . ':product');
-        $group->post('/product/getinfo',      App\Controllers\User\ProductController::class . ':getProductInfo');
-        $group->post('/product/renewal',      App\Controllers\User\ProductController::class . ':renewalProduct');
+        $group->get('/product',                         App\Controllers\User\ProductController::class . ':product');
+        $group->post('/product/getinfo',                App\Controllers\User\ProductController::class . ':getProductInfo');
+        $group->post('/product/renewal',                App\Controllers\User\ProductController::class . ':renewalProduct');
 
-        $group->get('/ticket',                   App\Controllers\User\TicketController::class . ':ticketIndex');
-        $group->post('/ticket/create',            App\Controllers\User\TicketController::class . ':createTicket');
-        $group->get('/ticket/view/{id}',         App\Controllers\User\TicketController::class . ':ticketViewIndex');
-        $group->put('/ticket/update',              App\Controllers\User\TicketController::class . ':updateTicket');
+        $group->get('/ticket',                          App\Controllers\User\TicketController::class . ':ticketIndex');
+        $group->post('/ticket/create',                  App\Controllers\User\TicketController::class . ':createTicket');
+        $group->get('/ticket/view/{id}',                App\Controllers\User\TicketController::class . ':ticketViewIndex');
+        $group->put('/ticket/update',                   App\Controllers\User\TicketController::class . ':updateTicket');
         
-        $group->post('/update_profile/{type}',    App\Controllers\UserController::class . ':updateProfile');
-        $group->post('/send',                    App\Controllers\AuthController::class . ':sendVerify');
-        $group->post('/mail',                    App\Controllers\UserController::class . ':updateMail');
-        $group->post('/enable_notify',           App\Controllers\UserController::class . ':enableNotify');
-        $group->get('/trafficlog',               App\Controllers\UserController::class . ':trafficLog');
-        $group->post('/kill',                    App\Controllers\UserController::class . ':handleKill');
-        $group->get('/logout',                   App\Controllers\UserController::class . ':logout');
+        $group->post('/update_profile/{type}',          App\Controllers\UserController::class . ':updateProfile');
+        $group->post('/send',                           App\Controllers\AuthController::class . ':sendVerify');
+        $group->post('/mail',                           App\Controllers\UserController::class . ':updateMail');
+        $group->post('/enable_notify',                  App\Controllers\UserController::class . ':enableNotify');
+        $group->get('/trafficlog',                      App\Controllers\UserController::class . ':trafficLog');
+        $group->post('/kill',                           App\Controllers\UserController::class . ':handleKill');
+        $group->get('/logout',                          App\Controllers\UserController::class . ':logout');
         
         
 
         // getUserAllURL
-        $group->get('/getUserAllURL',            App\Controllers\UserController::class . ':getUserAllURL');
+        $group->get('/getUserAllURL',                   App\Controllers\UserController::class . ':getUserAllURL');
         
-        $group->get('/nodeinfo/{id}',            App\Controllers\ZeroController::class . ':nodeInfo');
-        $group->get('/money',                    App\Controllers\ZeroController::class . ':getmoney');
-        $group->get('/ajax_data/table/{name}',   App\Controllers\ZeroController::class . ':ajaxDatatable');
-        $group->get('/ajax_data/chart/{name}',   App\Controllers\ZeroController::class . ':ajaxDataChart');
-        $group->delete('/ajax_data/delete',      App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
-        $group->post('/withdraw_commission',          App\Controllers\ZeroController::class . ':withdrawCommission');
-        $group->post('/withdraw_account_setting',     App\Controllers\ZeroController::class . ':withdrawAccountSettings');
+        $group->get('/nodeinfo/{id}',                   App\Controllers\ZeroController::class . ':nodeInfo');
+        $group->get('/money',                           App\Controllers\ZeroController::class . ':getmoney');
+        $group->get('/ajax_data/table/{name}',          App\Controllers\ZeroController::class . ':ajaxDatatable');
+        $group->get('/ajax_data/chart/{name}',          App\Controllers\ZeroController::class . ':ajaxDataChart');
+        $group->delete('/ajax_data/delete',             App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
+        $group->post('/withdraw_commission',            App\Controllers\ZeroController::class . ':withdrawCommission');
+        $group->post('/withdraw_account_setting',       App\Controllers\ZeroController::class . ':withdrawAccountSettings');
 
         // Agent
         $group->get('/agent/ajax_data/table/{name}',        App\Zero\Agent::class . ':ajaxDatatable');
@@ -91,11 +100,11 @@ return function (SlimApp $app) {
 
     // Auth
     $app->group('/auth', function (Group $group) {
-        $group->get('/signin',           App\Controllers\AuthController::class . ':signInIndex');
-        $group->post('/signin',           App\Controllers\AuthController::class . ':signInHandle');
-        $group->get('/signup',           App\Controllers\AuthController::class . ':signUpIndex');
-        $group->post('/signup',        App\Controllers\AuthController::class . ':signUpHandle');
-        $group->post('/send',            App\Controllers\AuthController::class . ':sendVerify');
+        $group->get('/signin',              App\Controllers\AuthController::class . ':signInIndex');
+        $group->post('/signin',             App\Controllers\AuthController::class . ':signInHandle');
+        $group->get('/signup',              App\Controllers\AuthController::class . ':signUpIndex');
+        $group->post('/signup',             App\Controllers\AuthController::class . ':signUpHandle');
+        $group->post('/send',               App\Controllers\AuthController::class . ':sendVerify');
 
     })->add(new Guest());
 
@@ -111,94 +120,115 @@ return function (SlimApp $app) {
     $admin_path = Setting::obtain('website_admin_path');
     $app->group('/' . $admin_path, function (Group $group) {
         $group->get('/dashboard',                   App\Controllers\AdminController::class . ':index');
-        // Node Mange
-        $group->get('/node',                        App\Controllers\Admin\NodeController::class . ':index');
-        $group->get('/node/create',                 App\Controllers\Admin\NodeController::class . ':createNodeIndex');
-        $group->post('/node/create',                App\Controllers\Admin\NodeController::class . ':createNode');
-        $group->get('/node/update/{id}',            App\Controllers\Admin\NodeController::class . ':updateNodeIndex');
-        $group->put('/node/update',                 App\Controllers\Admin\NodeController::class . ':updateNode');
-        $group->delete('/node/delete',              App\Controllers\Admin\NodeController::class . ':deleteNode');
-        $group->post('/node/ajax',                  App\Controllers\Admin\NodeController::class . ':nodeAjax');
-        $group->put('/node/update/status',          App\Controllers\Admin\NodeController::class . ':updateNodeStatus');
-
-        //ticket
-        $group->get('/ticket',                       App\Controllers\Admin\TicketController::class . ':ticketIndex');
-        $group->post('/ticket/create',               App\Controllers\Admin\TicketController::class . ':createTicket');
-        $group->get('/ticket/view/{id}',             App\Controllers\Admin\TicketController::class . ':ticketViewIndex');
-        $group->put('/ticket/update',                App\Controllers\Admin\TicketController::class . ':updateTicket');
-        $group->post('/ticket/ajax',                 App\Controllers\Admin\TicketController::class . ':ticketAjax');
-        $group->delete('/ticket/delete',             App\Controllers\Admin\TicketController::class . ':deleteTicket');
-        $group->put('/ticket/close',                 App\Controllers\Admin\TicketController::class . ':closeTicket');
-
-        // Product Mange
-        $group->get('/product',                     App\Controllers\Admin\ProductController::class . ':index');
-        $group->post('/product/ajax',               App\Controllers\Admin\ProductController::class . ':productAjax');
-        $group->get('/product/create',              App\Controllers\Admin\ProductController::class . ':createProductIndex');
-        $group->post('/product/create',                    App\Controllers\Admin\ProductController::class . ':createProduct');
-        $group->get('/product/update/{id}',           App\Controllers\Admin\ProductController::class . ':updateProductIndex');
-        $group->put('/product/update',                App\Controllers\Admin\ProductController::class . ':updateProduct');
-        $group->delete('/product/delete',                  App\Controllers\Admin\ProductController::class . ':deleteProduct');
-        $group->put('/product/update/status',      App\Controllers\Admin\ProductController::class . ':updateProductStatus');
-        $group->post('/product/getinfo',      App\Controllers\Admin\ProductController::class . ':getProductInfo');
-
-        // order
-        $group->get('/order',                   App\Controllers\Admin\OrderController::class . ':index');
-        $group->post('/order/ajax',             App\Controllers\Admin\OrderController::class . ':ajaxOrder');
-        $group->delete('/order/delete',         App\Controllers\Admin\OrderController::class . ':deleteOrder');
-        $group->put('/order/complete',       App\Controllers\Admin\OrderController::class . ':completeOrder');
-        
-        // news
-        $group->get('/news',             App\Controllers\Admin\AnnController::class . ':index');
-        $group->post('/news/create',      App\Controllers\Admin\AnnController::class . ':createNews');
-        $group->put('/news/update',        App\Controllers\Admin\AnnController::class . ':updateNews');
-        $group->delete('/news/delete',          App\Controllers\Admin\AnnController::class . ':deleteNews');
-        $group->post('/news/ajax',       App\Controllers\Admin\AnnController::class . ':ajax');
-        $group->post('/news/request',       App\Controllers\Admin\AnnController::class . ':requestNews');
-
-        // Detect Mange
-        $group->get('/ban',                      App\Controllers\Admin\BanController::class . ':index');
-        $group->post('/ban/rule/create',         App\Controllers\Admin\BanController::class . ':createBanRule');
-        $group->put('/ban/rule/update',          App\Controllers\Admin\BanController::class . ':updateBanRule');
-        $group->post('/ban/detect/record/ajax',  App\Controllers\Admin\BanController::class . ':detectRuleRecordAjax');
-        $group->post('/ban/rule/ajax',           App\Controllers\Admin\BanController::class . ':banRuleAjax');
-        $group->post('/ban/record/ajax',         App\Controllers\Admin\BanController::class . ':banRecordAjax');
-        $group->post('/ban/rule/request',          App\Controllers\Admin\BanController::class . ':requestBanRule');
-        $group->delete('/ban/rule/delete',          App\Controllers\Admin\BanController::class . ':deleteBanRule');
-
-        // record Mange
-        $group->get('/record',                    App\Controllers\Admin\RecordController::class . ':recordIndex');
-        $group->post('/record/ajax/{type}',        App\Controllers\Admin\RecordController::class . ':recordAjax');
-
-
-        // User Mange
-        $group->get('/user',                     App\Controllers\Admin\UserController::class . ':index');
-        $group->get('/user/update/{id}',           App\Controllers\Admin\UserController::class . ':updateUserIndex');
-        $group->put('/user/update',                App\Controllers\Admin\UserController::class . ':updateUser');
-        $group->delete('/user/delete',                  App\Controllers\Admin\UserController::class . ':deleteUser');
-        $group->post('/user/ajax',               App\Controllers\Admin\UserController::class . ':ajax');
-        $group->post('/user/create',             App\Controllers\Admin\UserController::class . ':createNewUser');
-        $group->post('/user/buy',                App\Controllers\Admin\UserController::class . ':buy');
-        $group->put('/user/update/status/{type}', App\Controllers\Admin\UserController::class . ':updateUserStatus');
-
-
-        $group->get('/coupon',                   App\Controllers\Admin\CouponController::class . ':couponIndex');
-        $group->post('/coupon/create',           App\Controllers\Admin\CouponController::class . ':createCoupon');
-        $group->post('/coupon/ajax',             App\Controllers\Admin\CouponController::class . ':couponAjax');
-       
-        // 设置中心
-        $group->get('/setting',                  App\Controllers\Admin\SettingController::class . ':index');
-        $group->post('/setting',                 App\Controllers\Admin\SettingController::class . ':save');
-        $group->post('/setting/email',           App\Controllers\Admin\SettingController::class . ':test');
-        $group->post('/setting/payment',         App\Controllers\Admin\SettingController::class . ':payment');
 
         // admin 增加收入和新用户统计
         $group->post('/ajax_data/chart/{name}',        App\Controllers\AdminController::class . ':AjaxDataChart');
 
-      
-        $group->get('/commission',                      App\Controllers\Admin\CommissionController::class . ':commissionIndex');
-        $group->put('/commission/withdraw/update',      App\Controllers\Admin\CommissionController::class . ':updateWithdrawCommission');
-        $group->post('/commission/withdraw/ajax',       App\Controllers\Admin\CommissionController::class . ':withdrawAjax');
-        $group->post('/commission/ajax',                App\Controllers\Admin\CommissionController::class . ':commissionAjax');
+        // Node Mange
+        $group->group('/node', function($node) {
+            $node->get('',                        NodeController::class . ':index');
+            $node->get('/create',                 NodeController::class . ':createNodeIndex');
+            $node->post('/create',                NodeController::class . ':createNode');
+            $node->get('/update/{id}',            NodeController::class . ':updateNodeIndex');
+            $node->put('/update',                 NodeController::class . ':updateNode');
+            $node->delete('/delete',              NodeController::class . ':deleteNode');
+            $node->post('/ajax',                  NodeController::class . ':nodeAjax');
+            $node->put('/update/status',          NodeController::class . ':updateNodeStatus');
+        });
+
+        //ticket
+        $group->group('/ticket', function($ticket) {
+            $ticket->get('',                       TicketController::class . ':ticketIndex');
+            $ticket->post('/create',               TicketController::class . ':createTicket');
+            $ticket->get('/view/{id}',             TicketController::class . ':ticketViewIndex');
+            $ticket->put('/update',                TicketController::class . ':updateTicket');
+            $ticket->post('/ajax',                 TicketController::class . ':ticketAjax');
+            $ticket->delete('/delete',             TicketController::class . ':deleteTicket');
+            $ticket->put('/close',                 TicketController::class . ':closeTicket');
+        });
+
+        // Product Mange
+        $group->group('/product', function($product) {
+            $product->get('',                     ProductController::class . ':index');
+            $product->post('/ajax',               ProductController::class . ':productAjax');
+            $product->get('/create',              ProductController::class . ':createProductIndex');
+            $product->post('/create',             ProductController::class . ':createProduct');
+            $product->get('/update/{id}',         ProductController::class . ':updateProductIndex');
+            $product->put('/update',              ProductController::class . ':updateProduct');
+            $product->delete('/delete',           ProductController::class . ':deleteProduct');
+            $product->put('/update/status',       ProductController::class . ':updateProductStatus');
+            $product->post('/getinfo',            ProductController::class . ':getProductInfo');
+        });
+
+        // order
+        $group->group('/order', function($order) {
+            $order->get('',                   OrderController::class . ':index');
+            $order->post('/ajax',             OrderController::class . ':ajaxOrder');
+            $order->delete('delete',          OrderController::class . ':deleteOrder');
+            $order->put('/complete',          OrderController::class . ':completeOrder');
+        });
+
+        // news
+        $group->group('/news', function($news) {
+            $news->get('',               AnnController::class . ':index');
+            $news->post('/create',       AnnController::class . ':createNews');
+            $news->put('/update',        AnnController::class . ':updateNews');
+            $news->delete('/delete',     AnnController::class . ':deleteNews');
+            $news->post('/ajax',         AnnController::class . ':ajax');
+            $news->post('/request',      AnnController::class . ':requestNews');
+        });
+
+        // Detect Mange
+        $group->group('/ban', function($ban) {
+            $ban->get('',                      BanController::class . ':index');
+            $ban->post('/rule/create',         BanController::class . ':createBanRule');
+            $ban->put('/rule/update',          BanController::class . ':updateBanRule');
+            $ban->post('/detect/record/ajax',  BanController::class . ':detectRuleRecordAjax');
+            $ban->post('/rule/ajax',           BanController::class . ':banRuleAjax');
+            $ban->post('/record/ajax',         BanController::class . ':banRecordAjax');
+            $ban->post('/rule/request',        BanController::class . ':requestBanRule');
+            $ban->delete('/rule/delete',       BanController::class . ':deleteBanRule');
+        });
+
+        // record Mange
+        $group->group('/record', function($record) {
+            $record->get('',                    RecordController::class . ':recordIndex');
+            $record->post('/ajax/{type}',       RecordController::class . ':recordAjax');
+        });
+
+        // User Mange
+        $group->group('/user', function($user) {
+            $user->get('',                        UserController::class . ':index');
+            $user->get('/update/{id}',            UserController::class . ':updateUserIndex');
+            $user->put('/update',                 UserController::class . ':updateUser');
+            $user->delete('/delete',              UserController::class . ':deleteUser');
+            $user->post('/ajax',                  UserController::class . ':ajax');
+            $user->post('/create',                UserController::class . ':createNewUser');
+            $user->post('/buy',                   UserController::class . ':buy');
+            $user->put('/update/status/{type}',   UserController::class . ':updateUserStatus');
+        });
+
+        $group->group('/coupon', function($coupon) {
+            $coupon->get('',                   CouponController::class . ':couponIndex');
+            $coupon->post('/create',           CouponController::class . ':createCoupon');
+            $coupon->post('/ajax',             CouponController::class . ':couponAjax');
+        });
+
+        // 设置中心
+        $group->group('/setting', function($setting) {
+            $setting->get('',                  SettingController::class . ':index');
+            $setting->post('',                 SettingController::class . ':save');
+            $setting->post('/email',           SettingController::class . ':test');
+            $setting->post('/payment',         SettingController::class . ':payment');
+        });
+
+        // 佣金
+        $group->group('/commission', function($commission) {
+            $commission->get('',                      CommissionController::class . ':commissionIndex');
+            $commission->put('/withdraw/update',      CommissionController::class . ':updateWithdrawCommission');
+            $commission->post('/withdraw/ajax',       CommissionController::class . ':withdrawAjax');
+            $commission->post('/ajax',                CommissionController::class . ':commissionAjax');
+        });
     })->add(new Admin());
 
     // webapi

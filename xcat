@@ -11,7 +11,6 @@ require __DIR__ . '/config/.config.php';
 require __DIR__ . '/app/envload.php';
 require __DIR__ . '/config/.zeroconfig.php';
 
-Boot::setTime();
 Boot::bootDb();
 
 if (!isset($argv[1])) {
