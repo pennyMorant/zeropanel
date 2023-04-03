@@ -6,7 +6,6 @@ use App\Models\{
     User,
     Setting,
     InviteCode,
-    EmailVerify
 };
 use App\Utils\Hash;
 use App\Services\{
@@ -162,7 +161,7 @@ class AuthController extends BaseController
         $user->t                    = 0;
         $user->u                    = 0;
         $user->d                    = 0;
-        $user->transfer_enable      = $configs['signup_default_traffic'];
+        $user->transfer_enable      = $configs['signup_default_traffic'] * 1024 * 1024 * 1024;
         $user->money                = 0;
 
         //dumplin：填写邀请人，写入邀请奖励
