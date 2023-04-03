@@ -11,7 +11,6 @@ use App\Models\SigninIp;
 use App\Models\TrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
-use App\Models\PasswordReset;
 use App\Models\UserSubscribeLog;
 use App\Models\Setting;
 use App\Models\Order;
@@ -68,7 +67,6 @@ class Job extends Command
         UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_keep_time')))->delete();
         Token::where('expire_time', '<', time())->delete();
         DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
-        PasswordReset::where('expire_time', '<', time() - 86400 * 3)->delete();
         Ip::where('datetime', '<', time() - 300)->delete();
         SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
         TrafficLog::where('datetime', '<', time() - 86400 * 10)->delete();
