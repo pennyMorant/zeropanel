@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-02 07:02:35
+-- 生成日期： 2023-04-03 12:39:15
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -140,20 +140,6 @@ CREATE TABLE `email_queue` (
   `array` longtext NOT NULL,
   `time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Email Queue 發件列表';
-
--- --------------------------------------------------------
-
---
--- 表的结构 `email_verify`
---
-
-CREATE TABLE `email_verify` (
-  `id` int(11) NOT NULL,
-  `email` varchar(32) NOT NULL,
-  `ip` varchar(39) NOT NULL,
-  `code` varchar(39) NOT NULL,
-  `expire_in` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -296,20 +282,6 @@ CREATE TABLE `signin_ip` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `telegram_session`
---
-
-CREATE TABLE `telegram_session` (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `type` int(11) NOT NULL,
-  `session_content` mediumtext NOT NULL,
-  `datetime` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `ticket`
 --
 
@@ -387,20 +359,6 @@ CREATE TABLE `user_invite_code` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `user_password_reset`
---
-
-CREATE TABLE `user_password_reset` (
-  `id` int(11) NOT NULL,
-  `email` varchar(32) NOT NULL,
-  `token` varchar(50) NOT NULL,
-  `init_time` int(11) NOT NULL,
-  `expire_time` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `user_subscribe_log`
 --
 
@@ -425,7 +383,8 @@ CREATE TABLE `user_token` (
   `token` varchar(256) NOT NULL,
   `user_id` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
-  `expire_time` int(11) NOT NULL
+  `expire_time` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1-tg token,2-重置密码token,3-邮箱验证token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -515,12 +474,6 @@ ALTER TABLE `email_queue`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `email_verify`
---
-ALTER TABLE `email_verify`
-  ADD PRIMARY KEY (`id`);
-
---
 -- 表的索引 `node`
 --
 ALTER TABLE `node`
@@ -565,12 +518,6 @@ ALTER TABLE `signin_ip`
   ADD PRIMARY KEY (`id`);
 
 --
--- 表的索引 `telegram_session`
---
-ALTER TABLE `telegram_session`
-  ADD PRIMARY KEY (`id`);
-
---
 -- 表的索引 `ticket`
 --
 ALTER TABLE `ticket`
@@ -590,12 +537,6 @@ ALTER TABLE `user`
 ALTER TABLE `user_invite_code`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
-
---
--- 表的索引 `user_password_reset`
---
-ALTER TABLE `user_password_reset`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- 表的索引 `user_subscribe_log`
@@ -674,12 +615,6 @@ ALTER TABLE `email_queue`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `email_verify`
---
-ALTER TABLE `email_verify`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `node`
 --
 ALTER TABLE `node`
@@ -722,12 +657,6 @@ ALTER TABLE `signin_ip`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- 使用表AUTO_INCREMENT `telegram_session`
---
-ALTER TABLE `telegram_session`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
 -- 使用表AUTO_INCREMENT `ticket`
 --
 ALTER TABLE `ticket`
@@ -743,12 +672,6 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `user_invite_code`
 --
 ALTER TABLE `user_invite_code`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- 使用表AUTO_INCREMENT `user_password_reset`
---
-ALTER TABLE `user_password_reset`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
