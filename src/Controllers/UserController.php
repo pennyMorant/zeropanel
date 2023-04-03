@@ -3,18 +3,18 @@
 namespace App\Controllers;
 
 use App\Services\Auth;
+use App\Services\Mail;
 use App\Models\{
     Ann,
     User,
     Setting,
     InviteCode,
-    EmailVerify
+    Token
 };
 use App\Utils\{
     URL,
     Hash,
-    Tools,
-    TelegramSessionManager
+    Tools
 };
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
@@ -67,12 +67,15 @@ class UserController extends BaseController
 
     public function profile(ServerRequest $request, Response $response, array $args)
     {
-        $bind_token = TelegramSessionManager::addBindSession($this->user);
-
+        $tg_bind_token = Token::where('user_id', $this->user->id)->where('expire_time', '>', time())
+                        ->where('type', 1)->value('token');
+        if (is_null($tg_bind_token)) {
+            $tg_bind_token = Token::createToken($this->user, 32, 1);
+        }
         $this->view()
             ->assign('user', $this->user)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
-            ->assign('bind_token', $bind_token)
+            ->assign('bind_token', $tg_bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
             ->registerClass('URL', URL::class)
             ->display('user/profile.tpl');

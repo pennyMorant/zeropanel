@@ -8,14 +8,15 @@ use App\Models\{
     Setting
 };
 use App\Utils\Hash;
-use App\Services\Password;
+use App\Models\Token;
+use App\Services\Mail;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Pkly\I18Next\I18n;
 
 class PasswordController extends BaseController
 {
-    public function reset(ServerRequest $request, Response $response, array $args)
+    public function resetIndex(ServerRequest $request, Response $response, array $args)
     {
         $this->view()->display('password/reset.tpl');
         return $response;
@@ -31,34 +32,44 @@ class PasswordController extends BaseController
                 'msg' => I18n::get()->t('email does not exist')
             ]);
         }
-        if (Password::sendResetEmail($email)) {
-            $msg = I18n::get()->t('email sending success');
-        } else {
-            $msg = I18n::get()->t('email sending failed');;
-        }
+        $token = Token::createToken($user, 64, 3);
+        $subject = Setting::obtain('website_name') . '重置密码';
+        $url = Setting::obtain('website_url') . '/password/reset?token=' . $token;
+
+        Mail::send(
+            $user->email,
+            $subject,
+            'password/reset.tpl',
+            [
+                'url' => $url
+            ],
+            []
+        );
         return $response->withJson([
-            'ret' => 1,
-            'msg' => $msg
+            'ret'   =>  1,
+            'msg'   =>  '验证邮件发送成功'
         ]);
     }
 
-    public function token(ServerRequest $request, Response $response, array $args)
+    public function tokenIndex(ServerRequest $request, Response $response, array $args)
     {
-        $token = PasswordReset::where('token', $args['token'])->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
+        $token = Token::where('token', $request->getParam('token'))->where('expire_time', '>', time())->first();
         if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
         
-        $this->view()->display('password/token.tpl');
+        $this->view()
+        ->assign('token', $request->getParam('token'))
+        ->display('password/token.tpl');
         return $response;
     }
 
     public function handleToken(ServerRequest $request, Response $response, array $args)
     {
-        $tokenStr = $args['token'];
+        $tokenStr = $request->getParam('token');
         $password = $request->getParam('password');
         $repassword = $request->getParam('repassword');
 
         // check token
-        $token = PasswordReset::where('token', $tokenStr)->where('expire_time', '>', time())->orderBy('id', 'desc')->first();
+        $token = Token::where('token', $tokenStr)->where('expire_time', '>', time())->first();
         if (is_null($token)) {
             return $response->withJson([
                 'ret' => 0,
@@ -66,7 +77,7 @@ class PasswordController extends BaseController
             ]);
         }
 
-        $user = $token->getUser();
+        $user = User::find($token->user_id);
         if (is_null($user)) {
             return $response->withJson([
                 'ret' => 0,
@@ -75,7 +86,7 @@ class PasswordController extends BaseController
         }
 
         // reset password
-        $hashPassword    = Hash::passwordHash($password);
+        $hashPassword        = Hash::passwordHash($password);
         $user->password      = $hashPassword;
 
         if (!$user->save()) {

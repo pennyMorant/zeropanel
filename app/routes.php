@@ -31,7 +31,7 @@ return function (SlimApp $app) {
     // User Center
     $app->group('/user', function (Group $group) {
         $group->get('/dashboard',                       App\Controllers\UserController::class . ':index');
-
+        
         $group->post('/getusertrafficinfo',             App\Controllers\UserController::class . ':getUserTrafficUsage');
         $group->get('/tutorial',                        App\Controllers\UserController::class . ':tutorial');
         $group->get('/referral',                        App\Controllers\UserController::class . ':referral');
@@ -107,10 +107,10 @@ return function (SlimApp $app) {
 
     // Password
     $app->group('/password', function (Group $group) {
-        $group->get('/reset',            App\Controllers\PasswordController::class . ':reset');
+        $group->get('/reset',            App\Controllers\PasswordController::class . ':resetIndex');
         $group->post('/reset',           App\Controllers\PasswordController::class . ':handleReset');
-        $group->get('/token/{token}',    App\Controllers\PasswordController::class . ':token');
-        $group->post('/token/{token}',   App\Controllers\PasswordController::class . ':handleToken');
+        $group->get('/token',            App\Controllers\PasswordController::class . ':tokenIndex');
+        $group->post('/token',           App\Controllers\PasswordController::class . ':handleToken');
     })->add(new Guest());
 
     // Admin

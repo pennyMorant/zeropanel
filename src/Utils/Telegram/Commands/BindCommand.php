@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Utils\Telegram\Commands;
 
 use App\Models\User;
+use App\Models\Token;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
-use App\Utils\TelegramSessionManager;
 
 final class BindCommand extends Command
 {
@@ -40,8 +40,8 @@ final class BindCommand extends Command
             );
             return;
         }
-        $id = TelegramSessionManager::verifyBindSession($token);
-        if ($id == 0) {
+        $result = Token::where('token', $token)->where('type', 1)->first();
+        if ($result->expire_time < time()) {
             $this->replyWithMessage(
                 [
                     'text' => '当前token已经失效，请刷新网页重新获取token',
@@ -50,7 +50,7 @@ final class BindCommand extends Command
             );
             return;
         }
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $result->user_id)->first();
         if (!is_null($user->telegram_id) == $chatId) {
             $this->replyWithMessage(
                 [

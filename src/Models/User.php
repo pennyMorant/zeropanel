@@ -249,10 +249,7 @@ class User extends Model
         InviteCode::where('user_id', '=', $uid)->delete();
         Ip::where('userid', '=', $uid)->delete();
         SigninIp::where('userid', '=', $uid)->delete();
-        PasswordReset::where('email', '=', $email)->delete();
-        TelegramSession::where('user_id', '=', $uid)->delete();
         Token::where('user_id', '=', $uid)->delete();
-
         UserSubscribeLog::where('user_id', '=', $uid)->delete();
 
         $this->delete();

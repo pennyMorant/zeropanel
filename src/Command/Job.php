@@ -12,7 +12,6 @@ use App\Models\TrafficLog;
 use App\Models\NodeInfoLog;
 use App\Models\NodeOnlineLog;
 use App\Models\PasswordReset;
-use App\Models\TelegramSession;
 use App\Models\UserSubscribeLog;
 use App\Models\Setting;
 use App\Models\Order;
@@ -71,7 +70,6 @@ class Job extends Command
         DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
         PasswordReset::where('expire_time', '<', time() - 86400 * 3)->delete();
         Ip::where('datetime', '<', time() - 300)->delete();
-        TelegramSession::where('datetime', '<', time() - 900)->delete();
         SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
         TrafficLog::where('datetime', '<', time() - 86400 * 10)->delete();
         NodeOnlineLog::where('log_time', '<', time() - 86400 * 3)->delete();
