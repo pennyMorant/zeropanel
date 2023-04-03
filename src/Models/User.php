@@ -242,8 +242,6 @@ class User extends Model
     public function deleteUser(): bool
     {
         $uid   = $this->id;
-        $email = $this->email;
-
         DetectBanLog::where('user_id', '=', $uid)->delete();
         DetectLog::where('user_id', '=', $uid)->delete();
         InviteCode::where('user_id', '=', $uid)->delete();
