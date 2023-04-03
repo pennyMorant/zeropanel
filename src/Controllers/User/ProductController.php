@@ -104,7 +104,7 @@ final class ProductController extends BaseController
                 ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_time')->first();
             $product = Product::find($user->product_id);
             if (is_null($product)) {
-                throw new \Exception('改产品已经被删除, 续费失败');
+                throw new \Exception('产品已经被删除, 续费失败');
             }
             $order = new Order;
             $order->order_no = OrderController::createOrderNo();
