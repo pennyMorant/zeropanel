@@ -178,7 +178,7 @@ class Job extends Command
         $nodes = Node::get();
         foreach ($nodes as $node) {
             $server = $node->server;
-            if (!Tools::isIPv4($server) && $node->changeNodeIp($server)) {
+            if (!Tools::isIP($server) && $node->changeNodeIp($server)) {
                 $node->save();
             }
         }
