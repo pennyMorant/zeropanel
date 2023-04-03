@@ -246,7 +246,6 @@ class User extends Model
 
         DetectBanLog::where('user_id', '=', $uid)->delete();
         DetectLog::where('user_id', '=', $uid)->delete();
-        EmailVerify::where('email', $email)->delete();
         InviteCode::where('user_id', '=', $uid)->delete();
         Ip::where('userid', '=', $uid)->delete();
         SigninIp::where('userid', '=', $uid)->delete();
