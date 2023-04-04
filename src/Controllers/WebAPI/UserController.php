@@ -31,7 +31,7 @@ class UserController extends BaseController
         $node->save();
 
         // 节点流量耗尽则返回 null
-        if ($node->node_traffic_limit != 0 && $node->node_traffic_limit >= $node->node_traffic) {
+        if ($node->node_traffic_limit != 0 && $node->node_traffic_limit <= $node->node_traffic) {
             $users = null;
 
             return $response->withJson([
