@@ -35,45 +35,45 @@ class TicketController extends AdminController
 
     public function createTicket(ServerRequest $request, Response $response, array $args): Response
     {
-        $title    = $request->getParam('title');
-        $content  = $request->getParam('content');
-        $userid   = $request->getParam('userid');
-        if ($title == '' || $content == '') {
+        $postData = $request->getParsedBody();
+        $subject = $postData['subject'] ?? '';
+        $comment = $postData['content'] ?? '';
+        $type = $postData['type'] ?? 'support';
+        $user_id = $postData['user_id'] ?? '';
+        if (empty($subject)||empty($comment)||empty($user_id)) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '非法输入'
-            ]);
-        }
-        if (strpos($content, 'admin') !== false || strpos($content, 'user') !== false) {
-            return $response->withJson([
-                'ret' => 0,
-                'msg' => '请求中有不当词语'
+                'msg' => '非法输入',
             ]);
         }
 
-        $ticket           = new Ticket();
-        $antiXss          = new AntiXSS();
-        $ticket->title    = $antiXss->xss_clean($title);
-        $ticket->content  = $antiXss->xss_clean($content);
-        $ticket->rootid   = 0;
-        $ticket->userid   = $userid;
+        $antiXss = new AntiXSS();
+
+        $content = [
+            [
+                'comment_id' => 0,
+                'commenter_email' => $this->user->email,
+                'comment' => $antiXss->xss_clean($comment),
+                'datetime' => time(),
+            ],
+        ];
+
+        $ticket = new Ticket();
+        $ticket->title = $antiXss->xss_clean($subject);
+        $ticket->content = json_encode($content);
+        $ticket->userid = $user_id;
         $ticket->datetime = time();
+        $ticket->status = 1;
+        $ticket->type = $antiXss->xss_clean($type);
         $ticket->save();
 
-        $user = User::find($userid);
-        $user->sendMail(
-            Setting::obtain('website_name') . '-新管理员工单被开启',
-            'news/warn.tpl',
+        return $response->withJson(
             [
-                'text' => '管理员开启了新的工单，请您及时访问用户面板处理。'
-            ],
-            []
+                'ret' => 1,
+                'id' => $ticket->id,
+                'msg' => '创建成功'
+            ]
         );
-
-        return $response->withJson([
-            'ret' => 1,
-            'msg' => '提交成功'
-        ]);
     }
 
     public function updateTicket(ServerRequest $request, Response $response, array $args): Response

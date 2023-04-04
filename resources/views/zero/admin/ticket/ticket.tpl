@@ -77,8 +77,19 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">{$trans->t('subject')}</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_admin_create_ticket_title">
+                            <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_admin_create_ticket_subject">
                         </div>
+                        <div class="d-flex flex-column mb-8">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+								<span class="required">工单类型</span>
+							</label>
+							<select id="zero_admin_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
+								<option value="support">支持</option>
+								<option value="account">账户</option>
+								<option value="billing">账单</option>
+								<option value="sales">销售</option>
+							</select>
+						</div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">{$trans->t('details')}</span>
@@ -127,8 +138,9 @@
                         url: "/{$config['website_admin_path']}/ticket/create",
                         dataType: "json",
                         data: {
-                            title: $("#zero_admin_create_ticket_title").val(),
-                            userid: $("#zero_admin_create_ticket_userid").val(),
+                            subject: $("#zero_admin_create_ticket_subject").val(),
+                            user_id: $("#zero_admin_create_ticket_userid").val(),
+                            type: $("#zero_admin_create_ticket_type").val(),
                             content: text
                         },
                         success: function (data) {
