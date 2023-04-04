@@ -45,6 +45,7 @@ class ProductController extends AdminController
         $product->year_price = $postdata['year_price'] == '' ? NULL : $postdata['year_price'];
         $product->two_year_price = $postdata['two_year_price'] == '' ? NULL : $postdata['two_year_price'];
         $product->onetime_price = $postdata['onetime_price'] == '' ? NULL : $postdata['onetime_price'];
+        $product->custom_content = $postdata['custom_content'] == '' ? NULL : $postdata['custom_content'];
         $product->type = $postdata['type'];
         $product->sort = $postdata['sort'];
         $product->traffic = $postdata['traffic'];
@@ -90,6 +91,7 @@ class ProductController extends AdminController
         $product->year_price = $putdata['year_price'] == '' ? NULL : $putdata['year_price'];
         $product->two_year_price = $putdata['two_year_price'] == '' ? NULL : $putdata['two_year_price'];
         $product->onetime_price = $putdata['onetime_price'] == '' ? NULL : $putdata['onetime_price'];
+        $product->custom_content = $putdata['custom_content'] == '' ? NULL : $putdata['custom_content'];
         $product->type = $putdata['type'];
         $product->sort = $putdata['sort'];
         $product->traffic = $putdata['traffic'];

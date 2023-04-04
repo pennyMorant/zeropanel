@@ -27,7 +27,7 @@
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
-                                    <div class="card">
+                                    <div class="card mb-5">
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">产品配置</div>
                                             <div class="card-toolbar">
@@ -90,7 +90,15 @@
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="数字越大,越靠前" id="sort" name="sort" type="number" placeholder="产品排序" value="0">
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">商品介绍</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <textarea class="form-control" data-kt-autosize="true" id="custom_content"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +132,7 @@
                         speed_limit: $('#speed_limit').val(),
                         ip_limit: $('#ip_limit').val(),
                         sort: $('#sort').val(),
+                        custom_content: $('#custom_content').val()
                     },
                     success: function(data){
                         if (data.ret === 1){
