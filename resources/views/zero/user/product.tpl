@@ -190,7 +190,7 @@
 										<div class="tab-pane fade show active">
 											<div class="pb-5">
 												<h2 class="fw-bold text-dark">{$trans->t('what the product contains')}</h2>
-												<div class="text-muted fw-semibold">{$trans->t('for light users')}</div>
+												<!--<div class="text-muted fw-semibold">{$trans->t('for light users')}</div>-->
 											</div>
 											<div class="w-100 mb-10" id="zero_modal_configure_product_inner_html">
 											</div>
