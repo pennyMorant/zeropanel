@@ -145,10 +145,10 @@ class URL
         $node_config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
 
         $url = sprintf(
-            'ss://%s:%s@%s:%s#%s',
-            rawurlencode($node_config['method']),
+            'ss://%s@%s:%s#%s',
+            base64_encode($node_config['method'] . ':' . $node_config['passwd']),
             $node_config['passwd'],
-            rawurlencode($node_config['address']),
+            $node_config['address'],
             $node_config['port'],
             rawurlencode($node_config['remark'])
         );
@@ -164,11 +164,11 @@ class URL
         $node_config = $node->getVmessConfig($user, $node->custom_config, $emoji);
         $url= sprintf(
             'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-            rawurlencode($node_config['uuid']),
+            $node_config['uuid'],
             $node_config['address'],
             $node_config['port'],
             $node_config['host'],
-            rawurlencode($node_config['path']),
+            $node_config['path'],
             $node_config['flow'],
             $node_config['security'],
             $node_config['sni'],
@@ -189,11 +189,11 @@ class URL
 
         $url= sprintf(
             'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-            rawurlencode($node_config['uuid']),
+            $node_config['uuid'],
             $node_config['address'],
             $node_config['port'],
             $node_config['host'],
-            rawurlencode($node_config['path']),
+            $node_config['path'],
             $node_config['flow'],
             $node_config['security'],
             $node_config['sni'],
@@ -213,7 +213,7 @@ class URL
         $node_config = $node->getTrojanConfig($user, $node->custom_config, $emoji);
         $url= sprintf(
             'trojan://%s@%s:%s?flow=%s&security=%s&sni=%s#%s',
-            rawurlencode($node_config['uuid']),
+            $node_config['uuid'],
             $node_config['address'],
             $node_config['port'],
             $node_config['flow'],
