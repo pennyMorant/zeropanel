@@ -11,14 +11,14 @@ final class SubController
     {
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $url = base64_encode(sprintf(
+                $url = sprintf(
                     'ss://%s:%s@%s:%s#%s',
-                    $node_config['method'],
-                    $node_config['passwd'],
+                    base64_encode($node_config['method']),
+                    base64_encode($node_config['passwd']),
                     $node_config['address'],
                     $node_config['port'],
                     rawurlencode($node_config['remark'])
-                ));
+                );
                 break;
         }
         return $url;
