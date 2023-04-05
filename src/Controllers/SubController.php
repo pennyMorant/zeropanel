@@ -11,14 +11,14 @@ final class SubController
     {
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $url = sprintf(
+                $url = base64_encode(sprintf(
                     'ss://%s:%s@%s:%s#%s',
-                    rawurlencode($node_config['method']),
+                    $node_config['method'],
                     $node_config['passwd'],
-                    rawurlencode($node_config['address']),
+                    $node_config['address'],
                     $node_config['port'],
                     rawurlencode($node_config['remark'])
-                );
+                ));
                 break;
         }
         return $url;
@@ -52,11 +52,11 @@ final class SubController
             case 'vless':
                 $url= sprintf(
                     'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-                    rawurlencode($node_config['uuid']),
+                    $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
                     $node_config['host'],
-                    rawurlencode($node_config['path']),
+                    $node_config['path'],
                     $node_config['flow'],
                     $node_config['security'],
                     $node_config['sni'],
@@ -95,7 +95,7 @@ final class SubController
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
-                        rawurlencode($node_config['uuid']),
+                        $node_config['uuid'],
                         $vmess_params['ws'],
                         $node_config['path'],
                         $node_config['host'],
@@ -214,7 +214,7 @@ final class SubController
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
-                        rawurlencode($node_config['uuid']),
+                        $node_config['uuid'],
                         $vmess_params['ws'],
                         $node_config['path'],
                         $node_config['host'],
@@ -298,17 +298,17 @@ final class SubController
         $url = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                    $url = self::getShadowsocks($node_config);
+                $url = self::getShadowsocks($node_config);
                 break;
             case 'vmess':
                 $tls = $node_config['security'] == 'tls' ? 1 : 0;
                 $url= sprintf(
                     'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-                    rawurlencode($node_config['uuid']),
+                    $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
                     $node_config['host'],
-                    rawurlencode($node_config['path']),
+                    $node_config['path'],
                     $node_config['flow'],
                     $tls,
                     $node_config['sni'],
@@ -317,17 +317,16 @@ final class SubController
                     $node_config['net'],
                     rawurlencode($node_config['remark'])
                 );
-                return $url;
                 break;
             case 'vless':
                 $tls = $node_config['security'] == 'tls' ? 1 : 0;
                 $url= sprintf(
                     'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-                    rawurlencode($node_config['uuid']),
+                    $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
                     $node_config['host'],
-                    rawurlencode($node_config['path']),
+                    $node_config['path'],
                     $node_config['flow'],
                     $tls,
                     $node_config['sni'],
@@ -351,7 +350,7 @@ final class SubController
             case 'trojan':
                 $url= sprintf(
                     'trojan://%s@%s:%s?flow=%s&security=%s&sni=%s&#%s',
-                    rawurlencode($node_config['uuid']),
+                    $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
                     $node_config['flow'],
@@ -374,11 +373,11 @@ final class SubController
             case 'vmess':
                 $url = sprintf(
                         'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
-                        rawurlencode($node_config['uuid']),
+                        $node_config['uuid'],
                         $node_config['address'],
                         $node_config['port'],
                         $node_config['host'],
-                        rawurlencode($node_config['path']),
+                        $node_config['path'],
                         $node_config['flow'],
                         $node_config['security'],
                         $node_config['sni'],
@@ -392,17 +391,20 @@ final class SubController
                 $url = self::getTrojan($node_config);
                 break;
             case 'vless':
-                $url = sprintf(
-                        'vless://%s@%s:%d?encryption=none&flow=%s&security=%s&sni=%s&host=%s&type=%s#%s',
-                        rawurlencode($node_config['uuid']),
-                        $node_config['address'],
-                        $node_config['port'],
-                        $node_config['flow'],
-                        $node_config['security'],
-                        $node_config['sni'],
-                        $node_config['host'],
-                        $node_config['net'],
-                        rawurlencode($node_config['remark'])
+                $url= sprintf(
+                    'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    rawurlencode($node_config['uuid']),
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['host'],
+                    rawurlencode($node_config['path']),
+                    $node_config['flow'],
+                    $node_config['security'],
+                    $node_config['sni'],
+                    rawurlencode($node_config['servicename']),
+                    $node_config['headertype'],
+                    $node_config['net'],
+                    rawurlencode($node_config['remark'])
                 );
                 break;
         }
