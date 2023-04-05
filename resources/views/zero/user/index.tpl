@@ -211,12 +211,6 @@
 																</ul>
 															</div>
 															{/if}
-															{if in_array('kitsunebi',$zeroconfig['index_sub'])}
-															<!-- Kitsunebi订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-kitsunebi copy-text" data-clipboard-text="{$subInfo["kitsunebi"]}"><i class="zero-kitsunebi text-white"></i>&nbsp;&nbsp;复制 Kitsunebi 订阅&nbsp;&nbsp;</button>
-															</div>
-															{/if}
 															{if in_array('anxray',$zeroconfig['index_sub'])}
 															<!-- AnXray订阅 -->
 															<div class="btn-group mb-3 mr-3">
