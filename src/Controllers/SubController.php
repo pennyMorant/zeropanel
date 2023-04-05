@@ -2,9 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\{
-    Setting
-};
+use App\Models\Setting;
+use App\Utils\URL;
 
 final class SubController
 {
@@ -12,18 +11,25 @@ final class SubController
     {
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = 'ss://' . base64_encode($node_config['method'] . ':' . $node_config['passwd']) . '@[' . $node_config['address'] . ']:' . $node_config['port'];
-                return $return . '#' . rawurlencode($node_config['remark']);
+                $url = sprintf(
+                    'ss://%s:%s@%s:%s#%s',
+                    rawurlencode($node_config['method']),
+                    $node_config['passwd'],
+                    rawurlencode($node_config['address']),
+                    $node_config['port'],
+                    rawurlencode($node_config['remark'])
+                );
                 break;
         }
+        return $url;
     }
 
     public static function getV2RayN(array $node_config)
     {
-        $return = null;
+        $url = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = self::getShadowsocks($node_config);
+                $url = self::getShadowsocks($node_config);
                 break;
             case 'vmess':
                 $node = [
@@ -41,48 +47,74 @@ final class SubController
                     'sni' => $node_config['sni'],
                     'serviceName' => $node_config['servicename'],
                 ];
-                $return = 'vmess://' . base64_encode(json_encode($node, 320));
+                $url = 'vmess://' . base64_encode(json_encode($node, 320));
                 break;
             case 'vless':
-                $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . 
-                $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . 
-                '&serviceName=' . $node_config['servicename'] . '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
+                $url= sprintf(
+                    'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    rawurlencode($node_config['uuid']),
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['host'],
+                    rawurlencode($node_config['path']),
+                    $node_config['flow'],
+                    $node_config['security'],
+                    $node_config['sni'],
+                    rawurlencode($node_config['servicename']),
+                    $node_config['headertype'],
+                    $node_config['net'],
+                    rawurlencode($node_config['remark'])
+                );
                 break;
             case 'trojan':
-                $return = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . 
-                $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
+                $url = self::getTrojan($node_config);
         }
-        return $return;
+        return $url;
     }
 
     public static function getSurge(array $node_config)
     {
-        $return = null;
+        $node_info = null;
             switch ($node_config['type']) {
                 case 'shadowsocks':
-                    $return = ($node_config['remark'] . ' = ss, ' . $node_config['address'] . ', ' . $node_config['port'] . ', encrypt-method=' . $node_config['method'] . ', password=' . $node_config['passwd'] . ', udp-relay=true');
+                    $node_info = sprintf(
+                        '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['method'],
+                        $node_config['passwd']
+                    );                    
                     break;
-                case 'vmess':
-                    if (!in_array($node_config['net'], ['ws', 'tcp'])) {
-                        break;
-                    }
-                    if ($node_config['security'] == 'tls') {
-                        $tls = ', tls=true';
-                        $sni = $node_config['sni'] ? ', ' . $node_config['sni'] : '';
-                    } else {
-                        $tls = ', ';
-                        $sni = ', ';
-                    }
-                    $ws = ($node_config['net'] == 'ws'
-                        ? ', ws=true, ws-path=' . $node_config['path'] . ', ws-headers=host:' . $node_config['host']
-                        : '');
-                    $return = $node_config['remark'] . ' = vmess, ' . $node_config['address'] . ', ' . $node_config['port'] . ', username = ' . $node_config['uuid'] . $ws . $tls . $sni;
+                case 'vmess':                  
+                    $vmess_params['ws'] = $node_config['net'] == 'ws' ? 'true' : 'false';
+                    $vmess_params['tls'] = $node_config['security'] == 'tls' ? 'true' : 'false';
+                    
+                    $node_info = sprintf(
+                        '%s = vmess, %s, %s, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        rawurlencode($node_config['uuid']),
+                        $vmess_params['ws'],
+                        $node_config['path'],
+                        $node_config['host'],
+                        $vmess_params['tls'],
+                        $node_config['sni']
+                    );
                     break;
                 case 'trojan':
-                    $return = $node_config['remark'] . ' = trojan, ' . $node_config['address'] . ', ' . $node_config['port'] . ', password= ' . $node_config['uuid'] . ', sni= ' . $node_config['sni'];
+                    $node_info = sprintf(
+                        '%s = trojan, %s, %s, password=%s, sni=%s',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['uuid'],
+                        $node_config['sni']
+                    );
                     break;
             }
-        return $return;
+        return $node_info;
     }
 
     public static function getQuantumult(array $node_config)
@@ -161,40 +193,55 @@ final class SubController
 
     public static function getSurfboard(array $node_config)
     {
-        $return = null;
-        switch ($node_config['type']) {
-            case 'shadowsocks':
-                $return = ($node_config['remark'] . ' = shadowsocks, ' . $node_config['address'] . ', ' . $node_config['port'] . ', encrypt-method=' . $node_config['method'] . ', password=' . $node_config['passwd'] .  ', udp-relay=true');
-                break;
-            case 'vmess':
-                if (!in_array($node_config['net'], ['ws', 'tcp'])) {
+        $node_info = null;
+            switch ($node_config['type']) {
+                case 'shadowsocks':
+                    $node_info = sprintf(
+                        '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['method'],
+                        $node_config['passwd']
+                    );                    
                     break;
-                }
-                if ($node_config['security'] == 'tls') {
-                    $tls = ', tls=true';
-                    $sni = $node_config['sni'] ? ', ' . $node_config['sni'] : '';
-                } else {
-                    $tls = ', ';
-                    $sni = ', ';
-                }
-                $ws = ($node_config['net'] == 'ws'
-                    ? ', ws=true, ws-path=' . $node_config['path'] . ', ws-headers=host:' . $node_config['host']
-                    : '');
-                $return = $node_config['remark'] . ' = vmess, ' . $node_config['address'] . ', ' . $node_config['port'] . ', username= ' . $node_config['uuid'] . $ws . $tls . $sni;
-                break;
-            case 'trojan':
-                $return = $node_config['remark'] . ' = trojan, ' . $node_config['address'] . ', ' . $node_config['port'] . ', password= ' . $node_config['uuid'] . ', sni= ' . $node_config['sni'];
-                break;    
-        }
-        return $return;
+                case 'vmess':                  
+                    $vmess_params['ws'] = $node_config['net'] == 'ws' ? 'true' : 'false';
+                    $vmess_params['tls'] = $node_config['security'] == 'tls' ? 'true' : 'false';
+                    
+                    $node_info = sprintf(
+                        '%s = vmess, %s, %s, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s, skip-cert-verify=true, vmess-aead=true',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        rawurlencode($node_config['uuid']),
+                        $vmess_params['ws'],
+                        $node_config['path'],
+                        $node_config['host'],
+                        $vmess_params['tls'],
+                        $node_config['sni']
+                    );
+                    break;
+                case 'trojan':
+                    $node_info = sprintf(
+                        '%s = trojan, %s, %s, password=%s, sni=%s, skip-cert-verify=true',
+                        $node_config['remark'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['uuid'],
+                        $node_config['sni']
+                    );
+                    break;
+            }
+        return $node_info;
     }
 
     public static function getClash(array $node_config)
     {
-        $return = null;
+        $node_info = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = [
+                $node_info = [
                     'name' => $node_config['remark'],
                     'type' => 'ss',
                     'server' => $node_config['address'],
@@ -205,10 +252,9 @@ final class SubController
                 ];
                 break;
             case 'vmess':
-                if (!in_array($node_config['net'], array('ws', 'tcp', 'grpc'))) {
-                    break;
-                }
-                $return = [
+                $ws = $node_config['net'] == 'ws' ? 'ws' : '';
+                $tls = $node_config['security'] == 'tls' ? true : false;
+                $node_info = [
                     'name' => $node_config['remark'],
                     'type' => 'vmess',
                     'server' => $node_config['address'],
@@ -216,30 +262,24 @@ final class SubController
                     'uuid' => $node_config['uuid'],
                     'alterId' => $node_config['aid'],
                     'cipher' => 'auto',
-                    'udp' => true
+                    'udp' => true,
+                    'servername' => $node_config['host'],
+                    'network' => $ws,
+                    'tls'   =>  $tls,
+                    'skip-cert-verify'  =>  true,
+                    'ws-opts' => [
+                        'path'  =>  $node_config['path'],
+                        'headers' => [
+                            'Host'  =>  $node_config['host'],
+                        ]
+                    ],
+                    'grpc-opts' =>  [
+                        'grpc-service-name' =>  $node_config['servicename'],
+                    ]
                 ];
-                if ($node_config['host']) {
-                    $return['servername'] = $node_config['host'];
-                }
-                if ($node_config['net'] == 'ws') {
-                    $return['network'] = 'ws';
-                    $return['ws-opts']['path'] = $node_config['path'];
-                    $return['ws-opts']['headers']['Host'] = ($node_config['host'] != '' ? $node_config['host'] : $node_config['address']);
-                }
-                if ($node_config['security'] == 'tls') {
-                    $return['tls'] = true;
-                    if ($node_config['verify_cert'] == false) {
-                        $return['skip-cert-verify'] = true;
-                    }
-                }
-                if ($node_config['net'] == 'grpc') {
-                    $return['network'] = 'grpc';
-                    $return['servername'] = ($node_config['host'] != '' ? $node_config['host'] : $node_config['address']);
-                    $return['grpc-opts']['grpc-service-name'] = ($node_config['servicename'] != '' ? $node_config['servicename'] : "");
-                }
                 break;
             case 'trojan':
-                $return = [
+                $node_info = [
                     'name' => $node_config['remark'],
                     'type' => 'trojan',
                     'server' => $node_config['address'],
@@ -248,202 +288,124 @@ final class SubController
                     'sni' => $node_config['sni'],
                     'udp' => true
                 ];
-                if ($node_config['net'] == 'grpc') {
-                    $return['network'] = 'grpc';
-                    $return['grpc-opts']['grpc-service-name'] = ($node_config['servicename'] != '' ? $node_config['servicename'] : "");
-                }
                 break;
         }
-        return $return;
+        return $node_info;
     }
 
     public static function getShadowrocket(array $node_config)
     {
-        $return = null;
+        $url = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                    $return = self::getShadowsocks($node_config);
+                    $url = self::getShadowsocks($node_config);
                 break;
             case 'vmess':
-                if (!in_array($node_config['net'], ['tcp', 'ws', 'http', 'h2'])) {
-                    break;
-                }
-                $obfs = '';
-                switch ($node_config['net']) {
-                    case 'ws':
-                        $obfs .= ($node_config['host'] != ''
-                            ? ('&obfsParam=' . $node_config['host'] . '&path=' . $node_config['path'] . '&obfs=websocket')
-                            : ('&obfsParam=' . $node_config['address'] . '&path=' . $node_config['path'] . '&obfs=websocket'));
-                        break;
-                    case 'kcp':
-                        $obfs .= 'obfsParam={"header":' . '"' . ($node_config['headertype'] == '' || $node_config['headertype'] == 'noop' ? 'none' : $node_config['headertype']) . '"' . '}&obfs=mkcp';
-                        break;
-                    case 'mkcp':
-                        $obfs .= 'obfsParam={"header":' . '"' . ($node_config['headertype'] == '' || $node_config['headertype'] == 'noop' ? 'none' : $node_config['headertype']) . '"' . '}&obfs=mkcp';
-                        break;
-                    case 'h2':
-                        $obfs .= ($node_config['host'] != ''
-                            ? ('&obfsParam=' . $node_config['host'] . '&path=' . $node_config['path'] . '&obfs=h2')
-                            : ('&obfsParam=' . $node_config['address'] . '&path=' . $node_config['path'] . '&obfs=h2'));
-                        break;
-                    default:
-                        $obfs .= '&obfs=none';
-                        break;
-                }
-                $tls = '';
-                if ($node_config['security'] == 'tls') {
-                    $tls = '&tls=1';
-                    if ($node_config['verify_cert'] == false) {
-                        $tls .= '&allowInsecure=1';
-                    }
-                    $tls .= ($node_config['sni']
-                        ? ('&peer=' . $node_config['sni'])
-                        : ('&peer=' . $node_config['host']));
-                }
-                $return = 'vmess://auto:' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?remarks=' . rawurlencode($node_config['remark']) . $obfs . $tls . '&alterId=' . $node_config['aid'];
+                $tls = $node_config['security'] == 'tls' ? 1 : 0;
+                $url= sprintf(
+                    'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    rawurlencode($node_config['uuid']),
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['host'],
+                    rawurlencode($node_config['path']),
+                    $node_config['flow'],
+                    $tls,
+                    $node_config['sni'],
+                    rawurlencode($node_config['servicename']),
+                    $node_config['headertype'],
+                    $node_config['net'],
+                    rawurlencode($node_config['remark'])
+                );
+                return $url;
                 break;
             case 'vless':
-                if (!in_array($node_config['net'], ['tcp', 'ws', 'http', 'h2'])) {
-                    break;
-                }
-                $obfs = '';
-                switch ($node_config['net']) {
-                    case 'ws':
-                        $obfs .= ($node_config['host'] != ''
-                            ? ('&obfsParam=' . $node_config['host'] . '&path=' . $node_config['path'] . '&obfs=websocket')
-                            : ('&obfsParam=' . $node_config['address'] . '&path=' . $node_config['path'] . '&obfs=websocket'));
-                        break;
-                    case 'kcp':
-                        $obfs .= 'obfsParam={"header":' . '"' . ($node_config['headertype'] == '' || $node_config['headertype'] == 'noop' ? 'none' : $node_config['headertype']) . '"' . '}&obfs=mkcp';
-                        break;
-                    case 'mkcp':
-                        $obfs .= 'obfsParam={"header":' . '"' . ($node_config['headertype'] == '' || $node_config['headertype'] == 'noop' ? 'none' : $node_config['headertype']) . '"' . '}&obfs=mkcp';
-                        break;
-                    case 'h2':
-                        $obfs .= ($node_config['host'] != ''
-                            ? ('&obfsParam=' . $node_config['host'] . '&path=' . $node_config['path'] . '&obfs=h2')
-                            : ('&obfsParam=' . $node_config['address'] . '&path=' . $node_config['path'] . '&obfs=h2'));
-                        break;
-                    default:
-                        $obfs .= '&obfs=none';
-                        break;
-                }
-                $tls = '';
-                if ($node_config['security'] == 'tls') {
-                    $tls = '&tls=1';
-                    if ($node_config['verify_cert'] == false) {
-                        $tls .= '&allowInsecure=1';
-                    }
-                    $tls .= ($node_config['sni']
-                        ? ('&peer=' . $node_config['sni'])
-                        : ('&peer=' . $node_config['host']));
-                } else {
-                    $tls = '&tls=1';
-                    
-                    if ($node_config['verify_cert'] == false) {
-                        $tls .= '&allowInsecure=1';
-                    }
-                    $tls .= ($node_config['sni']
-                        ? ('&peer=' . $node_config['sni'])
-                        : ('&peer=' . $node_config['host']));
-                    $tls .= '&xtls=1';
-                }
-                $return = 'vless://auto:' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?remarks=' . rawurlencode($node_config['remark']) . $obfs . $tls . '&alterId=' . $node_config['aid'];
+                $tls = $node_config['security'] == 'tls' ? 1 : 0;
+                $url= sprintf(
+                    'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    rawurlencode($node_config['uuid']),
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['host'],
+                    rawurlencode($node_config['path']),
+                    $node_config['flow'],
+                    $tls,
+                    $node_config['sni'],
+                    rawurlencode($node_config['servicename']),
+                    $node_config['headertype'],
+                    $node_config['net'],
+                    rawurlencode($node_config['remark'])
+                );
                 break;
             case 'trojan':
-                $return = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?peer=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
+                $url = self::getTrojan($node_config);
                 break;
         }
-        return $return;
-    }
-
-    public static function getKitsunebi(array $node_config)
-    {
-        $return = null;
-        switch ($node_config['type']) {
-            case 'shadowsocks':
-                $return = (self::getShadowsocks($node_config));
-                break;
-            case 'vmess':
-                $network = ($node_config['net'] == 'tls'
-                    ? '&network=tcp'
-                    : ('&network=' . $node_config['net']));
-                $protocol = '';
-                switch ($node_config['net']) {
-                    case 'kcp':
-                        $protocol .= ('&kcpheader=' . $node_config['headertype']);
-                        break;
-                    case 'ws':
-                        $protocol .= ('&wspath=' . $node_config['path'] . '&wsHost=' . $node_config['host']);
-                        break;
-                    case 'h2':
-                        $protocol .= ('&h2Path=' . $node_config['path'] . '&h2Host=' . $node_config['host']);
-                        break;
-                }
-                $tls = '';
-                if ($node_config['secty'] == 'tls') {
-                    $tls = '&tls=1';
-                    if ($node_config['verify_cert'] == false) {
-                        $tls .= '&allowInsecure=1';
-                    }
-                }
-                $return .= 'vmess://auto:' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?remark=' . rawurlencode($node_config['remark']) . $network . $protocol . '&aid=' . $node_config['aid'] . $tls;
-                break;
-        }
-        return $return;
+        return $url;
     }
     
     public static function getTrojan(array $node_config)
     {
-        $return = null;
+        $url = null;
         switch ($node_config['type']) {
             case 'trojan':
-                $return  = ('trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port']);
-                $return .= ('?peer=' . $node_config['sni'] . '&sni=' . $node_config['sni']);
-                if($node_config['security'] == "xtls"){
-                   $return.=("&security=".$node_config['security']."&flow=".$node_config['flow']);
-                }
-                if ($node_config['net'] === 'grpc') {
-                    $params = [];
-                    // shadowrocket
-                    $params['obfs'] = 'grpc';
-                    $params['path'] = $node_config['servicename'];
-                    $params['obfsParam'] = $node_config['host'];
-                    // v2rayn
-                    $params['type'] = 'grpc';
-                    $params['security'] = 'tls';
-                    $params['serviceName'] = $node_config['servicename'];
-                    $return .= '&' . http_build_query($params);
-                }
-                $return.=('#' .  rawurlencode($node_config['remark']));
+                $url= sprintf(
+                    'trojan://%s@%s:%s?flow=%s&security=%s&sni=%s&#%s',
+                    rawurlencode($node_config['uuid']),
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['flow'],
+                    $node_config['security'],
+                    $node_config['sni'],
+                    rawurlencode($node_config['remark'])
+                );
+                return $url;
                 break;
         }
-        return $return;
     }
 
     public static function getAnXray(array $node_config)
     {
-        $return = null;
+        $url = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = self::getShadowsocks($node_config);
+                $url = self::getShadowsocks($node_config);
                 break;				
             case 'vmess':
-                $return = 'vmess://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=auto&host=' . 
-                            $node_config['host'] . '&path=' . $node_config['path'] . '&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . 
-                            '&sni=' . $node_config['sni'] . '&serviceName=' . $node_config['servicename'] . '&headerType=' . $node_config['headertype'] . '&type=' . 
-                            $node_config['net']  . '#' . rawurlencode($node_config['remark']);
+                $url = sprintf(
+                        'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                        rawurlencode($node_config['uuid']),
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['host'],
+                        rawurlencode($node_config['path']),
+                        $node_config['flow'],
+                        $node_config['security'],
+                        $node_config['sni'],
+                        rawurlencode($node_config['servicename']),
+                        $node_config['headertype'],
+                        $node_config['net'],
+                        rawurlencode($node_config['remark'])
+                );
                 break;
             case 'trojan':
-                $return = 'trojan://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . $node_config['flow'] . 
-                        '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
+                $url = self::getTrojan($node_config);
                 break;
             case 'vless':
-                $return = 'vless://' . $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . 
-                            $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . 
-                            '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
+                $url = sprintf(
+                        'vless://%s@%s:%d?encryption=none&flow=%s&security=%s&sni=%s&host=%s&type=%s#%s',
+                        rawurlencode($node_config['uuid']),
+                        $node_config['address'],
+                        $node_config['port'],
+                        $node_config['flow'],
+                        $node_config['security'],
+                        $node_config['sni'],
+                        $node_config['host'],
+                        $node_config['net'],
+                        rawurlencode($node_config['remark'])
+                );
                 break;
         }
-        return $return;
+        return $url;
     }	
 }

@@ -143,8 +143,16 @@ class URL
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
-        $shadowsocks = base64_encode($node_config['method'] . ':' . $node_config['passwd']) . '@[' . $node_config['address'] . ']:' . $node_config['port'];
-        return 'ss://'. $shadowsocks . '#' . rawurlencode($node_config['remark']);
+
+        $url = sprintf(
+            'ss://%s:%s@%s:%s#%s',
+            rawurlencode($node_config['method']),
+            $node_config['passwd'],
+            rawurlencode($node_config['address']),
+            $node_config['port'],
+            rawurlencode($node_config['remark'])
+        );
+        return $url;
     }
 
 
@@ -154,11 +162,22 @@ class URL
     public static function getVmessURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getVmessConfig($user, $node->custom_config, $emoji);
-        $vmess = $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=auto&host=' . $node_config['host'] . 
-                '&path=' . $node_config['path'] . '&flow=' . $node_config['flow'] . '&security=' . $node_config['security'] . 
-                '&sni=' . $node_config['sni'] . '&serviceName=' . $node_config['servicename'] . '&headerType=' . $node_config['headertype'] . 
-                '&type=' . $node_config['net']  . '#' . rawurlencode($node_config['remark']);
-        return 'vmess://' . $vmess;
+        $url= sprintf(
+            'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+            rawurlencode($node_config['uuid']),
+            $node_config['address'],
+            $node_config['port'],
+            $node_config['host'],
+            rawurlencode($node_config['path']),
+            $node_config['flow'],
+            $node_config['security'],
+            $node_config['sni'],
+            rawurlencode($node_config['servicename']),
+            $node_config['headertype'],
+            $node_config['net'],
+            rawurlencode($node_config['remark'])
+        );
+        return $url;
     }
 
     /**
@@ -167,11 +186,23 @@ class URL
     public static function getVlessURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getVlessConfig($user, $node->custom_config, $emoji);
-        //$item['serviceName'] = $item['servicename'];
-        $vless = $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?encryption=none&flow=' . 
-                $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '&host=' . $node_config['host'] . 
-                '&type=' . $node_config['net'] . '#' . rawurlencode($node_config['remark']);
-        return 'vless://' . $vless;
+
+        $url= sprintf(
+            'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+            rawurlencode($node_config['uuid']),
+            $node_config['address'],
+            $node_config['port'],
+            $node_config['host'],
+            rawurlencode($node_config['path']),
+            $node_config['flow'],
+            $node_config['security'],
+            $node_config['sni'],
+            rawurlencode($node_config['servicename']),
+            $node_config['headertype'],
+            $node_config['net'],
+            rawurlencode($node_config['remark'])
+        );
+        return $url;
     }
     
     /**
@@ -180,8 +211,16 @@ class URL
     public static function getTrojanURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getTrojanConfig($user, $node->custom_config, $emoji);
-        $trojan = $node_config['uuid'] . '@' . $node_config['address'] . ':' . $node_config['port'] . '?flow=' . 
-                $node_config['flow'] . '&security=' . $node_config['security'] . '&sni=' . $node_config['sni'] . '#' . rawurlencode($node_config['remark']);
-        return 'trojan://' . $trojan;
+        $url= sprintf(
+            'trojan://%s@%s:%s?flow=%s&security=%s&sni=%s#%s',
+            rawurlencode($node_config['uuid']),
+            $node_config['address'],
+            $node_config['port'],
+            $node_config['flow'],
+            $node_config['security'],
+            $node_config['sni'],
+            rawurlencode($node_config['remark'])
+        );
+        return $url;
     }
 }

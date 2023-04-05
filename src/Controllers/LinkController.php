@@ -163,13 +163,6 @@ class LinkController extends BaseController
                     'class' => 'Lists'
                 ];
                 break;
-            case 'kitsunebi':
-                $return = [
-                    'filename' => 'Kitsunebi',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
-                ];
-                break;
             case 'anxray':
                     $return = [
                         'filename' => 'AnXray',
@@ -306,7 +299,6 @@ class LinkController extends BaseController
             'quantumult' => '?list=quantumult',
             'quantumultx' => '?list=quantumultx',
             'shadowrocket' => '?list=shadowrocket',
-            'kitsunebi' => '?list=kitsunebi'
         ];
 
         return array_map(
@@ -335,9 +327,6 @@ class LinkController extends BaseController
                 break;
             case 'surge':
                 $return = SubController::getSurge($item);
-                break;
-            case 'kitsunebi':
-                $return = SubController::getKitsunebi($item);
                 break;
             case 'quantumult':
                 $return = SubController::getQuantumult($item);
@@ -375,7 +364,6 @@ class LinkController extends BaseController
             }
         }
         switch ($list) {
-            case 'kitsunebi':
             case 'quantumult':
             case 'quantumultx':
             case 'shadowrocket':
@@ -440,7 +428,7 @@ class LinkController extends BaseController
         }
         foreach ($info_array as $remark) {
             $Extend['remark'] = $remark;
-            if (in_array($list, ['kitsunebi', 'quantumult', 'v2rayn', 'anxray'])) {
+            if (in_array($list, ['quantumult', 'v2rayn', 'anxray'])) {
                 $Extend['type'] = 'vmess';
                 $out = self::getListItem($Extend, $list);
             } elseif ($list == 'trojan') {
