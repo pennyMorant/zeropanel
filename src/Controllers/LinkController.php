@@ -290,7 +290,6 @@ class LinkController extends BaseController
             'ss' => '?list=shadowsocks',
             'v2rayn' => '?list=v2rayn',
             'trojan' => '?list=trojan',
-            'v2ray_vless' => '?sub=5',
             // apps
             'anxray' => '?list=anxray',
             'clash' => '?clash=1',
