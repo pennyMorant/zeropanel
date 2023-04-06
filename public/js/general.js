@@ -824,7 +824,7 @@ function oneclickImport(client, subLink) {
       surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
       clash: "clash://install-config?url=" + encodeURIComponent(subLink),
       sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
-      quantumultx: "quantumult-x:///update-configuration?remote-resource=" + encodeURIComponent(subLink),
+      quantumultx: "quantumult-x:///add-resource?remote-resource=" + encodeURIComponent(subLink),
     }
     Swal.fire({
         title: i18next.t('confirm importing subscription link'),
