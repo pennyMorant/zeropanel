@@ -820,7 +820,7 @@ function oneclickImport(client, subLink) {
     if (client == 'quantumultx') {
         config = {
             "server_remote": [
-              subLink, + 'tag=quanx'
+              subLink
             ]
         }
     }
