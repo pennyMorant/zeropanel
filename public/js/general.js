@@ -699,7 +699,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                     switch (data.type) {
                         case 2:                           
                             // 循环设置HTML内容
-                            const selectors_11 = {
+                            const selectors_vmess = {
                                 '#zero_modal_vmess_node_info_remark': 'remark',
                                 '#zero_modal_vmess_node_info_address': 'address',
                                 '#zero_modal_vmess_node_info_port': 'port',
@@ -713,15 +713,15 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_vmess_node_info_security': 'security'
                             }
                             
-                            for (let selector in selectors_11) {
-                                $(selector).html(info[selectors_11[selector]]);
+                            for (let selector in selectors_vmess) {
+                                $(selector).html(info[selectors_vmess[selector]]);
                               }
                             // 生成QRCode
                             $('#zero_modal_vmess_node_info_qrcode').html(qrcodeHtml);                           
                             $("#zero_modal_vmess_node_info").modal('show'); 
                             break;
                         case 4:
-                            const selectors_14 = {
+                            const selectors_trojan = {
                                 '#zero_modal_trojan_node_info_remark': 'remark', 
                                 '#zero_modal_trojan_node_info_address': 'address',
                                 '#zero_modal_trojan_node_info_port': 'port',
@@ -731,14 +731,14 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_trojan_node_info_flow': 'flow',
                             };
                             
-                            for (let selector in selectors_14) {
-                                $(selector).html(info[selectors_14[selector]]);
+                            for (let selector in selectors_trojan) {
+                                $(selector).html(info[selectors_trojan[selector]]);
                               }
                             $("#zero_modal_trojan_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_trojan_node_info").modal('show');
                             break;
                         case 3:
-                            const selectors_15 = {
+                            const selectors_vless = {
                                 '#zero_modal_vless_node_info_remark': 'remark',
                                 '#zero_modal_vless_node_info_address': 'address',
                                 '#zero_modal_vless_node_info_port': 'port',
@@ -753,14 +753,14 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_vless_node_info_sni': 'sni',
                               }
                               
-                            for (let selector in selectors_15) {
-                            $(selector).html(info[selectors_15[selector]]);
+                            for (let selector in selectors_vless) {
+                            $(selector).html(info[selectors_vless[selector]]);
                             }
                             $("#zero_modal_vless_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_vless_node_info").modal('show');
                             break;
                         case 1:
-                            const selectors_0 = {
+                            const selectors_ss = {
                                 '#zero_modal_shadowsocks_node_info_remark': 'remark',
                                 '#zero_modal_shadowsocks_node_info_address': 'address',
                                 '#zero_modal_shadowsocks_node_info_port': 'port',
@@ -768,8 +768,8 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_shadowsocks_node_info_passwd': 'passwd',
                             }
 
-                            for (let selector in selectors_0) {
-                                $(selector).html(info[selectors_0[selector]]);
+                            for (let selector in selectors_ss) {
+                                $(selector).html(info[selectors_ss[selector]]);
                             }
                             $("#zero_modal_shadowsocks_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_shadowsocks_node_info").modal('show');
@@ -824,6 +824,7 @@ function oneclickImport(client, subLink) {
       surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
       clash: "clash://install-config?url=" + encodeURIComponent(subLink),
       sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
+      quantumultx: "quantumult-x:///update-configuration?remote-resource=" + encodeURIComponent(subLink),
     }
     Swal.fire({
         title: i18next.t('confirm importing subscription link'),

@@ -123,16 +123,13 @@
 											</div>
 											<div class="card card-flush">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fw-bolder fs-3">
-														
-															{$trans->t('subscription url')}
-														
+													<div class="card-title text-dark fw-bolder fs-3">														
+														{$trans->t('subscription url')}
 													</div>
 												</div>
 												<div class="card-body pt-0">
 													<div class="row">
 														<div class="col">
-															{if in_array('clash',$zeroconfig['index_sub'])}
 															<!-- Clash订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('clash')}&nbsp;&nbsp;</button>
@@ -142,8 +139,6 @@
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
-															{if in_array('surge',$zeroconfig['index_sub'])}
 															<!-- Surge订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('surge')}&nbsp;&nbsp;</button>
@@ -153,75 +148,68 @@
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
-															{if in_array('ss',$zeroconfig['index_sub'])}
 															<!-- ss订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
 															</div>
-															{/if}
-															{if in_array('v2rayn',$zeroconfig['index_sub'])}
 															<!-- V2Ray订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2rayn"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2rayn')}</button>
 															</div>
-															{/if}
-															{if in_array('shadowrocket',$zeroconfig['index_sub'])}
 															<!-- Shadowrocket订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['shadowrocket']}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo["shadowrocket"]}')">{$trans->t('import')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo['shadowrocket']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
-															{if in_array('quantumult',$zeroconfig['index_sub'])}
 															<!-- Quantumult订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['quantumult']}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo["quantumult"]}')">{$trans->t('import')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo['quantumult']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
-															{if in_array('quantumultx',$zeroconfig['index_sub'])}
 															<!-- QuantumultX订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumultx copy-text" data-clipboard-text="{$subInfo["quantumultx"]}"><i class="zero-quantumultx text-white"></i>{$trans->t('quanx')}</button>
+																<button class="btn btn-pill btn-quantumultx dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	<i class="zero-quantumultx text-white"></i>
+																	{$trans->t('quanx')}
+																</button>
+																<ul class="dropdown-menu">
+																	<li>
+																		<a class="dropdown-item copy-text" type="button" data-clipboard-text="{$subInfo['quantumultx']}">{$trans->t('copy')}</a>
+																	</li>
+																	<li>
+																		<hr class="dropdown-divider">
+																	</li>
+																	<li>
+																		<a class="dropdown-item" type="button" onclick="oneclickImport('quantumultx', '{$subInfo['quantumultx']}')">{$trans->t('import')}</a>
+																	</li>
+																</ul>
 															</div>
-															{/if}
-															{if in_array('v2rayvless',$zeroconfig['index_sub'])}
-																<!-- V2Ray订阅 -->
-																<div class="btn-group mb-3 mr-3">
-																	<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2ray_vless"]}"><i class="zero-v2rayng text-white"></i>&nbsp;&nbsp;复制 V2Ray-VLESS 订阅&nbsp;&nbsp;</button>
-																</div>
-															{/if}
-															{if in_array('surfboard',$zeroconfig['index_sub'])}
 															<!-- Surfboard订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('surfboard')}</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surfboard"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo["surfboard"]}')">{$trans->t('import')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo['surfboard']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
-															{if in_array('anxray',$zeroconfig['index_sub'])}
 															<!-- AnXray订阅 -->
 															<div class="btn-group mb-3 mr-3">
 																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('sagernet')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["anxray"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo["anxray"]}')">{$trans->t('import')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo['anxray']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															{/if}
 														</div>
 													</div>
 												</div>
