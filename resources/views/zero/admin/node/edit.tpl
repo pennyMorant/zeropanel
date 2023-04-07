@@ -59,6 +59,7 @@
                                                         <option value="canada" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg" {if $node->node_flag == 'canada'}selected{/if}>加拿大</option>
                                                         <option value="russia" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg" {if $node->node_flag == 'russia'}selected{/if}>俄罗斯</option>
                                                         <option value="hong-kong" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg" {if $node->node_flag == 'hong-kong'}selected{/if}>香港</option>
+                                                        <option value="taiwan" data-kt-select2-country="/theme/zero/assets/media/flags/taiwan.svg" {if $node->node_flag == 'taiwan'}selected{/if}>台湾</option>
                                                         <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg" {if $node->node_flag == 'japan'}selected{/if}>日本</option>
                                                         <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg" {if $node->node_flag == 'singapore'}selected{/if}>新加坡</option>
                                                         <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg" {if $node->node_flag == 'south-korea'}selected{/if}>韩国</option>

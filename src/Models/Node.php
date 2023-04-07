@@ -191,7 +191,7 @@ class Node extends Model
     public function getShadowsocksConfig(User $user, $custom_config, bool $emoji = false): array
     {
         $custom_configs = json_decode($custom_config, true);
-        $config['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) : $this->name;
         $config['type']     = 'shadowsocks';
         $config['passwd']   = $user->passwd;
         $config['method']   = $custom_configs['mu_encryption'];
@@ -210,7 +210,7 @@ class Node extends Model
         $custom_configs = json_decode($custom_config, true);
         $config['v']      = '2';      
         $config['type']   = 'vmess';
-        $config['remark'] = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['remark'] = $emoji ? $this->getNodeFlag($this->node_flag) : $this->name;
         $config['uuid']     = $user->uuid;
         $config['class']  = $this->node_class;        
         $config['address'] = $this->server;
@@ -235,7 +235,7 @@ class Node extends Model
     {
         $custom_configs = json_decode($custom_config, true);    
         $config['type']   = 'vless';
-        $config['remark'] = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['remark'] = $emoji ? $this->getNodeFlag($this->node_flag) : $this->name;
         $config['uuid']     = $user->uuid;
         $config['class']  = $this->node_class;        
         $config['address'] = $this->server;
@@ -259,7 +259,7 @@ class Node extends Model
     public function getTrojanConfig(User $user, $custom_config,  bool $emoji = false): array
     {
         $custom_configs = json_decode($custom_config, true);
-        $config['remark']   = ($emoji ? Tools::addEmoji($this->name) : $this->name);
+        $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) : $this->name;
         $config['type']     = 'trojan';
         $config['uuid']   = $user->uuid;
         $config['address'] = $this->server;
@@ -275,5 +275,32 @@ class Node extends Model
         }
         
         return $config;
+    }
+
+    public function getNodeFlag($country)
+    {
+        $country_emoji = [
+            'united-states' =>  '🇺🇸',
+            'canada'   =>  '🇨🇦',
+            'mexico'    =>  '🇲🇽',
+            'argentina' =>  '🇦🇷',
+            'brazil'    =>  '🇧🇷',
+            'united-kingdom'    =>  '🇬🇧',
+            'france'    =>  '🇫🇷',
+            'germany'   =>  '🇩🇪',
+            'ireland'   =>  '🇮🇪',
+            'turkey'    =>  '🇹🇷',
+            'russia'    =>  '🇷🇺',
+            'hong-kong' =>  '🇭🇰',
+            'japan'     =>  '🇯🇵',
+            'singapore' =>  '🇸🇬',
+            'taiwan'    =>  '🇹🇼',
+            'south-korea'   =>  '🇰🇷',
+            'australia' =>  '🇦🇺',
+            'thailand'  =>  '🇹🇭',
+            'philippines'   =>  '🇵🇭',
+            'malaysia'  =>  '🇲🇾',
+        ];
+        return $country_emoji[$country];
     }
 }

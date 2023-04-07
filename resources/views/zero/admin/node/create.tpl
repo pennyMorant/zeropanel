@@ -59,6 +59,7 @@
                                                         <option value="canada" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">加拿大</option>
                                                         <option value="russia" data-kt-select2-country="/theme/zero/assets/media/flags/russia.svg">俄罗斯</option>
                                                         <option value="hong-kong" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">香港</option>
+                                                        <option value="taiwan" data-kt-select2-country="/theme/zero/assets/media/flags/taiwan.svg">台湾</option>
                                                         <option value="japan" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">日本</option>
                                                         <option value="singapore" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">新加坡</option>
                                                         <option value="south-korea" data-kt-select2-country="/theme/zero/assets/media/flags/south-korea.svg">韩国</option>
