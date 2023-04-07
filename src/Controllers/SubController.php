@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Setting;
-use App\Utils\URL;
+use App\Models\Node;
 
 final class SubController
 {
@@ -11,13 +11,24 @@ final class SubController
     {
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $url = sprintf(
-                    'ss://%s@[%s]:%s#%s',
-                    base64_encode($node_config['method'] . ':' . $node_config['passwd']),
-                    $node_config['address'],
-                    $node_config['port'],
-                    rawurlencode($node_config['remark'])
-                );
+                if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                    $url = sprintf(
+                        'ss://%s@[%s]:%s#%s',
+                        base64_encode($node_config['method'] . ':' . $node_config['passwd']),
+                        $node_config['address'],
+                        $node_config['port'],
+                        rawurlencode($node_config['remark'])
+                    );
+                } else {
+                    $url = sprintf(
+                        'ss://%s:%s@[%s]:%s#%s',
+                        $node_config['method'],
+                        $node_config['server_key'] . ':' . $node_config['passwd'],
+                        $node_config['address'],
+                        $node_config['port'],
+                        rawurlencode($node_config['remark'])
+                    );
+                }
                 break;
         }
         return $url;
@@ -76,14 +87,16 @@ final class SubController
         $node_info = null;
             switch ($node_config['type']) {
                 case 'shadowsocks':
-                    $node_info = sprintf(
-                        '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
-                        $node_config['remark'],
-                        $node_config['address'],
-                        $node_config['port'],
-                        $node_config['method'],
-                        $node_config['passwd']
-                    );                    
+                    if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                        $node_info = sprintf(
+                            '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                            $node_config['remark'],
+                            $node_config['address'],
+                            $node_config['port'],
+                            $node_config['method'],
+                            $node_config['passwd']
+                        );
+                    }                  
                     break;
                 case 'vmess':                  
                     $vmess_params['ws'] = $node_config['net'] == 'ws' ? 'true' : 'false';
@@ -121,7 +134,9 @@ final class SubController
         $return = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = $node_config['remark'] . ' = shadowsocks, ' . $node_config['address'] . ', ' . $node_config['port'] . ', ' . $node_config['method'] . ', "' . $node_config['passwd'] . '", upstream-proxy=false, upstream-proxy-auth=false' . ', group=' . Setting::obtain('website_name') . '_ss';
+                if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                    $return = $node_config['remark'] . ' = shadowsocks, ' . $node_config['address'] . ', ' . $node_config['port'] . ', ' . $node_config['method'] . ', "' . $node_config['passwd'] . '", upstream-proxy=false, upstream-proxy-auth=false' . ', group=' . Setting::obtain('website_name') . '_ss';
+                }
                 break;
             case 'vmess':
                 if (!in_array($node_config['net'], ['ws', 'tcp', 'http'])) {
@@ -151,7 +166,9 @@ final class SubController
         $return = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $return = (self::getShadowsocks($node_config));
+                if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                    $return = (self::getShadowsocks($node_config));
+                }
                 break;
             case 'vmess':
                 // ;vmess=example.com:80, method=none, password=23ad6b10-8d1a-40f7-8ad0-e3e35cd32291, fast-open=false, udp-relay=false, tag=vmess-01
@@ -189,14 +206,16 @@ final class SubController
         $node_info = null;
             switch ($node_config['type']) {
                 case 'shadowsocks':
-                    $node_info = sprintf(
-                        '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
-                        $node_config['remark'],
-                        $node_config['address'],
-                        $node_config['port'],
-                        $node_config['method'],
-                        $node_config['passwd']
-                    );                    
+                    if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                        $node_info = sprintf(
+                            '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                            $node_config['remark'],
+                            $node_config['address'],
+                            $node_config['port'],
+                            $node_config['method'],
+                            $node_config['passwd']
+                        );    
+                    }                
                     break;
                 case 'vmess':                  
                     $vmess_params['ws'] = $node_config['net'] == 'ws' ? 'true' : 'false';
@@ -234,15 +253,17 @@ final class SubController
         $node_info = null;
         switch ($node_config['type']) {
             case 'shadowsocks':
-                $node_info = [
-                    'name' => $node_config['remark'],
-                    'type' => 'ss',
-                    'server' => $node_config['address'],
-                    'port' => $node_config['port'],
-                    'cipher' => $node_config['method'],
-                    'password' => $node_config['passwd'],
-                    'udp' => true
-                ];
+                if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                    $node_info = [
+                        'name' => $node_config['remark'],
+                        'type' => 'ss',
+                        'server' => $node_config['address'],
+                        'port' => $node_config['port'],
+                        'cipher' => $node_config['method'],
+                        'password' => $node_config['passwd'],
+                        'udp' => true
+                    ];
+                }
                 break;
             case 'vmess':
                 $ws = $node_config['net'] == 'ws' ? 'ws' : '';

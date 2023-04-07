@@ -143,14 +143,29 @@ class URL
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
-
-        $url = sprintf(
-            'ss://%s@[%s]:%s#%s',
-            base64_encode($node_config['method'] . ':' . $node_config['passwd']),
-            $node_config['address'],
-            $node_config['port'],
-            rawurlencode($node_config['remark'])
-        );
+        $method = [
+            '2022-blake3-aes-128-gcm',
+            '2022-blake3-aes-256-gcm',
+            '2022-blake3-chacha20-poly1305',
+        ];
+        if (!in_array($node_config['method'], $method)) {
+            $url = sprintf(
+                'ss://%s@[%s]:%s#%s',
+                base64_encode($node_config['method'] . ':' . $node_config['passwd']),
+                $node_config['address'],
+                $node_config['port'],
+                rawurlencode($node_config['remark'])
+            );
+        } else {
+            $url = sprintf(
+                'ss://%s:%s@[%s]:%s#%s',
+                $node_config['method'],
+                $node_config['server_key'] . ':' . $node_config['passwd'],
+                $node_config['address'],
+                $node_config['port'],
+                rawurlencode($node_config['remark'])
+            );
+        }
         return $url;
     }
 

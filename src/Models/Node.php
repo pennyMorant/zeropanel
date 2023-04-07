@@ -194,6 +194,7 @@ class Node extends Model
         $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
         $config['type']     = 'shadowsocks';
         $config['passwd']   = $user->passwd;
+        $config['server_key']   =   $custom_configs['server_key'] ?? '';
         $config['method']   = $custom_configs['mu_encryption'];
         $config['address']  = $this->server;
         $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
@@ -302,5 +303,22 @@ class Node extends Model
             'malaysia'  =>  '🇲🇾',
         ];
         return $country_emoji[$country];
+    }
+
+    public static function getShadowsocksSupportMethod($method)
+    {
+        $method_2022 = [
+            '2022-blake3-aes-128-gcm',
+            '2022-blake3-aes-256-gcm',
+            '2022-blake3-chacha20-poly1305',
+        ];
+        $method_old = [
+            'aes-128-gcm',
+            'aes-256-gcm',
+            'chacha20-poly1305',
+        ];
+
+        $support = in_array($method, $method_2022) ? false : (in_array($method, $method_old) ?? true);
+        return $support;
     }
 }
