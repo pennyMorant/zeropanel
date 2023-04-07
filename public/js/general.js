@@ -817,12 +817,11 @@ function KTUsersWithdrawCommission(type){
 
 //import sub url
 function oneclickImport(client, subLink) {
-    if (client == 'quantumultx') {
-        config = {
-            "server_remote": [
-              subLink + ', tag=' + webName
-            ]
-        }
+   
+    quanx_config = {
+        "server_remote": [
+            subLink + ', tag=' + webName
+        ]
     }
     var sublink = {
       surfboard: "surfboard:///install-config?url=" + encodeURIComponent(subLink),
@@ -831,7 +830,7 @@ function oneclickImport(client, subLink) {
       surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
       clash: "clash://install-config?url=" + encodeURIComponent(subLink),
       sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
-      quantumultx: "quantumult-x:///add-resource?remote-resource=" + encodeURIComponent(JSON.stringify(config)),
+      quantumultx: "quantumult-x:///add-resource?remote-resource=" + encodeURIComponent(JSON.stringify(quanx_config)),
     }
 
     Swal.fire({
