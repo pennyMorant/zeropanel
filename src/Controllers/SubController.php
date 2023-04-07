@@ -21,9 +21,8 @@ final class SubController
                     );
                 } else {
                     $url = sprintf(
-                        'ss://%s:%s@[%s]:%s#%s',
-                        $node_config['method'],
-                        base64_encode($node_config['server_key'] . ':' . $node_config['passwd']),
+                        'ss://%s@[%s]:%s#%s',
+                        base64_encode($node_config['method'] . ':' . $node_config['server_key'] . ':' . $node_config['passwd']),
                         $node_config['address'],
                         $node_config['port'],
                         rawurlencode($node_config['remark'])
