@@ -507,7 +507,7 @@ class User extends Model
         }
     }
 
-    public function createShadowsocksPasswd($length = 16) 
+    public function createShadowsocksPasswd($length = 32) 
     {
         $passwd = base64_encode(openssl_random_pseudo_bytes($length));
         return $passwd;
