@@ -50,7 +50,7 @@ class Order extends Model
     public function orderType() {
         $order_type = [
             1   =>  '新购产品',
-            2   =>  '账户充值',
+            2   =>  '充值余额',
             3   =>  '续费产品',
             4   =>  '升级产品',
         ];

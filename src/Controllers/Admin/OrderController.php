@@ -51,7 +51,7 @@ class OrderController extends AdminController
                 'order_no'  =>  $rowData->order_no,
                 'created_time'  =>  date('Y-m-d H:i:s', $rowData->created_time),
                 'order_payment' =>  $rowData->payment(),
-                'order_type'    =>  $rowData->order_type == 1 ? $trans->t('purchase product') : $trans->t('add credit'),
+                'order_type'    =>  $rowData->orderType(),
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" type="button" onclick="completeOrder(' . $rowData->id . ')">标记完成</a></li>
