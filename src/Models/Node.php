@@ -194,7 +194,7 @@ class Node extends Model
         $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
         $config['type']     = 'shadowsocks';
         $config['passwd']   = $user->passwd;
-        $config['server_key']   =   $custom_configs['server_key'] ?? '';
+        $config['server_psk']   =   $custom_configs['server_psk'] ?? '';
         $config['method']   = $custom_configs['mu_encryption'];
         $config['address']  = $this->server;
         $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
