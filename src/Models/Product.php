@@ -105,4 +105,28 @@ class Product extends Model
         $user->save();
     }
 
+    public function getAverageMonthlyPrice()
+    {
+       $price = Product::where('id', $this->id)
+       ->selectRaw("GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) AS max_price,
+       CASE 
+           WHEN GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) = month_price THEN 'month_price'
+           WHEN GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) = quarter_price THEN 'quarter_price'
+           WHEN GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) = half_year_price THEN 'half_year_price'
+           WHEN GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) = year_price THEN 'year_price'
+           WHEN GREATEST(COALESCE(month_price, 0), COALESCE(quarter_price, 0), COALESCE(half_year_price, 0), COALESCE(year_price, 0), COALESCE(two_year_price, 0)) = two_year_price THEN 'two_year_price'
+       END AS column_with_max_price")
+       ->first();
+        $date = [
+            'month_price'   =>  1,
+            'quarter_price' =>  3,
+            'half_year_price'   =>  6,
+            'year_price'    => 12,
+            'two_year_price'    =>24,
+        ];
+
+        $average_price =  $price->max_price / $date[$price->column_with_max_price];
+        return $average_price;
+    }
+
 }

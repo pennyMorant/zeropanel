@@ -53,9 +53,11 @@
 																						<h1 class="text-dark mb-5 fw-bolder" id="zero_product_name_{$product->id}">{$product->name}</h1>
 																						<div class="text-center">
 																							<span class="mb-2 text-primary fw-bold">{$currency_unit}</span>
-																							<span class="fs-3x fw-bold text-pirmay" id="zero_product_price_{$product->id}">
-																								{if $product->type == 1}{$product->month_price}{else}{$product->onetime_price}{/if}
+																							<span class="fs-3x fw-bold text-primary" id="zero_product_price_{$product->id}">
+																								{if $product->type == 1}{$product->getAverageMonthlyPrice()}{else}{$product->onetime_price}{/if}
 																							</span>
+																							<span class="fs-7 fw-semibold opacity-50">/
+																							<span data-kt-element="period">{$trans->t('month')}</span></span>
 																						</div>
 																					</div>
 																					<div class="w-100 mb-10" id="zero_product_{$product->id}">
