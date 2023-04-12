@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-04 07:27:21
+-- 生成日期： 2023-04-12 10:59:51
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -217,8 +217,8 @@ CREATE TABLE `order` (
   `updated_time` int(11) NOT NULL COMMENT '订单更新时间',
   `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
   `paid_time` int(11) DEFAULT NULL COMMENT '订单支付时间',
-  `order_payment` varchar(15) DEFAULT NULL COMMENT '订单支付方式',
-  `paid_action` text DEFAULT NULL COMMENT '支付后操作',
+  `payment_id` int(11) DEFAULT NULL COMMENT '订单支付方式',
+  `handling_fee` decimal(12,2) DEFAULT NULL,
   `execute_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '执行状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -235,6 +235,27 @@ CREATE TABLE `payback` (
   `ref_by` int(11) NOT NULL,
   `ref_get` decimal(12,2) NOT NULL,
   `datetime` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL COMMENT 'id',
+  `name` varchar(128) NOT NULL COMMENT '显示名称',
+  `gateway` varchar(128) NOT NULL COMMENT '支付网关',
+  `config` text NOT NULL COMMENT '网关配置文件',
+  `icon` varchar(128) DEFAULT NULL COMMENT '图标url',
+  `percent_fee` int(11) DEFAULT NULL COMMENT '百分比手续费',
+  `fixed_fee` int(11) DEFAULT NULL COMMENT '固定手续费',
+  `notify_domain` varchar(128) DEFAULT NULL COMMENT '通知域名',
+  `enable` int(1) NOT NULL DEFAULT 0 COMMENT '开启',
+  `sort` int(11) NOT NULL DEFAULT 0,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -507,6 +528,12 @@ ALTER TABLE `payback`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `product`
 --
 ALTER TABLE `product`
@@ -644,6 +671,12 @@ ALTER TABLE `order`
 --
 ALTER TABLE `payback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id';
 
 --
 -- 使用表AUTO_INCREMENT `product`
