@@ -30,7 +30,7 @@ class Order extends Model
     public function payment() {
         $payment = Payment::find($this->payment_id);
 
-        return $payment->payment_name ?? '未选择';
+        return $payment->name ?? '未选择';
     }
 
     public function orderType() {
