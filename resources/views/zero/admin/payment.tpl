@@ -194,7 +194,8 @@
                             getResult(data.msg, '', 'success');
                             submitButton.removeAttribute('data-kt-indicator');
                             submitButton.disabled = false;
-                            location.reload();
+                            table_1.ajax.reload();
+                            $("#zero_modal_create_payment").modal('hide');
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
