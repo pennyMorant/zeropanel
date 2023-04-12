@@ -260,7 +260,7 @@ class User extends Model
      */
     public function getTotalIncome(): float
     {
-        $number = Order::where('user_id', $this->id)->where('order_status', 2)->where('order_payment', '!=', 'creditpay')->sum('order_total');
+        $number = Order::where('user_id', $this->id)->where('order_status', 2)->sum('order_total');
         return is_null($number) ? 0.00 : round($number, 2);
     }
 

@@ -43,37 +43,20 @@ class OrderController extends BaseController
             $product = [];
         }
 
-        switch ($order->order_payment) {
-            case 'creditpay':
-                $payment = 'credit';
-                break;
-            case 'alipay':
-                $payment = 'alipay';
-                break;
-            case 'wechatpay':
-                $payment = 'wechat';
-                break;
-            case 'cryptopay':
-                $payment = 'crypto';
-                break;
-            default:
-                $payment = '未知';
-                break;
-        }
-
         $order_type = [
             1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name,
             2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
             3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
             4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
         ];
-
+        
         $gateways = Gateway::where('enable', 1)->get();
+        $order_payment = Gateway::find($order->payment_id);
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
-                ->assign('payment', $payment)
+                ->assign('order_payment', $order_payment)
                 ->assign('order_type', $order_type)
                 ->assign('gateways', $gateways)
                 ->display('user/order_detail.tpl');

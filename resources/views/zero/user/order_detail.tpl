@@ -80,7 +80,7 @@
                                                                 {/if}   
                                                             </td>
 															{if $order->order_status == '2'}
-																<td class="text-end">{$trans->t($payment)}</td>
+																<td class="text-end">{$order_payment->name}</td>
 															{/if}
                                                             <td class="text-end">{$order->order_no}</td>                                                           
                                                             <td class="text-end">1</td>
@@ -134,16 +134,6 @@
                                                                 </a>
                                                             </li>
                                                         {/foreach}
-														{if $order->order_type != 2}
-														<li class="nav-item mb-3">
-															<a class="btn btn-outline btn-active-light-info d-flex flex-column" data-bs-toggle="pill" data-name="creditpay">
-																<span class="nav-icon py-2">
-																	<i class="bi bi-wallet fs-3hx text-info"></i>
-																</span>
-																<span class="fs-3 py-2 fw-bold text-info">{$trans->t('credit')}</span>
-															</a>
-														</li>
-														{/if}
 													</ul>
 											</div>
 											<div class="text-center pt-15">

@@ -80,8 +80,7 @@ class AdminController extends UserController
                 $today = Carbon::today()->endOfDay();
 
                 // 获取查询结果集合
-                $orders = Order::where('order_payment', '!=', 'creditpay')
-                    ->whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
+                $orders = Order::whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
                     ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, sum(order_total) as amount')
                     ->groupBy('date')->get();
 
