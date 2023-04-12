@@ -462,16 +462,15 @@ class User extends Model
 
     public function enable()
     {
-        $enables = "'enable'";
         switch ($this->enable) {
             case 0:
                 $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" onclick="updateUserStatus('.$enables.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" onclick="updateUserStatus(\'enables\', '.$this->id.')" />
                             </div>';
                 break;
             case 1:
                 $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" checked="checked" onclick="updateUserStatus('.$enables.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" checked="checked" onclick="updateUserStatus(\'$enables\', '.$this->id.')" />
                             </div>';
                 break;
         }

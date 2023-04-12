@@ -148,7 +148,7 @@
             });
         </script>
         <script>
-            function zeroAdminCreatePayment(type, id = 0) {
+            function zeroAdminCreatePayment(type, id = 0, enable = 0) {
                 const submitButton = document.querySelector('[data-kt-admin-create-payment-action="submit"]');
                 payment = $('#payment_gateway').val();
                 switch (payment) {
@@ -254,6 +254,22 @@
                     default:
                         getResult('发生错误', '', 'error');
                 }   
+            }
+        </script>
+        <script>
+            function zeroAdminEnablePayment(status, id) {
+                $.ajax({
+                    type: 'PUT',
+                    url: '/{$config['website_admin_path']}/payment/enable',
+                    dataType: 'json',
+                    data: {
+                        status,
+                        id,
+                    },
+                    success: function(data){
+                        table_1.ajax.reload();
+                    }
+                });
             }
         </script>
         <script>

@@ -62,9 +62,6 @@ final class PaymentController extends AdminController
         $payment->percent_fee = $postData['payment_percent_fee'] ?: NULL;
         $payment->fixed_fee = $postData['payment_fixed_fee'] ?: NULL;
         $payment->notify_domain = $postData['payment_notify_domain'] ?: NULL;
-        $payment->enable = 0;
-        $payment->sort = 0;
-        $payment->created_at = time();
         $payment->updated_at = time();
         $payment->save();
 
@@ -90,7 +87,7 @@ final class PaymentController extends AdminController
                 'id'    =>  $rowData->id,
                 'name'   =>  $rowData->name,
                 'gateway'   =>  $rowData->gateway,
-                'enable'  =>  $rowData->enable,
+                'enable'  =>  $rowData->enable(),
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdatePayment(\'request\', ' . $rowData->id . ')">编辑</a></li>
@@ -129,6 +126,18 @@ final class PaymentController extends AdminController
         $id = $request->getParam('id');
         $payment = Payment::find($id);
         $payment->delete();
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => 'success'
+        ]);
+    }
+
+    public function enablePayment(ServerRequest $request, Response $response, array $args): Response
+    {
+        $id = $request->getParam('id');
+        $payment = Payment::find($id);
+        $payment->enable = $request->getParam('status');
+        $payment->save();
         return $response->withJson([
             'ret' => 1,
             'msg' => 'success'
