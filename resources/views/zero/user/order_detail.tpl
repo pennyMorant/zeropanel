@@ -120,7 +120,7 @@
                                             </div>
 											{if $order->order_status == '1'}
                                             <div class="col-lg-12">
-												<label class="col-form-label kt-font-boldest"><strong>{$trans->t('payment method')}: </strong></label>
+												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
 												
 													<ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
 													
@@ -128,9 +128,9 @@
                                                             <li class="nav-item mb-3">
                                                                 <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$gateway->id}">
                                                                     
-                                                                    <img class="h-70px w-auto" src={$gateway->icon}>
+                                                                    <img class="h-35px w-auto" src={$gateway->icon}>
                                                                     
-                                                                    <span class="text-primary fs-3 py-2 fw-bold">{$gateway->name}</span>
+                                                                    <span class="fs-3 py-2 fw-bold">{$gateway->name}</span>
                                                                 </a>
                                                             </li>
                                                         {/foreach}
