@@ -239,8 +239,8 @@ return function (SlimApp $app) {
             $payment->post('/create',               PaymentController::class . ':createPayment');
             $payment->post('/update',               PaymentController::class . ':updatePayment');
             $payment->post('/ajax',                 PaymentController::class . ':paymentAjax');
-            $payment->get('/config',                 PaymentController::class . ':getPaymentConfig');
-            $payment->delete('/delete',                 PaymentController::class . ':deletePayment');
+            $payment->get('/config',                PaymentController::class . ':getPaymentConfig');
+            $payment->delete('/delete',             PaymentController::class . ':deletePayment');
         });
     })->add(new Admin());
 
