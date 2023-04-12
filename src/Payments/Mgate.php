@@ -1,12 +1,11 @@
 <?php
 namespace App\Payments;;
 
-use App\Models\Setting;
 use App\Services\PaymentService;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
-class PayTaro
+class Mgate
 {
     private $config = [];
 
@@ -72,10 +71,10 @@ class PayTaro
     {
         $data = [
             'app_id'    =>  $this->config['mgate_id'],
-            'out_trade_no'  =>  $this->config['order_no'],
-            'notify_url'    =>  $this->config['notify_url'],
-            'return_url'    =>  $this->config['return_url'],
-            'total_amount'   =>  $this->config['total_amount']
+            'out_trade_no'  =>  $order['order_no'],
+            'notify_url'    =>  $order['notify_url'],
+            'return_url'    =>  $order['return_url'],
+            'total_amount'   =>  $order['total_amount']
         ];
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
