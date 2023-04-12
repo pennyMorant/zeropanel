@@ -69,15 +69,12 @@ class OrderController extends BaseController
         ];
 
         $gateways = Gateway::where('enable', 1)->get();
-        
-        $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
                 ->assign('payment', $payment)
                 ->assign('order_type', $order_type)
-                ->assign('payment_gateway', $payment_gateway)
                 ->assign('gateways', $gateways)
                 ->display('user/order_detail.tpl');
         return $response;   
@@ -314,19 +311,6 @@ class OrderController extends BaseController
                 $product->sales += 1; // 加销量
             }           
             $product->save();
-            // 告罄补货通知
-            /*
-            if ($product->stock - $product->sales == 5 || $product->stock - $product->sales == 0) {
-                $admin_users = User::where('is_admin', '1')->get();
-                foreach ($admin_users as $admin) {
-                    Mail::send($admin->email, $_ENV['appName'] . ' - 商品缺货通知', 'news/warn.tpl',
-                        [
-                            'user' => $admin,
-                            'text' => '商品【' . $product->name . '】当前库存仅有 ' . ($product->stock - $product->sales) . ' 件，请注意及时补货',
-                        ], []
-                    );
-                }
-            }*/
         }
     }
 
