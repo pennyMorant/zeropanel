@@ -150,6 +150,8 @@
         <script>
             function zeroAdminCreatePayment(type, id = 0, enable = 0) {
                 const submitButton = document.querySelector('[data-kt-admin-create-payment-action="submit"]');
+                submitButton.setAttribute('data-kt-indicator', 'on');
+                submitButton.disabled = true;
                 payment = $('#payment_gateway').val();
                 switch (payment) {
                     case 'Epay':
