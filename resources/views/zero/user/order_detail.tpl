@@ -124,37 +124,16 @@
 												
 													<ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
 													
-														{if $payment_gateway['alipay_payment'] != 'none'}
-														<li class="nav-item mb-3">
-															<a class="btn btn-outline btn-active-light-primary d-flex flex-column active" data-bs-toggle="pill" data-name="alipay">
-																<span class="nav-icon py-2 w-auto">
-																	<i class="fab fa-alipay fs-3hx text-primary"></i>
-																</span>
-																<span class="text-primary fs-3 py-2 fw-bold">{$trans->t('alipay')}</span>
-															</a>
-														</li>
-														{/if}
-														{if $payment_gateway['wechatpay_payment'] != 'none'}
-														<li class="nav-item mb-3">
-															<a class="btn btn-outline btn-active-light-success d-flex flex-column" data-bs-toggle="pill" data-name="wechatpay">
-																<span class="nav-icon py-2">
-																	<i class="fab fa-weixin fs-3hx text-success"></i>
-																</span>
-																<span class="fs-3 py-2 fw-bold text-success">{$trans->t('wechat')}</span>
-															</a>
-														</li>
-														{/if}
-														{if $payment_gateway['cryptopay_payment'] != 'none'}
-														<li class="nav-item mb-3">
-															<a class="btn btn-outline btn-active-light-warning d-flex flex-column" data-bs-toggle="pill" data-name="cryptopay">
-																<span class="nav-icon py-2">
-																	<i class="fab fa-bitcoin fs-3hx text-warning"></i>
-																</span>
-																<span class="fs-3 py-2 fw-bold text-warning">{$trans->t('crypto')}</span>
-															</a>
-														</li>
-														{/if}
-													
+														{foreach $gateways as $gateway}
+                                                            <li class="nav-item mb-3">
+                                                                <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$gateway->id}">
+                                                                    
+                                                                    <img class="h-70px w-auto" src={$gateway->icon}>
+                                                                    
+                                                                    <span class="text-primary fs-3 py-2 fw-bold">{$gateway->name}</span>
+                                                                </a>
+                                                            </li>
+                                                        {/foreach}
 														{if $order->order_type != 2}
 														<li class="nav-item mb-3">
 															<a class="btn btn-outline btn-active-light-info d-flex flex-column" data-bs-toggle="pill" data-name="creditpay">

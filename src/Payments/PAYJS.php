@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
 use App\Services\Auth;
 use App\Models\Order;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
 use App\Services\Payment;
 use App\Models\Setting;

@@ -122,7 +122,7 @@ $(document).ready(function (){
                 });
                 break;
             case 'ticket':
-            $.ajax({
+                $.ajax({
                     type: "DELETE",
                     url: "/{$config['website_admin_path']}/ticket/delete",
                     dataType: "json",
@@ -138,6 +138,46 @@ $(document).ready(function (){
                         }
                     }
                 });
+                break;
+            case 'payment':
+                $.ajax({
+                    type: "DELETE",
+                    url: "/{$config['website_admin_path']}/payment/delete",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function(data){
+                        if (data.ret === 1){
+                            getResult(data.msg, '', 'success');
+                            table_1.ajax.reload();
+                        }else{
+                            getResult('发生错误', '', 'error');
+                        }
+                    }
+                });
+                break;
+            case 'order':
+                $.ajax({
+                    type: "DELETE",
+                    url: "/{$config['website_admin_path']}/order/delete",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function(data){
+                        if (data.ret === 1){
+                            getResult(data.msg, '', 'success');
+                            table_1.ajax.reload();
+                        }else{
+                            getResult('发生错误', '', 'error');
+                        }
+                    }
+                });
+                break;
+            default:
+                getResult('发生错误', '', 'error');
+
         }
     }
 </script>

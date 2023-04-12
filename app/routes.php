@@ -15,7 +15,13 @@ use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\CouponController;
 use App\Controllers\Admin\SettingController;
 use App\Controllers\Admin\CommissionController;
-use App\Middleware\{Guest, Admin, Auth, WebAPI};
+use App\Controllers\Admin\PaymentController;
+use App\Middleware\{
+    Guest, 
+    Admin, 
+    Auth, 
+    WebAPI
+};
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (SlimApp $app) {
@@ -161,7 +167,7 @@ return function (SlimApp $app) {
         $group->group('/order', function($order) {
             $order->get('',                   OrderController::class . ':index');
             $order->post('/ajax',             OrderController::class . ':ajaxOrder');
-            $order->delete('delete',          OrderController::class . ':deleteOrder');
+            $order->delete('/delete',          OrderController::class . ':deleteOrder');
             $order->put('/complete',          OrderController::class . ':completeOrder');
         });
 
@@ -225,6 +231,16 @@ return function (SlimApp $app) {
             $commission->put('/withdraw/update',      CommissionController::class . ':updateWithdrawCommission');
             $commission->post('/withdraw/ajax',       CommissionController::class . ':withdrawAjax');
             $commission->post('/ajax',                CommissionController::class . ':commissionAjax');
+        });
+
+        //payment
+        $group->group('/payment', function($payment) {
+            $payment->get('',                       PaymentController::class . ':paymentIndex');
+            $payment->post('/create',               PaymentController::class . ':createPayment');
+            $payment->post('/update',               PaymentController::class . ':updatePayment');
+            $payment->post('/ajax',                 PaymentController::class . ':paymentAjax');
+            $payment->get('/config',                 PaymentController::class . ':getPaymentConfig');
+            $payment->delete('/delete',                 PaymentController::class . ':deletePayment');
         });
     })->add(new Admin());
 

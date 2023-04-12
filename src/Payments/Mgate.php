@@ -1,27 +1,23 @@
 <?php
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
 use App\Models\Setting;
-use App\Services\Payment;
+use App\Services\PaymentService;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
 class PayTaro
 {
-
-    private $appSecret;
-    private $gatewayUri;
+    private $config = [];
 
     /**
      * 签名初始化
      * @param merKey    签名密钥
      */
 
-    public function __construct()
+    public function __construct($config)
     {
-        $configs = Setting::getClass('paytaro');
-        $this->appSecret = $configs['paytaro_app_secret'];
-        $this->gatewayUri = 'https://api.paytaro.com/v1/gateway/fetch';
+        $this->config = $config;
     }
 
 
@@ -41,7 +37,7 @@ class PayTaro
      */
     public function sign($data)
     {
-        return strtolower(md5($data . $this->appSecret));
+        return strtolower(md5($data . $this->config['mgate_secret']));
     }
 
     /*
@@ -60,7 +56,7 @@ class PayTaro
     public function post($data)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $this->gatewayUri);
+        curl_setopt($curl, CURLOPT_URL, $this->config['mgate_url']  . '/v1/gateway/fetch');
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -72,21 +68,15 @@ class PayTaro
         return $data;
     }
 
-    public function ZeroPay($user_id, $method, $order_no, $amount)
+    public function pay($order)
     {
-        $configs = Setting::getClass('paytaro');
-        $currency = Setting::getClass('currency');
-
-        $data['app_id'] = $configs['paytaro_app_id'];
-        $data['out_trade_no'] = $order_no;
-        
-        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
-            $data['total_amount'] = (int)($amount * 100 * $currency['currency_exchange_rate']);
-        } else {
-            $data['total_amount'] = (int)($amount * 100);
-        }
-        $data['notify_url'] = Setting::obtain('website_url') . '/payment/notify/paytaro';
-        $data['return_url'] = Setting::obtain('website_url') . '/payment/return?tradeno='.$order_no;
+        $data = [
+            'app_id'    =>  $this->config['mgate_id'],
+            'out_trade_no'  =>  $this->config['order_no'],
+            'notify_url'    =>  $this->config['notify_url'],
+            'return_url'    =>  $this->config['return_url'],
+            'total_amount'   =>  $this->config['total_amount']
+        ];
         $params = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
     	$result = json_decode($this->post($data), true);
@@ -110,7 +100,7 @@ class PayTaro
     	if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
     		die('FAIL');
     	}
-    	Payment::executeAction($request->getParam('out_trade_no'));
+    	PaymentService::executeAction($request->getParam('out_trade_no'));
     	die('SUCCESS');
     }
 

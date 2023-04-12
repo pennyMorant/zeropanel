@@ -9,7 +9,6 @@ use App\Models\{
     Ann,
     Order
 };
-use App\Utils\Cookie;
 use App\Controllers\OrderController;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;

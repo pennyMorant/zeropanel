@@ -6,7 +6,7 @@
  * Time: 下午9:24
  */
 
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
 use Exception;
 use Omnipay\Omnipay;

@@ -4,7 +4,7 @@
  * User: Bobs9
  */
 
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
 use App\Models\Order;
 use App\Models\Setting;

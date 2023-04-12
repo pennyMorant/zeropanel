@@ -11,10 +11,12 @@ use App\Models\{
     User,
     Payback,
     Ann,
+    Payment
 };
+use App\Models\Payment as Gateway;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use App\Services\Payment;
+use App\Services\PaymentService;
 use Pkly\I18Next\I18n;
 
 class OrderController extends BaseController
@@ -65,6 +67,8 @@ class OrderController extends BaseController
             3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
             4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
         ];
+
+        $gateways = Gateway::where('enable', 1)->get();
         
         $payment_gateway = Setting::getClass('payment_gateway');
             $this->view()
@@ -74,6 +78,7 @@ class OrderController extends BaseController
                 ->assign('payment', $payment)
                 ->assign('order_type', $order_type)
                 ->assign('payment_gateway', $payment_gateway)
+                ->assign('gateways', $gateways)
                 ->display('user/order_detail.tpl');
         return $response;   
     }
@@ -118,12 +123,21 @@ class OrderController extends BaseController
                     $order->product_price = $product_price;
                     $order->order_coupon = (empty($coupon)) ? null : $coupon_code;
                     $order->order_total = (empty($coupon)) ? $product_price : round($product_price * ((100 - $coupon->discount) / 100), 2);
+                    if ($user->credit > 0 && $order->order_total > 0) {
+                        $remaining_total = $user->credit - $order->order_toal;
+                        if ($remaining_total > 0) {
+                            $order->credit_paid = $order->order_total;
+                            $order->order_total = 0;
+                        } else {
+                            $order->credit_paid = $user->credit;
+                            $order->order_total = $order->order_total - $user->credit;
+                        }
+                    }
                     
                     $order->order_status = 1;
                     $order->created_time = time();
                     $order->updated_time = time();
                     $order->expired_time = time() + 600;
-                    $order->paid_action = json_encode(['action' => 'buy_product', 'params' => $product->id]);
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e) {
@@ -182,7 +196,7 @@ class OrderController extends BaseController
     public function processOrder(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
-        $payment = $request->getParam('method');
+        $payment_method = $request->getParam('method');
         $order_no = $request->getParam('order_no');
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
@@ -194,29 +208,35 @@ class OrderController extends BaseController
                 throw new \Exception(I18n::get()->t('order has paid'));
             }
             
-            if ($payment == 'creditpay') {
-                if ($user->money < ($order->order_total)) {
+            if ($order->order_total <= 0) {
+                if ($user->money < $order->order_total) {
                     throw new \Exception(I18n::get()->t('insufficient credit'));
                 }
                 
-                $order->order_payment = $payment;
+                //$order->order_payment = $payment;
                 $order->credit_paid = $order->order_total;
                 $order->save();
                 $user->money -= $order->order_total;
                 $user->save();
                 self::execute($order->order_no);
             } else {
-                // 计算结账金额
-                if ($order->credit_paid == 0) {
-                    $checkout_amount = $order->order_total;
-                } else {
-                    $checkout_amount = $order->order_total - $order->credit_paid;
+                // 计算结账金额              
+                $payment = Payment::find($payment_method);
+                $payment_service = new PaymentService($payment->gateway, $payment->id);
+                if ($payment->fixed_fee || $payment->percent_fee) {
+                    $order->handling_fee = round(($order->order_total * ($payment->percent_fee / 100)) + $payment->fixed_fee, 3);
                 }
+                
+                $currency = Setting::getClass('currency');
+                $exchange_rate = $currency['currency_exchange_rate'] ?: 1;
 
-                $order->order_payment = $payment;
+                $order->payment_id = $payment_method;
                 $order->save();
-                // 提交订单
-                $result =  Payment::toPay($user->id, $payment, $order->order_no, $checkout_amount);
+                $result = $payment_service->toPay([
+                    'order_no'  =>  $order->order_no,
+                    'total_amount'  =>  isset($order->handling_fee) ? (($order->order_total + $order->handling_fee) * $exchange_rate) : $order->order_total * $exchange_rate,
+                    'user_id'   =>  $user->id
+                ]);
                 return $response->withJson($result);
             }
         } catch (\Exception $e) {

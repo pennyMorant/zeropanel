@@ -81,21 +81,5 @@
                 });
             }
         </script>
-        <script>
-        function deleteOrder(order_id) {
-            $.ajax({
-                type: "DELETE",
-                url: "/{$config['website_admin_path']}/order/delete",
-                dataType: "json",
-                data: {
-                    order_id
-                },
-                success: function(data){
-                    getResult(data.msg, '', 'success');
-                    table_1.ajax.reload();
-                }
-            });
-        }
-    </script>
     </body>
 </html>

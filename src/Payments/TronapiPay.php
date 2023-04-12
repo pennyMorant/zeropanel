@@ -1,25 +1,21 @@
 <?php
 
 
-namespace App\Services\Gateway;
+namespace App\Payments;;
 
-use App\Models\Setting;
-use App\Services\Payment;
+use App\Services\PaymentService;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
 class TronapiPay
 {
-    protected $public_key;
-    protected $private_key;
-    protected $gatewayUri;
+    protected $config;
+    protected $gatewayUrl;
 
-    public function __construct()
+    public function __construct($config)
     {
-        $configs = Setting::getClass('tronapipay');
-        $this->public_key = $configs['tronapipay_public_key'];
-        $this->private_key = $configs['tronapipay_private_key'];
-        $this->gatewayUri = 'https://pro.tronapi.com/api/transaction/create';
+        $this->config = $config;
+        $this->gatewayUrl = 'https://pro.tronapi.com/api/transaction/create';
     }
 
     /**
@@ -34,7 +30,7 @@ class TronapiPay
     public function post($data)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $this->gatewayUri);
+        curl_setopt($curl, CURLOPT_URL, $this->gatewayUrl);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -48,31 +44,18 @@ class TronapiPay
         return $data;
     }
 
-    /**
-     * @param $type
-     * @param $price
-     * @param $buyshop
-     * @param int $order_id
-     */
-    public function ZeroPay($user_id, $method, $order_no, $amount)
+    public function pay($order)
     {
-        $currency = Setting::getClass('currency');
-        
-        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
-            $final_amount = $amount * $currency['currency_exchange_rate'];
-        } else {
-            $final_amount = $amount;
-        }
 
-        $amount = $final_amount;
+        $amount = $order['total_amount'];
         $currency = 'CNY';
         $coin_code = 'USDT';
-        $order_id = $order_no;
-        $customer_id = $user_id;
+        $order_id = $order['order_no'];
+        $customer_id = $order['user_id'];
         $product_name = '';
-        $notify_url = Setting::obtain('website_url') . '/payment/notify/tronapipay';
-        $redirect_url = Setting::obtain('website_url') . '/payment/return?tradeno=' . $order_no;
-        $signatureStr = $amount.$currency.$coin_code.$order_id.$product_name.$customer_id.$notify_url.$redirect_url.$this->public_key.$this->private_key;
+        $notify_url = $order['notify_url'];
+        $redirect_url = $order['return_url'];
+        $signatureStr = $amount.$currency.$coin_code.$order_id.$product_name.$customer_id.$notify_url.$redirect_url.$this->config['tronapipay_public_key'].$this->config['tronapipay_private_key'];
         $signature = $this->sign($signatureStr);
 
         $data = [
@@ -84,7 +67,7 @@ class TronapiPay
             'product_name' => $product_name,
             'notify_url' => $notify_url,
             'redirect_url' => $redirect_url,
-            'public_key' => $this->public_key,
+            'public_key' => $this->config['tronapipay_public_key'],
             'signature' => $signature,
         ];
 
@@ -111,14 +94,14 @@ class TronapiPay
         $coin_code = $request->getParam('coin_code');
         $coin_amount = $request->getParam('coin_amount');
         $hash = $request->getParam('hash');
-        $private_key = $this->private_key;
+        $private_key = $this->config['tronapipay_private_key'];
         $signature = $request->getParam('signature');
         $_signatureStr = $transaction_token.$order_id.$amount.$currency.$coin_code.$coin_amount.$hash.$private_key;
         $_signature = $this->sign($_signatureStr);
         if ($_signature != $signature) {
             die('FAIL');
         }
-    	Payment::executeAction($order_id);
+    	PaymentService::executeAction($order_id);
         $res = [
             'code' => '200',
             'data' => 'ok'

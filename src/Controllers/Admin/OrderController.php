@@ -42,7 +42,7 @@ class OrderController extends AdminController
         );
 
         $data = $query['datas']->map(function($rowData) {
-            $trans = I18n::get();
+
             return [
                 'id'    =>  $rowData->id,
                 'user_id'   =>  $rowData->user_id,
@@ -55,7 +55,7 @@ class OrderController extends AdminController
                 'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" type="button" onclick="completeOrder(' . $rowData->id . ')">标记完成</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="deleteOrder(' . $rowData->id . ')">删除</a></li>
+                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete(\'order\', ' . $rowData->id . ')">删除</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -83,7 +83,7 @@ class OrderController extends AdminController
 
     public function deleteOrder(ServerRequest $request, Response $response, array $args): Response
     {
-        $order_id = $request->getParam('order_id');
+        $order_id = $request->getParam('id');
         $order = Order::find($order_id);
         $order->delete();
         return $response->withJson([

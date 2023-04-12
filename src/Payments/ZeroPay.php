@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Gateway;
+namespace App\Payments;
 
 use App\Models\{
     Order,
@@ -33,10 +33,6 @@ class ZeroPay
                     $stripe = new StripePay();
                     $result = $stripe->ZeroPay($user_id, $method, $order_no, $amount);
                     break;
-                case ('mgate'):
-                    $mgate = new MGate();
-                    $result = $mgate->ZeroPay($user_id, $method, $order_no, $amount);
-                    return $result;
                 case ('theadpay'):
                     $theadpay = new THeadPay();
                     $result = $theadpay->ZeroPay($user_id, $method, $order_no, $amount);
