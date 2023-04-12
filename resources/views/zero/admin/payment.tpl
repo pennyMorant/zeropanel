@@ -88,8 +88,7 @@
                             <select class="form-select mb-5" id="payment_gateway" value="" data-control="select2" data-hide-search="true">
                                 <option value="Epay">Epay</option>>
                                 <option value="TronapiPay">TronapiPay</option>
-                                <option value="Magte">Magte</option>
-                                <option value="VMQPay">VMQPay</option>
+                                <option value="Mgate">Mgate</option>
                             </select>
                             <div id="payment_config_epay" class="">
                                 <label class="form-label fw-bold">URL</label>
@@ -144,6 +143,7 @@
                 var configToggle = $('#payment_gateway').val();
                 $('#payment_config_epay').addClass('d-none');
                 $('#payment_config_tronapipay').addClass('d-none');
+                $('#payment_config_mgate').addClass('d-none');
                 $('#payment_config_'+configToggle.toLowerCase()).removeClass('d-none');
             });
         </script>
@@ -246,6 +246,7 @@
                                 submitButton.setAttribute('onclick', 'zeroAdminUpdatePayment("update", ' + id + ')');
                                 $('#payment_config_epay').addClass('d-none');
                                 $('#payment_config_tronapipay').addClass('d-none');
+                                $('#payment_config_mgate').addClass('d-none');
                                 $('#payment_config_'+data.payment_gateway.toLowerCase()).removeClass('d-none');
                                 $('#zero_modal_create_payment').modal('show');
                             }
