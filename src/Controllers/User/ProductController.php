@@ -101,6 +101,9 @@ final class ProductController extends BaseController
             $user = $this->user;
             $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)
                 ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_time')->first();
+            if (is_null($latest_order)){
+                throw new \Exception('订单不存在');
+            }
             $product = Product::find($user->product_id);
             if (is_null($product)) {
                 throw new \Exception('产品已经被删除, 续费失败');
