@@ -84,19 +84,19 @@
 															{/if}
                                                             <td class="text-end">{$order->order_no}</td>                                                           
                                                             <td class="text-end">1</td>
-                                                            <td class="text-end">{$order->order_total}</td>                                                           
-                                                            <td class="text-end">{$order->order_total}</td>                                                           
+                                                            <td class="text-end">{$order->product_price}</td>                                                           
+                                                            <td class="text-end">{$order->product_price}</td>                                                           
                                                         </tr>                                                                                                              
                                                         <tr>
                                                             <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('subtotal')}</td>
-                                                            <td class="text-end">{$order->order_total}</td>
+                                                            <td class="text-end">{$order->product_price}</td>
                                                         </tr>
                                                         
                                                         
-														{if !is_null($order->order_coupon)}
+														{if !is_null($order->credit_paid)}
                                                         <tr>
                                                             <td {if $order->order_status == '2'}colspan="6"{else}colspan="5"{/if} class="text-end">{$trans->t('discount')}</td>
-                                                            <td class="text-end">{$order->product_price - $order->order_total}</td>
+                                                            <td class="text-end">{$order->credit_paid}</td>
                                                         </tr>
 														{/if}
                                                         
@@ -118,7 +118,7 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status == '1' && $order->credit_paid <= $user->money}
+											{if $order->order_status == '1'}
                                             <div class="col-lg-12">
 												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
 												
@@ -136,6 +136,7 @@
                                                         {/foreach}
 													</ul>
 											</div>
+                                            
 											<div class="text-center pt-15">
 												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
 													<span class="indicator-label">{$trans->t('submit')}</span>
@@ -143,7 +144,7 @@
 													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 												</button>
 											</div>
-											{/if}
+                                            {/if}
                                         </div>
                                         
                                     </div>
