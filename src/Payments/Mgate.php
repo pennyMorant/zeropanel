@@ -1,7 +1,7 @@
 <?php
 namespace App\Payments;;
 
-use App\Services\PaymentService;
+use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
@@ -93,13 +93,13 @@ class Mgate
     }
 
 
-    public function notify(ServerRequest $request, Response $response, array $args)
+    public function notify(ServerRequest $request)
     {
     	//file_put_contents(BASE_PATH . '/storage/paytaro.log', json_encode($request->getParams())."\r\n", FILE_APPEND);
     	if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
     		die('FAIL');
     	}
-    	PaymentService::executeAction($request->getParam('out_trade_no'));
+    	OrderController::execute($request->getParam('out_trade_no'));
     	die('SUCCESS');
     }
 

@@ -378,4 +378,21 @@ class OrderController extends BaseController
         $order_no = $order_id_main . str_pad((100 - $order_id_sum % 100) % 100,2,'0',STR_PAD_LEFT);
         return $order_no;
     }
+
+    public function orderNotify(ServerRequest $request, Response $response, array $args)
+    {
+        $method = $args['method'];
+        $payment = new PaymentService($method, null);
+        $result = $payment->notify($request);
+        return $result;
+    }
+
+    public function orderReturn(ServerRequest $request, Response $response, array $args)
+    {
+        $order_no = $_GET['tradeno'];
+        $order = Order::where('order_no', $order_no)->first();
+        if ($order->order_status == 2) {
+            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
+        }
+    }
 }

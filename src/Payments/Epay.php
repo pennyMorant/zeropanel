@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace App\Payments;;
 
+use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 use App\Payments\Epay\EpayNotify;
@@ -65,7 +66,7 @@ class Epay
         return $result;
     }
 
-    public function notify(ServerRequest $request, Response $response, array $args)
+    public function notify(ServerRequest $request)
     {
         $alipayNotify = new EpayNotify([
             'apiurl'  =>  $this->config['epay_url'],
@@ -80,7 +81,7 @@ class Epay
             $out_trade_no = $_GET['out_trade_no'];
             $trade_status = $_GET['trade_status'];
             if ($trade_status === 'TRADE_SUCCESS') {
-                PaymentService::executeAction($out_trade_no);
+                OrderController::execute($out_trade_no);
                 die('success');
             }
         }

@@ -18,7 +18,7 @@ class PaymentService
     protected $config;
     protected $payment;
 
-    public function __construct($method, $id,)
+    public function __construct($method, $id)
     {
         $this->method = $method;
         $this->class = '\\App\\Payments\\' . $this->method;
@@ -34,18 +34,9 @@ class PaymentService
         $this->payment = new $this->class($this->config);
     }
 
-    public function notify(ServerRequest $request, Response $response, array $args)
+    public function notify($param)
     {
-        return  $this->payment->notify($request, $response, $args);
-    }
-
-    public function return(ServerRequest $request, Response $response, array $args)
-    {
-        $order_no = $_GET['tradeno'];
-        $order = Order::where('order_no', $order_no)->first();
-        if ($order->order_status == 2) {
-            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
-        }
+        return  $this->payment->notify($param);
     }
 
     public function toPay($order)

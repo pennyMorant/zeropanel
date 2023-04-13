@@ -94,14 +94,14 @@ return function (SlimApp $app) {
 
     $app->group('/payment', function (Group $group) {
         //Reconstructed Payment System
-        $group->get('/return',                  App\Services\PaymentService::class . ':return')->add(new Auth());
-        $group->get('/notify',                  App\Services\PaymentService::class . ':notify');
-        $group->post('/notify',                 App\Services\PaymentService::class . ':notify');
-        $group->get('/notify/{type}',           App\Services\PaymentService::class . ':notify');
-        $group->post('/notify/{type}',          App\Services\PaymentService::class . ':notify');
-        $group->get('/notify/{type}/{method}',  App\Services\PaymentService::class . ':notify');
-        $group->post('/notify/{type}/{method}', App\Services\PaymentService::class . ':notify');
-        $group->post('/status',                 App\Services\PaymentService::class . ':getStatus');
+        $group->get('/return',                  App\Controllers\OrderController::class . ':orderReturn')->add(new Auth());
+        $group->get('/notify',                  App\Controllers\OrderController::class . ':orderNotify');
+        $group->post('/notify',                 App\Controllers\OrderController::class . ':orderNotify');
+        $group->get('/notify/{type}',           App\Controllers\OrderController::class . ':orderNotify');
+        $group->post('/notify/{type}',          App\Controllers\OrderController::class . ':orderNotify');
+        $group->get('/notify/{method}',         App\Controllers\OrderController::class . ':orderNotify');
+        $group->post('/notify/{method}',        App\Controllers\OrderController::class . ':orderNotify');
+        //$group->post('/status',                 App\Controllers\OrderController::class . ':getStatus');
     });
 
     // Auth

@@ -3,7 +3,7 @@
 
 namespace App\Payments;;
 
-use App\Services\PaymentService;
+use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
@@ -85,7 +85,7 @@ class TronapiPay
         ];
     }
 
-    public function notify(ServerRequest $request, Response $response, array $args)
+    public function notify(ServerRequest $request)
     {
     	$transaction_token = $request->getParam('transaction_token');
         $order_id = $request->getParam('order_id');
@@ -101,7 +101,7 @@ class TronapiPay
         if ($_signature != $signature) {
             die('FAIL');
         }
-    	PaymentService::executeAction($order_id);
+    	OrderController::execute($order_id);
         $res = [
             'code' => '200',
             'data' => 'ok'
