@@ -103,14 +103,14 @@ class OrderController extends BaseController
                     $order->product_price = $product_price;
                     $order->order_coupon = (empty($coupon)) ? null : $coupon_code;
                     $order->order_total = (empty($coupon)) ? $product_price : round($product_price * ((100 - $coupon->discount) / 100), 2);
-                    if ($user->credit > 0 && $order->order_total > 0) {
-                        $remaining_total = $user->credit - $order->order_toal;
+                    if ($user->money > 0 && $order->order_total > 0) {
+                        $remaining_total = $user->money - $order->order_toal;
                         if ($remaining_total > 0) {
                             $order->credit_paid = $order->order_total;
                             $order->order_total = 0;
                         } else {
-                            $order->credit_paid = $user->credit;
-                            $order->order_total = $order->order_total - $user->credit;
+                            $order->credit_paid = $user->money;
+                            $order->order_total = $order->order_total - $user->money;
                         }
                     }
                     

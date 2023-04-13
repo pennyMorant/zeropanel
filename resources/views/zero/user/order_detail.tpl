@@ -118,7 +118,7 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status == '1'}
+											{if $order->order_status == '1' && $order->credit_paid <= $user->money}
                                             <div class="col-lg-12">
 												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
 												
