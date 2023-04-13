@@ -193,7 +193,7 @@ class OrderController extends BaseController
                     throw new \Exception(I18n::get()->t('insufficient credit'));
                 }
                 
-                $user->money -= $order->order_credit_paid;
+                $user->money -= $order->credit_paid;
                 $user->save();
                 self::execute($order->order_no);
             } else {
