@@ -37,7 +37,7 @@ class Epay
             "return_url" => $order['return_url'],
             "name" => "Purchase",
             'type'  => $this->config['epay_type'],
-            "clientip"  =>  "192.168.1.100",
+            //"clientip"  =>  "192.168.1.100",
             "money" => $order['total_amount']
         ];
         $paySubmit = new EpaySubmit([
@@ -48,15 +48,16 @@ class Epay
             'input_charset' => strtolower('utf-8'),
             'transport' => 'https',
         ]);
-        $payData = $paySubmit->buildRequestPost($data);
+        $payData = $paySubmit->buildRequestForm($data);
+        /*
         if ($payData['code'] != 1) {
             return [
                 'ret'   =>  0,
                 'msg'   =>  $payData['msg']
             ];
-        }
+        }*/
         $result = [
-            'url'       =>  $payData['payurl'], 
+            'url'       =>  $payData, 
             'ret'       =>  1, 
             'tradeno'   =>  $order['order_no'], 
             'type'      =>  'url'
