@@ -78,8 +78,8 @@ class Epay
         ]);
         $verify_result = $alipayNotify->verifyNotify();
         if ($verify_result) {
-            $out_trade_no = $_GET['out_trade_no'];
-            $trade_status = $_GET['trade_status'];
+            $out_trade_no = $request->getParam('out_trade_no');
+            $trade_status = $request->getParam('trade_status');
             if ($trade_status === 'TRADE_SUCCESS') {
                 OrderController::execute($out_trade_no);
                 die('success');
