@@ -54,14 +54,14 @@ class Product extends Model
     public function purchase($user, $price, $order_type)
     {
         $product_type = $this->type;
-        $price_to_time = [
+        $product_period = [
             $this->month_price => 30,
             $this->quarter_price => 90,
             $this->half_year_price => 180,
             $this->year_price => 360
         ];
-        if (isset($price_to_time[$price])) {
-            $time = $price_to_time[$price];
+        if (isset($product_period[$price])) {
+            $time = $product_period[$price];
         }
         
         switch ($product_type) {  // 产品类型

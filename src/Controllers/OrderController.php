@@ -91,9 +91,9 @@ class OrderController extends BaseController
                         throw new \Exception(I18n::get()->t('error request'));
                     }
                     
-                    if ($user->product_id == $product->id) {                      
+                    /*if ($user->product_id == $product->id) {                      
                         throw new \Exception('已有该产品，不可新购');
-                    }
+                    }*/
 
                     $order = new Order();
                     $order->order_no = self::createOrderNo();
