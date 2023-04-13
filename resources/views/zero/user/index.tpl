@@ -32,11 +32,13 @@
 											<div class="card card-flush h-md-100">
 												<div class="card-header border-0">
 													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>
+													<!--
 													{if $user->class >= 1}
 														<div class="card-toolbar">
 															<button class="btn btn-light-primary btn-sm" onclick="zeroUserRenewalProduct()">续费</button>
 														</div>
 													{/if}
+													-->
 												</div>     
 												<div class="card-body pt-0">
 													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
