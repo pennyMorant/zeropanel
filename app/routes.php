@@ -16,6 +16,7 @@ use App\Controllers\Admin\CouponController;
 use App\Controllers\Admin\SettingController;
 use App\Controllers\Admin\CommissionController;
 use App\Controllers\Admin\PaymentController;
+use App\Services\PaymentService;
 use App\Middleware\{
     Guest, 
     Admin, 
