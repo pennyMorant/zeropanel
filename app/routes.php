@@ -97,8 +97,6 @@ return function (SlimApp $app) {
         $group->get('/return',                  App\Controllers\OrderController::class . ':orderReturn')->add(new Auth());
         $group->get('/notify',                  App\Controllers\OrderController::class . ':orderNotify');
         $group->post('/notify',                 App\Controllers\OrderController::class . ':orderNotify');
-        $group->get('/notify/{type}',           App\Controllers\OrderController::class . ':orderNotify');
-        $group->post('/notify/{type}',          App\Controllers\OrderController::class . ':orderNotify');
         $group->get('/notify/{method}',         App\Controllers\OrderController::class . ':orderNotify');
         $group->post('/notify/{method}',        App\Controllers\OrderController::class . ':orderNotify');
         //$group->post('/status',                 App\Controllers\OrderController::class . ':getStatus');
