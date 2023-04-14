@@ -33,7 +33,7 @@
 												<div class="card-header border-0">
 													<div class="card-title d-flex flex-column">
                                                         <div class="d-flex align-items-center">
-                                                            <span class="text-dark fs-2hx fw-bold me-2" data-kt-countup="true" data-kt-countup-value={$income_this_month} data-kt-countup-prefix="$">0</span>
+                                                            <span class="text-dark fs-2hx fw-bold me-2" data-kt-countup="true" data-kt-countup-value={$income_this_month} data-kt-countup-decimal-places="2" data-kt-countup-prefix="$">0</span>
                                                         
                                                             <span class="badge badge-light-success fs-base" data-bs-toggle="tooltip" title="比上月增长百分比">                                                                                               
                                                                 <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
