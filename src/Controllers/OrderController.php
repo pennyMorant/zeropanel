@@ -35,22 +35,21 @@ class OrderController extends BaseController
         $order = Order::where('user_id', $this->user->id)
             ->where('order_no', $order_no)
             ->first();
-        if (!is_null($order->product_id)) {
+        if (!is_null($order->product_id) && $order->order_type != '2') {
             $product = Product::find($order->product_id);
             $product_name = $product->name;
             $order_type = [
-                1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name,
-                3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
-                4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
+                1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name . '-' . $product->productPeriod($order->product_price),
+                3   =>  I18n::get()->t('renewal product') .': ' . $product_name . '-' . $product->productPeriod($order->product_price),
+                4   =>  I18n::get()->t('upgrade product') .': ' . $product_name . '-' . $product->productPeriod($order->product_price),
             ];
         } else {
             $product_name = '';
             $product = [];
+            $order_type = [
+                2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
+            ];
         }
-
-        $order_type = [
-            2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
-        ];
         
         $payments = Payment::where('enable', 1)->get();
             $this->view()
