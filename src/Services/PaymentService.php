@@ -43,14 +43,14 @@ class PaymentService
 
     public function toPay($order)
     {
-        $notify_url = Setting::obtain('website_url') . "/order/notify/" . $this->method;
+        $notify_url = Setting::obtain('website_url') . "/payment/notify/" . $this->method;
         if ($this->config['notify_domain']) {
-            $notify_url = $this->config['notify_domain'] . "/order/notify/" . $this->method . '/' . $this->config['uuid'];
+            $notify_url = $this->config['notify_domain'] . "/payment/notify/" . $this->method . '/' . $this->config['uuid'];
         }
 
         return $this->payment->pay([
             'notify_url'    =>  $notify_url,
-            'return_url'    =>  Setting::obtain('website_url') . "/order/return?tradeno=" . $order['order_no'],
+            'return_url'    =>  Setting::obtain('website_url') . "/payment/return?tradeno=" . $order['order_no'],
             'order_no'      =>  $order['order_no'],
             'total_amount'  =>  $order['total_amount'],
             'user_id'       =>  $order['user_id']
