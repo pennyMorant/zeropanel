@@ -165,8 +165,9 @@ return function (SlimApp $app) {
         // order
         $group->group('/order', function($order) {
             $order->get('',                   OrderController::class . ':index');
+            $order->get('/{no}',              OrderController::class . ':orderDetailIndex');
             $order->post('/ajax',             OrderController::class . ':ajaxOrder');
-            $order->delete('/delete',          OrderController::class . ':deleteOrder');
+            $order->delete('/delete',         OrderController::class . ':deleteOrder');
             $order->put('/complete',          OrderController::class . ':completeOrder');
         });
 

@@ -14,7 +14,6 @@ use App\Models\{
     Payment
 };
 use App\Utils\Telegram;
-use App\Models\Payment as Gateway;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use App\Services\PaymentService;
@@ -39,27 +38,27 @@ class OrderController extends BaseController
         if (!is_null($order->product_id)) {
             $product = Product::find($order->product_id);
             $product_name = $product->name;
+            $order_type = [
+                1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name,
+                3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
+                4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
+            ];
         } else {
             $product_name = '';
             $product = [];
         }
 
         $order_type = [
-            1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name,
             2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
-            3   =>  I18n::get()->t('renewal product') .': ' . $product_name,
-            4   =>  I18n::get()->t('upgrade product') .': ' . $product_name,
         ];
         
-        $gateways = Gateway::where('enable', 1)->get();
-        $order_payment = Gateway::find($order->payment_id);
+        $payments = Payment::where('enable', 1)->get();
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
-                ->assign('order_payment', $order_payment)
                 ->assign('order_type', $order_type)
-                ->assign('gateways', $gateways)
+                ->assign('payments', $payments)
                 ->display('user/order_detail.tpl');
         return $response;   
     }
@@ -95,6 +94,7 @@ class OrderController extends BaseController
                     /*if ($user->product_id == $product->id) {                      
                         throw new \Exception('已有该产品，不可新购');
                     }*/
+                    $coupon = Coupon::where('code', '=', $coupon_code)->first();
 
                     $order = new Order();
                     $order->order_no = self::createOrderNo();
@@ -102,8 +102,11 @@ class OrderController extends BaseController
                     $order->product_id = $product->id;
                     $order->order_type = $type;
                     $order->product_price = $product_price;
-                    $order->order_coupon = (empty($coupon)) ? null : $coupon_code;
-                    $order->order_total = (empty($coupon)) ? $product_price : round($product_price * ((100 - $coupon->discount) / 100), 2);
+                    $order->total = $product_price;
+                    if ($coupon_code != '') {
+                        $order->coupon_id   = $coupon->id;
+                        $order->order_total = round($product_price * ((100 - $coupon->discount) / 100), 2);
+                    }
                     if ($user->money > 0 && $order->order_total > 0) {
                         $remaining_total = $user->money - $order->order_total;
                         if ($remaining_total > 0) {

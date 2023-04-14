@@ -129,4 +129,19 @@ class Product extends Model
         return $average_price;
     }
 
+    public function productPeriod($price)
+    {
+        $product_period = [
+            $this->month_price => 30,
+            $this->quarter_price => 90,
+            $this->half_year_price => 180,
+            $this->year_price => 360
+        ];
+        if (isset($product_period[$price])) {
+            $period = $product_period[$price];
+        }
+
+        return $period;
+    }
+
 }

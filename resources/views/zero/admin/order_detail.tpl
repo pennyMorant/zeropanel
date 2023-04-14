@@ -22,7 +22,7 @@
         <link href="/favicon.png" rel="shortcut icon">
         <link href="/apple-touch-icon.png" rel="apple-touch-icon">
     </head>
-    {include file ='include/index/menu.tpl'}
+    {include file ='admin/menu.tpl'}
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -46,9 +46,7 @@
                                                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                                             <th class="min-w-175px">{$trans->t('type')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('status')}</th>
-															
                                                             <th class="min-w-70px text-end">{$trans->t('payment method')}</th>
-                                                            
                                                             <th class="min-w-100px text-end">{$trans->t('order number')}</th>
                                                             <th class="min-w-70px text-end">{$trans->t('quantity')}</th>
                                                             <th class="min-w-100px text-end">{$trans->t('price')}</th>
@@ -79,9 +77,7 @@
 																<span class="badge badge-danger fs-6 fw-bold">{$trans->t('invalid')}</span>	
                                                                 {/if}   
                                                             </td>
-															
 															<td class="text-end">{$order->payment()}</td>
-															
                                                             <td class="text-end">{$order->order_no}</td>                                                           
                                                             <td class="text-end">1</td>
                                                             {if $order->order_type == '2'}
@@ -90,19 +86,18 @@
                                                             {else}
                                                                 <td class="text-end">{$order->order_product_price}</td>                                                           
                                                                 <td class="text-end">{$order->order_product_price}</td>
-                                                            {/if}                                       
-                                                        </tr>                                                                                                              
+                                                            {/if}
+                                                        </tr>
                                                         {if $order->order_type != '2'}                                                                                                            
-                                                            <tr>
-                                                                <td colspan="6" class="text-end">余额抵扣</td>
-                                                                <td class="text-end">{$order->credit_paid}</td>
-                                                            </tr>                                                       
-                                                            <tr>
-                                                                <td colspan="6" class="text-end">{$trans->t('discount')}</td>
-                                                                <td class="text-end">{$order->discount_amount}</td>
-                                                            </tr>
-                                                        {/if}
-                                                                                            
+                                                        <tr>
+                                                            <td colspan="6" class="text-end">余额抵扣</td>
+                                                            <td class="text-end">{$order->credit_paid}</td>
+                                                        </tr>                                                       
+                                                        <tr>
+                                                            <td colspan="6" class="text-end">{$trans->t('discount')}</td>
+                                                            <td class="text-end">{$order->discount_amount}</td>
+                                                        </tr>
+                                                        {/if}														                                                        
                                                         <tr>
                                                             <td colspan="6" class="fs-3 text-dark text-end">{$trans->t('total')}</td>
                                                             <td class="text-dark fs-3 fw-bolder text-end">{$order->order_total}</td>
@@ -120,33 +115,6 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status == '1'}
-                                            <div class="col-lg-12">
-												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
-												
-													<ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
-													
-														{foreach $payments as $payment}
-                                                            <li class="nav-item mb-3">
-                                                                <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$gateway->id}">
-                                                                    
-                                                                    <img class="h-35px w-auto" src={$payment->icon}>
-                                                                    
-                                                                    <span class="fs-3 py-2 fw-bold">{$payment->name}</span>
-                                                                </a>
-                                                            </li>
-                                                        {/foreach}
-													</ul>
-											</div>
-                                            
-											<div class="text-center pt-15">
-												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
-													<span class="indicator-label">{$trans->t('submit')}</span>
-													<span class="indicator-progress">{$trans->t('please wait')}
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-												</button>
-											</div>
-                                            {/if}
                                         </div>
                                         
                                     </div>
@@ -165,7 +133,5 @@
                 </div>
             </div>
         </div>
-		{include file='include/global/scripts.tpl'}
-        {include file='include/index/news.tpl'}
     </body>
 </html>

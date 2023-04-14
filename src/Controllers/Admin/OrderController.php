@@ -4,6 +4,9 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Setting;
+use App\Models\Payment as Gateway;
 use Pkly\I18Next\I18n;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -56,6 +59,7 @@ class OrderController extends AdminController
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" type="button" onclick="completeOrder(' . $rowData->id . ')">标记完成</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete(\'order\', ' . $rowData->id . ')">删除</a></li>
+                                        <li><a class="dropdown-item" href="/'. Setting::obtain('website_admin_path') . '/order/' . $rowData->order_no . '">详细</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -67,6 +71,34 @@ class OrderController extends AdminController
             'recordsFiltered' => $query['count'],
             'data'            => $data,
         ]);
+    }
+
+    public function orderDetailIndex(ServerRequest $request, Response $response, array $args): Response
+    {
+        $id = $args['no'];
+        $order = Order::where('order_no', $id)->first();
+        if (!is_null($order->product_id)) {
+            $product = Product::find($order->product_id);
+            $product_name = $product->name;
+            $order_type = [
+                1   =>  I18n::get()->t('purchase product') .  ': ' . $product_name . '-' . $product->productPeriod($order->product_price),
+                3   =>  I18n::get()->t('renewal product') .': ' . $product_name . '-' . $product->productPeriod($order->product_price),
+                4   =>  I18n::get()->t('upgrade product') .': ' . $product_name . '-' . $product->productPeriod($order->product_price),
+            ];
+        } else {
+            $product_name = '';
+            $product = [];
+        }
+
+        $order_type = [
+            2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
+        ];
+        
+        $this->view()
+            ->assign('order', $order)
+            ->assign('order_type', $order_type)      
+            ->display('admin/order_detail.tpl');
+        return $response;
     }
 
     public function completeOrder(ServerRequest $request, Response $response, array $args): Response

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Controllers\Admin\OrderController;
 use Pkly\I18Next\I18n;
 use App\Models\Payment;
 use App\Services\PaymentService;
@@ -41,10 +42,6 @@ class Order extends Model
             4   =>  '升级产品',
         ];
         return $order_type[$this->order_type];
-    }
-
-    public function finshOrder($order_no) {
-        PaymentService::executeAction($order_no);
     }
 }
 
