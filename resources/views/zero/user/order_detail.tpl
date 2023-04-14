@@ -88,8 +88,8 @@
                                                                 <td class="text-end">{$order->order_total}</td>                                                           
                                                                 <td class="text-end">{$order->order_total}</td>
                                                             {else}
-                                                                <td class="text-end">{$order->order_product_price}</td>                                                           
-                                                                <td class="text-end">{$order->order_product_price}</td>
+                                                                <td class="text-end">{$order->product_price}</td>                                                           
+                                                                <td class="text-end">{$order->product_price}</td>
                                                             {/if}                                       
                                                         </tr>                                                                                                              
                                                         {if $order->order_type != '2'}                                                                                                            
