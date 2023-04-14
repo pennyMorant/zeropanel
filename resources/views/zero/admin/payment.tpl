@@ -97,12 +97,6 @@
                                 <input class="form-control mb-5" id="epay_pid" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">KEY</label>
                                 <input class="form-control mb-5" id="epay_key" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">类型</label>
-                                <select class="form-select" id="epay_type" value="" data-control="select2" data-hide-search="true">
-                                    <option value="alipay">支付宝</option>
-                                    <option value="wxpay">微信</option>
-                                    <option value="qqpay">QQ</option>
-                                </select>
                             </div>
                             <div id="payment_config_tronapipay" class="d-none">
                                 <label class="form-label fw-bold">Public key</label>
@@ -159,7 +153,6 @@
                             'epay_url': $('#epay_url').val(),
                             'epay_pid': $('#epay_pid').val(),
                             'epay_key': $('#epay_key').val(),
-                            'epay_type': $('#epay_type').val()
                         };
                         break;
                     case 'TronapiPay':
@@ -231,7 +224,6 @@
                                         $('#epay_url').val(data.payment_config['epay_url']);
                                         $('#epay_pid').val(data.payment_config['epay_pid']);
                                         $('#epay_key').val(data.payment_config['epay_key']);
-                                        $('#epay_type').val(data.payment_config['epay_type']).trigger('change');
                                         break;
                                     case 'TronapiPay':
                                         $('#tronapipay_public_key').val(data.payment_config['tronapipay_public_key']);
@@ -295,7 +287,6 @@
                 $('#mgate_secret').val('');
                 $('#payment_gateway').val('Epay').trigger('change');
                 $('#payment_config_epay').removeClass('d-none');
-                $('#epay_type').val('alipay').trigger('change');
                 submitButton.setAttribute('onclick', 'zeroAdminCreatePayment("create")');
                 $('#payment_config_tronapipay').addClass('d-none');
                 $('#payment_config_mgate').addClass('d-none');

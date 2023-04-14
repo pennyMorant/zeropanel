@@ -37,7 +37,7 @@ class Epay
             "notify_url" => $order['notify_url'],
             "return_url" => $order['return_url'],
             "name" => "Purchase",
-            'type'  => $this->config['epay_type'],
+            //'type'  => $this->config['epay_type'],
             //"clientip"  =>  "192.168.1.100",
             "money" => $order['total_amount']
         ];
