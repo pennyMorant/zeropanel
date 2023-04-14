@@ -81,7 +81,7 @@ class AdminController extends UserController
 
                 // 获取查询结果集合
                 $orders = Order::whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
-                    ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, sum(order_total) as amount')
+                    ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, round(sum(order_total), 2) as amount')
                     ->groupBy('date')->get();
 
                 if (isset($orders)) {
