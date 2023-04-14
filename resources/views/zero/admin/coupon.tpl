@@ -31,7 +31,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">优惠码记录</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_coupon">创建优惠码</button>
+                                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_coupon">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建优惠码
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body">

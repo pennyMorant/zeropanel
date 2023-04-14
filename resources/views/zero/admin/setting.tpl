@@ -48,7 +48,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">基础配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('website')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('website')">
+                                                                    <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -80,7 +82,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">权限组自定义</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" onclick="updateAdminConfigSettings('permission_group')">
+                                                                            <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">                                                                  
@@ -103,7 +107,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">邮件配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mail')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mail')">
+                                                                            <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -121,7 +127,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">邮件备份</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('backup')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('backup')">
+                                                                            <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -154,7 +162,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">SENDGRID 配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('sendgrid')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('sendgrid')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -175,7 +185,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">SMTP 配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('smtp')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('smtp')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -209,7 +221,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">MAILGUN 配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mailgun')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('mailgun')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -225,7 +239,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">SES 配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('ses')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('ses')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -245,7 +261,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">Telegram 配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -265,7 +283,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">Telegram BOT</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram_bot')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('telegram_bot')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -305,7 +325,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">订阅配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('subscribe')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('subscribe')">
+                                                                <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -355,7 +377,9 @@
                                                                         <span class="text-gray-400 pt-1 fw-semibold fs-6">API申请地址: https://app.abstractapi.com</span>
                                                                     </div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('currency')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('currency')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -387,7 +411,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">提现配置</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('withdraw')">保存配置</button>
+                                                                        <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('withdraw')">
+                                                                        <i class="bi bi-save"></i>保存配置
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
@@ -412,7 +438,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">注册配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('register')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('register')">
+                                                                <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -456,7 +484,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">验证配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('captcha')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('captcha')">
+                                                                <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -490,7 +520,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">客服配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('live_chat')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('live_chat')">
+                                                                <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">
@@ -524,7 +556,9 @@
                                                         <div class="card-header">
                                                             <div class="card-title fw-bold">模式配置</div>
                                                             <div class="card-toolbar">
-                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('invite')">保存配置</button>
+                                                                <button class="btn btn-light-primary btn-sm" type="button" onclick="updateAdminConfigSettings('invite')">
+                                                                <i class="bi bi-save"></i>保存配置
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="card-body">

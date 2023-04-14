@@ -32,7 +32,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">公告列表</div>
                                             <div class="card-toolbar">
-												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_news">创建公告</button>
+												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_news">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建公告
+                                                </button>
 											</div>
                                         </div>
                                         <div class="card-body">

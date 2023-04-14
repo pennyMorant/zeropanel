@@ -40,7 +40,9 @@
                                                     </span>
                                                     <input type="text" data-kt-admin-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers"/>
                                                 </div>
-                                                <button class="btn btn-primary btn-sm fw-bold">创建用户</button>
+                                                <button class="btn btn-primary btn-sm fw-bold">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建用户
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body" id="KTAdmin_node_record">

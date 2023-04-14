@@ -32,7 +32,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">工单列表</div>
                                             <div class="card-toolbar">
-												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">创建工单</button>
+												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建工单
+                                                </button>
 											</div>
                                         </div>
                                         <div class="card-body">

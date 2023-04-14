@@ -40,7 +40,9 @@
                                                     </span>
                                                     <input type="text" data-kt-admin-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers"/>
                                                 </div>
-                                                <a class="btn btn-primary btn-sm fw-bold" href="node/create">创建节点</a>
+                                                <a class="btn btn-primary btn-sm fw-bold" href="node/create">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建节点
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="card-body">

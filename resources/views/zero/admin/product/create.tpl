@@ -31,7 +31,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">产品配置</div>
                                             <div class="card-toolbar">
-                                                <a class="btn btn-primary btn-sm fw-bold" onclick="zeroAdminCreateProduct()">保存产品</a>
+                                                <button class="btn btn-primary btn-sm fw-bold" onclick="zeroAdminCreateProduct()">
+                                                <i class="bi bi-cloud-plus fs-3"></i>保存产品
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body">

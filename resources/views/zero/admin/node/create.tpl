@@ -33,7 +33,9 @@
                                         <div class="card-header card-flush">
                                             <div class="card-title fw-bold">节点配置</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">创建节点</button>
+                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建节点
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body">
