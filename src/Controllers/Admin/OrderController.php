@@ -77,7 +77,7 @@ class OrderController extends AdminController
     {
         $id = $args['no'];
         $order = Order::where('order_no', $id)->first();
-        if (!is_null($order->product_id)) {
+        if (!is_null($order->product_id) && $order->order_type != '2') {
             $product = Product::find($order->product_id);
             $product_name = $product->name;
             $order_type = [
@@ -88,11 +88,11 @@ class OrderController extends AdminController
         } else {
             $product_name = '';
             $product = [];
+            $order_type = [
+                2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
+            ];
         }
 
-        $order_type = [
-            2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
-        ];
         
         $this->view()
             ->assign('order', $order)
