@@ -5,31 +5,30 @@ namespace App\Payments;;
 
 use App\Services\Payment;
 use App\Models\Setting;
+use App\Services\PaymentService;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
 class VmqPay
 {
+    private $config = [];
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function sign($payId, $type, $price)
     {
-        $configs = Setting::getClass('vmq');
-        $vmq_param = $configs['vmq_key'];
-        $vmq_secret = $configs['vmq_key'];
+        $vmq_param = $this->config['vmq_key'];
+        $vmq_secret = $this->config['vmq_secret'];
 
         return md5($payId . $vmq_param . $type . $price . $vmq_secret);
     }
 
-    public function ZeroPay($user_id, $method, $order_no, $amount)
+    public function pay($order)
     {
-        $configs = Setting::getClass('vmq');
-        $currency = Setting::getClass('currency');
-        $type = $method === 'alipay' ? 2 : 1;
-        $url_header = $configs['vmq_gateway'] . '/createOrder?';
-        if ($currency['enable_currency'] == true && !is_null($currency['currency_exchange_rate'])) {
-            $final_amount = $amount * $currency['currency_exchange_rate'];
-        } else {
-            $final_amount = $amount;
-        }
+        $url_header = $this->config['vmq_url'] . '/createOrder?';
         $sign = $this->sign($order_no, $type, $final_amount);
         $data = [
             'payId' => $order_no,
@@ -60,7 +59,7 @@ class VmqPay
         if ($_sign != $sign) {
             die('error_sign');//sign校验不通过
         }
-        Payment::executeAction($request->getParam('payId'));
+        PaymentService::executeAction($request->getParam('payId'));
     	die('success');
     }
 
