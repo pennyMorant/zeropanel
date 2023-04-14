@@ -78,19 +78,16 @@ class Product extends Model
                         $user->node_iplimit = $this->ip_limit;                       
                         $user->node_group = $this->user_group;
                         $user->product_id = $this->id;
-                        if ($this->reset_traffic_cycle === 1 && $time > 30) {
-                            $user->reset_traffic_date = date('d');
+                        if ($this->reset_traffic_cycle === 1) { //订单日充值
+                            $user->reset_traffic_date = date('d', strtotime('+1 day', time()));
                             $user->reset_traffic_value = $this->traffic;
-                        } else if ($this->reset_traffic_cycle === 2 && $time > 30) {
+                        } else if ($this->reset_traffic_cycle === 2) {  //每月1日重置
                             $user->reset_traffic_date = 1;
                             $user->reset_traffic_value = $this->traffic;
                         }
                         break;
                     case 3:
-                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
-                        if ($time = 30) {                            
-                            $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
-                        }                          
+                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);                                         
                         break;
                     case 4:
                         break;
