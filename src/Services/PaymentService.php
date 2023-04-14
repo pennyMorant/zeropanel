@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
-use App\Controllers\OrderController;
-use App\Models\Order;
-use App\Models\User;
+
 use App\Models\Setting;
 use App\Models\Payment;
-use App\Utils\Telegram;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
@@ -43,7 +40,7 @@ class PaymentService
 
     public function toPay($order)
     {
-        $notify_url = Setting::obtain('website_url') . "/payment/notify/" . $this->method;
+        $notify_url = Setting::obtain('website_url') . "/payment/notify/" . $this->method  . '/' . $this->config['uuid'];
         if ($this->config['notify_domain']) {
             $notify_url = $this->config['notify_domain'] . "/payment/notify/" . $this->method . '/' . $this->config['uuid'];
         }

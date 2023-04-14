@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace App\Payments;;
 
-use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 use App\Payments\Epay\EpayNotify;
 use App\Payments\Epay\EpaySubmit;
-use App\Services\PaymentService;
 
 class Epay
 {
