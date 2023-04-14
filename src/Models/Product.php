@@ -79,7 +79,7 @@ class Product extends Model
                         $user->node_group = $this->user_group;
                         $user->product_id = $this->id;
                         if ($this->reset_traffic_cycle === 1) { //订单日充值
-                            $user->reset_traffic_date = date('d', strtotime('+1 day', time()));
+                            $user->reset_traffic_date = date('d');
                             $user->reset_traffic_value = $this->traffic;
                         } else if ($this->reset_traffic_cycle === 2) {  //每月1日重置
                             $user->reset_traffic_date = 1;
