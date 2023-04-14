@@ -295,6 +295,8 @@
                 $('#mgate_secret').val('');
                 $('#payment_gateway').val('Epay').trigger('change');
                 $('#payment_config_epay').removeClass('d-none');
+                $('#epay_type').val('alipay').trigger('change');
+                submitButton.setAttribute('onclick', 'zeroAdminCreatePayment("create")');
                 $('#payment_config_tronapipay').addClass('d-none');
                 $('#payment_config_mgate').addClass('d-none');
                 console.log('clean success');
