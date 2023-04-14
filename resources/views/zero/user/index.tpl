@@ -64,7 +64,7 @@
 															</span>
 														</div>
 														<div class="text-end">
-															<i class="bi bi-database-add fs-1 fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="zeroUserRenewalProduct()"></i>
+															<i class="bi bi-database-add fs-2hx fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="zeroUserRenewalProduct()"></i>
 														</div>
 													</div>
 													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-9">
@@ -114,7 +114,7 @@
 														</div>
 														<div class="text-end">
 															
-															<i class="bi bi-plus-circle fw-bold fs-1 text-info" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal"></i>
+														<i class="bi bi-plus-circle fs-2hx fw-bold text-info" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal"></i>
 															
 														</div>
 													</div>

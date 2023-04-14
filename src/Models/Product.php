@@ -132,7 +132,8 @@ class Product extends Model
             $this->month_price => 30,
             $this->quarter_price => 90,
             $this->half_year_price => 180,
-            $this->year_price => 360
+            $this->year_price => 360,
+            $this->two_year_price => 720
         ];
         if (isset($product_period[$price])) {
             $period = $product_period[$price];
