@@ -114,6 +114,7 @@ final class ProductController extends BaseController
             $order->user_id = $user->id;
             $order->product_id = $latest_order->product_id;
             $order->product_price = $latest_order->product_price;
+            $order->product_period = $product->productPeriod($latest_order->product_price);
             $order->order_total =  $latest_order->order_total + $latest_order->credit_paid;
             if ($user->money > 0 && $order->order_total > 0) {
                 $remaining_total = $user->money - $order->order_toal;

@@ -115,11 +115,11 @@ class Product extends Model
        END AS column_with_max_price")
        ->first();
         $date = [
-            'month_price'   =>  1,
-            'quarter_price' =>  3,
+            'month_price'       =>  1,
+            'quarter_price'     =>  3,
             'half_year_price'   =>  6,
-            'year_price'    => 12,
-            'two_year_price'    =>24,
+            'year_price'        =>  12,
+            'two_year_price'    =>  24,
         ];
 
         $average_price =  $price->max_price / $date[$price->column_with_max_price];

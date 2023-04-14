@@ -101,6 +101,7 @@ class OrderController extends BaseController
                     $order->product_id = $product->id;
                     $order->order_type = $type;
                     $order->product_price = $product_price;
+                    $order->product_period = $product->productPeriod($product_price);
                     $order->order_total = $product_price;
                     if ($coupon_code != '') {
                         $order->coupon_id   = $coupon->id;
