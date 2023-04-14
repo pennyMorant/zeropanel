@@ -77,13 +77,19 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">折扣比例</span>
                             </label>
-                            <input type="text" value="" class="form-control form-control-solid" placeholder="折扣比例" id="zero_create_coupon_dicount_rate">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="折扣比例" id="zero_create_coupon_dicount_rate">
+                                <span class="input-group-text">%</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">有效时间</span>
                             </label>
-                            <input type="text" value="1" class="form-control form-control-solid" placeholder="有效时间" id="zero_create_coupon_valid_time">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="1" class="form-control form-control-solid" placeholder="有效时间" id="zero_create_coupon_valid_time">
+                                <span class="input-group-text">小时</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">
@@ -95,13 +101,19 @@
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">用户使用次数</span>
                             </label>
-                            <input type="text" value="1" class="form-control form-control-solid" placeholder="用户使用次数" id="zero_create_coupon_per_times">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="1" class="form-control form-control-solid" placeholder="用户使用次数" id="zero_create_coupon_per_times">
+                                <span class="input-group-text">次</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">总使用次数</span>
                             </label>
-                            <input type="text" value="-1" class="form-control form-control-solid" placeholder="总使用次数" id="zero_create_coupon_total_times">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="-1" class="form-control form-control-solid" placeholder="总使用次数" id="zero_create_coupon_total_times">
+                                <span class="input-group-text">次</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-semibold mb-2">

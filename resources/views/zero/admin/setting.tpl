@@ -424,7 +424,7 @@
                                                                     </select>
                                                                     <label class="form-label">提现方式</label>
                                                                     <select class="form-select mb-5" id="withdraw_method">
-                                                                        <option value="USDT" data-kt-select2-image="/tether.svg">USDT</option>
+                                                                        <option value="USDT" data-kt-select2-image="/theme/zero/assets/media/payment_logo/tether.svg">USDT</option>
                                                                     </select>
                                                                     <label class="form-label">最低提现金额</label>
                                                                     <input class="form-control mb-5" id="withdraw_minimum_amount" value="{$settings['withdraw_minimum_amount']}" type="text" placeholder="最低金额" />
