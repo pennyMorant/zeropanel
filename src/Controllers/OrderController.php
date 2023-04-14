@@ -90,9 +90,9 @@ class OrderController extends BaseController
                         throw new \Exception(I18n::get()->t('error request'));
                     }
                     
-                    /*if ($user->product_id == $product->id) {                      
-                        throw new \Exception('已有该产品，不可新购');
-                    }*/
+                    if ($user->product_id == $product->id) {                      
+                        throw new \Exception('已有该产品，请在主页点击续费');
+                    }
                     $coupon = Coupon::where('code', '=', $coupon_code)->first();
 
                     $order = new Order();
