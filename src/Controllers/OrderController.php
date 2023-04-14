@@ -382,7 +382,8 @@ class OrderController extends BaseController
     public function orderNotify(ServerRequest $request, Response $response, array $args)
     {
         $method = $args['method'];
-        $payment = new PaymentService($method, null);
+        $uuid = $args['uuid'];
+        $payment = new PaymentService($method, null, $uuid);
         $result = $payment->notify($request);
         return $result;
     }

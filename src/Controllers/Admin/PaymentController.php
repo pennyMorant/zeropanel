@@ -6,6 +6,7 @@ use App\Controllers\AdminController;
 use App\Models\Payment;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
+use Ramsey\Uuid\Uuid;
 
 final class PaymentController extends AdminController
 {
@@ -39,6 +40,7 @@ final class PaymentController extends AdminController
         $payment->notify_domain = $postData['payment_notify_domain'] ?: NULL;
         $payment->enable = 0;
         $payment->sort = 0;
+        $payment->uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
         $payment->created_at = time();
         $payment->updated_at = time();
 
@@ -62,6 +64,7 @@ final class PaymentController extends AdminController
         $payment->percent_fee = $postData['payment_percent_fee'] ?: NULL;
         $payment->fixed_fee = $postData['payment_fixed_fee'] ?: NULL;
         $payment->notify_domain = $postData['payment_notify_domain'] ?: NULL;
+        $payment->uuid = $payment->uuid ?: Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
         $payment->updated_at = time();
         $payment->save();
 

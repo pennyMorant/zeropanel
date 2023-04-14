@@ -95,10 +95,10 @@ return function (SlimApp $app) {
     $app->group('/payment', function (Group $group) {
         //Reconstructed Payment System
         $group->get('/return',                  App\Controllers\OrderController::class . ':orderReturn')->add(new Auth());
-        $group->get('/notify',                  App\Controllers\OrderController::class . ':orderNotify');
-        $group->post('/notify',                 App\Controllers\OrderController::class . ':orderNotify');
-        $group->get('/notify/{method}',         App\Controllers\OrderController::class . ':orderNotify');
-        $group->post('/notify/{method}',        App\Controllers\OrderController::class . ':orderNotify');
+        //$group->get('/notify',                  App\Controllers\OrderController::class . ':orderNotify');
+       // $group->post('/notify',                 App\Controllers\OrderController::class . ':orderNotify');
+        $group->get('/notify/{method}/{uuid}',         App\Controllers\OrderController::class . ':orderNotify');
+        $group->post('/notify/{method}/{uuid}',        App\Controllers\OrderController::class . ':orderNotify');
         //$group->post('/status',                 App\Controllers\OrderController::class . ':getStatus');
     });
 

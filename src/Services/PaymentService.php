@@ -18,16 +18,18 @@ class PaymentService
     protected $config;
     protected $payment;
 
-    public function __construct($method, $id)
+    public function __construct($method, $id = null, $uuid = null)
     {
         $this->method = $method;
         $this->class = '\\App\\Payments\\' . $this->method;
         if ($id) $payment = Payment::find($id)->toArray();
+        if ($uuid) $payment = Payment::where('uuid', $uuid)->first()->toArray();
         $this->config = [];
         if (isset($payment)) {
             $this->config = json_decode($payment['config'], true);
             $this->config['enable'] = $payment['enable'];
             $this->config['id'] = $payment['id'];
+            $this->config['uuid'] = $payment['uuid'];
             $this->config['notify_domain'] = $payment['notify_domain'];
         };
         
@@ -43,7 +45,7 @@ class PaymentService
     {
         $notify_url = Setting::obtain('website_url') . "/payment/notify/" . $this->method;
         if ($this->config['notify_domain']) {
-            $notify_url = $this->config['notify_domain'] . "/payment/notify/" . $this->method;
+            $notify_url = $this->config['notify_domain'] . "/payment/notify/" . $this->method . '/' . $this->config['uuid'];
         }
 
         return $this->payment->pay([
