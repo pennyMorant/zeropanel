@@ -18,7 +18,6 @@ class PaymentController
         $payment = new PaymentService($method, null, $uuid);
         $result = $payment->notify($request);
         $this->handle($result['order_no']);
-        OrderController::execute($result['order_no']);
         die(isset($verify['custom_result']) ? $verify['custom_result'] : 'success');
     }
 
@@ -32,15 +31,16 @@ class PaymentController
     public function handle($no)
     {
         $order = Order::where('order_no', $no)->first();
-        if ($order->order_status == '2') {
-            if (Setting::obtain('enable_push_top_up_message') == true) {
-                $messageText = sprintf(
-                    "💰成功收款%s元\n———————————————\n订单号：%s",
-                    $order->order_total,
-                    $order->order_no
-                );
-                Telegram::pushToAdmin($messageText);
-            }
+        OrderController::execute($no);
+        
+        if (Setting::obtain('enable_push_top_up_message') == true) {
+            $messageText = sprintf(
+                "💰成功收款%s元\n———————————————\n订单号：%s",
+                $order->order_total,
+                $order->order_no
+            );
+            Telegram::pushToAdmin($messageText);
         }
+        
     }
 }
