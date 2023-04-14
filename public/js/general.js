@@ -44,9 +44,20 @@ function getResult(titles, texts, icons) {
         }
     });
 }
+
 $(document).ready(function (){
-    $("a.menu-link[href='"+window.location.pathname+"']").addClass('active');
+    // 获取当前 URL 路径
+    var path = window.location.pathname;
+
+    // 使用 split() 切割路径字符串
+    var parts = path.split('/');
+
+    // 访问最后一个元素
+    var target2 = parts[2];
+    var target1 = parts[1];
+    $("a.menu-link[href='/"+target1+"/"+target2+"']").addClass('active');
 });
+
 //get load
 function getLoad() {
     Swal.fire({
@@ -439,52 +450,66 @@ function kTUserConfigureProductModal(id, currency) {
         const year_price = product_info.year_price;
         const two_year_price = product_info.two_year_price;
         const onetime_price = product_info.onetime_price;
-        const submitButton = document.querySelector('[data-kt-users-action="submit"]');
-        if (product_info.type == 1) {
-            const all_prices = {
-                month_price: {
-                  label: i18next.t('monthly fee'),
-                  value: month_price
-                },
-                quarter_price: {
-                  label: i18next.t('quarterly fee'),
-                  value: quarter_price
-                },
-                half_year_price: {
-                  label: i18next.t('semi annua fee'),
-                  value: half_year_price
-                },
-                year_price: {
-                  label: i18next.t('annual fee'),
-                  value: year_price
-                },
-                two_year_price: {
-                    label: i18next.t('biennial fee'),
-                    value: two_year_price
-                }
-              };
-              
-              Object.entries(all_prices).forEach(([key, { label, value }]) => {
-                if (value) {
-                  $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
-                  $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value}", ${id}, "${key}", "${currency}")`);
-                  if (key === 'month_price') {
-                    $('#zero_modal_configure_product_' + key + ' a').addClass('active');
-                  }
-                }
-              });
-        }
         var modalInnerHtml = $('#zero_modal_configure_product_inner_html');
         var modalName = $('#zero_modal_configure_product_name');
         var modalPrice = $('#zero_modal_configure_product_price');
         var modalTotal = $('#zero_modal_configure_product_total');
         var modalCoupon = $('#zero_modal_configure_coupon');
         var modalCouponHtml = $('#zero_modal_configure_coupon_html');
+        const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+        if (product_info.type == 1) {
+            const all_prices = {
+                month_price: {
+                  label: i18next.t('monthly fee'),
+                  value: parseFloat(month_price)
+                },
+                quarter_price: {
+                  label: i18next.t('quarterly fee'),
+                  value: parseFloat(quarter_price)
+                },
+                half_year_price: {
+                  label: i18next.t('semi annua fee'),
+                  value: parseFloat(half_year_price)
+                },
+                year_price: {
+                  label: i18next.t('annual fee'),
+                  value: parseFloat(year_price)
+                },
+                two_year_price: {
+                    label: i18next.t('biennial fee'),
+                    value: parseFloat(two_year_price)
+                }
+              };
+
+              console.log(all_prices);
+              const prices = [
+                all_prices.month_price,
+                all_prices.quarter_price,
+                all_prices.half_year_price,
+                all_prices.year_price,
+                all_prices.two_year_price
+            ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
+              minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
+              
+              console.log(minPrice);
+              
+              Object.entries(all_prices).forEach(([key, { label, value }]) => {
+                if (value) {
+                  $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
+                  $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}", "${currency}")`);
+                  if (value == minPrice.value) {
+                    $('#zero_modal_configure_product_' + key + ' a').addClass('active');
+                  }
+                }
+              });
+
+            
+        }
 
         modalInnerHtml.html(html);
         product_info.type == 3 ? modalCouponHtml.hide() : false;
-        const product_final_price = product_info.type == 1 ? month_price : onetime_price; // 判断不同类型商品的价格
-        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + i18next.t('monthly fee') : name);
+        const product_final_price = product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price; // 判断不同类型商品的价格
+        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
         modalPrice.html(product_final_price + currency);
         modalTotal.html(product_final_price + currency);
         modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+id+')');
