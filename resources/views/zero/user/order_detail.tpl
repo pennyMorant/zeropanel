@@ -128,7 +128,7 @@
 													
 														{foreach $payments as $payment}
                                                             <li class="nav-item mb-3">
-                                                                <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$gateway->id}">
+                                                                <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$payment->id}">
                                                                     
                                                                     <img class="h-35px w-auto" src={$payment->icon}>
                                                                     
