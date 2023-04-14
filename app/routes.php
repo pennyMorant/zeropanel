@@ -51,7 +51,6 @@ return function (SlimApp $app) {
         $group->post('/order/pay_order',                App\Controllers\OrderController::class . ':processOrder');
         $group->post('/verify_coupon',                  App\Controllers\OrderController::class . ':verifyCoupon');
 
-        $group->get('/disable',                         App\Controllers\UserController::class . ':disable');
         $group->get('/node',                            App\Controllers\User\NodeController::class . ':node');
 
         $group->get('/product',                         App\Controllers\User\ProductController::class . ':product');

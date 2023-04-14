@@ -110,6 +110,11 @@
 																{$trans->t('commission')}:&nbsp;{$user->commission} $
 															</span>
 														</div>
+														<div class="text-end">
+															
+															<i class="bi bi-plus-circle fw-bold fs-1 text-info" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal"></i>
+															
+														</div>
 													</div>
 												</div>
 											</div>
@@ -344,6 +349,33 @@
 								</div>
 							</div>
                     	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- add credit modal -->
+		<div class="modal fade" id="zero_user_add_credit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content shadow-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>		
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                        <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder(2, '', '')">
+                            <span class="indicator-label">{$trans->t('submit')}</span>			
+                            <span class="indicator-progress">{$trans->t('please wait')}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
                     </div>
                 </div>
             </div>
