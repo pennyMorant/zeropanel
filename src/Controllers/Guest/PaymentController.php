@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers\Guest;
 
+use App\Controllers\OrderController;
 use App\Services\PaymentService;
 use App\Models\Order;
 use App\Models\Setting;
@@ -17,6 +18,7 @@ class PaymentController
         $payment = new PaymentService($method, null, $uuid);
         $result = $payment->notify($request);
         $this->handle($result['order_no']);
+        OrderController::execute($result['order_no']);
         die(isset($verify['custom_result']) ? $verify['custom_result'] : 'success');
     }
 
@@ -24,7 +26,6 @@ class PaymentController
     {
         $order_no = $request->getParam('tradeno');
         $order = Order::where('order_no', $order_no)->first();
-        
         return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
     }
 

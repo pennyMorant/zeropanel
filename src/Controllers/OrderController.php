@@ -236,15 +236,7 @@ class OrderController extends BaseController
     public static function execute($order_no)
     {
         $order = Order::where('order_no', $order_no)->first();
-        $user = User::find($order->user_id);
-        if (Setting::obtain('enable_push_top_up_message') == true) {
-            $messageText = '交易提醒' . PHP_EOL .
-                            '------------------------------' . PHP_EOL .
-                            '用户：' . $user->email . PHP_EOL .
-                            '金额：' . $order->order_total . PHP_EOL .
-                            '订单：' . $order->order_no;
-            Telegram::pushToAdmin($messageText);
-        }
+        
         if (is_null($order->product_id)) {
             return self::executeAddCredit($order);
         } else {
@@ -388,23 +380,5 @@ class OrderController extends BaseController
 
         $order_no = $order_id_main . str_pad((100 - $order_id_sum % 100) % 100,2,'0',STR_PAD_LEFT);
         return $order_no;
-    }
-
-    public function orderNotify(ServerRequest $request, Response $response, array $args)
-    {
-        $method = $args['method'];
-        $uuid = $args['uuid'];
-        $payment = new PaymentService($method, null, $uuid);
-        $result = $payment->notify($request);
-        return $result;
-    }
-
-    public function orderReturn(ServerRequest $request, Response $response, array $args)
-    {
-        $order_no = $_GET['tradeno'];
-        $order = Order::where('order_no', $order_no)->first();
-        if ($order->order_status == 2) {
-            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
-        }
     }
 }

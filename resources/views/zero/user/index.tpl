@@ -51,18 +51,20 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fs-lg fw-bolder text-gray-800 mb-1">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
+																{if $user->class >= 1}
 																	<span class="counter">{$trans->t('time')}:&nbsp;<span id="user_class_expired_time"></span></span>
-																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
+																{else if $user->class <= 0}
 																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('no product')}</span>
-																{else}<span class="counter">No product</span>
 																{/if}
 															</a>					   
 															<span class="text-muted fw-semibold d-block">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	{$trans->t('expired date')}:&nbsp;{$user->class_expire}
+																{if $user->class >= 1}
+																	{$trans->t('expired date')}:&nbsp;{substr($user->class_expire, 0, 10)}
 																{/if}
 															</span>
+														</div>
+														<div class="text-end">
+															<i class="bi bi-database-add fs-1 fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="zeroUserRenewalProduct()"></i>
 														</div>
 													</div>
 													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-9">
