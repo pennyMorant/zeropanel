@@ -34,7 +34,9 @@
 												</div>
 											</div>
 											<div class="card-toolbar">
-												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">{$trans->t('create ticket')}</button>
+												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
+												<i class="bi bi-cloud-plus fs-2"></i>{$trans->t('create ticket')}
+												</button>
 											</div>
 										</div>
 										<div class="card-body pt-0">
