@@ -43,34 +43,18 @@ class PaymentService
 
     public function toPay($order)
     {
-        $notify_url = Setting::obtain('website_url') . "/payment/notify/" . $this->method;
+        $notify_url = Setting::obtain('website_url') . "/order/notify/" . $this->method;
         if ($this->config['notify_domain']) {
-            $notify_url = $this->config['notify_domain'] . "/payment/notify/" . $this->method . '/' . $this->config['uuid'];
+            $notify_url = $this->config['notify_domain'] . "/order/notify/" . $this->method . '/' . $this->config['uuid'];
         }
 
         return $this->payment->pay([
             'notify_url'    =>  $notify_url,
-            'return_url'    =>  Setting::obtain('website_url') . "/payment/return?tradeno=" . $order['order_no'],
+            'return_url'    =>  Setting::obtain('website_url') . "/order/return?tradeno=" . $order['order_no'],
             'order_no'      =>  $order['order_no'],
             'total_amount'  =>  $order['total_amount'],
             'user_id'       =>  $order['user_id']
         ]);
         
-    }
-
-    public static function executeAction($order_no)
-    {
-        OrderController::execute($order_no);
-
-        $order = Order::where('order_no', $order_no)->first();
-        $user = User::find($order->user_id);
-        if (Setting::obtain('enable_push_top_up_message') == true) {
-            $messageText = '交易提醒' . PHP_EOL .
-                            '------------------------------' . PHP_EOL .
-                            '用户：' . $user->email . PHP_EOL .
-                            '金额：' . $order->order_total . PHP_EOL .
-                            '订单：' . $order->order_no;
-            Telegram::pushToAdmin($messageText);
-        }
     }
 }

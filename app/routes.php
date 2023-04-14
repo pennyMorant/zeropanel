@@ -51,6 +51,9 @@ return function (SlimApp $app) {
         $group->post('/order/create_order/{type}',      App\Controllers\OrderController::class . ':createOrder');
         $group->post('/order/pay_order',                App\Controllers\OrderController::class . ':processOrder');
         $group->post('/verify_coupon',                  App\Controllers\OrderController::class . ':verifyCoupon');
+        $group->get('/order/notify/{method}/{uuid}',          App\Controllers\OrderController::class . ':orderNotify');
+        $group->post('/order/notify/{method}/{uuid}',         App\Controllers\OrderController::class . ':orderNotify');
+        $group->get('/order/return',                          App\Controllers\OrderController::class . ':orderReturn')->add(new Auth());
 
         $group->get('/disable',                         App\Controllers\UserController::class . ':disable');
         $group->get('/node',                            App\Controllers\User\NodeController::class . ':node');

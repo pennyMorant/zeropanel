@@ -13,6 +13,7 @@ use App\Models\{
     Ann,
     Payment
 };
+use App\Utils\Telegram;
 use App\Models\Payment as Gateway;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -233,7 +234,15 @@ class OrderController extends BaseController
     public static function execute($order_no)
     {
         $order = Order::where('order_no', $order_no)->first();
-        
+        $user = User::find($order->user_id);
+        if (Setting::obtain('enable_push_top_up_message') == true) {
+            $messageText = '交易提醒' . PHP_EOL .
+                            '------------------------------' . PHP_EOL .
+                            '用户：' . $user->email . PHP_EOL .
+                            '金额：' . $order->order_total . PHP_EOL .
+                            '订单：' . $order->order_no;
+            Telegram::pushToAdmin($messageText);
+        }
         if (is_null($order->product_id)) {
             return self::executeAddCredit($order);
         } else {
