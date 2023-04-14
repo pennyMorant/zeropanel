@@ -35,8 +35,9 @@ class PaymentController
         
         if (Setting::obtain('enable_push_top_up_message') == true) {
             $messageText = sprintf(
-                "💰成功收款%s元\n———————————————\n订单号：%s",
+                "💰成功收款%s%s\n———————————————\n订单号：%s",
                 $order->order_total,
+                Setting::obtain('currency_unit'),
                 $order->order_no
             );
             Telegram::pushToAdmin($messageText);
