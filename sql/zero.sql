@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-12 10:59:51
+-- 生成日期： 2023-04-14 15:40:08
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -209,9 +209,11 @@ CREATE TABLE `order` (
   `user_id` int(11) NOT NULL COMMENT '提交用户',
   `product_id` int(11) DEFAULT NULL COMMENT '订单商品',
   `product_price` decimal(12,2) DEFAULT NULL COMMENT '商品售价',
-  `order_coupon` varchar(20) DEFAULT NULL COMMENT '订单优惠码',
+  `product_period` int(11) DEFAULT NULL,
+  `coupon_id` int(11) DEFAULT NULL COMMENT '订单优惠码',
   `order_total` decimal(12,2) NOT NULL COMMENT '订单金额',
-  `credit_paid` int(11) DEFAULT NULL COMMENT '订单余额支付部分',
+  `credit_paid` decimal(12,2) DEFAULT NULL COMMENT '订单余额支付部分',
+  `discount_amount` decimal(12,2) DEFAULT NULL COMMENT '折扣金额',
   `order_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
   `created_time` int(11) NOT NULL COMMENT '订单创建时间',
   `updated_time` int(11) NOT NULL COMMENT '订单更新时间',
@@ -248,12 +250,13 @@ CREATE TABLE `payment` (
   `name` varchar(128) NOT NULL COMMENT '显示名称',
   `gateway` varchar(128) NOT NULL COMMENT '支付网关',
   `config` text NOT NULL COMMENT '网关配置文件',
-  `icon` varchar(128) DEFAULT NULL COMMENT '图标url',
+  `icon` text DEFAULT NULL COMMENT '图标url',
   `percent_fee` int(11) DEFAULT NULL COMMENT '百分比手续费',
   `fixed_fee` int(11) DEFAULT NULL COMMENT '固定手续费',
   `notify_domain` varchar(128) DEFAULT NULL COMMENT '通知域名',
   `enable` int(1) NOT NULL DEFAULT 0 COMMENT '开启',
   `sort` int(11) NOT NULL DEFAULT 0,
+  `uuid` varchar(36) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
