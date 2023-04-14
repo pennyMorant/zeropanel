@@ -91,12 +91,18 @@
                                                     <input class="form-control mb-5" id="node_class" name="node_class" type="number" placeholder="节点等级" value="{$node->node_class}">
                                                     <label class="form-label">节点群组</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不分组" id="node_group" name="node_group" type="number" placeholder="节点群组" value="{$node->node_group}">
-                                                    <label class="form-label">流量上限(GB)</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_traffic_limit" name="node_traffic_limit" type="text" value="{$node->node_traffic_limit/1024/1024/1024}" placeholder="流量上限">
+                                                    <label class="form-label">流量上限</label>
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_traffic_limit" name="node_traffic_limit" type="text" value="{$node->node_traffic_limit/1024/1024/1024}" placeholder="流量上限">
+                                                        <span class="input-group-text">GB</span>
+                                                    </div>
                                                     <label class="form-label">流量上限清空日</label>
                                                     <input class="form-control mb-5" id="node_traffic_limit_reset_date" name="node_traffic_limit_reset_date" type="text" value="{$node->node_traffic_limit_reset_date}" placeholder="流量上限清空日">
                                                     <label class="form-label">节点速度</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$node->node_speedlimit}" placeholder="节点速度">
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$node->node_speedlimit}" placeholder="节点速度">
+                                                        <span class="input-group-text">Mbps</span>
+                                                    </div>
                                                     <label class="form-label required">节点排序</label>
                                                     <input class="form-control" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="{$node->node_sort}" placeholder="节点排序">
                                                 </div>

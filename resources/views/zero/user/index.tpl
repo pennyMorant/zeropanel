@@ -327,7 +327,7 @@
                                                                 <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('ref.gift')}</span>
                                                                 <span class="fs-h2 fw-bolder">{$trans->t('ref.referral')}</span>
                                                             </div>                                                                                              
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['appName']}{$config['rebate_ratio'] * 100}%</span>                                               
+                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['appName']}{$config['rebate_ratio']}%</span>                                               
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
                                                                 <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>

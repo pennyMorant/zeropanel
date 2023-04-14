@@ -66,8 +66,11 @@
                                                         <option value="2" {if $product->type == 2}selected{/if}>流量产品</option>
                                                         <option value="3" {if $product->type == 3}selected{/if}>其他产品</option>
                                                     </select>
-                                                    <label class="form-label required">产品流量(GB)</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="默认为0" id="traffic" name="traffic" type="number" placeholder="产品流量" value="{$product->traffic}">
+                                                    <label class="form-label required">产品流量</label>
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="默认为0" id="traffic" name="traffic" type="number" placeholder="产品流量" value="{$product->traffic}">
+                                                        <span class="input-group-text">GB</span>
+                                                    </div>    
                                                     <label class="form-label required">产品等级</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="默认为0" id="class" name="class" type="number" placeholder="产品等级" value="{$product->class}">
                                                     <label class="form-label">产品群组</label>
@@ -83,9 +86,15 @@
                                                         <option value="2" {if $product->reset_traffic_cycle === 2}selected{/if}>每月1日重置</option>
                                                     </select>
                                                     <label class="form-label">产品速度</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="speed_limit" name="speed_limit" type="number" placeholder="产品速度" value="{$product->speed_limit}">
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="speed_limit" name="speed_limit" type="number" placeholder="产品速度" value="{$product->speed_limit}">
+                                                        <span class="input-group-text">Mbps</span>
+                                                    </div>
                                                     <label class="form-label">产品IP</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="ip_limit" name="ip_limit" type="number" placeholder="产品IP" value="{$product->ip_limit}">
+                                                    <div class="input-group">
+                                                        <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="ip_limit" name="ip_limit" type="number" placeholder="产品IP" value="{$product->ip_limit}">
+                                                        <span class="input-group-text">个</span>
+                                                    </div>
                                                     <label class="form-label required">产品排序</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="数值越大,越靠前" id="sort" name="sort" type="number" placeholder="产品排序" value="{$product->sort}">
                                                 </div>

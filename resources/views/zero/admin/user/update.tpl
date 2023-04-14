@@ -47,8 +47,11 @@
                                                     <input class="form-control mb-5" id="money" name="money" type="number" placeholder="用户余额" value="{$user->money}">
                                                     <label class="form-label required">用户佣金</label>
                                                     <input class="form-control mb-5" id="commission" name="commission" type="number" placeholder="用户佣金" value="{$user->commission}">
-                                                    <label class="form-label required">手动封禁时长(分钟)</label>
-                                                    <input class="form-control mb-5" id="ban_time" name="ban_time" type="number" placeholder="手动封禁时长" value="0">
+                                                    <label class="form-label required">手动封禁时长</label>
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" id="ban_time" name="ban_time" type="number" placeholder="手动封禁时长" value="0">
+                                                        <span class="input-group-text">Min</span>
+                                                    </div>
                                                     <label class="form-label required">最后被封禁时间</label>
                                                     <input class="form-control mb-5" id="last_detect_ban_time" name="last_detect_ban_time" type="text" disabled  value="{$user->last_detect_ban_time()}">
                                                     <label class="form-label required">解禁时间</label>
@@ -76,9 +79,15 @@
                                                     <label class="form-label required">用户等级过期时间</label>
                                                     <input class="form-control mb-5" id="class_expire" name="class_expire" type="text" value="{$user->class_expire}">
                                                     <label class="form-label required">用户速度</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$user->node_speedlimit}">
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="{$user->node_speedlimit}">
+                                                        <span class="input-group-text">Mbps</span>
+                                                    </div>
                                                     <label class="form-label required">用户IP数</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_iplimit" name="node_iplimit" type="text" value="{$user->node_iplimit}">
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_iplimit" name="node_iplimit" type="text" value="{$user->node_iplimit}">
+                                                        <span class="input-group-text">个</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>  

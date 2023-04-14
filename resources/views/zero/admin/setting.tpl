@@ -427,15 +427,27 @@
                                                                     <label class="form-label">默认等级</label>
                                                                     <input class="form-control mb-5" id="signup_default_class" value="{$settings['signup_default_class']}" type="text" placeholder="默认等级" />
                                                                     <label class="form-label">默认等级时长</label>
-                                                                    <input class="form-control mb-5" id="signup_default_class_time" value="{$settings['signup_default_class_time']}" type="text" placeholder="等级时长" />
+                                                                    <div class="input-group mb-5">
+                                                                        <input class="form-control" id="signup_default_class_time" value="{$settings['signup_default_class_time']}" type="text" placeholder="等级时长" />
+                                                                        <span class="input-group-text">天</span>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">默认流量</label>
-                                                                    <input class="form-control mb-5" id="signup_default_traffic" value="{$settings['signup_default_traffic']}" type="text" placeholder="默认流量" />
+                                                                    <div class="input-group mb-5">
+                                                                        <input class="form-control" id="signup_default_traffic" value="{$settings['signup_default_traffic']}" type="text" placeholder="默认流量" />
+                                                                        <span class="input-group-text">GB</span>
+                                                                    </div>
                                                                     <label class="form-label">默认IP限制</label>
-                                                                    <input class="form-control mb-5" id="signup_default_ip_limit" value="{$settings['signup_default_ip_limit']}" type="text" placeholder="IP限制" />
+                                                                    <div class="input-group mb-5">
+                                                                        <input class="form-control" id="signup_default_ip_limit" value="{$settings['signup_default_ip_limit']}" type="text" placeholder="IP限制" />
+                                                                        <span class="input-group-text">个</span>
+                                                                    </div>
                                                                     <label class="form-label">默认速度限制</label>
-                                                                    <input class="form-control" id="signup_default_speed_limit" value="{$settings['signup_default_speed_limit']}" type="text" placeholder="速度限制" />
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" id="signup_default_speed_limit" value="{$settings['signup_default_speed_limit']}" type="text" placeholder="速度限制" />
+                                                                        <span class="input-group-text">Mbps</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -538,10 +550,16 @@
                                                                         <option value="limit_time_range" {if $settings['invite_rebate_mode'] == 'limit_time_range'} selected{/if}>
                                                                         限制邀请人能从被邀请人身上获得返利的时间范围</option>
                                                                     </select>
-                                                                    <label class="form-label">返利比例。10 元商品反 2 元就填 0.2</label>
-                                                                    <input class="form-control mb-5" id="rebate_ratio" value="{$settings['rebate_ratio']}" type="text">
-                                                                    <label class="form-label">返利时间范围限制（单位：天）</label>
-                                                                    <input class="form-control mb-5" id="rebate_time_range_limit" value="{$settings['rebate_time_range_limit']}" type="text">
+                                                                    <label class="form-label">返利比例</label>
+                                                                    <div class="input-group mb-5">
+                                                                        <input class="form-control" id="rebate_ratio" value="{$settings['rebate_ratio']}" type="text">
+                                                                        <span class="input-group-text">%</span>
+                                                                    </div>
+                                                                    <label class="form-label">返利时间范围限制</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" id="rebate_time_range_limit" value="{$settings['rebate_time_range_limit']}" type="text">
+                                                                        <span class="input-group-text">天</span>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">返利总次数限制</label>
@@ -550,8 +568,11 @@
                                                                     <input class="form-control mb-5" id="rebate_amount_limit" value="{$settings['rebate_amount_limit']}">
                                                                     <label class="form-label">若有人使用现存用户的邀请链接注册，被邀请人所能获得的余额奖励</label>
                                                                     <input class="form-control mb-5" id="invitation_to_signup_credit_reward" value="{$settings['invitation_to_signup_credit_reward']}">
-                                                                    <label class="form-label">若有人使用现存用户的邀请链接注册，邀请人所能获得的流量奖励（单位：GB）</label>
-                                                                    <input class="form-control mb-5" id="invitation_to_signup_traffic_reward" value="{$settings['invitation_to_signup_traffic_reward']}">
+                                                                    <label class="form-label">若有人使用现存用户的邀请链接注册，邀请人所能获得的流量奖励</label>
+                                                                    <div class="input-group">
+                                                                        <input class="form-control" id="invitation_to_signup_traffic_reward" value="{$settings['invitation_to_signup_traffic_reward']}">
+                                                                        <span class="input-group-text">GB</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>

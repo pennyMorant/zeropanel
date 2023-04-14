@@ -39,7 +39,7 @@
 										<div class="col-xl-6">
 											<div class="card card-flush mb-9">
 												<div class="card-body">
-													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$config['rebate_ratio'] * 100}%</p>
+													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$config['rebate_ratio']}%</p>
 													<p class="text-gray-400 text-center">{$trans->t('commission ratio')}</p>
 												</div>
 											</div>

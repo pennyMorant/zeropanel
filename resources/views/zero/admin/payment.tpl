@@ -77,7 +77,10 @@
                             <div class="row mb-5">
                                 <div class="col-6">
                                     <label class="form-label fw-bold">百分比手续费(选填)</label>
-                                    <input class="form-control" id="payment_percent_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
+                                    <div class="input-group">
+                                        <input class="form-control" id="payment_percent_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
+                                        <span class="input-group-text">%</span>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label fw-bold">固定手续费(选填)</label>
