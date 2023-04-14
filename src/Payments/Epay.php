@@ -81,10 +81,11 @@ class Epay
             $out_trade_no = $request->getParam('out_trade_no');
             $trade_status = $request->getParam('trade_status');
             if ($trade_status === 'TRADE_SUCCESS') {
-                OrderController::execute($out_trade_no);
-                die('success');
+                return [
+                    'order_no'  => $out_trade_no,
+                ];
             }
         }
-        die('error');
+        return false;
     }
 }

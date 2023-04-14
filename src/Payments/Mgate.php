@@ -96,10 +96,11 @@ class Mgate
     public function notify(ServerRequest $request)
     {
     	if (!$this->verify($request->getParams(), $request->getParam('sign'))) {
-    		die('FAIL');
+    		return false;
     	}
-    	OrderController::execute($request->getParam('out_trade_no'));
-    	die('SUCCESS');
+    	return [
+            'order_no'  => $request->getParam('out_trade_no'),
+        ];
     }
 
 }

@@ -16,7 +16,6 @@ use App\Controllers\Admin\CouponController;
 use App\Controllers\Admin\SettingController;
 use App\Controllers\Admin\CommissionController;
 use App\Controllers\Admin\PaymentController;
-use App\Services\PaymentService;
 use App\Middleware\{
     Guest, 
     Admin, 
@@ -94,12 +93,8 @@ return function (SlimApp $app) {
 
     $app->group('/payment', function (Group $group) {
         //Reconstructed Payment System
-        $group->get('/return',                  App\Controllers\OrderController::class . ':orderReturn')->add(new Auth());
-        //$group->get('/notify',                  App\Controllers\OrderController::class . ':orderNotify');
-       // $group->post('/notify',                 App\Controllers\OrderController::class . ':orderNotify');
-        $group->get('/notify/{method}/{uuid}',         App\Controllers\OrderController::class . ':orderNotify');
-        $group->post('/notify/{method}/{uuid}',        App\Controllers\OrderController::class . ':orderNotify');
-        //$group->post('/status',                 App\Controllers\OrderController::class . ':getStatus');
+        $group->get('/return',                                   App\Controllers\Guest\PaymentController::class . ':return')->add(new Auth());
+        $group->map(['GET', 'POST'], '/notify/{method}/{uuid}',  App\Controllers\Guest\PaymentController::class . ':notify');
     });
 
     // Auth

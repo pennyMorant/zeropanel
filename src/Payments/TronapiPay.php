@@ -99,13 +99,15 @@ class TronapiPay
         $_signatureStr = $transaction_token.$order_id.$amount.$currency.$coin_code.$coin_amount.$hash.$private_key;
         $_signature = $this->sign($_signatureStr);
         if ($_signature != $signature) {
-            die('FAIL');
+            return false;
         }
-    	OrderController::execute($order_id);
-        $res = [
-            'code' => '200',
-            'data' => 'ok'
-        ];
-    	die(json_encode($res));  
+    	
+        return [
+            'order_no'  => $order_id,
+            'custom_result' =>  [
+                'code'  =>  200,
+                'data'  =>  'ok'
+            ],
+        ]; 
     }
 }
