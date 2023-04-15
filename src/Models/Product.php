@@ -118,17 +118,20 @@ class Product extends Model
 
     public function productPeriod($price)
     {
-        $product_period = [
-            $this->month_price     => 30,
-            $this->quarter_price   => 90,
-            $this->half_year_price => 180,
-            $this->year_price      => 360,
-            $this->two_year_price  => 720
-        ];
-        if (isset($product_period[$price])) {
-            $period = $product_period[$price] ?? NULL;
+        switch ($this->type) {
+            case 1:
+                $product_period = [
+                    $this->month_price     => 30,
+                    $this->quarter_price   => 90,
+                    $this->half_year_price => 180,
+                    $this->year_price      => 360,
+                    $this->two_year_price  => 720
+                ];             
+                $period = $product_period[$price] ?? NULL;
+                break;
+            default:
+                $period = $this->onetime_price == $price ? true : false;
         }
-
         return $period;
     }
 
