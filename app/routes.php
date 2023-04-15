@@ -53,7 +53,6 @@ return function (SlimApp $app) {
 
         $group->get('/product',                         App\Controllers\User\ProductController::class . ':product');
         $group->post('/product/getinfo',                App\Controllers\User\ProductController::class . ':getProductInfo');
-        $group->post('/product/renewal',                App\Controllers\User\ProductController::class . ':renewalProduct');
 
         $group->get('/ticket',                          App\Controllers\User\TicketController::class . ':ticketIndex');
         $group->post('/ticket/create',                  App\Controllers\User\TicketController::class . ':createTicket');

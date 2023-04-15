@@ -64,7 +64,7 @@
 															</span>
 														</div>
 														<div class="text-end">
-															<i class="bi bi-database-add fs-2hx fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="zeroUserRenewalProduct()"></i>
+															<i class="bi bi-database-add fs-2hx fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="KTUsersCreateOrder(3, '', '')"></i>
 														</div>
 													</div>
 													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-9">
@@ -385,25 +385,6 @@
 		{include file='include/global/scripts.tpl'}
 		{include file='include/index/news.tpl'}
 		<script>countdown('{$user->class_expire}', 'user_class_expired_time')</script>
-		<script>var webName = "{$config['appName']}";</script>
-		<script>
-			function zeroUserRenewalProduct() {
-				$.ajax({
-					type: "POST",
-					url: "/user/product/renewal",
-					dataType: "json",
-					data: {},
-					success: function(data){
-						if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_no);
-                        } else {
-                            getResult(data.msg, '', 'error');
-                            //submitButton.removeAttribute('data-kt-indicator');
-                            //submitButton.disabled = false;
-                        }
-					}
-				})
-			}
-		</script>									
+		<script>var webName = "{$config['appName']}";</script>								
 	</body>
 </html>

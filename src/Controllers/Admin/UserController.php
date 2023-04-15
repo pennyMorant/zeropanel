@@ -115,7 +115,9 @@ class UserController extends AdminController
     {
         $id = $args['id'];
         $user = User::find($id);
-        $this->view()->display('admin/user/update.tpl');
+        $this->view()
+            ->assign('user', $user)
+            ->display('admin/user/update.tpl');
         return $response;
     }
     

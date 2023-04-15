@@ -72,20 +72,13 @@ class OrderController extends BaseController
         $type = $args['type'];
 
         switch ($type) {
-            case 1:
+            case 1: // 新购产品
                 try {
                     if (is_null($product)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    $all_price = [
-                        $product->month_price, 
-                        $product->quarter_price, 
-                        $product->half_year_price, 
-                        $product->year_price, 
-                        $product->two_year_price, 
-                        $product->onetime_price
-                    ];
-                    if (!in_array($product_price, $all_price)) {
+                    
+                    if (!$product->productPeriod($product_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
                     
@@ -100,7 +93,7 @@ class OrderController extends BaseController
                     $order->product_id = $product->id;
                     $order->order_type = $type;
                     $order->product_price = $product_price;
-                    $order->product_period = $product->productPeriod($product_price);
+                    $order->product_period = $product->productPeriod($product_price) ?? NULL;
                     $order->order_total = $product_price;
                     if ($coupon_code != '') {
                         $order->coupon_id   = $coupon->id;
@@ -130,7 +123,7 @@ class OrderController extends BaseController
                     ]);
                 }
                 break;
-            case 2:
+            case 2: // 账户充值
                 try {
                     if ($amount == '') {
                         throw new \Exception(I18n::get()->t('please enter the amount'));
@@ -156,12 +149,56 @@ class OrderController extends BaseController
                     ]);
                 }
                 break;
+            case 3: //续费产品
+                try {
+                    $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)
+                        ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_time')->first();
+                    if (is_null($latest_order)){
+                        throw new \Exception('订单不存在');
+                    }
+                    $product = Product::find($user->product_id);
+                    if (is_null($product)) {
+                        throw new \Exception('产品已经被删除, 续费失败');
+                    }
+                    if (is_null($latest_order->product_period)) {
+                        throw new \Exception('订单错误，无法续费');
+                    }
+                    $order                 = new Order;
+                    $order->order_no       = OrderController::createOrderNo();
+                    $order->order_type     = 3;
+                    $order->user_id        = $user->id;
+                    $order->product_id     = $latest_order->product_id;
+                    $order->product_price  = $latest_order->product_price;
+                    $order->product_period = $product->productPeriod($latest_order->product_price);
+                    $order->order_total    = $latest_order->order_total + $latest_order->credit_paid;
+                    if ($user->money > 0 && $order->order_total > 0) {
+                        $remaining_total = $user->money - $order->order_toal;
+                        if ($remaining_total > 0) {
+                            $order->credit_paid = $order->order_total;
+                            $order->order_total = 0;
+                        } else {
+                            $order->credit_paid = $user->money;
+                            $order->order_total = $order->order_total - $user->money;
+                        }
+                    }
+                    $order->order_status   = 1;
+                    $order->created_time   = time();
+                    $order->updated_time   = time();
+                    $order->expired_time   = time() + 600;
+                    $order->execute_status = 0;
+                    $order->save();
+                } catch (\Exception $e){
+                    return $response->withJson([
+                        'ret' => 0,
+                        'msg' => $e->getMessage(),
+                    ]);
+                }
             default:
                 break;
         }
         return $response->withJson([
-            'ret' => 1,
-            'order_id' => $order->order_no,
+            'ret'      => 1,
+            'order_no' => $order->order_no,
         ]);
     }
 
@@ -213,14 +250,16 @@ class OrderController extends BaseController
                 
                 $currency = Setting::getClass('currency');
                 $exchange_rate = $currency['currency_exchange_rate'] ?: 1;
-
                 $order->payment_id = $payment_method;
                 $order->save();
+
                 $result = $payment_service->toPay([
                     'order_no'  =>  $order->order_no,
                     'total_amount'  =>  isset($order->handling_fee) ? (($order->order_total + $order->handling_fee) * $exchange_rate) : $order->order_total * $exchange_rate,
                     'user_id'   =>  $user->id
                 ]);
+                $user->money -= $order->credit_paid;
+                $user->save();
                 return $response->withJson($result);
             }
         } catch (\Exception $e) {

@@ -62,7 +62,7 @@ class Product extends Model
                         $user->u               = 0;
                         $user->d               = 0;
                         $user->last_day_t      = 0;
-                        $user->class_expire    = date('Y-m-d H:i:s', time() + $this->productPeriod($order->product_price) * 86400);
+                        $user->class_expire    = date('Y-m-d H:i:s', time() + $order->product_period * 86400);
                         $user->class           = $this->class;
                         $user->node_speedlimit = $this->speed_limit;
                         $user->node_iplimit    = $this->ip_limit;
@@ -126,7 +126,7 @@ class Product extends Model
             $this->two_year_price  => 720
         ];
         if (isset($product_period[$price])) {
-            $period = $product_period[$price];
+            $period = $product_period[$price] ?? NULL;
         }
 
         return $period;

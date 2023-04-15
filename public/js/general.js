@@ -560,7 +560,7 @@ function KTUsersCreateOrder(type, price, product_id) {
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
     switch (type) {
-        case 1:
+        case 1: //产品新购
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
@@ -573,7 +573,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_id);
+                            $(location).attr('href', '/user/order/' + data.order_no);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -583,7 +583,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                 });
             }, 2000)
             break;
-        case 2:
+        case 2:  // 充值账户
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
@@ -594,7 +594,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_id);
+                            $(location).attr('href', '/user/order/' + data.order_no);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -603,7 +603,25 @@ function KTUsersCreateOrder(type, price, product_id) {
                     }
                 });
             }, 2000)
-            break; 
+            break;
+        case 3: // 产品续费
+            $.ajax({
+                type: "POST",
+                url: "/user/order/create_order/"+type,
+                dataType: "json",
+                data: {},
+                success: function(data){
+                    if (data.ret == 1) {
+                        $(location).attr('href', '/user/order/' + data.order_no);
+                    } else {
+                        getResult(data.msg, '', 'error');
+                        //submitButton.removeAttribute('data-kt-indicator');
+                        //submitButton.disabled = false;
+                    }
+                }
+            }); 
+        default:
+            getResult('请求错误', '', 'error');
     }
 }
 
