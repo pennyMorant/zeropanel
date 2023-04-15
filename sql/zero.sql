@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-14 15:40:08
+-- 生成日期： 2023-04-15 08:22:19
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.4
 
@@ -221,6 +221,7 @@ CREATE TABLE `order` (
   `paid_time` int(11) DEFAULT NULL COMMENT '订单支付时间',
   `payment_id` int(11) DEFAULT NULL COMMENT '订单支付方式',
   `handling_fee` decimal(12,2) DEFAULT NULL,
+  `bonus_amount` decimal(12,2) DEFAULT NULL COMMENT '充值返利',
   `execute_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '执行状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -253,6 +254,7 @@ CREATE TABLE `payment` (
   `icon` text DEFAULT NULL COMMENT '图标url',
   `percent_fee` int(11) DEFAULT NULL COMMENT '百分比手续费',
   `fixed_fee` int(11) DEFAULT NULL COMMENT '固定手续费',
+  `recharge_bonus` int(11) DEFAULT NULL COMMENT '充值返利百分比',
   `notify_domain` varchar(128) DEFAULT NULL COMMENT '通知域名',
   `enable` int(1) NOT NULL DEFAULT 0 COMMENT '开启',
   `sort` int(11) NOT NULL DEFAULT 0,
