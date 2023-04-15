@@ -116,9 +116,9 @@ class Job extends Command
             $swap = (new Builder())
                 ->add('abstract_api', ['api_key' => $configs['currency_exchange_rate_api_key']])
             ->build();
-            $rate = $swap->latest($configs['currency_unit'] . '/CNY');
-            $result = $rate->getValue();
-            $setting = Setting::where('item', '=', 'currency_exchange_rate')->first();
+            $rate           = $swap->latest($configs['currency_unit'] . '/CNY');
+            $result         = $rate->getValue();
+            $setting        = Setting::where('item', '=', 'currency_exchange_rate')->first();
             $setting->value = substr($result, 0, 4);
             $setting->save();
         }
@@ -249,11 +249,11 @@ class Job extends Command
             ->get();
 
         foreach ($users as $user) {
-            $text = '您好，您的订阅产品已到期。';
+            $text                  = '您好，您的订阅产品已到期。';
             $user->transfer_enable = 0;
-            $user->u = 0;
-            $user->d = 0;
-            $user->last_day_t = 0;
+            $user->u               = 0;
+            $user->d               = 0;
+            $user->last_day_t      = 0;
             $user->sendMail(
                 Setting::obtain('website_name'),
                 'news/warn.tpl',
@@ -263,12 +263,12 @@ class Job extends Command
                 [],
                 $_ENV['email_queue']
             );
-            $user->class = 0;
-            $user->node_iplimit = $configs['signup_default_ip_limit'];
-            $user->node_speedlimit = $configs['signup_default_speed_limit'];
+            $user->class               = 0;
+            $user->node_iplimit        = $configs['signup_default_ip_limit'];
+            $user->node_speedlimit     = $configs['signup_default_speed_limit'];
             $user->reset_traffic_value = NULL;
-            $user->reset_traffic_date = NULL;
-            $user->product_id = NULL;
+            $user->reset_traffic_date  = NULL;
+            $user->product_id          = NULL;
             $user->save();
         }
         echo '用户等级过期检测结束' . PHP_EOL;

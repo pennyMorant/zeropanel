@@ -47,28 +47,28 @@ class TronapiPay
     public function pay($order)
     {
 
-        $amount = $order['total_amount'];
-        $currency = 'CNY';
-        $coin_code = 'USDT';
-        $order_id = $order['order_no'];
-        $customer_id = $order['user_id'];
+        $amount       = $order['total_amount'];
+        $currency     = 'CNY';
+        $coin_code    = 'USDT';
+        $order_id     = $order['order_no'];
+        $customer_id  = $order['user_id'];
         $product_name = '';
-        $notify_url = $order['notify_url'];
+        $notify_url   = $order['notify_url'];
         $redirect_url = $order['return_url'];
         $signatureStr = $amount.$currency.$coin_code.$order_id.$product_name.$customer_id.$notify_url.$redirect_url.$this->config['tronapipay_public_key'].$this->config['tronapipay_private_key'];
-        $signature = $this->sign($signatureStr);
+        $signature    = $this->sign($signatureStr);
 
         $data = [
-            'amount' => $amount,
-            'currency' => $currency,
-            'coin_code' => $coin_code,
-            'order_id' => $order_id,
-            'customer_id' => $customer_id,
+            'amount'       => $amount,
+            'currency'     => $currency,
+            'coin_code'    => $coin_code,
+            'order_id'     => $order_id,
+            'customer_id'  => $customer_id,
             'product_name' => $product_name,
-            'notify_url' => $notify_url,
+            'notify_url'   => $notify_url,
             'redirect_url' => $redirect_url,
-            'public_key' => $this->config['tronapipay_public_key'],
-            'signature' => $signature,
+            'public_key'   => $this->config['tronapipay_public_key'],
+            'signature'    => $signature,
         ];
 
         $result = json_decode($this->post($data), true);
@@ -79,34 +79,35 @@ class TronapiPay
             ];
         }
         return [
-            'ret' => 1, 
-            'url' => $result['data']['cashier_url'], 
+            'ret'  => 1,
+            'url'  => $result['data']['cashier_url'],
             'type' => 'url'
         ];
     }
 
     public function notify(ServerRequest $request)
     {
-    	$transaction_token = $request->getParam('transaction_token');
-        $order_id = $request->getParam('order_id');
-        $amount = $request->getParam('amount');
-        $currency = $request->getParam('currency');
-        $coin_code = $request->getParam('coin_code');
-        $coin_amount = $request->getParam('coin_amount');
-        $hash = $request->getParam('hash');
-        $private_key = $this->config['tronapipay_private_key'];
-        $signature = $request->getParam('signature');
-        $_signatureStr = $transaction_token.$order_id.$amount.$currency.$coin_code.$coin_amount.$hash.$private_key;
-        $_signature = $this->sign($_signatureStr);
+        $transaction_token = $request->getParam('transaction_token');
+        $order_id          = $request->getParam('order_id');
+        $amount            = $request->getParam('amount');
+        $currency          = $request->getParam('currency');
+        $coin_code         = $request->getParam('coin_code');
+        $coin_amount       = $request->getParam('coin_amount');
+        $hash              = $request->getParam('hash');
+        $private_key       = $this->config['tronapipay_private_key'];
+        $signature         = $request->getParam('signature');
+        $_signatureStr     = $transaction_token.$order_id.$amount.$currency.$coin_code.$coin_amount.$hash.$private_key;
+        $_signature        = $this->sign($_signatureStr);
+        
         if ($_signature != $signature) {
             return false;
         }
     	
         return [
-            'order_no'  => $order_id,
-            'custom_result' =>  [
-                'code'  =>  200,
-                'data'  =>  'ok'
+            'order_no'      => $order_id,
+            'custom_result' => [
+                'code' => 200,
+                'data' => 'ok'
             ],
         ]; 
     }

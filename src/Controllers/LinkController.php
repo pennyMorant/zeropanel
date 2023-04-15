@@ -117,97 +117,97 @@ class LinkController extends BaseController
             case 'shadowsocks':
                 $return = [
                     'filename' => 'Shadowsocks',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
+                    'suffix'   => 'txt',
+                    'class'    => 'Lists'
                 ];
                 break;
-            case 'clash':
+            case 'clash': 
                 if (!is_null($value)) {                   
-                    $return = self::getSubscribeExtend('clash');
+                    $return          = self::getSubscribeExtend('clash');
                     $return['class'] = 'Clash';
                 } else {
                     $return = [
                         'filename' => 'Clash',
-                        'suffix' => 'yaml',
-                        'class' => 'Lists'
+                        'suffix'   => 'yaml',
+                        'class'    => 'Lists'
                     ];
                 }
                 break;
-            case 'surge':
+            case 'surge': 
                 if (!is_null($value)) {
                     $return = [
                         'filename' => 'Surge',
-                        'suffix' => 'conf',
-                        'class' => 'Surge'
+                        'suffix'   => 'conf',
+                        'class'    => 'Surge'
                     ];
                     $return['filename'] .= $value;
                 } else {
                     $return = [
                         'filename' => 'SurgeList',
-                        'suffix' => 'list',
-                        'class' => 'Lists'
+                        'suffix'   => 'list',
+                        'class'    => 'Lists'
                     ];
                 }
                 break;
-            case 'v2rayn':
+            case 'v2rayn': 
                 $return = [
                     'filename' => 'V2rayn',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
+                    'suffix'   => 'txt',
+                    'class'    => 'Lists'
                 ];
                 break;
-            case 'trojan':
+            case 'trojan': 
                 $return = [
                     'filename' => 'Trojan',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
+                    'suffix'   => 'txt',
+                    'class'    => 'Lists'
                 ];
                 break;
-            case 'anxray':
+            case 'anxray': 
                     $return = [
                         'filename' => 'AnXray',
                         'suffix'   => 'txt',
                         'class'    => 'Lists'
                     ];
                     break;
-            case 'surfboard':
+            case 'surfboard': 
                 $return = [
                     'filename' => 'Surfboard',
-                    'suffix' => 'conf',
-                    'class' => 'Surfboard'
+                    'suffix'   => 'conf',
+                    'class'    => 'Surfboard'
                 ];
                 break;
-            case 'quantumult':
+            case 'quantumult': 
                
                 $return = [
                     'filename' => 'Quantumult',
-                    'suffix' => 'conf',
-                    'class' => 'Lists'
+                    'suffix'   => 'conf',
+                    'class'    => 'Lists'
                 ];
                 
                 break;
-            case 'quantumultx':
+            case 'quantumultx': 
                 $return = [
                     'filename' => 'QuantumultX',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
+                    'suffix'   => 'txt',
+                    'class'    => 'Lists'
                 ];
                 if (!is_null($value)) {
                     $return['class'] = 'QuantumultX';
                 }
                 break;
-            case 'shadowrocket':
+            case 'shadowrocket': 
                 $return = [
                     'filename' => 'Shadowrocket',
-                    'suffix' => 'txt',
-                    'class' => 'Lists'
+                    'suffix'   => 'txt',
+                    'class'    => 'Lists'
                 ];
                 break;
-            default:
+            default: 
                 $return = [
                     'filename' => 'UndefinedNode',
-                    'suffix' => 'txt',
-                    'class' => 'Sub'
+                    'suffix'   => 'txt',
+                    'class'    => 'Sub'
                 ];
                 break;
         }

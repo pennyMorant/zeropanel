@@ -101,13 +101,13 @@ class User extends Command
     {
         if (count($this->argv) === 3) {
             echo 'add admin/ 创建管理员帐号.....';
-            // ask for input
+              // ask for input
             fwrite(STDOUT, '(1/3)/输入管理员邮箱: ') . PHP_EOL;
-            // get input
+              // get input
             $email = strtolower(trim(fgets(STDIN)));
             $email ?? die("必须输入管理员邮箱.\r\n");
             
-            // write input back
+              // write input back
             fwrite(STDOUT, "(2/3) 请输入管理员账户密码：") . PHP_EOL;
             $passwd = trim(fgets(STDIN));
             $passwd ?? die("必须输入管理员密码.\r\n");
@@ -116,30 +116,30 @@ class User extends Command
             $y = trim(fgets(STDIN));
         } elseif (count($this->argv) === 5) {
             [,,, $email, $passwd] = $this->argv;
-            $y = 'y';
+            $y                    = 'y';
         }
 
         if (strtolower($y) == 'y') {
             echo 'start create admin account';
-            $current_timestamp          = time();
-            // create admin user
-            $user                   = new ModelsUser();
-            $user->email            = $email;
-            $user->password         = Hash::passwordHash($passwd);
-            $user->passwd           = $user->createShadowsocksPasswd();
-            $user->uuid             = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
-            $user->t                = 0;
-            $user->u                = 0;
-            $user->d                = 0;
-            $user->transfer_enable  = 0;
-            $user->ref_by           = 0;
-            $user->is_admin         = 1;
-            $user->signup_date      = date('Y-m-d H:i:s');
-            $user->money            = 0;
-            $user->class            = 0;
-            $user->node_speedlimit  = 0;
-            $user->theme            = $_ENV['theme'];
-            $user->subscription_token  = $user->createSubToken();
+            $current_timestamp = time();
+              // create admin user
+            $user                     = new ModelsUser();
+            $user->email              = $email;
+            $user->password           = Hash::passwordHash($passwd);
+            $user->passwd             = $user->createShadowsocksPasswd();
+            $user->uuid               = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
+            $user->t                  = 0;
+            $user->u                  = 0;
+            $user->d                  = 0;
+            $user->transfer_enable    = 0;
+            $user->ref_by             = 0;
+            $user->is_admin           = 1;
+            $user->signup_date        = date('Y-m-d H:i:s');
+            $user->money              = 0;
+            $user->class              = 0;
+            $user->node_speedlimit    = 0;
+            $user->theme              = $_ENV['theme'];
+            $user->subscription_token = $user->createSubToken();
 
             if ($user->save()) {
                 echo '创建成功，请在主页登录' . PHP_EOL;

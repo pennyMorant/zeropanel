@@ -64,13 +64,13 @@ class TicketController extends UserController
             ],
         ];
 
-        $ticket = new Ticket();
-        $ticket->title = $antiXss->xss_clean($title);
-        $ticket->content = json_encode($content);
-        $ticket->userid = $this->user->id;
+        $ticket           = new Ticket();
+        $ticket->title    = $antiXss->xss_clean($title);
+        $ticket->content  = json_encode($content);
+        $ticket->userid   = $this->user->id;
         $ticket->datetime = time();
-        $ticket->status = 1;
-        $ticket->type = $antiXss->xss_clean($type);
+        $ticket->status   = 1;
+        $ticket->type     = $antiXss->xss_clean($type);
         $ticket->save();
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
@@ -119,10 +119,10 @@ class TicketController extends UserController
         $content_old = json_decode($ticket->content, true);
         $content_new = [
             [
-                'comment_id' => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                'comment_id'      => $content_old[count($content_old) - 1]['comment_id'] + 1,
                 'commenter_email' => $this->user->email,
-                'comment' => $antiXss->xss_clean($comment),
-                'datetime' => time(),
+                'comment'         => $antiXss->xss_clean($comment),
+                'datetime'        => time(),
             ],
         ];
 

@@ -112,12 +112,12 @@ class RecordController extends AdminController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'id'    =>  $rowData->id,
-                        'userid'    =>  $rowData->userid,
-                        'ip'    =>  $rowData->ip,
-                        'location'  =>  Tools::getIPLocation($rowData->ip),
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
-                        'type'  =>  $rowData->type(),
+                        'id'       => $rowData->id,
+                        'userid'   => $rowData->userid,
+                        'ip'       => $rowData->ip,
+                        'location' => Tools::getIPLocation($rowData->ip),
+                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                        'type'     => $rowData->type(),
                     ];
                 })->toArray();
                 $total = SigninIp::count();
@@ -135,12 +135,12 @@ class RecordController extends AdminController
         
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'id'    =>  $rowData->id,
-                        'user_id'   =>  $rowData->user_id,
-                        'subscribe_type'    => $rowData->subscribe_type,
-                        'request_ip'    =>  $rowData->request_ip,
-                        'location'  =>  Tools::getIPLocation($rowData->request_ip),
-                        'request_time'  =>  date('Y-m-d H:i:s', $rowData->request_time),
+                        'id'             => $rowData->id,
+                        'user_id'        => $rowData->user_id,
+                        'subscribe_type' => $rowData->subscribe_type,
+                        'request_ip'     => $rowData->request_ip,
+                        'location'       => Tools::getIPLocation($rowData->request_ip),
+                        'request_time'   => date('Y-m-d H:i:s', $rowData->request_time),
                     ];
                 })->toArray();
                 $total = UserSubscribeLog::count();
@@ -149,13 +149,13 @@ class RecordController extends AdminController
                 $query = TrafficLog::getTableDataFromAdmin($request);
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'id'    =>  $rowData->id,
-                        'user_id'   =>  $rowData->user_id,
-                        'node_name' =>  $rowData->node()->name,
-                        'rate'  =>  $rowData->rate,
-                        'origin_traffic'    =>   Tools::flowAutoShow($rowData->u + $rowData->d),
-                        'traffic'   =>  $rowData->traffic,
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'id'             => $rowData->id,
+                        'user_id'        => $rowData->user_id,
+                        'node_name'      => $rowData->node()->name,
+                        'rate'           => $rowData->rate,
+                        'origin_traffic' => Tools::flowAutoShow($rowData->u + $rowData->d),
+                        'traffic'        => $rowData->traffic,
+                        'datetime'       => date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
                 $total = TrafficLog::count();

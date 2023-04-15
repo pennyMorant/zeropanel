@@ -205,9 +205,9 @@ class UserController extends BaseController
         $res['unflowtraffic'] = $this->user->transfer_enable;
         $res['traffic'] = Tools::flowAutoShow($this->user->transfer_enable);
         $res['trafficInfo'] = array(
-            'todayUsedTraffic' => $this->user->TodayusedTraffic(),
-            'lastUsedTraffic' => $this->user->LastusedTraffic(),
-            'unUsedTraffic' => $this->user->unusedTraffic(),
+            'todayUsedTraffic'        => $this->user->TodayusedTraffic(),
+            'lastUsedTraffic'         => $this->user->LastusedTraffic(),
+            'unUsedTraffic'           => $this->user->unusedTraffic(),
             'TodayusedTrafficPercent' => $this->user->TodayusedTrafficPercent(),
             'LastusedTrafficPercent'  => $this->user->LastusedTrafficPercent()
         );

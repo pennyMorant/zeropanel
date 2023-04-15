@@ -67,8 +67,8 @@ final class BindCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => $text,
-                'chat_id' => $chatId,
+                'text'       => $text,
+                'chat_id'    => $chatId,
                 'parse_mode' => 'Markdown',
             ]
         );

@@ -99,7 +99,7 @@ class URL
             
             if (in_array($node->node_type, [1, 2, 3, 4, 5])) {
                 $node_type = [
-                    1  => 'getShadowsocksConfig',     // SS
+                    1 => 'getShadowsocksConfig',     // SS
                     2 => 'getVmessConfig',           // V2Ray
                     4 => 'getTrojanConfig',          // Trojan
                     3 => 'getVlessConfig'

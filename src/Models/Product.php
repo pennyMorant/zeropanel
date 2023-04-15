@@ -69,27 +69,27 @@ class Product extends Model
                 switch ($order_type) { // 判定订单类型
                     case 1:
                         $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
-                        $user->u = 0;
-                        $user->d = 0;
-                        $user->last_day_t = 0;             
-                        $user->class_expire = date('Y-m-d H:i:s', time() + $time * 86400);
-                        $user->class = $this->class;
+                        $user->u               = 0;
+                        $user->d               = 0;
+                        $user->last_day_t      = 0;
+                        $user->class_expire    = date('Y-m-d H:i:s', time() + $time * 86400);
+                        $user->class           = $this->class;
                         $user->node_speedlimit = $this->speed_limit;
-                        $user->node_iplimit = $this->ip_limit;                       
-                        $user->node_group = $this->user_group;
-                        $user->product_id = $this->id;
+                        $user->node_iplimit    = $this->ip_limit;
+                        $user->node_group      = $this->user_group;
+                        $user->product_id      = $this->id;
                         if ($this->reset_traffic_cycle === 1) { //订单日充值
-                            $user->reset_traffic_date = date('d');
+                            $user->reset_traffic_date  = date('d');
                             $user->reset_traffic_value = $this->traffic;
                         } else if ($this->reset_traffic_cycle === 2) {  //每月1日重置
-                            $user->reset_traffic_date = 1;
+                            $user->reset_traffic_date  = 1;
                             $user->reset_traffic_value = $this->traffic;
                         }
                         break;
-                    case 3:
-                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);                                         
+                    case 3: 
+                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
                         break;
-                    case 4:
+                    case 4: 
                         break;
                 }
                 break;
@@ -129,11 +129,11 @@ class Product extends Model
     public function productPeriod($price)
     {
         $product_period = [
-            $this->month_price => 30,
-            $this->quarter_price => 90,
+            $this->month_price     => 30,
+            $this->quarter_price   => 90,
             $this->half_year_price => 180,
-            $this->year_price => 360,
-            $this->two_year_price => 720
+            $this->year_price      => 360,
+            $this->two_year_price  => 720
         ];
         if (isset($product_period[$price])) {
             $period = $product_period[$price];

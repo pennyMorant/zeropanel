@@ -108,14 +108,14 @@ final class ProductController extends BaseController
             if (is_null($product)) {
                 throw new \Exception('产品已经被删除, 续费失败');
             }
-            $order = new Order;
-            $order->order_no = OrderController::createOrderNo();
-            $order->order_type = 3;
-            $order->user_id = $user->id;
-            $order->product_id = $latest_order->product_id;
-            $order->product_price = $latest_order->product_price;
+            $order                 = new Order;
+            $order->order_no       = OrderController::createOrderNo();
+            $order->order_type     = 3;
+            $order->user_id        = $user->id;
+            $order->product_id     = $latest_order->product_id;
+            $order->product_price  = $latest_order->product_price;
             $order->product_period = $product->productPeriod($latest_order->product_price);
-            $order->order_total =  $latest_order->order_total + $latest_order->credit_paid;
+            $order->order_total    = $latest_order->order_total + $latest_order->credit_paid;
             if ($user->money > 0 && $order->order_total > 0) {
                 $remaining_total = $user->money - $order->order_toal;
                 if ($remaining_total > 0) {
@@ -126,10 +126,10 @@ final class ProductController extends BaseController
                     $order->order_total = $order->order_total - $user->money;
                 }
             }
-            $order->order_status = 1;
-            $order->created_time = time();
-            $order->updated_time = time();
-            $order->expired_time = time() + 600;
+            $order->order_status   = 1;
+            $order->created_time   = time();
+            $order->updated_time   = time();
+            $order->expired_time   = time() + 600;
             $order->execute_status = 0;
             $order->save();
         } catch (\Exception $e){

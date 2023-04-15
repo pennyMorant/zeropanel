@@ -34,7 +34,7 @@ final class PingCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text'  =>  '您的 ID 是: ' . $chatId,
+                'text'    => '您的 ID 是: ' . $chatId,
                 'chat_id' => $chatId,
             ]
         );

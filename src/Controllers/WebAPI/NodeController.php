@@ -58,15 +58,15 @@ class NodeController extends BaseController
         $node_server = $node->server;
 
         $data = [
-            'node_group' => $node->node_group,
-            'node_class' => $node->node_class,
+            'node_group'      => $node->node_group,
+            'node_class'      => $node->node_class,
             'node_speedlimit' => $node->node_speedlimit,
-            'traffic_rate' => $node->traffic_rate,
-            'sort' => $node->node_type,
-            'server' => $node_server,
-            'custom_config' => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
-            'type' => 'SSPanel-UIM',
-            'version' => '2023-3-1'
+            'traffic_rate'    => $node->traffic_rate,
+            'sort'            => $node->node_type,
+            'server'          => $node_server,
+            'custom_config'   => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
+            'type'            => 'SSPanel-UIM',
+            'version'         => '2023-3-1'
         ];
 
         return $response->withJson([

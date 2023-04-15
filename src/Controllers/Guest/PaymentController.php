@@ -13,10 +13,10 @@ class PaymentController
 {
     public function notify(ServerRequest $request, Response $response, array $args)
     {
-        $method = $args['method'];
-        $uuid = $args['uuid'];
+        $method  = $args['method'];
+        $uuid    = $args['uuid'];
         $payment = new PaymentService($method, null, $uuid);
-        $result = $payment->notify($request);
+        $result  = $payment->notify($request);
         $this->handle($result['order_no']);
         die(isset($verify['custom_result']) ? $verify['custom_result'] : 'success');
     }
@@ -24,7 +24,7 @@ class PaymentController
     public function return(ServerRequest $request, Response $response, array $args)
     {
         $order_no = $request->getParam('tradeno');
-        $order = Order::where('order_no', $order_no)->first();
+        $order    = Order::where('order_no', $order_no)->first();
         return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
     }
 

@@ -37,7 +37,7 @@ final class StartCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => '绑定账户命令: /bind "telegram token"',
+                'text'    => '绑定账户命令: /bind "telegram token"',
                 'chat_id' => $chatId,
             ]
         );

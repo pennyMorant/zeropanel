@@ -46,13 +46,13 @@ class AnnController extends AdminController
             $type_2 = "'news'";
             
             return [
-                'id'    =>  $rowData->id,
-                'date'  =>  $rowData->date,
-                'content'   =>  $rowData->content,
-                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateNews('.$type_1.', '.$rowData->id.')">编辑</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
+                'id'      => $rowData->id,
+                'date'    => $rowData->date,
+                'content' => $rowData->content,
+                'action'  => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul    class = "dropdown-menu">
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateNews('.$type_1.', '.$rowData->id.')">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -160,8 +160,8 @@ class AnnController extends AdminController
         $id = $request->getParam('id');
         $news = Ann::find($id);
         return $response->withJson([
-            'content'   => $news->content,
-            'id'    => $news->id,
+            'content' => $news->content,
+            'id'      => $news->id,
         ]);
     }
 }

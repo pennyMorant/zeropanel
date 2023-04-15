@@ -17,14 +17,14 @@ class TicketController extends AdminController
     public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
         $table_config['total_column'] = [
-            'id'        => 'ID',
-            'userid'    => '用户ID',
-            'type'      => '类型',
-            'title'     => '主题',
-            'status'    => '状态',
-            'datetime'  => '时间',
-            'last_updated'  => '最后更新',                  
-            'action'        => '操作',
+            'id'           => 'ID',
+            'userid'       => '用户ID',
+            'type'         => '类型',
+            'title'        => '主题',
+            'status'       => '状态',
+            'datetime'     => '时间',
+            'last_updated' => '最后更新',
+            'action'       => '操作',
         ];
         $table_config['ajax_url'] = 'ticket/ajax';
         $this->view()
@@ -36,10 +36,10 @@ class TicketController extends AdminController
     public function createTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $postData = $request->getParsedBody();
-        $subject = $postData['subject'] ?? '';
-        $comment = $postData['content'] ?? '';
-        $type = $postData['type'] ?? 'support';
-        $user_id = $postData['user_id'] ?? '';
+        $subject  = $postData['subject'] ?? '';
+        $comment  = $postData['content'] ?? '';
+        $type     = $postData['type'] ?? 'support';
+        $user_id  = $postData['user_id'] ?? '';
         if (empty($subject)||empty($comment)||empty($user_id)) {
             return $response->withJson([
                 'ret' => 0,
@@ -51,26 +51,26 @@ class TicketController extends AdminController
 
         $content = [
             [
-                'comment_id' => 0,
+                'comment_id'      => 0,
                 'commenter_email' => $this->user->email,
-                'comment' => $antiXss->xss_clean($comment),
-                'datetime' => time(),
+                'comment'         => $antiXss->xss_clean($comment),
+                'datetime'        => time(),
             ],
         ];
 
-        $ticket = new Ticket();
-        $ticket->title = $antiXss->xss_clean($subject);
-        $ticket->content = json_encode($content);
-        $ticket->userid = $user_id;
+        $ticket           = new Ticket();
+        $ticket->title    = $antiXss->xss_clean($subject);
+        $ticket->content  = json_encode($content);
+        $ticket->userid   = $user_id;
         $ticket->datetime = time();
-        $ticket->status = 1;
-        $ticket->type = $antiXss->xss_clean($type);
+        $ticket->status   = 1;
+        $ticket->type     = $antiXss->xss_clean($type);
         $ticket->save();
 
         return $response->withJson(
             [
                 'ret' => 1,
-                'id' => $ticket->id,
+                'id'  => $ticket->id,
                 'msg' => '创建成功'
             ]
         );
@@ -78,7 +78,7 @@ class TicketController extends AdminController
 
     public function updateTicket(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id      = $request->getParam('id');
         $comment = $request->getParam('comment');
 
         if ($comment === '') {
@@ -95,10 +95,10 @@ class TicketController extends AdminController
         $content_old = json_decode($ticket->content, true);
         $content_new = [
             [
-                'comment_id' => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                'comment_id'      => $content_old[count($content_old) - 1]['comment_id'] + 1,
                 'commenter_email' => 'Admin',
-                'comment' => $antiXss->xss_clean($comment),
-                'datetime' => time(),
+                'comment'         => $antiXss->xss_clean($comment),
+                'datetime'        => time(),
             ],
         ];
 
@@ -113,7 +113,7 @@ class TicketController extends AdminController
         );
 
         $ticket->content = json_encode(array_merge($content_old, $content_new));
-        $ticket->status = 1;
+        $ticket->status  = 1;
         $ticket->save();
 
         return $response->withJson([
@@ -124,8 +124,8 @@ class TicketController extends AdminController
 
     public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
-        $id = $args['id'];
-        $ticket = Ticket::where('id', '=', $id)->first();
+        $id       = $args['id'];
+        $ticket   = Ticket::where('id', '=', $id)->first();
         $comments = json_decode($ticket->content, true);
 
         $this->view()
@@ -150,24 +150,24 @@ class TicketController extends AdminController
         );
 
         $data = $query['datas']->map(function($rowData) {
-            $type = "'ticket'";
+            $type     = "'ticket'";
             $comments = json_decode($rowData->content, true);
             foreach ($comments as $comment) {
                 $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
             }
             return [
-                'id'    => $rowData->id,
-                'userid'    =>  $rowData->userid,
-                'type'  =>  $rowData->type,
-                'title' =>  $rowData->title,
-                'status'    =>  $rowData->status(),
-                'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
-                'last_updated'  =>  $last_updated,
-                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="ticket/view/'.$rowData->id.'">编辑</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('. $type . ', ' . $rowData->id. ')">删除</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminCloseTicket(' . $rowData->id . ')">关闭</a></li>
+                'id'           => $rowData->id,
+                'userid'       => $rowData->userid,
+                'type'         => $rowData->type,
+                'title'        => $rowData->title,
+                'status'       => $rowData->status(),
+                'datetime'     => date('Y-m-d H:i:s', $rowData->datetime),
+                'last_updated' => $last_updated,
+                'action'       => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul    class = "dropdown-menu">
+                                    <li><a class = "dropdown-item" href = "ticket/view/'.$rowData->id.'">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('. $type . ', ' . $rowData->id. ')">删除</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminCloseTicket(' . $rowData->id . ')">关闭</a></li>
                                     </ul>
                                 </div>',
             ];

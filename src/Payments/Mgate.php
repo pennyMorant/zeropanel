@@ -70,24 +70,24 @@ class Mgate
     public function pay($order)
     {
         $data = [
-            'app_id'    =>  $this->config['mgate_id'],
-            'out_trade_no'  =>  $order['order_no'],
-            'notify_url'    =>  $order['notify_url'],
-            'return_url'    =>  $order['return_url'],
-            'total_amount'   =>  $order['total_amount']
+            'app_id'       => $this->config['mgate_id'],
+            'out_trade_no' => $order['order_no'],
+            'notify_url'   => $order['notify_url'],
+            'return_url'   => $order['return_url'],
+            'total_amount' => $order['total_amount']
         ];
-        $params = $this->prepareSign($data);
+        $params       = $this->prepareSign($data);
         $data['sign'] = $this->sign($params);
-    	$result = json_decode($this->post($data), true);
+        $result       = json_decode($this->post($data), true);
     	if (!isset($result['data']['pay_url'])) {
     		return [
-                'ret' => 0, 
+                'ret' => 0,
                 'msg' => '支付网关处理失败'
             ];
     	}
         return [
-            'url' => $result['data']['pay_url'], 
-            'ret' => 0, 
+            'url'  => $result['data']['pay_url'],
+            'ret'  => 0,
             'type' => 'url'
         ];
     }
@@ -99,7 +99,7 @@ class Mgate
     		return false;
     	}
     	return [
-            'order_no'  => $request->getParam('out_trade_no'),
+            'order_no' => $request->getParam('out_trade_no'),
         ];
     }
 

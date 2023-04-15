@@ -27,15 +27,15 @@ class UserController extends AdminController
     {
         $table_config['total_column'] = [
             
-            'id'                    => 'ID',
-            'email'                 => '邮箱',
-            'money'                 => '金钱',
-            'class'                 => '等级',
-            'class_expire'          => '等级过期时间',
-            'traffic'               => '流量',
-            'enable'                => '启用',
-            'is_admin'              => '管理员',
-            'action'                => '操作',
+            'id'           => 'ID',
+            'email'        => '邮箱',
+            'money'        => '金钱',
+            'class'        => '等级',
+            'class_expire' => '等级过期时间',
+            'traffic'      => '流量',
+            'enable'       => '启用',
+            'is_admin'     => '管理员',
+            'action'       => '操作',
         ];
         $table_config['ajax_url'] = 'user/ajax';
         $products = Product::where('status', 1)->orderBy('name')->get();
@@ -67,27 +67,27 @@ class UserController extends AdminController
         }
         
         $configs = Setting::getClass('register');
-        // do reg user
-        $pass                       = Tools::genRandomChar(16);
-        $user                       = new User();
-        $current_timestamp          = time();
-        $user->password             = Hash::passwordHash($pass);
-        $user->email                = $email;
-        $user->passwd               = $user->createShadowsocksPasswd();
-        $user->uuid                 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
-        $user->t                    = 0;
-        $user->u                    = 0;
-        $user->d                    = 0;
-        $user->transfer_enable      = Tools::toGB($configs['signup_default_traffic']);
-        $user->money                = ($money != -1 ? $money : 0);
-        $user->class_expire         = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
-        $user->class                = $configs['signup_default_class'];
-        $user->node_iplimit       = $configs['signup_default_ip_limit'];
-        $user->node_speedlimit      = $configs['signup_default_speed_limit'];
-        $user->signup_date             = date('Y-m-d H:i:s');
-        $user->signup_ip               = $_SERVER['REMOTE_ADDR'];
-        $user->theme                = $_ENV['theme'];
-        $user->node_group           = 0;
+          // do reg user
+        $pass                  = Tools::genRandomChar(16);
+        $user                  = new User();
+        $current_timestamp     = time();
+        $user->password        = Hash::passwordHash($pass);
+        $user->email           = $email;
+        $user->passwd          = $user->createShadowsocksPasswd();
+        $user->uuid            = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
+        $user->t               = 0;
+        $user->u               = 0;
+        $user->d               = 0;
+        $user->transfer_enable = Tools::toGB($configs['signup_default_traffic']);
+        $user->money           = ($money != -1 ? $money : 0);
+        $user->class_expire    = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
+        $user->class           = $configs['signup_default_class'];
+        $user->node_iplimit    = $configs['signup_default_ip_limit'];
+        $user->node_speedlimit = $configs['signup_default_speed_limit'];
+        $user->signup_date     = date('Y-m-d H:i:s');
+        $user->signup_ip       = $_SERVER['REMOTE_ADDR'];
+        $user->theme           = $_ENV['theme'];
+        $user->node_group      = 0;
         
         if ($user->save()) {
             $res['ret']         = 1;
@@ -129,30 +129,30 @@ class UserController extends AdminController
             $user->password = Hash::passwordHash($request->getParam('password'));
         }
 
-        $user->transfer_enable  = Tools::toGB($request->getParam('transfer_enable'));
-        $user->node_speedlimit  = $request->getParam('node_speedlimit');
-        $user->node_iplimit   = $request->getParam('node_iplimit');
-        $user->node_group       = $request->getParam('group');
-        $user->remark           = $request->getParam('remark');
-        $user->money            = $request->getParam('money');
-        $user->class            = $request->getParam('class');
-        $user->class_expire     = $request->getParam('class_expire');
-        $user->commission       = $request->getParam('commission');
+        $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
+        $user->node_speedlimit = $request->getParam('node_speedlimit');
+        $user->node_iplimit    = $request->getParam('node_iplimit');
+        $user->node_group      = $request->getParam('group');
+        $user->remark          = $request->getParam('remark');
+        $user->money           = $request->getParam('money');
+        $user->class           = $request->getParam('class');
+        $user->class_expire    = $request->getParam('class_expire');
+        $user->commission      = $request->getParam('commission');
 
-        // 手动封禁
+          // 手动封禁
         $ban_time = (int) $request->getParam('ban_time');
         if ($ban_time > 0) {
-            $user->enable                       = 0;
-            $end_time                           = date('Y-m-d H:i:s');
-            $user->last_detect_ban_time         = $end_time;
-            $DetectBanLog                       = new DetectBanLog();
-            $DetectBanLog->user_id              = $user->id;
-            $DetectBanLog->email                = $user->email;
-            $DetectBanLog->detect_number        = '0';
-            $DetectBanLog->ban_time             = $ban_time;
-            $DetectBanLog->start_time           = strtotime('1989-06-04 00:05:00');
-            $DetectBanLog->end_time             = strtotime($end_time);
-            $DetectBanLog->all_detect_number    = $user->all_detect_number;
+            $user->enable                    = 0;
+            $end_time                        = date('Y-m-d H:i:s');
+            $user->last_detect_ban_time      = $end_time;
+            $DetectBanLog                    = new DetectBanLog();
+            $DetectBanLog->user_id           = $user->id;
+            $DetectBanLog->email             = $user->email;
+            $DetectBanLog->detect_number     = '0';
+            $DetectBanLog->ban_time          = $ban_time;
+            $DetectBanLog->start_time        = strtotime('1989-06-04 00:05:00');
+            $DetectBanLog->end_time          = strtotime($end_time);
+            $DetectBanLog->all_detect_number = $user->all_detect_number;
             $DetectBanLog->save();
         }
 
@@ -195,18 +195,18 @@ class UserController extends AdminController
         $data = $query['datas']->map(function($rowData) {
             $type = "'user'";
             return [
-                'id'            =>  $rowData->id,
-                'email'         =>  $rowData->email,
-                'money'         =>  $rowData->money,
-                'class'         =>  $rowData->class,
-                'class_expire'  =>  $rowData->class_expire,
-                'traffic'       =>  $rowData->usedTraffic() . '/' . Tools::flowToGB($rowData->transfer_enable).'GB',
-                'is_admin'      =>  $rowData->is_admin(),
-                'enable'        =>  $rowData->enable(),
-                'action'        =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="user/update/'.$rowData->id.'">编辑</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                'id'           => $rowData->id,
+                'email'        => $rowData->email,
+                'money'        => $rowData->money,
+                'class'        => $rowData->class,
+                'class_expire' => $rowData->class_expire,
+                'traffic'      => $rowData->usedTraffic() . '/' . Tools::flowToGB($rowData->transfer_enable).'GB',
+                'is_admin'     => $rowData->is_admin(),
+                'enable'       => $rowData->enable(),
+                'action'       => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                    <ul    class = "dropdown-menu">
+                                    <li><a class = "dropdown-item" href = "user/update/'.$rowData->id.'">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
                                     </ul>
                                 </div>',
             ];

@@ -33,7 +33,7 @@ final class MyCommand extends Command
         if (is_null($user)) {
             $this->replyWithMessage(
                 [
-                    'text' => '您还没有绑定账号',
+                    'text'                => '您还没有绑定账号',
                     'reply_to_message_id' => $messageId,
                 ]
             );
@@ -50,8 +50,8 @@ final class MyCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => implode(PHP_EOL, $text),
-                'chat_id' => $chatId,
+                'text'       => implode(PHP_EOL, $text),
+                'chat_id'    => $chatId,
                 'parse_mode' => 'Markdown',
             ]
         );

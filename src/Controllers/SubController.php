@@ -42,18 +42,18 @@ final class SubController
                 break;
             case 'vmess':
                 $node = [
-                    'v' => "2",
-                    'ps' => $node_config['remark'],
-                    'add' => $node_config['address'],
-                    'port' => (string)$node_config['port'],
-                    'id' => $node_config['uuid'],
-                    'aid' => (string)$node_config['aid'],
-                    'net' => $node_config['net'],
-                    'type' => $node_config['net'] == 'grpc' ? "multi" : $node_config['headertype'],
-                    'host' => $node_config['host'],
-                    'path' => $node_config['path'],
-                    'tls' => $node_config['security'],
-                    'sni' => $node_config['sni'],
+                    'v'           => "2",
+                    'ps'          => $node_config['remark'],
+                    'add'         => $node_config['address'],
+                    'port'        => (string)$node_config['port'],
+                    'id'          => $node_config['uuid'],
+                    'aid'         => (string)$node_config['aid'],
+                    'net'         => $node_config['net'],
+                    'type'        => $node_config['net'] == 'grpc' ? "multi" : $node_config['headertype'],
+                    'host'        => $node_config['host'],
+                    'path'        => $node_config['path'],
+                    'tls'         => $node_config['security'],
+                    'sni'         => $node_config['sni'],
                     'serviceName' => $node_config['servicename'],
                 ];
                 $url = 'vmess://' . base64_encode(json_encode($node, 320));
@@ -254,13 +254,13 @@ final class SubController
             case 'shadowsocks':
                 if (Node::getShadowsocksSupportMethod($node_config['method'])) {
                     $node_info = [
-                        'name' => $node_config['remark'],
-                        'type' => 'ss',
-                        'server' => $node_config['address'],
-                        'port' => $node_config['port'],
-                        'cipher' => $node_config['method'],
+                        'name'     => $node_config['remark'],
+                        'type'     => 'ss',
+                        'server'   => $node_config['address'],
+                        'port'     => $node_config['port'],
+                        'cipher'   => $node_config['method'],
                         'password' => $node_config['passwd'],
-                        'udp' => true
+                        'udp'      => true
                     ];
                 }
                 break;
@@ -268,38 +268,38 @@ final class SubController
                 $ws = $node_config['net'] == 'ws' ? 'ws' : '';
                 $tls = $node_config['security'] == 'tls' ? true : false;
                 $node_info = [
-                    'name' => $node_config['remark'],
-                    'type' => 'vmess',
-                    'server' => $node_config['address'],
-                    'port' => $node_config['port'],
-                    'uuid' => $node_config['uuid'],
-                    'alterId' => $node_config['aid'],
-                    'cipher' => 'auto',
-                    'udp' => true,
-                    'servername' => $node_config['host'],
-                    'network' => $ws,
-                    'tls'   =>  $tls,
-                    'skip-cert-verify'  =>  true,
-                    'ws-opts' => [
-                        'path'  =>  $node_config['path'],
+                    'name'             => $node_config['remark'],
+                    'type'             => 'vmess',
+                    'server'           => $node_config['address'],
+                    'port'             => $node_config['port'],
+                    'uuid'             => $node_config['uuid'],
+                    'alterId'          => $node_config['aid'],
+                    'cipher'           => 'auto',
+                    'udp'              => true,
+                    'servername'       => $node_config['host'],
+                    'network'          => $ws,
+                    'tls'              => $tls,
+                    'skip-cert-verify' => true,
+                    'ws-opts'          => [
+                        'path'    => $node_config['path'],
                         'headers' => [
-                            'Host'  =>  $node_config['host'],
+                            'Host' => $node_config['host'],
                         ]
                     ],
                     'grpc-opts' =>  [
-                        'grpc-service-name' =>  $node_config['servicename'],
+                        'grpc-service-name' => $node_config['servicename'],
                     ]
                 ];
                 break;
             case 'trojan':
                 $node_info = [
-                    'name' => $node_config['remark'],
-                    'type' => 'trojan',
-                    'server' => $node_config['address'],
-                    'port' => $node_config['port'],
+                    'name'     => $node_config['remark'],
+                    'type'     => 'trojan',
+                    'server'   => $node_config['address'],
+                    'port'     => $node_config['port'],
                     'password' => $node_config['uuid'],
-                    'sni' => $node_config['sni'],
-                    'udp' => true
+                    'sni'      => $node_config['sni'],
+                    'udp'      => true
                 ];
                 break;
         }

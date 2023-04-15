@@ -25,15 +25,15 @@ final class UnbindCommand extends Command
     public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-        $message = $this->getUpdate()->getMessage();
+        $message   = $this->getUpdate()->getMessage();
         $messageId = $message->getMessageId();
-        $chatId = $message->getChat()->getId();
+        $chatId    = $message->getChat()->getId();
         
         $user = User::where('telegram_id', $chatId)->first();
         if (is_null($user)) {
             $this->replyWithMessage(
                 [
-                    'text' => '您还没有绑定账号',
+                    'text'                => '您还没有绑定账号',
                     'reply_to_message_id' => $messageId,
                 ]
             );
@@ -42,10 +42,10 @@ final class UnbindCommand extends Command
         $user->telegram_id = NULL;
         $user->save();
 
-        // 回送信息
+          // 回送信息
         $this->replyWithMessage(
             [
-                'text' => '您已经解除绑定',
+                'text'    => '您已经解除绑定',
                 'chat_id' => $chatId,
             ]
         );
