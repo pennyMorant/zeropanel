@@ -406,7 +406,7 @@
                             <div class="mb-3">
                                 <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('type')}:</label>
                                 <select class="form-select" id="withdraw_method" data-style="btn-primary">	
-                                    <option value="USDT" data-kt-select2-image="/tether.svg">USDT</option>
+                                    <option value="USDT" data-kt-select2-image="/theme/zero/assets/media/payment_logo/tether.svg">USDT</option>
                                 </select>
                             </div>
                         </form>
@@ -495,6 +495,7 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
+        <script src="/js/profile.min.js"></script>
         {include file='include/index/news.tpl'}
         <script>
             var optionFormatCommission = function(item) {
