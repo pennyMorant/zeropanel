@@ -231,6 +231,7 @@
                                 $('#payment_notify_domain').val(data.payment_notify_domain);
                                 $('#payment_percent_fee').val(data.payment_percent_fee);
                                 $('#payment_fixed_fee').val(data.payment_fixed_fee);
+                                $('#payment_recharge_bonus').val(data.payment_recharge_bonus);
                                 $('#payment_gateway').val(data.payment_gateway).trigger('change');
                                 switch (data.payment_gateway) {
                                     case 'Epay':
