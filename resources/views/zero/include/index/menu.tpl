@@ -116,7 +116,7 @@
                                                     <img alt="gravatar" src="{$user->gravatar}" />
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a class="badge badge-light-success fw-bold fs-8">权限组:&nbsp; {$user_permission}</a>
+                                                    <a class="badge badge-light-success fw-bold fs-8">权限组:&nbsp; {$user->getPermission($user->class)}</a>
                                                     <a class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
                                                 </div>
                                             </div>

@@ -517,4 +517,14 @@ class User extends Model
         $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $this->email . '|' . $current_timestamp);
         return $uuid;
     }
+
+    public function getPermission($class)
+    {
+        if (Setting::obtain('enable_permission_group') == true) {
+            $permission_group = json_decode(Setting::obtain('permission_group_detail'), true);
+        }
+        $permission = isset($permission_group) ? $permission_group[$class] : 'LV-'.$class;
+
+        return $permission;
+    }
 }

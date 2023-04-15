@@ -5,17 +5,17 @@ namespace App\Models;
 class Payback extends Model
 {
     protected $connection = 'default';
-    protected $table = 'payback';
+    protected $table      = 'payback';
     
     public static function rebate($user_id, $order_amount)
     {
-        $configs = Setting::getClass('invite');
-        $user = User::where('id', $user_id)->first();
+        $configs      = Setting::getClass('invite');
+        $user         = User::where('id', $user_id)->first();
         $gift_user_id = $user->ref_by;
 
         // 判断
         $invite_rebate_mode = $configs['invite_rebate_mode'];
-        $rebate_ratio = $configs['rebate_ratio'] / 100;
+        $rebate_ratio       = $configs['rebate_ratio'] / 100;
         if ($invite_rebate_mode == 'continued') {
             // 不设限制
             self::executeRebate($user_id, $gift_user_id, $order_amount);
@@ -52,10 +52,10 @@ class Payback extends Model
     {
         $gift_user     = User::where('id', $gift_user_id)->first();
         $rebate_amount = $order_amount * (Setting::obtain('rebate_ratio') / 100);
-          // 返利
+            // 返利
         $gift_user->commission += $adjust_rebate ?? $rebate_amount;
         $gift_user->save();
-          // 记录
+            // 记录
         $Payback           = new Payback();
         $Payback->total    = $order_amount;
         $Payback->userid   = $user_id;

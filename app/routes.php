@@ -37,8 +37,6 @@ return function (SlimApp $app) {
     // User Center
     $app->group('/user', function (Group $group) {
         $group->get('/dashboard',                       App\Controllers\UserController::class . ':index');
-        
-        $group->post('/getusertrafficinfo',             App\Controllers\UserController::class . ':getUserTrafficUsage');
         $group->get('/tutorial',                        App\Controllers\UserController::class . ':tutorial');
         $group->get('/referral',                        App\Controllers\UserController::class . ':referral');
         $group->get('/profile',                         App\Controllers\UserController::class . ':profile');

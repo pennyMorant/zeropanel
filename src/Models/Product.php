@@ -53,17 +53,7 @@ class Product extends Model
 
     public function purchase($user, $price, $order_type)
     {
-        $product_type = $this->type;
-        $product_period = [
-            $this->month_price => 30,
-            $this->quarter_price => 90,
-            $this->half_year_price => 180,
-            $this->year_price => 360
-        ];
-        if (isset($product_period[$price])) {
-            $time = $product_period[$price];
-        }
-        
+        $product_type = $this->type; 
         switch ($product_type) {  // 产品类型
             case 1:
                 switch ($order_type) { // 判定订单类型
@@ -72,7 +62,7 @@ class Product extends Model
                         $user->u               = 0;
                         $user->d               = 0;
                         $user->last_day_t      = 0;
-                        $user->class_expire    = date('Y-m-d H:i:s', time() + $time * 86400);
+                        $user->class_expire    = date('Y-m-d H:i:s', time() + $this->productPeriod($price) * 86400);
                         $user->class           = $this->class;
                         $user->node_speedlimit = $this->speed_limit;
                         $user->node_iplimit    = $this->ip_limit;
@@ -87,7 +77,7 @@ class Product extends Model
                         }
                         break;
                     case 3: 
-                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $time * 86400);
+                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $this->productPeriod($price)* 86400);
                         break;
                     case 4: 
                         break;

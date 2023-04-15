@@ -41,30 +41,11 @@ class NodeController extends UserController
         } else {
             $min_node_class = 0;
         }
-        if (Setting::obtain('enable_permission_group') == true) {
-            $permission_group = json_decode(Setting::obtain('permission_group_detail'), true);
-        } else {
-            $permission_group = [
-                0   =>  'LV-0',
-                1   =>  'LV-1', 
-                2   =>  'LV-2', 
-                3   =>  'LV-3', 
-                4   =>  'LV-4', 
-                5   =>  'LV-5', 
-                6   =>  'LV-6', 
-                7   =>  'LV-7',
-                8   =>  'LV-8', 
-                9   =>  'LV-9', 
-                10  =>  'LV-10',
-            ];
-        }
 
         $this->view()
             ->assign('class', $class)
             ->assign('servers', $servers)
             ->assign('min_node_class', $min_node_class)
-            ->assign('user', $user)
-            ->assign('permission_group', $permission_group)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->registerClass('URL', URL::class)
             ->display('user/node.tpl');

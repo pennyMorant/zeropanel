@@ -44,7 +44,6 @@
 														<div class="row g-10">                                               
 															{if $count[$key] != '0'}
 																{foreach $products as $product}
-																	{assign var="product_permission" value=$permission_group[$product->class]|default: "unknown"}
 																	{if $product->type == $key}
 																		<div class="col-xl-4">
 																			<div class="d-flex h-100 align-items-center">
@@ -114,7 +113,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$product_permission}&nbsp;{$trans->t('access permission')}</span></span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$user->getPermission($product->class)}&nbsp;{$trans->t('access permission')}</span></span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />

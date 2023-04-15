@@ -28,7 +28,6 @@ class Order extends Model
 
     public function payment() {
         $payment = Payment::find($this->payment_id);
-
         return $payment->name ?? '未选择';
     }
 

@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Services\Auth;
-use App\Services\Mail;
 use App\Models\{
     Ann,
     User,
@@ -13,8 +12,7 @@ use App\Models\{
 };
 use App\Utils\{
     URL,
-    Hash,
-    Tools
+    Hash
 };
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
@@ -31,10 +29,8 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
-        $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
 
         $this->view()
-            ->assign('class_left_days', $class_left_days)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('invite_url', $invite_url)
             ->registerClass('URL', URL::class)
@@ -46,19 +42,13 @@ class UserController extends BaseController
     public function tutorial(ServerRequest $request, Response $response, array $args)
     {
         $opts = $request->getQueryParams();
-        if ($opts['os'] == 'faq') {
-            return $this->view()->display('user/tutorial/faq.tpl');
-        }
         $opts['os'] = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
         if ($opts['os'] != '' && $opts['client'] != '') {
             $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
-            $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
             $this->view()
                 ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
-                ->assign('class_left_days', $class_left_days)
-                ->assign('user', $this->user)
                 ->registerClass('URL', URL::class)
                 ->display($url);
         }
@@ -73,7 +63,6 @@ class UserController extends BaseController
             $tg_bind_token = Token::createToken($this->user, 32, 1);
         }
         $this->view()
-            ->assign('user', $this->user)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('bind_token', $tg_bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
@@ -200,27 +189,9 @@ class UserController extends BaseController
         ]);
     }
 
-    public function getUserTrafficUsage(ServerRequest $request, Response $response, array $args)
-    {   
-        $res['unflowtraffic'] = $this->user->transfer_enable;
-        $res['traffic'] = Tools::flowAutoShow($this->user->transfer_enable);
-        $res['trafficInfo'] = array(
-            'todayUsedTraffic'        => $this->user->TodayusedTraffic(),
-            'lastUsedTraffic'         => $this->user->LastusedTraffic(),
-            'unUsedTraffic'           => $this->user->unusedTraffic(),
-            'TodayusedTrafficPercent' => $this->user->TodayusedTrafficPercent(),
-            'LastusedTrafficPercent'  => $this->user->LastusedTrafficPercent()
-        );
-        $res['ret'] = 1;
-        return $response->withJson($res);
-    }
-
     public function handleKill(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
-
-        $email = $user->email;
-
         $passwd = $request->getParam('passwd');
         // check passwd
         $res = array();
