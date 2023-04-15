@@ -284,7 +284,7 @@ class OrderController extends BaseController
                 $coupon->save();
             }
 
-            $product->purchase($user, $order->product_price, $order->order_type);           
+            $product->purchase($user, $order);           
 
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {

@@ -51,18 +51,18 @@ class Product extends Model
     }
     
 
-    public function purchase($user, $price, $order_type)
+    public function purchase($user, $order)
     {
         $product_type = $this->type; 
         switch ($product_type) {  // 产品类型
             case 1:
-                switch ($order_type) { // 判定订单类型
-                    case 1:
+                switch ($order->order_type) { // 判定订单类型
+                    case 1: // purchase new product
                         $user->transfer_enable = $this->traffic * 1024 * 1024 * 1024;
                         $user->u               = 0;
                         $user->d               = 0;
                         $user->last_day_t      = 0;
-                        $user->class_expire    = date('Y-m-d H:i:s', time() + $this->productPeriod($price) * 86400);
+                        $user->class_expire    = date('Y-m-d H:i:s', time() + $this->productPeriod($order->product_price) * 86400);
                         $user->class           = $this->class;
                         $user->node_speedlimit = $this->speed_limit;
                         $user->node_iplimit    = $this->ip_limit;
@@ -76,17 +76,17 @@ class Product extends Model
                             $user->reset_traffic_value = $this->traffic;
                         }
                         break;
-                    case 3: 
-                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $this->productPeriod($price)* 86400);
+                    case 3: // renew product
+                        $user->class_expire = date('Y-m-d H:i:s', strtotime($user->class_expire) + $order->product_period* 86400);
                         break;
-                    case 4: 
+                    case 4:  // update product
                         break;
                 }
                 break;
-            case 2:
+            case 2: // purchase traffic
                 $user->transfer_enable += $this->traffic * 1024 * 1024 * 1024;
                 break;    
-            case 3:
+            case 3: // purchase other product
                 break;
         }
         $user->save();

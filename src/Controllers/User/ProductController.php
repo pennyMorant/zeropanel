@@ -91,6 +91,9 @@ final class ProductController extends BaseController
             if (is_null($product)) {
                 throw new \Exception('产品已经被删除, 续费失败');
             }
+            if (is_null($latest_order->product_period)) {
+                throw new \Exception('订单错误，无法续费');
+            }
             $order                 = new Order;
             $order->order_no       = OrderController::createOrderNo();
             $order->order_type     = 3;
