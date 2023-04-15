@@ -204,7 +204,11 @@ class OrderController extends BaseController
                 $payment = Payment::find($payment_method);
                 $payment_service = new PaymentService($payment->gateway, $payment->id);
                 if ($payment->fixed_fee || $payment->percent_fee) {
-                    $order->handling_fee = round(($order->order_total * ($payment->percent_fee / 100)) + $payment->fixed_fee, 3);
+                    $order->handling_fee = round(($order->order_total * ($payment->percent_fee / 100)) + $payment->fixed_fee, 2);
+                }
+
+                if ($payment->recharge_bonus && $order->order_type === 2) {
+                    $order->bonus_amount = $order->order_total * ($payment->recharge_bonus / 100);
                 }
                 
                 $currency = Setting::getClass('currency');
@@ -237,7 +241,7 @@ class OrderController extends BaseController
     {
         $order = Order::where('order_no', $order_no)->first();
         
-        if (is_null($order->product_id)) {
+        if (is_null($order->product_id) && $order->order_type === 2) {
             return self::executeAddCredit($order);
         } else {
             return self::executeProduct($order);
@@ -254,7 +258,7 @@ class OrderController extends BaseController
             $order->save();
 
             $user = User::find($order->user_id);
-            $user->money += $order->order_total;
+            $user->money += $order->order_total + $order->bonus_amount;
             $user->save();
 
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {

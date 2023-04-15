@@ -23,11 +23,12 @@ class PaymentService
         if ($uuid) $payment = Payment::where('uuid', $uuid)->first()->toArray();
            $this->config    = [];
         if (isset($payment)) {
-            $this->config                  = json_decode($payment['config'], true);
-            $this->config['enable']        = $payment['enable'];
-            $this->config['id']            = $payment['id'];
-            $this->config['uuid']          = $payment['uuid'];
-            $this->config['notify_domain'] = $payment['notify_domain'];
+            $this->config                   = json_decode($payment['config'], true);
+            $this->config['enable']         = $payment['enable'];
+            $this->config['id']             = $payment['id'];
+            $this->config['uuid']           = $payment['uuid'];
+            $this->config['notify_domain']  = $payment['notify_domain'];
+            $this->config['recharge_bonus'] = $payment['recharge_bonus'];
         };
         
         $this->payment = new $this->class($this->config);

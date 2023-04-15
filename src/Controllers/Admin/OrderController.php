@@ -6,7 +6,7 @@ use App\Controllers\AdminController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
-use App\Models\Payment as Gateway;
+use App\Controllers\OrderController as UserOrder;
 use Pkly\I18Next\I18n;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -106,7 +106,7 @@ class OrderController extends AdminController
         $order_id = $request->getParam('order_id');
         $order    = Order::find($order_id);
         $order_no = $order->order_no;
-        $order->finshOrder($order_no);
+        UserOrder::execute($order_no);
         return $response->withJson([
             'ret' => 1,
             'msg' => 'success'

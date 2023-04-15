@@ -77,16 +77,23 @@
                             <label class="form-label fw-bold">自定义通知域名(选填)</label>
                             <input class="form-control mb-5" id="payment_notify_domain" value="" type="text" placeholder="网关通知将发送到此域名(https://xxxx.com)" />
                             <div class="row mb-5">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="form-label fw-bold">百分比手续费(选填)</label>
                                     <div class="input-group">
                                         <input class="form-control" id="payment_percent_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="form-label fw-bold">固定手续费(选填)</label>
                                     <input class="form-control" id="payment_fixed_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label fw-bold">充值返利(选填，仅充值)</label>
+                                    <div class="input-group">
+                                        <input class="form-control" id="payment_recharge_bonus" value="" type="number" placeholder="在订单金额的基础返利" />
+                                        <span class="input-group-text">%</span>
+                                    </div>
                                 </div>
                             </div>
                             <label class="form-label fw-bold">接口文件</label>
@@ -187,6 +194,7 @@
                         payment_percent_fee: $('#payment_percent_fee').val(),
                         payment_fixed_fee: $('#payment_fixed_fee').val(),
                         payment_gateway: $('#payment_gateway').val(),
+                        payment_recharge_bonus: $('#payment_recharge_bonus').val(),
                         payment_config: config
                     },
                     success: function(data) {
@@ -281,6 +289,7 @@
                 $("#payment_notify_domain").val('');
                 $('#payment_percent_fee').val('');
                 $('#payment_fixed_fee').val('');
+                $('#payment_recharge_bonus').val('');
                 $('#payment_gateway').val('');
                 $('#epay_url').val('');
                 $('#epay_pid').val('');

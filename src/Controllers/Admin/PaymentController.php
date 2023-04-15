@@ -30,19 +30,20 @@ final class PaymentController extends AdminController
     {
         $postData = $request->getParsedBody();
 
-        $payment                = new Payment();
-        $payment->name          = $postData['payment_name'];
-        $payment->gateway       = $postData['payment_gateway'];
-        $payment->config        = json_encode($postData['payment_config']);
-        $payment->icon          = $postData['payment_icon'] ?: NULL;
-        $payment->percent_fee   = $postData['payment_percent_fee'] ?: NULL;
-        $payment->fixed_fee     = $postData['payment_fixed_fee'] ?: NULL;
-        $payment->notify_domain = $postData['payment_notify_domain'] ?: NULL;
-        $payment->enable        = 0;
-        $payment->sort          = 0;
-        $payment->uuid          = Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
-        $payment->created_at    = time();
-        $payment->updated_at    = time();
+        $payment                 = new Payment();
+        $payment->name           = $postData['payment_name'];
+        $payment->gateway        = $postData['payment_gateway'];
+        $payment->config         = json_encode($postData['payment_config']);
+        $payment->icon           = $postData['payment_icon'] ?: NULL;
+        $payment->percent_fee    = $postData['payment_percent_fee'] ?: NULL;
+        $payment->fixed_fee      = $postData['payment_fixed_fee'] ?: NULL;
+        $payment->recharge_bonus = $postData['payment_recharge_bonus'] ?: NULL;
+        $payment->notify_domain  = $postData['payment_notify_domain'] ?: NULL;
+        $payment->enable         = 0;
+        $payment->sort           = 0;
+        $payment->uuid           = Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
+        $payment->created_at     = time();
+        $payment->updated_at     = time();
 
         $payment->save();
 
@@ -56,16 +57,17 @@ final class PaymentController extends AdminController
     {
         $postData = $request->getParsedBody();
         
-        $payment                = Payment::find($postData['id']);
-        $payment->name          = $postData['payment_name'];
-        $payment->gateway       = $postData['payment_gateway'];
-        $payment->config        = json_encode($postData['payment_config']);
-        $payment->icon          = $postData['payment_icon'] ?: NULL;
-        $payment->percent_fee   = $postData['payment_percent_fee'] ?: NULL;
-        $payment->fixed_fee     = $postData['payment_fixed_fee'] ?: NULL;
-        $payment->notify_domain = $postData['payment_notify_domain'] ?: NULL;
-        $payment->uuid          = $payment->uuid ?: Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
-        $payment->updated_at    = time();
+        $payment                 = Payment::find($postData['id']);
+        $payment->name           = $postData['payment_name'];
+        $payment->gateway        = $postData['payment_gateway'];
+        $payment->config         = json_encode($postData['payment_config']);
+        $payment->icon           = $postData['payment_icon'] ?: NULL;
+        $payment->percent_fee    = $postData['payment_percent_fee'] ?: NULL;
+        $payment->fixed_fee      = $postData['payment_fixed_fee'] ?: NULL;
+        $payment->recharge_bonus = $postData['payment_recharge_bonus'] ?: NULL;
+        $payment->notify_domain  = $postData['payment_notify_domain'] ?: NULL;
+        $payment->uuid           = $payment->uuid ?: Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
+        $payment->updated_at     = time();
         $payment->save();
 
         return $response->withJson([
@@ -118,6 +120,7 @@ final class PaymentController extends AdminController
             'payment_notify_domain' => $payment->notify_domain,
             'payment_percent_fee'   => $payment->percent_fee,
             'payment_fixed_fee'     => $payment->fixed_fee,
+            'payment_recharge_bonus'=> $payment->recharge_bonus,
             'payment_gateway'       => $payment->gateway,
             'payment_config'        => json_decode($payment->config),
         ];
