@@ -258,8 +258,12 @@ class OrderController extends BaseController
                     'total_amount'  =>  isset($order->handling_fee) ? (($order->order_total + $order->handling_fee) * $exchange_rate) : $order->order_total * $exchange_rate,
                     'user_id'   =>  $user->id
                 ]);
-                $user->money -= $order->credit_paid;
-                $user->save();
+                
+                // 支付成功，从用户账户扣除余额抵扣金额
+                if ($result['ret'] === 1) {
+                    $user->money -= $order->credit_paid;
+                    $user->save();
+                }
                 return $response->withJson($result);
             }
         } catch (\Exception $e) {
