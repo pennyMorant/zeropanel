@@ -615,11 +615,10 @@ function KTUsersCreateOrder(type, price, product_id) {
                         $(location).attr('href', '/user/order/' + data.order_no);
                     } else {
                         getResult(data.msg, '', 'error');
-                        //submitButton.removeAttribute('data-kt-indicator');
-                        //submitButton.disabled = false;
                     }
                 }
-            }); 
+            });
+            break;
         default:
             getResult('请求错误', '', 'error');
     }
@@ -890,4 +889,3 @@ function oneclickImport(client, subLink) {
         }
     });
 }
-
