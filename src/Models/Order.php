@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Controllers\Admin\OrderController;
 use Pkly\I18Next\I18n;
 use App\Models\Payment;
-use App\Services\PaymentService;
 
 class Order extends Model
 {

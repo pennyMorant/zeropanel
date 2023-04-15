@@ -50,17 +50,17 @@ class Payback extends Model
 
     public static function executeRebate($user_id, $gift_user_id, $order_amount, $adjust_rebate = null)
     {
-        $gift_user = User::where('id', $gift_user_id)->first();
+        $gift_user     = User::where('id', $gift_user_id)->first();
         $rebate_amount = $order_amount * (Setting::obtain('rebate_ratio') / 100);
-        // 返利
+          // 返利
         $gift_user->commission += $adjust_rebate ?? $rebate_amount;
         $gift_user->save();
-        // 记录
-        $Payback = new Payback();
-        $Payback->total = $order_amount;
-        $Payback->userid = $user_id;
-        $Payback->ref_by = $gift_user_id;
-        $Payback->ref_get = $adjust_rebate ?? $rebate_amount;
+          // 记录
+        $Payback           = new Payback();
+        $Payback->total    = $order_amount;
+        $Payback->userid   = $user_id;
+        $Payback->ref_by   = $gift_user_id;
+        $Payback->ref_get  = $adjust_rebate ?? $rebate_amount;
         $Payback->datetime = time();
         $Payback->save(); 
     }

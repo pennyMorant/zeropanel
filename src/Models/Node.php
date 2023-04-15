@@ -13,8 +13,8 @@ class Node extends Model
     protected $casts = [
         'node_speedlimit' => 'float',
         'traffic_rate'    => 'float',
-        'node_type'            => 'int',
-        'status'            => 'bool',
+        'node_type'       => 'int',
+        'status'          => 'bool',
         'node_heartbeat'  => 'int',
     ];
 
