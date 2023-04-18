@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Github:https://github.com/anhao
  */
 
-namespace App\Payments;;
+namespace App\Payments;
 
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
