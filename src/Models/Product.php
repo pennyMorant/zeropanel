@@ -19,12 +19,29 @@ class Product extends Model
         switch ($this->status) {
             case 0:
                 $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="product_status_'.$this->id.'" onclick="updateProductStatus('.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" onclick="updateProductStatus(\'status\', ' . 1 . ', ' .$this->id.')" />
                             </div>';
                 break;
             case 1:
                 $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="product_status_'.$this->id.'" checked="checked" onclick="updateProductStatus('.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" checked="checked" onclick="updateProductStatus(\'status\', ' . 0 . ', ' .$this->id.')" />
+                            </div>';
+                break;
+        }
+        return $status;
+    }
+
+    public function renew()
+    {
+        switch ($this->renew) {
+            case 0:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" onclick="updateProductStatus(\'renew\', ' . 1 . ', ' .$this->id.')" />
+                            </div>';
+                break;
+            case 1:
+                $status = '<div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" checked="checked" onclick="updateProductStatus(\'renew\', ' . 0 . ', ' .$this->id.')" />
                             </div>';
                 break;
         }

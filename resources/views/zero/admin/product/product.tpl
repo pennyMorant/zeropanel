@@ -56,18 +56,42 @@
             })
         </script>
         <script>
-            function updateProductStatus(id) {
-                var status = $("#product_status_"+id).prop("checked") ? 1 : 0;
-                $.ajax({
-                    type: "PUT",
-                    url: "/{$config['website_admin_path']}/product/update/status",
-                    dataType: "JSON",
-                    data: {
-                        status,
-                        id,
-                    },
-                    success: function(data){}
-                });
+            function updateProductStatus(method, type, id) {
+                switch (method) {
+                    case 'status':
+                        $.ajax({
+                            type: "PUT",
+                            url: "/{$config['website_admin_path']}/product/update/status",
+                            dataType: "JSON",
+                            data: {
+                                type,
+                                id,
+                                method
+                            },
+                            success: function(data){
+                                table_1.ajax.reload();
+                            }
+                        });
+                        break;
+                    case 'renew':
+                        $.ajax({
+                            type: "PUT",
+                            url: "/{$config['website_admin_path']}/product/update/status",
+                            dataType: "JSON",
+                            data: {
+                                type,
+                                id,
+                                method
+                            },
+                            success: function(data){
+                                table_1.ajax.reload();
+                            }
+                        });
+                        break;
+                    default:
+                        getresult('请求错误', '', 'error');
+                        break;
+                }
             }
         </script>
     </body>

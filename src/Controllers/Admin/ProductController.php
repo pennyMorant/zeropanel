@@ -18,6 +18,7 @@ class ProductController extends AdminController
             'type'      => '产品类型',
             'sales'     => '周期销量',
             'status'    => '状态',
+            'renew'     => '续费',
             'action'    => '操作'
         ];
     
@@ -134,6 +135,7 @@ class ProductController extends AdminController
                 'type'   => $rowData->type(),
                 'sales'  => $rowData->sales,
                 'status' => $rowData->status(),
+                'renew'  => $rowData->renew(),
                 'action' => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
                                     <li><a class = "dropdown-item" href = "product/update/'.$rowData->id.'">编辑</a></li>
@@ -153,10 +155,15 @@ class ProductController extends AdminController
 
     public function updateProductStatus(ServerRequest $request, Response $response, array $args): Response
     {
-        $id              = $request->getParam('id');
-        $status          = $request->getParam('status');
-        $product         = Product::find($id);
-        $product->status = $status;
+        $id      = $request->getParam('id');
+        $type    = $request->getParam('type');
+        $method  = $request->getParam('method');
+        $product = Product::find($id);
+        if ($method == 'status') {
+            $product->status = $type;
+        } else if ($method == 'renew') {
+            $product->renew = $type;
+        }
         $product->save();
         return $response->withJson([
             'ret' => 1,
