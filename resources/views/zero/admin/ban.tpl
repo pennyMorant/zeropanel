@@ -309,7 +309,6 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { width: '5%', targets: 0 },
                 { className: 'text-end', targets: -1 }
             ],
             columns: [
@@ -335,7 +334,6 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { width: '5%', targets: 0 },
                 { className: 'text-end', targets: -1 }
             ],
             columns: [

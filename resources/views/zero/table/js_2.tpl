@@ -11,8 +11,8 @@ scrollX: true,
 order: [[ 0, 'desc' ]],
 stateSave: true,
 columnDefs: [
-    { width: '5%', targets: 0 },
-    { className: 'text-end', targets: -1 }
+    { className: 'text-end', targets: -1 },
+    { orderable: false, targets: [-1] }
 ],
 columns: [
 {foreach $table_config['total_column'] as $key => $value}
