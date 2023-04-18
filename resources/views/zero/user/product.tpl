@@ -241,6 +241,9 @@
 													<li class="nav-item mb-3" id="zero_modal_configure_product_year_price">
 														
 													</li>
+													<li class="nav-item mb-3" id="zero_modal_configure_product_two_year_price">
+														
+													</li>
 												</ul>
 											</div>
 										</div>
@@ -266,6 +269,7 @@
 				$("#zero_modal_configure_product_quarter_price").html('');
 				$("#zero_modal_configure_product_half_year_price").html('');
 				$("#zero_modal_configure_product_year_price").html('');
+				$("#zero_modal_configure_product_two_year_price").html('');
 				console.log('clean success');
 			});
 		</script>

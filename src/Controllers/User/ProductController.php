@@ -65,14 +65,14 @@ final class ProductController extends BaseController
         $id = $request->getParam('id');
         $product = Product::find($id);
         $data = [
-            'name' => $product->name,
-            'month_price'   =>  $product->month_price,
-            'quarter_price' =>  $product->quarter_price,
-            'half_year_price'   =>  $product->half_year_price,
-            'year_price'    =>  $product->year_price,
-            'two_yeat_price'    => $product->two_year_price,
-            'onetime_price' =>  $product->onetime_price,
-            'type'  =>  $product->type,
+            'name'            => $product->name,
+            'month_price'     => $product->month_price,
+            'quarter_price'   => $product->quarter_price,
+            'half_year_price' => $product->half_year_price,
+            'year_price'      => $product->year_price,
+            'two_year_price'  => $product->two_year_price,
+            'onetime_price'   => $product->onetime_price,
+            'type'            => $product->type,
         ];
         return $response->withJson($data);
     }

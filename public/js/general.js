@@ -153,9 +153,7 @@ function kTUserConfigureProductModal(id, currency) {
                     $('#zero_modal_configure_product_' + key + ' a').addClass('active');
                   }
                 }
-              });
-
-            
+              });         
         }
 
         modalInnerHtml.html(html);

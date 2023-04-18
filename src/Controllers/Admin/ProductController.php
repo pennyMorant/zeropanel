@@ -193,6 +193,7 @@ class ProductController extends AdminController
             'quarter_price'   => $product->quarter_price,
             'half_year_price' => $product->half_year_price,
             'year_price'      => $product->year_price,
+            'two_year_price'  => $product->two_year_price,
             'type'            => $product->type,
         ];
         return $response->withJson($data);

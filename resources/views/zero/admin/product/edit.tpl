@@ -93,8 +93,8 @@
                                                         <span class="input-group-text">Mbps</span>
                                                     </div>
                                                     <label class="form-label">产品IP</label>
-                                                    <div class="input-group">
-                                                        <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="ip_limit" name="ip_limit" type="number" placeholder="产品IP" value="{$product->ip_limit}">
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="ip_limit" name="ip_limit" type="number" placeholder="产品IP" value="{$product->ip_limit}">
                                                         <span class="input-group-text">个</span>
                                                     </div>
                                                     <label class="form-label required">产品排序</label>
