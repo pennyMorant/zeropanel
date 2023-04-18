@@ -29,13 +29,14 @@ final class PaymentController extends AdminController
 
     public function createPayment(ServerRequest $request, Response $response, array $args): Response
     {
-        $postData = $request->getParsedBody();
-        if (is_null(Setting::obtain('website_url'))) {
+        if (empty(Setting::obtain('website_url'))) {
             return $response->withJson([
                 'ret'   => 0,
                 'msg'   => '请设置站点URL'
             ]);
         }
+
+        $postData                = $request->getParsedBody();
         $payment                 = new Payment();
         $payment->name           = $postData['payment_name'];
         $payment->gateway        = $postData['payment_gateway'];
@@ -61,8 +62,14 @@ final class PaymentController extends AdminController
 
     public function updatePayment(ServerRequest $request, Response $response, array $args): Response
     {
-        $postData = $request->getParsedBody();
+        if (empty(Setting::obtain('website_url'))) {
+            return $response->withJson([
+                'ret'   => 0,
+                'msg'   => '请设置站点URL'
+            ]);
+        }
         
+        $postData                = $request->getParsedBody();
         $payment                 = Payment::find($postData['id']);
         $payment->name           = $postData['payment_name'];
         $payment->gateway        = $postData['payment_gateway'];
