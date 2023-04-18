@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Payment;
+use App\Models\Setting;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use Ramsey\Uuid\Uuid;
@@ -29,7 +30,12 @@ final class PaymentController extends AdminController
     public function createPayment(ServerRequest $request, Response $response, array $args): Response
     {
         $postData = $request->getParsedBody();
-
+        if (is_null(Setting::obtain('website_url'))) {
+            return $response->withJson([
+                'ret'   => 0,
+                'msg'   => '请设置站点URL'
+            ]);
+        }
         $payment                 = new Payment();
         $payment->name           = $postData['payment_name'];
         $payment->gateway        = $postData['payment_gateway'];
