@@ -156,13 +156,17 @@ class OrderController extends BaseController
                     if (is_null($latest_order)){
                         throw new \Exception('订单不存在');
                     }
+                    if (is_null($latest_order->product_period)) {
+                        throw new \Exception('订单错误，无法续费');
+                    }
                     $product = Product::find($user->product_id);
                     if (is_null($product)) {
                         throw new \Exception('产品已经被删除, 续费失败');
                     }
-                    if (is_null($latest_order->product_period)) {
-                        throw new \Exception('订单错误，无法续费');
+                    if ($product->renew === 0) {
+                        throw new \Exception('该产品不允许续费');
                     }
+                    
                     $order                 = new Order;
                     $order->order_no       = OrderController::createOrderNo();
                     $order->order_type     = 3;
