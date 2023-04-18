@@ -163,7 +163,7 @@ class OrderController extends BaseController
                     if (is_null($product)) {
                         throw new \Exception('产品已经被删除, 续费失败');
                     }
-                    if ($product->renew === 0) {
+                    if ($product->renew === 0 && $product->status === 0) {
                         throw new \Exception('该产品不允许续费');
                     }
                     

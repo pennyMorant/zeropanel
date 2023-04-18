@@ -18,7 +18,7 @@ class ProductController extends AdminController
             'type'      => '产品类型',
             'sales'     => '周期销量',
             'status'    => '状态',
-            'renew'     => '续费',
+            'renew'     => '续费 <i class="bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="在商品停止销售时，已购用户是否可以续费"></i>',
             'action'    => '操作'
         ];
     
