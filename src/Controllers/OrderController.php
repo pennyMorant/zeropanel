@@ -337,9 +337,8 @@ class OrderController extends BaseController
             // 如果上面的代码执行成功，没有报错，再标记为已处理
             $order->execute_status = 1;
             $order->save();
-            if ($product->stock !== 0) {
-                $product->sales += 1; // 加销量
-            }           
+            
+            $product->sales += 1; // 加累积销量     
             $product->save();
         }
     }
