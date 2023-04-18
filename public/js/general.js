@@ -175,7 +175,8 @@ function KTUsersChangePlan(price, id, type, currency) {
         'month_price': i18next.t('monthly fee'),
         'quarter_price': i18next.t('quarterly fee'),
         'half_year_price': i18next.t('semi annua fee'),
-        'year_price':i18next.t('annual fee')
+        'year_price': i18next.t('annual fee'),
+        'two_year_price': i18next.t('biennial fee')
         };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
