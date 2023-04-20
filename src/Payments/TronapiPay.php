@@ -9,7 +9,7 @@ use Slim\Http\Response;
 
 class TronapiPay
 {
-    protected $config;
+    protected $config = [];
     protected $gatewayUrl;
 
     public function __construct($config)
@@ -31,13 +31,12 @@ class TronapiPay
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->gatewayUrl);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)');
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         $data = curl_exec($curl);
         curl_close($curl);
@@ -74,8 +73,8 @@ class TronapiPay
         $result = json_decode($this->post($data), true);
         if (!isset($result['data']['cashier_url'])) {        
             return [
-                'ret' => 0, '
-                msg' => '支付网关处理失败'
+                'ret' => 0,
+                'msg' => '支付网关处理失败'
             ];
         }
         return [
