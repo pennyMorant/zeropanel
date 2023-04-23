@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-15 08:22:19
+-- 生成日期： 2023-04-23 12:48:19
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
--- PHP 版本： 8.2.4
+-- PHP 版本： 8.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -287,6 +287,7 @@ CREATE TABLE `product` (
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '产品状态 1上架0下架',
+  `renew` tinyint(4) NOT NULL DEFAULT 1 COMMENT '开启续费',
   `stock` int(11) NOT NULL DEFAULT 0 COMMENT '库存',
   `sales` int(11) NOT NULL DEFAULT 0 COMMENT '销量',
   `custom_content` longtext DEFAULT NULL COMMENT '自定义商品介绍内容'
