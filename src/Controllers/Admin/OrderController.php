@@ -146,7 +146,7 @@ class OrderController extends AdminController
             $order->order_type     = 1;
             $order->product_price  = $product->productPrice($product_period);
             $order->product_period = $product_period;
-            $order->order_total    = $order_total == '' ? $product->price : $order_total;
+            $order->order_total    = ($order_total == '' ? $order->product_price : $order_total);
             $order->order_status   = 1;
             $order->created_time   = time();
             $order->updated_time   = time();
