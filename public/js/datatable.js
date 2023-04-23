@@ -21,6 +21,7 @@ var KTDatatablesOrderSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/order",
+                type: "POST"
             },
             
             columns: [
@@ -75,6 +76,7 @@ var KTDatatablesTicketSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/ticket",
+                type: "POST"
             },
             
             columns: [
@@ -131,6 +133,7 @@ var KTDatatablesSigninLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/loginlog",
+                type: "POST"
             },
             
             columns: [
@@ -181,6 +184,7 @@ var KTDatatablesUsedLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/uselog",
+                type: "POST"
             },
             
             columns: [
@@ -231,6 +235,7 @@ var KTDatatablesSubscribeLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/sublog",
+                type: "POST"
             },
             
             columns: [
@@ -289,6 +294,7 @@ var KTDatatablesTrafficLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/trafficlog",
+                type: "POST"
             },
             
             columns: [
@@ -339,6 +345,7 @@ var KTDatatablesBanRuleSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/ban_rule",
+                type: "POST"
             },
             columns: [
                 { data: 'name' },
@@ -387,6 +394,7 @@ var KTDatatablesUserBanedLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/user_baned_log",
+                type: "POST"
             },
             columns: [
                 { data: 'node_name' },
@@ -436,6 +444,7 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/get_commission_log",
+                type: "POST"
             },
             
             columns: [

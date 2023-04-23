@@ -38,8 +38,8 @@ class ZeroController extends BaseController
             ]);
         }
 
-        $commission = (int) trim($request->getParam('commission'));         # 金额
-        $type  = (int) trim($request->getParam('type'));    # 1:转余额 2:提现
+        $commission = (int) trim($request->getParsedBodyParam('commission'));         # 金额
+        $type       = (int) trim($request->getParsedBodyParam('type'));    # 1:转余额 2:提现
 
         if (!is_numeric($commission)) {
             return $response->withJson([
@@ -133,8 +133,8 @@ class ZeroController extends BaseController
             return $response->withJson($res);
         }
 
-        $account   = trim($request->getParam('acc'));   # 账号
-        $type  = trim($request->getParam('method'));  # 类型
+        $account   = trim($request->getParsedBodyParam('acc'));   # 账号
+        $type  = trim($request->getParsedBodyParam('method'));  # 类型
 
         if ($type !== Setting::obtain('withdraw_method')) {
             $res['ret'] = 0;
@@ -264,16 +264,13 @@ class ZeroController extends BaseController
     {
         $name       = $args['name'];                        # 得到表名
         $user       = $this->user;                          # 得到用户
-        $sort       = $request->getParam('order')[0]['dir'];             # 得到排序方法
-        $field      = $request->getParam('order')[0]['column'];
-        $sort_field = $request->getParam('columns')[$field]['data'];                                             # 得到排序字段
         if (is_null($user) || !$user->isLogin) {
             return 0;
         }
         
         switch ($name) {
             case 'ticket':
-                $querys = Ticket::query()->where('userid', $user->id)->orderBy($sort_field, $sort);
+                $querys = Ticket::query()->where('userid', $user->id);
                 $query = Ticket::getTableDataFromAdmin($request, null, null, $querys);
                 
                 $data = $query['datas']->map(function($rowData) {
@@ -298,7 +295,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'order':
-                $querys = Order::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
+                $querys = Order::query()->where('user_id', $user->id);
                 $query = Order::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
@@ -319,7 +316,7 @@ class ZeroController extends BaseController
                 break;
             case 'loginlog':
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;
-                $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
+                $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time);
                 $query = SigninIp::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
@@ -334,7 +331,7 @@ class ZeroController extends BaseController
                 break;
             case 'uselog':
                 $time   = $_SERVER['REQUEST_TIME'] - 86400 * 7;
-                $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
+                $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time);
                 $query  = Ip::getTableDataFromAdmin($request, null, null, $querys);
                 $data   = $query['datas']->map(function($rowData) {
                     return [
@@ -348,7 +345,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'sublog':
-                $querys = UserSubscribeLog::query()->where('user_id', $user->id)->orderBy($sort_field, $sort);
+                $querys = UserSubscribeLog::query()->where('user_id', $user->id);
                 $query = UserSubscribeLog::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
@@ -363,7 +360,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'trafficlog':
-                $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400)->orderBy($sort_field, $sort);
+                $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400);
                 $query = TrafficLog::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
@@ -378,7 +375,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'user_baned_log':
-                $querys = DetectLog::query()->orderBy($sort_field, 'desc')->where('user_id', $user->id);
+                $querys = DetectLog::query()->where('user_id', $user->id);
                 $query = DetectLog::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
@@ -393,8 +390,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;               
             case 'ban_rule':
-                $querys = DetectRule::query()->orderBy($sort_field, $sort);
-                $query = DetectRule::getTableDataFromAdmin($request, null, null, $querys);
+                $query = DetectRule::getTableDataFromAdmin($request);
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
@@ -407,7 +403,7 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'get_commission_log':
-                $querys = Payback::where('ref_by', '=', $user->id)->orderBy($sort_field, $sort);
+                $querys = Payback::where('ref_by', '=', $user->id);
                 $query = Payback::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {

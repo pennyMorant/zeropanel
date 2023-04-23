@@ -80,6 +80,7 @@ class RecordController extends AdminController
                             $order_field = 'ip';
                         }
                     },
+                    null,
                     static function ($query) {
                         $query->selectRaw('*, MAX(datetime) AS latest_datetime')->whereRaw('datetime >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
                     }

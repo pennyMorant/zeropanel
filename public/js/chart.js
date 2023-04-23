@@ -16,7 +16,7 @@ $(document).ready(function() {
     $.ajax({
         dataType: "json",
         url: url,
-        methond: "GET",
+        methond: "POST",
         data: {},
         success: function(data) {
             chart.updateSeries([{

@@ -72,8 +72,8 @@ return function (SlimApp $app) {
         
         $group->get('/nodeinfo/{id}',                   App\Controllers\ZeroController::class . ':nodeInfo');
         $group->get('/money',                           App\Controllers\ZeroController::class . ':getmoney');
-        $group->get('/ajax_data/table/{name}',          App\Controllers\ZeroController::class . ':ajaxDatatable');
-        $group->get('/ajax_data/chart/{name}',          App\Controllers\ZeroController::class . ':ajaxDataChart');
+        $group->post('/ajax_data/table/{name}',          App\Controllers\ZeroController::class . ':ajaxDatatable');
+        $group->post('/ajax_data/chart/{name}',          App\Controllers\ZeroController::class . ':ajaxDataChart');
         $group->delete('/ajax_data/delete',             App\Controllers\ZeroController::class . ':ajaxDatatableDelete');
         $group->post('/withdraw_commission',            App\Controllers\ZeroController::class . ':withdrawCommission');
         $group->post('/withdraw_account_setting',       App\Controllers\ZeroController::class . ':withdrawAccountSettings');

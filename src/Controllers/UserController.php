@@ -264,7 +264,7 @@ class UserController extends BaseController
                 ]);
                 break;
             case 'check':
-                $token_str = $request->getParsedBodyParam('token');
+                $token_str = $request->getQueryParam('token');
                 $token = Token::where('token', $token_str)->where('user_id', $user->id)
                             ->where('type', 3)->where('expire_time', '>', time())
                             ->first();

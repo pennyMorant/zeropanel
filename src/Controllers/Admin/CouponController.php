@@ -63,7 +63,7 @@ class CouponController extends AdminController
         $code->total_use_count = $postdata['total_use_count'];
         $code->code            = $final_code;
         $code->expire          = time() + $postdata['expire'] * 3600;
-        $code->limited_product = $postdata['limited_product'];
+        $code->limited_product = $postdata['limited_product'] ?: NULL;
         $code->discount        = $postdata['discount'];
 
         $code->save();
