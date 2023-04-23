@@ -150,12 +150,12 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">邮件测试</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm">测试</button>
+                                                                        <button class="btn btn-light-primary btn-sm" onclick="sendTestEmail()">测试</button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <label class="form-label">账号</label>
-                                                                    <input class="form-control" id="email_send_test" value="" type="text" placeholder="账号" />
+                                                                    <input class="form-control" id="test_email_address" value="" type="text" placeholder="账号" />
                                                                 </div>
                                                             </div>
                                                             <div class="card card-bordered">
@@ -1066,6 +1066,25 @@
                         getResult('请求错误', '', 'error');
                         break;
                 }
+            }
+        </script>
+        <script>
+            function sendTestEmail(){
+                $.ajax({
+                    type: 'POST',
+                    url: location.pathname+'/email',
+                    dataType: 'json',
+                    data: {
+                        email_address: $('#test_email_address').val()
+                    },
+                    success: function(data){
+                        if (data.ret === 1) {
+                            getResult(data.msg, '', 'success');
+                        } else {
+                            getResult(data.msg, '', 'error');
+                        }
+                    }
+                });
             }
         </script>
     </body>

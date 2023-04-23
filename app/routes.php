@@ -214,7 +214,6 @@ return function (SlimApp $app) {
             $setting->get('',                  SettingController::class . ':index');
             $setting->post('',                 SettingController::class . ':save');
             $setting->post('/email',           SettingController::class . ':test');
-            $setting->post('/payment',         SettingController::class . ':payment');
         });
 
         // 佣金

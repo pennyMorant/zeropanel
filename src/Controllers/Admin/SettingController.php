@@ -246,13 +246,13 @@ class SettingController extends AdminController
      */
     public function test(ServerRequest $request, Response $response, array $args)
     {
-        $to = $request->getParam('recipient');
+        $to = $request->getParam('email_address');
 
         try {
             Mail::send(
                 $to,
                 '测试邮件',
-                'news/welcome.tpl',
+                'auth/test.tpl',
                 [],
                 []
             );
