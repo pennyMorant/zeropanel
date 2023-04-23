@@ -110,7 +110,7 @@ class Job extends Command
         $messagetext = Setting::obtain('diy_system_clean_database_report_telegram_notify_content');
         Telegram::pushToAdmin($messagetext);
         echo '每日数据库清理成功报告发送结束' . PHP_EOL;
-
+        
         $configs = Setting::getClass('currency');
         if ($configs['enable_currency'] == true && !is_null($configs['currency_exchange_rate'])) {
             $swap = (new Builder())

@@ -74,6 +74,9 @@ class OrderController extends BaseController
         switch ($type) {
             case 1: // 新购产品
                 try {
+                    if (Setting::obtain('verify_email') === 'open' && $user->verified === 0) {
+                        throw new \Exception(I18n::get()->t('please verify email first'));
+                    }
                     if (is_null($product)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }

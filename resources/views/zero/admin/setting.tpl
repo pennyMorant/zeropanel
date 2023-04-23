@@ -459,6 +459,11 @@
                                                                         <input class="form-control" id="signup_default_class_time" value="{$settings['signup_default_class_time']}" type="text" placeholder="等级时长" />
                                                                         <span class="input-group-text">天</span>
                                                                     </div>
+                                                                    <label class="form-label">验证邮箱</label>
+                                                                    <select class="form-select mb-5" id="verify_email" data-control="select2" data-hide-search="true">
+                                                                        <option value="close" {if $settings['verify_email'] == 'close'} selected{/if}>关闭</option>
+                                                                        <option value="open" {if $settings['verify_email'] == 'open'} selected{/if}>开启</option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">默认流量</label>
@@ -982,7 +987,8 @@
                                 signup_default_class_time: $('#signup_default_class_time').val(),
                                 signup_default_traffic: $('#signup_default_traffic').val(),
                                 signup_default_ip_limit: $('#signup_default_ip_limit').val(),
-                                signup_default_speed_limit: $('#signup_default_speed_limit').val()
+                                signup_default_speed_limit: $('#signup_default_speed_limit').val(),
+                                verify_email: $('#verify_email').val()
                             },
                             success: function(data){
                                 if (data.ret === 1){

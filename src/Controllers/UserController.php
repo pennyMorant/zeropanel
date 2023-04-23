@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\Auth;
+use App\Services\Mail;
 use App\Models\{
     Ann,
     User,
@@ -233,5 +234,53 @@ class UserController extends BaseController
         return $response
             ->withStatus(302)
             ->withHeader('Location', '/');
+    }
+
+    public function verifyEmail(ServerRequest $request, Response $response, array $args)
+    {
+        $action = $args['action'];
+        $user = $this->user;
+        if ($user->verified == 1) {
+            return $response->withHeader('Location', '/user/dashboard');
+        }
+        switch ($action) {
+            case 'send':            
+                $token = Token::createToken($user, 64, 3);
+                $subject = Setting::obtain('website_name') . '邮箱验证';
+                $url = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
+
+                Mail::send(
+                    $user->email,
+                    $subject,
+                    'auth/verify.tpl',
+                    [
+                        'url' => $url
+                    ],
+                    []
+                );
+                return $response->withJson([
+                    'ret'   =>  1,
+                    'msg'   =>  '验证邮件发送成功'
+                ]);
+                break;
+            case 'check':
+                $token_str = $request->getParam('token');
+                $token = Token::where('token', $token_str)->where('user_id', $user->id)
+                            ->where('type', 3)->where('expire_time', '>', time())
+                            ->first();
+                if (is_null($token)) {
+                    $this->view()
+                        ->assign('verification_result', 'false')
+                        ->display('user/verify.tpl');
+                    return $response;
+                }
+                $user->verified = 1;
+                $user->save();
+                $this->view()
+                        ->assign('verification_result', 'true')
+                        ->display('user/verify.tpl');
+                return $response;
+                break;
+        }
     }
 }

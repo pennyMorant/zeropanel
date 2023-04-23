@@ -226,6 +226,7 @@
     "subject": "主题",
     "create ticket": "创建工单",
     "reply": "回复",
+    "please verify email first": "请先验证邮箱",
     "tutorial": {
         "android": {
             "clash": {

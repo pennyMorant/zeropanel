@@ -3,14 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
-use App\Models\{
-    Setting
-};
+use App\Models\Setting;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use App\Services\{
-    Mail
-};
+use App\Services\Mail;
 use Exception;
 
 class SettingController extends AdminController
@@ -133,7 +129,8 @@ class SettingController extends AdminController
                     'signup_default_class', 
                     'signup_default_class_time', 
                     'signup_default_ip_limit', 
-                    'signup_default_speed_limit'
+                    'signup_default_speed_limit',
+                    'verify_email'
                 ];
                 break;
             // 邀请设置

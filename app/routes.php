@@ -65,8 +65,7 @@ return function (SlimApp $app) {
         $group->get('/trafficlog',                      App\Controllers\UserController::class . ':trafficLog');
         $group->post('/kill',                           App\Controllers\UserController::class . ':handleKill');
         $group->get('/logout',                          App\Controllers\UserController::class . ':logout');
-        
-        
+        $group->any('/verify/email/{action}',           App\Controllers\UserController::class . ':verifyEmail');
 
         // getUserAllURL
         $group->get('/getUserAllURL',                   App\Controllers\UserController::class . ':getUserAllURL');

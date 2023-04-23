@@ -221,6 +221,7 @@
     "change passwd": "Change password",
     "subject": "Subject",
     "create ticket": "Create Ticket",
+    "please verify email first": "Please verify email first",
     "tutorial": {
         "android": {
             "clash": {
