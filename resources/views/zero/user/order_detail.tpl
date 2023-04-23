@@ -120,7 +120,7 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status === 1 && $order->order_total !== 0}
+											{if $order->order_status === 1 && $order->order_total != 0}
                                             <div class="col-lg-12">
 												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
 												
