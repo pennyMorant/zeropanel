@@ -63,9 +63,9 @@ class PasswordController extends BaseController
 
     public function handleToken(ServerRequest $request, Response $response, array $args)
     {
-        $tokenStr = $request->getParam('token');
-        $password = $request->getParam('password');
-        $repassword = $request->getParam('repassword');
+        $tokenStr   = $request->getParsedBodyParam('token');
+        $password   = $request->getParsedBodyParam('password');
+        $repassword = $request->getParsedBodyParam('repassword');
 
         // check token
         $token = Token::where('token', $tokenStr)->where('expire_time', '>', time())->first();

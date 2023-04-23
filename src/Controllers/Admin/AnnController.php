@@ -124,8 +124,8 @@ class AnnController extends AdminController
 
     public function updateNews(ServerRequest $request, Response $response, array $args): Response
     {   
-        $ann           = Ann::find($request->getParam('id'));
-        $ann->content  = $request->getParam('content');
+        $ann           = Ann::find($request->getParsedBodyParam('id'));
+        $ann->content  = $request->getParsedBodyParam('content');
         //$ann->markdown = $datas['markdown');
         $ann->date     = date('Y-m-d H:i:s');
         if (!$ann->save()) {
@@ -146,7 +146,7 @@ class AnnController extends AdminController
 
     public function deleteNews(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $ann = Ann::find($id);
         $ann->delete();
         return $response->withJson([
@@ -157,7 +157,7 @@ class AnnController extends AdminController
 
     public function requestNews(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $news = Ann::find($id);
         return $response->withJson([
             'content' => $news->content,

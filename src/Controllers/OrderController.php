@@ -64,11 +64,12 @@ class OrderController extends BaseController
     public function createOrder(ServerRequest $request, Response $response, array $args)
     {
         $user          = $this->user;
-        $coupon_code   = $request->getParam('coupon_code');
-        $product_id    = $request->getParam('product_id');
-        $product_price = $request->getParam('product_price');
+        $postData      = $request->getParsedBody();
+        $coupon_code   = $postData['coupon_code'];
+        $product_id    = $postData['product_id'];
+        $product_price = $postData['product_price'];
         $product       = Product::find($product_id);
-        $amount        = $request->getParam('add_credit_amount');
+        $amount        = $postData['add_credit_amount'];
         $type          = $args['type'];
 
         switch ($type) {
@@ -113,10 +114,10 @@ class OrderController extends BaseController
                         }
                     }
                     
-                    $order->order_status = 1;
-                    $order->created_time = time();
-                    $order->updated_time = time();
-                    $order->expired_time = time() + 600;
+                    $order->order_status   = 1;
+                    $order->created_time   = time();
+                    $order->updated_time   = time();
+                    $order->expired_time   = time() + 600;
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e) {
@@ -223,8 +224,8 @@ class OrderController extends BaseController
     public function processOrder(ServerRequest $request, Response $response, array $args)
     {
         $user           = $this->user;
-        $payment_method = $request->getParam('method');
-        $order_no       = $request->getParam('order_no');
+        $payment_method = $request->getParsedBodyParam('method');
+        $order_no       = $request->getParsedBodyParam('order_no');
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
         try {
@@ -352,7 +353,7 @@ class OrderController extends BaseController
 
     public function verifyCoupon(ServerRequest $request, Response $response, array $args)
     {
-        $coupon = $request->getParam('coupon_code');
+        $coupon = $request->getParsedBodyParam('coupon_code');
         $coupon = trim($coupon);
 
         $user = $this->user;
@@ -362,7 +363,7 @@ class OrderController extends BaseController
             return $response->withJson($res);
         }
 
-        $product_id = $request->getParam('product_id');
+        $product_id = $request->getParsedBodyParam('product_id');
 
         $product = Product::where('id', $product_id)->where('status', 1)->first();
 

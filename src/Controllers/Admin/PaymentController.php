@@ -69,17 +69,17 @@ final class PaymentController extends AdminController
             ]);
         }
         
-        $postData                = $request->getParsedBody();
-        $payment                 = Payment::find($postData['id']);
-        $payment->name           = $postData['payment_name'];
-        $payment->gateway        = $postData['payment_gateway'];
-        $payment->config         = json_encode($postData['payment_config']);
-        $payment->icon           = $postData['payment_icon'] ?: NULL;
-        $payment->percent_fee    = $postData['payment_percent_fee'] ?: NULL;
-        $payment->fixed_fee      = $postData['payment_fixed_fee'] ?: NULL;
-        $payment->recharge_bonus = $postData['payment_recharge_bonus'] ?: NULL;
-        $payment->notify_domain  = $postData['payment_notify_domain'] ?: NULL;
-        $payment->uuid           = $payment->uuid ?: Uuid::uuid5(Uuid::NAMESPACE_DNS,  $postData['payment_name']. '|' . time());
+        $putData                = $request->getParsedBody();
+        $payment                 = Payment::find($putData['id']);
+        $payment->name           = $putData['payment_name'];
+        $payment->gateway        = $putData['payment_gateway'];
+        $payment->config         = json_encode($putData['payment_config']);
+        $payment->icon           = $putData['payment_icon'] ?: NULL;
+        $payment->percent_fee    = $putData['payment_percent_fee'] ?: NULL;
+        $payment->fixed_fee      = $putData['payment_fixed_fee'] ?: NULL;
+        $payment->recharge_bonus = $putData['payment_recharge_bonus'] ?: NULL;
+        $payment->notify_domain  = $putData['payment_notify_domain'] ?: NULL;
+        $payment->uuid           = $payment->uuid ?: Uuid::uuid5(Uuid::NAMESPACE_DNS,  $putData['payment_name']. '|' . time());
         $payment->updated_at     = time();
         $payment->save();
 
@@ -116,7 +116,7 @@ final class PaymentController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Payment::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -125,7 +125,7 @@ final class PaymentController extends AdminController
 
     public function getPaymentConfig(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $payment = Payment::find($id);
         $data = [
             'payment_name'          => $payment->name,
@@ -153,9 +153,9 @@ final class PaymentController extends AdminController
 
     public function enablePayment(ServerRequest $request, Response $response, array $args): Response
     {
-        $id              = $request->getParam('id');
+        $id              = $request->getParsedBodyParam('id');
         $payment         = Payment::find($id);
-        $payment->enable = $request->getParam('status');
+        $payment->enable = $request->getParsedBodyParam('status');
         $payment->save();
         return $response->withJson([
             'ret' => 1,

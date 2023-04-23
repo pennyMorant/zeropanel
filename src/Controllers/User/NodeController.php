@@ -17,7 +17,7 @@ use Slim\Http\ServerRequest;
 
 class NodeController extends UserController
 {
-    public function node(ServerRequest $request, Response $response, array $args)
+    public function nodeIndex(ServerRequest $request, Response $response, array $args)
     {
         $user        = $this->user;
         $user_group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);

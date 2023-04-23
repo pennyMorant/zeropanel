@@ -36,10 +36,10 @@ class TicketController extends AdminController
     public function createTicket(ServerRequest $request, Response $response, array $args): Response
     {
         $postData = $request->getParsedBody();
-        $subject  = $postData['subject'] ?? '';
-        $comment  = $postData['content'] ?? '';
-        $type     = $postData['type'] ?? 'support';
-        $user_id  = $postData['user_id'] ?? '';
+        $subject  = $postData['subject'] ?: '';
+        $comment  = $postData['content'] ?: '';
+        $type     = $postData['type'] ?: 'support';
+        $user_id  = $postData['user_id'] ?: '';
         if (empty($subject)||empty($comment)||empty($user_id)) {
             return $response->withJson([
                 'ret' => 0,
@@ -78,8 +78,8 @@ class TicketController extends AdminController
 
     public function updateTicket(ServerRequest $request, Response $response, array $args): Response
     {
-        $id      = $request->getParam('id');
-        $comment = $request->getParam('comment');
+        $id      = $request->getParsedBodyParam('id');
+        $comment = $request->getParsedBodyParam('comment');
 
         if ($comment === '') {
             return $response->withJson([
@@ -174,7 +174,7 @@ class TicketController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Ticket::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -183,7 +183,7 @@ class TicketController extends AdminController
 
     public function deleteTicket(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         Ticket::find($id)->delete();
         return $response->withJson([
             'ret'   => 1,
@@ -193,7 +193,7 @@ class TicketController extends AdminController
 
     public function closeTicket(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $ticket = Ticket::find($id);
         $ticket->status = 0;
         $ticket->save();

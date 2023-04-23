@@ -76,7 +76,7 @@ class CommissionController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Withdraw::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -85,8 +85,8 @@ class CommissionController extends AdminController
 
     public function updateWithdrawCommission(ServerRequest $request, Response $response, array $args)
     {
-        $mode = $request->getParam('mode');
-        $id   = $request->getParam('id');
+        $mode = $request->getParsedBodyParam('mode');
+        $id   = $request->getParsedBodyParam('id');
 
         switch ($mode) {
             case 'mark_done': 
@@ -135,7 +135,7 @@ class CommissionController extends AdminController
         })->toArray();
 
         return $response->WithJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Payback::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data

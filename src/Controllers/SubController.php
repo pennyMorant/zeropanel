@@ -217,7 +217,7 @@ final class SubController
                     }                
                     break;
                 case 'vmess':                  
-                    $vmess_params['ws'] = $node_config['net'] == 'ws' ? 'true' : 'false';
+                    $vmess_params['ws']  = $node_config['net']      == 'ws' ? 'true' : 'false';
                     $vmess_params['tls'] = $node_config['security'] == 'tls' ? 'true' : 'false';
                     
                     $node_info = sprintf(

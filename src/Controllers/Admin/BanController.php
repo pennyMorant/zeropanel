@@ -39,8 +39,8 @@ class BanController extends AdminController
             'datetime' => '时间'
         ];
         $table_config_detect_record['ajax_url'] = 'ban/detect/record/ajax';
-        $table_config_ban_record['ajax_url'] = 'ban/record/ajax';
-        $table_config['ajax_url'] = 'ban/rule/ajax';
+        $table_config_ban_record['ajax_url']    = 'ban/record/ajax';
+        $table_config['ajax_url']               = 'ban/rule/ajax';
         $this->view()
             ->assign('table_config', $table_config)
             ->assign('table_config_detect_record', $table_config_detect_record)
@@ -79,7 +79,7 @@ class BanController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => DetectRule::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -88,11 +88,12 @@ class BanController extends AdminController
 
     public function createBanRule(ServerRequest $request, Response $response, array $args): Response
     {
+        $postData    = $request->getParsedBody();
         $rule        = new DetectRule();
-        $rule->name  = $request->getParam('name');
-        $rule->text  = $request->getParam('text');
-        $rule->regex = $request->getParam('regex');
-        $rule->type  = $request->getParam('type');
+        $rule->name  = $postData['name'];
+        $rule->text  = $postData['text'];
+        $rule->regex = $postData['regex'];
+        $rule->type  = $postData['type'];
 
         if (!$rule->save()) {
             return $response->withJson([
@@ -109,13 +110,14 @@ class BanController extends AdminController
 
     public function updateBanRule(ServerRequest $request, Response $response, array $args): Response
     {
-        $id   = $request->getParam('id');
-        $rule = DetectRule::find($id);
+        $putData = $request->getParsedBody();
+        $id      = $putData['id'];
+        $rule    = DetectRule::find($id);
 
-        $rule->name  = $request->getParam('name');
-        $rule->text  = $request->getParam('text');
-        $rule->regex = $request->getParam('regex');
-        $rule->type  = $request->getParam('type');
+        $rule->name  = $putData['name'];
+        $rule->text  = $putData['text'];
+        $rule->regex = $putData['regex'];
+        $rule->type  = $putData['type'];
 
         if (!$rule->save()) {
             return $response->withJson([
@@ -132,7 +134,7 @@ class BanController extends AdminController
 
     public function deleteBanRule(ServerRequest $request, Response $response, array $args): Response
     {
-        $id   = $request->getParam('id');
+        $id   = $request->getParsedBodyParam('id');
         $rule = DetectRule::find($id);
         $rule->delete();
         return $response->withJson([
@@ -158,7 +160,7 @@ class BanController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => DetectLog::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -189,7 +191,7 @@ class BanController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => DetectBanLog::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -198,7 +200,7 @@ class BanController extends AdminController
 
     public function requestBanRule(ServerRequest $request, Response $response, array $args): Response
     {
-        $id   = $request->getParam('id');
+        $id   = $request->getParsedBodyParam('id');
         $rule = DetectRule::find($id);
         return $response->withJson([
             'name'  => $rule->name,

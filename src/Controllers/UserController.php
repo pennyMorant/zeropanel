@@ -42,8 +42,8 @@ class UserController extends BaseController
     
     public function tutorial(ServerRequest $request, Response $response, array $args)
     {
-        $opts = $request->getQueryParams();
-        $opts['os'] = str_replace(' ','',$opts['os']);
+        $opts           = $request->getQueryParams();
+        $opts['os']     = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
         if ($opts['os'] != '' && $opts['client'] != '') {
             $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
@@ -80,7 +80,7 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $referred_user = User::where('ref_by', $this->user->id)->count();
-        $invite_url = Setting::obtain('website_url') . '/signup?ref=' . $code->code;
+        $invite_url    = Setting::obtain('website_url') . '/signup?ref=' . $code->code;
         $this->view()
             ->assign('code', $code)
             ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
@@ -92,7 +92,7 @@ class UserController extends BaseController
     
     public function enableNotify(ServerRequest $request, Response $response, array $args)
     {
-        $type = $request->getParam('notify_type');
+        $type = $request->getParsedBodyParam('notify_type');
        
         $user = $this->user;
         if ($type == 'telegram' && Setting::obtain('enable_telegram_bot') == false) {
@@ -117,15 +117,15 @@ class UserController extends BaseController
         $user = $this->user;
         switch ($type) {
             case 'password':
-                $current_password = $request->getParam('current_password');
-                $new_password = $request->getParam('new_password');
+                $current_password = $request->getParsedBodyParam('current_password');
+                $new_password     = $request->getParsedBodyParam('new_password');
                 try {
-                if (!Hash::checkPassword($user->password, $current_password)) {  
-                    throw new \Exception(I18n::get()->t('passwd error'));
-                }
-                $hashPassword = Hash::passwordHash($new_password);
-                $user->password = $hashPassword;
-                $user->save();
+                    if (!Hash::checkPassword($user->password, $current_password)) {  
+                        throw new \Exception(I18n::get()->t('passwd error'));
+                    }
+                    $hashPassword   = Hash::passwordHash($new_password);
+                    $user->password = $hashPassword;
+                    $user->save();
                 } catch (\Exception $e) {
                     return $response->withJson([
                         'ret' => 0,
@@ -135,8 +135,8 @@ class UserController extends BaseController
                 }
                 break;
             case 'email':
-                $newemail = $request->getParam('newemail');
-                $oldemail = $user->email;
+                $newemail  = $request->getParsedBodyParam('newemail');
+                $oldemail  = $user->email;
                 $otheruser = User::where('email', $newemail)->first();
                 try {                 
                     if (empty($newemail)) {
@@ -193,7 +193,7 @@ class UserController extends BaseController
     public function handleKill(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
-        $passwd = $request->getParam('passwd');
+        $passwd = $request->getParsedBodyParam('passwd');
         // check passwd
         $res = array();
         if (!Hash::checkPassword($user->password, $passwd)) {
@@ -239,15 +239,15 @@ class UserController extends BaseController
     public function verifyEmail(ServerRequest $request, Response $response, array $args)
     {
         $action = $args['action'];
-        $user = $this->user;
+        $user   = $this->user;
         if ($user->verified == 1) {
             return $response->withHeader('Location', '/user/dashboard');
         }
         switch ($action) {
             case 'send':            
-                $token = Token::createToken($user, 64, 3);
+                $token   = Token::createToken($user, 64, 3);
                 $subject = Setting::obtain('website_name') . '邮箱验证';
-                $url = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
+                $url     = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
 
                 Mail::send(
                     $user->email,
@@ -264,7 +264,7 @@ class UserController extends BaseController
                 ]);
                 break;
             case 'check':
-                $token_str = $request->getParam('token');
+                $token_str = $request->getParsedBodyParam('token');
                 $token = Token::where('token', $token_str)->where('user_id', $user->id)
                             ->where('type', 3)->where('expire_time', '>', time())
                             ->first();

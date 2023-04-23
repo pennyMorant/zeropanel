@@ -225,13 +225,13 @@ class LinkController extends BaseController
      */
     private static function Subscribe_log($user, $type, $ua)
     {
-        $log = new UserSubscribeLog();
-        $log->user_id = $user->id;
-        $log->email = $user->email;
-        $log->subscribe_type = $type;
-        $log->request_ip = $_SERVER['REMOTE_ADDR'];
-        $log->request_time = time();
-        $antiXss = new AntiXSS();
+        $log                     = new UserSubscribeLog();
+        $log->user_id            = $user->id;
+        $log->email              = $user->email;
+        $log->subscribe_type     = $type;
+        $log->request_ip         = $_SERVER['REMOTE_ADDR'];
+        $log->request_time       = time();
+        $antiXss                 = new AntiXSS();
         $log->request_user_agent = $antiXss->xss_clean($ua);
         $log->save();
     }
@@ -285,18 +285,16 @@ class LinkController extends BaseController
         }
         $userapiUrl = Setting::obtain('subscribe_address_url') . '/link/' . $user->subscription_token;
         $return_info = [
-            'link' => '',
-            // sub
-            'ss' => '?list=shadowsocks',
-            'v2rayn' => '?list=v2rayn',
-            'trojan' => '?list=trojan',
-            // apps
-            'anxray' => '?list=anxray',
-            'clash' => '?clash=1',
-            'surge' => '?surge=4',
-            'surfboard' => '?surfboard=1',
-            'quantumult' => '?list=quantumult',
-            'quantumultx' => '?list=quantumultx',
+            'link'         => '',
+            'ss'           => '?list=shadowsocks',
+            'v2rayn'       => '?list=v2rayn',
+            'trojan'       => '?list=trojan',
+            'anxray'       => '?list=anxray',
+            'clash'        => '?clash=1',
+            'surge'        => '?surge=4',
+            'surfboard'    => '?surfboard=1',
+            'quantumult'   => '?list=quantumult',
+            'quantumultx'  => '?list=quantumultx',
             'shadowrocket' => '?list=shadowrocket',
         ];
 
@@ -403,24 +401,24 @@ class LinkController extends BaseController
         }
         $baseUrl = explode('//', Setting::obtain('website_url'))[1];
         $Extend = [
-            'remark' => '',
-            'type' => '',
-            'add' => $baseUrl,
-            'address' => $baseUrl,
-            'port' => 10086,
-            'method' => 'aes-128-gcm',
-            'passwd' => $user->passwd,
-            'uuid' => $user->uuid,
-            'aid' => 0,
-            'net' => 'tcp',
-            'headertype' => 'none',
-            'host' => '',
-            'path' => '/',
-            'security' => '',
-            'sni' => '',
-            'flow' => '',
+            'remark'      => '',
+            'type'        => '',
+            'add'         => $baseUrl,
+            'address'     => $baseUrl,
+            'port'        => 10086,
+            'method'      => 'aes-128-gcm',
+            'passwd'      => $user->passwd,
+            'uuid'        => $user->uuid,
+            'aid'         => 0,
+            'net'         => 'tcp',
+            'headertype'  => 'none',
+            'host'        => '',
+            'path'        => '/',
+            'security'    => '',
+            'sni'         => '',
+            'flow'        => '',
             'servicename' => '',
-            'group' => Setting::obtain('website_name')
+            'group'       => Setting::obtain('website_name')
         ];
         if ($list == 'shadowrocket') {
             $return[] = ('STATUS=' . $unusedTraffic . '.♥.' . $expire_in . PHP_EOL . 'REMARKS=' . Setting::obtain('website_name'));
@@ -524,11 +522,11 @@ class LinkController extends BaseController
      */
     public static function getClash($user, $clash, $opts, $Rule)
     {
-        $subInfo = self::getSubinfo($user, $clash);
-        $userapiUrl = $subInfo['clash'];
+        $subInfo     = self::getSubinfo($user, $clash);
+        $userapiUrl  = $subInfo['clash'];
         $ssr_support = ($clash == 2 ? true : false);
-        $items = URL::getNew_AllItems($user, $Rule);
-        $Proxys = [];
+        $items       = URL::getNew_AllItems($user, $Rule);
+        $Proxys      = [];
         foreach ($items as $item) {
             $Proxy = SubController::getClash($item, $ssr_support);
             if (!is_null($Proxy)) {

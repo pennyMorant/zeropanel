@@ -38,8 +38,8 @@ class AuthController extends BaseController
     public function signinHandle(ServerRequest $request, Response $response, array $args)
     {
         $postdata = $request->getParsedBody();
-        $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
-        $passwd = $postdata['passwd'];
+        $email    = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
+        $passwd   = $postdata['passwd'];
 
         $trans = I18n::get();
         try {
@@ -107,9 +107,9 @@ class AuthController extends BaseController
     public function signUpHandle(ServerRequest $request, Response $response, array $args)
     {
         $postdata = $request->getParsedBody();
-        $email = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
-        $passwd     = $postdata['passwd'];
-        $code = $request->getParsedBodyParam('code');
+        $email    = filter_var($postdata['email'], FILTER_VALIDATE_EMAIL);
+        $passwd   = $postdata['passwd'];
+        $code     = $request->getParsedBodyParam('code');
 
         $trans = I18n::get();
 

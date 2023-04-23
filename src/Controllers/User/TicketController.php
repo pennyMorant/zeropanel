@@ -43,9 +43,9 @@ class TicketController extends UserController
 
     public function createTicket(ServerRequest $request, Response $response, array $args)
     {
-        $title = $request->getParam('title');
-        $comment = $request->getParam('comment');
-        $type = $request->getParam('type');
+        $title   = $request->getParsedBodyParam('title');
+        $comment = $request->getParsedBodyParam('comment');
+        $type    = $request->getParsedBodyParam('type');
         if ($title === '' || $comment === '') {
             return $response->withJson([
                 'ret' => 0,
@@ -98,8 +98,8 @@ class TicketController extends UserController
 
     public function updateTicket(ServerRequest $request, Response $response, array $args)
     {
-        $id = $request->getParam('id');
-        $comment = $request->getParam('comment');
+        $id      = $request->getParsedBodyParam('id');
+        $comment = $request->getParsedBodyParam('comment');
 
         if ($comment === '') {
             return $response->withJson([
@@ -154,8 +154,8 @@ class TicketController extends UserController
 
     public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
-        $id = $args['id'];
-        $ticket = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
+        $id       = $args['id'];
+        $ticket   = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
         $comments = json_decode($ticket->content, true);
 
         //$ticket->status = Tools::getTicketStatus($ticket);

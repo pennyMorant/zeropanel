@@ -179,40 +179,40 @@ class ZeroController extends BaseController
             case '1':
                 $info = $node->getShadowsocksConfig($user, $node->custom_config);
                 $res = [
-                    'ret' => 1,
+                    'ret'  => 1,
                     'type' => 1,
                     'info' => $info,
-                    'url' => URL::getShadowsocksURL($user, $node, $emoji)
+                    'url'  => URL::getShadowsocksURL($user, $node, $emoji)
                 ];
                 break;
             case '2':
                 $info = $node->getVmessConfig($user, $node->custom_config);
-                $res = [
-                    'ret' => 1,
+                $res  = [
+                    'ret'  => 1,
                     'type' => 2,
                     'info' => $info,
-                    'url' => URL::getVmessURL($user, $node, $emoji),
+                    'url'  => URL::getVmessURL($user, $node, $emoji),
                 ];
                 break;
-            case '3':
+            case '3': 
                 $info = $node->getVlessConfig($user, $node->custom_config);
-                $res = [
-                    'ret' => 1,
+                $res  = [
+                    'ret'  => 1,
                     'type' => 3,
                     'info' => $info,
-                    'url' => URL::getVlessURL($user, $node, $emoji),
+                    'url'  => URL::getVlessURL($user, $node, $emoji),
                 ];
                 break;
-            case '4':
+            case '4': 
                 $info = $node->getTrojanConfig($user, $node->custom_config);
-                $res = [
-                    'ret' => 1,
+                $res  = [
+                    'ret'  => 1,
                     'type' => 4,
                     'info' => $info,
-                    'url' => URL::getTrojanURL($user, $node, $emoji),
+                    'url'  => URL::getTrojanURL($user, $node, $emoji),
                 ];
                 break;
-            default:
+            default: 
                 $res = [
                     'ret' => 0,
                     'msg' => '该节点暂不支持查看配置',
@@ -262,10 +262,10 @@ class ZeroController extends BaseController
 
     public function ajaxDatatable(ServerRequest $request, Response $response, array $args)
     {
-        $name = $args['name'];                        # 得到表名
-        $user = $this->user;                          # 得到用户
-        $sort = $request->getParam('order')[0]['dir'];             # 得到排序方法
-        $field = $request->getParam('order')[0]['column'];            
+        $name       = $args['name'];                        # 得到表名
+        $user       = $this->user;                          # 得到用户
+        $sort       = $request->getParam('order')[0]['dir'];             # 得到排序方法
+        $field      = $request->getParam('order')[0]['column'];
         $sort_field = $request->getParam('columns')[$field]['data'];                                             # 得到排序字段
         if (is_null($user) || !$user->isLogin) {
             return 0;
@@ -284,13 +284,13 @@ class ZeroController extends BaseController
                         $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
                     }
                     return [
-                        'id'    => $rowData->id,
-                        'type'  =>  $rowData->type,
-                        'title' =>  $rowData->title,
-                        'status'    =>  $rowData->status(),
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
-                        'last_updated'  =>  $last_updated,
-                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$rowData->id.'">' . $trans->t('details') . '</a>',
+                        'id'           => $rowData->id,
+                        'type'         => $rowData->type,
+                        'title'        => $rowData->title,
+                        'status'       => $rowData->status(),
+                        'datetime'     => date('Y-m-d H:i:s', $rowData->datetime),
+                        'last_updated' => $last_updated,
+                        'action'       => '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$rowData->id.'">' . $trans->t('details') . '</a>',
                     ];
                 })->toArray();
 
@@ -305,16 +305,16 @@ class ZeroController extends BaseController
                     $trans = I18n::get();
 
                     return [
-                        'order_total'   =>  $rowData->order_total,
-                        'order_status'  =>  $rowData->status(),
-                        'order_no'  =>  $rowData->order_no,
-                        'created_time'  =>  date('Y-m-d H:i:s', $rowData->created_time),
-                        'order_type'    =>  $rowData->orderType(),
-                        'action'    =>  '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$rowData->order_no.'">' . $trans->t('details') . '</a>',
+                        'order_total'  => $rowData->order_total,
+                        'order_status' => $rowData->status(),
+                        'order_no'     => $rowData->order_no,
+                        'created_time' => date('Y-m-d H:i:s', $rowData->created_time),
+                        'order_type'   => $rowData->orderType(),
+                        'action'       => '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$rowData->order_no.'">' . $trans->t('details') . '</a>',
                     ];
                 })->toArray();
 
-                $recordsTotal = $query['count'];
+                $recordsTotal    = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'loginlog':
@@ -324,27 +324,27 @@ class ZeroController extends BaseController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'ip'    =>  $rowData->ip,
-                        'location'  =>  Tools::getIPLocation($rowData->ip),
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'ip'       => $rowData->ip,
+                        'location' => Tools::getIPLocation($rowData->ip),
+                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
-                $recordsTotal = $query['count'];
+                $recordsTotal    = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'uselog':
-                $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;               
+                $time   = $_SERVER['REQUEST_TIME'] - 86400 * 7;
                 $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time)->orderBy($sort_field, $sort);
-                $query = Ip::getTableDataFromAdmin($request, null, null, $querys);
-                $data = $query['datas']->map(function($rowData) {
+                $query  = Ip::getTableDataFromAdmin($request, null, null, $querys);
+                $data   = $query['datas']->map(function($rowData) {
                     return [
-                        'ip'    =>  $rowData->ip,
-                        'location'  =>  Tools::getIPLocation($rowData->ip),
-                        'datetime'  => date('Y-m-d H:i:s', $rowData->datetime),
+                        'ip'       => $rowData->ip,
+                        'location' => Tools::getIPLocation($rowData->ip),
+                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
 
-                $recordsTotal = $query['count'];
+                $recordsTotal    = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'sublog':
@@ -353,10 +353,10 @@ class ZeroController extends BaseController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'subscribe_type'    => $rowData->subscribe_type,
-                        'request_ip'    =>  $rowData->request_ip,
-                        'location'  =>  Tools::getIPLocation($rowData->request_ip),
-                        'request_time'  =>  date('Y-m-d H:i:s', $rowData->request_time),
+                        'subscribe_type' => $rowData->subscribe_type,
+                        'request_ip'     => $rowData->request_ip,
+                        'location'       => Tools::getIPLocation($rowData->request_ip),
+                        'request_time'   => date('Y-m-d H:i:s', $rowData->request_time),
                     ];
                 })->toArray();
                 $recordsTotal = $query['count'];
@@ -368,9 +368,9 @@ class ZeroController extends BaseController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'node_name'   =>  $rowData->node()->name,
-                        'traffic'   =>  $rowData->traffic,
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'node_name' => $rowData->node()->name,
+                        'traffic'   => $rowData->traffic,
+                        'datetime'  => date('Y-m-d H:i:s', $rowData->datetime),
                     ];
                 })->toArray();
 
@@ -427,7 +427,7 @@ class ZeroController extends BaseController
         }
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => $recordsTotal,
             'recordsFiltered' => $recordsFiltered,
             'data'            => $data,

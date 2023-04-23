@@ -146,7 +146,7 @@ class ProductController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Product::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -155,9 +155,10 @@ class ProductController extends AdminController
 
     public function updateProductStatus(ServerRequest $request, Response $response, array $args): Response
     {
-        $id      = $request->getParam('id');
-        $type    = $request->getParam('type');
-        $method  = $request->getParam('method');
+        $putData = $request->getParsedBody();
+        $id      = $putData['id'];
+        $type    = $putData['type'];
+        $method  = $putData['method'];
         $product = Product::find($id);
         if ($method == 'status') {
             $product->status = $type;
@@ -173,7 +174,7 @@ class ProductController extends AdminController
 
     public function deleteProduct(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $product = Product::find($id);
         $product->delete();
 
@@ -185,7 +186,7 @@ class ProductController extends AdminController
 
     public function getProductInfo(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $product = Product::find($id);
         $data = [
             'name'            => $product->name,

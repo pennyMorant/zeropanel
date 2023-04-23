@@ -27,7 +27,7 @@ class RecordController extends AdminController
             'location'  => '归属地',
             'datetime'  => '时间'
     ];
-        $table_config_alive['ajax_url'] = 'record/ajax/alive';
+        $table_config_alive['ajax_url']      = 'record/ajax/alive';
         $table_config_signin['total_column'] = [
             'id'        => 'ID',
             'userid'    => '用户ID',
@@ -36,7 +36,7 @@ class RecordController extends AdminController
             'datetime'  => '时间',
             'type'      => '类型'
         ];
-        $table_config_signin['ajax_url'] = 'record/ajax/signin';
+        $table_config_signin['ajax_url']        = 'record/ajax/signin';
         $table_config_subscribe['total_column'] = [
             'id'                  => 'ID',
             'user_id'             => '用户ID',
@@ -45,7 +45,7 @@ class RecordController extends AdminController
             'location'            => '归属地',
             'request_time'        => '时间',
         ];
-        $table_config_subscribe['ajax_url'] = 'record/ajax/subscribe';
+        $table_config_subscribe['ajax_url']   = 'record/ajax/subscribe';
         $table_config_traffic['total_column'] = [
             'id'              => 'ID',
             'user_id'         => '用户ID',
@@ -162,7 +162,7 @@ class RecordController extends AdminController
                 break;
         }
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => $total,
             'recordsFiltered' => $query['count'],
             'data'            => $data,

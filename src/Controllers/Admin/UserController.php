@@ -44,8 +44,8 @@ class UserController extends AdminController
     
     public function createNewUser(ServerRequest $request, Response $response, array $args)
     {
-        $email          = strtolower(trim($request->getParam('email')));
-        $passwd         = $request->getParam('passwd') ?: $email;
+        $email          = strtolower(trim($request->getParsedBodyParam('email')));
+        $passwd         = $request->getParsedBodyParam('passwd') ?: $email;
 
         $user = User::where('email', $email)->first();
         if (!is_null($user)) {

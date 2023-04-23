@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\User;
 use App\Controllers\OrderController as UserOrder;
-use Exception;
 use Pkly\I18Next\I18n;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -105,7 +104,7 @@ class OrderController extends AdminController
 
     public function completeOrder(ServerRequest $request, Response $response, array $args): Response
     {
-        $order_id = $request->getParam('order_id');
+        $order_id = $request->getParsedBodyParam('order_id');
         $order    = Order::find($order_id);
         $order_no = $order->order_no;
         UserOrder::execute($order_no);
@@ -117,7 +116,7 @@ class OrderController extends AdminController
 
     public function deleteOrder(ServerRequest $request, Response $response, array $args): Response
     {
-        $order_id = $request->getParam('id');
+        $order_id = $request->getParsedBodyParam('id');
         $order    = Order::find($order_id);
         $order->delete();
         return $response->withJson([
@@ -128,10 +127,11 @@ class OrderController extends AdminController
 
     public function createOrder(ServerRequest $request, Response $response, array $args): Response
     {
-        $user_id        = $request->getParam('id');
-        $product_id     = $request->getParam('product_id');
-        $product_period = $request->getParam('product_period');
-        $order_total    = $request->getParam('order_total');
+        $postData       = $request->getParsedBody();
+        $user_id        = $postData['id'];
+        $product_id     = $postData['product_id'];
+        $product_period = $postData['product_period'];
+        $order_total    = $postData['order_total'];
         $user           = User::find($user_id);
         $product        = Product::find($product_id);
         $order          = new Order();

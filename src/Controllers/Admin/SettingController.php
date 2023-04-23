@@ -36,7 +36,7 @@ class SettingController extends AdminController
 
     public function save(ServerRequest $request, Response $response, array $args): Response
     {
-        $class = $request->getParam('class');
+        $class = $request->getParsedBodyParam('class');
 
         switch ($class) {
             case 'website':

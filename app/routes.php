@@ -49,9 +49,9 @@ return function (SlimApp $app) {
         $group->post('/order/pay_order',                App\Controllers\OrderController::class . ':processOrder');
         $group->post('/verify_coupon',                  App\Controllers\OrderController::class . ':verifyCoupon');
 
-        $group->get('/node',                            App\Controllers\User\NodeController::class . ':node');
+        $group->get('/node',                            App\Controllers\User\NodeController::class . ':nodeIndex');
 
-        $group->get('/product',                         App\Controllers\User\ProductController::class . ':product');
+        $group->get('/product',                         App\Controllers\User\ProductController::class . ':productIndex');
         $group->post('/product/getinfo',                App\Controllers\User\ProductController::class . ':getProductInfo');
 
         $group->get('/ticket',                          App\Controllers\User\TicketController::class . ':ticketIndex');
@@ -227,7 +227,7 @@ return function (SlimApp $app) {
         $group->group('/payment', function($payment) {
             $payment->get('',                       PaymentController::class . ':paymentIndex');
             $payment->post('/create',               PaymentController::class . ':createPayment');
-            $payment->post('/update',               PaymentController::class . ':updatePayment');
+            $payment->put('/update',                PaymentController::class . ':updatePayment');
             $payment->post('/ajax',                 PaymentController::class . ':paymentAjax');
             $payment->get('/config',                PaymentController::class . ':getPaymentConfig');
             $payment->delete('/delete',             PaymentController::class . ':deletePayment');

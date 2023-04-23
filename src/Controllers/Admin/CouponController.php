@@ -27,7 +27,7 @@ class CouponController extends AdminController
 
     public function createCoupon(ServerRequest $request, Response $response, array $args)
     {
-        $postdata = $request->getParsedBody();
+        $postdata      = $request->getParsedBody();
         $generate_type = $postdata['generate_type'];
         $final_code    = $postdata['code'];
         if (empty($final_code) && in_array($generate_type, [1, 3])) {
@@ -92,7 +92,7 @@ class CouponController extends AdminController
         })->toArray();
 
         return $response->WithJson([
-            'draw'              => $request->getParam('draw'),
+            'draw'              => $request->getParsedBodyParam('draw'),
             'recordsTotal'      => Coupon::count(),
             'recordsFiltered'   => $query['count'],
             'data'              => $data

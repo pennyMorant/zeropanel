@@ -15,7 +15,7 @@ use Pkly\I18Next\I18n;
 
 final class ProductController extends BaseController
 {
-    public function product(ServerRequest $request, Response $response, array $args)
+    public function productIndex(ServerRequest $request, Response $response, array $args)
     {
         $trans = I18n::get();
         $products = Product::where('status', '1')
@@ -62,7 +62,7 @@ final class ProductController extends BaseController
 
     public function getProductInfo(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $product = Product::find($id);
         $data = [
             'name'            => $product->name,
