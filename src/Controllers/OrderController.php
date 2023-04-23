@@ -87,14 +87,14 @@ class OrderController extends BaseController
                     }
                     $coupon = Coupon::where('code', '=', $coupon_code)->first();
 
-                    $order = new Order();
-                    $order->order_no = self::createOrderNo();
-                    $order->user_id = $user->id;
-                    $order->product_id = $product->id;
-                    $order->order_type = $type;
-                    $order->product_price = $product_price;
+                    $order                 = new Order();
+                    $order->order_no       = self::createOrderNo();
+                    $order->user_id        = $user->id;
+                    $order->product_id     = $product->id;
+                    $order->order_type     = $type;
+                    $order->product_price  = $product_price;
                     $order->product_period = $product->productPeriod($product_price) ?? NULL;
-                    $order->order_total = $product_price;
+                    $order->order_total    = $product_price;
                     if ($coupon_code != '') {
                         $order->coupon_id   = $coupon->id;
                         $order->order_total = round($product_price * ((100 - $coupon->discount) / 100), 2);
@@ -131,15 +131,15 @@ class OrderController extends BaseController
                     if ($amount <= 0) {
                         throw new \Exception(I18n::get()->t('amount should be greater than zero'));
                     }
-                    $order = new Order();
-                    $order->order_no = self::createOrderNo();
-                    $order->user_id = $user->id;
-                    $order->order_total = $amount;
-                    $order->order_type = $type;
-                    $order->order_status = 1;
-                    $order->created_time = time();
-                    $order->updated_time = time();
-                    $order->expired_time = time() + 600;
+                    $order                 = new Order();
+                    $order->order_no       = self::createOrderNo();
+                    $order->user_id        = $user->id;
+                    $order->order_total    = $amount;
+                    $order->order_type     = $type;
+                    $order->order_status   = 1;
+                    $order->created_time   = time();
+                    $order->updated_time   = time();
+                    $order->expired_time   = time() + 600;
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e) {
@@ -219,9 +219,9 @@ class OrderController extends BaseController
 
     public function processOrder(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
+        $user           = $this->user;
         $payment_method = $request->getParam('method');
-        $order_no = $request->getParam('order_no');
+        $order_no       = $request->getParam('order_no');
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
         try {
@@ -258,9 +258,9 @@ class OrderController extends BaseController
                 $order->save();
 
                 $result = $payment_service->toPay([
-                    'order_no'  =>  $order->order_no,
-                    'total_amount'  =>  isset($order->handling_fee) ? (($order->order_total + $order->handling_fee) * $exchange_rate) : $order->order_total * $exchange_rate,
-                    'user_id'   =>  $user->id
+                    'order_no'     => $order->order_no,
+                    'total_amount' => isset($order->handling_fee) ? round((($order->order_total + $order->handling_fee) * $exchange_rate), 2) : round($order->order_total * $exchange_rate, 2),
+                    'user_id'      => $user->id
                 ]);
                 
                 // 支付成功，从用户账户扣除余额抵扣金额
@@ -298,13 +298,13 @@ class OrderController extends BaseController
     public static function executeAddCredit($order)
     {
         if ($order->execute_status !== 1) {
-            $order->paid_time = time();
-            $order->updated_time = time();
-            $order->order_status = 2;
+            $order->paid_time      = time();
+            $order->updated_time   = time();
+            $order->order_status   = 2;
             $order->execute_status = 1;
             $order->save();
 
-            $user = User::find($order->user_id);
+            $user         = User::find($order->user_id);
             $user->money += $order->order_total + $order->bonus_amount;
             $user->save();
 
@@ -317,16 +317,16 @@ class OrderController extends BaseController
     public static function executeProduct($order)
     {
         $product = Product::find($order->product_id);
-        $user = User::find($order->user_id);
+        $user    = User::find($order->user_id);
 
         if ($order->execute_status != '1') {
             $order->order_status = 2;
             $order->updated_time = time();
-            $order->paid_time = time();
+            $order->paid_time    = time();
 
             if (!empty($order->order_coupon)) {
-                $coupon = Coupon::where('coupon', $order->order_coupon)->first();
-                $coupon->use_count += 1;
+                $coupon                   = Coupon::where('coupon', $order->order_coupon)->first();
+                $coupon->use_count       += 1;
                 $coupon->discount_amount += $order->product_price - $order->order_total;
                 $coupon->save();
             }
@@ -421,8 +421,8 @@ class OrderController extends BaseController
 
     public static function createOrderNo(){
         $order_id_main = date('YmdHis') . rand(10000000,99999999);
-        $order_id_len = strlen($order_id_main);
-        $order_id_sum = 0;
+        $order_id_len  = strlen($order_id_main);
+        $order_id_sum  = 0;
 
         for($i=0; $i<$order_id_len; $i++){
             $order_id_sum += (int)(substr($order_id_main,$i,1));

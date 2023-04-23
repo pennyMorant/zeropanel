@@ -6,7 +6,9 @@ use App\Controllers\AdminController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Models\User;
 use App\Controllers\OrderController as UserOrder;
+use Exception;
 use Pkly\I18Next\I18n;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -121,6 +123,46 @@ class OrderController extends AdminController
         return $response->withJson([
             'ret' => 1,
             'msg' => 'success'
+        ]);
+    }
+
+    public function createOrder(ServerRequest $request, Response $response, array $args): Response
+    {
+        $user_id        = $request->getParam('id');
+        $product_id     = $request->getParam('product_id');
+        $product_period = $request->getParam('product_period');
+        $order_total    = $request->getParam('order_total');
+        $user           = User::find($user_id);
+        $product        = Product::find($product_id);
+        $order          = new Order();
+
+        try {
+            if (is_null($product->productPrice($product_period))) {
+                throw new \Exception('选定的产品周期的价格未设置');
+            }
+            $order->order_no       = UserOrder::createOrderNo();
+            $order->user_id        = $user->id;
+            $order->product_id     = $product->id;
+            $order->order_type     = 1;
+            $order->product_price  = $product->productPrice($product_period);
+            $order->product_period = $product_period;
+            $order->order_total    = $order_total == '' ? $product->price : $order_total;
+            $order->order_status   = 1;
+            $order->created_time   = time();
+            $order->updated_time   = time();
+            $order->expired_time   = time() + 600;
+            $order->execute_status = 0;
+            $order->save();
+        } catch (\Exception $e) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => $e->getMessage(),
+            ]);
+        }
+
+        return $response->withJson([
+            'ret' => 1,
+            'msg'   =>  '成功'
         ]);
     }
 }

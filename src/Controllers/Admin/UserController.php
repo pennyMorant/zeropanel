@@ -9,16 +9,12 @@ use App\Models\{
     Setting,
     DetectBanLog
 };
-use App\Services\{
-    Mail,
-};
 use App\Utils\{
     Hash,
     Tools,
 };
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use Exception;
 use Ramsey\Uuid\Uuid;
 
 class UserController extends AdminController
@@ -48,8 +44,8 @@ class UserController extends AdminController
     
     public function createNewUser(ServerRequest $request, Response $response, array $args)
     {
-        $email   = strtolower(trim($request->getParam('email')));
-        $money   = (int) trim($request->getParam('balance'));
+        $email          = strtolower(trim($request->getParam('email')));
+        $passwd         = $request->getParam('passwd') ?: $email;
 
         $user = User::where('email', $email)->first();
         if (!is_null($user)) {
@@ -59,7 +55,7 @@ class UserController extends AdminController
             ]);
         }
 
-        if (! Tools::isEmail($email)) {
+        if (!Tools::isEmail($email)) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '邮箱不规范'
@@ -68,46 +64,31 @@ class UserController extends AdminController
         
         $configs = Setting::getClass('register');
           // do reg user
-        $pass                  = Tools::genRandomChar(16);
-        $user                  = new User();
-        $current_timestamp     = time();
-        $user->password        = Hash::passwordHash($pass);
-        $user->email           = $email;
-        $user->passwd          = $user->createShadowsocksPasswd();
-        $user->uuid            = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
-        $user->t               = 0;
-        $user->u               = 0;
-        $user->d               = 0;
-        $user->transfer_enable = Tools::toGB($configs['signup_default_traffic']);
-        $user->money           = ($money != -1 ? $money : 0);
-        $user->class_expire    = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
-        $user->class           = $configs['signup_default_class'];
-        $user->node_iplimit    = $configs['signup_default_ip_limit'];
-        $user->node_speedlimit = $configs['signup_default_speed_limit'];
-        $user->signup_date     = date('Y-m-d H:i:s');
-        $user->signup_ip       = $_SERVER['REMOTE_ADDR'];
-        $user->theme           = $_ENV['theme'];
-        $user->node_group      = 0;
+        $user                     = new User();
+        $current_timestamp        = time();
+        $user->password           = Hash::passwordHash($passwd);
+        $user->email              = $email;
+        $user->passwd             = $user->createShadowsocksPasswd();
+        $user->uuid               = Uuid::uuid5(Uuid::NAMESPACE_DNS, $email . '|' . $current_timestamp);
+        $user->t                  = 0;
+        $user->u                  = 0;
+        $user->d                  = 0;
+        $user->transfer_enable    = Tools::toGB($configs['signup_default_traffic']);
+        $user->money              = 0;
+        $user->class_expire       = date('Y-m-d H:i:s', time() + $configs['signup_default_class_time'] * 86400);
+        $user->class              = $configs['signup_default_class'];
+        $user->node_iplimit       = $configs['signup_default_ip_limit'];
+        $user->node_speedlimit    = $configs['signup_default_speed_limit'];
+        $user->signup_date        = date('Y-m-d H:i:s');
+        $user->signup_ip          = $_SERVER['REMOTE_ADDR'];
+        $user->theme              = $_ENV['theme'];
+        $user->subscription_token = $user->createSubToken();
+        $user->node_group         = 0;
         
-        if ($user->save()) {
-            $res['ret']         = 1;
-            $res['msg']         = '新用户注册成功 用户名: ' . $email . ' 随机初始密码: ' . $pass;
-            $res['email_error'] = 'success';
-            $subject            = Setting::obtain('website_name') . '-新用户注册通知';
-            $to                 = $user->email;
-            $text               = '您好，管理员已经为您生成账户，用户名: ' . $email . '，登录密码为：' . $pass . '，感谢您的支持。 ';
-            try {
-                Mail::send($to, $subject, 'newuser.tpl', [
-                    'user' => $user, 'text' => $text,
-                ], []);
-            } catch (Exception $e) {
-                $res['email_error'] = $e->getMessage();
-            }
-            return $response->withJson($res);
-        }
+        $user->save();
         return $response->withJson([
-            'ret' => 0,
-            'msg' => '未知错误'
+            'ret' => 1,
+            'msg' => '创建成功'
         ]);
     }
     
@@ -206,9 +187,10 @@ class UserController extends AdminController
                 'is_admin'     => $rowData->is_admin(),
                 'enable'       => $rowData->enable(),
                 'action'       => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" href = "user/update/'.$rowData->id.'">编辑</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                                    <ul    class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="user/update/'.$rowData->id.'">编辑</a></li>
+                                    <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
+                                    <li><a class="dropdown-item" type="button" onclick="zeroModalAdminCreateOrderForUser(' . $rowData->id . ')">分配订单</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -224,11 +206,11 @@ class UserController extends AdminController
 
     public function updateUserStatus(ServerRequest $request, Response $response, array $args): Response
     {
-        $type = $args['type'];
-        $id = $request->getParam('id');
-        $enable = $request->getParam('enable');
+        $type     = $args['type'];
+        $id       = $request->getParam('id');
+        $enable   = $request->getParam('enable');
         $is_admin = $request->getParam('is_admin');
-        $user = User::find($id);
+        $user     = User::find($id);
         switch ($type) {
             case 'enable': 
                 $user->enable = $enable;

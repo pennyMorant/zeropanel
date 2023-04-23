@@ -160,6 +160,7 @@ return function (SlimApp $app) {
             $order->post('/ajax',             OrderController::class . ':ajaxOrder');
             $order->delete('/delete',         OrderController::class . ':deleteOrder');
             $order->put('/complete',          OrderController::class . ':completeOrder');
+            $order->post('/create',           OrderController::class . ':createOrder');
         });
 
         // news

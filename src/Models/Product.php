@@ -152,4 +152,16 @@ class Product extends Model
         return $period;
     }
 
+    public function productPrice($period)
+    {
+        $product_prices = [
+            30  => $this->month_price,
+            90  => $this->quarter_price,
+            180 => $this->half_year_price,
+            360 => $this->year_price,
+            720 => $this->two_year_price
+        ];             
+        $price = $product_prices[$period] ?? NULL;
+        return $price;
+    }
 }
