@@ -63,13 +63,13 @@ class OrderController extends BaseController
 
     public function createOrder(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
-        $coupon_code = $request->getParam('coupon_code');
-        $product_id = $request->getParam('product_id');
+        $user          = $this->user;
+        $coupon_code   = $request->getParam('coupon_code');
+        $product_id    = $request->getParam('product_id');
         $product_price = $request->getParam('product_price');
-        $product = Product::find($product_id);
-        $amount = $request->getParam('add_credit_amount');
-        $type = $args['type'];
+        $product       = Product::find($product_id);
+        $amount        = $request->getParam('add_credit_amount');
+        $type          = $args['type'];
 
         switch ($type) {
             case 1: // 新购产品
@@ -179,7 +179,7 @@ class OrderController extends BaseController
                     $order->product_period = $product->productPeriod($latest_order->product_price);
                     $order->order_total    = $latest_order->order_total + $latest_order->credit_paid;
                     if ($user->money > 0 && $order->order_total > 0) {
-                        $remaining_total = $user->money - $order->order_toal;
+                        $remaining_total = $user->money - $order->order_total;
                         if ($remaining_total > 0) {
                             $order->credit_paid = $order->order_total;
                             $order->order_total = 0;
