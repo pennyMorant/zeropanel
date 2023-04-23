@@ -74,13 +74,12 @@ class RecordController extends AdminController
                     $request,
                     static function (&$order_field) {
                         if (in_array($order_field, ['node_name'])) {
-                            $order_field = 'nodeid';
+                            $order_field = 'id';
                         }
                         if (in_array($order_field, ['location'])) {
-                            $order_field = 'ip';
+                            $order_field = 'id';
                         }
                     },
-                    null,
                     static function ($query) {
                         $query->selectRaw('*, MAX(datetime) AS latest_datetime')->whereRaw('datetime >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
                     }
