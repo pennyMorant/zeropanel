@@ -120,32 +120,33 @@
                                                 </table>
                                                 
                                             </div>
-											{if $order->order_status === 1 && $order->order_total != 0}
-                                            <div class="col-lg-12">
-												<label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
-												
-													<ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
-													
-														{foreach $payments as $payment}
-                                                            <li class="nav-item mb-3">
-                                                                <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$payment->id}">
-                                                                    
-                                                                    <img class="h-35px w-auto" src={$payment->icon}>
-                                                                    
-                                                                    <span class="fs-3 py-2 fw-bold">{$payment->name}</span>
-                                                                </a>
-                                                            </li>
-                                                        {/foreach}
-													</ul>
-											</div>
-                                            
-											<div class="text-center pt-15">
-												<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
-													<span class="indicator-label">{$trans->t('submit')}</span>
-													<span class="indicator-progress">{$trans->t('please wait')}
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-												</button>
-											</div>
+											{if $order->order_status === 1}
+                                                {if $order->order_total != 0}
+                                                    <div class="col-lg-12">
+                                                        <label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
+                                                        
+                                                            <ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
+                                                            
+                                                                {foreach $payments as $payment}
+                                                                    <li class="nav-item mb-3">
+                                                                        <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$payment->id}">
+                                                                            
+                                                                            <img class="h-35px w-auto" src={$payment->icon}>
+                                                                            
+                                                                            <span class="fs-3 py-2 fw-bold">{$payment->name}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                {/foreach}
+                                                            </ul>
+                                                    </div>
+                                                {/if}
+                                                <div class="text-center pt-15">
+                                                    <button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersPayOrder('{$order->order_no}')">
+                                                        <span class="indicator-label">{$trans->t('submit')}</span>
+                                                        <span class="indicator-progress">{$trans->t('please wait')}
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                    </button>
+                                                </div>
                                             {/if}
                                         </div>
                                         
