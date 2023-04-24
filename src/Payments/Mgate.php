@@ -56,11 +56,11 @@ class Mgate
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->config['mgate_url']  . '/v1/gateway/fetch');
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POST, false);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         $data = curl_exec($curl);
         curl_close($curl);
@@ -87,7 +87,7 @@ class Mgate
     	}
         return [
             'url'  => $result['data']['pay_url'],
-            'ret'  => 0,
+            'ret'  => 1,
             'type' => 'url'
         ];
     }
