@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-23 12:48:19
+-- 生成日期： 2023-04-24 15:19:28
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.5
 
@@ -352,7 +352,7 @@ CREATE TABLE `user` (
   `notify_type` varchar(32) DEFAULT NULL COMMENT '接收通知的的方式',
   `ref_by` int(11) NOT NULL DEFAULT 0 COMMENT '推荐人',
   `signup_ip` varchar(39) NOT NULL DEFAULT '127.0.0.1' COMMENT '注册IP',
-  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '端口速度',
+  `node_speedlimit` int(11) NOT NULL DEFAULT 0 COMMENT '端口速度',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `is_admin` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是管理员1是0不是',
   `last_day_t` bigint(20) NOT NULL DEFAULT 0,
