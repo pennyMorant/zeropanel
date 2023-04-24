@@ -19,9 +19,9 @@ class AlipayF2F {
         
         $gateway = new Alipay();
         $gateway->setMethod('alipay.trade.precreate');
-        $gateway->setAppId($this->config['app_id']);
-        $gateway->setPrivateKey($this->config['private_key']); // 可以是路径，也可以是密钥内容
-        $gateway->setAlipayPublicKey($this->config['public_key']); // 可以是路径，也可以是密钥内容
+        $gateway->setAppId($this->config['alipayf2f_app_id']);
+        $gateway->setPrivateKey($this->config['alipayf2f_private_key']); // 可以是路径，也可以是密钥内容
+        $gateway->setAlipayPublicKey($this->config['alipayf2f_public_key']); // 可以是路径，也可以是密钥内容
         $gateway->setNotifyUrl($order['notify_url']);
         $gateway->setBizContent([
             'subject' => 'purchase',

@@ -196,7 +196,7 @@
                     },
                     'AlipayF2F': function() {
                         return {
-                        'alipayf2f_id': $('#alipayf2f_id').val(),
+                        'alipayf2f_app_id': $('#alipayf2f_id').val(),
                         'alipayf2f_private_key': $('#alipayf2f_private_key').val(),
                         'alipayf2f_public_key': $('#alipayf2f_public_key').val()
                         };
@@ -290,7 +290,7 @@
                                         'secret': 'mgate_secret',
                                     },
                                     'alipayf2f': {
-                                        'id': 'alipayf2f_id',
+                                        'app_id': 'alipayf2f_id',
                                         'private_key': 'alipayf2f_private_key',
                                         'public_key': 'alipayf2f_public_key',
                                     },
