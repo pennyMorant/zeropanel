@@ -67,7 +67,7 @@ class OrderController extends AdminController
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Order::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,

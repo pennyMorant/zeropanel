@@ -135,7 +135,7 @@ class AnnController extends AdminController
             ]);
         }
         $converter = new HtmlConverter();
-        $html = $request->getParam('content');
+        $html = $request->getParsedBodyParam('content');
         $markdown = $converter->convert($html);
         Telegram::pushToChannel('公告更新：' . PHP_EOL . $markdown);
         return $response->withJson([

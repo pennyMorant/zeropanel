@@ -48,10 +48,10 @@ class NodeController extends AdminController
         $postData               = $request->getParsedBody();
         $node->name             = $postData['name'];
         $node->server           = trim($postData['server']);
-        $node->traffic_rate     = $postData['traffic_rate'];
+        $node->traffic_rate     = $postData['traffic_rate'] ?: 1;
         $node->status           = 0;
-        $node->node_group       = $postData['node_group'];
-        $node->node_speedlimit  = $postData['node_speedlimit'];
+        $node->node_group       = $postData['node_group'] ?: 0;
+        $node->node_speedlimit  = $postData['node_speedlimit'] ?: 0;
         $node->node_flag        = $postData['node_flag'];
         $node->node_type        = $postData['node_type'];
 
@@ -77,8 +77,8 @@ class NodeController extends AdminController
             ]);
         }
         
-        $node->node_class                       = $postData['node_class'];
-        $node->node_sort                        = $postData['node_sort'];
+        $node->node_class                       = $postData['node_class'] ?: 0;
+        $node->node_sort                        = $postData['node_sort'] ?: 0;
         $node->node_traffic_limit               = $postData['node_traffic_limit'] * 1024 * 1024 * 1024;
         $node->node_traffic_limit_reset_date    = $postData['node_traffic_limit_reset_date'];
         $node->save();
@@ -105,10 +105,10 @@ class NodeController extends AdminController
         $id                     = $putData['id'];
         $node                   = Node::find($id);
         $node->name             = $putData['name'];
-        $node->node_group       = $putData['node_group'];
+        $node->node_group       = $putData['node_group'] ?: 0;
         $node->server           = trim($putData['server']);
-        $node->traffic_rate     = $putData['traffic_rate'];
-        $node->node_speedlimit  = $putData['node_speedlimit'];
+        $node->traffic_rate     = $putData['traffic_rate'] ?: 1;
+        $node->node_speedlimit  = $putData['node_speedlimit'] ?: 0;
         $node->node_type        = $putData['node_type'];
 
         if (!is_null($putData['custom_config'])) {
@@ -132,8 +132,8 @@ class NodeController extends AdminController
             ]);
         }
         $node->node_flag                        = $putData['node_flag'];
-        $node->node_class                       = $putData['node_class'];
-        $node->node_sort                        = $putData['node_sort'];
+        $node->node_class                       = $putData['node_class'] ?: 0;
+        $node->node_sort                        = $putData['node_sort'] ?: 0;
         $node->node_traffic_limit               = $putData['node_traffic_limit'] * 1024 * 1024 * 1024;
         $node->node_traffic_limit_reset_date    = $putData['node_traffic_limit_reset_date'];
 

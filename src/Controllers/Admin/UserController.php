@@ -104,26 +104,27 @@ class UserController extends AdminController
     
     public function updateUser(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $putData = $request->getParsedBody();
+        $id = $putData['id'];
         $user = User::find($id);
-        $user->email = $request->getParam('email');
+        $user->email = $putData['email'];
 
-        if ($request->getParam('password') != '') {
-            $user->password = Hash::passwordHash($request->getParam('password'));
+        if ($putData['password'] != '') {
+            $user->password = Hash::passwordHash($putData['password']);
         }
 
-        $user->transfer_enable = Tools::toGB($request->getParam('transfer_enable'));
-        $user->node_speedlimit = $request->getParam('node_speedlimit');
-        $user->node_iplimit    = $request->getParam('node_iplimit');
-        $user->node_group      = $request->getParam('group');
-        $user->remark          = $request->getParam('remark');
-        $user->money           = $request->getParam('money');
-        $user->class           = $request->getParam('class');
-        $user->class_expire    = $request->getParam('class_expire');
-        $user->commission      = $request->getParam('commission');
+        $user->transfer_enable = Tools::toGB($putData['transfer_enable']);
+        $user->node_speedlimit = $putData['node_speedlimit'] ?: 0;
+        $user->node_iplimit    = $putData['node_iplimit'] ?: 0;
+        $user->node_group      = $putData['group'] ?: 0;
+        $user->remark          = $putData['remark'] ?: NULL;
+        $user->money           = $putData['money'] ?: 0;
+        $user->class           = $putData['class'] ?: 0;
+        $user->class_expire    = $putData['class_expire'];
+        $user->commission      = $putData['commission'] ?: 0;
 
           // 手动封禁
-        $ban_time = (int) $request->getParam('ban_time');
+        $ban_time = (int) $putData['ban_time'];
         if ($ban_time > 0) {
             $user->enable                    = 0;
             $end_time                        = date('Y-m-d H:i:s');
@@ -153,7 +154,7 @@ class UserController extends AdminController
 
     public function deleteUser(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $user = User::find($id);
         $user->deleteUser();
         return $response->withJson([
@@ -197,7 +198,7 @@ class UserController extends AdminController
         })->toArray();
         
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => User::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -207,9 +208,9 @@ class UserController extends AdminController
     public function updateUserStatus(ServerRequest $request, Response $response, array $args): Response
     {
         $type     = $args['type'];
-        $id       = $request->getParam('id');
-        $enable   = $request->getParam('enable');
-        $is_admin = $request->getParam('is_admin');
+        $id       = $request->getParsedBodyParam('id');
+        $enable   = $request->getParsedBodyParam('enable');
+        $is_admin = $request->getParsedBodyParam('is_admin');
         $user     = User::find($id);
         switch ($type) {
             case 'enable': 

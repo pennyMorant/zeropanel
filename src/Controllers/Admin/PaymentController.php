@@ -142,7 +142,7 @@ final class PaymentController extends AdminController
 
     public function deletePayment(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $payment = Payment::find($id);
         $payment->delete();
         return $response->withJson([

@@ -65,15 +65,14 @@ class OrderController extends BaseController
     {
         $user          = $this->user;
         $postData      = $request->getParsedBody();
-        $coupon_code   = $postData['coupon_code'];
-        $product_id    = $postData['product_id'];
-        $product_price = $postData['product_price'];
-        $product       = Product::find($product_id);
-        $amount        = $postData['add_credit_amount'];
         $type          = $args['type'];
 
         switch ($type) {
             case 1: // 新购产品
+                $coupon_code   = $postData['coupon_code'];
+                $product_id    = $postData['product_id'];
+                $product_price = $postData['product_price'];
+                $product       = Product::find($product_id);
                 try {
                     if (Setting::obtain('verify_email') === 'open' && $user->verified === 0) {
                         throw new \Exception(I18n::get()->t('please verify email first'));
@@ -128,6 +127,7 @@ class OrderController extends BaseController
                 }
                 break;
             case 2: // 账户充值
+                $amount        = $postData['add_credit_amount'];
                 try {
                     if ($amount == '') {
                         throw new \Exception(I18n::get()->t('please enter the amount'));

@@ -48,14 +48,14 @@ class ProductController extends AdminController
         $product->onetime_price       = $postdata['onetime_price']   == '' ? NULL : $postdata['onetime_price'];
         $product->custom_content      = $postdata['custom_content']  == '' ? NULL : $postdata['custom_content'];
         $product->type                = $postdata['type'];
-        $product->sort                = $postdata['sort'];
+        $product->sort                = $postdata['sort'] ?: 0;
         $product->traffic             = $postdata['traffic'];
-        $product->user_group          = $postdata['group'];
-        $product->class               = $postdata['class'];
+        $product->user_group          = $postdata['group'] ?: 0;
+        $product->class               = $postdata['class'] ?: 0;
         $product->reset_traffic_cycle = $postdata['reset'];
-        $product->speed_limit         = $postdata['speed_limit'];
-        $product->ip_limit            = $postdata['ip_limit'];
-        $product->stock               = $postdata['stock'];
+        $product->speed_limit         = $postdata['speed_limit'] ?: 0;
+        $product->ip_limit            = $postdata['ip_limit'] ?: 0;
+        $product->stock               = $postdata['stock'] ?: 0;
         $product->status              = 0;
         if (!$product->save()) {
             return $response->withJson([
@@ -94,14 +94,14 @@ class ProductController extends AdminController
         $product->onetime_price       = $putdata['onetime_price']   == '' ? NULL : $putdata['onetime_price'];
         $product->custom_content      = $putdata['custom_content']  == '' ? NULL : $putdata['custom_content'];
         $product->type                = $putdata['type'];
-        $product->sort                = $putdata['sort'];
+        $product->sort                = $putdata['sort'] ?: 0;
         $product->traffic             = $putdata['traffic'];
-        $product->user_group          = $putdata['group'];
-        $product->class               = $putdata['class'];
+        $product->user_group          = $putdata['group'] ?: 0;
+        $product->class               = $putdata['class'] ?: 0;
         $product->reset_traffic_cycle = $putdata['reset'];
-        $product->speed_limit         = $putdata['speed_limit'];
-        $product->ip_limit            = $putdata['ip_limit'];
-        $product->stock               = $putdata['stock'];
+        $product->speed_limit         = $putdata['speed_limit'] ?: 0;
+        $product->ip_limit            = $putdata['ip_limit'] ?: 0;
+        $product->stock               = $putdata['stock'] ?: 0;
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,

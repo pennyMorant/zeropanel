@@ -429,47 +429,4 @@ class ZeroController extends BaseController
             'data'            => $data,
         ]);
     }
-
-    public function ajaxDatatableDelete(ServerRequest $request, Response $response, array $args)
-    {
-        $name = $request->getParam('name');
-        $id = $request->getParam('id');
-        $mode = $request->getParam('mode');
-
-        switch ($name) {
-            case 'order':
-                $table = Order::find($id);
-
-                if($table->status === 1) {
-                    $res = ['ret' => 0, 'msg' =>'已到账的订单无法删除'];
-                    return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-                }
-
-                if ($table->userid !== $this->user->id) {
-                    $res = ['ret' => 0, 'msg' =>'非法操作'];
-                    return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-                }
-
-                break;
-            case('subscribe_log'):
-                $table = UserSubscribeLog::find($id);
-
-                if($table->user_id !== $this->user->id) {
-                    $res = ['ret' => 0, 'msg' =>'非法操作'];
-                    return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-                }
-                break;
-            default:
-                $res = ['ret' => 0, 'msg' =>'删除失败'];
-                return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-                break;
-        }
-
-        if (!$table->delete()) {
-            $res = ['ret' => 0, 'msg' =>'删除失败'];
-            return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-        }
-        $res = ['ret' => 1, 'msg' =>'删除成功'];
-        return $response->getBody()->write(json_encode($res, JSON_UNESCAPED_UNICODE));
-    }
 }

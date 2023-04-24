@@ -218,9 +218,9 @@ class SettingController extends AdminController
             $setting = Setting::where('item', '=', $item)->first();
 
             if ($setting->type == 'array') {               
-                $setting->value = json_encode($request->getParam($item));
+                $setting->value = json_encode($request->getParsedBodyParam($item));
             } else {
-                $setting->value = $request->getParam($item);
+                $setting->value = $request->getParsedBodyParam($item);
             }
             if(!$setting->save()) {
                 return $response->withJson([
@@ -243,7 +243,7 @@ class SettingController extends AdminController
      */
     public function test(ServerRequest $request, Response $response, array $args)
     {
-        $to = $request->getParam('email_address');
+        $to = $request->getParsedBodyParam('email_address');
 
         try {
             Mail::send(
