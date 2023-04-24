@@ -128,7 +128,7 @@
                             </div>
                             <div class="d-none" id="payment_config_alipayf2f">
                                 <label class="form-label fw-bold">APP ID</label>
-                                <input class="form-control mb-5" id="alipayf2f_id" value="" type="text" placeholder="" />
+                                <input class="form-control mb-5" id="alipayf2f_app_id" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">Private key</label>
                                 <input class="form-control mb-5" id="alipayf2f_private_key" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">Public key</label>

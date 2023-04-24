@@ -1,7 +1,7 @@
 <?php
 namespace App\Payments\Alipay;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class AlipayF2F {
     private $appId;
@@ -71,12 +71,15 @@ class AlipayF2F {
 
     public function send()
     {
-        $response = Http::get('https://openapi.alipay.com/gateway.do', $this->buildParam())->json();
+        $params = $this->buildParam();
+        $client = new Client();
+        $response = $client->request('GET', 'https://openapi.alipay.com/gateway.do', ['query' => $params]);
+        $data = json_decode($response->getBody()->getContents(), true);
         $resKey = str_replace('.', '_', $this->method) . '_response';
-        if (!isset($response[$resKey])) throw new \Exception('从支付宝请求失败');
-        $response = $response[$resKey];
-        if ($response['msg'] !== 'Success') throw new \Exception($response['sub_msg']);
-        $this->response = $response;
+        if (!isset($data[$resKey])) throw new \Exception('从支付宝请求失败');
+        $data = $data[$resKey];
+        if ($response['msg'] !== 'Success') throw new \Exception($data['sub_msg']);
+        $this->response = $data;
     }
 
     public function getQrCodeUrl()
