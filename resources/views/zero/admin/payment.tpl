@@ -102,6 +102,7 @@
                                 <option value="TronapiPay">TronapiPay</option>
                                 <option value="Mgate">Mgate</option>
                                 <option value="AlipayF2F">AlipayF2F</option>
+                                <option value="Epusdt">Epusdt</option>
                             </select>
                             <div id="payment_config_epay" class="">
                                 <label class="form-label fw-bold">URL</label>
@@ -132,6 +133,12 @@
                                 <input class="form-control mb-5" id="alipayf2f_private_key" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">Public key</label>
                                 <input class="form-control mb-5" id="alipayf2f_public_key" value="" type="text" placeholder="" />
+                            </div>
+                            <div class="d-none" id="payment_config_epusdt">
+                                <label class="form-label fw-bold">Epusdt URL</label>
+                                <input class="form-control mb-5" id="epusdt_url" value="" type="text" placeholder="" />
+                                <label class="form-label fw-bold">Private key</label>
+                                <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
                             </div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
@@ -187,11 +194,17 @@
                         'mgate_secret': $('#mgate_secret').val(),
                         };
                     },
-                    'alipayf2f': function() {
+                    'AlipayF2F': function() {
                         return {
                         'alipayf2f_id': $('#alipayf2f_id').val(),
                         'alipayf2f_private_key': $('#alipayf2f_private_key').val(),
                         'alipayf2f_public_key': $('#alipayf2f_public_key').val()
+                        };
+                    },
+                    'Epusdt': function() {
+                        return {
+                            'epusdt_url': $('#epusdt_url').val(),
+                            'epusdt_private_key': $('#epusdt_private_key').val()
                         };
                     }
                 };
@@ -242,7 +255,7 @@
                 switch (type) {
                     case 'request':
                         $.ajax({
-                            type: 'GET',
+                            type: 'POST',
                             url: '/{$config['website_admin_path']}/payment/config',
                             dataType: 'json',
                             data: {
@@ -280,6 +293,10 @@
                                         'id': 'alipayf2f_id',
                                         'private_key': 'alipayf2f_private_key',
                                         'public_key': 'alipayf2f_public_key',
+                                    },
+                                    'epusdt': {
+                                        'url': 'epusdt_url',
+                                        'private_key': 'epusdt_private_key',
                                     },
                                 };
                                 
@@ -348,6 +365,8 @@
                     '#alipayf2f_id',
                     '#alipayf2f_private_key',
                     '#alipayf2f_public_key',
+                    '#epusdt_url',
+                    '#epusdt_private_key',
                 ];
                 paymentFields.forEach(field => $(field).val(''));
                 
