@@ -3,7 +3,6 @@
 
 namespace App\Payments;;
 
-use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
 
@@ -37,6 +36,7 @@ class TronapiPay
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)');
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         $data = curl_exec($curl);
         curl_close($curl);

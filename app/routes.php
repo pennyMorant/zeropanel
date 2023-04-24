@@ -227,9 +227,9 @@ return function (SlimApp $app) {
         $group->group('/payment', function($payment) {
             $payment->get('',                       PaymentController::class . ':paymentIndex');
             $payment->post('/create',               PaymentController::class . ':createPayment');
-            $payment->put('/update',                PaymentController::class . ':updatePayment');
+            $payment->post('/update',                PaymentController::class . ':updatePayment');
             $payment->post('/ajax',                 PaymentController::class . ':paymentAjax');
-            $payment->get('/config',                PaymentController::class . ':getPaymentConfig');
+            $payment->post('/config',                PaymentController::class . ':getPaymentConfig');
             $payment->delete('/delete',             PaymentController::class . ':deletePayment');
             $payment->put('/enable',                PaymentController::class . ':enablePayment');
         });
