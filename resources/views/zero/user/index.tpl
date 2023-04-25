@@ -154,12 +154,12 @@
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surge"]}">{$trans->t('copy')}</a></li>
 																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('import')}</a></li>
+																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo['surge']}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
 															<!-- ss订阅 -->
 															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
+																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["shadowsocks"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
 															</div>
 															<!-- V2Ray订阅 -->
 															<div class="btn-group mb-3 mr-3">

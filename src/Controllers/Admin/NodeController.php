@@ -64,7 +64,7 @@ class NodeController extends AdminController
         $req_node_ip = trim($postData['node_ip']);
         $success = true;
         
-        if (Tools::isIP($req_node_ip)) {
+        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
             $success = $node->changeNodeIp($node->server);
@@ -120,12 +120,12 @@ class NodeController extends AdminController
         $req_node_ip = trim($putData['node_ip']);
 
         $success = true;
-        if (Tools::isIP($req_node_ip)) {
+        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
             $success = $node->changeNodeIp($node->server);
         }
-        if (! $success) {
+        if (!$success) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '更新节点IP失败，请检查您输入的节点地址是否正确！',

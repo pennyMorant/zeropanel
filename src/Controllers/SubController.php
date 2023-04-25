@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Setting;
+use App\Utils\Tools;
 use App\Models\Node;
 
 final class SubController
@@ -11,9 +12,11 @@ final class SubController
     {
         switch ($node_config['type']) {
             case 'shadowsocks':
-                if (Node::getShadowsocksSupportMethod($node_config['method'])) {
+                $ip_type = Tools::isIP($node_config['address']);
+                $header = ($ip_type === 'v6' ? 'ss://%s@[%s]:%s#%s' : 'ss://%s@%s:%s#%s');              
+                if (Node::getShadowsocksSupportMethod($node_config['method'])) {                   
                     $url = sprintf(
-                        'ss://%s@[%s]:%s#%s',
+                        $header,
                         base64_encode($node_config['method'] . ':' . $node_config['passwd']),
                         $node_config['address'],
                         $node_config['port'],
@@ -21,7 +24,7 @@ final class SubController
                     );
                 } else {
                     $url = sprintf(
-                        'ss://%s@[%s]:%s#%s',
+                        $header,
                         base64_encode($node_config['method'] . ':' . $node_config['server_psk'] . ':' . $node_config['passwd']),
                         $node_config['address'],
                         $node_config['port'],

@@ -286,7 +286,7 @@ class LinkController extends BaseController
         $userapiUrl = Setting::obtain('subscribe_address_url') . '/link/' . $user->subscription_token;
         $return_info = [
             'link'         => '',
-            'ss'           => '?list=shadowsocks',
+            'shadowsocks'  => '?list=shadowsocks',
             'v2rayn'       => '?list=v2rayn',
             'trojan'       => '?list=trojan',
             'anxray'       => '?list=anxray',
@@ -406,7 +406,7 @@ class LinkController extends BaseController
             'add'         => $baseUrl,
             'address'     => $baseUrl,
             'port'        => 10086,
-            'method'      => 'aes-128-gcm',
+            'method'      => 'aes-256-gcm',
             'passwd'      => $user->passwd,
             'uuid'        => $user->uuid,
             'aid'         => 0,
@@ -432,7 +432,7 @@ class LinkController extends BaseController
                 $Extend['type'] = 'trojan';
                 $out = self::getListItem($Extend, $list);
             } elseif ($list = 'shadowsocks') {               
-                $Extend['type'] = 'ss';
+                $Extend['type'] = 'shadowsocks';
                 $out = self::getListItem($Extend, $list);
                 
             }
