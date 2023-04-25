@@ -13,7 +13,7 @@ final class SubController
         switch ($node_config['type']) {
             case 'shadowsocks':
                 $ip_type = Tools::isIP($node_config['address']);
-                $header = ($ip_type === 'v6' ? 'ss://%s@[%s]:%s#%s' : 'ss://%s@%s:%s#%s');              
+                $header = ($ip_type === 'v6' ? 'ss://%s@[%s]:%d#%s' : 'ss://%s@%s:%d#%s');              
                 if (Node::getShadowsocksSupportMethod($node_config['method'])) {                   
                     $url = sprintf(
                         $header,
@@ -91,7 +91,7 @@ final class SubController
                 case 'shadowsocks':
                     if (Node::getShadowsocksSupportMethod($node_config['method'])) {
                         $node_info = sprintf(
-                            '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                            '%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true',
                             $node_config['remark'],
                             $node_config['address'],
                             $node_config['port'],
@@ -105,7 +105,7 @@ final class SubController
                     $vmess_params['tls'] = $node_config['security'] == 'tls' ? 'true' : 'false';
                     
                     $node_info = sprintf(
-                        '%s = vmess, %s, %s, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s',
+                        '%s = vmess, %s, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s',
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
@@ -119,7 +119,7 @@ final class SubController
                     break;
                 case 'trojan':
                     $node_info = sprintf(
-                        '%s = trojan, %s, %s, password=%s, sni=%s',
+                        '%s = trojan, %s, %d, password=%s, sni=%s',
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
@@ -210,7 +210,7 @@ final class SubController
                 case 'shadowsocks':
                     if (Node::getShadowsocksSupportMethod($node_config['method'])) {
                         $node_info = sprintf(
-                            '%s = ss, %s, %s, encrypt-method=%s, password=%s, udp-relay=true',
+                            '%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true',
                             $node_config['remark'],
                             $node_config['address'],
                             $node_config['port'],
@@ -224,7 +224,7 @@ final class SubController
                     $vmess_params['tls'] = $node_config['security'] == 'tls' ? 'true' : 'false';
                     
                     $node_info = sprintf(
-                        '%s = vmess, %s, %s, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s, skip-cert-verify=true, vmess-aead=true',
+                        '%s = vmess, %s, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s, skip-cert-verify=true, vmess-aead=true',
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
@@ -238,7 +238,7 @@ final class SubController
                     break;
                 case 'trojan':
                     $node_info = sprintf(
-                        '%s = trojan, %s, %s, password=%s, sni=%s, skip-cert-verify=true',
+                        '%s = trojan, %s, %d, password=%s, sni=%s, skip-cert-verify=true',
                         $node_config['remark'],
                         $node_config['address'],
                         $node_config['port'],
@@ -365,7 +365,7 @@ final class SubController
         switch ($node_config['type']) {
             case 'trojan':
                 $url= sprintf(
-                    'trojan://%s@%s:%s?flow=%s&security=%s&sni=%s&#%s',
+                    'trojan://%s@%s:%d?flow=%s&security=%s&sni=%s&#%s',
                     $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
