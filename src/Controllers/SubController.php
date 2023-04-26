@@ -13,10 +13,10 @@ final class SubController
         switch ($node_config['type']) {
             case 'shadowsocks':
                 $ip_type = Tools::isIP($node_config['address']);
-                $header = ($ip_type === 'v6' ? 'ss://%s@[%s]:%d#%s' : 'ss://%s@%s:%d#%s');              
+                $address = ($ip_type === 'v6' ? '[%s]' : '%s');              
                 if (Node::getShadowsocksSupportMethod($node_config['method'])) {                   
                     $url = sprintf(
-                        $header,
+                        'ss://%s@'.$address.':%d#%s',
                         base64_encode($node_config['method'] . ':' . $node_config['passwd']),
                         $node_config['address'],
                         $node_config['port'],
@@ -24,7 +24,7 @@ final class SubController
                     );
                 } else {
                     $url = sprintf(
-                        $header,
+                        'ss://%s@'.$address.':%d#%s',
                         base64_encode($node_config['method'] . ':' . $node_config['server_psk'] . ':' . $node_config['passwd']),
                         $node_config['address'],
                         $node_config['port'],
@@ -39,6 +39,8 @@ final class SubController
     public static function getV2RayN(array $node_config)
     {
         $url = null;
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         switch ($node_config['type']) {
             case 'shadowsocks':
                 $url = self::getShadowsocks($node_config);
@@ -63,7 +65,7 @@ final class SubController
                 break;
             case 'vless':
                 $url= sprintf(
-                    'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    'vmess://%s@'.$address.':%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
                     $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
@@ -312,6 +314,8 @@ final class SubController
     public static function getShadowrocket(array $node_config)
     {
         $url = null;
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         switch ($node_config['type']) {
             case 'shadowsocks':
                 $url = self::getShadowsocks($node_config);
@@ -319,7 +323,7 @@ final class SubController
             case 'vmess':
                 $tls = $node_config['security'] == 'tls' ? 1 : 0;
                 $url= sprintf(
-                    'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    'vmess://%s@'.$address.':%d?encryption=auto&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
                     $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
@@ -362,10 +366,12 @@ final class SubController
     public static function getTrojan(array $node_config)
     {
         $url = null;
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         switch ($node_config['type']) {
             case 'trojan':
                 $url= sprintf(
-                    'trojan://%s@%s:%d?flow=%s&security=%s&sni=%s&#%s',
+                    'trojan://%s@'.$address.':%d?flow=%s&security=%s&sni=%s&#%s',
                     $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
@@ -382,13 +388,15 @@ final class SubController
     public static function getAnXray(array $node_config)
     {
         $url = null;
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         switch ($node_config['type']) {
             case 'shadowsocks':
                 $url = self::getShadowsocks($node_config);
                 break;				
             case 'vmess':
                 $url = sprintf(
-                        'vmess://%s@%s:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                        'vmess://%s@'.$address.':%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
                         $node_config['uuid'],
                         $node_config['address'],
                         $node_config['port'],
@@ -408,7 +416,7 @@ final class SubController
                 break;
             case 'vless':
                 $url= sprintf(
-                    'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+                    'vmess://%s@'.$address.':%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
                     rawurlencode($node_config['uuid']),
                     $node_config['address'],
                     $node_config['port'],
