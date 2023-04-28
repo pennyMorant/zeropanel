@@ -129,7 +129,17 @@
         <script>
             var create_news_editors;
             ClassicEditor
-                .create(document.getElementById('zero_modal_create_news_ckeditor_classic'))
+                .create(document.getElementById('zero_modal_create_news_ckeditor_classic'), {
+                    toolbar: [
+                        'heading', 
+                        '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+                        '|',
+                        'outdent', 'indent',
+                        '|',
+                        'undo', 'redo'
+                    ]
+                })
                 .then(editor => {
                     create_news_editors = editor;
                 })
@@ -140,7 +150,17 @@
         <script>
             var update_news_editors;
             ClassicEditor
-                .create(document.getElementById('zero_modal_update_news_ckeditor_classic'))
+                .create(document.getElementById('zero_modal_update_news_ckeditor_classic'), {
+                    toolbar: [
+                        'heading', 
+                        '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+                        '|',
+                        'outdent', 'indent',
+                        '|',
+                        'undo', 'redo'
+                    ]
+                })
                 .then(editor => {
                     update_news_editors = editor;
                 })
