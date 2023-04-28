@@ -9,7 +9,7 @@ use Slim\Http\ServerRequest;
 
 class ProductController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             'id'        => 'ID',
@@ -29,7 +29,7 @@ class ProductController extends AdminController
         return $response;
     }
 
-    public function createProductIndex(ServerRequest $request, Response $response, array $args)
+    public function createProductIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $this->view()->display('admin/product/create.tpl');
         return $response;
@@ -69,7 +69,7 @@ class ProductController extends AdminController
         ]);
     }
 
-    public function updateProductIndex(ServerRequest $request, Response $response, array $args)
+    public function updateProductIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $args['id'];
         $product = Product::find($id);

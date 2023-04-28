@@ -14,7 +14,7 @@ use Slim\Http\ServerRequest;
 
 class OrderController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             'id'            => 'ID',

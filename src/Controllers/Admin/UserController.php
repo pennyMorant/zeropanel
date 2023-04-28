@@ -19,7 +19,7 @@ use Ramsey\Uuid\Uuid;
 
 class UserController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             
@@ -42,7 +42,7 @@ class UserController extends AdminController
         return $response;
     }
     
-    public function createNewUser(ServerRequest $request, Response $response, array $args)
+    public function createNewUser(ServerRequest $request, Response $response, array $args): Response
     {
         $email          = strtolower(trim($request->getParsedBodyParam('email')));
         $passwd         = $request->getParsedBodyParam('passwd') ?: $email;
@@ -92,7 +92,7 @@ class UserController extends AdminController
         ]);
     }
     
-    public function updateUserIndex(ServerRequest $request, Response $response, array $args)
+    public function updateUserIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $args['id'];
         $user = User::find($id);

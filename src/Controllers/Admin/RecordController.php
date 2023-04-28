@@ -17,7 +17,7 @@ use Slim\Http\ServerRequest;
 
 class RecordController extends AdminController
 {
-    public function recordIndex(ServerRequest $request, Response $response, array $args)
+    public function recordIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config_alive['total_column'] = [
             'id'        => 'ID',

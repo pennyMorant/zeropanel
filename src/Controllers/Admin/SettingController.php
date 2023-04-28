@@ -11,7 +11,7 @@ use Exception;
 
 class SettingController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $config = [];
         $settings = Setting::get(['item', 'value', 'type']);
@@ -241,7 +241,7 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function test(ServerRequest $request, Response $response, array $args)
+    public function test(ServerRequest $request, Response $response, array $args): Response
     {
         $to = $request->getParsedBodyParam('email_address');
 

@@ -14,7 +14,7 @@ use Slim\Http\ServerRequest;
 
 class TicketController extends AdminController
 {
-    public function ticketIndex(ServerRequest $request, Response $response, array $args)
+    public function ticketIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             'id'           => 'ID',
@@ -122,7 +122,7 @@ class TicketController extends AdminController
         ]);
     }
 
-    public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
+    public function ticketViewIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id       = $args['id'];
         $ticket   = Ticket::where('id', '=', $id)->first();

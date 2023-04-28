@@ -9,7 +9,7 @@ use Slim\Http\ServerRequest;
 
 class CouponController extends AdminController
 {
-    public function couponIndex(ServerRequest $request, Response $response, array $args)
+    public function couponIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             'id'              => 'ID',
@@ -25,7 +25,7 @@ class CouponController extends AdminController
         return $response;
     }
 
-    public function createCoupon(ServerRequest $request, Response $response, array $args)
+    public function createCoupon(ServerRequest $request, Response $response, array $args): Response
     {
         $postdata      = $request->getParsedBody();
         $generate_type = $postdata['generate_type'];
@@ -80,7 +80,7 @@ class CouponController extends AdminController
         ]);
     }
 
-    public function couponAjax(ServerRequest $request, Response $response, array $args)
+    public function couponAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Coupon::getTableDataFromAdmin(
             $request

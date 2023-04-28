@@ -16,7 +16,7 @@ use Slim\Http\ServerRequest;
 
 class CommissionController extends AdminController
 {
-    public function commissionIndex(ServerRequest $request, Response $response, array $args)
+    public function commissionIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             'id'       => 'ID',
@@ -45,7 +45,7 @@ class CommissionController extends AdminController
         return $response;
     }
 
-    public function withdrawAjax(ServerRequest $request, Response $response, array $args)
+    public function withdrawAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Withdraw::getTableDataFromAdmin(
             $request,
@@ -83,7 +83,7 @@ class CommissionController extends AdminController
         ]);
     }
 
-    public function updateWithdrawCommission(ServerRequest $request, Response $response, array $args)
+    public function updateWithdrawCommission(ServerRequest $request, Response $response, array $args): Response
     {
         $mode = $request->getParsedBodyParam('mode');
         $id   = $request->getParsedBodyParam('id');
@@ -118,7 +118,7 @@ class CommissionController extends AdminController
 
     }
 
-    public function commissionAjax(ServerRequest $request, Response $response, array $args)
+    public function commissionAjax(ServerRequest $request, Response $response, array $args): Response
     {
         $query = Payback::getTableDataFromAdmin(
             $request

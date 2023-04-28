@@ -13,7 +13,7 @@ use Slim\Http\ServerRequest;
 
 class NodeController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             
@@ -36,7 +36,7 @@ class NodeController extends AdminController
         return $response;
     }
 
-    public function createNodeIndex(ServerRequest $request, Response $response, array $args)
+    public function createNodeIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
@@ -89,7 +89,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function updateNodeIndex(ServerRequest $request, Response $response, array $args)
+    public function updateNodeIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $args['id'];
         $node = Node::find($id);
@@ -202,7 +202,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function deleteNode(ServerRequest $request, Response $response, array $args)
+    public function deleteNode(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParsedBodyParam('id');
         $node = Node::find($id);
