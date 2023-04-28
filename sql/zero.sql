@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-24 15:19:28
+-- 生成日期： 2023-04-28 14:43:45
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.5
 
@@ -73,11 +73,11 @@ CREATE TABLE `config` (
 CREATE TABLE `coupon` (
   `id` int(11) NOT NULL,
   `code` varchar(20) NOT NULL COMMENT '优惠码',
-  `per_use_count` int(11) NOT NULL COMMENT '每个用户使用次数',
-  `expire` int(11) NOT NULL COMMENT '到期时间',
+  `per_use_count` int(11) DEFAULT NULL COMMENT '每个用户使用次数',
+  `expire_at` int(11) NOT NULL COMMENT '到期时间',
   `limited_product` varchar(20) NOT NULL COMMENT '限定产品使用',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
-  `total_use_count` int(11) NOT NULL COMMENT '总使用次数'
+  `total_use_count` int(11) DEFAULT NULL COMMENT '总使用次数'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
