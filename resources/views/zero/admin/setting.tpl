@@ -150,7 +150,9 @@
                                                                 <div class="card-header">
                                                                     <div class="card-title fw-bold">邮件测试</div>
                                                                     <div class="card-toolbar">
-                                                                        <button class="btn btn-light-primary btn-sm" onclick="sendTestEmail()">测试</button>
+                                                                        <button class="btn btn-light-primary btn-sm" onclick="sendTestEmail()">
+                                                                            <i class="bi bi-send"></i>测试
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
