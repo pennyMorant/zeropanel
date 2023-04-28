@@ -133,35 +133,25 @@ class Job extends Command
     public function CheckJob()
     {
         //节点掉线检测
-        
         echo '节点掉线检测开始' . PHP_EOL;
-        $adminUser = User::where('is_admin', '=', '1')->get();
         $nodes = Node::all();
         foreach ($nodes as $node) {
             if ($node->isNodeOnline() === false && $node->online == true) {              
-                foreach ($adminUser as $user) {
-                    $notice_text = str_replace(
-                        '%node_name%',
-                        $node->name,
-                        Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
-                    );
-                }
-                
-                $messagetext = $notice_text;
-                Telegram::pushToAdmin($messagetext);
+                $notice_text = str_replace(
+                    '%node_name%',
+                    $node->name,
+                    Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
+                );
+                Telegram::pushToAdmin($notice_text);
                 $node->online = false;
                 $node->save();
             } elseif ($node->isNodeOnline() === true && $node->online == false) {
-                foreach ($adminUser as $user) {
-                    $notice_text = str_replace(
-                        '%node_name%',
-                        $node->name,
-                        Setting::obtain('diy_system_node_online_report_telegram_notify_content')
-                    );
-                }
-                $messagetext = $notice_text;
-                Telegram::pushToAdmin($messagetext);          
-
+                $notice_text = str_replace(
+                    '%node_name%',
+                    $node->name,
+                    Setting::obtain('diy_system_node_online_report_telegram_notify_content')
+                );
+                Telegram::pushToAdmin($notice_text);          
                 $node->online = true;
                 $node->save();
             }
