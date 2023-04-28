@@ -101,6 +101,7 @@ class OrderController extends BaseController
                     if ($coupon_code != '') {
                         $order->coupon_id   = $coupon->id;
                         $order->order_total = round($product_price * ((100 - $coupon->discount) / 100), 2);
+                        $order->discount_amount = round($product_price * ($coupon->discount / 100), 2);
                     }
                     if ($user->money > 0 && $order->order_total > 0) {
                         $remaining_total = $user->money - $order->order_total;
@@ -331,7 +332,7 @@ class OrderController extends BaseController
             if (!empty($order->coupon_id)) {
                 $coupon                   = Coupon::where('id', $order->coupon_id)->first();
                 $coupon->use_count       += 1;
-                $coupon->discount_amount += $order->product_price - $order->order_total - $order->credit_paid;
+                ///$coupon->discount_amount += $order->product_price - $order->order_total - $order->credit_paid;
                 $coupon->save();
             }
 
