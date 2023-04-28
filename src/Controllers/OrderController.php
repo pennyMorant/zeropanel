@@ -247,7 +247,7 @@ class OrderController extends BaseController
                 self::execute($order->order_no);
             } else {
                 // 计算结账金额              
-                $payment = Payment::find($payment_method);
+                $payment         = Payment::find($payment_method);
                 $payment_service = new PaymentService($payment->gateway, $payment->id);
                 if ($payment->fixed_fee || $payment->percent_fee) {
                     $order->handling_fee = round(($order->order_total * ($payment->percent_fee / 100)) + $payment->fixed_fee, 2);
@@ -257,8 +257,8 @@ class OrderController extends BaseController
                     $order->bonus_amount = $order->order_total * ($payment->recharge_bonus / 100);
                 }
                 
-                $currency = Setting::getClass('currency');
-                $exchange_rate = $currency['currency_exchange_rate'] ?: 1;
+                $currency          = Setting::getClass('currency');
+                $exchange_rate     = $currency['currency_exchange_rate'] ?: 1;
                 $order->payment_id = $payment_method;
                 $order->save();
 
@@ -344,10 +344,10 @@ class OrderController extends BaseController
 
     public function verifyCoupon(ServerRequest $request, Response $response, array $args)
     {
-        $coupon_code = $request->getParsedBodyParam('coupon_code');
-        $product_id = $request->getParsedBodyParam('product_id');
+        $coupon_code   = $request->getParsedBodyParam('coupon_code');
+        $product_id    = $request->getParsedBodyParam('product_id');
         $product_price = $request->getParsedBodyParam('product_price');
-        $user = $this->user;
+        $user          = $this->user;
         try{
             $product = Product::where('id', $product_id)->where('status', 1)->first();
             $coupons = Coupon::where('code', $coupon_code)->first();
