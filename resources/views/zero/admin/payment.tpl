@@ -196,7 +196,7 @@
                     },
                     'AlipayF2F': function() {
                         return {
-                        'alipayf2f_app_id': $('#alipayf2f_id').val(),
+                        'alipayf2f_app_id': $('#alipayf2f_app_id').val(),
                         'alipayf2f_private_key': $('#alipayf2f_private_key').val(),
                         'alipayf2f_public_key': $('#alipayf2f_public_key').val()
                         };
