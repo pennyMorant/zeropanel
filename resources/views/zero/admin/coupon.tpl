@@ -102,7 +102,7 @@
                                 <span class="required">用户使用次数</span>
                             </label>
                             <div class="input-group input-group-solid">
-                                <input type="text" value="1" class="form-control form-control-solid" placeholder="用户使用次数" id="zero_create_coupon_per_times">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="默认为无限制" id="zero_create_coupon_per_times">
                                 <span class="input-group-text">次</span>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                 <span class="required">总使用次数</span>
                             </label>
                             <div class="input-group input-group-solid">
-                                <input type="text" value="-1" class="form-control form-control-solid" placeholder="总使用次数" id="zero_create_coupon_total_times">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="默认为无限制" id="zero_create_coupon_total_times">
                                 <span class="input-group-text">次</span>
                             </div>
                         </div>
