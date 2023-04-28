@@ -143,14 +143,11 @@ class URL
     public static function getShadowsocksURL(User $user, Node $node, bool $emoji = false): string
     {
         $node_config = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
-        $method = [
-            '2022-blake3-aes-128-gcm',
-            '2022-blake3-aes-256-gcm',
-            '2022-blake3-chacha20-poly1305',
-        ];
-        if (!in_array($node_config['method'], $method)) {
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');              
+        if (Node::getShadowsocksSupportMethod($node_config['method'])) {                   
             $url = sprintf(
-                'ss://%s@[%s]:%s#%s',
+                'ss://%s@'.$address.':%d#%s',
                 base64_encode($node_config['method'] . ':' . $node_config['passwd']),
                 $node_config['address'],
                 $node_config['port'],
@@ -158,9 +155,8 @@ class URL
             );
         } else {
             $url = sprintf(
-                'ss://%s:%s@[%s]:%s#%s',
-                $node_config['method'],
-                $node_config['server_psk'] . ':' . $node_config['passwd'],
+                'ss://%s@'.$address.':%d#%s',
+                base64_encode($node_config['method'] . ':' . $node_config['server_psk'] . ':' . $node_config['passwd']),
                 $node_config['address'],
                 $node_config['port'],
                 rawurlencode($node_config['remark'])

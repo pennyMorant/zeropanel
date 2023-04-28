@@ -77,9 +77,9 @@ class Telegram
     public static function pushToAdmin($messageText, $keyBoard = null): void
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
-            $admin = Setting::obtain('telegram_admin_id');
+            $admin   = Setting::obtain('telegram_admin_id');
             $chat_id = User::where('id', $admin)->where('is_admin', '1')->value('telegram_id');
-            $bot = new Api(Setting::obtain('telegram_bot_token'), true);
+            $bot     = new Api(Setting::obtain('telegram_bot_token'), true);
             if (!is_null($keyBoard)) {
                 $reply_markup = json_encode(
                     [
