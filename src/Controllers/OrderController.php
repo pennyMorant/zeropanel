@@ -328,16 +328,7 @@ class OrderController extends BaseController
             $order->order_status = 2;
             $order->updated_time = time();
             $order->paid_time    = time();
-
-            if (!empty($order->coupon_id)) {
-                $coupon                   = Coupon::where('id', $order->coupon_id)->first();
-                $coupon->use_count       += 1;
-                ///$coupon->discount_amount += $order->product_price - $order->order_total - $order->credit_paid;
-                $coupon->save();
-            }
-
-            $product->purchase($user, $order);           
-
+            $product->purchase($user, $order);        
             // 返利
             if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
                 Payback::rebate($user->id, $order->order_total);
@@ -346,7 +337,6 @@ class OrderController extends BaseController
             // 如果上面的代码执行成功，没有报错，再标记为已处理
             $order->execute_status = 1;
             $order->save();
-            
             $product->sales += 1; // 加累积销量     
             $product->save();
         }
@@ -358,68 +348,54 @@ class OrderController extends BaseController
         $product_id = $request->getParsedBodyParam('product_id');
         $product_price = $request->getParsedBodyParam('product_price');
         $user = $this->user;
+        try{
+            $product = Product::where('id', $product_id)->where('status', 1)->first();
+            $coupons = Coupon::where('code', $coupon_code)->first();
+            $per_use_limit = $coupons->per_use_count;
+            if (is_null($product)) {
+                throw new \Exception(I18n::get()->t('error request'));
+            }           
+            if (is_null($coupons)) {
+                throw new \Exception(I18n::get()->t('promo code invalid'));
+            }
 
-        if (!$user->isLogin) {
-            $res['ret'] = -1;
-            return $response->withJson($res);
-        }
+            if ($coupons->expire_at < time()) {
+                throw new \Exception(I18n::get()->t('promo code has expired'));
+            }
+            
+            if (!$coupons->order($product->id)) {
+                throw new \Exception(I18n::get()->t('the conditions of use are not met'));
+            }           
+            if ($per_use_limit > 0) {
+                $use_count = Order::where('user_id', $user->id)
+                    ->where('coupon_id', $coupons->id)
+                    ->where('order_status', 'paid')
+                    ->count();
+                if ($use_count >= $per_use_limit) {
+                    throw new \Exception(I18n::get()->t('promo code have been used up'));
+                }
+            }
 
-        $product = Product::where('id', $product_id)->where('status', 1)->first();
-
-        if (is_null($product)) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('error request');
-            return $response->withJson($res);
-        }
-
-        $coupons = Coupon::where('code', $coupon_code)->first();
-
-        if (is_null($coupons)) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('promo code invalid');
-            return $response->withJson($res);
-        }
-
-        if ($coupons->expire < time()) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('promo code has expired');
-            return $response->withJson($res);
+            $total_use_limit = $coupons->total_use_count;
+            if ($total_use_limit > 0) {
+                $total_use_count = Order::where('coupon_id', $coupons->id)
+                    ->where('order_status', 'paid')
+                    ->count();
+                if ($total_use_count >= $total_use_limit) {
+                    throw new \Exception(I18n::get()->t('promo code have been used up'));
+                }
+            }
+        } catch (\Exception $e) {
+            return $response->withJson([
+                'ret' => 0,
+                'msg' => $e->getMessage(),
+            ]);
         }
         
-        if ($coupons->order($product->id) == false) {
-            $res['ret'] = 0;
-            $res['msg'] = I18n::get()->t('the conditions of use are not met');
-            return $response->withJson($res);
-        }
-
-        $per_use_limit = $coupons->per_use_count;
-        if ($per_use_limit > 0) {
-            $use_count = Order::where('user_id', $user->id)
-                ->where('coupon_id', $coupons->id)
-                ->where('order_status', 'paid')
-                ->count();
-            if ($use_count >= $per_use_limit) {
-                $res['ret'] = 0;
-                $res['msg'] = I18n::get()->t('promo code have been used up');
-                return $response->withJson($res);
-            }
-        }
-
-        $total_use_limit = $coupons->total_use_count;
-        if ($total_use_limit > 0) {
-            $total_use_count = Order::where('coupon_id', $coupons->id)
-                ->where('order_status', 'paid')
-                ->count();
-            if ($total_use_count >= $total_use_limit) {
-                $res['ret'] = 0;
-                $res['msg'] = I18n::get()->t('promo code have been used up');
-                return $response->withJson($res);
-            }
-        }
-
-        $res['ret']     = 1;
-        $res['total']   = round($product_price * ((100 - $coupons->discount) / 100), 2);
-        return $response->withJson($res);
+        return $response->withJson([
+            'ret'     => 1,
+            'total'   => round($product_price * ((100 - $coupons->discount) / 100), 2),
+        ]);
     }
 
     public static function createOrderNo(){

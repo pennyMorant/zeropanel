@@ -180,6 +180,8 @@ function KTUsersChangePlan(price, id, type, currency) {
         };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+    const modalCoupon = $('#zero_modal_configure_coupon');
+    modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+price+', '+id+')');
     $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
     $('#zero_modal_configure_product_price').html(`${price}${currency}`);
     $('#zero_modal_configure_product_total').html(`${price}${currency}`);
