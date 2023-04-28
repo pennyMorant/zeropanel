@@ -9,11 +9,11 @@ class Coupon extends Model
 
     public function order($product_id)
     {
-        if ($this->attributes['limited_product'] == '') {
+        if ($this->limited_product == '') {
             return true;
         }
 
-        $product_array = explode(',', $this->attributes['limited_product']);
+        $product_array = explode(',', $this->limited_product);
 
         foreach ($product_array as $product) {
             if ($product == $product_id) {

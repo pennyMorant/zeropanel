@@ -162,7 +162,7 @@ function kTUserConfigureProductModal(id, currency) {
         modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
         modalPrice.html(product_final_price + currency);
         modalTotal.html(product_final_price + currency);
-        modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+id+')');
+        modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+minPrice.value+', '+id+')');
         submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
 
         $("#zero_modal_configure_product").modal("show");
@@ -187,13 +187,14 @@ function KTUsersChangePlan(price, id, type, currency) {
 }
 
 // verify coupon
-function KTUserVerifyCoupon(product_id) {
+function KTUserVerifyCoupon(product_price, product_id) {
     $.ajax({
         type: "POST",
         url: "/user/verify_coupon",
         dataType: "json",
         data: {
             coupon_code: $("#zero_coupon_code").val(),
+            product_price,
             product_id
         },
         success: function (data) {

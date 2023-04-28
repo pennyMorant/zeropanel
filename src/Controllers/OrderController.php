@@ -328,10 +328,10 @@ class OrderController extends BaseController
             $order->updated_time = time();
             $order->paid_time    = time();
 
-            if (!empty($order->order_coupon)) {
-                $coupon                   = Coupon::where('coupon', $order->order_coupon)->first();
+            if (!empty($order->coupon_id)) {
+                $coupon                   = Coupon::where('id', $order->coupon_id)->first();
                 $coupon->use_count       += 1;
-                $coupon->discount_amount += $order->product_price - $order->order_total;
+                $coupon->discount_amount += $order->product_price - $order->order_total - $order->credit_paid;
                 $coupon->save();
             }
 
@@ -353,17 +353,15 @@ class OrderController extends BaseController
 
     public function verifyCoupon(ServerRequest $request, Response $response, array $args)
     {
-        $coupon = $request->getParsedBodyParam('coupon_code');
-        $coupon = trim($coupon);
-
+        $coupon_code = $request->getParsedBodyParam('coupon_code');
+        $product_id = $request->getParsedBodyParam('product_id');
+        $product_price = $request->getParsedBodyParam('product_price');
         $user = $this->user;
 
         if (!$user->isLogin) {
             $res['ret'] = -1;
             return $response->withJson($res);
         }
-
-        $product_id = $request->getParsedBodyParam('product_id');
 
         $product = Product::where('id', $product_id)->where('status', 1)->first();
 
@@ -373,7 +371,7 @@ class OrderController extends BaseController
             return $response->withJson($res);
         }
 
-        $coupons = Coupon::where('code', $coupon)->first();
+        $coupons = Coupon::where('code', $coupon_code)->first();
 
         if (is_null($coupons)) {
             $res['ret'] = 0;
@@ -396,7 +394,7 @@ class OrderController extends BaseController
         $per_use_limit = $coupons->per_use_count;
         if ($per_use_limit > 0) {
             $use_count = Order::where('user_id', $user->id)
-                ->where('order_coupon', $coupons->code)
+                ->where('coupon_id', $coupons->id)
                 ->where('order_status', 'paid')
                 ->count();
             if ($use_count >= $per_use_limit) {
@@ -408,7 +406,7 @@ class OrderController extends BaseController
 
         $total_use_limit = $coupons->total_use_count;
         if ($total_use_limit > 0) {
-            $total_use_count = Order::where('order_coupon', $coupons->code)
+            $total_use_count = Order::where('coupon_id', $coupons->id)
                 ->where('order_status', 'paid')
                 ->count();
             if ($total_use_count >= $total_use_limit) {
@@ -419,7 +417,7 @@ class OrderController extends BaseController
         }
 
         $res['ret']     = 1;
-        $res['total']   = round($product->price * ((100 - $coupons->discount) / 100), 2);
+        $res['total']   = round($product_price * ((100 - $coupons->discount) / 100), 2);
         return $response->withJson($res);
     }
 
