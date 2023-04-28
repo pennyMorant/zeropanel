@@ -36,12 +36,13 @@ class CouponController extends AdminController
                 'msg' => '优惠码不能为空'
             ]);
         }
-
-        if ($postdata['per_use_count'] <= 0 || $postdata['total_use_count'] <= 0) {
-            return $response->withJson([
-                'ret'   =>  0,
-                'msg'   =>  '次数必须大于0'
-            ]);
+        if (!empty($postdata['per_use_count']) || !empty($postdata['total_use_count'])) {
+            if ($postdata['per_use_count'] <= 0 || $postdata['total_use_count'] <= 0) {
+                return $response->withJson([
+                    'ret'   =>  0,
+                    'msg'   =>  '次数必须大于0'
+                ]);
+            }
         }
         if ($generate_type == 1) {
             if (Coupon::where('code', $final_code)->count() != 0) {
@@ -88,7 +89,7 @@ class CouponController extends AdminController
             return [
                 'id'              => $rowData->id,
                 'code'            => $rowData->code,
-                'expire'          => date('Y-m-d H:i:s', $rowData->expire),
+                'expire'          => date('Y-m-d H:i:s', $rowData->expire_at),
                 'limited_product' => $rowData->limited_product ?? '无限制',
                 'discount'        => $rowData->discount,
                 'per_use_count'   => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
