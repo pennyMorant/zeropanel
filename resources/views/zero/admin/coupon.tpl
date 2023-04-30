@@ -96,6 +96,7 @@
                                 <span class="required">指定商品</span>
                             </label>
                             <select class="form-select form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-close-on-select="false" data-placeholder="限制指定产品使用优惠" data-allow-clear="true" multiple="multiple">
+                                <option></option>
                                 {foreach $products as $product}
                                     <option value={$product->id}>{$product->name}</option>
                                 {/foreach}
@@ -105,7 +106,8 @@
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">指定周期</span>
                             </label>
-                            <select class="form-select form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-close-on-select="false" data-placeholder="限制指定周期使用优惠" data-allow-clear="true" multiple="multiple">                              
+                            <select class="form-select form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-close-on-select="false" data-placeholder="限制指定周期使用优惠" data-allow-clear="true" multiple="multiple">
+                                <option></option>                              
                                 <option value="30">一个月</option>
                                 <option value="90">三个月</option>
                                 <option value="180">半年</option>

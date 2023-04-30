@@ -42,14 +42,13 @@ class CouponController extends AdminController
                 'msg' => '优惠码不能为空'
             ]);
         }
-        if (!empty($postdata['per_use_count']) || !empty($postdata['total_use_count'])) {
-            if ($postdata['per_use_count'] <= 0 || $postdata['total_use_count'] <= 0) {
-                return $response->withJson([
-                    'ret'   =>  0,
-                    'msg'   =>  '次数必须大于0'
-                ]);
-            }
+        if (!empty($postdata['per_use_count']) && $postdata['per_use_count'] <= 0 || !empty($postdata['total_use_count']) && $postdata['total_use_count'] <= 0) {         
+            return $response->withJson([
+                'ret'   =>  0,
+                'msg'   =>  '次数必须大于0'
+            ]);
         }
+
         if ($generate_type == 1) {
             if (Coupon::where('code', $final_code)->count() != 0) {
                  return $response->withJson([
