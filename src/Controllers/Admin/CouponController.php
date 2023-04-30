@@ -36,39 +36,40 @@ class CouponController extends AdminController
         $postdata      = $request->getParsedBody();
         $generate_type = $postdata['generate_type'];
         $final_code    = $postdata['code'];
-        if (empty($final_code) && in_array($generate_type, [1, 3])) {
+        try {
+            if (empty($final_code) && in_array($generate_type, [1, 3])) {
+                throw new \Exception('优惠码不能为空');
+            }
+            if (empty($postdata['discount']) || !is_numeric($postdata['discount'])) {
+                throw new \Exception('折扣比例错误');
+            }
+            if (!empty($postdata['per_use_count']) && $postdata['per_use_count'] <= 0 || !empty($postdata['total_use_count']) && $postdata['total_use_count'] <= 0) {         
+                throw new \Exception('次数必须大于0');
+            }
+
+            if ($generate_type == 1) {
+                if (Coupon::where('code', $final_code)->count() != 0) {
+                    throw new \Exception('优惠码已存在');
+                }
+            } else {
+                while (true) {
+                    $code_str = Tools::genRandomChar(8);
+                    if ($generate_type == 3) {
+                        $final_code .= $code_str;
+                    } else {
+                        $final_code  = $code_str;
+                    }
+
+                    if (Coupon::where('code', $final_code)->count() == 0) {
+                        break;
+                    }
+                }
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '优惠码不能为空'
+                'msg' => $e->getMessage(),
             ]);
-        }
-        if (!empty($postdata['per_use_count']) && $postdata['per_use_count'] <= 0 || !empty($postdata['total_use_count']) && $postdata['total_use_count'] <= 0) {         
-            return $response->withJson([
-                'ret'   =>  0,
-                'msg'   =>  '次数必须大于0'
-            ]);
-        }
-
-        if ($generate_type == 1) {
-            if (Coupon::where('code', $final_code)->count() != 0) {
-                 return $response->withJson([
-                    'ret' => 0,
-                    'msg' => '优惠码已存在'
-                ]);
-            }
-        } else {
-            while (true) {
-                $code_str = Tools::genRandomChar(8);
-                if ($generate_type == 3) {
-                    $final_code .= $code_str;
-                } else {
-                    $final_code  = $code_str;
-                }
-
-                if (Coupon::where('code', $final_code)->count() == 0) {
-                    break;
-                }
-            }
         }
         $coupon                         = new Coupon();
         $coupon->per_use_count          = $postdata['per_use_count'] ?: NULL;
