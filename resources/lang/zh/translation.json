@@ -227,6 +227,7 @@
     "create ticket": "创建工单",
     "reply": "回复",
     "please verify email first": "请先验证邮箱",
+    "coupon failed": "优惠券使用失败",
     "tutorial": {
         "android": {
             "clash": {

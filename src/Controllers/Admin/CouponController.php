@@ -3,6 +3,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Coupon;
+use App\Models\Product;
 use App\Utils\Tools;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -12,16 +13,21 @@ class CouponController extends AdminController
     public function couponIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
-            'id'              => 'ID',
-            'code'            => '优惠码',
-            'expire'          => '过期时间',
-            'limited_product' => '限定商品ID',
-            'discount'        => '额度',
-            'per_use_count'   => '每个用户次数',
-            'total_use_count' => '优惠码总使用次数'
+            'id'                     => 'ID',
+            'code'                   => '优惠码',
+            'expire'                 => '过期时间',
+            'limited_product'        => '限定商品ID',
+            'limited_product_period' => '限定周期',
+            'discount'               => '额度',
+            'per_use_count'          => '每个用户次数',
+            'total_use_count'        => '优惠码总使用次数'
         ];
         $table_config['ajax_url'] = 'coupon/ajax';
-        $this->view()->assign('table_config', $table_config)->display('admin/coupon.tpl');
+        $products = Product::where('status', 1)->get();
+        $this->view()
+            ->assign('table_config', $table_config)
+            ->assign('products', $products)
+            ->display('admin/coupon.tpl');
         return $response;
     }
 
@@ -65,14 +71,15 @@ class CouponController extends AdminController
                 }
             }
         }
-        $code                  = new Coupon();
-        $code->per_use_count   = $postdata['per_use_count'] ?: NULL;
-        $code->total_use_count = $postdata['total_use_count'] ?: NULL;
-        $code->code            = $final_code;
-        $code->expire_at       = time() + $postdata['expire'] * 3600;
-        $code->limited_product = $postdata['limited_product'] ?: NULL;
-        $code->discount        = $postdata['discount'];
-        $code->save();
+        $coupon                         = new Coupon();
+        $coupon->per_use_count          = $postdata['per_use_count'] ?: NULL;
+        $coupon->total_use_count        = $postdata['total_use_count'] ?: NULL;
+        $coupon->code                   = $final_code;
+        $coupon->expire_at              = time() + $postdata['expire'] * 3600;
+        $coupon->limited_product        = json_encode($postdata['limited_product']) ?: NULL;
+        $coupon->limited_product_period = json_encode($postdata['limited_product_period']) ?: NULL;
+        $coupon->discount               = $postdata['discount'];
+        $coupon->save();
 
         return $response->withJson([
             'ret' => 1,
@@ -87,13 +94,14 @@ class CouponController extends AdminController
         );
         $data = $query['datas']->map(function($rowData) {
             return [
-                'id'              => $rowData->id,
-                'code'            => $rowData->code,
-                'expire'          => date('Y-m-d H:i:s', $rowData->expire_at),
-                'limited_product' => $rowData->limited_product ?? '无限制',
-                'discount'        => $rowData->discount,
-                'per_use_count'   => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
-                'total_use_count' => is_null($rowData->total_use_count) ? '无限次使用' : $rowData->total_use_count,
+                'id'                     => $rowData->id,
+                'code'                   => $rowData->code,
+                'expire'                 => date('Y-m-d H:i:s', $rowData->expire_at),
+                'limited_product'        => $rowData->limited_product ?? '无限制',
+                'limited_product_period' => $rowData->limited_product_period ?? '无限制',
+                'discount'               => $rowData->discount,
+                'per_use_count'          => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
+                'total_use_count'        => is_null($rowData->total_use_count) ? '无限次使用' : $rowData->total_use_count,
             ];
         })->toArray();
 

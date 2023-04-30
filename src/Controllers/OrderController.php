@@ -16,6 +16,7 @@ use App\Models\{
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use App\Services\PaymentService;
+use App\Services\CouponService;
 use Pkly\I18Next\I18n;
 
 class OrderController extends BaseController
@@ -88,7 +89,7 @@ class OrderController extends BaseController
                     if ($user->product_id == $product->id) {                      
                         throw new \Exception('已有该产品，请在主页点击续费');
                     }
-                    $coupon = Coupon::where('code', '=', $coupon_code)->first();
+                    //$coupon = Coupon::where('code', '=', $coupon_code)->first();
 
                     $order                 = new Order();
                     $order->order_no       = self::createOrderNo();
@@ -98,10 +99,13 @@ class OrderController extends BaseController
                     $order->product_price  = $product_price;
                     $order->product_period = $product->productPeriod($product_price) ?? NULL;
                     $order->order_total    = $product_price;
-                    if ($coupon_code != '') {
-                        $order->coupon_id   = $coupon->id;
-                        $order->order_total = round($product_price * ((100 - $coupon->discount) / 100), 2);
-                        $order->discount_amount = round($product_price * ($coupon->discount / 100), 2);
+                    if (!empty($coupon_code)) {
+                        $couponService = new CouponService($coupon_code);
+                        if (!$couponService->use($order)){
+                            throw new \Exception(I18n::get()->t('coupon failed'));
+                        }
+                        $order->coupon_id = $couponService->getID();
+                        $order->order_total = round($order->order_total - $order->discount_amount, 2);
                     }
                     if ($user->money > 0 && $order->order_total > 0) {
                         $remaining_total = $user->money - $order->order_total;
@@ -344,14 +348,15 @@ class OrderController extends BaseController
 
     public function verifyCoupon(ServerRequest $request, Response $response, array $args)
     {
-        $coupon_code   = $request->getParsedBodyParam('coupon_code');
-        $product_id    = $request->getParsedBodyParam('product_id');
-        $product_price = $request->getParsedBodyParam('product_price');
-        $user          = $this->user;
+        $coupon_code    = $request->getParsedBodyParam('coupon_code');
+        $product_id     = $request->getParsedBodyParam('product_id');
+        $product_price  = $request->getParsedBodyParam('product_price');
+        $user           = $this->user;
+        $product        = Product::where('id', $product_id)->where('status', 1)->first();
+        $coupons        = Coupon::where('code', $coupon_code)->first();
+        $per_use_limit  = $coupons->per_use_count;
+        $product_period = $product->productPeriod($product_price);
         try{
-            $product = Product::where('id', $product_id)->where('status', 1)->first();
-            $coupons = Coupon::where('code', $coupon_code)->first();
-            $per_use_limit = $coupons->per_use_count;
             if (is_null($product)) {
                 throw new \Exception(I18n::get()->t('error request'));
             }           
@@ -363,9 +368,16 @@ class OrderController extends BaseController
                 throw new \Exception(I18n::get()->t('promo code has expired'));
             }
             
-            if (!$coupons->order($product->id)) {
-                throw new \Exception(I18n::get()->t('the conditions of use are not met'));
-            }           
+            if (!is_null($coupons->limited_product)) {
+                if (!in_array($product_id, json_decode($coupons->limited_product, true))) {
+                    throw new \Exception(I18n::get()->t('此优惠码不适用于此产品'));
+                }
+            }
+            if (!is_null($coupons->limited_product_period)) {
+                if (!in_array($product_period, json_decode($coupons->limited_product_period, true))) {
+                    throw new \Exception(I18n::get()->t('此优惠码不适用于此产品周期'));
+                }
+            }        
             if ($per_use_limit > 0) {
                 $use_count = Order::where('user_id', $user->id)
                     ->where('coupon_id', $coupons->id)
@@ -375,15 +387,9 @@ class OrderController extends BaseController
                     throw new \Exception(I18n::get()->t('promo code have been used up'));
                 }
             }
-
-            $total_use_limit = $coupons->total_use_count;
-            if ($total_use_limit > 0) {
-                $total_use_count = Order::where('coupon_id', $coupons->id)
-                    ->where('order_status', 'paid')
-                    ->count();
-                if ($total_use_count >= $total_use_limit) {
-                    throw new \Exception(I18n::get()->t('promo code have been used up'));
-                }
+           
+            if ($coupons->total_use_count <= 0 && !is_null($coupons->total_use_count)) {
+                throw new \Exception(I18n::get()->t('promo code have been used up'));
             }
         } catch (\Exception $e) {
             return $response->withJson([
@@ -394,7 +400,7 @@ class OrderController extends BaseController
         
         return $response->withJson([
             'ret'     => 1,
-            'total'   => round($product_price * ((100 - $coupons->discount) / 100), 2),
+            'total'   => number_format($product_price * ((100 - $coupons->discount) / 100), 2)
         ]);
     }
 

@@ -93,22 +93,22 @@ function kTUserConfigureProductModal(id, currency) {
         })
     }
     getProductData().then(function(data) {
-        const product_info = data;
-        const html = $('#zero_product_'+id).html();
-        const name = product_info.name;
-        const month_price = product_info.month_price;
-        const quarter_price = product_info.quarter_price;
+        const product_info    = data;
+        const html            = $('#zero_product_'+id).html();
+        const name            = product_info.name;
+        const month_price     = product_info.month_price;
+        const quarter_price   = product_info.quarter_price;
         const half_year_price = product_info.half_year_price;
-        const year_price = product_info.year_price;
-        const two_year_price = product_info.two_year_price;
-        const onetime_price = product_info.onetime_price;
-        var modalInnerHtml = $('#zero_modal_configure_product_inner_html');
-        var modalName = $('#zero_modal_configure_product_name');
-        var modalPrice = $('#zero_modal_configure_product_price');
-        var modalTotal = $('#zero_modal_configure_product_total');
-        var modalCoupon = $('#zero_modal_configure_coupon');
-        var modalCouponHtml = $('#zero_modal_configure_coupon_html');
-        const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+        const year_price      = product_info.year_price;
+        const two_year_price  = product_info.two_year_price;
+        const onetime_price   = product_info.onetime_price;
+        var   modalInnerHtml  = $('#zero_modal_configure_product_inner_html');
+        var   modalName       = $('#zero_modal_configure_product_name');
+        var   modalPrice      = $('#zero_modal_configure_product_price');
+        var   modalTotal      = $('#zero_modal_configure_product_total');
+        var   modalCoupon     = $('#zero_modal_configure_coupon');
+        var   modalCouponHtml = $('#zero_modal_configure_coupon_html');
+        const submitButton    = document.querySelector('[data-kt-users-action="submit"]');
         if (product_info.type == 1) {
             const all_prices = {
                 month_price: {
@@ -130,6 +130,10 @@ function kTUserConfigureProductModal(id, currency) {
                 two_year_price: {
                     label: i18next.t('biennial fee'),
                     value: parseFloat(two_year_price)
+                },
+                onetime_price: {
+                    label: i18next.t('onetime fee'),
+                    value: parseFloat(onetime_price)
                 }
               };
 
@@ -139,7 +143,8 @@ function kTUserConfigureProductModal(id, currency) {
                 all_prices.quarter_price,
                 all_prices.half_year_price,
                 all_prices.year_price,
-                all_prices.two_year_price
+                all_prices.two_year_price,
+                all_prices.onetime_price
             ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
               minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
               
@@ -153,16 +158,17 @@ function kTUserConfigureProductModal(id, currency) {
                     $('#zero_modal_configure_product_' + key + ' a').addClass('active');
                   }
                 }
-              });         
+              });
+            modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+minPrice.value.toFixed(2)+'", '+id+')');      
         }
 
         modalInnerHtml.html(html);
         product_info.type == 3 ? modalCouponHtml.hide() : false;
-        const product_final_price = product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price; // 判断不同类型商品的价格
+        const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
         modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
         modalPrice.html(product_final_price + currency);
         modalTotal.html(product_final_price + currency);
-        modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+minPrice.value+', '+id+')');
+        
         submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
 
         $("#zero_modal_configure_product").modal("show");
@@ -181,7 +187,7 @@ function KTUsersChangePlan(price, id, type, currency) {
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     const modalCoupon = $('#zero_modal_configure_coupon');
-    modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+price+', '+id+')');
+    modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+price+'", '+id+')');
     $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
     $('#zero_modal_configure_product_price').html(`${price}${currency}`);
     $('#zero_modal_configure_product_total').html(`${price}${currency}`);
