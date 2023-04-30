@@ -95,7 +95,7 @@
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">指定商品</span>
                             </label>
-                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-close-on-select="true" data-placeholder="限制指定产品使用优惠" data-allow-clear="true" multiple="multiple">
+                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-close-on-select="false" data-placeholder="限制指定产品使用优惠" data-allow-clear="true" multiple="multiple">
                                 <option></option>
                                 {foreach $products as $product}
                                     <option value={$product->id}>{$product->name}</option>
@@ -186,6 +186,7 @@
                                 submitButton.removeAttribute('data-kt-indicator');
                                 submitButton.disabled = false;
                                 getResult(data.msg, '', 'success');
+                                $('#zero_modal_create_coupon').modal('hide');
                                 table_1.ajax.reload();
                             }, 1500);
                         } else {
