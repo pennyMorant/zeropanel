@@ -265,9 +265,7 @@ class UserController extends BaseController
                 break;
             case 'check':
                 $token_str = $request->getQueryParam('token');
-                $token = Token::where('token', $token_str)->where('user_id', $user->id)
-                            ->where('type', 3)->where('expire_time', '>', time())
-                            ->first();
+                $token = Token::where('token', $token_str)->where('type', 3)->where('expire_time', '>', time())->first();
                 if (is_null($token)) {
                     $this->view()
                         ->assign('verification_result', 'false')
