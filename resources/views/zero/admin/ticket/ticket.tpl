@@ -73,7 +73,12 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">用户ID</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="用户ID" id="zero_admin_create_ticket_userid">
+                            <select class="form-select form-select-solid" id="zero_admin_create_ticket_userid" data-control="select2" data-placeholder="选择一个用户">
+                                <option></option>
+                                {foreach $allUsers as $allUser}
+                                    <option value={$allUser->id}>{$allUser->email}</option>
+                                {/foreach}
+                            </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -85,7 +90,7 @@
 							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
 								<span class="required">工单类型</span>
 							</label>
-							<select id="zero_admin_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
+							<select id="zero_admin_create_ticket_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
 								<option value="support">支持</option>
 								<option value="account">账户</option>
 								<option value="billing">账单</option>
@@ -177,6 +182,7 @@
                     }
                 });
             }
-    </script>
+        </script>
+        
     </body>
 </html>
