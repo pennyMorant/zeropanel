@@ -15,6 +15,30 @@ function getResult(titles, texts, icons) {
         }
     });
 }
+
+function getwarning() {
+  return new Promise(function (resolve, reject) {
+    Swal.fire({
+      text: '继续执行下面操作?',
+      icon: "warning",
+      buttonsStyling: false,
+      showCancelButton: true,
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-light"
+      }
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        resolve(); // 点击确定时返回一个已解决的 Promise 对象
+      } else {
+        reject(); // 点击取消时返回一个已拒绝的 Promise 对象
+      }
+    });
+  });
+}
+
 $(document).ready(function (){
     // 获取当前 URL 路径
     var path = window.location.pathname;
@@ -30,6 +54,9 @@ $(document).ready(function (){
 </script>
 <script>
     function zeroAdminDelete(type, id){
+        getwarning().then(function() {
+
+        
         switch (type) {
             case 'product':
                 $.ajax({
@@ -179,5 +206,8 @@ $(document).ready(function (){
                 getResult('发生错误', '', 'error');
 
         }
+        }).catch(function() {
+            Swal.close();
+        })
     }
 </script>
