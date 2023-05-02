@@ -77,9 +77,8 @@ class Telegram
     public static function pushToAdmin($messageText, $keyBoard = null): void
     {
         if (Setting::obtain('enable_telegram_bot') == true) {
-            $admin   = Setting::obtain('telegram_admin_id');
-            $chat_id = User::where('id', $admin)->where('is_admin', '1')->value('telegram_id');
-            $bot     = new Api(Setting::obtain('telegram_bot_token'), true);
+            $chat_ids = json_decode(Setting::obtain('telegram_admin_id'), true);
+            $bot      = new Api(Setting::obtain('telegram_bot_token'), true);
             if (!is_null($keyBoard)) {
                 $reply_markup = json_encode(
                     [
@@ -89,18 +88,20 @@ class Telegram
             } else {
                 $reply_markup = null;
             }
-            $sendMessage = [
-                'chat_id'                   => $chat_id,
-                'text'                      => $messageText,
-                'parse_mode'                => '',
-                'disable_web_page_preview'  => false,
-                'reply_to_message_id'       => null,
-                'reply_markup'              => $reply_markup
-            ];
-            try {
-                $bot->sendMessage($sendMessage);
-            } catch (Exception $e) {
-                echo $e->getMessage();
+            foreach ($chat_ids as $chat_id) {
+                $sendMessage = [
+                    'chat_id'                   => $chat_id,
+                    'text'                      => $messageText,
+                    'parse_mode'                => '',
+                    'disable_web_page_preview'  => false,
+                    'reply_to_message_id'       => null,
+                    'reply_markup'              => $reply_markup
+                ];
+                try {
+                    $bot->sendMessage($sendMessage);
+                } catch (Exception $e) {
+                    echo $e->getMessage();
+                }
             }
         }
     }

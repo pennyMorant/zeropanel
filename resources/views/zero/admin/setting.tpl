@@ -276,7 +276,12 @@
                                                                     <label class="form-label">频道账号</label>
                                                                     <input class="form-control mb-5" id="telegram_channel_id" value="{$settings['telegram_channel_id']}" type="text" placeholder="账号" />
                                                                     <label class="form-label">ADMIN ID</label>
-                                                                    <input class="form-control" id="telegram_admin_id" value="{$settings['telegram_admin_id']}" type="text" placeholder="ID" />
+                                                                    <select class="form-select" id="telegram_admin_id" data-control="select2" data-close-on-select="false" data-placeholder="选择管理员" data-allow-clear="true" multiple="multiple">
+                                                                        <option></option>
+                                                                        {foreach $adminUsers as $adminUser}
+                                                                            <option value={$adminUser->telegram_id}>{$adminUser->email}</option>
+                                                                        {/foreach}
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -479,10 +484,21 @@
                                                                         <span class="input-group-text">个</span>
                                                                     </div>
                                                                     <label class="form-label">默认速度限制</label>
-                                                                    <div class="input-group">
+                                                                    <div class="input-group mb-5">
                                                                         <input class="form-control" id="signup_default_speed_limit" value="{$settings['signup_default_speed_limit']}" type="text" placeholder="速度限制" />
                                                                         <span class="input-group-text">Mbps</span>
                                                                     </div>
+                                                                    <label class="form-label">限制邮箱后缀</label>
+                                                                    <select class="form-select" id="limit_email_suffix" data-control="select2" data-close-on-select="false" data-placeholder="指定邮箱后缀" data-allow-clear="true" multiple="multiple">
+                                                                        <option></option>                              
+                                                                        <option value="qq.com">@qq.com</option>
+                                                                        <option value="163.com">@163.com</option>
+                                                                        <option value="gmail.com">@gmail.com</option>
+                                                                        <option value="outlook.com">@outlook.com</option>
+                                                                        <option value="yahoo.com">@yahoo.com</option>
+                                                                        <option value="live.com">@live.com</option>
+                                                                        <option value="hotmail.com">@hotmail.com</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -656,7 +672,9 @@
                 templateResult: optionFormatCountry
             });
         </script>
-
+        <script>
+            $('#limit_email_suffix').val({$settings['limit_email_suffix']}).trigger('change');
+        </script>
         <script>
             const container = document.getElementById('permission_group_detail');
             var options = {
@@ -990,7 +1008,8 @@
                                 signup_default_traffic: $('#signup_default_traffic').val(),
                                 signup_default_ip_limit: $('#signup_default_ip_limit').val(),
                                 signup_default_speed_limit: $('#signup_default_speed_limit').val(),
-                                verify_email: $('#verify_email').val()
+                                verify_email: $('#verify_email').val(),
+                                limit_email_suffix: $('#limit_email_suffix').val()
                             },
                             success: function(data){
                                 if (data.ret === 1){

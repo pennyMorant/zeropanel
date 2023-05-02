@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Setting;
+use App\Models\User;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 use App\Services\Mail;
@@ -26,10 +27,11 @@ class SettingController extends AdminController
                 $config[$setting->item] = (string) $setting->value;
             }
         }
-
+        $adminUsers = User::where('is_admin', 1)->where('telegram_id', '!=', '')->get();
         $this->view()
             ->registerClass('Setting', Setting::class)
             ->assign('settings', $config)
+            ->assign('adminUsers', $adminUsers)
             ->display('admin/setting.tpl');
         return $response;
     }
@@ -130,7 +132,8 @@ class SettingController extends AdminController
                     'signup_default_class_time', 
                     'signup_default_ip_limit', 
                     'signup_default_speed_limit',
-                    'verify_email'
+                    'verify_email',
+                    'limit_email_suffix',
                 ];
                 break;
             // 邀请设置

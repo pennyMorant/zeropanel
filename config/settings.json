@@ -371,6 +371,16 @@
     },
     {
         "id": null,
+        "item": "limit_email_suffix",
+        "value": "",
+        "class": "register",
+        "is_public": 1,
+        "type": "array",
+        "default": "",
+        "mark": "限制邮箱后缀"
+    },
+    {
+        "id": null,
         "item": "signup_default_traffic",
         "value": "20",
         "class": "register",
@@ -605,7 +615,7 @@
         "value": "",
         "class": "telegram",
         "is_public": 0,
-        "type": "string",
+        "type": "array",
         "default": "",
         "mark": "管理员ID"
     },
