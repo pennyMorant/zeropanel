@@ -39,7 +39,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">                                                   
-                                                    {$knowledge->content}                                                   
+                                                    {eval var=$knowledge->content}                                                   
                                                 </div>
                                             </div>
                                         {/foreach}
