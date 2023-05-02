@@ -143,7 +143,7 @@
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-                            <button type="submit" class="btn btn-primary" data-kt-admin-create-payment-action="submit" onclick="zeroAdminCreatePayment('create')">
+                            <button type="submit" class="btn btn-primary" data-kt-admin-create-payment-action="submit" onclick="zeroAdminPayment('create')">
                                 <span class="indicator-label">{$trans->t('submit')}</span>
                                 <span class="indicator-progress">{$trans->t('please wait')}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -169,7 +169,7 @@
             });
         </script>
         <script>
-            function zeroAdminCreatePayment(type, id = 0, enable = 0) {
+            function zeroAdminPayment(type, id = 0, enable = 0) {
                 const submitButton = document.querySelector('[data-kt-admin-create-payment-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
@@ -250,78 +250,68 @@
             }
         </script>
         <script>
-            function zeroAdminUpdatePayment(type, id) {
+            function zeroAdminPaymentGetInfo(id) {
                 const submitButton = document.querySelector('[data-kt-admin-create-payment-action="submit"]');
-                switch (type) {
-                    case 'request':
-                        $.ajax({
-                            type: 'POST',
-                            url: '/{$config['website_admin_path']}/payment/config',
-                            dataType: 'json',
-                            data: {
-                                id
+                $.ajax({
+                    type: 'POST',
+                    url: '/{$config['website_admin_path']}/payment/getinfo',
+                    dataType: 'json',
+                    data: {
+                        id
+                    },
+                    success: function(data) {
+                                        
+                        const paymentGatewaySelect = $('#payment_gateway');
+                        const paymentConfigSections = $('[id^=payment_config_]');
+                        
+                        $('#payment_name').val(data.payment_name);
+                        $('#payment_icon').val(data.payment_icon);
+                        $('#payment_notify_domain').val(data.payment_notify_domain);
+                        $('#payment_percent_fee').val(data.payment_percent_fee);
+                        $('#payment_fixed_fee').val(data.payment_fixed_fee);
+                        $('#payment_recharge_bonus').val(data.payment_recharge_bonus);
+                        paymentGatewaySelect.val(data.payment_gateway).trigger('change');
+                        
+                        const paymentConfigObj = {
+                            'epay': {
+                                'url': 'epay_url',
+                                'pid': 'epay_pid',
+                                'key': 'epay_key',
                             },
-                            success: function(data) {
-                                              
-                                const paymentGatewaySelect = $('#payment_gateway');
-                                const paymentConfigSections = $('[id^=payment_config_]');
-                                
-                                $('#payment_name').val(data.payment_name);
-                                $('#payment_icon').val(data.payment_icon);
-                                $('#payment_notify_domain').val(data.payment_notify_domain);
-                                $('#payment_percent_fee').val(data.payment_percent_fee);
-                                $('#payment_fixed_fee').val(data.payment_fixed_fee);
-                                $('#payment_recharge_bonus').val(data.payment_recharge_bonus);
-                                paymentGatewaySelect.val(data.payment_gateway).trigger('change');
-                                
-                                const paymentConfigObj = {
-                                    'epay': {
-                                        'url': 'epay_url',
-                                        'pid': 'epay_pid',
-                                        'key': 'epay_key',
-                                    },
-                                    'tronapipay': {
-                                        'public_key': 'tronapipay_public_key',
-                                        'private_key': 'tronapipay_private_key',
-                                    },
-                                    'mgate': {
-                                        'url': 'mgate_url',
-                                        'id': 'mgate_id',
-                                        'secret': 'mgate_secret',
-                                    },
-                                    'alipayf2f': {
-                                        'app_id': 'alipayf2f_id',
-                                        'private_key': 'alipayf2f_private_key',
-                                        'public_key': 'alipayf2f_public_key',
-                                    },
-                                    'epusdt': {
-                                        'url': 'epusdt_url',
-                                        'private_key': 'epusdt_private_key',
-                                    },
-                                };
-                                
-                                if (paymentConfigObj.hasOwnProperty(data.payment_gateway.toLowerCase())) {
-                                        const configKeys = Object.keys(paymentConfigObj[data.payment_gateway.toLowerCase()]);
-                                        configKeys.forEach(key => {
-                                        const selector = '#'+paymentConfigObj[data.payment_gateway.toLowerCase()][key];
-                                        $(selector).val(data.payment_config[paymentConfigObj[data.payment_gateway.toLowerCase()][key]]);
-                                    });
-                                }
-                                
-                                submitButton.setAttribute('onclick', 'zeroAdminUpdatePayment("update", ' + id + ')');
-                                paymentConfigSections.addClass('d-none');
-                                $('#payment_config_'+data.payment_gateway.toLowerCase()).removeClass('d-none');
-                                $('#zero_modal_create_payment').modal('show');
-                            }
-                            
-                        });
-                        break;
-                    case 'update':
-                        zeroAdminCreatePayment(type, id);
-                        break;
-                    default:
-                        getResult('发生错误', '', 'error');
-                }   
+                            'tronapipay': {
+                                'public_key': 'tronapipay_public_key',
+                                'private_key': 'tronapipay_private_key',
+                            },
+                            'mgate': {
+                                'url': 'mgate_url',
+                                'id': 'mgate_id',
+                                'secret': 'mgate_secret',
+                            },
+                            'alipayf2f': {
+                                'app_id': 'alipayf2f_id',
+                                'private_key': 'alipayf2f_private_key',
+                                'public_key': 'alipayf2f_public_key',
+                            },
+                            'epusdt': {
+                                'url': 'epusdt_url',
+                                'private_key': 'epusdt_private_key',
+                            },
+                        };
+                        
+                        if (paymentConfigObj.hasOwnProperty(data.payment_gateway.toLowerCase())) {
+                                const configKeys = Object.keys(paymentConfigObj[data.payment_gateway.toLowerCase()]);
+                                configKeys.forEach(key => {
+                                const selector = '#'+paymentConfigObj[data.payment_gateway.toLowerCase()][key];
+                                $(selector).val(data.payment_config[paymentConfigObj[data.payment_gateway.toLowerCase()][key]]);
+                            });
+                        }
+                        
+                        submitButton.setAttribute('onclick', 'zeroAdminPayment("update", ' + id + ')');
+                        paymentConfigSections.addClass('d-none');
+                        $('#payment_config_'+data.payment_gateway.toLowerCase()).removeClass('d-none');
+                        $('#zero_modal_create_payment').modal('show');
+                    }
+                });
             }
         </script>
         <script>
@@ -373,7 +363,7 @@
                 paymentGatewaySelect.val('Epay');
                 paymentConfigSections.addClass('d-none');
                 $('#payment_config_epay').removeClass('d-none');
-                submitButton.setAttribute('onclick', 'zeroAdminCreatePayment("create")');
+                submitButton.setAttribute('onclick', 'zeroAdminPayment("create")');
                 console.log('success');
             });
     </script>

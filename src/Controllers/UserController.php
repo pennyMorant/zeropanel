@@ -9,7 +9,8 @@ use App\Models\{
     User,
     Setting,
     InviteCode,
-    Token
+    Token,
+    Knowledge
 };
 use App\Utils\{
     URL,
@@ -45,11 +46,13 @@ class UserController extends BaseController
         $opts           = $request->getQueryParams();
         $opts['os']     = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
+        $knowledges = Knowledge::where('client', $opts['client'])->where('platform', $opts['os'])->get();
         if ($opts['os'] != '' && $opts['client'] != '') {
             $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
             $this->view()
                 ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
+                ->assign('knowledges', $knowledges)
                 ->registerClass('URL', URL::class)
                 ->display($url);
         }

@@ -55,157 +55,22 @@ $(document).ready(function (){
 <script>
     function zeroAdminDelete(type, id){
         getwarning().then(function() {
-
-        
-        switch (type) {
-            case 'product':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/product/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
+            $.ajax({
+                type: "DELETE",
+                url: "/{$config['website_admin_path']}/"+type+"/delete",
+                dataType: "json",
+                data: {
+                    id
+                },
+                success: function(data){
+                    if (data.ret === 1){
+                        getResult(data.msg, '', 'success');
+                        table_1.ajax.reload();
+                    }else{
+                        getResult('发生错误', '', 'error');
                     }
-                });
-                break;
-            case 'node':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/node/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'user':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/user/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'ban_rule':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/ban/rule/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'news':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/news/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'ticket':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/ticket/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'payment':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/payment/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            case 'order':
-                $.ajax({
-                    type: "DELETE",
-                    url: "/{$config['website_admin_path']}/order/delete",
-                    dataType: "json",
-                    data: {
-                        id
-                    },
-                    success: function(data){
-                        if (data.ret === 1){
-                            getResult(data.msg, '', 'success');
-                            table_1.ajax.reload();
-                        }else{
-                            getResult('发生错误', '', 'error');
-                        }
-                    }
-                });
-                break;
-            default:
-                getResult('发生错误', '', 'error');
-
-        }
+                }
+            });
         }).catch(function() {
             Swal.close();
         })

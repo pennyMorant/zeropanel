@@ -16,6 +16,7 @@ use App\Controllers\Admin\CouponController;
 use App\Controllers\Admin\SettingController;
 use App\Controllers\Admin\CommissionController;
 use App\Controllers\Admin\PaymentController;
+use App\Controllers\Admin\KnowledgeController;
 use App\Middleware\{
     Guest, 
     Admin, 
@@ -227,11 +228,21 @@ return function (SlimApp $app) {
         $group->group('/payment', function($payment) {
             $payment->get('',                       PaymentController::class . ':paymentIndex');
             $payment->post('/create',               PaymentController::class . ':createPayment');
-            $payment->post('/update',                PaymentController::class . ':updatePayment');
+            $payment->post('/update',               PaymentController::class . ':updatePayment');
             $payment->post('/ajax',                 PaymentController::class . ':paymentAjax');
-            $payment->post('/config',                PaymentController::class . ':getPaymentConfig');
+            $payment->post('/getinfo',              PaymentController::class . ':getInfoPayment');
             $payment->delete('/delete',             PaymentController::class . ':deletePayment');
             $payment->put('/enable',                PaymentController::class . ':enablePayment');
+        });
+
+        // knowledge 
+        $group->group('/knowledge', function($knowledge) {
+            $knowledge->get('',                       KnowledgeController::class . ':knowledgeIndex');
+            $knowledge->post('/ajax',                 KnowledgeController::class . ':knowledgeAjax');
+            $knowledge->post('/create',               KnowledgeController::class . ':createKnowledge');
+            $knowledge->post('/update',               KnowledgeController::class . ':updateKnowledge');
+            $knowledge->post('/getinfo',              KnowledgeController::class . ':getInfoKnowledge');
+            $knowledge->delete('/delete',             KnowledgeController::class . ':deleteKnowledge');
         });
     })->add(new Admin());
 
