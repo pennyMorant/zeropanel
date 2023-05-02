@@ -48,4 +48,5 @@
         }
     {/if}
 </script>
+<script>var webName = "{$config['appName']}";</script>
 {include file='live_chat.tpl'}

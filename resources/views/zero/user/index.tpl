@@ -384,7 +384,6 @@
         </div>
 		{include file='include/global/scripts.tpl'}
 		{include file='include/index/news.tpl'}
-		<script>countdown('{$user->class_expire}', 'user_class_expired_time')</script>
-		<script>var webName = "{$config['appName']}";</script>							
+		<script>countdown('{$user->class_expire}', 'user_class_expired_time')</script>							
 	</body>
 </html>
