@@ -100,25 +100,15 @@ class AnnController extends AdminController
                     $_ENV['email_queue']
                 );
             }
-            if (count($users) == $_ENV['sendPageLimit']) {
-                return $response->withJson([
-                    'ret' => 2,
-                    'msg' => $postdata['page'] + 1
-                ]);
-            }
         }
         $converter = new HtmlConverter();
         $html = $postdata['content'];
         $markdown = $converter->convert($html);
         Telegram::pushToChannel($markdown);
-        if ($issend == 1) {
-            $msg = '公告添加成功，邮件发送成功';
-        } else {
-            $msg = '公告添加成功';
-        }
+        
         return $response->withJson([
             'ret' => 1,
-            'msg' => $msg
+            'msg' => ($issend == 1 ? '公告添加成功，邮件发送成功' : '公告添加成功'),
         ]);
     }
 
