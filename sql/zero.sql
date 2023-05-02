@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-04-30 16:24:51
+-- 生成日期： 2023-05-02 15:57:22
 -- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP 版本： 8.2.5
 
@@ -75,7 +75,7 @@ CREATE TABLE `coupon` (
   `code` varchar(20) NOT NULL COMMENT '优惠码',
   `per_use_count` int(11) DEFAULT NULL COMMENT '每个用户使用次数',
   `expire_at` int(11) NOT NULL COMMENT '到期时间',
-  `limited_product` varchar(20) NOT NULL COMMENT '限定产品使用',
+  `limited_product` varchar(20) DEFAULT NULL COMMENT '限定产品使用',
   `limited_product_period` varchar(20) DEFAULT NULL COMMENT '限制产品周期',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
   `total_use_count` int(11) DEFAULT NULL COMMENT '总使用次数'
@@ -141,6 +141,22 @@ CREATE TABLE `email_queue` (
   `array` longtext NOT NULL,
   `time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Email Queue 發件列表';
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `knowledge`
+--
+
+CREATE TABLE `knowledge` (
+  `id` int(11) NOT NULL,
+  `platform` varchar(20) NOT NULL COMMENT '平台',
+  `client` varchar(20) NOT NULL COMMENT '分类',
+  `title` varchar(20) NOT NULL COMMENT '标题',
+  `content` longtext NOT NULL COMMENT '内容',
+  `created_at` int(11) NOT NULL COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -503,6 +519,12 @@ ALTER TABLE `email_queue`
   ADD PRIMARY KEY (`id`);
 
 --
+-- 表的索引 `knowledge`
+--
+ALTER TABLE `knowledge`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `node`
 --
 ALTER TABLE `node`
@@ -647,6 +669,12 @@ ALTER TABLE `detect_log`
 -- 使用表AUTO_INCREMENT `email_queue`
 --
 ALTER TABLE `email_queue`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `knowledge`
+--
+ALTER TABLE `knowledge`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
