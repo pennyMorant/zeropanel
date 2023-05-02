@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Node;
-use App\Models\Setting;
 use App\Utils\{
     Tools,
 };
