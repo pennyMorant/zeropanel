@@ -108,7 +108,7 @@ final class PaymentController extends AdminController
                 'enable'  => $rowData->enable(),
                 'action'  => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminPaymentGetInfo(\'request\', ' . $rowData->id . ')">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminPaymentGetInfo(' . $rowData->id . ')">编辑</a></li>
                                     <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'payment\', ' . $rowData->id . ')">删除</a></li>
                                     </ul>
                                 </div>',
@@ -123,7 +123,7 @@ final class PaymentController extends AdminController
         ]);
     }
 
-    public function getPaymentConfig(ServerRequest $request, Response $response, array $args): Response
+    public function getInfoPayment(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $request->getParsedBodyParam('id');
         $payment = Payment::find($id);
