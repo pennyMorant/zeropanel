@@ -30,7 +30,6 @@ class Job extends Command
     . '│ ├─ CheckJob                - 检查任务，每分钟' . PHP_EOL
     . '│ ├─ CheckUserClassExpire    - 检查用户会员等级过期任务，每分钟' . PHP_EOL
     . '│ ├─ CheckOrderStatus        - 检查订单状态任务，每分钟' . PHP_EOL
-    . '│ ├─ CheckUserExpire         - 检查账号过期任务，每小钟' . PHP_EOL
     . '│ ├─ UserJob                 - 用户账户相关任务，每小时' . PHP_EOL
     . '│ ├─ SendMail                - 处理邮件队列' . PHP_EOL;
 
