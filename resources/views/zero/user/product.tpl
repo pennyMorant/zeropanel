@@ -137,7 +137,12 @@
 																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">{$trans->t('purchase')}</button>
+																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">
+																							<span class="indicator-label">{$trans->t('purchase')}</span>			
+																							<span class="indicator-progress">{$trans->t('please wait')}
+																							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+																						</button>
+																						
 																					{/if}
 																				</div>
 																			</div>

@@ -77,102 +77,107 @@ function getLoad() {
 
 // show configure product modal 
 function kTUserConfigureProductModal(id, currency) {
-    function getProductData() {
-        return new Promise(function(resolve, reject) {
-            $.ajax({
-                type: "POST",
-                url: "/user/product/getinfo",
-                dataType: "json",
-                data: {
-                    id
-                },
-                success: function(data){
-                    resolve(data);
-                }
-            });
-        })
-    }
-    getProductData().then(function(data) {
-        const product_info    = data;
-        const html            = $('#zero_product_'+id).html();
-        const name            = product_info.name;
-        const month_price     = product_info.month_price;
-        const quarter_price   = product_info.quarter_price;
-        const half_year_price = product_info.half_year_price;
-        const year_price      = product_info.year_price;
-        const two_year_price  = product_info.two_year_price;
-        const onetime_price   = product_info.onetime_price;
-        var   modalInnerHtml  = $('#zero_modal_configure_product_inner_html');
-        var   modalName       = $('#zero_modal_configure_product_name');
-        var   modalPrice      = $('#zero_modal_configure_product_price');
-        var   modalTotal      = $('#zero_modal_configure_product_total');
-        var   modalCoupon     = $('#zero_modal_configure_coupon');
-        var   modalCouponHtml = $('#zero_modal_configure_coupon_html');
-        const submitButton    = document.querySelector('[data-kt-users-action="submit"]');
-        if (product_info.type == 1) {
-            const all_prices = {
-                month_price: {
-                  label: i18next.t('monthly fee'),
-                  value: parseFloat(month_price)
-                },
-                quarter_price: {
-                  label: i18next.t('quarterly fee'),
-                  value: parseFloat(quarter_price)
-                },
-                half_year_price: {
-                  label: i18next.t('semi annua fee'),
-                  value: parseFloat(half_year_price)
-                },
-                year_price: {
-                  label: i18next.t('annual fee'),
-                  value: parseFloat(year_price)
-                },
-                two_year_price: {
-                    label: i18next.t('biennial fee'),
-                    value: parseFloat(two_year_price)
-                },
-                onetime_price: {
-                    label: i18next.t('onetime fee'),
-                    value: parseFloat(onetime_price)
-                }
-              };
-
-              console.log(all_prices);
-              const prices = [
-                all_prices.month_price,
-                all_prices.quarter_price,
-                all_prices.half_year_price,
-                all_prices.year_price,
-                all_prices.two_year_price,
-                all_prices.onetime_price
-            ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
-              minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
-              
-              console.log(minPrice);
-              
-              Object.entries(all_prices).forEach(([key, { label, value }]) => {
-                if (value) {
-                  $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
-                  $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}", "${currency}")`);
-                  if (value == minPrice.value) {
-                    $('#zero_modal_configure_product_' + key + ' a').addClass('active');
-                  }
-                }
-              });
-            modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+minPrice.value.toFixed(2)+'", '+id+')');      
+    const checkOutButton = document.querySelector('[data-kt-users-action="check-out-'+id+'"]');
+    checkOutButton.setAttribute('data-kt-indicator', 'on');
+    checkOutButton.disabled = true;
+    setTimeout(function() {
+        function getProductData() {
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/product/getinfo",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function(data){
+                        resolve(data);
+                    }
+                });
+            })
         }
+        getProductData().then(function(data) {
+            const product_info    = data;
+            const html            = $('#zero_product_'+id).html();
+            const name            = product_info.name;
+            const month_price     = product_info.month_price;
+            const quarter_price   = product_info.quarter_price;
+            const half_year_price = product_info.half_year_price;
+            const year_price      = product_info.year_price;
+            const two_year_price  = product_info.two_year_price;
+            const onetime_price   = product_info.onetime_price;
+            var   modalInnerHtml  = $('#zero_modal_configure_product_inner_html');
+            var   modalName       = $('#zero_modal_configure_product_name');
+            var   modalPrice      = $('#zero_modal_configure_product_price');
+            var   modalTotal      = $('#zero_modal_configure_product_total');
+            var   modalCoupon     = $('#zero_modal_configure_coupon');
+            var   modalCouponHtml = $('#zero_modal_configure_coupon_html');
+            const submitButton    = document.querySelector('[data-kt-users-action="submit"]');
+            if (product_info.type == 1) {
+                const all_prices = {
+                    month_price: {
+                    label: i18next.t('monthly fee'),
+                    value: parseFloat(month_price)
+                    },
+                    quarter_price: {
+                    label: i18next.t('quarterly fee'),
+                    value: parseFloat(quarter_price)
+                    },
+                    half_year_price: {
+                    label: i18next.t('semi annua fee'),
+                    value: parseFloat(half_year_price)
+                    },
+                    year_price: {
+                    label: i18next.t('annual fee'),
+                    value: parseFloat(year_price)
+                    },
+                    two_year_price: {
+                        label: i18next.t('biennial fee'),
+                        value: parseFloat(two_year_price)
+                    },
+                    onetime_price: {
+                        label: i18next.t('onetime fee'),
+                        value: parseFloat(onetime_price)
+                    }
+                };
 
-        modalInnerHtml.html(html);
-        product_info.type == 3 ? modalCouponHtml.hide() : false;
-        const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
-        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
-        modalPrice.html(product_final_price + currency);
-        modalTotal.html(product_final_price + currency);
-        
-        submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
+                console.log(all_prices);
+                const prices = [
+                    all_prices.month_price,
+                    all_prices.quarter_price,
+                    all_prices.half_year_price,
+                    all_prices.year_price,
+                    all_prices.two_year_price,
+                    all_prices.onetime_price
+                ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
+                minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
+                
+                console.log(minPrice);
+                
+                Object.entries(all_prices).forEach(([key, { label, value }]) => {
+                    if (value) {
+                    $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
+                    $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}", "${currency}")`);
+                    if (value == minPrice.value) {
+                        $('#zero_modal_configure_product_' + key + ' a').addClass('active');
+                    }
+                    }
+                });
+                modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+minPrice.value.toFixed(2)+'", '+id+')');      
+            }
 
-        $("#zero_modal_configure_product").modal("show");
-    });
+            modalInnerHtml.html(html);
+            product_info.type == 3 ? modalCouponHtml.hide() : false;
+            const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
+            modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
+            modalPrice.html(product_final_price + currency);
+            modalTotal.html(product_final_price + currency);
+            submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
+            $("#zero_modal_configure_product").modal("show");
+            checkOutButton.removeAttribute('data-kt-indicator');
+            checkOutButton.disabled = false;
+        });
+    }, 2000)
     
 }
 
