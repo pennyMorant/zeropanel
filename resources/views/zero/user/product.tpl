@@ -210,7 +210,11 @@
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<input class="form-control me-3" placeholder={$trans->t('promo code')} type="text" id="zero_coupon_code">
-												<button id="zero_modal_configure_coupon" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">{$trans->t('verify')}</button>
+												<button id="zero_modal_configure_coupon" type="submit" data-kt-users-action="verify-coupon" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">
+													<span class="indicator-label">{$trans->t('verify')}</span>			
+													<span class="indicator-progress">{$trans->t('please wait')}
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
 											</div>
 										</div>
 									</div>

@@ -201,23 +201,30 @@ function KTUsersChangePlan(price, id, type, currency) {
 
 // verify coupon
 function KTUserVerifyCoupon(product_price, product_id) {
-    $.ajax({
-        type: "POST",
-        url: "/user/verify_coupon",
-        dataType: "json",
-        data: {
-            coupon_code: $("#zero_coupon_code").val(),
-            product_price,
-            product_id
-        },
-        success: function (data) {
-            if (data.ret == 1) {
-                document.getElementById('zero_modal_configure_product_total').innerHTML = data.total + 'USD';
-            } else {
-                getResult(data.msg, '', 'error');
+    const submitButton = document.querySelector('[data-kt-users-action="verify-coupon"]');
+    submitButton.setAttribute('data-kt-indicator', 'on');
+    submitButton.disabled = true;
+    setTimeout(function() {
+        $.ajax({
+            type: "POST",
+            url: "/user/verify_coupon",
+            dataType: "json",
+            data: {
+                coupon_code: $("#zero_coupon_code").val(),
+                product_price,
+                product_id
+            },
+            success: function (data) {
+                if (data.ret == 1) {
+                    document.getElementById('zero_modal_configure_product_total').innerHTML = data.total + 'USD';
+                } else {
+                    getResult(data.msg, '', 'error');
+                }
+                submitButton.removeAttribute('data-kt-indicator');
+                submitButton.disabled = false;
             }
-        }
-    })
+        });
+    }, 2000)
 }
 // create order
 function KTUsersCreateOrder(type, price, product_id) {

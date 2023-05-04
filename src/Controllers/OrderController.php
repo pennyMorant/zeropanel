@@ -354,7 +354,7 @@ class OrderController extends BaseController
         $user           = $this->user;
         $product        = Product::where('id', $product_id)->where('status', 1)->first();
         $coupons        = Coupon::where('code', $coupon_code)->first();
-        $per_use_limit  = $coupons->per_use_count;
+        //$per_use_limit  = $coupons->per_use_count ?? NULL;
         $product_period = $product->productPeriod($product_price);
         try{
             if (is_null($product)) {
@@ -378,12 +378,12 @@ class OrderController extends BaseController
                     throw new \Exception(I18n::get()->t('此优惠码不适用于此产品周期'));
                 }
             }        
-            if ($per_use_limit > 0) {
+            if (!is_null($coupons->per_use_limit)) {
                 $use_count = Order::where('user_id', $user->id)
                     ->where('coupon_id', $coupons->id)
-                    ->where('order_status', 'paid')
+                    ->whereNotIn('order_status', [0, 1])
                     ->count();
-                if ($use_count >= $per_use_limit) {
+                if ($use_count >= $coupons->per_use_limit) {
                     throw new \Exception(I18n::get()->t('promo code have been used up'));
                 }
             }
