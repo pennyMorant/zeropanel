@@ -173,8 +173,8 @@
                     data: {
                         code: $('#zero_create_coupon_code').val(),
                         discount: $('#zero_create_coupon_dicount_rate').val(),
-                        limited_product: $('#zero_create_coupon_limit_product').val() ? null : $('#zero_create_coupon_limit_product').val(),
-                        limited_product_period: $('#zero_create_coupon_limit_product_period').val() ? null : $('#zero_create_coupon_limit_product_period').val(),
+                        limited_product: $('#zero_create_coupon_limit_product').val(),
+                        limited_product_period: $('#zero_create_coupon_limit_product_period').val(),
                         per_use_count: $('#zero_create_coupon_per_times').val(),
                         total_use_count: $('#zero_create_coupon_total_times').val(),
                         expire: $('#zero_create_coupon_valid_time').val(),
