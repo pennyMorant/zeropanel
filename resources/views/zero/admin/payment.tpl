@@ -141,7 +141,7 @@
                                 <label class="form-label fw-bold">Private key</label>
                                 <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
                             </div>
-                            <div class="d-noe" id="payment_config_vmqpay">
+                            <div class="d-none" id="payment_config_vmqpay">
                                 <label class="form-label fw-bold">VmqPay URL</label>
                                 <input class="form-control mb-5" id="vmqpay_url" type="text" value="" placeholder="" />
                                 <label class="form-label fw-bold">VmqPay Key</label>
