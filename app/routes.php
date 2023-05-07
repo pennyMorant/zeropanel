@@ -89,7 +89,7 @@ return function (SlimApp $app) {
 
     $app->group('/payment', function (Group $group) {
         //Reconstructed Payment System
-        $group->get('/return',                                   App\Controllers\Guest\PaymentController::class . ':return')->add(new Auth());
+        $group->get('/return/{order_no}',                        App\Controllers\Guest\PaymentController::class . ':return')->add(new Auth());
         $group->map(['GET', 'POST'], '/notify/{method}/{uuid}',  App\Controllers\Guest\PaymentController::class . ':notify');
     });
 

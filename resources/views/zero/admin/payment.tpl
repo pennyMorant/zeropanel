@@ -103,6 +103,7 @@
                                 <option value="Mgate">Mgate</option>
                                 <option value="AlipayF2F">AlipayF2F</option>
                                 <option value="Epusdt">Epusdt</option>
+                                <option value="VmqPay">VmqPay</option>
                             </select>
                             <div id="payment_config_epay" class="">
                                 <label class="form-label fw-bold">URL</label>
@@ -139,6 +140,12 @@
                                 <input class="form-control mb-5" id="epusdt_url" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">Private key</label>
                                 <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
+                            </div>
+                            <div class="d-noe" id="payment_config_vmqpay">
+                                <label class="form-label fw-bold">VmqPay URL</label>
+                                <input class="form-control mb-5" id="vmqpay_url" type="text" value="" placeholder="" />
+                                <label class="form-label fw-bold">VmqPay Key</label>
+                                <input class="form-control mb-5" id="vmqpay_key" value="" type="text" placeholder="" />
                             </div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
@@ -206,6 +213,12 @@
                             'epusdt_url': $('#epusdt_url').val(),
                             'epusdt_private_key': $('#epusdt_private_key').val()
                         };
+                    },
+                    'VmqPay': function() {
+                        return {
+                            'vmqpay_url': $('#vmqpay_url').val(),
+                            'vmqpay_key': $('#vmqpay_key').val()
+                        }
                     }
                 };
 
@@ -296,6 +309,10 @@
                                 'url': 'epusdt_url',
                                 'private_key': 'epusdt_private_key',
                             },
+                            'vmqpay': {
+                                'url': 'vmqpay_url',
+                                'key': 'vmqpay_key',
+                            },
                         };
                         
                         if (paymentConfigObj.hasOwnProperty(data.payment_gateway.toLowerCase())) {
@@ -357,6 +374,8 @@
                     '#alipayf2f_public_key',
                     '#epusdt_url',
                     '#epusdt_private_key',
+                    '#vmqpay_url',
+                    '#vmqpay_key',
                 ];
                 paymentFields.forEach(field => $(field).val(''));
                 

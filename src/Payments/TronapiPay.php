@@ -4,7 +4,6 @@
 namespace App\Payments;;
 
 use Slim\Http\ServerRequest;
-use Slim\Http\Response;
 
 class TronapiPay
 {

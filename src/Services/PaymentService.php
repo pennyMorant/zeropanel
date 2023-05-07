@@ -48,7 +48,7 @@ class PaymentService
 
         return $this->payment->pay([
             'notify_url'   => $notify_url,
-            'return_url'   => Setting::obtain('website_url') . "/payment/return?tradeno=" . $order['order_no'],
+            'return_url'   => Setting::obtain('website_url') . "/payment/return/" . $order['order_no'],
             'order_no'     => $order['order_no'],
             'total_amount' => $order['total_amount'],
             'user_id'      => $order['user_id']

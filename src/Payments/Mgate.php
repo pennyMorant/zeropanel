@@ -1,9 +1,7 @@
 <?php
 namespace App\Payments;;
 
-use App\Controllers\OrderController;
 use Slim\Http\ServerRequest;
-use Slim\Http\Response;
 
 class Mgate
 {

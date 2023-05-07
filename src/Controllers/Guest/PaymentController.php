@@ -23,9 +23,11 @@ class PaymentController
 
     public function return(ServerRequest $request, Response $response, array $args)
     {
-        $order_no = $request->getQueryParam('tradeno');
+        $order_no = $args['order_no'];
         $order    = Order::where('order_no', $order_no)->first();
-        return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
+        if ($order) {
+            return $response->withStatus(302)->withHeader('Location', '/user/order/'.$order->order_no);
+        }
     }
 
     public function handle($no)
