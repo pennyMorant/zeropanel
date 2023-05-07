@@ -126,7 +126,7 @@ class AuthController extends BaseController
             // check email
             $user = User::where('email', $email)->first();
             $email_suffix = json_decode(Setting::obtain('limit_email_suffix'), true);
-            if (!empty($email_suffix)) {
+            if (count(array_filter($email_suffix)) > 0) {
                 if (!in_array(explode('@', $email)[1], $email_suffix)) {
                     throw new \Exception($trans->t('邮箱域名不支持'));
                 }
