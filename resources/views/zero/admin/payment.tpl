@@ -146,6 +146,11 @@
                                 <input class="form-control mb-5" id="vmqpay_url" type="text" value="" placeholder="" />
                                 <label class="form-label fw-bold">VmqPay Key</label>
                                 <input class="form-control mb-5" id="vmqpay_key" value="" type="text" placeholder="" />
+                                <label class="form-label fw-bold">支付方式</label>
+                                <select class="form-select" id="vmqpay_type" value="">
+                                    <option value=1>微信</option>
+                                    <option value=2>支付宝</option>
+                                </select>
                             </div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
@@ -217,7 +222,8 @@
                     'VmqPay': function() {
                         return {
                             'vmqpay_url': $('#vmqpay_url').val(),
-                            'vmqpay_key': $('#vmqpay_key').val()
+                            'vmqpay_key': $('#vmqpay_key').val(),
+                            'vmqpay_type': $('#vmqpay_type').val()
                         }
                     }
                 };
@@ -312,6 +318,7 @@
                             'vmqpay': {
                                 'url': 'vmqpay_url',
                                 'key': 'vmqpay_key',
+                                'type': 'vmqpay_type',
                             },
                         };
                         
@@ -376,10 +383,11 @@
                     '#epusdt_private_key',
                     '#vmqpay_url',
                     '#vmqpay_key',
+                    '#vmqpay_type',
                 ];
                 paymentFields.forEach(field => $(field).val(''));
                 
-                paymentGatewaySelect.val('Epay');
+                paymentGatewaySelect.val('Epay').trigger('change');
                 paymentConfigSections.addClass('d-none');
                 $('#payment_config_epay').removeClass('d-none');
                 submitButton.setAttribute('onclick', 'zeroAdminPayment("create")');

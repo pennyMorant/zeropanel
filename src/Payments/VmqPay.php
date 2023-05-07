@@ -24,10 +24,10 @@ class VmqPay
     public function pay($order)
     {
         $url_header = $this->config['vmqpay_url'] . '/createOrder?';
-        $sign       = $this->sign($order['order_no'], 1, $order['total_amount']);
+        $sign       = $this->sign($order['order_no'], $this->config['vmqpay_type'], $order['total_amount']);
         $data       = [
             'payId'     => $order['order_no'],
-            'type'      => 1,
+            'type'      => $this->config['vmqpay_type'],
             'price'     => $order['total_amount'],
             'sign'      => $sign,
             'param'     => $this->config['vmqpay_key'],

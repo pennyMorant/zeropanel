@@ -674,6 +674,7 @@
         </script>
         <script>
             $('#limit_email_suffix').val({$settings['limit_email_suffix']}).trigger('change');
+            $('#telegram_admin_id').val({$settings['telegram_admin_id']}).trigger('change');
         </script>
         <script>
             const container = document.getElementById('permission_group_detail');
