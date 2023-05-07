@@ -19,13 +19,7 @@ class SettingController extends AdminController
         
         foreach ($settings as $setting)
         {
-        	if ($setting->type === 'bool') {
-                $config[$setting->item] = (bool) $setting->value;
-            } else if ($setting->type == 'array') {
-                $config[$setting->item] = $setting->value;
-            } else {
-                $config[$setting->item] = (string) $setting->value;
-            }
+            $config[$setting->item] = $setting->value;
         }
         $adminUsers = User::where('is_admin', 1)->where('telegram_id', '!=', '')->get();
         $this->view()
@@ -220,8 +214,12 @@ class SettingController extends AdminController
         {
             $setting = Setting::where('item', '=', $item)->first();
 
-            if ($setting->type == 'array') {               
-                $setting->value = json_encode($request->getParsedBodyParam($item));
+            if ($setting->type == 'array') {     
+                if (array_filter($request->getParsedBodyParam($item))) {          
+                    $setting->value = json_encode($request->getParsedBodyParam($item));
+                } else {
+                    $setting->value = '[]';
+                }
             } else {
                 $setting->value = $request->getParsedBodyParam($item);
             }

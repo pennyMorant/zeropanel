@@ -95,7 +95,7 @@
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">指定商品</span>
                             </label>
-                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-close-on-select="false" data-placeholder="限制指定产品使用优惠" data-allow-clear="true" multiple="multiple">
+                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-allow-clear="true" data-placeholder="限制指定产品使用优惠" multiple="multiple">
                                 <option></option>
                                 {foreach $products as $product}
                                     <option value={$product->id}>{$product->name}</option>
@@ -106,7 +106,7 @@
                             <label class="fs-6 fw-semibold mb-2">
                                 <span class="required">指定周期</span>
                             </label>
-                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-close-on-select="false" data-placeholder="限制指定周期使用优惠" data-allow-clear="true" multiple="multiple">
+                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-allow-clear="true" data-placeholder="限制指定周期使用优惠" multiple="multiple">
                                 <option></option>                              
                                 <option value="30">一个月</option>
                                 <option value="90">三个月</option>
@@ -159,27 +159,28 @@
         <script>
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
-            })
+            });
         </script>
         <script>
             function zeroAdminCreateCoupon(){
                 const submitButton = document.querySelector('[data-kt-admin-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
+                const postData = {
+                    code: $('#zero_create_coupon_code').val(),
+                    discount: $('#zero_create_coupon_dicount_rate').val(),
+                    limited_product: ($('#zero_create_coupon_limit_product').val().length === 0) ? [""] : $('#zero_create_coupon_limit_product').val(),
+                    limited_product_period: ($('#zero_create_coupon_limit_product_period').val().length === 0) ? [""] : $('#zero_create_coupon_limit_product_period').val(),
+                    per_use_count: $('#zero_create_coupon_per_times').val(),
+                    total_use_count: $('#zero_create_coupon_total_times').val(),
+                    expire: $('#zero_create_coupon_valid_time').val(),
+                    generate_type: $('#zero_create_coupon_generation_method').val(),
+                };
                 $.ajax({
                     type: "POST",
                     url: "/{$config['website_admin_path']}/coupon/create",
                     dataType: "json",
-                    data: {
-                        code: $('#zero_create_coupon_code').val(),
-                        discount: $('#zero_create_coupon_dicount_rate').val(),
-                        limited_product: $('#zero_create_coupon_limit_product').val(),
-                        limited_product_period: $('#zero_create_coupon_limit_product_period').val(),
-                        per_use_count: $('#zero_create_coupon_per_times').val(),
-                        total_use_count: $('#zero_create_coupon_total_times').val(),
-                        expire: $('#zero_create_coupon_valid_time').val(),
-                        generate_type: $('#zero_create_coupon_generation_method').val(),
-                    },
+                    data: postData,
                     success: function (data) {
                         if (data.ret == 1) {
                             setTimeout(function() {

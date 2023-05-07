@@ -90,8 +90,8 @@
                                                                 <div class="card-body">                                                                  
                                                                     <label class="form-label">开启权限组自定义</label>
                                                                     <select class="form-select mb-5" id="enable_permission_group" data-control="select2" data-hide-search="true">
-                                                                        <option {if $settings['enable_permission_group'] == 0} selected{/if} value="0">关闭</option>
-                                                                        <option {if $settings['enable_permission_group'] == 1} selected{/if} value="1">开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                     <label class="form-label">权限组名称设置</label>
                                                                     <div id="permission_group_detail"></div>                                                                   
@@ -115,11 +115,11 @@
                                                                 <div class="card-body">
                                                                     <label class="form-label">邮件服务商</label>
                                                                     <select class="form-select" id="mail_driver" data-control="select2" data-hide-search="true">
-                                                                        <option value="none" {if $settings['mail_driver'] == "none"} selected{/if}>none</option>
-                                                                        <option value="mailgun" {if $settings['mail_driver'] == "mailgun"} selected{/if}>mailgun</option>
-                                                                        <option value="sendgrid" {if $settings['mail_driver'] == "sendgrid"} selected{/if}>sendgrid</option>
-                                                                        <option value="ses" {if $settings['mail_driver'] == "ses"} selected{/if}>ses</option>
-                                                                        <option value="smtp" {if $settings['mail_driver'] == "smtp"} selected{/if}>smtp</option>
+                                                                        <option value="none">none</option>
+                                                                        <option value="mailgun">mailgun</option>
+                                                                        <option value="sendgrid">sendgrid</option>
+                                                                        <option value="ses">ses</option>
+                                                                        <option value="smtp">smtp</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -139,8 +139,8 @@
                                                                     <input class="form-control mb-5" id="auto_backup_password" value="{$settings['auto_backup_password']}" type="text" placeholder="密码" />
                                                                     <label class="form-label">备份成功推送TG消息</label>
                                                                     <select class="form-select mb-5" id="auto_backup_notify" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['auto_backup_notify'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['auto_backup_notify'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -201,10 +201,10 @@
                                                                     <input class="form-control mb-5" id="smtp_password" value="{$settings['smtp_password']}" type="text" />
                                                                     <label class="form-label">SMTP 端口</label>
                                                                     <select class="form-select mb-5" id="smtp_port" data-control="select2" data-hide-search="true">
-                                                                        <option value="465" {if $settings['smtp_port'] == "465"} selected{/if}>465</option>
-                                                                        <option value="587" {if $settings['smtp_port'] == "587"} selected{/if}>587</option>
-                                                                        <option value="2525" {if $settings['smtp_port'] == "2525"} selected{/if}>2525</option>
-                                                                        <option value="25" {if $settings['smtp_port'] == "25"} selected{/if}>25</option>
+                                                                        <option value="465">465</option>
+                                                                        <option value="587">587</option>
+                                                                        <option value="2525">2525</option>
+                                                                        <option value="25">25</option>
                                                                     </select>
                                                                     <label class="form-label">SMTP 发信名称</label>
                                                                     <input class="form-control mb-5" id="smtp_name" value="{$settings['smtp_name']}" type="text" />
@@ -212,8 +212,8 @@
                                                                     <input class="form-control mb-5" id="smtp_sender" value="{$settings['smtp_sender']}" type="text" />
                                                                     <label class="form-label">是否使用 TLS/SSL 发信</label>
                                                                     <select id="smtp_ssl" class="form-select mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="1" {if $settings['smtp_ssl'] == true} selected{/if}>开启</option>
-                                                                        <option value="0" {if $settings['smtp_ssl'] == false} selected{/if}>关闭</option>
+                                                                        <option value="1">开启</option>
+                                                                        <option value="0">关闭</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -276,7 +276,7 @@
                                                                     <label class="form-label">频道账号</label>
                                                                     <input class="form-control mb-5" id="telegram_channel_id" value="{$settings['telegram_channel_id']}" type="text" placeholder="账号" />
                                                                     <label class="form-label">ADMIN ID</label>
-                                                                    <select class="form-select" id="telegram_admin_id" data-control="select2" data-close-on-select="false" data-placeholder="选择管理员" data-allow-clear="true" multiple="multiple">
+                                                                    <select class="form-select" id="telegram_admin_id" data-control="select2" data-close-on-select="true" data-placeholder="选择管理员" data-allow-clear="true" multiple="multiple">
                                                                         <option></option>
                                                                         {foreach $adminUsers as $adminUser}
                                                                             <option value={$adminUser->telegram_id}>{$adminUser->email}</option>
@@ -309,18 +309,18 @@
                                                                     <input class="form-control mb-5" id="telegram_bot_request_token" value="{$settings['telegram_bot_request_token']}" type="text" placeholder="TOKEN" />
                                                                     <label class="form-label">BOT 推送充值消息</label>
                                                                     <select class="form-select mb-5" id="enable_push_top_up_message" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_push_top_up_message'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_push_top_up_message'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                     <label class="form-label">BOT 推送工单消息</label>
                                                                     <select class="form-select mb-5" id="enable_push_ticket_message" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_push_ticket_message'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_push_ticket_message'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                     <label class="form-label">BOT 推送系统运行情况</label>
                                                                     <select class="form-select mb-5" id="enable_push_system_report" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_push_system_report'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_push_system_report'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -397,14 +397,14 @@
                                                                     </select>
                                                                     <label class="form-label">货币单位</label>
                                                                     <select class="form-select mb-5" id="currency_unit">
-                                                                        <option value="CNY" {if $settings['currency_unit'] == 'CNY'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/china.svg">CNY</option>
-                                                                        <option value="USD" {if $settings['currency_unit'] == 'USD'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">USD</option>
-                                                                        <option value="GBP" {if $settings['currency_unit'] == 'GBP'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">GBP</option>
-                                                                        <option value="CAD" {if $settings['currency_unit'] == 'CAD'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">CAD</option>
-                                                                        <option value="HKD" {if $settings['currency_unit'] == 'HKD'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">HKD</option>
-                                                                        <option value="JPY" {if $settings['currency_unit'] == 'JPY'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">JPY</option>
-                                                                        <option value="SGD" {if $settings['currency_unit'] == 'SGD'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">SGD</option>
-                                                                        <option value="EUR" {if $settings['currency_unit'] == 'EUR'} selected{/if} data-kt-select2-country="/theme/zero/assets/media/flags/european-union.svg">EUR</option>
+                                                                        <option value="CNY" data-kt-select2-country="/theme/zero/assets/media/flags/china.svg">CNY</option>
+                                                                        <option value="USD" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">USD</option>
+                                                                        <option value="GBP" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">GBP</option>
+                                                                        <option value="CAD" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">CAD</option>
+                                                                        <option value="HKD" data-kt-select2-country="/theme/zero/assets/media/flags/hong-kong.svg">HKD</option>
+                                                                        <option value="JPY" data-kt-select2-country="/theme/zero/assets/media/flags/japan.svg">JPY</option>
+                                                                        <option value="SGD" data-kt-select2-country="/theme/zero/assets/media/flags/singapore.svg">SGD</option>
+                                                                        <option value="EUR" data-kt-select2-country="/theme/zero/assets/media/flags/european-union.svg">EUR</option>
                                                                     </select>
                                                                     <label class="form-label">货币汇率</label>
                                                                     <input class="form-control mb-5" id="currency_exchange_rate" value="{$settings['currency_exchange_rate']}" type="text" placeholder="货币汇率" disabled />
@@ -426,8 +426,8 @@
                                                                 <div class="card-body">
                                                                     <label class="form-label">开启提现</label>
                                                                     <select class="form-select mb-5" id="enable_withdraw" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_withdraw'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_withdraw'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                     <label class="form-label">提现方式</label>
                                                                     <select class="form-select mb-5" id="withdraw_method">
@@ -455,9 +455,9 @@
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">注册模式</label>
                                                                     <select class="form-select mb-5" id="reg_mode" data-control="select2" data-hide-search="true">
-                                                                        <option value="close" {if $settings['reg_mode'] == 'close'} selected{/if}>关闭注册</option>
-                                                                        <option value="open" {if $settings['reg_mode'] == 'open'} selected{/if}>开启注册</option>
-                                                                        <option value="invite" {if $settings['reg_mode'] == 'invite'} selected{/if}>仅限邀请注册</option>
+                                                                        <option value="close">关闭注册</option>
+                                                                        <option value="open">开启注册</option>
+                                                                        <option value="invite">仅限邀请注册</option>
                                                                     </select>
                                                                     <label class="form-label">默认等级</label>
                                                                     <input class="form-control mb-5" id="signup_default_class" value="{$settings['signup_default_class']}" type="text" placeholder="默认等级" />
@@ -468,8 +468,8 @@
                                                                     </div>
                                                                     <label class="form-label">验证邮箱</label>
                                                                     <select class="form-select mb-5" id="verify_email" data-control="select2" data-hide-search="true">
-                                                                        <option value="close" {if $settings['verify_email'] == 'close'} selected{/if}>关闭</option>
-                                                                        <option value="open" {if $settings['verify_email'] == 'open'} selected{/if}>开启</option>
+                                                                        <option value="close">关闭</option>
+                                                                        <option value="open">开启</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xxl-6">
@@ -489,7 +489,7 @@
                                                                         <span class="input-group-text">Mbps</span>
                                                                     </div>
                                                                     <label class="form-label">限制邮箱后缀</label>
-                                                                    <select class="form-select" id="limit_email_suffix" data-control="select2" data-close-on-select="false" data-placeholder="指定邮箱后缀" data-allow-clear="true" multiple="multiple">
+                                                                    <select class="form-select" id="limit_email_suffix" data-control="select2" data-placeholder="指定邮箱后缀" data-allow-clear="true" multiple="multiple">
                                                                         <option></option>                              
                                                                         <option value="qq.com">@qq.com</option>
                                                                         <option value="163.com">@163.com</option>
@@ -517,17 +517,17 @@
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">验证码提供商</label>
                                                                     <select id="captcha_provider" class="form-select mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="turnstile" {if $settings['captcha_provider'] == "turnstile"} selected{/if}>Turnstile</option>
+                                                                        <option value="turnstile">Turnstile</option>
                                                                     </select>
                                                                     <label class="form-label">注册验证码</label>
                                                                     <select id="enable_signup_captcha" class="form-select mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_signup_captcha'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_signup_captcha'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                     <label class="form-label">登录验证码</label>
                                                                     <select id="enable_signin_captcha" class="form-select" data-control="select2" data-hide-search="true">
-                                                                        <option value="0" {if $settings['enable_signin_captcha'] == false} selected{/if}>关闭</option>
-                                                                        <option value="1" {if $settings['enable_signin_captcha'] == true} selected{/if}>开启</option>
+                                                                        <option value="0">关闭</option>
+                                                                        <option value="1">开启</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-xxl-6">
@@ -553,11 +553,11 @@
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">网页客服系统</label>
                                                                     <select id="live_chat" class="form-control mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="none" {if $settings['live_chat'] == "none"} selected{/if}>不启用</option>
-                                                                        <option value="tawk" {if $settings['live_chat'] == "tawk"} selected{/if}>Tawk</option>
-                                                                        <option value="crisp" {if $settings['live_chat'] == "crisp"} selected{/if}>Crisp</option>
-                                                                        <option value="livechat" {if $settings['live_chat'] == "livechat"} selected{/if}>LiveChat</option>
-                                                                        <option value="mylivechat" {if $settings['live_chat'] == "mylivechat"} selected{/if}>MyLiveChat</option>
+                                                                        <option value="none">不启用</option>
+                                                                        <option value="tawk">Tawk</option>
+                                                                        <option value="crisp">Crisp</option>
+                                                                        <option value="livechat">LiveChat</option>
+                                                                        <option value="mylivechat">MyLiveChat</option>
                                                                     </select>
                                                                     <label class="form-label">Tawk</label>
                                                                     <input class="form-control mb-5" id="tawk_id" value="{$settings['tawk_id']}">
@@ -589,23 +589,16 @@
                                                                 <div class="col-xxl-6">
                                                                     <label class="form-label">邀请模式</label>
                                                                     <select id="invitation_mode" class="form-select mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="registration_only" {if $settings['invitation_mode'] == 'registration_only'} selected{/if}>
-                                                                        仅使用邀请注册功能，不返利</option>
-                                                                        <option value="after_topup" {if $settings['invitation_mode'] == 'after_topup'} selected{/if}>
-                                                                        使用邀请注册功能，并在被邀请用户充值时返利</option>
-                                                                        <option value="after_purchase" {if $settings['invitation_mode'] == 'after_purchase'} selected{/if}>
-                                                                        使用邀请注册功能，并在被邀请用户购买时返利</option>
+                                                                        <option value="registration_only">仅使用邀请注册功能，不返利</option>
+                                                                        <option value="after_topup">使用邀请注册功能，并在被邀请用户充值时返利</option>
+                                                                        <option value="after_purchase">使用邀请注册功能，并在被邀请用户购买时返利</option>
                                                                     </select>
                                                                     <label class="form-label">返利模式</label>
                                                                     <select id="invite_rebate_mode" class="form-select mb-5" data-control="select2" data-hide-search="true">
-                                                                        <option value="continued" {if $settings['invite_rebate_mode'] == 'continued'} selected{/if}>
-                                                                        持续返利</option>
-                                                                        <option value="limit_frequency" {if $settings['invite_rebate_mode'] == 'limit_frequency'} selected{/if}>
-                                                                        限制邀请人能从被邀请人身上获得的总返利次数</option>
-                                                                        <option value="limit_amount" {if $settings['invite_rebate_mode'] == 'limit_amount'} selected{/if}>
-                                                                        限制邀请人能从被邀请人身上获得的总返利金额</option>
-                                                                        <option value="limit_time_range" {if $settings['invite_rebate_mode'] == 'limit_time_range'} selected{/if}>
-                                                                        限制邀请人能从被邀请人身上获得返利的时间范围</option>
+                                                                        <option value="continued">持续返利</option>
+                                                                        <option value="limit_frequency">限制邀请人能从被邀请人身上获得的总返利次数</option>
+                                                                        <option value="limit_amount">限制邀请人能从被邀请人身上获得的总返利金额</option>
+                                                                        <option value="limit_time_range">限制邀请人能从被邀请人身上获得返利的时间范围</option>
                                                                     </select>
                                                                     <label class="form-label">返利比例</label>
                                                                     <div class="input-group mb-5">
@@ -666,7 +659,6 @@
                 return $(span);
             }
     
-            // Init Select2 --- more info: https://select2.org/
             $('#currency_unit').select2({
                 templateSelection: optionFormatCountry,
                 templateResult: optionFormatCountry
@@ -675,6 +667,28 @@
         <script>
             $('#limit_email_suffix').val({$settings['limit_email_suffix']}).trigger('change');
             $('#telegram_admin_id').val({$settings['telegram_admin_id']}).trigger('change');
+            $('#enable_permission_group').val("{$settings['enable_permission_group']}").trigger('change');
+            $('#mail_driver').val("{$settings['mail_driver']}").trigger('change');
+            $('#auto_backup_notify').val("{$settings['auto_backup_notify']}").trigger('change');
+            $('#smtp_port').val("{$settings['smtp_port']}").trigger('change');
+            $('#smtp_ssl').val("{$settings['smtp_ssl']}").trigger('change');
+            $('#enable_telegram_bot').val("{$settings['enable_telegram_bot']}").trigger('change');
+            $('#enable_push_top_up_message').val("{$settings['enable_push_top_up_message']}").trigger('change');
+            $('#enable_push_ticket_message').val("{$settings['enable_push_ticket_message']}").trigger('change');
+            $('#enable_push_system_report').val("{$settings['enable_push_system_report']}").trigger('change');
+            $('#enable_subscribe_extend').val("{$settings['enable_subscribe_extend']}").trigger('change');
+            $('#enable_subscribe_emoji').val("{$settings['enable_subscribe_emoji']}").trigger('change');
+            $('#enable_subscribe_log').val("{$settings['enable_subscribe_log']}").trigger('change');
+            $('#currency_unit').val("{$settings['currency_unit']}").trigger('change');
+            $('#enable_withdraw').val("{$settings['enable_withdraw']}").trigger('change');
+            $('#reg_mode').val("{$settings['reg_mode']}").trigger('change');
+            $('#verify_email').val("{$settings['verify_email']}").trigger('change');
+            $('#captcha_provider').val("{$settings['captcha_provider']}").trigger('change');
+            $('#enable_signup_captcha').val("{$settings['enable_signup_captcha']}").trigger('change');
+            $('#enable_signin_captcha').val("{$settings['enable_signin_captcha']}").trigger('change');
+            $('#live_chat').val("{$settings['live_chat']}").trigger('change');
+            $('#invitation_mode').val("{$settings['invitation_mode']}").trigger('change');
+            $('#invite_rebate_mode').val("{$settings['invite_rebate_mode']}").trigger('change');
         </script>
         <script>
             const container = document.getElementById('permission_group_detail');
@@ -894,7 +908,7 @@
                                 telegram_group_id: $('#telegram_group_id').val(),
                                 telegram_group_url: $('#telegram_group_url').val(),
                                 telegram_channel_id: $('#telegram_channel_id').val(),
-                                telegram_admin_id: $('#telegram_admin_id').val(),
+                                telegram_admin_id: ($('#telegram_admin_id').val().length === 0) ? [""] : $('#telegram_admin_id').val(),
                             },
                             success: function(data){
                                 if (data.ret === 1){
@@ -1010,7 +1024,7 @@
                                 signup_default_ip_limit: $('#signup_default_ip_limit').val(),
                                 signup_default_speed_limit: $('#signup_default_speed_limit').val(),
                                 verify_email: $('#verify_email').val(),
-                                limit_email_suffix: $('#limit_email_suffix').val()
+                                limit_email_suffix: ($('#limit_email_suffix').val().length === 0) ? [""] : $('#limit_email_suffix').val(),
                             },
                             success: function(data){
                                 if (data.ret === 1){
@@ -1032,7 +1046,7 @@
                                 enable_signup_captcha: $('#enable_signup_captcha').val(),
                                 enable_signin_captcha: $('#enable_signin_captcha').val(),
                                 turnstile_sitekey: $('#turnstile_sitekey').val(),
-                                turnstile_secret: $('#turnstile_secret').val()
+                                turnstile_secret: $('#turnstile_secret').val(),
                             },
                             success: function(data){
                                 if (data.ret === 1){
@@ -1079,7 +1093,7 @@
                                 rebate_frequency_limit: $('#rebate_frequency_limit').val(),
                                 rebate_amount_limit: $('#rebate_amount_limit').val(),
                                 invitation_to_signup_credit_reward: $('#invitation_to_signup_credit_reward').val(),
-                                invitation_to_signup_traffic_reward: $('#invitation_to_signup_traffic_reward').val()
+                                invitation_to_signup_traffic_reward: $('#invitation_to_signup_traffic_reward').val(),
                             },
                             success: function(data){
                                 if (data.ret === 1){
