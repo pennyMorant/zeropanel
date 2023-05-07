@@ -64,9 +64,9 @@
                                                     </div>
                                                     <label class="form-label required">产品类型</label>
                                                     <select class="form-select mb-5" id="type" data-control="select2" data-hide-search="true">
-                                                        <option value="1" {if $product->type == 1}selected{/if}>周期产品</option>
-                                                        <option value="2" {if $product->type == 2}selected{/if}>流量产品</option>
-                                                        <option value="3" {if $product->type == 3}selected{/if}>其他产品</option>
+                                                        <option value="1">周期产品</option>
+                                                        <option value="2">流量产品</option>
+                                                        <option value="3">其他产品</option>
                                                     </select>
                                                     <label class="form-label required">产品流量</label>
                                                     <div class="input-group mb-5">
@@ -83,9 +83,9 @@
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="stock" name="name" type="number" placeholder="产品库存" value="{$product->stock}">
                                                     <label class="form-label required">产品流量重置周期</label>
                                                     <select class="form-select mb-5" id="reset" data-control="select2" data-hide-search="true">
-                                                        <option value="0" {if $product->reset_traffic_cycle === 0}selected{/if}>一次性</option>
-                                                        <option value="1" {if $product->reset_traffic_cycle === 1}selected{/if}>订单日重置</option>
-                                                        <option value="2" {if $product->reset_traffic_cycle === 2}selected{/if}>每月1日重置</option>
+                                                        <option value="0">一次性</option>
+                                                        <option value="1">订单日重置</option>
+                                                        <option value="2">每月1日重置</option>
                                                     </select>
                                                     <label class="form-label">产品速度</label>
                                                     <div class="input-group mb-5">
@@ -167,6 +167,10 @@
                     }
                 })
             }
+        </script>
+        <script>
+            $('#type').val("{$product->type}").trigger('change');
+            $('#reset').val("{$product->reset_traffic_cycle}").trigger('change');
         </script>
     </body>
 </html>
