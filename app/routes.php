@@ -207,6 +207,7 @@ return function (SlimApp $app) {
             $coupon->get('',                   CouponController::class . ':couponIndex');
             $coupon->post('/create',           CouponController::class . ':createCoupon');
             $coupon->post('/ajax',             CouponController::class . ':couponAjax');
+            $coupon->delete('/delete',         CouponController::class . ':deleteCoupon');
         });
 
         // 设置中心

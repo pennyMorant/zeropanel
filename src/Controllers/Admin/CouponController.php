@@ -20,7 +20,8 @@ class CouponController extends AdminController
             'limited_product_period' => '限定周期',
             'discount'               => '额度',
             'per_use_count'          => '每个用户次数',
-            'total_use_count'        => '优惠码总使用次数'
+            'total_use_count'        => '优惠码总使用次数',
+            'action'                 => '操作',
         ];
         $table_config['ajax_url'] = 'coupon/ajax';
         $products = Product::where('status', 1)->get();
@@ -102,6 +103,12 @@ class CouponController extends AdminController
                 'discount'               => $rowData->discount,
                 'per_use_count'          => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
                 'total_use_count'        => is_null($rowData->total_use_count) ? '无限次使用' : $rowData->total_use_count,
+                'action'                 => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                <ul    class = "dropdown-menu">
+                                                
+                                                <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'coupon\', ' . $rowData->id . ')">删除</a></li>
+                                                </ul>
+                                            </div>',
             ];
         })->toArray();
 
@@ -112,5 +119,16 @@ class CouponController extends AdminController
             'data'              => $data
         ]);
         
+    }
+
+    public function deleteCoupon(ServerRequest $request, Response $response, array $args): Response
+    {
+        $coupon = Coupon::find($request->getParsedBodyParam('id'));
+        $coupon->delete();
+
+        return $response->withJson([
+            'ret' => 1,
+            'msg' => '删除成功',
+        ]);
     }
 }
