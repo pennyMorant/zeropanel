@@ -16,8 +16,14 @@ class PaymentController
         $method  = $args['method'];
         $uuid    = $args['uuid'];
         $payment = new PaymentService($method, null, $uuid);
-        $result  = $payment->notify($request);
-        $this->handle($result['order_no']);
+        $verify  = $payment->notify($request);
+        $this->handle($verify['order_no']);
+        if ($method === 'PayPal') {
+            return $response->withJson([
+                'ret'   => 1,
+                'msg'   => 'success',
+            ]);
+        }
         die(isset($verify['custom_result']) ? $verify['custom_result'] : 'success');
     }
 

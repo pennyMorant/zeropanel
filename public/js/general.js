@@ -301,7 +301,7 @@ function KTUsersPayOrder(order_no) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
-    let paymentMethod = $("#payment_method a.active").attr("data-name");
+    let payment_id = $("#payment_method a.active").attr("data-name");
     let orderNo = order_no;
     
     setTimeout(() => {
@@ -309,7 +309,7 @@ function KTUsersPayOrder(order_no) {
             type: "POST",
             url: "/user/order/pay_order",
             dataType: "json",
-            data: {method: paymentMethod, order_no: orderNo},
+            data: {payment_id, order_no: orderNo},
             success: function (data) {
                 if (data.ret == 1) {
                     $(location).attr('href', data.url);

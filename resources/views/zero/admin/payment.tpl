@@ -103,6 +103,7 @@
                                 <option value="Mgate">Mgate</option>
                                 <option value="AlipayF2F">AlipayF2F</option>
                                 <option value="Epusdt">Epusdt</option>
+                                <option value="PayPal">PayPal</option>
                                 <option value="VmqPay">VmqPay</option>
                             </select>
                             <div id="payment_config_epay" class="">
@@ -140,6 +141,12 @@
                                 <input class="form-control mb-5" id="epusdt_url" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold">Private key</label>
                                 <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
+                            </div>
+                            <div class="d-none" id="payment_config_paypal">
+                                <label class="form-label fw-bold">PayPal Client ID</label>
+                                <input class="form-control mb-5" id="paypal_client_id" value="" type="text" placeholder="" />
+                                <label class="form-label fw-bold">PayPal Secret</label>
+                                <input class="form-control mb-5" id="paypal_secret" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_vmqpay">
                                 <label class="form-label fw-bold">VmqPay URL</label>
@@ -217,6 +224,12 @@
                         return {
                             'epusdt_url': $('#epusdt_url').val(),
                             'epusdt_private_key': $('#epusdt_private_key').val()
+                        };
+                    },
+                    'PayPal': function() {
+                        return {
+                            'paypal_client_id': $('#paypal_client_id').val(),
+                            'paypal_secret': $('#paypal_secret').val()
                         };
                     },
                     'VmqPay': function() {
@@ -315,6 +328,10 @@
                                 'url': 'epusdt_url',
                                 'private_key': 'epusdt_private_key',
                             },
+                            'paypal': {
+                                'client_id': 'paypal_client_id',
+                                'secret': 'paypal_secret',
+                            },
                             'vmqpay': {
                                 'url': 'vmqpay_url',
                                 'key': 'vmqpay_key',
@@ -381,6 +398,8 @@
                     '#alipayf2f_public_key',
                     '#epusdt_url',
                     '#epusdt_private_key',
+                    '#paypal_client_id',
+                    '#paypal_secret',
                     '#vmqpay_url',
                     '#vmqpay_key',
                     '#vmqpay_type',

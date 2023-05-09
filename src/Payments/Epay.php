@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Copyright (c) 2019.
- * Author:Alone88
- * Github:https://github.com/anhao
- */
-
 namespace App\Payments;
 
 use Slim\Http\ServerRequest;
@@ -58,7 +52,6 @@ class Epay
         $result = [
             'url'     => $payData,
             'ret'     => 1,
-            'tradeno' => $order['order_no'],
             'type'    => 'url'
         ];
         return $result;

@@ -123,21 +123,19 @@
 											{if $order->order_status === 1}
                                                 {if $order->order_total != 0}
                                                     <div class="col-lg-12">
-                                                        <label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>
-                                                        
-                                                            <ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">
-                                                            
-                                                                {foreach $payments as $payment}
-                                                                    <li class="nav-item mb-3">
-                                                                        <a class="btn btn-outline btn-active-light-primary d-flex flex-column" data-bs-toggle="pill" data-name="{$payment->id}">
-                                                                            
-                                                                            <img class="h-35px w-auto" src={$payment->icon}>
-                                                                            
-                                                                            <span class="fs-3 py-2 fw-bold">{$payment->name}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                {/foreach}
-                                                            </ul>
+                                                        <label class="col-form-label fs-3 fw-bold">{$trans->t('payment method')}:</label>                                                       
+                                                        <ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">                                                         
+                                                            {foreach $payments as $payment}
+                                                                <li class="nav-item mb-3">
+                                                            <a class="btn btn-outline btn-active-light-primary d-flex flex-column" {if $payment->gateway == 'PayPal'} id="payment_paypal_{$payment->id}"{else} id="payment_others_{$payment->id}"{/if} data-bs-toggle="pill" data-name="{$payment->id}">
+                                                                        
+                                                                        <img class="h-35px w-auto" src={$payment->icon}>
+                                                                        
+                                                                        <span class="fs-3 py-2 fw-bold">{$payment->name}</span>
+                                                                    </a>
+                                                                </li>
+                                                            {/foreach}
+                                                        </ul>
                                                     </div>
                                                 {/if}
                                                 <div class="text-center pt-15">
@@ -147,6 +145,9 @@
                                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                 </div>
+                                                <script src="https://www.paypal.com/sdk/js?client-id=Aa69h7psOgN_5Gp20yOP0eOuYBKsKZapS0ZK_RvWTl57ZZTS_SDoCvtG3j0_1R_hcp2sSl8-2f7Jik5R&currency=USD&disable-funding=credit,card"></script>
+                                                <!-- Set up a container element for the button -->
+                                                <div id="paypal-button-container" class="text-center"></div>
                                             {/if}
                                         </div>
                                         
@@ -168,5 +169,57 @@
         </div>
 		{include file='include/global/scripts.tpl'}
         {include file='include/index/news.tpl'}
+        <script>
+        
+            paypal
+            .Buttons({
+                
+            // Sets up the transaction when a payment button is clicked
+            createOrder: function () {
+                return fetch("/user/order/pay_order", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                // use the "body" param to optionally pass additional order information
+                // like product skus and quantities
+                body: JSON.stringify({
+                    payment_id: '8',
+                    order_no: '{$order->order_no}',
+                }),
+                })
+                .then((response) => response.json())
+                .then((order) => order.id);
+            },
+            // Finalize the transaction after payer approval
+            onApprove: function (data) {
+                return fetch("/payment/notify/PayPal/8609d948-0ff0-5682-96e2-e577541e1065", {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderID: data.orderID,
+                }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    location.reload();
+                });
+            },
+            })
+            .render("#paypal-button-container");
+        </script>
+        <script>
+            $('[id^=payment_paypal_]').on('click', function() {
+                $('button[type^="submit"]').addClass('d-none');
+                $('#paypal-button-container').removeClass('d-none');
+            });
+            $('[id^=payment_others_]').on('click', function() {
+                $('button[type^="submit"]').removeClass('d-none');
+                $('#paypal-button-container').addClass('d-none');
+            });
+            $('#paypal-button-container').addClass('d-none');
+        </script>
     </body>
 </html>

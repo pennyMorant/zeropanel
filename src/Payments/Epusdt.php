@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Payments;;
 
 use Slim\Http\ServerRequest;

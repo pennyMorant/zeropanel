@@ -229,7 +229,7 @@ class OrderController extends BaseController
     public function processOrder(ServerRequest $request, Response $response, array $args)
     {
         $user           = $this->user;
-        $payment_method = $request->getParsedBodyParam('method');
+        $payment_id = $request->getParsedBodyParam('payment_id');
         $order_no       = $request->getParsedBodyParam('order_no');
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
@@ -251,7 +251,7 @@ class OrderController extends BaseController
                 self::execute($order->order_no);
             } else {
                 // 计算结账金额              
-                $payment         = Payment::find($payment_method);
+                $payment         = Payment::find($payment_id);
                 $payment_service = new PaymentService($payment->gateway, $payment->id);
                 if ($payment->fixed_fee || $payment->percent_fee) {
                     $order->handling_fee = round(($order->order_total * ($payment->percent_fee / 100)) + $payment->fixed_fee, 2);
@@ -263,7 +263,7 @@ class OrderController extends BaseController
                 
                 $currency          = Setting::getClass('currency');
                 $exchange_rate     = $currency['currency_exchange_rate'] ?: 1;
-                $order->payment_id = $payment_method;
+                $order->payment_id = $payment_id;
                 $order->save();
 
                 $result = $payment_service->toPay([
@@ -272,11 +272,6 @@ class OrderController extends BaseController
                     'user_id'      => $user->id
                 ]);
                 
-                // 支付成功，从用户账户扣除余额抵扣金额
-                if ($result['ret'] === 1) {
-                    $user->money -= $order->credit_paid;
-                    $user->save();
-                }
                 return $response->withJson($result);
             }
         } catch (\Exception $e) {
