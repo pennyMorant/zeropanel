@@ -145,7 +145,7 @@
                                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                 </div>
-                                                <script src="https://www.paypal.com/sdk/js?client-id=Aa69h7psOgN_5Gp20yOP0eOuYBKsKZapS0ZK_RvWTl57ZZTS_SDoCvtG3j0_1R_hcp2sSl8-2f7Jik5R&currency=USD&disable-funding=credit,card"></script>
+                                                <script src="https://www.paypal.com/sdk/js?client-id=Aa69h7psOgN_5Gp20yOP0eOuYBKsKZapS0ZK_RvWTl57ZZTS_SDoCvtG3j0_1R_hcp2sSl8-2f7Jik5R&currency={$paypal_currency_unit}&disable-funding=credit,card"></script>
                                                 <!-- Set up a container element for the button -->
                                                 <div id="paypal-button-container" class="text-center"></div>
                                             {/if}

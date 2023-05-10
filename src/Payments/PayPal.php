@@ -4,6 +4,7 @@ namespace App\Payments;
 
 use Slim\Http\ServerRequest;
 use Slim\Http\Response;
+use App\Models\Setting;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PayPal
@@ -16,7 +17,7 @@ class PayPal
         $this->config = $config;
 
         $this->paypal_config = [
-            'mode' => 'live',
+            'mode' => 'sandbox',
             'sandbox' => [
                 'client_id' => $this->config['paypal_client_id'],
                 'client_secret' => $this->config['paypal_secret'],
@@ -28,7 +29,7 @@ class PayPal
                 'app_id' => '',
             ],
             'payment_action' => 'Sale',
-            'currency' => 'USD',
+            'currency' => Setting::obtain('currency_unit'),
             'notify_url' => '',
             'locale' => 'en_US',
             'validate_ssl' => true,
@@ -42,7 +43,7 @@ class PayPal
             "purchase_units" => [
                 [
                     "amount" => [
-                        "currency_code" => 'USD',
+                        "currency_code" => Setting::obtain('currency_unit'),
                         "value" => $order['total_amount'],
                     ],
                     "reference_id" => $order['order_no'],

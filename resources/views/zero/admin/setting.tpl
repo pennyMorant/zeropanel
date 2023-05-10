@@ -397,7 +397,6 @@
                                                                     </select>
                                                                     <label class="form-label">货币单位</label>
                                                                     <select class="form-select mb-5" id="currency_unit">
-                                                                        <option value="CNY" data-kt-select2-country="/theme/zero/assets/media/flags/china.svg">CNY</option>
                                                                         <option value="USD" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">USD</option>
                                                                         <option value="GBP" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">GBP</option>
                                                                         <option value="CAD" data-kt-select2-country="/theme/zero/assets/media/flags/canada.svg">CAD</option>
@@ -407,7 +406,7 @@
                                                                         <option value="EUR" data-kt-select2-country="/theme/zero/assets/media/flags/european-union.svg">EUR</option>
                                                                     </select>
                                                                     <label class="form-label">货币汇率</label>
-                                                                    <input class="form-control mb-5" id="currency_exchange_rate" value="{$settings['currency_exchange_rate']}" type="text" placeholder="货币汇率" disabled />
+                                                                    <input class="form-control mb-5" id="currency_exchange_rate" value="{$settings['currency_exchange_rate']}" type="text" placeholder="货币汇率" />
                                                                     <label class="form-label">汇率 API KEY</label>
                                                                     <input class="form-control mb-5" id="currency_exchange_rate_api_key" value="{$settings['currency_exchange_rate_api_key']}" type="text" placeholder="API KEY" />
                                                                 </div>

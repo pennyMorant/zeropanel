@@ -50,7 +50,7 @@ class OrderController extends BaseController
                 2   =>  I18n::get()->t('add credit') .': ' . $order->order_total,
             ];
         }
-        
+        $paypal_currency_unit = Setting::obtain('currency_unit') ?: 'USD';
         $payments = Payment::where('enable', 1)->get();
             $this->view()
                 ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
@@ -58,6 +58,7 @@ class OrderController extends BaseController
                 ->assign('product', $product)
                 ->assign('order_type', $order_type)
                 ->assign('payments', $payments)
+                ->assign('paypal_currency_unit', $paypal_currency_unit)
                 ->display('user/order_detail.tpl');
         return $response;   
     }
