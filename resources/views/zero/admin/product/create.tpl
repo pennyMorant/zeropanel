@@ -76,11 +76,11 @@
                                                     <label class="form-label required">产品等级</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="默认为0" id="class" name="class" type="number" placeholder="产品等级" value="0">
                                                     <label class="form-label">产品群组</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="不分组保持默认" id="group" name="group" type="number" placeholder="产品群组" value="0">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="不分组保持默认" id="group" name="group" type="number" placeholder="不分组保持默认" value="0">
                                                 </div>
                                                 <div class="col-xxl-6">
                                                     <label class="form-label">产品库存</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="stock" name="name" type="number" placeholder="产品库存" value="0">
+                                                    <input class="form-control mb-5" id="stock" name="name" type="number" placeholder="默认为无限制" value="">
                                                     <label class="form-label required">产品流量重置周期</label>
                                                     <select class="form-select mb-5" id="reset" data-control="select2" data-hide-search="true">
                                                         <option value="0">一次性</option>
@@ -89,16 +89,16 @@
                                                     </select>
                                                     <label class="form-label">产品速度</label>
                                                     <div class="input-group mb-5">
-                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="speed_limit" name="speed_limit" type="number" placeholder="产品速度" value="0">
+                                                        <input class="form-control" id="speed_limit" name="speed_limit" type="number" placeholder="默认为无限制" value="">
                                                         <span class="input-group-text">Mbps</span>
                                                     </div>
                                                     <label class="form-label">产品IP</label>
                                                     <div class="input-group mb-5">
-                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="ip_limit" name="ip_limit" type="number" placeholder="产品IP" value="0">
+                                                        <input class="form-control" id="ip_limit" name="ip_limit" type="number" placeholder="默认为无限制" value="">
                                                         <span class="input-group-text">个</span>
                                                     </div>
                                                     <label class="form-label required">产品排序</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="数字越大,越靠前" id="sort" name="sort" type="number" placeholder="产品排序" value="0">
+                                                    <input class="form-control mb-5" id="sort" name="sort" type="number" placeholder="产品排序,数字越大越靠前" value="0">
                                                 </div>
                                             </div>
                                         </div>

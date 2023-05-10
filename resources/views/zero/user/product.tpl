@@ -86,7 +86,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{if {$product->ip_limit} === '0' }{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}&nbsp;{$trans->t('online ip')}</span></span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{if empty($product->ip_limit)}{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}&nbsp;{$trans->t('online ip')}</span></span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -95,7 +95,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speed_limit} == '0' }<span class="badge badge-success fw-bold fs-6">{$trans->t('unlimited')}</span>{else}{$product->speed_limit} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if empty($product->speed_limit)}<span class="badge badge-success fw-bold fs-6">{$trans->t('unlimited')}</span>{else}{$product->speed_limit} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -134,7 +134,7 @@
 																							{$product->custom_content}
 																						{/if}
 																					</div>
-																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
+																					{if isset($product->stock) && $product->stock - $product->realTimeSales() <= 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
 																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">

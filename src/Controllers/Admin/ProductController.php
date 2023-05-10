@@ -53,9 +53,9 @@ class ProductController extends AdminController
         $product->user_group          = $postdata['group'] ?: 0;
         $product->class               = $postdata['class'] ?: 0;
         $product->reset_traffic_cycle = $postdata['reset'];
-        $product->speed_limit         = $postdata['speed_limit'] ?: 0;
-        $product->ip_limit            = $postdata['ip_limit'] ?: 0;
-        $product->stock               = $postdata['stock'] ?: 0;
+        $product->speed_limit         = $postdata['speed_limit'] == '' ? NULL : $postdata['speed_limit'];
+        $product->ip_limit            = $postdata['ip_limit'] == '' ? NULL : $postdata['ip_limit'];
+        $product->stock               = $postdata['stock'] == '' ? NULL : $postdata['stock'];
         $product->status              = 0;
         if (!$product->save()) {
             return $response->withJson([
@@ -99,9 +99,9 @@ class ProductController extends AdminController
         $product->user_group          = $putdata['group'] ?: 0;
         $product->class               = $putdata['class'] ?: 0;
         $product->reset_traffic_cycle = $putdata['reset'];
-        $product->speed_limit         = $putdata['speed_limit'] ?: 0;
-        $product->ip_limit            = $putdata['ip_limit'] ?: 0;
-        $product->stock               = $putdata['stock'] ?: 0;
+        $product->speed_limit         = $putdata['speed_limit'] == '' ? NULL : $putdata['speed_limit'];
+        $product->ip_limit            = $putdata['ip_limit'] == '' ? NULL : $putdata['ip_limit'];
+        $product->stock               = $putdata['stock'] == '' ? NULL : $putdata['stock'];
         if (!$product->save()) {
             return $response->withJson([
                 'ret' => 0,
@@ -133,7 +133,7 @@ class ProductController extends AdminController
                 'sort'   => $rowData->sort,
                 'name'   => $rowData->name,
                 'type'   => $rowData->type(),
-                'sales'  => $rowData->sales,
+                'sales'  => $rowData->cumulativeSales(),
                 'status' => $rowData->status(),
                 'renew'  => $rowData->renew(),
                 'action' => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>

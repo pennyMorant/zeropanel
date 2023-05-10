@@ -81,8 +81,8 @@ class Product extends Model
                         $user->last_day_t      = 0;
                         $user->class_expire    = date('Y-m-d H:i:s', time() + $order->product_period * 86400);
                         $user->class           = $this->class;
-                        $user->node_speedlimit = $this->speed_limit;
-                        $user->node_iplimit    = $this->ip_limit;
+                        $user->node_speedlimit = $this->speed_limit ?? 0;
+                        $user->node_iplimit    = $this->ip_limit ?? 0;
                         $user->node_group      = $this->user_group;
                         $user->product_id      = $this->id;
                         if ($this->reset_traffic_cycle === 1) { //订单日充值
@@ -163,5 +163,15 @@ class Product extends Model
         ];             
         $price = $product_prices[$period] ?? NULL;
         return $price;
+    }
+
+    public function cumulativeSales() {
+        $sales = Order::where('product_id', $this->id)->where('order_status', 2)->count() ?: 0;
+        return $sales;
+    }
+
+    public function realTimeSales() {
+        $sales = User::where('product_id', $this->id)->where('class', $this->class)->count() ?: 0;
+        return $sales;
     }
 }
