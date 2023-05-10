@@ -227,7 +227,7 @@ class User extends Model
     public function onlineIPCount(): int
     {
         $total_ip = IP::selectRaw('userid, COUNT(DISTINCT ip) AS count')
-            ->where('datetime', '>=', time() - 180)
+            ->whereRaw('datetime >= UNIX_TIMESTAMP() - 180')
             ->where('userid', $this->id)
             ->groupBy('userid')
             ->first();
