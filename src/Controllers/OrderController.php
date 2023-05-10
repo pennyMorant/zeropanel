@@ -338,6 +338,8 @@ class OrderController extends BaseController
             $order->save();
             $product->sales += 1; // 加累积销量     
             $product->save();
+            $user->money -= $order->credit_paid; // 支付成功，从用户账户扣除余额抵扣金额
+            $user->save();
         }
     }
 
