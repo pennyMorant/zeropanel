@@ -106,7 +106,7 @@
                                                         <span class="input-group-text">Mbps</span>
                                                     </div>
                                                     <label class="form-label required">节点排序</label>
-                                                    <input class="form-control" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
                                                 </div>
                                             </div>  
                                         </div>

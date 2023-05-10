@@ -75,8 +75,7 @@
                                                     </div>    
                                                     <label class="form-label required">产品等级</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="默认为0" id="class" name="class" type="number" placeholder="默认等级为0" value="{$product->class}">
-                                                    <label class="form-label">产品群组</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="不分组保持默认" id="group" name="group" type="number" placeholder="不分组保持默认" value="{$product->user_group}">
+                                                    
                                                 </div>
                                                 <div class="col-xxl-6">
                                                     <label class="form-label">产品库存</label>
@@ -99,6 +98,8 @@
                                                     </div>
                                                     <label class="form-label required">产品排序</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="数值越大,越靠前" id="sort" name="sort" type="number" placeholder="产品排序" value="{$product->sort}">
+                                                    <label class="form-label">产品群组</label>
+                                                    <input class="form-control" data-bs-toggle="tooltip" title="不分组保持默认" id="group" name="group" type="number" placeholder="不分组保持默认" value="{$product->user_group}">
                                                 </div>
                                             </div>
                                         </div>  
