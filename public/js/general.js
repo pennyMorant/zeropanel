@@ -301,7 +301,7 @@ function KTUsersPayOrder(order_no) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
-    let payment_id = $("#payment_method a.active").attr("data-name");
+    let payment_id = $("#payment_method a.active").attr("data-payment-id");
     let orderNo = order_no;
     
     setTimeout(() => {

@@ -127,7 +127,7 @@
                                                         <ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">                                                         
                                                             {foreach $payments as $payment}
                                                                 <li class="nav-item mb-3">
-                                                            <a class="btn btn-outline btn-active-light-primary d-flex flex-column" {if $payment->gateway == 'PayPal'} id="payment_paypal_{$payment->id}"{else} id="payment_others_{$payment->id}"{/if} data-bs-toggle="pill" data-name="{$payment->id}">
+                                                            <a class="btn btn-outline btn-active-light-primary d-flex flex-column" {if $payment->gateway == 'PayPal'} id="payment_paypal_{$payment->id}"{else} id="payment_others_{$payment->id}"{/if} data-bs-toggle="pill" data-payment-id="{$payment->id}">
                                                                         
                                                                         <img class="h-35px w-auto" src={$payment->icon}>
                                                                         
@@ -184,7 +184,7 @@
                 // use the "body" param to optionally pass additional order information
                 // like product skus and quantities
                 body: JSON.stringify({
-                    payment_id: '8',
+                    payment_id: $("#payment_method a.active").attr("data-payment-id"),
                     order_no: '{$order->order_no}',
                 }),
                 })
