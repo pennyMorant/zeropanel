@@ -53,18 +53,18 @@ class PayPal
         $paypal = new PayPalClient($this->paypal_config);
         $paypal->getAccessToken();
         $trade = $paypal->createOrder($order_data);
-        return $trade;
-        
+
+        return $trade;  
     }
 
     public function notify (ServerRequest $request)
     {
         $order_id = $request->getParsedBodyParam('orderID');
 
-        $pp = new PayPalClient($this->paypal_config);
-        $pp->getAccessToken();
+        $paypal = new PayPalClient($this->paypal_config);
+        $paypal->getAccessToken();
 
-        $result = $pp->capturePaymentOrder($order_id);
+        $result = $paypal->capturePaymentOrder($order_id);
         $transaction = $result['purchase_units'][0]['payments']['captures'][0];
         if ($transaction['status'] === 'COMPLETED') {
             return [
