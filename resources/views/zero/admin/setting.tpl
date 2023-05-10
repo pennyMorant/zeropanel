@@ -390,7 +390,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="card-body">
-                                                                    <label class="form-label">开启其他货币</label>
+                                                                    <label class="form-label">开启其他货币(不开启默认为CNY)</label>
                                                                     <select class="form-select mb-5" id="enable_currency" data-control="select2" data-hide-search="true"> 
                                                                         <option value="0" {if $settings['enable_currency'] == false}selected{/if}>关闭</option>
                                                                         <option value="1" {if $settings['enable_currency'] == true}selected{/if}>开启</option>

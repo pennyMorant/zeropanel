@@ -17,7 +17,7 @@ class PayPal
         $this->config = $config;
 
         $this->paypal_config = [
-            'mode' => 'sandbox',
+            'mode' => 'live',
             'sandbox' => [
                 'client_id' => $this->config['paypal_client_id'],
                 'client_secret' => $this->config['paypal_secret'],
