@@ -263,6 +263,9 @@ class OrderController extends BaseController
                 
                 $currency          = Setting::getClass('currency');
                 $exchange_rate     = $currency['currency_exchange_rate'] ?: 1;
+                if ($payment->gateway === 'PayPal') {
+                    $exchange_rate = 1;
+                }
                 $order->payment_id = $payment_id;
                 $order->save();
 
