@@ -123,18 +123,24 @@
                                         </div>
                                         <div class="separator my-2"></div>
                                         <div class="menu-item px-5" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-offset="-15px, 0">
-                                            <a href="#" class="menu-link px-5">
-                                                <span class="menu-title position-relative">Language
+                                            <a href="#" class="menu-link px-5" id="zero_user_current_language">
+                                                <span class="menu-title position-relative">{$trans->t('language')}
                                                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
                                                 <img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>
                                             </a>
                                             <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link d-flex px-5 active">
-                                                    <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
-                                                    </span>English</a>
-                                                </div>												
+                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('en-US')">
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+                                                        </span>{$trans->t('english')}
+                                                    </a>
+                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('zh-CN')">
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
+                                                        </span>{$trans->t('chinese')}
+                                                    </a>
+                                                </div>											
                                             </div>
                                         </div>
                                         <div class="menu-item px-5">

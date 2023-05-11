@@ -223,6 +223,9 @@
     "create ticket": "Create Ticket",
     "please verify email first": "Please verify email first",
     "coupon failed": "Coupon failed",
+    "language": "Language",
+    "english": "English",
+    "chinese": "Chinese",
     "tutorial": {
         "android": {
             "clash": {

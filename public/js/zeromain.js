@@ -1,21 +1,6 @@
 //获取cookie
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i].trim();
-        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-    }
-    return "";
-}
 
-if (getCookie('language') != '') {
-    var language_type = getCookie('language');
-} else if (navigator.language != '') {
-    var language_type = navigator.language;
-} else {
-    var language_type = "en-US";
-}
+
 
 //get left date
 var showtime = function () {

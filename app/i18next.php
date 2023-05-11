@@ -18,10 +18,9 @@ I18n::get([
     'query'             =>  \Pkly\I18Next\Plugin\Detector\Query::class,
     'cookie'            =>  \Pkly\I18Next\Plugin\Detector\Cookie::class
 ], [
-    'lookupQuery'       =>  'i18n_lng',
-    'lookupCookie'       => 'language'
+    'lookupQuery'       => 'i18n_lng',
+    'lookupCookie'      => 'i18next'
 ]))->init();
-if (isset($_COOKIE['language'])){
-    $_COOKIE['language'];
-    I18n::get()->changeLanguage('');
+if (isset($_COOKIE['i18next'])){
+    I18n::get()->changeLanguage($_COOKIE['i18next']);
 }
