@@ -296,30 +296,29 @@ class OrderController extends BaseController
     public static function execute($order_no)
     {
         $order = Order::where('order_no', $order_no)->first();
-        
-        if (is_null($order->product_id) && $order->order_type === 2) {
-            return self::executeAddCredit($order);
-        } else {
-            return self::executeProduct($order);
+        if (!$order->execute_status) {
+            if (is_null($order->product_id) && $order->order_type === 2) {
+                return self::executeAddCredit($order);
+            } else {
+                return self::executeProduct($order);
+            }
         }
     }
 
     public static function executeAddCredit($order)
-    {
-        if ($order->execute_status !== 1) {
-            $order->paid_time      = time();
-            $order->updated_time   = time();
-            $order->order_status   = 2;
-            $order->execute_status = 1;
-            $order->save();
+    {    
+        $order->paid_time      = time();
+        $order->updated_time   = time();
+        $order->order_status   = 2;
+        $order->execute_status = 1;
+        $order->save();
 
-            $user         = User::find($order->user_id);
-            $user->money += $order->order_total + $order->bonus_amount;
-            $user->save();
+        $user         = User::find($order->user_id);
+        $user->money += $order->order_total + $order->bonus_amount;
+        $user->save();
 
-            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {
-                Payback::rebate($user->id, $order->order_total);
-            }
+        if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {
+            Payback::rebate($user->id, $order->order_total);
         }
     }
 
@@ -327,24 +326,22 @@ class OrderController extends BaseController
     {
         $product = Product::find($order->product_id);
         $user    = User::find($order->user_id);
+      
+        $product->purchase($user, $order);        
+        // 如果上面的代码执行成功，没有报错，再标记为已处理
+        $order->order_status = 2;
+        $order->updated_time = time();
+        $order->paid_time    = time();
+        $order->execute_status = 1;
+        $order->save();
+        $product->sales += 1; // 加累积销量     
+        $product->save();
+        $user->money -= $order->credit_paid; // 支付成功，从用户账户扣除余额抵扣金额
+        $user->save();
 
-        if ($order->execute_status != '1') {
-            $order->order_status = 2;
-            $order->updated_time = time();
-            $order->paid_time    = time();
-            $product->purchase($user, $order);        
-            // 返利
-            if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
-                Payback::rebate($user->id, $order->order_total);
-            }
-
-            // 如果上面的代码执行成功，没有报错，再标记为已处理
-            $order->execute_status = 1;
-            $order->save();
-            $product->sales += 1; // 加累积销量     
-            $product->save();
-            $user->money -= $order->credit_paid; // 支付成功，从用户账户扣除余额抵扣金额
-            $user->save();
+        // 返利
+        if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
+            Payback::rebate($user->id, $order->order_total);
         }
     }
 

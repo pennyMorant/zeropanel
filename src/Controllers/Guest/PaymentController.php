@@ -39,16 +39,17 @@ class PaymentController
     public function handle($no)
     {
         $order = Order::where('order_no', $no)->first();
-        OrderController::execute($no);
-        
-        if (Setting::obtain('enable_push_top_up_message') == true) {
-            $messageText = sprintf(
-                "💰成功收款%s%s\n———————————————\n订单号：%s",
-                $order->order_total,
-                Setting::obtain('currency_unit'),
-                $order->order_no
-            );
-            Telegram::pushToAdmin($messageText);
+        if (!$order->execute_status){
+            OrderController::execute($no);
+            if (Setting::obtain('enable_push_top_up_message')) {
+                $messageText = sprintf(
+                    "💰成功收款%s%s\n———————————————\n订单号：%s",
+                    $order->order_total,
+                    Setting::obtain('currency_unit'),
+                    $order->order_no
+                );
+                Telegram::pushToAdmin($messageText);
+            }
         }
         
     }
