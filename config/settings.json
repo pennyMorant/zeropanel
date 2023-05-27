@@ -372,11 +372,11 @@
     {
         "id": null,
         "item": "limit_email_suffix",
-        "value": "",
+        "value": "['']",
         "class": "register",
         "is_public": 1,
         "type": "array",
-        "default": "",
+        "default": "['']",
         "mark": "限制邮箱后缀"
     },
     {
@@ -612,11 +612,11 @@
     {
         "id": null,
         "item": "telegram_admin_id",
-        "value": "",
+        "value": "['']",
         "class": "telegram",
         "is_public": 0,
         "type": "array",
-        "default": "",
+        "default": "['']",
         "mark": "管理员ID"
     },
     {
