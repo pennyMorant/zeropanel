@@ -88,7 +88,7 @@ function getLoad() {
 
 // show configure product modal 
 function kTUserConfigureProductModal(id, currency) {
-    const checkOutButton = document.querySelector('[data-kt-users-action="check-out-'+id+'"]');
+    const checkOutButton = document.querySelector(`[data-kt-users-action="check-out-${id}"]`);
     checkOutButton.setAttribute('data-kt-indicator', 'on');
     checkOutButton.disabled = true;
     setTimeout(function() {
@@ -419,7 +419,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 			success: function(data) {
 				if (data.ret == 1){
                     const info = data.info;
-                    const qrcodeHtml = '<div class="pb-3" align="center" id="qrcode' + nodeid + '"></div>';
+                    const qrcodeHtml = `<div class="pb-3" align="center" id="qrcode${nodeid}"></div>`;
                     var content = data.url;
                     switch (data.type) {
                         case 2:                           

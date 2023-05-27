@@ -488,15 +488,11 @@
                                                                         <span class="input-group-text">Mbps</span>
                                                                     </div>
                                                                     <label class="form-label">限制邮箱后缀</label>
-                                                                    <select class="form-select" id="limit_email_suffix" data-control="select2" data-placeholder="指定邮箱后缀" data-allow-clear="true" multiple="multiple">
+                                                                    <select class="form-select" id="limit_email_suffix" data-control="select2" data-placeholder="指定邮箱后缀" data-allow-clear="true" multiple="multiple" data-tags="true" >
                                                                         <option></option>                              
-                                                                        <option value="qq.com">@qq.com</option>
-                                                                        <option value="163.com">@163.com</option>
-                                                                        <option value="gmail.com">@gmail.com</option>
-                                                                        <option value="outlook.com">@outlook.com</option>
-                                                                        <option value="yahoo.com">@yahoo.com</option>
-                                                                        <option value="live.com">@live.com</option>
-                                                                        <option value="hotmail.com">@hotmail.com</option>
+                                                                        {foreach json_decode($settings['limit_email_suffix']) as $email_domain}
+                                                                            <option value="{$email_domain}">{$email_domain}</option>
+                                                                        {/foreach}
                                                                     </select>
                                                                 </div>
                                                             </div>

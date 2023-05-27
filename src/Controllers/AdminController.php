@@ -144,7 +144,7 @@ class AdminController extends UserController
                 $datas = $user->map(function ($traffic, $user_id) {
                     return [
                         'y' => number_format($traffic / (1024 * 1024 * 1024), 2),
-                        'x' => "用户ID: $user_id",
+                        'x' => "ID: $user_id",
                     ];
                 })->values();
                 break;
