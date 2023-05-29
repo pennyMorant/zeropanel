@@ -371,7 +371,7 @@ final class SubController
         switch ($node_config['type']) {
             case 'trojan':
                 $url= sprintf(
-                    'trojan://%s@'.$address.':%d?flow=%s&security=%s&sni=%s&#%s',
+                    'trojan://%s@'.$address.':%d?flow=%s&security=%s&sni=%s#%s',
                     $node_config['uuid'],
                     $node_config['address'],
                     $node_config['port'],
