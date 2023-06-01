@@ -182,7 +182,7 @@ return function (SlimApp $app) {
             $ban->post('/rule/ajax',           BanController::class . ':banRuleAjax');
             $ban->post('/record/ajax',         BanController::class . ':banRecordAjax');
             $ban->post('/rule/request',        BanController::class . ':requestBanRule');
-            $ban->delete('/rule/delete',       BanController::class . ':deleteBanRule');
+            $ban->delete('/delete',       BanController::class . ':deleteBanRule');
         });
 
         // record Mange

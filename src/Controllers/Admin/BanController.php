@@ -62,7 +62,7 @@ class BanController extends AdminController
 
         $data = $query['datas']->map(function($rowData) {
             $type_1 = "'request'";
-            $type_2 = "'ban_rule'";
+            $type_2 = "'ban'";
             return [
                 'id'     => $rowData->id,
                 'name'   => $rowData->name,
