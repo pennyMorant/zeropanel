@@ -108,27 +108,28 @@ class AdminController extends UserController
                 break;
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
-                $time_a = strtotime(Carbon::now()->subDays(7)->startOfDay());
-                $time_b = strtotime(Carbon::today()->endOfDay());
+                $time_a = Carbon::now()->subDays(7)->startOfDay();
+                $time_b = Carbon::today()->endOfDay();
                 // 查询7天内按日期分组的流量数据，并转换成GB              
-                $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
+                $traffic = TrafficLog::whereBetween('datetime', [strtotime($time_a), strtotime($time_b)])
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
-                    ->groupBy('x')->pluck('y', 'x');
-                // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
-                $dates = array_map(function ($i) {
-                    return date('Y-m-d', time() - $i * 86400);
-                }, range(6, 0));
-
-                $trafficData = array_fill_keys($dates, '0');
-                $trafficData = array_replace($trafficData, $traffic->toArray());
-
-                $datas = array_map(function ($date, $flow) {
-                    return [
-                        'x' => $date,
-                        'y' => $flow,
-                        'name' => I18n::get()->t('traffic'),
-                    ];
-                }, array_keys($trafficData), $trafficData);
+                    ->groupBy('x')->get();
+                if (isset($traffic)) {
+                    // 对结果集合按照日期进行分组和统计
+                    $datas = $traffic->mapWithKeys(function ($item) {
+                        return [$item->x => $item->y];
+                    });
+                    $datas = collect(range(0, $time_b->diffInDays($time_a)))
+                        ->mapWithKeys(function ($day) use ($time_a) {
+                            return [$time_a->copy()->addDays($day)->format('Y-m-d') => 0];
+                        })->merge($datas)
+                        ->map(function ($value, $key) {
+                            return [
+                                'x' => strval($key),
+                                'y' => $value,
+                            ];
+                        })->values(); // 返回一个索引数组
+                }
                 break;
             case 'user_traffic_ranking':
                 $startOfDay = Carbon::today()->startOfDay()->timestamp;
