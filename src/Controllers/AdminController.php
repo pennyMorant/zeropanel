@@ -43,7 +43,7 @@ class AdminController extends UserController
         switch ($name) {
             case 'newusers':
                 // get current month 
-                $start_date = Carbon::now()->subDays(7);
+                $start_date = Carbon::now()->subDays(6);
                 $start_month_date = Carbon::parse($start_date)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
@@ -75,7 +75,7 @@ class AdminController extends UserController
                     })->values(); // 返回一个索引数组
                 break;
             case 'income':
-                $start_date = Carbon::now()->subDays(7)->startOfDay();
+                $start_date = Carbon::now()->subDays(6)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 
@@ -108,10 +108,10 @@ class AdminController extends UserController
                 break;
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
-                $time_a = Carbon::now()->subDays(7)->startOfDay();
-                $time_b = Carbon::today()->endOfDay();
+                $start_date = Carbon::now()->subDays(6)->startOfDay();
+                $today = Carbon::today()->endOfDay();
                 // 查询7天内按日期分组的流量数据，并转换成GB              
-                $traffic = TrafficLog::whereBetween('datetime', [strtotime($time_a), strtotime($time_b)])
+                $traffic = TrafficLog::whereBetween('datetime', [strtotime($start_date), strtotime($today)])
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->groupBy('x')->get();
                 if (isset($traffic)) {
@@ -119,9 +119,9 @@ class AdminController extends UserController
                     $datas = $traffic->mapWithKeys(function ($item) {
                         return [$item->x => $item->y];
                     });
-                    $datas = collect(range(0, $time_b->diffInDays($time_a)))
-                        ->mapWithKeys(function ($day) use ($time_a) {
-                            return [$time_a->copy()->addDays($day)->format('Y-m-d') => 0];
+                    $datas = collect(range(0, $today->diffInDays($start_date)))
+                        ->mapWithKeys(function ($day) use ($start_date) {
+                            return [$start_date->copy()->addDays($day)->format('Y-m-d') => 0];
                         })->merge($datas)
                         ->map(function ($value, $key) {
                             return [
