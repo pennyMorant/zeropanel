@@ -108,8 +108,8 @@ class AdminController extends UserController
                 break;
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
-                $time_a = strtotime(date('Y-m-d', time()) . " -6 days");
-                $time_b = strtotime(date('Y-m-d', time()) . " +1 days");
+                $time_a = strtotime(Carbon::now()->subDays(7)->startOfDay());
+                $time_b = strtotime(Carbon::today()->endOfDay());
                 // 查询7天内按日期分组的流量数据，并转换成GB              
                 $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
