@@ -163,7 +163,7 @@ class NodeController extends AdminController
             $type = "'node'";
             return [
                 'id'              => $rowData->id,
-                'online'          => $rowData->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>',
+                'online'          => $rowData->online == 1 ? '<span class="badge badge-circle badge-success w-15px h-15px"></span>' : '<span class="badge badge-circle badge-danger w-15px h-15px"></span>',
                 'name'            => $rowData->name,
                 'online_user'     => $rowData->getNodeOnlineUserCount(),
                 'type'            => $rowData->nodeType(),

@@ -108,15 +108,15 @@ class AdminController extends UserController
                 break;
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
-                $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
-                $time_b = $time_a + 86400 * 8;
+                $time_a = strtotime(date('Y-m-d', time()) . " -6 days");
+                $time_b = strtotime(date('Y-m-d', time()) . " +1 days");
                 // 查询7天内按日期分组的流量数据，并转换成GB              
                 $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
                     ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->groupBy('x')->pluck('y', 'x');
                 // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
                 $dates = array_map(function ($i) {
-                    return date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
+                    return date('Y-m-d', time() - $i * 86400);
                 }, range(6, 0));
 
                 $trafficData = array_fill_keys($dates, '0');
