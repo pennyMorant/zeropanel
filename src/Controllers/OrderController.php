@@ -247,9 +247,6 @@ class OrderController extends BaseController
                 if ($user->money < $order->order_total) {
                     throw new \Exception(I18n::get()->t('insufficient credit'));
                 }
-                
-                $user->money -= $order->credit_paid;
-                $user->save();
                 self::execute($order->order_no);
             } else {
                 // 计算结账金额              
@@ -336,7 +333,8 @@ class OrderController extends BaseController
         $order->save();
         $product->sales += 1; // 加累积销量     
         $product->save();
-
+        $user->money -= $order->credit_paid; // 支付成功，从用户账户扣除余额抵扣金额
+        $user->save();
         // 返利
         if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
             Payback::rebate($user->id, $order->order_total);
