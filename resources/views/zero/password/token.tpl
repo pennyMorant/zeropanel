@@ -62,7 +62,8 @@
 				</div>
 			</div>
 		</div>
-		<script var zero_reset_passwrod_token = {$token}></script>
+		<script>var zero_reset_passwrod_token = {$token};</script>
+
 		<script src="/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
 		<script src="/theme/zero/assets/js/scripts.bundle.js"></script>
 		<script src="/js/new-password.js"></script>		
