@@ -60,7 +60,8 @@ var KTAuthNewPassword = function () {
                             dataType: "json",
                             data: {
                                 password: $("#password").val(),
-                                repassword: $("#repassword").val()
+                                repassword: $("#repassword").val(),
+                                token: zero_reset_passwrod_token
                             },
                             success: function(data){
                                 if (data.ret == 1){

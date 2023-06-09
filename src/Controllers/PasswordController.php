@@ -33,7 +33,7 @@ class PasswordController extends BaseController
         }
         $token   = Token::createToken($user, 64, 3);
         $subject = Setting::obtain('website_name') . '重置密码';
-        $url     = Setting::obtain('website_url') . '/password/reset?token=' . $token;
+        $url     = Setting::obtain('website_url') . '/password/token?token=' . $token;
 
         Mail::send(
             $user->email,
@@ -56,8 +56,8 @@ class PasswordController extends BaseController
         if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
 
         $this->view()
-        ->assign('token', $request->getQueryParam('token'))
-        ->display('password/token.tpl');
+            ->assign('token', $request->getQueryParam('token'))
+            ->display('password/token.tpl');
         return $response;
     }
 
