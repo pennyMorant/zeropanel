@@ -80,6 +80,8 @@ class CouponController extends AdminController
         $coupon->limited_product        = !array_filter($postdata['limited_product']) ? NULL : json_encode($postdata['limited_product']);
         $coupon->limited_product_period = !array_filter($postdata['limited_product_period']) ? NULL : json_encode($postdata['limited_product_period']);
         $coupon->discount               = $postdata['discount'];
+        $coupon->created_at             = time();
+        $coupon->updated_at             = time();
         $coupon->save();
 
         return $response->withJson([

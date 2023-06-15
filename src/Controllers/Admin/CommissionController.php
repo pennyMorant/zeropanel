@@ -8,7 +8,7 @@ use App\Controllers\{
 use App\Models\{
     User, 
     Withdraw,
-    Payback,
+    Commission,
     Setting
 };
 use Slim\Http\Response;
@@ -28,12 +28,12 @@ class CommissionController extends AdminController
             'action'   => '操作'
         ];
         $table_config_commission['total_column'] = [
-            'id'       => 'ID',
-            'total'    => '原始金额',
-            'userid'   => '发起用户ID',
-            'ref_by'   => '获利用户ID',
-            'ref_get'  => '佣金',
-            'datetime' => '时间'
+            'id'            => 'ID',
+            'order_amount'  => '原始金额',
+            'userid'        => '发起用户ID',
+            'invite_userid' => '获利用户ID',
+            'get_amount'    => '佣金',
+            'datetime'      => '时间'
         ];
         $table_config_commission['ajax_url'] = 'commission/ajax';
 
@@ -57,19 +57,17 @@ class CommissionController extends AdminController
         );
         
         $data = $query['datas']->map(function($rowData) {
-            $mark_done = "'mark_done'";
-            $go_back   = "'go_back'";
             return [
                 'id'       => $rowData->id,
                 'userid'   => $rowData->userid,
                 'total'    => $rowData->total,
                 'type'     => $rowData->type === 1 ? '提现至余额' : '提现至USDT',
                 'status'   => $rowData->status(),
-                'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                'datetime' => date('Y-m-d H:i:s', $rowData->created_at),
                 'action'   => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission('.$mark_done.', '.$rowData->id.')">完成</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission('.$go_back.', '.$rowData->id.')">拒绝</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission(\'mark_done\', '.$rowData->id.')">完成</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission(\'go_back\', '.$rowData->id.')">拒绝</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -120,23 +118,23 @@ class CommissionController extends AdminController
 
     public function commissionAjax(ServerRequest $request, Response $response, array $args): Response
     {
-        $query = Payback::getTableDataFromAdmin(
+        $query = Commission::getTableDataFromAdmin(
             $request
         );
         $data = $query['datas']->map(function($rowData) {
             return [
-                'id'       => $rowData->id,
-                'total'    => $rowData->total,
-                'userid'   => $rowData->userid,
-                'ref_by'   => $rowData->ref_by,
-                'ref_get'  => $rowData->ref_get,
-                'datetime' => $rowData->date('Y-m-d H:i:s', $rowData->datetime),
+                'id'            => $rowData->id,
+                'order_amount'  => $rowData->order_amount,
+                'userid'        => $rowData->userid,
+                'invite_userid' => $rowData->invite_userid,
+                'get_amount'    => $rowData->ref_get,
+                'datetime'      => $rowData->date('Y-m-d H:i:s', $rowData->created_at),
             ];
         })->toArray();
 
         return $response->WithJson([
             'draw'            => $request->getParsedBodyParam('draw'),
-            'recordsTotal'    => Payback::count(),
+            'recordsTotal'    => Commission::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data
         ]);

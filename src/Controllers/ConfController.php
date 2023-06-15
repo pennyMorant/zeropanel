@@ -106,7 +106,7 @@ class ConfController extends BaseController
         $Rule = self::getRule($Configs['Rule']);
 
         $Conf = [
-            '#!MANAGED-CONFIG ' . Setting::obtain('website_url') . $_SERVER['REQUEST_URI'],
+            '#!MANAGED-CONFIG ' . Setting::obtain('subscribe_address_url') . $_SERVER['REQUEST_URI'],
             '',
             '#---------------------------------------------------#',
             '## 上次更新于：' . date("Y-m-d H:i:s"),
@@ -350,7 +350,7 @@ class ConfController extends BaseController
         );
 
         $Conf = [
-            '#!MANAGED-CONFIG ' . Setting::obtain('website_url') . $_SERVER['REQUEST_URI'],
+            '#!MANAGED-CONFIG ' . Setting::obtain('subscribe_address_url') . $_SERVER['REQUEST_URI'],
             '',
             '#---------------------------------------------------#',
             '## 上次更新于：' . date("Y-m-d H:i:s"),

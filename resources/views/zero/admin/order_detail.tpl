@@ -62,7 +62,7 @@
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="ms-5">
                                                                         <a class="fw-bold text-gray-600 text-hover-primary">{$order_type[$order->order_type]}</a>
-                                                                        <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d H:i:s', $order->created_time)}</div>
+                                                                        <div class="fs-7 text-muted">{$trans->t('date')}: {date('Y-m-d H:i:s', $order->created_at)}</div>
                                                                     </div>
                                                                     
                                                                 </div>

@@ -36,7 +36,7 @@ class BanController extends AdminController
             'user_id'  => '用户ID',
             'node_id'  => '节点ID',
             'list_id'  => '规则ID',
-            'datetime' => '时间'
+            'created_at' => '时间'
         ];
         $table_config_detect_record['ajax_url'] = 'ban/detect/record/ajax';
         $table_config_ban_record['ajax_url']    = 'ban/record/ajax';
@@ -61,8 +61,6 @@ class BanController extends AdminController
         );
 
         $data = $query['datas']->map(function($rowData) {
-            $type_1 = "'request'";
-            $type_2 = "'ban'";
             return [
                 'id'     => $rowData->id,
                 'name'   => $rowData->name,
@@ -71,8 +69,8 @@ class BanController extends AdminController
                 'type'   => $rowData->type(),
                 'action' => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" onclick = "zeroAdminUpdateBanRule('.$type_1.', '.$rowData->id.')">编辑</a></li>
-                                    <li><a class = "dropdown-item" type    = "button" onclick = "zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
+                                    <li><a class = "dropdown-item" onclick = "zeroAdminUpdateBanRule(\'request\', '.$rowData->id.')">编辑</a></li>
+                                    <li><a class = "dropdown-item" type    = "button" onclick = "zeroAdminDelete(\'ban\', '.$rowData->id.')">删除</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -151,11 +149,11 @@ class BanController extends AdminController
 
         $data = $query['datas']->map(function($rowData) {
             return [
-                'id'       => $rowData->id,
-                'user_id'  => $rowData->user_id,
-                'node_id'  => $rowData->node_id,
-                'list_id'  => $rowData->list_id,
-                'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                'id'         => $rowData->id,
+                'user_id'    => $rowData->user_id,
+                'node_id'    => $rowData->node_id,
+                'list_id'    => $rowData->list_id,
+                'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
             ];
         })->toArray();
 

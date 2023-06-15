@@ -63,14 +63,14 @@ class Job extends Command
 
         // 清理各表记录
         echo '清理数据库各表开始' . PHP_EOL;
-        UserSubscribeLog::where('request_time', '<', date('Y-m-d H:i:s', time() - 86400 * (int)Setting::obtain('subscribe_log_keep_time')))->delete();
-        Token::where('expire_time', '<', time())->delete();
-        DetectLog::where('datetime', '<', time() - 86400 * 3)->delete();
-        Ip::where('datetime', '<', time() - 300)->delete();
-        SigninIp::where('datetime', '<', time() - 86400 * 7)->delete();
-        TrafficLog::where('datetime', '<', time() - 86400 * 10)->delete();
-        NodeOnlineLog::where('log_time', '<', time() - 86400 * 3)->delete();
-        NodeInfoLog::where('log_time', '<', time() - 86400 * 3)->delete();
+        UserSubscribeLog::where('created_at', '<',  time() - 86400 * (int)Setting::obtain('subscribe_log_keep_time'))->delete();
+        Token::where('expire_at', '<', time())->delete();
+        DetectLog::where('created_at', '<', time() - 86400 * 3)->delete();
+        Ip::where('created_at', '<', time() - 300)->delete();
+        SigninIp::where('created_at', '<', time() - 86400 * 7)->delete();
+        TrafficLog::where('created_at', '<', time() - 86400 * 10)->delete();
+        NodeOnlineLog::where('created_at', '<', time() - 86400 * 3)->delete();
+        NodeInfoLog::where('created_at', '<', time() - 86400 * 3)->delete();
         echo '清理数据库各表结束;' . PHP_EOL;
 
         //auto reset
@@ -267,7 +267,7 @@ class Job extends Command
     public function CheckOrderStatus()
     {
         echo '订单状态检测开始' . PHP_EOL;
-        $orders = Order::where('order_status', 1)->where('expired_time', '<', time())->get();
+        $orders = Order::where('order_status', 1)->where('expired_at', '<', time())->get();
         foreach ($orders as $order) {
             $order->order_status = 0;
             $order->save();

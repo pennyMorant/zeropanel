@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-class Payback extends Model
+class Commission extends Model
 {
     protected $connection = 'default';
-    protected $table      = 'payback';
+    protected $table      = 'commission';
     
-    public static function rebate($user_id, $order_amount)
+    public static function rebate($user_id, $order_amount, $order_no)
     {
         $configs      = Setting::getClass('invite');
         $user         = User::where('id', $user_id)->first();
@@ -18,12 +18,12 @@ class Payback extends Model
         $rebate_ratio       = $configs['rebate_ratio'] / 100;
         if ($invite_rebate_mode == 'continued') {
             // 不设限制
-            self::executeRebate($user_id, $gift_user_id, $order_amount);
+            self::executeRebate($user_id, $gift_user_id, $order_amount, $order_no);
         } elseif ($invite_rebate_mode == 'limit_frequency') {
             // 限制返利次数
             $rebate_frequency = self::where('userid', $user_id)->count();
             if ($rebate_frequency < $configs['rebate_frequency_limit']) {
-                self::executeRebate($user_id, $gift_user_id, $order_amount);
+                self::executeRebate($user_id, $gift_user_id, $order_amount, $order_no);
             }
         } elseif ($invite_rebate_mode == 'limit_amount') {
             // 限制返利金额
@@ -36,19 +36,19 @@ class Payback extends Model
                 ) {
                 $adjust_rebate = $configs['rebate_amount_limit'] - $total_rebate_amount;
                 if ($adjust_rebate > 0) {
-                    self::executeRebate($user_id, $gift_user_id, $order_amount, $adjust_rebate);
+                    self::executeRebate($user_id, $gift_user_id, $order_amount, $order_no, $adjust_rebate);
                 }
             } else {
-                self::executeRebate($user_id, $gift_user_id, $order_amount);
+                self::executeRebate($user_id, $gift_user_id, $order_amount, $order_no);
             }
         } elseif ($invite_rebate_mode == 'limit_time_range') {
             if (strtotime($user->signup_date) + $configs['rebate_time_range_limit'] * 86400 > time()) {
-                self::executeRebate($user_id, $gift_user_id, $order_amount);
+                self::executeRebate($user_id, $gift_user_id, $order_amount, $order_no);
             }
         }
     }
 
-    public static function executeRebate($user_id, $gift_user_id, $order_amount, $adjust_rebate = null)
+    public static function executeRebate($user_id, $gift_user_id, $order_amount, $order_no, $adjust_rebate = null)
     {
         $gift_user     = User::where('id', $gift_user_id)->first();
         $rebate_amount = $order_amount * (Setting::obtain('rebate_ratio') / 100);
@@ -56,12 +56,13 @@ class Payback extends Model
         $gift_user->commission += $adjust_rebate ?? $rebate_amount;
         $gift_user->save();
             // 记录
-        $Payback           = new Payback();
-        $Payback->total    = $order_amount;
-        $Payback->userid   = $user_id;
-        $Payback->ref_by   = $gift_user_id;
-        $Payback->ref_get  = $adjust_rebate ?? $rebate_amount;
-        $Payback->datetime = time();
-        $Payback->save(); 
+        $commission                = new Commission();
+        $commission->order_amount  = $order_amount;
+        $commission->userid        = $user_id;
+        $commission->invite_userid = $gift_user_id;
+        $commission->order_no      = $order_no;
+        $commission->get_amount    = $adjust_rebate ?? $rebate_amount;
+        $commission->created_at    = time();
+        $commission->save(); 
     }
 }

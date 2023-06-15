@@ -24,7 +24,7 @@
 					<div class="card card-bordered mb-2">
 						<div class="card-body">
 							<p class="fs-5 fw-semibold text-gray-800">{$ann->content}</p>
-							<p class="fs-6 text-muted">{substr($ann->date, 0 , 10)}</p>
+							<p class="fs-6 text-muted">{date('Y-m-d', $ann->updated_at)}</p>
 						</div>
 					</div>
 				{/foreach}

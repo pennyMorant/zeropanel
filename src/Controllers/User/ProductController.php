@@ -55,7 +55,6 @@ final class ProductController extends BaseController
             ->assign('product_tab_lists', $product_tab_lists)
             ->assign('currency_unit', $currency_unit)
             ->assign('count', $count)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/product.tpl');
         return $response;
     }

@@ -70,7 +70,7 @@ class Node extends Model
      */
     public function getNodeOnlineUserCount(): int
     {
-        $log = NodeOnlineLog::where('node_id', $this->id)->where('log_time', '>', time() - 300)->orderBy('id', 'desc')->first();
+        $log = NodeOnlineLog::where('node_id', $this->id)->where('created_at', '>', time() - 300)->orderBy('id', 'desc')->first();
         if (is_null($log)) {
             return 0;
         }

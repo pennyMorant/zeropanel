@@ -80,8 +80,8 @@ class AdminController extends UserController
                 $today = Carbon::today()->endOfDay();
 
                 // 获取查询结果集合
-                $orders = Order::whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
-                    ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, SUM(order_total) as amount')
+                $orders = Order::whereBetween('paid_at', [strtotime($start_date), strtotime($today)])
+                    ->selectRaw('DATE(FROM_UNIXTIME(paid_at)) as date, SUM(order_total) as amount')
                     ->groupBy('date')->get();
 
                 if (isset($orders)) {
@@ -111,8 +111,8 @@ class AdminController extends UserController
                 $start_date = Carbon::now()->subDays(6)->startOfDay();
                 $today = Carbon::today()->endOfDay();
                 // 查询7天内按日期分组的流量数据，并转换成GB              
-                $traffic = TrafficLog::whereBetween('datetime', [strtotime($start_date), strtotime($today)])
-                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
+                $traffic = TrafficLog::whereBetween('created_at', [strtotime($start_date), strtotime($today)])
+                    ->selectRaw('DATE(FROM_UNIXTIME(created_at)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->groupBy('x')->get();
                 if (isset($traffic)) {
                     // 对结果集合按照日期进行分组和统计
@@ -136,7 +136,7 @@ class AdminController extends UserController
                 $endOfDay = Carbon::today()->endOfDay()->timestamp;
 
                 $user = TrafficLog::selectRaw('user_id, COALESCE(SUM(u+d), 0) as total')
-                    ->whereBetween('datetime', [$startOfDay, $endOfDay])
+                    ->whereBetween('created_at', [$startOfDay, $endOfDay])
                     ->groupBy('user_id')
                     ->orderByDesc('total')
                     ->limit(10)

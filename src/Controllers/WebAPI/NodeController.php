@@ -21,13 +21,13 @@ class NodeController extends BaseController
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
-        $load = $request->getParam('load');
-        $uptime = $request->getParam('uptime');
-        $log = new NodeInfoLog();
-        $log->node_id = $node_id;
-        $log->load = $load;
-        $log->uptime = $uptime;
-        $log->log_time = time();
+        $load            = $request->getParam('load');
+        $uptime          = $request->getParam('uptime');
+        $log             = new NodeInfoLog();
+        $log->node_id    = $node_id;
+        $log->load       = $load;
+        $log->uptime     = $uptime;
+        $log->created_at = time();
         if (!$log->save()) {
             return $response->withJson([
                 'ret' => 0,

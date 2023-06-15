@@ -19,13 +19,7 @@ class TicketController extends UserController
 {
     public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
-        $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
-        /*
-        foreach ($tickets as $ticket) {
-            $ticket->status = Tools::getTicketStatus($ticket);
-            $ticket->type = Tools::getTicketType($ticket);
-            $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
-        }*/
+        $tickets = Ticket::where('userid', $this->user->id)->orderBy('created_at', 'desc')->get();
 
         if ($request->getParam('json') === 1) {
             return $response->withJson([
@@ -36,7 +30,6 @@ class TicketController extends UserController
 
         $this->view()
             ->assign('tickets', $tickets)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/ticket.tpl');
         return $response;
     }
@@ -68,7 +61,8 @@ class TicketController extends UserController
         $ticket->title    = $antiXss->xss_clean($title);
         $ticket->content  = json_encode($content);
         $ticket->userid   = $this->user->id;
-        $ticket->datetime = time();
+        $ticket->created_at = time();
+        $ticket->updated_at = time();
         $ticket->status   = 1;
         $ticket->type     = $antiXss->xss_clean($type);
         $ticket->save();
@@ -127,6 +121,7 @@ class TicketController extends UserController
         ];
 
         $ticket->content = json_encode(array_merge($content_old, $content_new));
+        $ticket->updated_at = time();
         $ticket->status = 1;
         $ticket->save();
 
@@ -158,10 +153,6 @@ class TicketController extends UserController
         $ticket   = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
         $comments = json_decode($ticket->content, true);
 
-        //$ticket->status = Tools::getTicketStatus($ticket);
-        //$ticket->type = Tools::getTicketType($ticket);
-        //$ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
-
         if (is_null($ticket)) {
             if ($request->getParam('json') === 1) {
                 return $response->withJson([
@@ -175,7 +166,6 @@ class TicketController extends UserController
         $this->view()
             ->assign('ticket', $ticket)
             ->assign('comments', $comments)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/view.tpl');
         return $response;  
     }

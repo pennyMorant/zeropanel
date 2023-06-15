@@ -46,7 +46,6 @@ class NodeController extends UserController
             ->assign('class', $class)
             ->assign('servers', $servers)
             ->assign('min_node_class', $min_node_class)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->registerClass('URL', URL::class)
             ->display('user/node.tpl');
         return $response;

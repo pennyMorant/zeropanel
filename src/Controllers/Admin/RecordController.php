@@ -25,7 +25,7 @@ class RecordController extends AdminController
             'node_name' => '节点名',
             'ip'        => 'IP',
             'location'  => '归属地',
-            'datetime'  => '时间'
+            'created_at'  => '时间'
     ];
         $table_config_alive['ajax_url']      = 'record/ajax/alive';
         $table_config_signin['total_column'] = [
@@ -81,7 +81,7 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->selectRaw('*, MAX(datetime) AS latest_datetime')->whereRaw('datetime >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
+                        $query->selectRaw('*, MAX(created_at) AS latest_datetime')->whereRaw('created_at >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
                     }
                 );
 
@@ -89,10 +89,10 @@ class RecordController extends AdminController
                     return [
                         'id'        =>  $rowData->id,
                         'userid'    =>  $rowData->userid,
-                        'node_name' =>  $rowData->node_name(),
+                        'node_name' =>  $rowData->node()->name ?? '暂无',
                         'ip'        =>  Tools::getRealIp($rowData->ip),
                         'location'  =>  Tools::getIPLocation(Tools::getRealIp($rowData->ip)),
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->latest_datetime),
+                        'created_at'  =>  date('Y-m-d H:i:s', $rowData->latest_datetime),
                     ];
                 })->toArray();
                 $total = Ip::count();
@@ -116,7 +116,7 @@ class RecordController extends AdminController
                         'userid'   => $rowData->userid,
                         'ip'       => $rowData->ip,
                         'location' => Tools::getIPLocation($rowData->ip),
-                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                        'datetime' => date('Y-m-d H:i:s', $rowData->created_at),
                         'type'     => $rowData->type(),
                     ];
                 })->toArray();
@@ -140,7 +140,7 @@ class RecordController extends AdminController
                         'subscribe_type' => $rowData->subscribe_type,
                         'request_ip'     => $rowData->request_ip,
                         'location'       => Tools::getIPLocation($rowData->request_ip),
-                        'request_time'   => date('Y-m-d H:i:s', $rowData->request_time),
+                        'request_time'   => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $total = UserSubscribeLog::count();
@@ -155,7 +155,7 @@ class RecordController extends AdminController
                         'rate'           => $rowData->rate,
                         'origin_traffic' => Tools::flowAutoShow($rowData->u + $rowData->d),
                         'traffic'        => $rowData->traffic,
-                        'datetime'       => date('Y-m-d H:i:s', $rowData->datetime),
+                        'datetime'       => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $total = TrafficLog::count();

@@ -11,7 +11,7 @@ class Analytics
     // admin
     public function getIncome($start_time, $end_time)
     {
-        $sum = Order::selectRaw('SUM(order_total) as sum')->where('order_status', 2)->where('paid_time', '>=', $start_time)->where('paid_time', '<=', $end_time)->first()->sum;
+        $sum = Order::selectRaw('SUM(order_total) as sum')->where('order_status', 2)->where('paid_at', '>=', $start_time)->where('paid_at', '<=', $end_time)->first()->sum;
         if (is_null($sum)) {
           $sum = 0;
         }

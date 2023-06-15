@@ -28,7 +28,7 @@ var KTDatatablesOrderSide = function () {
                 { data: 'order_total' },
                 { data: 'order_status' },
                 { data: 'order_type' },
-                { data: 'created_time' },
+                { data: 'created_at' },
                 { data: 'action' },
             ],
             
@@ -84,8 +84,8 @@ var KTDatatablesTicketSide = function () {
                 { data: 'type'},
                 { data: 'title' },
                 { data: 'status' },
-                { data: 'datetime' },
-                { data: 'last_updated'},
+                { data: 'created_at' },
+                { data: 'updated_at'},
                 { data: 'action'},
             ],
             columnDefs: [
@@ -139,7 +139,7 @@ var KTDatatablesSigninLogSide = function () {
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -190,7 +190,7 @@ var KTDatatablesUsedLogSide = function () {
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -242,7 +242,7 @@ var KTDatatablesSubscribeLogSide = function () {
                 { data: 'subscribe_type' },
                 { data: 'request_ip' },
                 { data: 'location'},
-                { data: 'request_time' },
+                { data: 'created_at' },
             ],
             columnDefs: [
                 {
@@ -300,7 +300,7 @@ var KTDatatablesTrafficLogSide = function () {
             columns: [
                 { data: 'node_name' },
                 { data: 'traffic' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -399,7 +399,7 @@ var KTDatatablesUserBanedLogSide = function () {
             columns: [
                 { data: 'node_name' },
                 { data: 'rule_name' },
-                { data: 'datetime'},
+                { data: 'created_at'},
             ],
 
             columnDefs: [
@@ -448,9 +448,9 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             },
             
             columns: [
-                { data: 'total' },
-                { data: 'ref_get' },
-                { data: 'datetime' },
+                { data: 'order_amount' },
+                { data: 'get_amount' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [

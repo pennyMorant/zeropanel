@@ -8,7 +8,7 @@ use App\Models\{
     User,
     Ticket,
     Order,
-    Payback,
+    Commission,
     SigninIp,
     TrafficLog,
     UserSubscribeLog,
@@ -79,7 +79,7 @@ class ZeroController extends BaseController
         $withdraw->type     = $type;
         $withdraw->total    = $commission;
         $withdraw->status   = ($type === 1 ? 1 : 0);
-        $withdraw->datetime = time();
+        $withdraw->created_at = time();
         if (!$withdraw->save()) {
             return $response->withJson([
                 'ret' => 0,
@@ -235,8 +235,8 @@ class ZeroController extends BaseController
                  $time_b = $time_a + 86400 * 8;
                 // 查询7天内按日期分组的流量数据，并转换成GB 
                 $traffic = TrafficLog::where('user_id', $user->id)
-                    ->whereBetween('datetime', [$time_a, $time_b])
-                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
+                    ->whereBetween('created_at', [$time_a, $time_b])
+                    ->selectRaw('DATE(FROM_UNIXTIME(created_at)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
                     ->groupBy('x')->pluck('y', 'x');
                 // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
                 $dates = array_map(function ($i) {
@@ -281,13 +281,13 @@ class ZeroController extends BaseController
                         $last_updated = date('Y-m-d H:i:s', $comment['datetime']);
                     }
                     return [
-                        'id'           => $rowData->id,
-                        'type'         => $rowData->type,
-                        'title'        => $rowData->title,
-                        'status'       => $rowData->status(),
-                        'datetime'     => date('Y-m-d H:i:s', $rowData->datetime),
-                        'last_updated' => $last_updated,
-                        'action'       => '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$rowData->id.'">' . $trans->t('details') . '</a>',
+                        'id'         => $rowData->id,
+                        'type'       => $rowData->type,
+                        'title'      => $rowData->title,
+                        'status'     => $rowData->status(),
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
+                        'updated_at' => date('Y-m-d H:i:s', $rowData->updated_at),
+                        'action'     => '<a class="btn btn-sm btn-light-primary" href="/user/ticket/view/'.$rowData->id.'">' . $trans->t('details') . '</a>',
                     ];
                 })->toArray();
 
@@ -305,7 +305,7 @@ class ZeroController extends BaseController
                         'order_total'  => $rowData->order_total,
                         'order_status' => $rowData->status(),
                         'order_no'     => $rowData->order_no,
-                        'created_time' => date('Y-m-d H:i:s', $rowData->created_time),
+                        'created_at'   => date('Y-m-d H:i:s', $rowData->created_at),
                         'order_type'   => $rowData->orderType(),
                         'action'       => '<a class="btn btn-sm btn-light-primary" href="/user/order/'.$rowData->order_no.'">' . $trans->t('details') . '</a>',
                     ];
@@ -316,14 +316,14 @@ class ZeroController extends BaseController
                 break;
             case 'loginlog':
                 $time = $_SERVER['REQUEST_TIME'] - 86400 * 7;
-                $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('datetime', '>', $time);
+                $querys = SigninIp::query()->where('userid', $user->id)->where('type', 0)->where('created_at', '>', $time);
                 $query = SigninIp::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'ip'       => $rowData->ip,
-                        'location' => Tools::getIPLocation($rowData->ip),
-                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                        'ip'         => $rowData->ip,
+                        'location'   => Tools::getIPLocation($rowData->ip),
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $recordsTotal    = $query['count'];
@@ -331,13 +331,13 @@ class ZeroController extends BaseController
                 break;
             case 'uselog':
                 $time   = $_SERVER['REQUEST_TIME'] - 86400 * 7;
-                $querys = Ip::query()->where('userid', $user->id)->where('datetime', '>', $time);
+                $querys = Ip::query()->where('userid', $user->id)->where('created_at', '>', $time);
                 $query  = Ip::getTableDataFromAdmin($request, null, null, $querys);
                 $data   = $query['datas']->map(function($rowData) {
                     return [
-                        'ip'       => $rowData->ip,
-                        'location' => Tools::getIPLocation($rowData->ip),
-                        'datetime' => date('Y-m-d H:i:s', $rowData->datetime),
+                        'ip'         => $rowData->ip,
+                        'location'   => Tools::getIPLocation($rowData->ip),
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
 
@@ -353,21 +353,21 @@ class ZeroController extends BaseController
                         'subscribe_type' => $rowData->subscribe_type,
                         'request_ip'     => $rowData->request_ip,
                         'location'       => Tools::getIPLocation($rowData->request_ip),
-                        'request_time'   => date('Y-m-d H:i:s', $rowData->request_time),
+                        'created_at'     => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $recordsTotal = $query['count'];
                 $recordsFiltered = $query['count'];
                 break;
             case 'trafficlog':
-                $querys = TrafficLog::query()->where('user_id', $user->id)->where('datetime', '>', time() - 7 * 86400);
+                $querys = TrafficLog::query()->where('user_id', $user->id)->where('created_at', '>', time() - 7 * 86400);
                 $query = TrafficLog::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'node_name' => $rowData->node()->name,
-                        'traffic'   => $rowData->traffic,
-                        'datetime'  => date('Y-m-d H:i:s', $rowData->datetime),
+                        'node_name'  => $rowData->node()->name,
+                        'traffic'    => $rowData->traffic,
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
 
@@ -380,9 +380,9 @@ class ZeroController extends BaseController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'node_name' =>  $rowData->node()->name,
-                        'rule_name' =>  $rowData->detectRule()->name,
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'node_name'  => $rowData->node()->name,
+                        'rule_name'  => $rowData->rule()->name,
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
 
@@ -403,14 +403,14 @@ class ZeroController extends BaseController
                 $recordsFiltered = $query['count'];
                 break;
             case 'get_commission_log':
-                $querys = Payback::where('ref_by', '=', $user->id);
-                $query = Payback::getTableDataFromAdmin($request, null, null, $querys);
+                $querys = Commission::where('invite_userid', '=', $user->id);
+                $query = Commission::getTableDataFromAdmin($request, null, null, $querys);
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'total'     =>  $rowData->total,
-                        'ref_get'   =>  $rowData->ref_get,
-                        'datetime'  =>  date('Y-m-d H:i:s', $rowData->datetime),
+                        'order_amount' => $rowData->order_amount,
+                        'get_amount'   => $rowData->get_amount,
+                        'created_at'   => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
 

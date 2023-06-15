@@ -19,10 +19,10 @@ class AnnController extends AdminController
     {
         $table_config['total_column'] = [
             
-            'id'      => 'ID',
-            'date'    => '日期',
-            'content' => '内容',
-            'action'  => '操作',
+            'id'         => 'ID',
+            'created_at' => '创建日期',
+            'updated_at' => '更新日期',
+            'action'     => '操作',
         ];
         
         $table_config['ajax_url'] = 'news/ajax';
@@ -41,18 +41,15 @@ class AnnController extends AdminController
             }
         );
 
-        $data = $query['datas']->map(function($rowData) {
-            $type_1 = "'request'";
-            $type_2 = "'news'";
-            
+        $data = $query['datas']->map(function($rowData) {          
             return [
-                'id'      => $rowData->id,
-                'date'    => $rowData->date,
-                'content' => $rowData->content,
-                'action'  => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                'id'         => $rowData->id,
+                'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
+                'updated_at' => date('Y-m-d H:i:s', $rowData->updated_at),
+                'action'     => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateNews('.$type_1.', '.$rowData->id.')">编辑</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('.$type_2.', '.$rowData->id.')">删除</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateNews(\'request\', '.$rowData->id.')">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'news\', '.$rowData->id.')">删除</a></li>
                                     </ul>
                                 </div>',
             ];
@@ -75,7 +72,8 @@ class AnnController extends AdminController
 
 
         $ann           = new Ann();
-        $ann->date     = date('Y-m-d H:i:s');
+        $ann->created_at     = time();
+        $ann->updated_at     = time();
         $ann->content  = $content;
 
         if (!$ann->save()) {
@@ -117,7 +115,7 @@ class AnnController extends AdminController
         $ann           = Ann::find($request->getParsedBodyParam('id'));
         $ann->content  = $request->getParsedBodyParam('content');
         //$ann->markdown = $datas['markdown');
-        $ann->date     = date('Y-m-d H:i:s');
+        $ann->updated_at     = time();
         if (!$ann->save()) {
             return $response->withJson([
                 'ret' => 0,

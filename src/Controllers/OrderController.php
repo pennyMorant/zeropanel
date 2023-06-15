@@ -9,8 +9,7 @@ use App\Models\{
     Setting,
     Order,
     User,
-    Payback,
-    Ann,
+    Commission,
     Payment
 };
 use Slim\Http\Response;
@@ -24,7 +23,6 @@ class OrderController extends BaseController
     public function order(ServerRequest $request, Response $response, array $args)
     {
         $this->view()
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/order.tpl');
         return $response;
     }
@@ -53,7 +51,6 @@ class OrderController extends BaseController
         $paypal_currency_unit = Setting::obtain('currency_unit') ?: 'USD';
         $payments = Payment::where('enable', 1)->get();
             $this->view()
-                ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
                 ->assign('order', $order)
                 ->assign('product', $product)
                 ->assign('order_type', $order_type)
@@ -121,9 +118,9 @@ class OrderController extends BaseController
                     }
                     
                     $order->order_status   = 1;
-                    $order->created_time   = time();
-                    $order->updated_time   = time();
-                    $order->expired_time   = time() + 600;
+                    $order->created_at     = time();
+                    $order->updated_at     = time();
+                    $order->expired_at     = time() + 600;
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e) {
@@ -148,9 +145,9 @@ class OrderController extends BaseController
                     $order->order_total    = $amount;
                     $order->order_type     = $type;
                     $order->order_status   = 1;
-                    $order->created_time   = time();
-                    $order->updated_time   = time();
-                    $order->expired_time   = time() + 600;
+                    $order->created_at     = time();
+                    $order->updated_at     = time();
+                    $order->expired_at     = time() + 600;
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e) {
@@ -197,9 +194,9 @@ class OrderController extends BaseController
                         }
                     }
                     $order->order_status   = 1;
-                    $order->created_time   = time();
-                    $order->updated_time   = time();
-                    $order->expired_time   = time() + 600;
+                    $order->created_at     = time();
+                    $order->updated_at     = time();
+                    $order->expired_at     = time() + 600;
                     $order->execute_status = 0;
                     $order->save();
                 } catch (\Exception $e){
@@ -230,9 +227,9 @@ class OrderController extends BaseController
 
     public function processOrder(ServerRequest $request, Response $response, array $args)
     {
-        $user           = $this->user;
+        $user       = $this->user;
         $payment_id = $request->getParsedBodyParam('payment_id');
-        $order_no       = $request->getParsedBodyParam('order_no');
+        $order_no   = $request->getParsedBodyParam('order_no');
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
         try {
@@ -304,8 +301,8 @@ class OrderController extends BaseController
 
     public static function executeAddCredit($order)
     {    
-        $order->paid_time      = time();
-        $order->updated_time   = time();
+        $order->paid_at        = time();
+        $order->updated_at     = time();
         $order->order_status   = 2;
         $order->execute_status = 1;
         $order->save();
@@ -315,7 +312,7 @@ class OrderController extends BaseController
         $user->save();
 
         if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_topup') {
-            Payback::rebate($user->id, $order->order_total);
+            Commission::rebate($user->id, $order->order_total, $order->order_no);
         }
     }
 
@@ -326,18 +323,18 @@ class OrderController extends BaseController
       
         $product->purchase($user, $order);        
         // 如果上面的代码执行成功，没有报错，再标记为已处理
-        $order->order_status = 2;
-        $order->updated_time = time();
-        $order->paid_time    = time();
+        $order->order_status   = 2;
+        $order->updated_at     = time();
+        $order->paid_at        = time();
         $order->execute_status = 1;
         $order->save();
-        $product->sales += 1; // 加累积销量     
+        $product->sales += 1;  // 加累积销量     
         $product->save();
-        $user->money -= $order->credit_paid; // 支付成功，从用户账户扣除余额抵扣金额
+        $user->money -= $order->credit_paid;  // 支付成功，从用户账户扣除余额抵扣金额
         $user->save();
         // 返利
         if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
-            Payback::rebate($user->id, $order->order_total);
+            Commission::rebate($user->id, $order->order_total, $order->order_no);
         }
     }
 

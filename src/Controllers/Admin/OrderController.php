@@ -53,7 +53,7 @@ class OrderController extends AdminController
                 'order_total'   => $rowData->order_total,
                 'order_status'  => $rowData->status(),
                 'order_no'      => $rowData->order_no,
-                'created_time'  => date('Y-m-d H:i:s', $rowData->created_time),
+                'created_time'  => date('Y-m-d H:i:s', $rowData->created_at),
                 'order_payment' => $rowData->payment(),
                 'order_type'    => $rowData->orderType(),
                 'action'        => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
@@ -148,9 +148,9 @@ class OrderController extends AdminController
             $order->product_period = $product_period;
             $order->order_total    = ($order_total == '' ? $order->product_price : $order_total);
             $order->order_status   = 1;
-            $order->created_time   = time();
-            $order->updated_time   = time();
-            $order->expired_time   = time() + 600;
+            $order->created_at     = time();
+            $order->updated_at     = time();
+            $order->expired_at     = time() + 600;
             $order->execute_status = 0;
             $order->save();
         } catch (\Exception $e) {
