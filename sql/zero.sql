@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-05-10 07:04:16
--- 服务器版本： 10.6.12-MariaDB-0ubuntu0.22.04.1
--- PHP 版本： 8.2.5
+-- 生成日期： 2023-06-15 10:09:12
+-- 服务器版本： 10.11.4-MariaDB-1:10.11.4+maria~deb11
+-- PHP 版本： 8.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `alive_ip` (
   `nodeid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `ip` varchar(39) NOT NULL,
-  `datetime` int(11) NOT NULL
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -43,8 +43,25 @@ CREATE TABLE `alive_ip` (
 
 CREATE TABLE `announcement` (
   `id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
   `content` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `commission`
+--
+
+CREATE TABLE `commission` (
+  `id` int(11) NOT NULL,
+  `order_amount` decimal(12,2) NOT NULL COMMENT '订单金额',
+  `userid` int(11) NOT NULL,
+  `invite_userid` int(11) NOT NULL,
+  `order_no` varchar(30) NOT NULL COMMENT '订单号',
+  `get_amount` decimal(12,2) NOT NULL COMMENT '获得佣金',
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -78,7 +95,9 @@ CREATE TABLE `coupon` (
   `limited_product` varchar(20) DEFAULT NULL COMMENT '限定产品使用',
   `limited_product_period` varchar(20) DEFAULT NULL COMMENT '限制产品周期',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
-  `total_use_count` int(11) DEFAULT NULL COMMENT '总使用次数'
+  `total_use_count` int(11) DEFAULT NULL COMMENT '总使用次数',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -122,7 +141,7 @@ CREATE TABLE `detect_log` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `list_id` int(11) NOT NULL,
-  `datetime` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -139,7 +158,7 @@ CREATE TABLE `email_queue` (
   `subject` longtext NOT NULL,
   `template` longtext NOT NULL,
   `array` longtext NOT NULL,
-  `time` int(11) NOT NULL
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Email Queue 發件列表';
 
 -- --------------------------------------------------------
@@ -197,7 +216,7 @@ CREATE TABLE `node_info` (
   `node_id` int(11) NOT NULL,
   `uptime` float NOT NULL,
   `load` varchar(32) NOT NULL,
-  `log_time` int(11) NOT NULL
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -210,7 +229,7 @@ CREATE TABLE `node_online_log` (
   `id` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,
   `online_user` int(11) NOT NULL,
-  `log_time` int(11) NOT NULL
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -232,29 +251,14 @@ CREATE TABLE `order` (
   `credit_paid` decimal(12,2) DEFAULT NULL COMMENT '订单余额支付部分',
   `discount_amount` decimal(12,2) DEFAULT NULL COMMENT '折扣金额',
   `order_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '订单状态,1-等待支付,2-完成支付,0-订单失效',
-  `created_time` int(11) NOT NULL COMMENT '订单创建时间',
-  `updated_time` int(11) NOT NULL COMMENT '订单更新时间',
-  `expired_time` int(11) DEFAULT NULL COMMENT '订单失效时间',
-  `paid_time` int(11) DEFAULT NULL COMMENT '订单支付时间',
+  `created_at` int(11) NOT NULL COMMENT '订单创建时间',
+  `updated_at` int(11) NOT NULL COMMENT '订单更新时间',
+  `expired_at` int(11) DEFAULT NULL COMMENT '订单失效时间',
+  `paid_at` int(11) DEFAULT NULL COMMENT '订单支付时间',
   `payment_id` int(11) DEFAULT NULL COMMENT '订单支付方式',
   `handling_fee` decimal(12,2) DEFAULT NULL,
   `bonus_amount` decimal(12,2) DEFAULT NULL COMMENT '充值返利',
   `execute_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '执行状态'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `payback`
---
-
-CREATE TABLE `payback` (
-  `id` int(11) NOT NULL,
-  `total` decimal(12,2) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `ref_by` int(11) NOT NULL,
-  `ref_get` decimal(12,2) NOT NULL,
-  `datetime` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -320,7 +324,7 @@ CREATE TABLE `signin_ip` (
   `id` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `ip` varchar(39) NOT NULL,
-  `datetime` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
   `type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -413,7 +417,7 @@ CREATE TABLE `user_subscribe_log` (
   `email` varchar(32) NOT NULL COMMENT '用户邮箱',
   `subscribe_type` varchar(20) NOT NULL COMMENT '获取的订阅类型',
   `request_ip` varchar(39) NOT NULL COMMENT '请求 IP',
-  `request_time` int(11) NOT NULL COMMENT '请求时间',
+  `created_at` int(11) NOT NULL COMMENT '请求时间',
   `request_user_agent` text DEFAULT NULL COMMENT '请求 UA 信息'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户订阅日志';
 
@@ -427,8 +431,8 @@ CREATE TABLE `user_token` (
   `id` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `create_time` int(11) NOT NULL,
-  `expire_time` int(11) NOT NULL,
+  `create_at` int(11) NOT NULL,
+  `expire_at` int(11) NOT NULL,
   `type` int(11) NOT NULL COMMENT '1-tg token,2-重置密码token,3-邮箱验证token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -446,7 +450,7 @@ CREATE TABLE `user_traffic_log` (
   `node_id` int(11) NOT NULL,
   `rate` float NOT NULL,
   `traffic` varchar(32) NOT NULL,
-  `datetime` int(11) NOT NULL COMMENT '记录时间'
+  `created_at` int(11) NOT NULL COMMENT '记录时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -461,7 +465,7 @@ CREATE TABLE `withdraw_log` (
   `userid` int(11) DEFAULT 0,
   `total` decimal(10,2) DEFAULT NULL,
   `status` int(11) DEFAULT 0,
-  `datetime` int(11) DEFAULT NULL
+  `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -478,6 +482,12 @@ ALTER TABLE `alive_ip`
 -- 表的索引 `announcement`
 --
 ALTER TABLE `announcement`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 表的索引 `commission`
+--
+ALTER TABLE `commission`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -548,12 +558,6 @@ ALTER TABLE `node_online_log`
 -- 表的索引 `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
-
---
--- 表的索引 `payback`
---
-ALTER TABLE `payback`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -636,6 +640,12 @@ ALTER TABLE `announcement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用表AUTO_INCREMENT `commission`
+--
+ALTER TABLE `commission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用表AUTO_INCREMENT `config`
 --
 ALTER TABLE `config`
@@ -700,12 +710,6 @@ ALTER TABLE `node_online_log`
 --
 ALTER TABLE `order`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'AUTO_INCREMENT';
-
---
--- 使用表AUTO_INCREMENT `payback`
---
-ALTER TABLE `payback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `payment`
