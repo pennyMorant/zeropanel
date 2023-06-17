@@ -12,15 +12,8 @@ use App\Models\User;
  */
 final class MyCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'my';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '用户信息';
+    protected string $name = 'my';
+    protected string $description = '用户信息';
 
     public function handle()
     {

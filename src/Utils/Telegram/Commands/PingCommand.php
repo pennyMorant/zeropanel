@@ -11,15 +11,8 @@ use Telegram\Bot\Commands\Command;
  */
 final class PingCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'ping';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '获取我的唯一ID';
+    protected string $name = 'ping';
+    protected string $description = '获取我的唯一ID';
 
     public function handle()
     {

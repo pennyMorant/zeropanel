@@ -13,15 +13,8 @@ use Telegram\Bot\Keyboard\Keyboard;
  */
 final class StartCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'start';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = 'Bot 初始命令.';
+    protected string $name = 'start';
+    protected string $description = 'Bot 初始命令.';
 
     public function handle()
     {

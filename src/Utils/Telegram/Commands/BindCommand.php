@@ -10,15 +10,8 @@ use Telegram\Bot\Commands\Command;
 
 final class BindCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'bind';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '绑定账户';
+    protected string $name = 'bind';
+    protected string $description = '绑定账户';
 
     public function handle()
     {

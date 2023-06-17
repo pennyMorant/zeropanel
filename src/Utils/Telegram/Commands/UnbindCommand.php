@@ -12,15 +12,8 @@ use App\Models\User;
  */
 final class UnbindCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'unbind';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '解除账户绑定';
+    protected string $name = 'unbind';
+    protected string $description = '解除账户绑定';
 
     public function handle()
     {
