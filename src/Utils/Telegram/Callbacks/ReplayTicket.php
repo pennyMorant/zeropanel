@@ -78,17 +78,24 @@ class ReplayTicket
             return;
         }
         if ($ticketId){
-            $ticket_main = Ticket::where('id', $ticketId)->first();
-            $content = $Message->getText();
-            $antiXss              = new AntiXSS();
-            $ticket               = new Ticket();
-            $ticket->title        = $antiXss->xss_clean($ticket_main->title);
-            $ticket->content      = $antiXss->xss_clean($content);
-            $ticket->rootid       = $ticket_main->id;
-            $ticket->userid       = $AdminUser->id;
-            $ticket->datetime     = time();
-            $ticket_main->status  = 1;
-            $ticket_main->save();
+            $ticket = Ticket::where('id', $ticketId)->first();
+            $user = User::where('id', $ticket->userid)->first();
+            $comment = $Message->getText();
+            $antiXss = new AntiXSS();
+
+            $content_old = json_decode($ticket->content, true);
+            $content_new = [
+                [
+                    'comment_id'      => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                    'commenter_email' => $user->email,
+                    'comment'         => $antiXss->xss_clean($comment),
+                    'datetime'        => time(),
+                ],
+            ];
+
+            $ticket->content = json_encode(array_merge($content_old, $content_new));
+            $ticket->updated_at = time();
+            $ticket->status = 1;
             $ticket->save();
             Telegram::pushToAdmin("# {$ticketId} 的工单已回复成功", $this->ChatID);
         }

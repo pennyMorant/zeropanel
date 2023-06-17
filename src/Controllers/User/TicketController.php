@@ -6,7 +6,6 @@ use App\Controllers\UserController;
 use App\Models\{
     Ticket,
     Setting,
-    Ann
 };
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
@@ -69,7 +68,13 @@ class TicketController extends UserController
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
             $converter = new HtmlConverter();
-            $messageText = '用户开启新工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($comment);
+            $messageText = sprintf(
+                "#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                $ticket->id,
+                $ticket->userid,
+                $ticket->type,
+                $converter->convert($comment)
+            );
             $keyBoard = [
                 [
                     [
@@ -127,7 +132,13 @@ class TicketController extends UserController
 
         if (Setting::obtain('enable_push_ticket_message') == true) {
             $converter = new HtmlConverter();
-            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $ticket->title . PHP_EOL . '内容：' . $converter->convert($comment);
+            $messageText = sprintf(
+                "#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                $ticket->id,
+                $ticket->userid,
+                $ticket->type,
+                $converter->convert($comment)
+            );
             $keyBoard = [
                 [
                     [
