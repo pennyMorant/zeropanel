@@ -5,7 +5,6 @@ namespace App\Utils;
 use Exception;
 use Telegram\Bot\Api;
 use App\Models\Setting;
-use App\Models\User;
 
 class Telegram
 {
@@ -74,11 +73,12 @@ class Telegram
      * @param string $messageText
      * @param int    $chat_id
      */
-    public static function pushToAdmin($messageText, $keyBoard = null): void
+    public static function pushToAdmin($messageText, $keyBoard = null)
     {
-        if (count(array_filter((json_decode(Setting::obtain('telegram_admin_id'), true)))) > 0 && Setting::obtain('enable_telegram_bot')) {
-            $chat_ids = json_decode(Setting::obtain('telegram_admin_id'), true);
-            $bot      = new Api(Setting::obtain('telegram_bot_token'), true);
+        $chat_ids = json_decode(Setting::obtain('telegram_admin_id'), true);
+        $enable_bot = Setting::obtain('enable_telegram_bot');
+        if (array_filter($chat_ids) && $enable_bot) {         
+            $bot = new Api(Setting::obtain('telegram_bot_token'), true);
             if (!is_null($keyBoard)) {
                 $reply_markup = json_encode(
                     [
@@ -100,7 +100,7 @@ class Telegram
                 try {
                     $bot->sendMessage($sendMessage);
                 } catch (Exception $e) {
-                    echo $e->getMessage();
+                    return $e->getMessage();
                 }
             }
         }
@@ -113,13 +113,10 @@ class Telegram
      * @param int    $chat_id
      */
     public static function pushToChannel($messageText): void
-    {
-        
-        if (Setting::obtain('enable_telegram_bot') == true) {
+    { 
+        if (Setting::obtain('enable_telegram_bot')) {
             $chat_id = Setting::obtain('telegram_channel_id');
-            // 发送给非群组时使用异步
-            $async = ($chat_id == Setting::obtain('telegram_channel_id'));
-            $bot = new Api(Setting::obtain('telegram_bot_token'), $async);
+            $bot = new Api(Setting::obtain('telegram_bot_token'), true);
             $sendMessage = [
                 'chat_id'                   => $chat_id,
                 'text'                      => $messageText,

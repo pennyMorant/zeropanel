@@ -66,7 +66,7 @@ class TicketController extends UserController
         $ticket->type     = $antiXss->xss_clean($type);
         $ticket->save();
 
-        if (Setting::obtain('enable_push_ticket_message') == true) {
+        if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
             $messageText = sprintf(
                 "#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
@@ -79,7 +79,7 @@ class TicketController extends UserController
                 [
                     [
                         'text' => '回复工单 #',
-                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket' 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/view/' . $ticket->id  
                     ]
                 ]
             ];
@@ -129,8 +129,7 @@ class TicketController extends UserController
         $ticket->updated_at = time();
         $ticket->status = 1;
         $ticket->save();
-
-        if (Setting::obtain('enable_push_ticket_message') == true) {
+        if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
             $messageText = sprintf(
                 "#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
@@ -143,13 +142,14 @@ class TicketController extends UserController
                 [
                     [
                         'text' => '回复工单 #' . $id,
-                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/update/' . $id 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/view/' . $id 
                     ]
                 ]
             ];
+            
             Telegram::pushToAdmin($messageText, $keyBoard);
+            
         }
-
         return $response->withJson(
             [
                 'ret' => 1,
