@@ -69,7 +69,7 @@ class TicketController extends UserController
         if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
             $messageText = sprintf(
-                "有工单需要处理#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                "有工单需要处理 #%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
                 $ticket->id,
                 $ticket->userid,
                 $ticket->type,
@@ -132,7 +132,7 @@ class TicketController extends UserController
         if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
             $messageText = sprintf(
-                "有工单需要处理#%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                "有工单需要处理 #%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
                 $ticket->id,
                 $ticket->userid,
                 $ticket->type,

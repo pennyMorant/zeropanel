@@ -25,7 +25,7 @@ final class Process
         $Message = $update->getMessage();
    
         if (!is_null($Message->getReplyToMessage())) {
-            if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
+            if (preg_match('/#(\d+)/', $Message->getReplyToMessage()->getText(), $match)) {
                 new Callbacks\ReplayTicket($bot, $Message, $match[1]);
             }
         }
