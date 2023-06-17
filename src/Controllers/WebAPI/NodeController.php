@@ -21,8 +21,8 @@ class NodeController extends BaseController
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
-        $load            = $request->getParam('load');
-        $uptime          = $request->getParam('uptime');
+        $load            = $request->getParsedBodyParam('load');
+        $uptime          = $request->getParsedBodyParam('uptime');
         $log             = new NodeInfoLog();
         $log->node_id    = $node_id;
         $log->load       = $load;

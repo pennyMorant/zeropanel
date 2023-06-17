@@ -27,10 +27,8 @@ class TicketController extends AdminController
             'action'       => '操作',
         ];
         $table_config['ajax_url'] = 'ticket/ajax';
-        $allUsers = User::where('is_admin', '!=', 1)->get();
         $this->view()
             ->assign('table_config', $table_config)
-            ->assign('allUsers', $allUsers)
             ->display('admin/ticket/ticket.tpl');
         return $response;
     }

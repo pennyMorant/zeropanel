@@ -11,7 +11,7 @@ class WebAPI
 {
     public function __invoke(Request $request, RequestHandler $handler)
     {
-        $key = $request->getParam('key');
+        $key = $request->getQueryParams()['key'] ?? null;
         if (is_null($key)) {
             // 未提供 key
             $response = new Response();

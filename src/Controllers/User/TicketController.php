@@ -18,17 +18,7 @@ class TicketController extends UserController
 {
     public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
-        $tickets = Ticket::where('userid', $this->user->id)->orderBy('created_at', 'desc')->get();
-
-        if ($request->getParam('json') === 1) {
-            return $response->withJson([
-                'ret' => 1,
-                'tickets' => $tickets,
-            ]);
-        }
-
         $this->view()
-            ->assign('tickets', $tickets)
             ->display('user/ticket/ticket.tpl');
         return $response;
     }
@@ -163,16 +153,6 @@ class TicketController extends UserController
         $id       = $args['id'];
         $ticket   = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
         $comments = json_decode($ticket->content, true);
-
-        if (is_null($ticket)) {
-            if ($request->getParam('json') === 1) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => '无访问权限',
-                ]);
-            }
-            return $response->withStatus(302)->withHeader('Location', '/user/ticket');
-        }
 
         $this->view()
             ->assign('ticket', $ticket)

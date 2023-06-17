@@ -85,12 +85,11 @@ class UserController extends BaseController
 
     public function addTraffic(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
 
-        $data = $request->getParam('data');
+        $data = $request->getParsedBodyParam('data');
         $this_time_total_bandwidth = 0;
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
@@ -157,11 +156,9 @@ class UserController extends BaseController
 
     public function addAliveIp(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
-
-        $data = $request->getParam('data');
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $data = $request->getParsedBodyParam('data');
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
@@ -195,11 +192,9 @@ class UserController extends BaseController
 
     public function addDetectLog(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
-
-        $data = $request->getParam('data');
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $data = $request->getParsedBodyParam('data');
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
