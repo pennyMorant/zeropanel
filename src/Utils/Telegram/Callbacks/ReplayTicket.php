@@ -56,17 +56,14 @@ class ReplayTicket
      */
     public function __construct($bot, $Message, $ticketId)
     {
-        $bot->replyWithChatAction(['action' => Actions::TYPING]);
+        $bot->sendChatAction([
+            'chat_id' => $Message->getChat()->getId(),
+            'action'  => Actions::TYPING,
+        ]);
         $this->bot              = $bot;
-        $this->triggerUser      = [
-            'id'       => $Message->getFrom()->getId(),
-            'name'     => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
-            'username' => $Message->getFrom()->getUsername(),
-        ];
         $AdminUser = User::where('is_admin', 1)->where('telegram_id', $Message->getFrom()->getId())->first();
         $this->User             = $AdminUser;
         $this->ChatID           = $Message->getChat()->getId();
-        $this->Callback         = $Message;
         $this->MessageID        = $Message->getMessageId();
         $this->TickedId         = $ticketId;
 
@@ -99,6 +96,7 @@ class ReplayTicket
             $ticket->status = 1;
             $ticket->save();
             $bot->replyWithMessage([
+                'chat_id' => $this->ChatID,
                 'text' => '回复成功',
                 'reply_to_message_id' => $this->MessageID,
             ]);
