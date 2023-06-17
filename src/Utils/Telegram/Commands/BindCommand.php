@@ -21,7 +21,7 @@ final class BindCommand extends Command
         $text = $message->getText();
         $messageId = $message->getMessageId();
         $chatId = $message->getChat()->getId();
-        
+
         if ($text != '/bind') {
             $args = explode(' ', $text);
             $token = $args[1];
@@ -37,7 +37,7 @@ final class BindCommand extends Command
 
         $result = Token::where('token', $token)->where('type', 1)->first();
 
-        if ($result->expire_time < time()) {
+        if ($result->expire_at < time()) {
             $this->replyWithMessage(
                 [
                     'text' => '当前token已经失效，请刷新网页重新获取token',
