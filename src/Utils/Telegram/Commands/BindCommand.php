@@ -21,13 +21,14 @@ final class BindCommand extends Command
         $text = $message->getText();
         $messageId = $message->getMessageId();
         $chatId = $message->getChat()->getId();
-        $args = explode(' ', $text);
-        $token = $args[1];
-
-        if (is_null($token)) {
+        
+        if ($text != '/bind') {
+            $args = explode(' ', $text);
+            $token = $args[1];
+        } else {      
             $this->replyWithMessage(
                 [
-                    'text' => '请输入telegram token',
+                    'text' => '请输出入绑定token, 格式: /bind token',
                     'reply_to_message_id' => $messageId,
                 ]
             );
