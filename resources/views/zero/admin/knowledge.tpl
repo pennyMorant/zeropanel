@@ -88,6 +88,9 @@
                                 <option value="sagernet">Sagernet</option>
                                 <option value="shadowrocket">Shadowrocket</option>
                                 <option value="quantumultx">Quantumultx</option>
+                                <option value="v2rayn">V2rayN</option>
+                                <option value="qv2ray">Qv2ray</option>
+                                <option value="netch">Netch</option>
                             </select>                         
                             <div id="zero_admin_create_knowledge_editor" class="d-flex flex-column">
                             </div>
