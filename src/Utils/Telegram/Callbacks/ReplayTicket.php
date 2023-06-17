@@ -95,7 +95,7 @@ class ReplayTicket
             $ticket->updated_at = time();
             $ticket->status = 1;
             $ticket->save();
-            $bot->replyWithMessage([
+            $bot->sendMessage([
                 'chat_id' => $this->ChatID,
                 'text' => '回复成功',
                 'reply_to_message_id' => $this->MessageID,

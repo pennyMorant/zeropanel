@@ -35,13 +35,6 @@ final class Process
             if (preg_match('/#(\d+)/', $reply, $matches)) {
                 new ReplayTicket($bot, $message, $matches[1]);
             }
-            
-            $bot->sendMessage(
-                [
-                    'chat_id' => $chat_id,
-                    'text' => 'test',
-                ]
-            ); 
         }
     }
 }
