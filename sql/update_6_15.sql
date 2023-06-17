@@ -22,3 +22,5 @@ ALTER TABLE `user_token` CHANGE `create_time` `create_at` INT(11) NOT NULL;
 ALTER TABLE `user_token` CHANGE `expire_time` `expire_at` INT(11) NOT NULL;
 ALTER TABLE `user_traffic_log` CHANGE `datetime` `created_at` INT(11) NOT NULL COMMENT '记录时间';
 ALTER TABLE `withdraw_log` CHANGE `datetime` `created_at` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `ticket` CHANGE `datetime` `created_at` INT(11) NOT NULL COMMENT '创建时间';
+ALTER TABLE `ticket` CHANGE `updated_at` `updated_at` INT(11) NOT NULL COMMENT '更新时间';

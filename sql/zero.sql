@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-06-15 10:09:12
+-- 生成日期： 2023-06-17 04:15:55
 -- 服务器版本： 10.11.4-MariaDB-1:10.11.4+maria~deb11
--- PHP 版本： 8.2.6
+-- PHP 版本： 8.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -340,7 +340,8 @@ CREATE TABLE `ticket` (
   `type` varchar(30) NOT NULL COMMENT '工单类型',
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '‘’' COMMENT '工单内容',
   `userid` int(11) NOT NULL COMMENT '用户ID',
-  `datetime` int(11) NOT NULL COMMENT '创建时间',
+  `created_at` int(11) NOT NULL COMMENT '创建时间',
+  `updated_at` int(11) NOT NULL COMMENT '更新时间',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态0关闭1活跃'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
