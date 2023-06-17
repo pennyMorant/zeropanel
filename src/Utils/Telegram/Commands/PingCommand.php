@@ -16,13 +16,13 @@ final class PingCommand extends Command
 
     public function handle()
     {
-        $update = $this->getUpdate();
-        $message = $update->getMessage();
-
-        // 消息会话 ID
-        $chatId = $message->getChat()->getId();
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
+
+        $update = $this->getUpdate();
+        $message = $update->getMessage();
+        // 消息会话 ID
+        $chatId = $message->getChat()->getId();
 
         // 回送信息
         $this->replyWithMessage(

@@ -16,14 +16,14 @@ final class BindCommand extends Command
     public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-        $message = $this->getUpdate()->getMessage();
+        $response = $this->getUpdate();
+        $message = $response->getMessage();
         $text = $message->getText();
         $messageId = $message->getMessageId();
         $chatId = $message->getChat()->getId();
         $args = explode(' ', $text);
         $token = $args[1];
 
-        
         if (is_null($token)) {
             $this->replyWithMessage(
                 [
@@ -33,7 +33,9 @@ final class BindCommand extends Command
             );
             return;
         }
+
         $result = Token::where('token', $token)->where('type', 1)->first();
+
         if ($result->expire_time < time()) {
             $this->replyWithMessage(
                 [
@@ -43,7 +45,9 @@ final class BindCommand extends Command
             );
             return;
         }
+
         $user = User::where('id', $result->user_id)->first();
+        
         if (!is_null($user->telegram_id) == $chatId) {
             $this->replyWithMessage(
                 [
