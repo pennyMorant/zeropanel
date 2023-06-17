@@ -97,7 +97,10 @@ class ReplayTicket
             $ticket->updated_at = time();
             $ticket->status = 1;
             $ticket->save();
-            Telegram::pushToAdmin("# {$ticketId} 的工单已回复成功", $this->ChatID);
+            $bot->replyWithMessage([
+                'text' => '回复成功',
+                'reply_to_message_id' => $this->MessageID,
+            ]);
         }
     }
 }
