@@ -8,8 +8,8 @@ use App\Utils\Telegram;
 use App\Models\{
     Ticket,
     User,
-    Setting
 };
+use Telegram\Bot\Actions;
 use voku\helper\AntiXSS;
 
 class ReplayTicket
@@ -56,6 +56,7 @@ class ReplayTicket
      */
     public function __construct($bot, $Message, $ticketId)
     {
+        $bot->replyWithChatAction(['action' => Actions::TYPING]);
         $this->bot              = $bot;
         $this->triggerUser      = [
             'id'       => $Message->getFrom()->getId(),
