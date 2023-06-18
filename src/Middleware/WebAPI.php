@@ -6,11 +6,12 @@ use App\Models\Setting;
 use Slim\Factory\AppFactory;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-final class WebAPI
+final class WebAPI implements MiddlewareInterface
 {
-    public function __invoke(Request $request, RequestHandler $handler): ResponseInterface
+    public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $key = $request->getQueryParams()['key'] ?? null;
         if (is_null($key)) {

@@ -5,11 +5,13 @@ namespace App\Middleware;
 use App\Services\Auth as AuthService;
 use Slim\Factory\AppFactory;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class Auth
+final class Auth implements MiddlewareInterface
 {
-    public function __invoke(Request $request, RequestHandler $handler)
+    public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $user = AuthService::getUser();
         if (!$user->isLogin) {
