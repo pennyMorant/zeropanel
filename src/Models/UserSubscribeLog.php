@@ -34,7 +34,7 @@ class UserSubscribeLog extends Model
         $log->email              = $user->email;
         $log->subscribe_type     = $type;
         $log->request_ip         = $_SERVER['REMOTE_ADDR'];
-        $log->request_time       = date('Y-m-d H:i:s');
+        $log->created_at         = date('Y-m-d H:i:s');
         $antiXss                 = new AntiXSS();
         $log->request_user_agent = $antiXss->xss_clean($ua);
         $log->save();

@@ -230,7 +230,7 @@ class LinkController extends BaseController
         $log->email              = $user->email;
         $log->subscribe_type     = $type;
         $log->request_ip         = $_SERVER['REMOTE_ADDR'];
-        $log->request_time       = time();
+        $log->created_at         = time();
         $antiXss                 = new AntiXSS();
         $log->request_user_agent = $antiXss->xss_clean($ua);
         $log->save();

@@ -20,30 +20,30 @@ class RecordController extends AdminController
     public function recordIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config_alive['total_column'] = [
-            'id'        => 'ID',
-            'userid'    => '用户ID',
-            'node_name' => '节点名',
-            'ip'        => 'IP',
-            'location'  => '归属地',
-            'created_at'  => '时间'
+            'id'         => 'ID',
+            'userid'     => '用户ID',
+            'node_name'  => '节点名',
+            'ip'         => 'IP',
+            'location'   => '归属地',
+            'created_at' => '时间'
     ];
         $table_config_alive['ajax_url']      = 'record/ajax/alive';
         $table_config_signin['total_column'] = [
-            'id'        => 'ID',
-            'userid'    => '用户ID',
-            'ip'        => 'IP',
-            'location'  => '归属地',
-            'datetime'  => '时间',
-            'type'      => '类型'
+            'id'         => 'ID',
+            'userid'     => '用户ID',
+            'ip'         => 'IP',
+            'location'   => '归属地',
+            'created_at' => '时间',
+            'type'       => '类型'
         ];
         $table_config_signin['ajax_url']        = 'record/ajax/signin';
         $table_config_subscribe['total_column'] = [
-            'id'                  => 'ID',
-            'user_id'             => '用户ID',
-            'subscribe_type'      => '类型',
-            'request_ip'          => 'IP',
-            'location'            => '归属地',
-            'request_time'        => '时间',
+            'id'             => 'ID',
+            'user_id'        => '用户ID',
+            'subscribe_type' => '类型',
+            'request_ip'     => 'IP',
+            'location'       => '归属地',
+            'created_at'     => '时间',
         ];
         $table_config_subscribe['ajax_url']   = 'record/ajax/subscribe';
         $table_config_traffic['total_column'] = [
@@ -53,7 +53,7 @@ class RecordController extends AdminController
             'rate'            => '倍率',
             'origin_traffic'  => '实际使用流量',
             'traffic'         => '结算流量',
-            'datetime'        => '记录时间'
+            'created_at'      => '记录时间'
         ];
         $table_config_traffic['ajax_url'] = 'record/ajax/traffic';
         $this->view()
@@ -116,7 +116,7 @@ class RecordController extends AdminController
                         'userid'   => $rowData->userid,
                         'ip'       => $rowData->ip,
                         'location' => Tools::getIPLocation($rowData->ip),
-                        'datetime' => date('Y-m-d H:i:s', $rowData->created_at),
+                        'created_at' => date('Y-m-d H:i:s', $rowData->created_at),
                         'type'     => $rowData->type(),
                     ];
                 })->toArray();
@@ -140,7 +140,7 @@ class RecordController extends AdminController
                         'subscribe_type' => $rowData->subscribe_type,
                         'request_ip'     => $rowData->request_ip,
                         'location'       => Tools::getIPLocation($rowData->request_ip),
-                        'request_time'   => date('Y-m-d H:i:s', $rowData->created_at),
+                        'created_at'   => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $total = UserSubscribeLog::count();
@@ -155,7 +155,7 @@ class RecordController extends AdminController
                         'rate'           => $rowData->rate,
                         'origin_traffic' => Tools::flowAutoShow($rowData->u + $rowData->d),
                         'traffic'        => $rowData->traffic,
-                        'datetime'       => date('Y-m-d H:i:s', $rowData->created_at),
+                        'created_at'       => date('Y-m-d H:i:s', $rowData->created_at),
                     ];
                 })->toArray();
                 $total = TrafficLog::count();
