@@ -20,7 +20,6 @@
         "sentry/sdk": "*",
         "slim/slim": "4.*",
         "slim/http": "*",
-        "slim/psr7": "*",
         "guzzlehttp/guzzle": "*",
         "guzzlehttp/psr7": "*",
         "smarty/smarty": "dev-master",

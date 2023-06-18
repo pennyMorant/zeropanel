@@ -77,7 +77,7 @@ class Telegram
     {
         $chat_ids = json_decode(Setting::obtain('telegram_admin_id'), true);
         $enable_bot = Setting::obtain('enable_telegram_bot');
-        if (array_filter($chat_ids) && $enable_bot) {         
+        if (array_filter($chat_ids)) {         
             $bot = new Api(Setting::obtain('telegram_bot_token'), true);
             if (!is_null($keyBoard)) {
                 $reply_markup = json_encode(

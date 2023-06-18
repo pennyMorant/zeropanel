@@ -3,7 +3,7 @@
 namespace App\Middleware;
 
 use App\Services\Auth as AuthService;
-use Slim\Psr7\Response;
+use Slim\Factory\AppFactory;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
@@ -13,12 +13,10 @@ class Admin
     {
         $user = AuthService::getUser();
         if (!$user->isLogin) {
-            $response = new Response();
-            return $response->withStatus(302)->withHeader('Location', '/auth/signin');
+            return AppFactory::determineResponseFactory()->createResponse(302)->withHeader('Location', '/auth/signin');
         }
         if (!$user->is_admin) {
-            $response = new Response();
-            return $response->withStatus(302)->withHeader('Location', '/user/dashboard');
+            return AppFactory::determineResponseFactory()->createResponse(302)->withHeader('Location', '/user/dashboard');
         }
         return $handler->handle($request);
     }
