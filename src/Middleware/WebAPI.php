@@ -7,7 +7,6 @@ use Slim\Factory\AppFactory;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Psr\Http\Server\MiddlewareInterface;
 
 final class WebAPI
 {
