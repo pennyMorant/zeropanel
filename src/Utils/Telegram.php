@@ -73,7 +73,7 @@ class Telegram
      * @param string $messageText
      * @param int    $chat_id
      */
-    public static function pushToAdmin($messageText, $keyBoard = null)
+    public static function pushToAdmin($messageText, $keyBoard = null): void
     {
         $chat_ids = json_decode(Setting::obtain('telegram_admin_id'), true);
         $enable_bot = Setting::obtain('enable_telegram_bot');
