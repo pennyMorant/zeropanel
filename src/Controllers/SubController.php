@@ -267,6 +267,16 @@ final class SubController
                         'password' => $node_config['passwd'],
                         'udp'      => true
                     ];
+                } else {
+                    $node_info = [
+                        'name'     => $node_config['remark'],
+                        'type'     => 'ss',
+                        'server'   => $node_config['address'],
+                        'port'     => $node_config['port'],
+                        'cipher'   => $node_config['method'],
+                        'password' => $node_config['server_psk'] . ':' . $node_config['passwd'],
+                        'udp'      => true
+                    ];
                 }
                 break;
             case 'vmess':
