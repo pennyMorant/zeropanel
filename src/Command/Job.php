@@ -136,23 +136,23 @@ class Job extends Command
         $nodes = Node::all();
         foreach ($nodes as $node) {
             if ($node->isNodeOnline() === false && $node->online == true) {              
+                $node->online = false;
+                $node->save();
                 $notice_text = str_replace(
                     '%node_name%',
                     $node->name,
                     Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
                 );
                 Telegram::pushToAdmin($notice_text);
-                $node->online = false;
-                $node->save();
             } elseif ($node->isNodeOnline() === true && $node->online == false) {
+                $node->online = true;
+                $node->save();
                 $notice_text = str_replace(
                     '%node_name%',
                     $node->name,
                     Setting::obtain('diy_system_node_online_report_telegram_notify_content')
                 );
                 Telegram::pushToAdmin($notice_text);          
-                $node->online = true;
-                $node->save();
             }
         }
         echo '节点掉线检测结束' . PHP_EOL;
