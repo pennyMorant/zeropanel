@@ -233,7 +233,7 @@ class OrderController extends BaseController
 
         $order = Order::where('user_id', $user->id)->where('order_no', $order_no)->first();
         try {
-            if (time() > $order->expired_time) {
+            if (time() > $order->expired_at) {
                 throw new \Exception(I18n::get()->t('order has expired'));
             }
             if ($order->order_status == 2) {
