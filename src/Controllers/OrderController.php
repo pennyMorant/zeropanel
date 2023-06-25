@@ -160,7 +160,7 @@ class OrderController extends BaseController
             case 3: //续费产品
                 try {
                     $latest_order = Order::where('user_id', $user->id)->where('order_status', 2)
-                        ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_time')->first();
+                        ->where('order_type', 1)->where('product_id', $user->product_id)->latest('paid_at')->first();
                     if (is_null($latest_order)){
                         throw new \Exception('订单不存在');
                     }
