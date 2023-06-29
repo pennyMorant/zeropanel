@@ -356,7 +356,7 @@ class OrderController extends BaseController
                 throw new \Exception(I18n::get()->t('promo code invalid'));
             }
 
-            if ($coupons->expire_at < time()) {
+            if ($coupons->expired_at < time()) {
                 throw new \Exception(I18n::get()->t('promo code has expired'));
             }
             

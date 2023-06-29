@@ -64,7 +64,7 @@ class Job extends Command
         // 清理各表记录
         echo '清理数据库各表开始' . PHP_EOL;
         UserSubscribeLog::where('created_at', '<',  time() - 86400 * (int)Setting::obtain('subscribe_log_keep_time'))->delete();
-        Token::where('expire_at', '<', time())->delete();
+        Token::where('expired_at', '<', time())->delete();
         DetectLog::where('created_at', '<', time() - 86400 * 3)->delete();
         Ip::where('created_at', '<', time() - 300)->delete();
         SigninIp::where('created_at', '<', time() - 86400 * 7)->delete();

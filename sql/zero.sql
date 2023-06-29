@@ -91,7 +91,7 @@ CREATE TABLE `coupon` (
   `id` int(11) NOT NULL,
   `code` varchar(20) NOT NULL COMMENT '优惠码',
   `per_use_count` int(11) DEFAULT NULL COMMENT '每个用户使用次数',
-  `expire_at` int(11) NOT NULL COMMENT '到期时间',
+  `expired_at` int(11) NOT NULL COMMENT '到期时间',
   `limited_product` varchar(20) DEFAULT NULL COMMENT '限定产品使用',
   `limited_product_period` varchar(20) DEFAULT NULL COMMENT '限制产品周期',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
@@ -432,8 +432,8 @@ CREATE TABLE `user_token` (
   `id` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `create_at` int(11) NOT NULL,
-  `expire_at` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `expired_at` int(11) NOT NULL,
   `type` int(11) NOT NULL COMMENT '1-tg token,2-重置密码token,3-邮箱验证token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

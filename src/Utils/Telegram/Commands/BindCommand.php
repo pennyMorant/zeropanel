@@ -37,7 +37,7 @@ final class BindCommand extends Command
 
         $result = Token::where('token', $token)->where('type', 1)->first();
 
-        if ($result->expire_at < time()) {
+        if ($result->expired_at < time()) {
             $this->replyWithMessage(
                 [
                     'text' => '当前token已经失效，请刷新网页重新获取token',

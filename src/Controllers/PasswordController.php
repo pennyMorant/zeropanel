@@ -52,7 +52,7 @@ class PasswordController extends BaseController
 
     public function tokenIndex(ServerRequest $request, Response $response, array $args)
     {
-        $token = Token::where('token', $request->getQueryParam('token'))->where('expire_at', '>', time())->first();
+        $token = Token::where('token', $request->getQueryParam('token'))->where('expired_at', '>', time())->first();
         if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
 
         $this->view()
@@ -68,7 +68,7 @@ class PasswordController extends BaseController
         $repassword = $request->getParsedBodyParam('repassword');
 
         // check token
-        $token = Token::where('token', $tokenStr)->where('expire_at', '>', time())->first();
+        $token = Token::where('token', $tokenStr)->where('expired_at', '>', time())->first();
         if (is_null($token)) {
             return $response->withJson([
                 'ret' => 0,
@@ -96,7 +96,7 @@ class PasswordController extends BaseController
             $rs['msg'] = I18n::get()->t('success');
 
             // 禁止链接多次使用
-            $token->expire_time = time();
+            $token->expired_at = time();
             $token->save();
         }
 

@@ -84,7 +84,7 @@ class CouponService
         if ($this->coupon->total_use_count <= 0 && !is_null($this->coupon->total_use_count)) {
             return false;
         }
-        if (time() > $this->coupon->expire_at) {
+        if (time() > $this->coupon->expired_at) {
             return false;
         }
         if (!is_null($this->coupon->limited_product)) {

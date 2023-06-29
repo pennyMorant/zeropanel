@@ -76,7 +76,7 @@ class CouponController extends AdminController
         $coupon->per_use_count          = $postdata['per_use_count'] ?: NULL;
         $coupon->total_use_count        = $postdata['total_use_count'] ?: NULL;
         $coupon->code                   = $final_code;
-        $coupon->expire_at              = time() + $postdata['expire'] * 3600;
+        $coupon->expired_at              = time() + $postdata['expire'] * 3600;
         $coupon->limited_product        = !array_filter($postdata['limited_product']) ? NULL : json_encode($postdata['limited_product']);
         $coupon->limited_product_period = !array_filter($postdata['limited_product_period']) ? NULL : json_encode($postdata['limited_product_period']);
         $coupon->discount               = $postdata['discount'];
@@ -99,7 +99,7 @@ class CouponController extends AdminController
             return [
                 'id'                     => $rowData->id,
                 'code'                   => $rowData->code,
-                'expire'                 => date('Y-m-d H:i:s', $rowData->expire_at),
+                'expire'                 => date('Y-m-d H:i:s', $rowData->expired_at),
                 'limited_product'        => $rowData->limited_product ?? '无限制',
                 'limited_product_period' => $rowData->limited_product_period ?? '无限制',
                 'discount'               => $rowData->discount,

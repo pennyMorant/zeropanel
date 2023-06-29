@@ -59,7 +59,7 @@ class UserController extends BaseController
 
     public function profile(ServerRequest $request, Response $response, array $args)
     {
-        $tg_bind_token = Token::where('user_id', $this->user->id)->where('expire_at', '>', time())
+        $tg_bind_token = Token::where('user_id', $this->user->id)->where('expired_at', '>', time())
                         ->where('type', 1)->value('token');
         if (is_null($tg_bind_token)) {
             $tg_bind_token = Token::createToken($this->user, 32, 1);
@@ -262,7 +262,7 @@ class UserController extends BaseController
                 break;
             case 'check':
                 $token_str = $request->getQueryParam('token');
-                $token = Token::where('token', $token_str)->where('type', 3)->where('expire_at', '>', time())->first();
+                $token = Token::where('token', $token_str)->where('type', 3)->where('expired_at', '>', time())->first();
                 if (is_null($token)) {
                     $this->view()
                         ->assign('verification_result', 'false')
