@@ -268,7 +268,7 @@
                 data: {},
                 success: function(data) {
                     zeroAdminTrafficChart.updateSeries([{
-                        name: data[0].name,
+                        name: '流量',
                         data: data
                     }])
                 }
@@ -312,7 +312,8 @@
                     y: {
                         formatter: function (val) {
                             return val + "GB"
-                        }
+                        },
+                        name: '流量'
                     },
                     
                 },
