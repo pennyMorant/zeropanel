@@ -167,8 +167,6 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
-                    tickAmount: 6,
                 },
                 tooltip: {
                     x: {
@@ -243,8 +241,6 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
-                    tickAmount: 6,
                 },
                 tooltip: {
                     x: {
