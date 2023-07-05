@@ -147,6 +147,7 @@
                     },
                     zoom: {
                         enabled: false,
+                        autoScaleYaxis: true
                     }
                 },
                 dataLabels: {
@@ -154,6 +155,15 @@
                 },
                 stroke: {
                     curve: 'smooth'
+                },
+                
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '',
+                    align: 'left'
                 },
                 xaxis: {
                     type: 'datetime',
@@ -210,6 +220,7 @@
                     },
                     zoom: {
                         enabled: false,
+                        autoScaleYaxis: true
                     }
                 },
                 
@@ -218,6 +229,15 @@
                 },
                 stroke: {
                     curve: 'smooth'
+                },
+                
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '',
+                    align: 'left'
                 },
                 xaxis: {
                     type: 'datetime',
@@ -273,6 +293,15 @@
                 stroke: {
                     curve: 'smooth'
                 },
+                
+                title: {
+                    text: '',
+                    align: 'left'
+                },
+                subtitle: {
+                    text: '',
+                    align: 'left'
+                },
                 xaxis: {
                     type: 'datetime',
                 },
@@ -318,9 +347,7 @@
             chart: {
                 height: 350,
                 type: 'bar',
-                toolbar: {
-                    show: false
-                }
+                
             },
             //colors: colors,
             plotOptions: {
@@ -330,17 +357,17 @@
                 }
             },
             dataLabels: {
-                enabled: false
+            enabled: false
             },
             legend: {
-                show: false
+            show: false
             },
             xaxis: {
                 categories: [],
                 labels: {
                     style: {
                     //colors: colors,
-                        fontSize: '12px'
+                    fontSize: '12px'
                     }
                 }
             },

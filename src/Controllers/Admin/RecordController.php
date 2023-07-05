@@ -25,7 +25,7 @@ class RecordController extends AdminController
             'node_name'  => '节点名',
             'ip'         => 'IP',
             'location'   => '归属地',
-            'created_at' => '时间'
+            'latest_at' => '时间'
     ];
         $table_config_alive['ajax_url']      = 'record/ajax/alive';
         $table_config_signin['total_column'] = [
@@ -81,21 +81,27 @@ class RecordController extends AdminController
                         }
                     },
                     static function ($query) {
-                        $query->selectRaw('*, MAX(created_at) AS latest_datetime')->whereRaw('created_at >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
+                        $query->selectRaw('*, MAX(created_at) AS latest_at')->whereRaw('created_at >= UNIX_TIMESTAMP() - 180')->groupBy('ip');
                     }
                 );
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'id'        =>  $rowData->id,
-                        'userid'    =>  $rowData->userid,
-                        'node_name' =>  $rowData->node()->name ?? '暂无',
-                        'ip'        =>  Tools::getRealIp($rowData->ip),
-                        'location'  =>  Tools::getIPLocation(Tools::getRealIp($rowData->ip)),
-                        'created_at'  =>  date('Y-m-d H:i:s', $rowData->latest_datetime),
+                        'id'         => $rowData->id,
+                        'userid'     => $rowData->userid,
+                        'node_name'  => $rowData->node()->name ?? '暂无',
+                        'ip'         => Tools::getRealIp($rowData->ip),
+                        'location'   => Tools::getIPLocation(Tools::getRealIp($rowData->ip)),
+                        'latest_at'  => date('Y-m-d H:i:s', $rowData->latest_at),
                     ];
                 })->toArray();
-                $total = Ip::count();
+                $total = IP::whereRaw('created_at >= UNIX_TIMESTAMP() - 180')->count(IP::raw('DISTINCT (ip)'));
+                return $response->withJson([
+                    'draw'            => $request->getParsedBodyParam('draw'),
+                    'recordsTotal'    => $total,
+                    'recordsFiltered' => $total,
+                    'data'            => $data,
+                ]);
                 break;
             case 'signin':
                 $query = SigninIp::getTableDataFromAdmin(
