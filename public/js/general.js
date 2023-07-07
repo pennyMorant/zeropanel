@@ -66,7 +66,7 @@ $(document).ready(function (){
     // 访问最后一个元素
     var target2 = parts[2];
     var target1 = parts[1];
-    $("a.menu-link[href='/"+target1+"/"+target2+"']").addClass('active');
+    $(`a.menu-link[href='/${target1}/${target2}']`).addClass('active');
 });
 
 //get load
@@ -87,7 +87,7 @@ function getLoad() {
 }
 
 // show configure product modal 
-function kTUserConfigureProductModal(id, currency) {
+function kTUserConfigureProductModal(id) {
     const checkOutButton = document.querySelector(`[data-kt-users-action="check-out-${id}"]`);
     checkOutButton.setAttribute('data-kt-indicator', 'on');
     checkOutButton.disabled = true;
@@ -168,22 +168,22 @@ function kTUserConfigureProductModal(id, currency) {
                 Object.entries(all_prices).forEach(([key, { label, value }]) => {
                     if (value) {
                     $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
-                    $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}", "${currency}")`);
+                    $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}")`);
                     if (value == minPrice.value) {
-                        $('#zero_modal_configure_product_' + key + ' a').addClass('active');
+                        $(`#zero_modal_configure_product_${key} a`).addClass('active');
                     }
                     }
                 });
-                modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+minPrice.value.toFixed(2)+'", '+id+')');      
+                modalCoupon.attr('onclick', `KTUserVerifyCoupon(${minPrice.value.toFixed(2)}, ${id})`);      
             }
 
             modalInnerHtml.html(html);
             product_info.type == 3 ? modalCouponHtml.hide() : false;
             const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
             modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
-            modalPrice.html(product_final_price + currency);
-            modalTotal.html(product_final_price + currency);
-            submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
+            modalPrice.html(product_final_price + currency_unit);
+            modalTotal.html(product_final_price + currency_unit);
+            submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${product_final_price}", ${id})`);
             $("#zero_modal_configure_product").modal("show");
             checkOutButton.removeAttribute('data-kt-indicator');
             checkOutButton.disabled = false;
@@ -192,7 +192,7 @@ function kTUserConfigureProductModal(id, currency) {
     
 }
 
-function KTUsersChangePlan(price, id, type, currency) {
+function KTUsersChangePlan(price, id, type) {
     const productPlanMap = {
         'month_price': i18next.t('monthly fee'),
         'quarter_price': i18next.t('quarterly fee'),
@@ -203,11 +203,11 @@ function KTUsersChangePlan(price, id, type, currency) {
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     const modalCoupon = $('#zero_modal_configure_coupon');
-    modalCoupon.attr('onclick', 'KTUserVerifyCoupon("'+price+'", '+id+')');
+    modalCoupon.attr('onclick', `KTUserVerifyCoupon("${price}", ${id})`);
     $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
-    $('#zero_modal_configure_product_price').html(`${price}${currency}`);
-    $('#zero_modal_configure_product_total').html(`${price}${currency}`);
-    submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
+    $('#zero_modal_configure_product_price').html(`${price}${currency_unit}`);
+    $('#zero_modal_configure_product_total').html(`${price}${currency_unit}`);
+    submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${price}", ${id})`);
 }
 
 // verify coupon
@@ -227,7 +227,7 @@ function KTUserVerifyCoupon(product_price, product_id) {
             },
             success: function (data) {
                 if (data.ret == 1) {
-                    document.getElementById('zero_modal_configure_product_total').innerHTML = data.total + 'USD';
+                    $('zero_modal_configure_product_total').html(`${data.total}${currency_unit}`);
                 } else {
                     getResult(data.msg, '', 'error');
                 }
@@ -247,7 +247,7 @@ function KTUsersCreateOrder(type, price, product_id) {
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
-                    url: "/user/order/create_order/"+type,
+                    url: `/user/order/create_order/${type}`,
                     dataType: "json",
                     data: {
                         product_id: product_id,
@@ -256,7 +256,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_no);
+                            $(location).attr('href', `/user/order/${data.order_no}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -277,7 +277,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_no);
+                            $(location).attr('href', `/user/order/${data.order_no}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -295,7 +295,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                 data: {},
                 success: function(data){
                     if (data.ret == 1) {
-                        $(location).attr('href', '/user/order/' + data.order_no);
+                        $(location).attr('href', `/user/order/${data.order_no}`);
                     } else {
                         getResult(data.msg, '', 'error');
                     }
@@ -368,7 +368,7 @@ function KTUsersTicket(type, id, status) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/ticket/view/'+data.id);
+                            $(location).attr('href', `/user/ticket/view/${data.id}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -545,17 +545,17 @@ function oneclickImport(client, subLink) {
    
     quanx_config = {
         "server_remote": [
-            subLink + ', tag=' + webName
+            `${subLink}, tag=${webName}`
         ]
     }
     var sublink = {
-      surfboard: "surfboard:///install-config?url=" + encodeURIComponent(subLink),
-      quantumult: "quantumult://configuration?server=" + btoa(subLink).replace(/=/g, '') + "&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw",
-      shadowrocket: "shadowrocket://add/sub://" + btoa(subLink),
-      surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
-      clash: "clash://install-config?url=" + encodeURIComponent(subLink),
-      sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
-      quantumultx: "quantumult-x:///add-resource?remote-resource=" + encodeURIComponent(JSON.stringify(quanx_config)),
+      surfboard: `surfboard:///install-config?url=${encodeURIComponent(subLink)}`,
+      quantumult: `quantumult://configuration?server=${btoa(subLink).replace(/=/g, '')}&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw`,
+      shadowrocket: `shadowrocket://add/sub://${btoa(subLink)}`,
+      surge4: `surge4:///install-config?url=${encodeURIComponent(subLink)}`,
+      clash: `clash://install-config?url=${encodeURIComponent(subLink)}`,
+      sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
+      quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
     }
 
     Swal.fire({

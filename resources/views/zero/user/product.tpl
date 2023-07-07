@@ -137,7 +137,7 @@
 																					{if isset($product->stock) && $product->stock - $product->realTimeSales() <= 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">
+																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">
 																							<span class="indicator-label">{$trans->t('purchase')}</span>			
 																							<span class="indicator-progress">{$trans->t('please wait')}
 																							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -171,8 +171,6 @@
                 </div>
             </div>
         </div>
-        {include file='include/global/scripts.tpl'}
-		{include file='include/index/news.tpl'}
 
 		<div class="modal fade" id="zero_modal_configure_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
@@ -272,6 +270,9 @@
 				</div>
 			</div>
 		</div>
+		{include file='include/index/news.tpl'}
+        {include file='include/global/scripts.tpl'}
+		<script>var currency_unit = "{$currency_unit}";</script>
 		<script>
 			$("#zero_modal_configure_product").on('hidden.bs.modal', function () {
 				$("#zero_modal_configure_product_month_price").html('');
