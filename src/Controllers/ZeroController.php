@@ -212,6 +212,15 @@ class ZeroController extends BaseController
                     'url'  => URL::getTrojanURL($user, $node, $emoji),
                 ];
                 break;
+            case '5':
+                $info = $node->getHysteriaConfig($user, $node->custom_config);
+                $res = [
+                    'ret'  => 1,
+                    'type' => 5,
+                    'info' => $info,
+                    'url'  => URL::getHysteriaURL($user, $node, $emoji),
+                ];
+                break;
             default: 
                 $res = [
                     'ret' => 0,

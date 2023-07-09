@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utils\{Tools, URL};
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class Node extends Model
 {
@@ -58,6 +59,9 @@ class Node extends Model
                 break;
             case 3:
                 $type = 'VLESS';
+                break;
+            case 5:
+                $type = 'Hysteria';
                 break;
             default:
                 $type = '系统保留';
@@ -199,6 +203,24 @@ class Node extends Model
             $config['net'] = 'tcp';
         }
         
+        return $config;
+    }
+
+    public function getHysteriaConfig(User $user, $custom_config, bool $emoji = false): array
+    {
+        $custom_configs      = json_decode($custom_config, true);
+        $config['type']      = 'hysteria';
+        $config['remark']    = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
+        $config['obfsParam'] = $user->passwd;
+        $config['address']   = $this->server;
+        $config['port']      = $custom_configs['offset_port_user'] ?? $custom_configs['hysteria_port'];
+        $config['protocol']  = $custom_configs['protocol'] ?? 'udp';
+        $config['peer']      = $custom_configs['peer'] ?? '';
+        $config['upmbps']    = $custom_configs['upmbps'] ?? '10';
+        $config['downmbps']  = $custom_configs['downmbps'] ?? '10';
+        $config['alpn']      = $custom_configs['alpn'] ?? '';
+        $config['obfs']      = $custom_configs['obfs'] ?? '';
+
         return $config;
     }
 

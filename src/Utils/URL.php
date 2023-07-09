@@ -233,4 +233,25 @@ class URL
         );
         return $url;
     }
+
+    public static function getHysteriaURL(User $user, Node $node, bool $emoji = false): string
+    {
+        $node_config = $node->getHysteriaConfig($user, $node->custom_config, $emoji);
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
+        $url = sprintf(
+            'hysteria://'.$address.':%d?protocol=%s&peer=%s&upmbps=%s&downmbps=%s&obfs=%s&obfsParam=%s#%s',
+            $node_config['address'],
+            $node_config['port'],
+            $node_config['protocol'],
+            $node_config['peer'],
+            $node_config['upmbps'],
+            $node_config['downmbps'],
+            $node_config['obfs'],
+            $node_config['obfsParam'],
+            rawurlencode($node_config['remark'])
+        );
+
+        return $url;
+    }
 }

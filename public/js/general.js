@@ -419,7 +419,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 			success: function(data) {
 				if (data.ret == 1){
                     const info = data.info;
-                    const qrcodeHtml = `<div class="pb-3" align="center" id="qrcode${nodeid}"></div>`;
+                    const qrcodeHtml = `<div class="pb-3" align="center" id="qrcode_${nodeid}"></div>`;
                     var content = data.url;
                     switch (data.type) {
                         case 2:                           
@@ -499,13 +499,36 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             $("#zero_modal_shadowsocks_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_shadowsocks_node_info").modal('show');
                             break;
+                        case 5:
+                            const selectors_hysteria = {
+                                '#zero_modal_hysteria_node_info_remark': 'remark',
+                                '#zero_modal_hysteria_node_info_address': 'address',
+                                '#zero_modal_hysteria_node_info_port': 'port',
+                                '#zero_modal_hysteria_node_info_obfsParam': 'obfsParam',
+                                '#zero_modal_hysteria_node_info_protocol': 'protocol',
+                                '#zero_modal_hysteria_node_info_obfs': 'obfs',
+                                '#zero_modal_hysteria_node_info_alpn': 'alpn',
+                                '#zero_modal_hysteria_node_info_upspeed': 'upmbps',
+                                '#zero_modal_hysteria_node_info_downspeed': 'downmbps',
+                                '#zero_modal_hysteria_node_info_peer': 'peer',
+                            }
+
+                            for (let selector in selectors_hysteria) {
+                                $(selector).html(info[selectors_hysteria[selector]]);
+                            }
+                            $("#zero_modal_hysteria_node_info_qrcode").html(qrcodeHtml);
+                            $("#zero_modal_hysteria_node_info").modal('show');
+                            break;
+                        default:
+                            0;
                     }
-                    $("#qrcode"  + nodeid).qrcode({
+                    $("#qrcode_"  + nodeid).qrcode({
                         width: 200,
                         height: 200,
                         render: "canvas",
                         text: content
                     });
+                    
                     Swal.close();
 				} else {                   
 					getResult(data.msg, "", "error");

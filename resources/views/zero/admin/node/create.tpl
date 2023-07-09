@@ -80,8 +80,9 @@
                                                     <select class="form-select mb-5" id="node_type" data-control="select2" data-hide-search="true">
                                                         <option value="1">Shadowsocks</option>
                                                         <option value="2">VMESS</option>
-                                                        <option value="4">TROJAN</option>
                                                         <option value="3">VLESS</option>
+                                                        <option value="4">TROJAN</option>
+                                                        <option value="5">Hysteria</option>
                                                     </select>
                                                 </div>
                                             </div>

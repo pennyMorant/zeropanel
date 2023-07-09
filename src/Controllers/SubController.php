@@ -82,6 +82,10 @@ final class SubController
                 break;
             case 'trojan':
                 $url = self::getTrojan($node_config);
+                break;
+            case 'hysteria':
+                $url = self::getHysteria($node_config);
+                break;
         }
         return $url;
     }
@@ -359,6 +363,9 @@ final class SubController
             case 'trojan':
                 $url = self::getTrojan($node_config);
                 break;
+            case 'hysteria':
+                $url = self::getHysteria($node_config);
+                break;
         }
         return $url;
     }
@@ -370,7 +377,7 @@ final class SubController
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         switch ($node_config['type']) {
             case 'trojan':
-                $url= sprintf(
+                $url = sprintf(
                     'trojan://%s@'.$address.':%d?flow=%s&security=%s&sni=%s#%s',
                     $node_config['uuid'],
                     $node_config['address'],
@@ -378,6 +385,30 @@ final class SubController
                     $node_config['flow'],
                     $node_config['security'],
                     $node_config['sni'],
+                    rawurlencode($node_config['remark'])
+                );
+                return $url;
+                break;
+        }
+    }
+
+    public static function getHysteria(array $node_config)
+    {
+        $url = null;
+        $ip_type = Tools::isIP($node_config['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
+        switch ($node_config['type']) {
+            case 'hysteria':
+                $url = sprintf(
+                    'hysteria://'.$address.':%d?protocol=%s&peer=%s&upmbps=%s&downmbps=%s&obfs=%s&obfsParam=%s#%s',
+                    $node_config['address'],
+                    $node_config['port'],
+                    $node_config['protocol'],
+                    $node_config['peer'],
+                    $node_config['upmbps'],
+                    $node_config['downmbps'],
+                    $node_config['obfs'],
+                    $node_config['obfsParam'],
                     rawurlencode($node_config['remark'])
                 );
                 return $url;
@@ -430,6 +461,9 @@ final class SubController
                     $node_config['net'],
                     rawurlencode($node_config['remark'])
                 );
+                break;
+            case 'hysteria':
+                $url = self::getHysteria($node_config);
                 break;
         }
         return $url;

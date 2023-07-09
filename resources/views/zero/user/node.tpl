@@ -110,6 +110,7 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_vmess_config">
 								<div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('node')}{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg">VMESS</span></p>
                                     <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_address"></span></p>
                                     <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_port"></span></p>
                                     <p>{$trans->t('alter id')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vmess_node_info_aid"></span></p>
@@ -157,6 +158,7 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_vless_config">
 								<div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('node')}{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg">VLESS</span></p>
                                     <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_address"></span></p>
                                     <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_port"></span></p>
                                     <p>{$trans->t('uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_uuid"></span></p>
@@ -180,7 +182,7 @@
             </div>
         </div>
 		<!-- ss modal -->
-		<div class="modal fade" id="zero_modal_shadowsocks_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
+		<div class="modal fade" id="zero_modal_shadowsocks_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_shadowsocks_node_info_title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
@@ -205,6 +207,7 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_shadowsocks_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('node')}{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg">Shadowsocks</span></p>
                                     <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_address"></span></p>
                                     <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_port"></span></p>
 									<p>{$trans->t('encrypt')}: <span class="badge badge-secondary badge-lg" id="zero_modal_shadowsocks_node_info_method"></span></p>
@@ -222,7 +225,7 @@
         </div>
 
         <!-- trojan modal -->
-		<div class="modal fade" id="zero_modal_trojan_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_vmess_node_info_title" aria-hidden="true">
+		<div class="modal fade" id="zero_modal_trojan_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_trojan_node_info_title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
@@ -247,12 +250,59 @@
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_trojan_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('node')}{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg">Trojan</span></p>
                                     <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_address"></span></p>
                                     <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_port"></span></p>
 									<p>{$trans->t('sni')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_sni"></span></p>
                                     <p>{$trans->t('uuid')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_uuid"></span></p>
                                     <p>{$trans->t('security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_security"></span></p>
                                     <p>{$trans->t('flow')}: <span class="badge badge-secondary badge-lg" id="zero_modal_trojan_node_info_flow"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">{$trans->t('discard')}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="zero_modal_hysteria_node_info" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="zero_modal_hysteria_node_info_title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content shadow-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+						<strong id="zero_modal_hysteria_node_info_remark">{$trans->t('node name')}</strong></h4>
+                    </div>
+                    <div class="modal-body align-items-center" id="zero_modal_hysteria_node_info_body">
+                        <nav class="nav nav-tabs nav-justified" role="tablist">
+							<button class="nav-link active" type="button" data-bs-toggle="tab" aria-selected="true" data-bs-target="#zero_modal_tab_hysteria_qrcode">
+								{$trans->t('qrcode')}
+							</button>
+							<button class="nav-link" type="button" data-bs-toggle="tab" aria-selected="false" data-bs-target="#zero_modal_tab_hysteria_config">
+								{$trans->t('config')}
+							</button>
+                        </nav>
+                        <div class="tab-content m-0 p-0">
+                            <div class="tab-pane fade active show" id="zero_modal_tab_hysteria_qrcode">
+                                
+                                <div class="text-center pt-10" id="zero_modal_hysteria_node_info_qrcode">
+                                </div>
+                                
+                            </div>
+                            <div class="tab-pane fade show" id="zero_modal_tab_hysteria_config">
+                                <div class="pt-10 pl-10 ms-10 text-start fs-4">
+                                    <p>{$trans->t('node')}{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg">Hysteria</span></p>
+                                    <p>{$trans->t('address')}: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_address"></span></p>
+                                    <p>{$trans->t('port')}: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_port"></span></p>
+									<p>peer: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_peer"></span></p>
+                                    <p>{$trans->t('passwd')}: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_obfsParam"></span></p>
+                                    <p>{$trans->t('protocol')}: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_protocol"></span></p>
+                                    <p>上传: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_upspeed"></span></p>
+                                    <p>{$trans->t('downspeed')}: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_downspeed"></span></p>
+                                    <p>obfs: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_obfs"></span></p>
+                                    <p>alpn: <span class="badge badge-secondary badge-lg" id="zero_modal_hysteria_node_info_alpn"></span></p>
                                 </div>
                             </div>
                         </div>
