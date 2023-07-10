@@ -68,6 +68,9 @@ class URL
             case 'vless':
                 $node_type = [3];
                 break;
+            case 'hysteria':
+                $node_type = [5];
+                break;
             default:
                 $Rule['type'] = 'all';
                 $node_type = [1, 2, 3, 4, 5];
@@ -102,7 +105,8 @@ class URL
                     1 => 'getShadowsocksConfig',     // SS
                     2 => 'getVmessConfig',           // V2Ray
                     4 => 'getTrojanConfig',          // Trojan
-                    3 => 'getVlessConfig'
+                    3 => 'getVlessConfig',           // VLess
+                    5 => 'getHysteriaConfig'         // Hysteria
                 ];
                 $custom_config = $node->custom_config;
                 $type = $node_type[$node->node_type];
