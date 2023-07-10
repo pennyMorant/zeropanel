@@ -211,7 +211,7 @@ class Node extends Model
         $custom_configs      = json_decode($custom_config, true);
         $config['type']      = 'hysteria';
         $config['remark']    = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
-        $config['obfsParam'] = $user->passwd;
+        $config['obfsParam'] = $custom_configs['obfs_param'] ?? '';
         $config['address']   = $this->server;
         $config['port']      = $custom_configs['offset_port_user'] ?? $custom_configs['hysteria_port'];
         $config['protocol']  = $custom_configs['protocol'] ?? 'udp';
@@ -220,6 +220,7 @@ class Node extends Model
         $config['downmbps']  = $custom_configs['downmbps'] ?? '10';
         $config['alpn']      = $custom_configs['alpn'] ?? '';
         $config['obfs']      = $custom_configs['obfs'] ?? '';
+        $config['auth']      = $user->passwd;
 
         return $config;
     }

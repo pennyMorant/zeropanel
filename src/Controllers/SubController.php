@@ -400,10 +400,11 @@ final class SubController
         switch ($node_config['type']) {
             case 'hysteria':
                 $url = sprintf(
-                    'hysteria://'.$address.':%d?protocol=%s&peer=%s&upmbps=%s&downmbps=%s&obfs=%s&obfsParam=%s#%s',
+                    'hysteria://'.$address.':%d?protocol=%s&auth=%s&peer=%s&upmbps=%s&downmbps=%s&obfs=%s&obfsParam=%s#%s',
                     $node_config['address'],
                     $node_config['port'],
                     $node_config['protocol'],
+                    $node_config['auth'],
                     $node_config['peer'],
                     $node_config['upmbps'],
                     $node_config['downmbps'],
