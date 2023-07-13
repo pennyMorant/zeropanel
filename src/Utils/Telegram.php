@@ -100,7 +100,7 @@ class Telegram
                 try {
                     $bot->sendMessage($sendMessage);
                 } catch (Exception $e) {
-                    return $e->getMessage();
+                    echo $e->getMessage();
                 }
             }
         }
