@@ -181,8 +181,8 @@ function kTUserConfigureProductModal(id) {
             product_info.type == 3 ? modalCouponHtml.hide() : false;
             const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
             modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
-            modalPrice.html(product_final_price + currency_unit);
-            modalTotal.html(product_final_price + currency_unit);
+            modalPrice.html(`${product_final_price}&nbsp;${currency_unit}`);
+            modalTotal.html(`${product_final_price}&nbsp;${currency_unit}`);
             submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${product_final_price}", ${id})`);
             $("#zero_modal_configure_product").modal("show");
             checkOutButton.removeAttribute('data-kt-indicator');
@@ -205,8 +205,8 @@ function KTUsersChangePlan(price, id, type) {
     const modalCoupon = $('#zero_modal_configure_coupon');
     modalCoupon.attr('onclick', `KTUserVerifyCoupon("${price}", ${id})`);
     $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
-    $('#zero_modal_configure_product_price').html(`${price}${currency_unit}`);
-    $('#zero_modal_configure_product_total').html(`${price}${currency_unit}`);
+    $('#zero_modal_configure_product_price').html(`${price}&nbsp;${currency_unit}`);
+    $('#zero_modal_configure_product_total').html(`${price}&nbsp;${currency_unit}`);
     submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${price}", ${id})`);
 }
 
@@ -227,7 +227,7 @@ function KTUserVerifyCoupon(product_price, product_id) {
             },
             success: function (data) {
                 if (data.ret == 1) {
-                    $('zero_modal_configure_product_total').html(`${data.total}${currency_unit}`);
+                    $('#zero_modal_configure_product_total').html(`${data.total}&nbsp;${currency_unit}`);
                 } else {
                     getResult(data.msg, '', 'error');
                 }

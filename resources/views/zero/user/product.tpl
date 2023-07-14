@@ -271,8 +271,9 @@
 			</div>
 		</div>
 		{include file='include/index/news.tpl'}
-        {include file='include/global/scripts.tpl'}
 		<script>var currency_unit = "{$currency_unit}";</script>
+        {include file='include/global/scripts.tpl'}
+		
 		<script>
 			$("#zero_modal_configure_product").on('hidden.bs.modal', function () {
 				$("#zero_modal_configure_product_month_price").html('');
