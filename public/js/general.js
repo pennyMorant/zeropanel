@@ -174,7 +174,7 @@ function kTUserConfigureProductModal(id) {
                     }
                     }
                 });
-                modalCoupon.attr('onclick', `KTUserVerifyCoupon(${minPrice.value.toFixed(2)}, ${id})`);      
+                modalCoupon.attr('onclick', `KTUserVerifyCoupon("${minPrice.value.toFixed(2)}", ${id})`);      
             }
 
             modalInnerHtml.html(html);
