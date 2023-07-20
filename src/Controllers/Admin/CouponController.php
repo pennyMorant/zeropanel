@@ -20,7 +20,8 @@ class CouponController extends AdminController
             'limited_product_period' => '限定周期',
             'discount'               => '额度',
             'per_use_count'          => '每个用户次数',
-            'total_use_count'        => '优惠码总使用次数',
+            'total_use_count'        => '总使用次数',
+            'total_used_count'       => '被使用的次数',
             'action'                 => '操作',
         ];
         $table_config['ajax_url'] = 'coupon/ajax';
@@ -76,7 +77,7 @@ class CouponController extends AdminController
         $coupon->per_use_count          = $postdata['per_use_count'] ?: NULL;
         $coupon->total_use_count        = $postdata['total_use_count'] ?: NULL;
         $coupon->code                   = $final_code;
-        $coupon->expired_at              = time() + $postdata['expire'] * 3600;
+        $coupon->expired_at             = time() + $postdata['expire'] * 3600;
         $coupon->limited_product        = !array_filter($postdata['limited_product']) ? NULL : json_encode($postdata['limited_product']);
         $coupon->limited_product_period = !array_filter($postdata['limited_product_period']) ? NULL : json_encode($postdata['limited_product_period']);
         $coupon->discount               = $postdata['discount'];
@@ -101,10 +102,11 @@ class CouponController extends AdminController
                 'code'                   => $rowData->code,
                 'expire'                 => date('Y-m-d H:i:s', $rowData->expired_at),
                 'limited_product'        => $rowData->limited_product ?? '无限制',
-                'limited_product_period' => $rowData->limited_product_period ?? '无限制',
+                'limited_product_period' => is_null($rowData->limited_product_period) ? '无限制' : $rowData->getLimitedProductPeriod(),
                 'discount'               => $rowData->discount,
                 'per_use_count'          => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
                 'total_use_count'        => is_null($rowData->total_use_count) ? '无限次使用' : $rowData->total_use_count,
+                'total_used_count'       => $rowData->total_used_count,
                 'action'                 => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                                 <ul    class = "dropdown-menu">
                                                 

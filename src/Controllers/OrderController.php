@@ -332,6 +332,12 @@ class OrderController extends BaseController
         $product->save();
         $user->money -= $order->credit_paid;  // 支付成功，从用户账户扣除余额抵扣金额
         $user->save();
+        // 优惠码被使用次数
+        if (!is_null($order->coupon_id)) {
+            $coupon = Coupon::find($order->coupon_id);
+            $coupon->total_used_count += 1;
+            $coupon->save();
+        }
         // 返利
         if ($user->ref_by > 0 && Setting::obtain('invitation_mode') === 'after_purchase') {
             Commission::rebate($user->id, $order->order_total, $order->order_no);
