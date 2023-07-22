@@ -314,7 +314,6 @@ class ConfController extends BaseController
             'Proxy'      => 'proxies',
             'ProxyGroup' => 'proxy-groups',
             'Rule'       => 'rules',
-            'Rule-Providers' => 'rule-providers',
         ];
         $Configs['General']['mode'] = 'rule';
 
@@ -358,8 +357,6 @@ class ConfController extends BaseController
             '',
             Yaml::dump($tmp, 4, 2),
             '',
-            $confStr['Rule-Providers'] . ':',
-            self::getProviders($Configs['Rule-Providers']),
             $confStr['Rule'] . ':',
             self::getRule($Configs['Rule'])
         ];
@@ -466,11 +463,5 @@ class ConfController extends BaseController
     {
         $render = ConfRender::getTemplateRender();
         return $render->fetch($Rules['source']);
-    }
-    
-    public static function getProviders($RuleProviders)
-    {
-        $render = ConfRender::getTemplateRender();
-        return $render->fetch($RuleProviders['source']);
     }
 }
