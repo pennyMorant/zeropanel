@@ -231,7 +231,7 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '🎸MUSIC',
+                'name' => '🎸SPOTIFY',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
@@ -251,33 +251,13 @@ $_ENV['Clash_Profiles'] = [
                 ]
             ],
             [
-                'name' => '📡SOCIAL APP',
+                'name' => '📡TWITTER',
                 'type' => 'select',
                 'content' => [
                     'left-proxies' => [
                         '🎯PROXY'
                     ],
                     'regex' => '(.*)',
-                ]
-            ],
-            [
-                'name' => '🚡VIDEO',
-                'type' => 'select',
-                'content' => [
-                    'left-proxies' => [
-                        '🎯PROXY'
-                    ],
-                    'regex' => '(.*)',
-                ]
-            ],
-            [
-                'name' => '📱APPLE',
-                'type' => 'select',
-                'content' => [
-                    'left-proxies' => [
-                        '🚀DIRECT',
-                        '🎯PROXY'
-                    ]
                 ]
             ],
             [
