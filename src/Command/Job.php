@@ -143,7 +143,7 @@ class Job extends Command
                     $node->name,
                     Setting::obtain('diy_system_node_offline_report_telegram_notify_content')
                 );
-                Telegram::pushToAdmin($notice_text);
+                //Telegram::pushToAdmin($notice_text);
             } elseif ($node->isNodeOnline() === true && $node->online == false) {
                 $node->online = true;
                 $node->save();
@@ -152,7 +152,7 @@ class Job extends Command
                     $node->name,
                     Setting::obtain('diy_system_node_online_report_telegram_notify_content')
                 );
-                Telegram::pushToAdmin($notice_text);          
+                //Telegram::pushToAdmin($notice_text);          
             }
         }
         echo '节点掉线检测结束' . PHP_EOL;
