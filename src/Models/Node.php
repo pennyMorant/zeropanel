@@ -51,9 +51,6 @@ class Node extends Model
             case 2:
                 $type = 'VMESS';
                 break;
-            case 5:
-                $type = 'Shadowsocks - V2Ray-Plugin&Obfs';
-                break;
             case 4:
                 $type = 'TROJAN';
                 break;
