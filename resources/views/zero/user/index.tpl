@@ -140,7 +140,7 @@
 													<div class="row">
 														<div class="col">
 															<!-- Clash订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('clash')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
@@ -149,7 +149,7 @@
 																</ul>
 															</div>
 															<!-- Surge订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('surge')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
@@ -157,16 +157,12 @@
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															<!-- ss订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
-															</div>
 															<!-- V2Ray订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2rayn')}</button>
 															</div>
 															<!-- Shadowrocket订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
@@ -174,17 +170,8 @@
 																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo}')">{$trans->t('import')}</a></li>
 																</ul>
 															</div>
-															<!-- Quantumult订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
 															<!-- QuantumultX订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button class="btn btn-pill btn-quantumultx dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 																	<i class="zero-quantumultx text-white"></i>
 																	{$trans->t('quanx')}
@@ -202,7 +189,7 @@
 																</ul>
 															</div>
 															<!-- Surfboard订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('surfboard')}</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
@@ -211,7 +198,7 @@
 																</ul>
 															</div>
 															<!-- AnXray订阅 -->
-															<div class="btn-group mb-3 mr-3">
+															<div class="btn-group mb-3 me-5">
 																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('sagernet')}&nbsp;&nbsp;</button>
 																<ul class="dropdown-menu">
 																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo}">{$trans->t('copy')}</a></li>
