@@ -22,7 +22,7 @@ class SubsController
             foreach (array_reverse(glob(dirname(__FILE__, 3).'/src/Clients'. '/*.php')) as $sub_file) {
                 $sub_file = 'App\\Clients\\'. basename($sub_file, '.php');
                 $class = new $sub_file($user, $servers);
-                if (strpos($flag, $class->flag) !== false) {
+                if (stripos($flag, $class->flag) !== false) {
                    die($class->handle());
                 }
             }

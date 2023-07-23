@@ -22,7 +22,7 @@ class QuantumultX
         $servers = $this->servers;
         $user = $this->user;
         $uri = '';
-        header("subscription-userinfo: upload={$user->u}; download={$user->d}; total={$user->transfer_enable}; expire={$user->class_expire}");
+        header("subscription-userinfo: upload={$user->u}; download={$user->d}; total={$user->transfer_enable}; expire=".strtotime($user->class_expire));
 
         foreach ($servers as $server) {
             switch ($server['type']) {
