@@ -7,7 +7,7 @@ use App\Utils\Tools;
 
 class QuantumultX
 {
-    public $flag = 'quantumult20x';
+    public $flag = 'quantumult%20x';
     private $servers;
     private $user;
 
