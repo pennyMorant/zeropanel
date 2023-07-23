@@ -46,7 +46,7 @@ class Universal
         return base64_encode($uri);
     }
 
-    public function buildShadowsocks($server)
+    public static function buildShadowsocks($server)
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');              
@@ -70,7 +70,7 @@ class Universal
         return $url;
     }
 
-    public function buildVmess($server)
+    public static function buildVmess($server)
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
@@ -92,7 +92,7 @@ class Universal
         return $url;
     }
 
-    public function buildVless($server)
+    public static function buildVless($server)
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
@@ -115,7 +115,7 @@ class Universal
         
     }
 
-    public function buildTrojan($server)
+    public static function buildTrojan($server)
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
@@ -132,7 +132,7 @@ class Universal
         return $url;
     }
 
-    public function buildHysteria($server)
+    public static function buildHysteria($server)
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');

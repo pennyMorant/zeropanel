@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Node;
 use App\Models\Setting;
+use App\Models\UserSubscribeLog;
+use voku\helper\AntiXSS;
 
 class NodeService
 {
@@ -38,6 +40,19 @@ class NodeService
                     break;
             }
         }
+        self::log($user);
         return $servers;
+    }
+
+    private static function log($user)
+    {
+        $log                     = new UserSubscribeLog();
+        $log->user_id            = $user->id;
+        $log->email              = $user->email;
+        $log->request_ip         = $_SERVER['REMOTE_ADDR'];
+        $log->created_at         = time();
+        $antiXss                 = new AntiXSS();
+        $log->request_user_agent = $antiXss->xss_clean($_SERVER['HTTP_USER_AGENT']);
+        $log->save();
     }
 }

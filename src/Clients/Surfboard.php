@@ -66,7 +66,7 @@ class Surfboard
         return $config;
     }
 
-    public function buildShadowsocks($server)
+    public static function buildShadowsocks($server)
     {     
         $uri = sprintf(
             "%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
@@ -79,7 +79,7 @@ class Surfboard
         return $uri;
     }
 
-    public function buildVmess($server)
+    public static function buildVmess($server)
     {
         $vmess_params['ws'] = $server['net'] == 'ws' ? 'true' : 'false';
         $vmess_params['tls'] = $server['security'] == 'tls' ? 'true' : 'false';
@@ -100,7 +100,7 @@ class Surfboard
         return $uri;
     }
 
-    public function buildTrojan($server)
+    public static function buildTrojan($server)
     {
         $uri = sprintf(
             "%s = trojan, %s, %d, password=%s, sni=%s\n",
