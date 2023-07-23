@@ -29,8 +29,10 @@ class Surge
         foreach ($servers as $server) {
             switch ($server['type']) {
                 case 'shadowsocks':
-                    $proxies .= self::buildShadowsocks($server);
-                    $proxyGroup .= $server['remark'] . ', ';
+                    if (Node::getShadowsocksSupportMethod($server['method'])) {
+                        $proxies .= self::buildShadowsocks($server);
+                        $proxyGroup .= $server['remark'] . ', ';
+                    }
                     break;
                 case 'vmess':
                     $proxies .= self::buildVmess($server);
@@ -46,7 +48,7 @@ class Surge
         $surge_config = dirname(__FILE__,3).'/resources/conf/surge/surge.conf';
         $config = file_get_contents("$surge_config");
 
-        $sub_url = Setting::obtain('website_url')."/api/v1/client/subscribe?token={$user->subscription_token}";
+        $sub_url = Setting::obtain('subscribe_address_url')."/api/v1/client/subscribe?token={$user->subscription_token}";
         $sub_domain = $_SERVER['HTTP_HOST'];
         $config = str_replace('$subs_link', $sub_url, $config);
         $config = str_replace('$subs_domain', $sub_domain, $config);
@@ -66,16 +68,16 @@ class Surge
 
     public function buildShadowsocks($server)
     {
-        if (Node::getShadowsocksSupportMethod($server['method'])) {
-            $uri = sprintf(
-                "%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
-                $server['remark'],
-                $server['address'],
-                $server['port'],
-                $server['method'],
-                $server['passwd']
-            );
-        }
+        
+        $uri = sprintf(
+            "%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
+            $server['remark'],
+            $server['address'],
+            $server['port'],
+            $server['method'],
+            $server['passwd']
+        );
+        
         return $uri;
     }
 

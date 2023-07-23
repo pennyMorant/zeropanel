@@ -27,7 +27,9 @@ class QuantumultX
         foreach ($servers as $server) {
             switch ($server['type']) {
                 case 'shadowsocks':
-                    $uri .= self::buildShadowsocks($server);
+                    if (Node::getShadowsocksSupportMethod($server['method'])) {
+                        $uri .= self::buildShadowsocks($server);
+                    }
                     break;
                 case 'vmess':
                     $uri .= self::buildVmess($server);
@@ -43,17 +45,16 @@ class QuantumultX
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
-        if (Node::getShadowsocksSupportMethod($server['method'])) {
-            $uri = sprintf(
-                "shadowsocks={$address}:%d, method=%s, password=%s, fast-open=false, udp-relay=true, tag=%s\r\n",
-                $server['address'],
-                $server['port'],
-                $server['method'],
-                $server['passwd'],
-                $server['remark']
-            );
-            return $uri;
-        }
+        
+        $uri = sprintf(
+            "shadowsocks={$address}:%d, method=%s, password=%s, fast-open=false, udp-relay=true, tag=%s\r\n",
+            $server['address'],
+            $server['port'],
+            $server['method'],
+            $server['passwd'],
+            $server['remark']
+        );
+        return $uri;
     }
 
     public static function buildVmess($server)
