@@ -31,11 +31,11 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
-
+        $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         $this->view()
             ->assign('invite_url', $invite_url)
             ->registerClass('URL', URL::class)
-            ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
+            ->assign('subInfo', $sub_url)
             ->display('user/index.tpl');
         return $response;
     }

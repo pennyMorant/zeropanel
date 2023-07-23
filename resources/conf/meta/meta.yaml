@@ -1,0 +1,61 @@
+# port: 7890
+# socks-port: 7891
+# redir-port: 7892
+# tproxy-port: 7893
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  # listen: 0.0.0.0:53
+  ipv6: true
+
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://doh.dns.sb/dns-query
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.twnic.tw/dns-query
+    - tls://8.8.4.4:853
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+
+proxies:
+
+proxy-groups:
+  - { name: "$app_name", type: select, proxies: ["自动选择", "故障转移"] }
+  - { name: "Telegram", type: select, proxies: [] }
+  - { name: "Youtube", type: select, proxies: [] }
+  - { name: "Twitter", type: select, proxies: [] }
+  - { name: "自动选择", type: url-test, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 86400 }
+  - { name: "故障转移", type: fallback, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 7200 }
+
+rules:
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(GEOSITE,geolocation-!cn),REJECT # 屏蔽quic
+
+  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,geolocation-cn,DIRECT
+  - GEOSITE,geolocation-!cn,$app_name
+
+  - GEOIP,private,DIRECT
+  - GEOIP,telegram,Telegram
+  - GEOIP,twitter,Twitter
+  - GEOIP,CN,DIRECT
+  - GEOIP,!CN,$app_name
+
+  - MATCH,$app_name

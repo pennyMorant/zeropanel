@@ -53,7 +53,7 @@ class URL
     
     public static function getNew_AllItems(User $user, array $Rule): array
     {
-        $emoji = (isset($Rule['emoji']) ? $Rule['emoji'] : false);
+        $emoji = Setting::obtain('enable_subscribe_emoji');
 
         switch ($Rule['type']) {
             case 'shadowsocks':
