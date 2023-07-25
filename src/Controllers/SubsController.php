@@ -6,10 +6,11 @@ use App\Models\User;
 use App\Clients\Universal;
 use App\Services\NodeService;
 use Slim\Http\ServerRequest;
+use Slim\Http\Response;
 
 class SubsController
 {
-    public function subscribe(ServerRequest $request)
+    public function subscribe(ServerRequest $request, Response $response)
     {
         $flag = $request->getParam('flag') ?? ($_SERVER['HTTP_USER_AGENT'] ?? '');
         $token = $request->getParam('token');
@@ -17,8 +18,8 @@ class SubsController
         $user = User::where('subscription_token', $token)->first();
         $node_service = new NodeService();
         $servers = $node_service->getAllNodes($user);
-        
-       if ($flag) {
+        //return $response->withJson($servers);
+        if ($flag) {
             foreach (array_reverse(glob(dirname(__FILE__, 3).'/src/Clients'. '/*.php')) as $sub_file) {
                 $sub_file = 'App\\Clients\\'. basename($sub_file, '.php');
                 $class = new $sub_file($user, $servers);

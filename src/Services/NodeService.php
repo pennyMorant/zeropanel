@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Node;
 use App\Models\Setting;
 use App\Models\UserSubscribeLog;
+use App\Utils\Tools;
 use voku\helper\AntiXSS;
 
 class NodeService
@@ -39,6 +40,18 @@ class NodeService
                     $servers[] = $node->getHysteriaConfig($user, $node->custom_config, $emoji);
                     break;
             }
+        }
+        if (Setting::obtain('enable_subscribe_extend')) {
+            $remaining_traffic = Tools::flowAutoShow($user->transfer_enable - ($user->u + $user->d));
+            $expire_date = substr($user->class_expire, 0, 10);
+            $extend_node_1 = [
+                'remark' => "剩余流量:{$remaining_traffic}",
+            ];
+            $extend_node_2 = [
+                'remark' => "到期时间:{$expire_date}",
+            ];
+            array_unshift($servers, array_merge($servers[0], $extend_node_1));
+            array_unshift($servers, array_merge($servers[0], $extend_node_2));
         }
         self::log($user);
         return $servers;
