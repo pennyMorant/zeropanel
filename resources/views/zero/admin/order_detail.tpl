@@ -34,9 +34,7 @@
                                             <div class="card-title">
                                                 <h2>{$trans->t('order')} #{$order->order_no}</h2>
                                             </div>
-                                        </div>
-                                        
-                                        
+                                        </div>                                                                              
                                         <div class="card-body pt-0">
                                             <div class="table-responsive">
                                                 

@@ -33,7 +33,7 @@ class View
         $smarty->assign('zeroconfig', ZeroConfig::getPublicSetting());
         $smarty->assign('trans', I18n::get());
         $smarty->assign('user', $user);
-        $smarty->assign('anns', Ann::where('updated_at', '>=', time() - 7 * 86400)->orderBy('created_at', 'desc')->get());
+        $smarty->assign('anns', Ann::orderBy('created_at', 'desc')->limit(3)->get());
 
         if (self::$connection) {
             $smarty->assign('queryLog', self::$connection->connection('default')->getQueryLog());

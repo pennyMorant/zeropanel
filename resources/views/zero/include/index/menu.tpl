@@ -99,12 +99,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="app-navbar-item ms-1 ms-lg-3">
                                     <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
                                         <i class="fonticon-alarm fs-2"></i>                                
                                         <span class="position-absolute top-0 start-100 translate-middle  badge badge-circle badge-danger w-15px h-15px ms-n4 mt-3">{count($anns)}</span>                              
                                     </div>
                                 </div>
+                                -->
                                 <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                                     <div class="cursor-pointer symbol symbol-circle symbol-35px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                         <img src="{$user->gravatar}" alt="gravatar" />
