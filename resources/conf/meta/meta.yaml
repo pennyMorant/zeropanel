@@ -38,11 +38,11 @@ dns:
 proxies:
 
 proxy-groups:
-  - { name: "$app_name", type: select, proxies: ["自动选择", "故障转移"] }
-  - { name: "Telegram", type: select, proxies: [] }
-  - { name: "Youtube", type: select, proxies: [] }
-  - { name: "Twitter", type: select, proxies: [] }
-  - { name: "自动选择", type: url-test, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 86400 }
+  - { name: "Proxy", type: select, proxies: ["Auto", "故障转移"] }
+  - { name: "Telegram", type: select, proxies: ["Proxy"] }
+  - { name: "Youtube", type: select, proxies: ["Proxy"] }
+  - { name: "Twitter", type: select, proxies: ["Proxy"] }
+  - { name: "Auto", type: url-test, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 86400 }
   - { name: "故障转移", type: fallback, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 7200 }
 
 rules:
@@ -50,12 +50,12 @@ rules:
 
   - GEOSITE,category-ads-all,REJECT
   - GEOSITE,geolocation-cn,DIRECT
-  - GEOSITE,geolocation-!cn,$app_name
+  - GEOSITE,geolocation-!cn,Proxy
 
   - GEOIP,private,DIRECT
   - GEOIP,telegram,Telegram
   - GEOIP,twitter,Twitter
   - GEOIP,CN,DIRECT
-  - GEOIP,!CN,$app_name
+  - GEOIP,!CN,Proxy
 
-  - MATCH,$app_name
+  - MATCH,Proxy

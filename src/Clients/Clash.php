@@ -81,7 +81,6 @@ class Clash
             }
 
             $yaml = Yaml::dump($config, 2, 4, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
-            $yaml = str_replace('$app_name', Setting::obtain('website_name'), $yaml);
             return $yaml;
     }
 
