@@ -56,7 +56,7 @@ proxy-groups:
       - "Proxy"
   - 
     name: "Telegram"
-    type: select,
+    type: select
     proxies: 
       - "Proxy"
   - 
