@@ -80,7 +80,7 @@ class Clash
                 array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
             }
 
-            $yaml = Yaml::dump($config, 2, 4, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
+            $yaml = Yaml::dump($config, 5, 2, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
             return $yaml;
     }
 
@@ -120,11 +120,11 @@ class Clash
                 'path'    => $server['path'],
                 'headers' => [
                     'Host' => $server['host'],
-                ]
+                ],
             ],
             'grpc-opts' =>  [
                 'grpc-service-name' => $server['servicename'],
-            ]
+            ],
         ];
 
         return $node_info;

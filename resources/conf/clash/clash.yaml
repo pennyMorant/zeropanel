@@ -38,9 +38,24 @@ dns:
 proxies:
 
 proxy-groups:
-  - { name: "Proxy", type: select, proxies: ["Auto", "故障转移"] }
-  - { name: "Auto", type: url-test, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 86400 }
-  - { name: "故障转移", type: fallback, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 7200 }
+  - 
+    name: "Proxy"
+    type: select
+    proxies: 
+      - "Auto" 
+      - "故障转移"
+  - 
+    name: "Auto"
+    type: url-test
+    proxies: []
+    url: "http://www.gstatic.com/generate_204" 
+    interval: 86400
+  - 
+    name: "故障转移" 
+    type: fallback 
+    proxies: []
+    url: "http://www.gstatic.com/generate_204" 
+    interval: 7200
 
 rules:
   # 自定义规则

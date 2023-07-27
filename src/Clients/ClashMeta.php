@@ -80,7 +80,7 @@ class ClashMeta
                 array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
             }
 
-            $yaml = Yaml::dump($config, 2, 4, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
+            $yaml = Yaml::dump($config, 5, 2, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
             return $yaml;
     }
 

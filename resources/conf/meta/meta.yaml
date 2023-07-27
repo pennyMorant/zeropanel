@@ -38,14 +38,49 @@ dns:
 proxies:
 
 proxy-groups:
-  - { name: "Proxy", type: select, proxies: ["Auto", "故障转移"] }
-  - { name: "Google", type: select, proxies: ["Proxy"] }
-  - { name: "Netflix", type: select, proxies: ["Proxy"] }
-  - { name: "Telegram", type: select, proxies: ["Proxy"] }
-  - { name: "Youtube", type: select, proxies: ["Proxy"] }
-  - { name: "Twitter", type: select, proxies: ["Proxy"] }
-  - { name: "Auto", type: url-test, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 86400 }
-  - { name: "故障转移", type: fallback, proxies: [], url: "http://www.gstatic.com/generate_204", interval: 7200 }
+  - 
+    name: "Proxy"
+    type: select
+    proxies: 
+      - "Auto"
+      - "故障转移"
+  - 
+    name: "Google"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Netflix"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Telegram"
+    type: select,
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Youtube"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Twitter"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Auto"
+    type: url-test
+    proxies: []
+    url: "http://www.gstatic.com/generate_204"
+    interval: 86400
+  - 
+    name: "故障转移"
+    type: fallback
+    proxies: []
+    url: "http://www.gstatic.com/generate_204"
+    interval: 7200
 
 rules:
   - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(GEOSITE,geolocation-!cn),REJECT # 屏蔽quic
