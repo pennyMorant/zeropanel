@@ -21,26 +21,23 @@ class NodeService
         }
         $nodes = $query->where('status', '1')->orderBy('node_sort', 'desc')->orderBy('name')->get();
         $emoji = Setting::obtain('enable_subscribe_emoji');
+        
+        $configMethodLookup = [
+            1 => 'getShadowsocksConfig',
+            2 => 'getVmessConfig',
+            3 => 'getVlessConfig',
+            4 => 'getTrojanConfig',
+            5 => 'getHysteriaConfig',
+        ];
+        
         $servers = [];
         foreach ($nodes as $node) {
-            switch ($node->node_type) {
-                case 1:
-                    $servers[] = $node->getShadowsocksConfig($user, $node->custom_config, $emoji);
-                    break;
-                case 2:
-                    $servers[] = $node->getVmessConfig($user, $node->custom_config, $emoji);
-                    break;
-                case 3:
-                    $servers[] = $node->getVlessConfig($user, $node->custom_config, $emoji);
-                    break;
-                case 4:
-                    $servers[] = $node->getTrojanConfig($user, $node->custom_config, $emoji);
-                    break;
-                case 5:
-                    $servers[] = $node->getHysteriaConfig($user, $node->custom_config, $emoji);
-                    break;
+            $configMethod = $configMethodLookup[$node->node_type] ?? null;
+            if ($configMethod && method_exists($node, $configMethod)) {
+                $servers[] = $node->$configMethod($user, $node->custom_config, $emoji);
             }
         }
+
         if (Setting::obtain('enable_subscribe_extend')) {
             $remaining_traffic = Tools::flowAutoShow($user->transfer_enable - ($user->u + $user->d));
             $expire_date = substr($user->class_expire, 0, 10);
