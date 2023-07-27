@@ -27,21 +27,17 @@ class Surge
         $proxyGroup = '';
 
         foreach ($servers as $server) {
-            switch ($server['type']) {
-                case 'shadowsocks':
-                    if (Node::getShadowsocksSupportMethod($server['method'])) {
-                        $proxies .= self::buildShadowsocks($server);
-                        $proxyGroup .= $server['remark'] . ', ';
-                    }
-                    break;
-                case 'vmess':
-                    $proxies .= self::buildVmess($server);
-                    $proxyGroup .= $server['remark'] . ', ';
-                    break;
-                case 'trojan':
-                    $proxies .= self::buildTrojan($server);
-                    $proxyGroup .= $server['remark'] . ', ';
-                    break;
+            $type = $server['type'];
+            $buildMethod = 'build' . ucfirst($type);
+            $isValidServer = true;
+        
+            if ($type === 'shadowsocks' && !Node::getShadowsocksSupportMethod($server['method'])) {
+                $isValidServer = false;
+            }
+        
+            if ($isValidServer && method_exists($this, $buildMethod)) {
+                $proxies .= $this->$buildMethod($server);
+                $proxyGroup .= $server['remark'] . ', ';
             }
         }
 
@@ -50,18 +46,17 @@ class Surge
 
         $sub_url = Setting::obtain('subscribe_address_url')."/api/v1/client/subscribe?token={$user->subscription_token}";
         $sub_domain = $_SERVER['HTTP_HOST'];
-        $config = str_replace('$subs_link', $sub_url, $config);
-        $config = str_replace('$subs_domain', $sub_domain, $config);
-        $config = str_replace('$proxies', $proxies, $config);
-        $config = str_replace('$proxy_group', rtrim($proxyGroup, ', '), $config);
-
         $upload = round($user->u / (1024*1024*1024), 2);
         $download = round($user->d / (1024*1024*1024), 2);
         $useTraffic = $upload + $download;
         $totalTraffic = round($user->transfer_enable / (1024*1024*1024), 2);
         $expireDate = $user->class_expire;
         $subscribeInfo = "title={$appName}订阅信息, content=上传流量：{$upload}GB\\n下载流量：{$download}GB\\n剩余流量：{$useTraffic}GB\\n套餐流量：{$totalTraffic}GB\\n到期时间：{$expireDate}";
-        $config = str_replace('$subscribe_info', $subscribeInfo, $config);
+
+        $search = ['$subs_link', '$subs_domain', '$proxies', '$proxy_group', '$subscribe_info'];
+        $replace = [$sub_url, $sub_domain, $proxies, rtrim($proxyGroup, ', '), $subscribeInfo];
+
+        $config = str_replace($search, $replace, $config);
 
         return $config;
     }

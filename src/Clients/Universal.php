@@ -25,22 +25,9 @@ class Universal
         $uri = '';
         
         foreach ($servers as $server) {
-            switch ($server['type']) {
-                case 'shadowsocks':
-                    $uri .= self::buildShadowsocks($server);
-                    break;
-                case 'vmess':
-                    $uri .= self::buildVmess($server);
-                    break;
-                case 'vless': 
-                    $uri .= self::buildVless($server);
-                    break;
-                case 'trojan':
-                    $uri .= self::buildTrojan($server);
-                    break;
-                case 'hysteria':
-                    $uri .= self::buildHysteria($server);
-                    break;
+            $buildMethod = 'build' . ucfirst($server['type']);
+            if (method_exists($this, $buildMethod)) {
+                $uri .= $this->$buildMethod($server);
             }
         }
         return base64_encode($uri);

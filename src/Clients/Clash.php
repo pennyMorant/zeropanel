@@ -33,55 +33,55 @@ class Clash
         $proxies = [];
 
         foreach ($servers as $server) {
-            switch ($server['type']) {
-                case 'shadowsocks':
-                    if (Node::getShadowsocksSupportMethod($server['method'])) {
-                        array_push($proxy, self::buildShadowsocks($server));
-                        array_push($proxies, $server['remark']);
-                    }
-                    break;
-                case 'vmess':
-                    array_push($proxy, self::buildVmess($user->uuid, $server));
-                    array_push($proxies, $server['remark']);
-                    break;
-                case 'trojan':
-                    array_push($proxy, self::buildTrojan($user->uuid, $server));
-                    array_push($proxies, $server['remark']);
-                    break;
-
+            $type = $server['type'];
+            $buildMethod = 'build' . ucfirst($type);
+            $isValidServer = true;
+        
+            if ($type === 'shadowsocks' && !Node::getShadowsocksSupportMethod($server['method'])) {
+                $isValidServer = false;
+            }
+        
+            if ($isValidServer && method_exists($this, $buildMethod)) {
+                array_push($proxy, $this->$buildMethod($server));
+                array_push($proxies, $server['remark']);
             }
         }
-            $config['proxies'] = array_merge($config['proxies'] ? $config['proxies'] : [], $proxy);
-            foreach ($config['proxy-groups'] as $k => $v) {
-                if (!is_array($config['proxy-groups'][$k]['proxies'])) $config['proxy-groups'][$k]['proxies'] = [];
-                $isFilter = false;
-                foreach ($config['proxy-groups'][$k]['proxies'] as $src) {
-                    foreach ($proxies as $dst) {
-                        if (!$this->isRegex($src)) continue;
-                        $isFilter = true;
-                        $config['proxy-groups'][$k]['proxies'] = array_values(array_diff($config['proxy-groups'][$k]['proxies'], [$src]));
-                        if ($this->isMatch($src, $dst)) {
-                            array_push($config['proxy-groups'][$k]['proxies'], $dst);
-                        }
-                    }
-                    if ($isFilter) continue;
+
+        $config['proxies'] = array_merge($config['proxies'] ?? [], $proxy);
+
+        foreach ($config['proxy-groups'] as &$group) {
+            $group['proxies'] = $group['proxies'] ?? [];
+
+            $isFilter = false;
+            $newProxies = [];
+            foreach ($group['proxies'] as $src) {
+                if (!$this->isRegex($src)) {
+                    $newProxies[] = $src;
+                    continue;
                 }
-                if ($isFilter) continue;
-                $config['proxy-groups'][$k]['proxies'] = array_merge($config['proxy-groups'][$k]['proxies'], $proxies);
-            }
 
-            $config['proxy-groups'] = array_filter($config['proxy-groups'], function($group) {
-                return $group['proxies'];
-            });
-            $config['proxy-groups'] = array_values($config['proxy-groups']);
-            // Force the current subscription domain to be a direct rule
-            $subsDomain = $_SERVER['HTTP_HOST'];
-            if ($subsDomain) {
-                array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
+                $isFilter = true;
+                foreach ($proxies as $dst) {
+                    if ($this->isMatch($src, $dst)) {
+                        $newProxies[] = $dst;
+                    }
+                }
             }
+            $group['proxies'] = $isFilter ? $newProxies : array_merge($group['proxies'], $proxies);
+        }
+        unset($group);
 
-            $yaml = Yaml::dump($config, 5, 2, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
-            return $yaml;
+        $config['proxy-groups'] = array_filter($config['proxy-groups'], function($group) {
+            return !empty($group['proxies']);
+        });
+
+        $subsDomain = $_SERVER['HTTP_HOST'];
+        if ($subsDomain) {
+            array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
+        }
+
+        $yaml = Yaml::dump($config, 5, 2, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
+        return $yaml;
     }
 
     public static function buildShadowsocks($server)
@@ -99,7 +99,7 @@ class Clash
         return $node_info;
     }
 
-    public static function buildVmess($uuid, $server)
+    public static function buildVmess($server)
     {
         $ws = $server['net'] == 'ws' ? 'ws' : '';
         $tls = $server['security'] == 'tls' ? true : false;
@@ -130,7 +130,7 @@ class Clash
         return $node_info;
     }
 
-    public static function buildTrojan($uuid, $server)
+    public static function buildTrojan($server)
     {
         $node_info = [
             'name'     => $server['remark'],
@@ -152,6 +152,6 @@ class Clash
 
     private function isRegex($exp)
     {
-        return @preg_match($exp, null) !== false;
+        return @preg_match($exp, '') !== false;
     }
 }

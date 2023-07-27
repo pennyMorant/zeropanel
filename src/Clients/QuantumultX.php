@@ -25,17 +25,16 @@ class QuantumultX
         header("subscription-userinfo: upload={$user->u}; download={$user->d}; total={$user->transfer_enable}; expire=".strtotime($user->class_expire));
 
         foreach ($servers as $server) {
-            switch ($server['type']) {
-                case 'shadowsocks':
-                    if (Node::getShadowsocksSupportMethod($server['method'])) {
-                        $uri .= self::buildShadowsocks($server);
-                    }
-                    break;
-                case 'vmess':
-                    $uri .= self::buildVmess($server);
-                    break;
-                case 'trojan':
-                    $uri .= self::buildTrojan($server);
+            $type = $server['type'];
+            $buildMethod = 'build' . ucfirst($type);
+            $isValidServer = true;
+        
+            if ($type === 'shadowsocks' && !Node::getShadowsocksSupportMethod($server['method'])) {
+                $isValidServer = false;
+            }
+        
+            if ($isValidServer && method_exists($this, $buildMethod)) {
+                $uri .= $this->$buildMethod($server);
             }
         }
         return base64_encode($uri);
