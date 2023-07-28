@@ -50,11 +50,10 @@ class NodeService
             array_unshift($servers, array_merge($servers[0], $extend_node_1));
             array_unshift($servers, array_merge($servers[0], $extend_node_2));
         }
-        self::log($user);
         return $servers;
     }
 
-    private static function log($user)
+    public function recordLog($user)
     {
         $log                     = new UserSubscribeLog();
         $log->user_id            = $user->id;
