@@ -20,7 +20,6 @@ class Config
         
         return [
             'appName'                       => $public_configs['website_name'],
-            'version'                       => VERSION,
             'baseUrl'                       => $public_configs['website_url'],
             'live_chat'                     => $public_configs['live_chat'],
             'tawk_id'                       => $public_configs['tawk_id'],
