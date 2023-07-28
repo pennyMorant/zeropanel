@@ -95,9 +95,9 @@ class UserController extends AdminController
     public function updateUserIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $args['id'];
-        $user = User::find($id);
+        $edit_user = User::find($id);
         $this->view()
-            ->assign('user', $user)
+            ->assign('edit_user', $edit_user)
             ->display('admin/user/update.tpl');
         return $response;
     }

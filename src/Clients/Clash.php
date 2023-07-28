@@ -22,10 +22,10 @@ class Clash
     {
         $user = $this->user;
         $servers = $this->servers;
-        $appName = Setting::obtain('website_name');
+        $website_name = Setting::obtain('website_name');
         header("subscription-userinfo: upload={$user->u}; download={$user->d}; total={$user->transfer_enable}; expire=".strtotime($user->class_expire));
         header('profile-update-interval: 24');
-        header("content-disposition:attachment;filename*=UTF-8''".rawurlencode($appName).".yaml");
+        header("content-disposition:attachment;filename*=UTF-8''".rawurlencode($website_name).".yaml");
         header("profile-web-page-url:" . Setting::obtain('website_url'));
         $clash_config = dirname(__FILE__,3).'/resources/conf/clash/clash.yaml';
         $config = Yaml::parseFile($clash_config);

@@ -5,6 +5,7 @@ namespace App\Services;
 use Smarty;
 use Pkly\I18Next\I18n;
 use App\Models\Ann;
+use App\Models\Setting;
 
 class View
 {
@@ -29,7 +30,7 @@ class View
         //$smarty->auto_literal = true;
         // add config
 
-        $smarty->assign('config', Config::getPublicConfig());
+        $smarty->assign('config', Setting::getPublicConfig());
         $smarty->assign('zeroconfig', ZeroConfig::getPublicSetting());
         $smarty->assign('trans', I18n::get());
         $smarty->assign('user', $user);

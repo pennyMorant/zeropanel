@@ -21,13 +21,13 @@
 												<!--begin:Logo-->
 												<div style="margin-bottom: 10px">
 													<a href="https://keenthemes.com" target="_blank">
-														<h1>{$config['appName']}</h1>
+														<h1>{$config['website_name']}</h1>
 													</a>
 												</div>
 												<!--end:Logo-->
 												<!--begin:Media-->
 												<div style="margin-bottom: 15px">
-													<img src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-positive-vote-1.svg" />
+													<img src="{$config['website_name']}/theme/zero/assets/media/email/icon-positive-vote-1.svg" />
 												</div>
 												<!--end:Media-->
 												<!--begin:Text-->
@@ -39,7 +39,7 @@
 												</div>
 												<!--end:Text-->
 												<!--begin:Action-->
-												<a href="{$config['baseUrl']}" target="_blank" style="background-color:#50cd89; border-radius:6px;display:inline-block; padding:11px 19px; color: #FFFFFF; font-size: 14px; font-weight:500;">Activate Account</a>
+												<a href="{$config['website_name']}" target="_blank" style="background-color:#50cd89; border-radius:6px;display:inline-block; padding:11px 19px; color: #FFFFFF; font-size: 14px; font-weight:500;">Activate Account</a>
 												<!--begin:Action-->
 											</div>
 											<!--end:Email content-->
@@ -54,7 +54,7 @@
 												<div style="display:flex">
 													<!--begin::Media-->
 													<div style="display: flex; justify-content: center; align-items: center; width:40px; height:40px; margin-right:13px">
-														<img  src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-polygon.svg" />
+														<img  src="{$config['website_name']}/theme/zero/assets/media/email/icon-polygon.svg" />
 														<span style="position: absolute; color:#50CD89; font-size: 16px; font-weight: 600;">1</span>
 													</div>
 													<!--end::Media-->
@@ -81,7 +81,7 @@
 												<div style="display:flex">
 													<!--begin::Media-->
 													<div style="display: flex; justify-content: center; align-items: center; width:40px; height:40px; margin-right:13px">
-														<img src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-polygon.svg" />
+														<img src="{$config['website_name']}/theme/zero/assets/media/email/icon-polygon.svg" />
 														<span style="position: absolute; color:#50CD89; font-size: 16px; font-weight: 600;">2</span>
 													</div>
 													<!--end::Media-->
@@ -108,7 +108,7 @@
 												<div style="display:flex">
 													<!--begin::Media-->
 													<div style="display: flex; justify-content: center; align-items: center; width:40px; height:40px; margin-right:13px">
-														<img src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-polygon.svg" />
+														<img src="{$config['website_name']}/theme/zero/assets/media/email/icon-polygon.svg" />
 														<span style="position: absolute; color:#50CD89; font-size: 16px; font-weight: 600;">3</span>
 													</div>
 													<!--end::Media-->
@@ -144,31 +144,31 @@
 									<tr>
 										<td align="center" valign="center" style="text-align:center; padding-bottom: 20px;">
 											<a href="#" style="margin-right:10px">
-												<img  src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-linkedin.svg" />
+												<img  src="{$config['website_name']}/theme/zero/assets/media/email/icon-linkedin.svg" />
 											</a>
 											<a href="#" style="margin-right:10px">
-												<img  src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-dribbble.svg" />
+												<img  src="{$config['website_name']}/theme/zero/assets/media/email/icon-dribbble.svg" />
 											</a>
 											<a href="#" style="margin-right:10px">
-												<img  src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-facebook.svg" />
+												<img  src="{$config['website_name']}/theme/zero/assets/media/email/icon-facebook.svg" />
 											</a>
 											<a href="#">
-												<img  src="{$config['baseUrl']}/theme/zero/assets/media/email/icon-twitter.svg" />
+												<img  src="{$config['website_name']}/theme/zero/assets/media/email/icon-twitter.svg" />
 											</a>
 										</td>
 									</tr>
 									<tr>
 										<td align="center" valign="center" style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #A1A5B7;font-family:Arial,Helvetica,sans-serif">
 											<p>&copy; Copyright.
-											<a href="{$config['baseUrl']}" rel="noopener" target="_blank" style="font-weight: 600;font-family:Arial,Helvetica,sans-serif"></a>&nbsp; {$config['appName']}</p>
+											<a href="{$config['website_name']}" rel="noopener" target="_blank" style="font-weight: 600;font-family:Arial,Helvetica,sans-serif"></a>&nbsp; {$config['website_name']}</p>
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
-        <script src="{$config['baseUrl']}/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
-		<script src="{$config['baseUrl']}/theme/zero/assets/js/scripts.bundle.js"></script>
+        <script src="{$config['website_name']}/theme/zero/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="{$config['website_name']}/theme/zero/assets/js/scripts.bundle.js"></script>
 	</body>
 	<!--end::Body-->
 </html>

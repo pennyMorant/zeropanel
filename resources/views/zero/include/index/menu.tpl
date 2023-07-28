@@ -16,7 +16,7 @@
                         </div>
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="/user/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
-                                {$config['appName']}
+                                {$config['website_name']}
                             </a>
                         </div>
                         <div class="d-flex align-items-stretch justify-content-between" id="kt_app_header_wrapper">
@@ -158,7 +158,7 @@
                     <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                         <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                             <a href="/user/dashboard" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
-                                {$config['appName']}
+                                {$config['website_name']}
                             </a>
                             <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
                                 <span class="svg-icon svg-icon-2 rotate-180">

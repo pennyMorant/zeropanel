@@ -21,8 +21,8 @@ class Surfboard
     {
         $user = $this->user;
         $servers = $this->servers;
-        $appName = Setting::obtain('website_name');
-        header("content-disposition:attachment;filename*=UTF-8''".rawurlencode($appName).".conf");
+        $website_name = Setting::obtain('website_name');
+        header("content-disposition:attachment;filename*=UTF-8''".rawurlencode($website_name).".conf");
         $proxies = '';
         $proxyGroup = '';
 
@@ -51,7 +51,7 @@ class Surfboard
         $useTraffic = $upload + $download;
         $totalTraffic = round($user->transfer_enable / (1024*1024*1024), 2);
         $expireDate = substr($user->class_expire, 0, 10);
-        $subscribeInfo = "title={$appName}订阅信息, content=上传流量：{$upload}GB\\n下载流量：{$download}GB\\n剩余流量：{$useTraffic}GB\\n套餐流量：{$totalTraffic}GB\\n到期时间：{$expireDate}";
+        $subscribeInfo = "title={$website_name}订阅信息, content=上传流量：{$upload}GB\\n下载流量：{$download}GB\\n剩余流量：{$useTraffic}GB\\n套餐流量：{$totalTraffic}GB\\n到期时间：{$expireDate}";
 
         $search = ['$subs_link', '$subs_domain', '$proxies', '$proxy_group', '$subscribe_info'];
         $replace = [$sub_url, $sub_domain, $proxies, rtrim($proxyGroup, ', '), $subscribeInfo];

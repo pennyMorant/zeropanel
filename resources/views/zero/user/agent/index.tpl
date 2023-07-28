@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>{$config["appName"]} 代理中心</title>
+	<title>{$config["website_name"]} 代理中心</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -52,7 +52,7 @@
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 							<a href="/user" class="d-lg-none fs-1 fw-bolder text-dark">
-								{$config['appName']}
+								{$config['website_name']}
 							</a>
 						</div>
 						<!--end::Mobile logo-->
@@ -270,7 +270,7 @@
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
 							<a href="/user" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
-                                {$config['appName']}
+                                {$config['website_name']}
 							</a>
 							<!--end::Logo image-->
 							<!--begin::Sidebar toggle-->
@@ -774,7 +774,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>

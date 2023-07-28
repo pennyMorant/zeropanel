@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} Dashboard</title>
+        <title>{$config["website_name"]} Dashboard</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -250,7 +250,7 @@
                                                                 <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('ref.gift')}</span>
                                                                 <span class="fs-h2 fw-bolder">{$trans->t('ref.referral')}</span>
                                                             </div>                                                                                              
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['appName']}{$config['rebate_ratio']}%</span>                                               
+                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['website_name']}{$config['rebate_ratio']}%</span>                                               
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
                                                                 <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
@@ -270,7 +270,7 @@
 						<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
 							<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
 								<div class="text-dark-75 order-2 order-md-1">
-									&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+									&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
 								</div>
 							</div>
                     	</div>

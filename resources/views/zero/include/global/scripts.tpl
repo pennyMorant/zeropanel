@@ -7,7 +7,7 @@
 <script src="/js/i18nextBrowserLanguageDetector.min.js"></script>
 <script src="/js/i18next.min.js"></script>
 <script src="/js/language.js"></script>
-<script>var webName = "{$config['appName']}";</script>
+<script>var webName = "{$config['website_name']}";</script>
 <script>
     {if $config['verify_email'] === 'open'}
         var veried = {$user->verified};

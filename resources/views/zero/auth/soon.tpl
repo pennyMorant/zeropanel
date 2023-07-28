@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>{$config['appName']} Coming Soon</title>
+		<title>{$config['website_name']} Coming Soon</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -19,7 +19,7 @@
 						<div class="card-body py-15 py-lg-20">
 							<div class="mb-13">
 								<a href="/auth/signin" class="fs-3hx fw-bolder text-dark">
-                                    {$config['appName']}
+                                    {$config['website_name']}
 								</a>
 							</div>
 							<h1 class="fw-bolder text-gray-900 mb-7">We're Launching Soon</h1>
