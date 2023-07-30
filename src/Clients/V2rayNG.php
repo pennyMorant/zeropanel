@@ -5,7 +5,7 @@ namespace App\Clients;
 use App\Models\Node;
 use App\Utils\Tools;
 
-class V2rayN
+class V2rayNG
 {
     public $flag = 'v2rayng';
     private $user;
