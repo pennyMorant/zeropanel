@@ -4,6 +4,7 @@ namespace App\Clients;
 
 use App\Models\Setting;
 use App\Models\Node;
+use App\Utils\Tools;
 
 class Surfboard
 {
@@ -51,7 +52,7 @@ class Surfboard
         $useTraffic = $upload + $download;
         $totalTraffic = round($user->transfer_enable / (1024*1024*1024), 2);
         $expireDate = substr($user->class_expire, 0, 10);
-        $subscribeInfo = "title={$website_name}订阅信息, content=上传流量：{$upload}GB\\n下载流量：{$download}GB\\n剩余流量：{$useTraffic}GB\\n套餐流量：{$totalTraffic}GB\\n到期时间：{$expireDate}";
+        $subscribeInfo = "title={$website_name}订阅信息, content=上传流量：{$upload}GB\\n下载流量:{$download}GB\\n剩余流量:{$useTraffic}GB\\n套餐流量:{$totalTraffic}GB\\n到期时间:{$expireDate}";
 
         $search = ['$subs_link', '$subs_domain', '$proxies', '$proxy_group', '$subscribe_info'];
         $replace = [$sub_url, $sub_domain, $proxies, rtrim($proxyGroup, ', '), $subscribeInfo];
@@ -62,9 +63,11 @@ class Surfboard
     }
 
     public static function buildShadowsocks($server)
-    {     
+    {   
+        $ip_type = Tools::isIP($server['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $uri = sprintf(
-            "%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
+            "%s = ss, {$address}, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
             $server['remark'],
             $server['address'],
             $server['port'],
@@ -76,11 +79,13 @@ class Surfboard
 
     public static function buildVmess($server)
     {
+        $ip_type = Tools::isIP($server['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $vmess_params['ws'] = $server['net'] == 'ws' ? 'true' : 'false';
         $vmess_params['tls'] = $server['security'] == 'tls' ? 'true' : 'false';
         
         $uri = sprintf(
-            "%s = vmess, %s, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s\n",
+            "%s = vmess, {$address}, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s\n",
             $server['remark'],
             $server['address'],
             $server['port'],
@@ -97,8 +102,10 @@ class Surfboard
 
     public static function buildTrojan($server)
     {
+        $ip_type = Tools::isIP($server['address']);
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $uri = sprintf(
-            "%s = trojan, %s, %d, password=%s, sni=%s\n",
+            "%s = trojan, {$address}, %d, password=%s, sni=%s\n",
             $server['remark'],
             $server['address'],
             $server['port'],
