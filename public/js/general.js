@@ -579,7 +579,7 @@ function oneclickImport(client, subLink) {
       clash: `clash://install-config?url=${encodeURIComponent(subLink)}`,
       sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
       quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
-      v2rayng: `v2rayng://install-config?url=${encodeURIComponent(subLink)}&name=${webName}`,
+      v2rayng: `v2rayng://install-config?url=${encodeURIComponent(subLink)}`,
     }
 
     Swal.fire({
