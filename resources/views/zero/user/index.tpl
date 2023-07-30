@@ -352,7 +352,9 @@
 		{include file='include/index/news.tpl'}
 		<script src="/js/qrcode.min.js"></script>		
 		<script>
-			countdown('{$user->class_expire}', 'user_class_expired_time');
+			{if strtotime($user->class_expire) > time()}
+				countdown('{$user->class_expire}', 'user_class_expired_time')
+			{/if}
 			$('#zero_show_ann div:first').addClass('active');
 			$("#zero_subscribe_qrcode").qrcode({
 				width: 200,
@@ -360,14 +362,14 @@
 				render: "canvas",
 				text: "{$subInfo}"
 			});
-			$(window).on('resize load',function(){
-				if (window.screen.width < 500) {
-					$('[data-bs-target="#zero_canvas_show_subscribe_info"]').removeClass('d-none');
-					$('[data-bs-target="#zero_modal_show_subscribe_info"]').addClass('d-none');
-				} else {
-					$('[data-bs-target="#zero_canvas_show_subscribe_info"]').addClass('d-none');
-					$('[data-bs-target="#zero_modal_show_subscribe_info"]').removeClass('d-none');
-				}
+
+			$(window).on('resize load', function() {
+				const isNarrowScreen = window.screen.width < 500;
+				const targetCanvas = $('[data-bs-target="#zero_canvas_show_subscribe_info"]');
+				const targetModal = $('[data-bs-target="#zero_modal_show_subscribe_info"]');
+			
+				targetCanvas.toggleClass('d-none', !isNarrowScreen);
+				targetModal.toggleClass('d-none', isNarrowScreen);
 			});
 		</script>					
 	</body>

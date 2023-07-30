@@ -5,9 +5,9 @@ namespace App\Clients;
 use App\Models\Node;
 use App\Utils\Tools;
 
-class Universal
+class V2rayN
 {
-    public $flag = 'universal';
+    public $flag = 'v2rayn';
     private $user;
     private $servers;
 
@@ -59,23 +59,23 @@ class Universal
     public static function buildVmess($server)
     {
         $ip_type = Tools::isIP($server['address']);
-        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
-        $url = sprintf(
-            "vmess://%s@{$address}:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
-            $server['uuid'],
-            $server['address'],
-            $server['port'],
-            $server['host'],
-            $server['path'],
-            $server['flow'],
-            $server['security'],
-            $server['sni'],
-            rawurlencode($server['servicename']),
-            $server['headertype'],
-            $server['net'],
-            rawurlencode($server['remark'])
-        );
-        return $url;
+        $address = ($ip_type === 'v6' ? "[{$server['address']}]" : $server['address']);
+        $config = [
+            'v'           => "2",
+            'ps'          => $server['remark'],
+            'add'         => $address,
+            'port'        => $server['port'],
+            'id'          => $server['uuid'],
+            'aid'         => $server['aid'],
+            'net'         => $server['net'],
+            'type'        => $server['net'] == 'grpc' ? "multi" : $server['headertype'],
+            'host'        => $server['host'],
+            'path'        => $server['path'],
+            'tls'         => $server['security'],
+            'sni'         => $server['sni'],
+            'serviceName' => $server['servicename'],
+        ];
+        return "vmess://" . base64_encode(json_encode($config)) . "\n";
     }
 
     public static function buildVless($server)

@@ -66,11 +66,7 @@
     </script>
     <script>
         function updateNodeStatus(id) {
-            if ($("#node_status_"+id).prop("checked")) {
-                var status = 1;
-            } else {
-                var status = 0;
-            }
+            const status = $("#node_status_"+id).prop("checked") ? 1 : 0;
             $.ajax({
                 type: "PUT",
                 url: "/{$config['website_admin_path']}/node/update/status",

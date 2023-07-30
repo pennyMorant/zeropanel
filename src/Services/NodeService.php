@@ -15,8 +15,7 @@ class NodeService
     {
         $query = Node::query();
         if (!$user->is_admin) {
-            $group = ($user->node_group != 0 ? [0, $user->node_group] : [0]);
-            $query->whereIn('node_group', $group)
+            $query->whereJsonContains('node_group', ["$user->node_group"])
                 ->where('node_class', '<=', $user->class);
         }
         $nodes = $query->where('status', '1')->orderBy('node_sort', 'desc')->orderBy('name')->get();

@@ -143,7 +143,7 @@ class RecordController extends AdminController
                     return [
                         'id'             => $rowData->id,
                         'user_id'        => $rowData->user_id,
-                        'request_user_agent' => substr($rowData->request_user_agent, 0, 25),
+                        'request_user_agent' => substr($rowData->request_user_agent, 0, 50),
                         'request_ip'     => $rowData->request_ip,
                         'location'       => Tools::getIPLocation($rowData->request_ip),
                         'created_at'   => date('Y-m-d H:i:s', $rowData->created_at),
