@@ -346,6 +346,7 @@
 				<a class="btn btn-outline btn-active-secondary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surge4', '{$subInfo}')">导入订阅Surge</a>
 				<a class="btn btn-outline btn-active-secondary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&&flag=clash')">导入订阅Clash</a>
 				<a class="btn btn-outline btn-active-secondary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&&flag=meta')">导入订阅Clash Meta</a>
+				<a class="btn btn-outline btn-active-secondary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('v2rayng', '{$subInfo}&&flag=v2rayng')">导入订阅Clash Meta</a>
 			</div>
 		</div>
 		{include file='include/global/scripts.tpl'}
