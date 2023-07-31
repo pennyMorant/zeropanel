@@ -64,10 +64,8 @@ class Surfboard
 
     public static function buildShadowsocks($server)
     {   
-        $ip_type = Tools::isIP($server['address']);
-        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $uri = sprintf(
-            "%s = ss, {$address}, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
+            "%s = ss, %s, %d, encrypt-method=%s, password=%s, udp-relay=true\n",
             $server['remark'],
             $server['address'],
             $server['port'],
@@ -79,13 +77,11 @@ class Surfboard
 
     public static function buildVmess($server)
     {
-        $ip_type = Tools::isIP($server['address']);
-        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $vmess_params['ws'] = $server['net'] == 'ws' ? 'true' : 'false';
         $vmess_params['tls'] = $server['security'] == 'tls' ? 'true' : 'false';
         
         $uri = sprintf(
-            "%s = vmess, {$address}, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s\n",
+            "%s = vmess, %s, %d, username=%s, ws=%s, ws-path=%s, ws-header=host:%s, tls=%s, sni=%s\n",
             $server['remark'],
             $server['address'],
             $server['port'],
@@ -102,10 +98,8 @@ class Surfboard
 
     public static function buildTrojan($server)
     {
-        $ip_type = Tools::isIP($server['address']);
-        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $uri = sprintf(
-            "%s = trojan, {$address}, %d, password=%s, sni=%s\n",
+            "%s = trojan, %s, %d, password=%s, sni=%s\n",
             $server['remark'],
             $server['address'],
             $server['port'],
