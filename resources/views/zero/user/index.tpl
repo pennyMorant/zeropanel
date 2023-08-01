@@ -27,7 +27,7 @@
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
-									<div class="row g-5">
+									<div class="row g-5 g-xl-10 mb-xl-10 mb-5">
 										<div class="col-xxl-6">
 											<div class="card card-flush">
 												<div class="card-header border-0">
@@ -116,7 +116,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-xxl-6 mb-5">
+										<div class="col-xxl-6">
 											<div class="card card-flush mb-3">
 												<div class="card-header">
 													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
@@ -148,7 +148,7 @@
 											</div>
 										</div>                                   
 									</div>
-									<div class="row g-5">
+									<div class="row g-5 g-xl-10 mb-xl-10">
 										<div class="col-xxl-8">
 											<div class="card card-flush">
 												<div class="card-header">
