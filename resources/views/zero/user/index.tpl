@@ -31,7 +31,7 @@
 										<div class="col-xxl-6">
 											<div class="card card-flush">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>																										
+													<div class="card-title fs-3 fw-bolder">{$trans->t('product details')}</div>																										
 													<div class="card-toolbar">
 														<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_info">一键订阅</button>
 														<button class="btn btn-primary btn-sm d-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#zero_canvas_show_subscribe_info">一键订阅</button>
@@ -119,9 +119,9 @@
 										<div class="col-xxl-6">
 											<div class="card card-flush mb-3">
 												<div class="card-header">
-													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
+													<div class="card-title  fw-bolder fs-3">{$trans->t('traffic details')}</div>
 													<div class="card-toolbar">
-														<span class="badge badge-light-primary badge fs-4">速率:{if $user->node_speedlimit == 0}{$trans->t('unlimited')}{else}{$user->node_speedlimit}Mbps{/if}</span>
+														<span class="badge badge-light-primary badge fs-4 fw-semibold">速率:{if $user->node_speedlimit == 0}{$trans->t('unlimited')}{else}{$user->node_speedlimit}Mbps{/if}</span>
 													</div>
 												</div>
 												<div class="card-body d-flex flex-column pt-0">
@@ -132,7 +132,7 @@
 												<div class="card-body d-flex flex-column">
 													<div id="kt_carousel_3_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
 														<div class="d-flex align-items-center justify-content-between flex-wrap">
-															<span class="fs-3 fw-bold">最近公告</span>
+															<span class="fs-3 fw-bolder">最近公告</span>
 															<ol class="p-0 m-0 carousel-indicators carousel-indicators-bullet carousel-indicators-active-primary">
 																<li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="0" class="ms-1 active"></li>
 																<li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="1" class="ms-1"></li>
