@@ -5,6 +5,7 @@ namespace App\Services;
 use Smarty;
 use Pkly\I18Next\I18n;
 use App\Models\Ann;
+use App\Models\Setting;
 
 class View
 {
@@ -29,11 +30,11 @@ class View
         //$smarty->auto_literal = true;
         // add config
 
-        $smarty->assign('config', Config::getPublicConfig());
+        $smarty->assign('config', Setting::getPublicConfig());
         $smarty->assign('zeroconfig', ZeroConfig::getPublicSetting());
         $smarty->assign('trans', I18n::get());
         $smarty->assign('user', $user);
-        $smarty->assign('anns', Ann::where('updated_at', '>=', time() - 7 * 86400)->orderBy('created_at', 'desc')->get());
+        $smarty->assign('anns', Ann::orderBy('created_at', 'desc')->limit(3)->get());
 
         if (self::$connection) {
             $smarty->assign('queryLog', self::$connection->connection('default')->getQueryLog());

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>{$config["appName"]} Order Detail</title>
+	<title>{$config["website_name"]} Order Detail</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -127,7 +127,7 @@
                                                         <ul class="nav nav-pills d-flex flex-column flex-xl-row justify-content-center" role="tablist" id="payment_method">                                                         
                                                             {foreach $payments as $payment}
                                                                 <li class="nav-item mb-3">
-                                                            <a class="btn btn-outline btn-active-light-primary d-flex flex-column" {if $payment->gateway == 'PayPal'} id="payment_paypal_{$payment->id}"{else} id="payment_others_{$payment->id}"{/if} data-bs-toggle="pill" data-payment-id="{$payment->id}"  data-payment-uuid="{$payment->uuid}">
+                                                                    <a class="btn btn-outline btn-active-light-primary d-flex flex-column" {if $payment->gateway == 'PayPal'} id="payment_paypal_{$payment->id}"{else} id="payment_others_{$payment->id}"{/if} data-bs-toggle="pill" data-payment-id="{$payment->id}"  data-payment-uuid="{$payment->uuid}">
                                                                         
                                                                         <img class="h-35px w-auto" src={$payment->icon}>
                                                                         
@@ -159,7 +159,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>

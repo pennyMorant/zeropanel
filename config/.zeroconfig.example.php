@@ -1,19 +1,4 @@
 <?php
-
-# 主页订阅框显示哪些订阅     可选: v2ray, surge, clash, surfboard, kitsunebi, shadowrocket, quantumult, quantumultx, v2rayvless, shadwosocks
-$_ZC['index_sub'] = [
-    'v2rayn',
-    'surge',
-    'clash',
-    'surfboard',
-    'quantumult',
-    'quantumultx',
-    'shadowrocket',
-    'anxray',
-    'ss',
-];
-
-
 /**
  *    Windows 客户端  --------------------------------------------------------------------------------------------
  */

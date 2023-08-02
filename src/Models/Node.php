@@ -51,9 +51,6 @@ class Node extends Model
             case 2:
                 $type = 'VMESS';
                 break;
-            case 5:
-                $type = 'Shadowsocks - V2Ray-Plugin&Obfs';
-                break;
             case 4:
                 $type = 'TROJAN';
                 break;
@@ -118,6 +115,8 @@ class Node extends Model
      */
     public function getShadowsocksConfig(User $user, $custom_config, bool $emoji = false): array
     {
+        $config = [];
+        if ($this->node_type == 1) {
         $custom_configs       = json_decode($custom_config, true);
         $config['remark']     = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
         $config['type']       = 'shadowsocks';
@@ -127,7 +126,7 @@ class Node extends Model
         $config['address']    = $this->server;
         $config['port']       = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
         $config['class']      = $this->node_class;
-
+        }
         return $config;
     }
 
@@ -136,6 +135,8 @@ class Node extends Model
      */
     public function getVmessConfig(User $user, $custom_config, bool $emoji = false): array
     {
+        $config = [];
+        if ($this->node_type == 2) {
         $custom_configs        = json_decode($custom_config, true);
         $config['v']           = '2';
         $config['type']        = 'vmess';
@@ -154,6 +155,7 @@ class Node extends Model
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        }
         return $config;
     }
 

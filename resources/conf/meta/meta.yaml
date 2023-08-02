@@ -1,0 +1,105 @@
+# port: 7890
+# socks-port: 7891
+# redir-port: 7892
+# tproxy-port: 7893
+mixed-port: 7890
+allow-lan: true
+bind-address: "*"
+mode: rule
+log-level: info
+ipv6: true
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  # listen: 0.0.0.0:53
+  ipv6: true
+
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://doh.dns.sb/dns-query
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.twnic.tw/dns-query
+    - tls://8.8.4.4:853
+  fallback-filter:
+    geoip: true
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+
+proxies:
+
+proxy-groups:
+  - 
+    name: "Proxy"
+    type: select
+    proxies: 
+      - "Auto"
+      - "故障转移"
+  - 
+    name: "Google"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Netflix"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Telegram"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Youtube"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Twitter"
+    type: select
+    proxies: 
+      - "Proxy"
+  - 
+    name: "Auto"
+    type: url-test
+    proxies: []
+    url: "http://www.gstatic.com/generate_204"
+    interval: 86400
+  - 
+    name: "故障转移"
+    type: fallback
+    proxies: []
+    url: "http://www.gstatic.com/generate_204"
+    interval: 7200
+
+rules:
+  - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(GEOSITE,geolocation-!cn),REJECT # 屏蔽quic
+
+  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,geolocation-cn,DIRECT
+  - GEOSITE,twitter,Twitter
+  - GEOSITE,youtube,Youtube
+  - GEOSITE,telegram,Telegram
+  - GEOSITE,google,Google
+  - GEOSITE,netflix,Netflix
+  - GEOSITE,geolocation-!cn,Proxy
+
+  - GEOIP,private,DIRECT
+  - GEOIP,google,Google
+  - GEOIP,netflix,Netflix
+  - GEOIP,telegram,Telegram
+  - GEOIP,twitter,Twitter
+  - GEOIP,CN,DIRECT
+  - GEOIP,!CN,Proxy
+
+  - MATCH,Proxy

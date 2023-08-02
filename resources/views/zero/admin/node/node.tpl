@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 节点</title>
+        <title>{$config["website_name"]} 节点</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -66,11 +66,7 @@
     </script>
     <script>
         function updateNodeStatus(id) {
-            if ($("#node_status_"+id).prop("checked")) {
-                var status = 1;
-            } else {
-                var status = 0;
-            }
+            const status = $("#node_status_"+id).prop("checked") ? 1 : 0;
             $.ajax({
                 type: "PUT",
                 url: "/{$config['website_admin_path']}/node/update/status",

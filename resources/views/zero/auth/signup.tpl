@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>{$config['appName']} - {$trans->t('signup')}</title>
+		<title>{$config['website_name']} - {$trans->t('signup')}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
@@ -16,7 +16,7 @@
 			<div class="d-flex flex-column flex-column-fluid flex-lg-row">
 				<div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
 					<div class="d-flex flex-center flex-lg-start flex-column">
-						<a href="" class="mb-7 fs-3hx fw-bold text-white">{$config['appName']}</a>						
+						<a href="" class="mb-7 fs-3hx fw-bold text-white">{$config['website_name']}</a>						
 					</div>
 				</div>
 				<div class="d-flex flex-center w-lg-50 p-10">
@@ -79,7 +79,7 @@
 			<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
 				<div class="app-container container-fluid d-flex flex-column flex-center py-3">
 					<div class="text-white order-2 order-md-1 text-center">
-						&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<span>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</span>
+						&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<span>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</span>
 					</div>
 				</div>
 			</div>

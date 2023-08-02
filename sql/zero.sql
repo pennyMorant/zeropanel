@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-06-17 04:15:55
+-- 生成日期： 2023-07-28 16:18:00
 -- 服务器版本： 10.11.4-MariaDB-1:10.11.4+maria~deb11
--- PHP 版本： 8.2.7
+-- PHP 版本： 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,6 +96,7 @@ CREATE TABLE `coupon` (
   `limited_product_period` varchar(20) DEFAULT NULL COMMENT '限制产品周期',
   `discount` int(11) NOT NULL COMMENT '折扣比例',
   `total_use_count` int(11) DEFAULT NULL COMMENT '总使用次数',
+  `total_used_count` int(11) NOT NULL DEFAULT 0 COMMENT '被使用的次数',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -416,7 +417,6 @@ CREATE TABLE `user_subscribe_log` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT '用户 ID',
   `email` varchar(32) NOT NULL COMMENT '用户邮箱',
-  `subscribe_type` varchar(20) NOT NULL COMMENT '获取的订阅类型',
   `request_ip` varchar(39) NOT NULL COMMENT '请求 IP',
   `created_at` int(11) NOT NULL COMMENT '请求时间',
   `request_user_agent` text DEFAULT NULL COMMENT '请求 UA 信息'
