@@ -120,6 +120,9 @@
 											<div class="card card-flush mb-3">
 												<div class="card-header">
 													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
+													<div class="card-toolbar">
+														<span class="badge badge-light-primary badge fs-4">速率:{if $user->node_speedlimit == 0}{$trans->t('unlimited')}{else}{$user->node_speedlimit}Mbps{/if}</span>
+													</div>
 												</div>
 												<div class="card-body d-flex flex-column pt-0">
 													<div id="zero_user_traffic_chart" data-kt-chart-color="success" style="height: 100px; min-height: 100px;"></div>
