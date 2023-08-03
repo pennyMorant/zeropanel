@@ -61,7 +61,7 @@ class QuantumultX
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $uri = sprintf(
-            "vmess={$address}:%d, method=chacha20-poly1305, password=%s, obfs=%s, obfs-host=%s, obfs-uri=%s, fast-open=false, upd-relay=false, tag=%s\r\n",
+            "vmess={$address}:%d, method=chacha20-poly1305, password=%s, obfs=%s, obfs-host=%s, obfs-uri=%s, fast-open=false, udp-relay=false, tag=%s\r\n",
             $server['address'],
             $server['port'],
             $server['uuid'],
