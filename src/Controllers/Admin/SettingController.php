@@ -26,7 +26,7 @@ class SettingController extends AdminController
             ->registerClass('Setting', Setting::class)
             ->assign('settings', $config)
             ->assign('adminUsers', $adminUsers)
-            ->display('admin/setting.tpl');
+            ->display('admin/setting/setting.tpl');
         return $response;
     }
 
@@ -202,10 +202,7 @@ class SettingController extends AdminController
                     'enable_subscribe_extend', 
                     'enable_subscribe_log', 
                     'subscribe_log_keep_time', 
-                    'subscribe_diy_message', 
-                    'subscribe_clash_default_profile', 
-                    'subscribe_surge_default_profile', 
-                    'subscribe_surfboard_default_profile'
+                    'subscribe_diy_message'
                 ];
                 break;
         }

@@ -69,7 +69,7 @@
                             <h1 class="mb-3">创建公告</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_modal_create_news_ckeditor_classic">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
                             <textarea id="zero_modal_create_news_ckeditor_classic" name="zero_modal_create_news_ckeditor_classic"></textarea>

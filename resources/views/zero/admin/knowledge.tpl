@@ -70,9 +70,9 @@
                             <h1 class="mb-3">添加文档</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="form-label fw-bold">标题</label>
+                            <label class="form-label fw-bold" for="zero_admin_create_knowledge_title">标题</label>
                             <input class="form-control mb-5" id="zero_admin_create_knowledge_title" value="">
-                            <label class="form-label fw-bold">平台</label>
+                            <label class="form-label fw-bold" for="zero_admin_create_knowledge_platform">平台</label>
                             <select class="form-select mb-5" id="zero_admin_create_knowledge_platform" value="" data-control="select2" data-hide-search="true" data-placeholder="选择平台">
                                 <option></option>
                                 <option value="windows">Windows</option>>
@@ -80,7 +80,7 @@
                                 <option value="ios">IOS</option>
                                 <option value="macos">MACOS</option>
                             </select>
-                            <label class="form-label fw-bold">客户端</label>
+                            <label class="form-label fw-bold" for="zero_admin_create_knowledge_client">客户端</label>
                             <select class="form-select mb-5" id="zero_admin_create_knowledge_client" value="" data-control="select2" data-hide-search="true" data-placeholder="选择客户端">
                                 <option></option>
                                 <option value="clash">Clash</option>>

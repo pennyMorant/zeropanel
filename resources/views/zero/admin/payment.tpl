@@ -67,36 +67,36 @@
                     </div>
                     <div class="modal-body scroll-y pt-0 pb-15 px-5 px-xl-20">
                         <div class="mb-13 text-center">
-                            <h1 class="mb-3">支付配置</h1>
+                            <h1 class="mb-3 fw-bolder">支付配置</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="form-label fw-bold">显示名称</label>
+                            <label class="form-label fw-bold" for="payment_name">显示名称</label>
                             <input class="form-control mb-5" id="payment_name" value="" type="text" placeholder="用于前端显示" />
-                            <label class="form-label fw-bold">图标URL(选填)</label>
+                            <label class="form-label fw-bold" for="payment_icon">图标URL(选填)</label>
                             <input class="form-control mb-5" id="payment_icon" value="" type="text" placeholder="用于前端显示使用(https://xxxx.com/icon.svg)" />
-                            <label class="form-label fw-bold">自定义通知域名(选填)</label>
+                            <label class="form-label fw-bold" for="payment_notify_domain">自定义通知域名(选填)</label>
                             <input class="form-control mb-5" id="payment_notify_domain" value="" type="text" placeholder="网关通知将发送到此域名(https://xxxx.com)" />
                             <div class="row mb-5">
-                                <div class="col-4">
-                                    <label class="form-label fw-bold">百分比手续费(选填)</label>
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold" for="payment_percent_fee">百分比手续费(选填)</label>
                                     <div class="input-group">
                                         <input class="form-control" id="payment_percent_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <label class="form-label fw-bold">固定手续费(选填)</label>
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold" for="payment_fixed_fee">固定手续费(选填)</label>
                                     <input class="form-control" id="payment_fixed_fee" value="" type="text" placeholder="在订单金额的基础上附加手续费" />
                                 </div>
-                                <div class="col-4">
-                                    <label class="form-label fw-bold">充值返利(选填，仅充值)</label>
+                                <div class="col-sm-4">
+                                    <label class="form-label fw-bold" for="payment_recharge_bonus">充值返利(选填，仅充值)</label>
                                     <div class="input-group">
                                         <input class="form-control" id="payment_recharge_bonus" value="" type="number" placeholder="在订单金额的基础返利" />
                                         <span class="input-group-text">%</span>
                                     </div>
                                 </div>
                             </div>
-                            <label class="form-label fw-bold">接口文件</label>
+                            <label class="form-label fw-bold" for="payment_gateway">接口文件</label>
                             <select class="form-select mb-5" id="payment_gateway" value="" data-control="select2" data-hide-search="true">
                                 <option value="Epay">Epay</option>>
                                 <option value="TronapiPay">TronapiPay</option>
@@ -107,53 +107,53 @@
                                 <option value="VmqPay">VmqPay</option>
                             </select>
                             <div id="payment_config_epay" class="">
-                                <label class="form-label fw-bold">URL</label>
+                                <label class="form-label fw-bold" for="epay_url">URL</label>
                                 <input class="form-control mb-5" id="epay_url" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">PID</label>
+                                <label class="form-label fw-bold" for="epay_pid">PID</label>
                                 <input class="form-control mb-5" id="epay_pid" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">KEY</label>
+                                <label class="form-label fw-bold" for="epay_key">KEY</label>
                                 <input class="form-control mb-5" id="epay_key" value="" type="text" placeholder="" />
                             </div>
                             <div id="payment_config_tronapipay" class="d-none">
-                                <label class="form-label fw-bold">Public key</label>
+                                <label class="form-label fw-bold" for="tronapipay_public_key">Public key</label>
                                 <input class="form-control mb-5" id="tronapipay_public_key" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">Private key</label>
+                                <label class="form-label fw-bold" for="tronapipay_private_key">Private key</label>
                                 <input class="form-control mb-5" id="tronapipay_private_key" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_mgate">
-                                <label class="form-label fw-bold">APP URL</label>
+                                <label class="form-label fw-bold" for="mgate_url">APP URL</label>
                                 <input class="form-control mb-5" id="mgate_url" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">APP ID</label>
+                                <label class="form-label fw-bold" for="mgate_id">APP ID</label>
                                 <input class="form-control mb-5" id="mgate_id" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">APP SECRET</label>
+                                <label class="form-label fw-bold" for="mgate_secret">APP SECRET</label>
                                 <input class="form-control mb-5" id="mgate_secret" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_alipayf2f">
-                                <label class="form-label fw-bold">APP ID</label>
+                                <label class="form-label fw-bold" for="alipayf2f_app_id">APP ID</label>
                                 <input class="form-control mb-5" id="alipayf2f_app_id" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">Private key</label>
+                                <label class="form-label fw-bold" for="alipayf2f_private_key">Private key</label>
                                 <input class="form-control mb-5" id="alipayf2f_private_key" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">Public key</label>
+                                <label class="form-label fw-bold" for="alipayf2f_public_key">Public key</label>
                                 <input class="form-control mb-5" id="alipayf2f_public_key" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_epusdt">
-                                <label class="form-label fw-bold">Epusdt URL</label>
+                                <label class="form-label fw-bold" for="epusdt_url">Epusdt URL</label>
                                 <input class="form-control mb-5" id="epusdt_url" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">Private key</label>
+                                <label class="form-label fw-bold" for="epusdt_private_key">Private key</label>
                                 <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_paypal">
-                                <label class="form-label fw-bold">PayPal Client ID</label>
+                                <label class="form-label fw-bold" for="paypal_client_id">PayPal Client ID</label>
                                 <input class="form-control mb-5" id="paypal_client_id" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">PayPal Secret</label>
+                                <label class="form-label fw-bold" for="paypal_secret">PayPal Secret</label>
                                 <input class="form-control mb-5" id="paypal_secret" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_vmqpay">
-                                <label class="form-label fw-bold">VmqPay URL</label>
+                                <label class="form-label fw-bold" for="vmqpay_url">VmqPay URL</label>
                                 <input class="form-control mb-5" id="vmqpay_url" type="text" value="" placeholder="" />
-                                <label class="form-label fw-bold">VmqPay Key</label>
+                                <label class="form-label fw-bold" for="vmqpay_key">VmqPay Key</label>
                                 <input class="form-control mb-5" id="vmqpay_key" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold">支付方式</label>
+                                <label class="form-label fw-bold" for="vmqpay_type">支付方式</label>
                                 <select class="form-select" id="vmqpay_type" value="">
                                     <option value=1>微信</option>
                                     <option value=2>支付宝</option>

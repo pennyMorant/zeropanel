@@ -34,7 +34,7 @@
 												</div>
 											</div>
 											<div class="card-toolbar">
-												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
+												<button class="btn btn-primary fw-bolder" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
 												<i class="bi bi-cloud-plus fs-2"></i>{$trans->t('create ticket')}
 												</button>
 											</div>
@@ -43,7 +43,7 @@
 											<!-- begin datatable -->
 											<table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_ticket_table">
 												<thead>
-													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
+													<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">                                                       
 														<th>ID</th>
 														<th>{$trans->t('type')}</th>
 														<th>{$trans->t('subject')}</th>
@@ -95,13 +95,13 @@
 							<h1 class="mb-3">{$trans->t('create ticket')}</h1>
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_title">
 								<span class="required">{$trans->t('subject')}</span>
 							</label>
 							<input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_type">
 								<span class="required">工单类型</span>
 							</label>
 							<select id="zero_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
@@ -112,7 +112,7 @@
 							</select>
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="fs-6 fw-semibold mb-2">
+							<label class="fs-6 fw-semibold mb-2" for="zero_modal_create_ticket_ckeditor_classic">
 								<span class="required">{$trans->t('details')}</span>
 							</label>
 							<textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>

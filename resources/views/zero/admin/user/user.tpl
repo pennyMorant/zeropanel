@@ -78,13 +78,13 @@
                             <h1 class="mb-3">创建用户</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_user_email">
                                 <span class="required">邮箱</span>
                             </label>                         
                             <input type="text" value="" class="form-control form-control-solid" placeholder="账号" id="zero_create_user_email">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_user_passwd">
                                 <span class="required">密码</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="留空则与邮箱相同" id="zero_create_user_passwd">
@@ -123,13 +123,13 @@
                             <h1 class="mb-3">分配订单</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fw-6 fw-semibold mb-2">
+                            <label class="fw-6 fw-semibold mb-2" for="zero_create_order_user_id">
                                 <span class="required">用户ID</span>
                             </label>
                             <input class="form-control form-control-solid" type="text" value="" placeholder="用户ID" id="zero_create_order_user_id">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_order_product_id">
                                 <span class="required">选择产品</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_order_product_id" data-placeholder="选择产品">
@@ -140,7 +140,7 @@
                             </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_order_product_period">
                                 <span class="required">选择周期</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_order_product_period" data-placeholder="选择周期">
@@ -153,7 +153,7 @@
                             </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fw-6 fw-semibold mb-2">
+                            <label class="fw-6 fw-semibold mb-2" for="zero_create_order_total">
                                 <span class="required">支付金额</span>
                             </label>
                             <input class="form-control form-control-solid" type="text" value="" placeholder="请输入需要支付的金额,留空则默认为产品价格" id="zero_create_order_total">

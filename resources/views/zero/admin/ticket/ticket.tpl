@@ -70,7 +70,7 @@
                             <h1 class="mb-3">创建工单</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_userid">
                                 <span class="required">用户ID</span>
                             </label>
                             <select class="form-select form-select-solid" id="zero_admin_create_ticket_userid" data-control="select2" data-placeholder="选择一个用户">
@@ -81,13 +81,13 @@
                             </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_subject">
                                 <span class="required">{$trans->t('subject')}</span>
                             </label>
                             <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_admin_create_ticket_subject">
                         </div>
                         <div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_type">
 								<span class="required">工单类型</span>
 							</label>
 							<select id="zero_admin_create_ticket_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
@@ -98,7 +98,7 @@
 							</select>
 						</div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_modal_create_ticket_ckeditor_classic">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
                             <textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>

@@ -68,13 +68,13 @@
                             <h1 class="mb-3">创建优惠码</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_coupon_code">
                                 <span class="required">优惠码</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="优惠码" id="zero_create_coupon_code">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_coupon_dicount_rate">
                                 <span class="required">折扣比例</span>
                             </label>
                             <div class="input-group input-group-solid">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_valid_time">
                                 <span class="required">有效时间</span>
                             </label>
                             <div class="input-group input-group-solid">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_limit_product">
                                 <span class="required">指定商品</span>
                             </label>
                             <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-allow-clear="true" data-placeholder="限制指定产品使用优惠" multiple="multiple">
@@ -103,7 +103,7 @@
                             </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_limit_product_period">
                                 <span class="required">指定周期</span>
                             </label>
                             <select class="form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-allow-clear="true" data-placeholder="限制指定周期使用优惠" multiple="multiple">
@@ -116,7 +116,7 @@
                             </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_per_times">
                                 <span class="required">用户使用次数</span>
                             </label>
                             <div class="input-group input-group-solid">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_total_times">
                                 <span class="required">总使用次数</span>
                             </label>
                             <div class="input-group input-group-solid">
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_generation_method">
                                 <span class="required">生成方式</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_coupon_generation_method">

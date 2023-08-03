@@ -108,25 +108,25 @@
                             <h1 class="mb-3">创建规则</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ban_rule_name">
                                 <span class="required">规则名称</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则名称" id="zero_create_ban_rule_name">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ban_rule_description">
                                 <span class="required">规则描述</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则描述" id="zero_create_ban_rule_description">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_ban_rule_regular_expressions">
                                 <span class="required">规则正则表达式</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="正则表达式" id="zero_create_ban_rule_regular_expressions">
                         </div>                   
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_ban_rule_type">
                                 <span class="required">规则类型</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_ban_rule_type">
@@ -168,25 +168,25 @@
                             <h1 class="mb-3">创建规则</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_update_ban_rule_name">
                                 <span class="required">规则名称</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则名称" id="zero_update_ban_rule_name">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_update_ban_rule_description">
                                 <span class="required">规则描述</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则描述" id="zero_update_ban_rule_description">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_update_ban_rule_regular_expressions">
                                 <span class="required">规则正则表达式</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="正则表达式" id="zero_update_ban_rule_regular_expressions">
                         </div>                   
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_update_ban_rule_type">
                                 <span class="required">规则类型</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_update_ban_rule_type">

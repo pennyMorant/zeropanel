@@ -821,36 +821,6 @@
     },
     {
         "id": null,
-        "item": "subscribe_clash_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "clash 默认配置"
-    },
-    {
-        "id": null,
-        "item": "subscribe_surge_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "surge 默认配置"
-    },
-    {
-        "id": null,
-        "item": "subscribe_surfboard_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "surfboard 默认配置"
-    },
-    {
-        "id": null,
         "item": "enable_permission_group",
         "value": "0",
         "class": "permission_group",

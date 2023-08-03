@@ -39,9 +39,9 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-xxl-6">
-                                                    <label class="form-label required">产品名称</label>
+                                                    <label class="form-label required" for="name">产品名称</label>
                                                     <input class="form-control mb-5" id="name" name="name" type="text" placeholder="产品名称" value="">
-                                                    <label class="form-label required">产品价格</label>
+                                                    <label class="form-label required" for="month_price">产品价格</label>
                                                     <div class="row">
                                                         <div class="col-4">
                                                             <input class="form-control mb-5" id="month_price" name="month_price" type="number" placeholder="月付" value="">
@@ -62,43 +62,43 @@
                                                             <input class="form-control mb-5" data-bs-toggle="tooltip" title="当设置为其他产品时,请设置一次性价格" id="onetime_price" name="onetime_price" type="number" placeholder="一次性" value="">
                                                         </div>
                                                     </div>
-                                                    <label class="form-label required">产品类型</label>
+                                                    <label class="form-label required" for="type">产品类型</label>
                                                     <select class="form-select mb-5" id="type" data-control="select2" data-hide-search="true">
                                                         <option value="1">周期产品</option>
                                                         <option value="2">流量产品</option>
                                                         <option value="3">其他产品</option>
                                                     </select>
-                                                    <label class="form-label required">产品流量</label>
+                                                    <label class="form-label required" for="traffic">产品流量</label>
                                                     <div class="input-group mb-5">
                                                         <input class="form-control" data-bs-toggle="tooltip" title="默认为0" id="traffic" name="traffic" type="number" placeholder="产品流量" value="0">
                                                         <span class="input-group-text">GB</span>
                                                     </div>
-                                                    <label class="form-label required">产品等级</label>
+                                                    <label class="form-label required" for="class">产品等级</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="默认为0" id="class" name="class" type="number" placeholder="产品等级" value="0">
                                                     
                                                 </div>
                                                 <div class="col-xxl-6">
-                                                    <label class="form-label">产品库存</label>
-                                                    <input class="form-control mb-5" id="stock" name="name" type="number" placeholder="默认为无限制" value="">
-                                                    <label class="form-label required">产品流量重置周期</label>
+                                                    <label class="form-label" for="stock">产品库存</label>
+                                                    <input class="form-control mb-5" id="stock" name="stock" type="number" placeholder="默认为无限制" value="">
+                                                    <label class="form-label required" for="reset">产品流量重置周期</label>
                                                     <select class="form-select mb-5" id="reset" data-control="select2" data-hide-search="true">
                                                         <option value="0">一次性</option>
                                                         <option value="1">订单日重置</option>
                                                         <option value="2">每月1日重置</option>
                                                     </select>
-                                                    <label class="form-label">产品速度</label>
+                                                    <label class="form-label" for="speed_limit">产品速度</label>
                                                     <div class="input-group mb-5">
                                                         <input class="form-control" id="speed_limit" name="speed_limit" type="number" placeholder="默认为无限制" value="">
                                                         <span class="input-group-text">Mbps</span>
                                                     </div>
-                                                    <label class="form-label">产品IP</label>
+                                                    <label class="form-label" for="ip_limit">产品IP</label>
                                                     <div class="input-group mb-5">
                                                         <input class="form-control" id="ip_limit" name="ip_limit" type="number" placeholder="默认为无限制" value="">
                                                         <span class="input-group-text">个</span>
                                                     </div>
-                                                    <label class="form-label required">产品排序</label>
+                                                    <label class="form-label required" for="sort">产品排序</label>
                                                     <input class="form-control mb-5" id="sort" name="sort" type="number" placeholder="产品排序,数字越大越靠前" value="0">
-                                                    <label class="form-label">产品群组</label>
+                                                    <label class="form-label" for="group">产品群组</label>
                                                     <input class="form-control" data-bs-toggle="tooltip" title="不分组保持默认" id="group" name="group" type="number" placeholder="不分组保持默认" value="0">
                                                 </div>
                                             </div>
