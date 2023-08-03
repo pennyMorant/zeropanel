@@ -147,7 +147,7 @@ class Node extends Model
         $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
         $config['aid']         = $custom_configs['alter_id'] ?? 0;
         $config['net']         = $custom_configs['network'];
-        $config['security']    = $custom_configs['security'] ?? '';
+        $config['security']    = $custom_configs['security'] ?? 'none';
         $config['flow']        = $custom_configs['flow'] ?? '';
         $config['path']        = $custom_configs['path'] ?? '';
         $config['host']        = $custom_configs['host'] ?? '';
