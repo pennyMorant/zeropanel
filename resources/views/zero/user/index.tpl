@@ -33,8 +33,8 @@
 												<div class="card-header border-0">
 													<div class="card-title fs-3 fw-bolder">{$trans->t('product details')}</div>																										
 													<div class="card-toolbar">
-														<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_info">一键订阅</button>
-														<button class="btn btn-primary btn-sm d-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#zero_canvas_show_subscribe_info">一键订阅</button>
+														<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_info"><i class="bi bi-file-earmark-arrow-down"></i>一键订阅</button>
+														<button class="btn btn-primary btn-sm d-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#zero_canvas_show_subscribe_info"><i class="bi bi-file-earmark-arrow-down"></i>一键订阅</button>
 													</div>												
 												</div>     
 												<div class="card-body pt-0">
