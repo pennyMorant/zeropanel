@@ -145,7 +145,7 @@ class Node extends Model
         $config['class']       = $this->node_class;
         $config['address']     = $this->server;
         $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
-        $config['aid']         = $custom_configs['alter_id'];
+        $config['aid']         = $custom_configs['alter_id'] ?? 0;
         $config['net']         = $custom_configs['network'];
         $config['security']    = $custom_configs['security'] ?? '';
         $config['flow']        = $custom_configs['flow'] ?? '';

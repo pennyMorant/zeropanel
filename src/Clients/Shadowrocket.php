@@ -67,16 +67,14 @@ class Shadowrocket
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
-        $tls = $server['security'] == 'tls' ? 1 : 0;
         $url= sprintf(
-            "vmess://%s@{$address}:%d?encryption=auto&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
+            "vmess://%s@{$address}:%d?encryption=auto&host=%s&path=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
             $server['uuid'],
             $server['address'],
             $server['port'],
-            $server['host'],
-            $server['path'],
-            $server['flow'],
-            $tls,
+            rawurlencode($server['host']),
+            rawurlencode($server['path']),
+            $server['security'],
             $server['sni'],
             rawurlencode($server['servicename']),
             $server['headertype'],
@@ -91,16 +89,15 @@ class Shadowrocket
     {
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
-        $tls = $server['security'] == 'tls' ? 1 : 0;
         $url= sprintf(
-            "vless://%s@{$address}:%d?encryption=none&host=%s&path=%s&flow=%s&tls=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
+            "vless://%s@{$address}:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
             $server['uuid'],
             $server['address'],
             $server['port'],
-            $server['host'],
-            $server['path'],
+            rawurlencode($server['host']),
+            rawurlencode($server['path']),
             $server['flow'],
-            $tls,
+            $server['security'],
             $server['sni'],
             rawurlencode($server['servicename']),
             $server['headertype'],
