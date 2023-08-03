@@ -292,7 +292,7 @@
                         <label class="col-form-label fw-bold" for="add_credit_amount">{$trans->t('amount')}:</label>		
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
+                                <input class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount" type="number" />
                             </div>
                         </div>
                         
