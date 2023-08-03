@@ -141,7 +141,7 @@
 														</div>
 														<div class="carousel-inner pt-2 scroll h-150px" id="zero_show_ann">
 														{foreach $anns as $ann}
-															<div class="carousel-item">
+															<div class="carousel-item {if $ann@iteration == 1}active{/if}">
 																{$ann->content}
 															</div>
 														{/foreach}
@@ -355,7 +355,6 @@
 			{if strtotime($user->class_expire) > time()}
 				countdown('{$user->class_expire}', 'user_class_expired_time')
 			{/if}
-			$('#zero_show_ann div:first').addClass('active');
 			$("#zero_subscribe_qrcode").qrcode({
 				width: 200,
 				height: 200,
