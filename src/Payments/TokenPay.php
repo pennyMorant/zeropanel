@@ -46,8 +46,9 @@ class TokenPay
             ];
         }
         return [
+            'ret'   => 1,
             'type' => 'url',
-            'data' => $paymentURL
+            'url' => $paymentURL
         ];
     }
 
