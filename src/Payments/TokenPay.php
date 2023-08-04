@@ -21,7 +21,7 @@ class TokenPay
 			"ActualAmount" => $order['total_amount'],
 			"OutOrderId" => $order['order_no'], 
 			"OrderUserKey" => strval($order['user_id']), 
-			"Currency" => $order['tokenpay_currency'],
+			"Currency" => $this->config['tokenpay_currency'],
 			'RedirectUrl' => $order['return_url'],
 			'NotifyUrl' => $order['notify_url'],
         ];
