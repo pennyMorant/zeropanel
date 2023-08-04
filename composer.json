@@ -32,7 +32,8 @@
         "league/html-to-markdown": "5.1.0",
         "nesbot/carbon": "2.66.0",
         "geoip2/geoip2": "~2.0",
-        "srmklive/paypal": "*"
+        "srmklive/paypal": "*",
+        "php-curl-class/php-curl-class": "*"
     },
     "autoload": {
         "psr-4": {

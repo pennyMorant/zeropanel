@@ -99,10 +99,10 @@
                             <label class="form-label fw-bold" for="payment_gateway">接口文件</label>
                             <select class="form-select mb-5" id="payment_gateway" value="" data-control="select2" data-hide-search="true">
                                 <option value="Epay">Epay</option>>
-                                <option value="TronapiPay">TronapiPay</option>
                                 <option value="Mgate">Mgate</option>
                                 <option value="AlipayF2F">AlipayF2F</option>
                                 <option value="Epusdt">Epusdt</option>
+                                <option value="TokenPay">TokenPay</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="VmqPay">VmqPay</option>
                             </select>
@@ -113,12 +113,6 @@
                                 <input class="form-control mb-5" id="epay_pid" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold" for="epay_key">KEY</label>
                                 <input class="form-control mb-5" id="epay_key" value="" type="text" placeholder="" />
-                            </div>
-                            <div id="payment_config_tronapipay" class="d-none">
-                                <label class="form-label fw-bold" for="tronapipay_public_key">Public key</label>
-                                <input class="form-control mb-5" id="tronapipay_public_key" value="" type="text" placeholder="" />
-                                <label class="form-label fw-bold" for="tronapipay_private_key">Private key</label>
-                                <input class="form-control mb-5" id="tronapipay_private_key" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_mgate">
                                 <label class="form-label fw-bold" for="mgate_url">APP URL</label>
@@ -141,6 +135,14 @@
                                 <input class="form-control mb-5" id="epusdt_url" value="" type="text" placeholder="" />
                                 <label class="form-label fw-bold" for="epusdt_private_key">Private key</label>
                                 <input class="form-control mb-5" id="epusdt_private_key" value="" type="text" placeholder="" />
+                            </div>
+                            <div class="d-none" id="payment_config_tokenpay">
+                                <label class="form-label fw-bold" for="tokenpay_url">TokenPay URL</label>
+                                <input class="form-control mb-5" id="tokenpay_url" value="" type="text" placeholder="" />
+                                <label class="form-label fw-bold" for="tokenpay_private_key">Private key</label>
+                                <input class="form-control mb-5" id="tokenpay_private_key" value="" type="text" placeholder="" />
+                                <label class="form-label fw-bold" for="tokenpay_currency">TokenPay Currency</label>
+                                <input class="form-control mb-5" id="tokenpay_currency" value="" type="text" placeholder="" />
                             </div>
                             <div class="d-none" id="payment_config_paypal">
                                 <label class="form-label fw-bold" for="paypal_client_id">PayPal Client ID</label>
@@ -200,12 +202,6 @@
                         'epay_key': $('#epay_key').val(),
                         };
                     },
-                    'TronapiPay': function() {
-                        return {
-                        'tronapipay_public_key': $('#tronapipay_public_key').val(),
-                        'tronapipay_private_key': $('#tronapipay_private_key').val()
-                        };
-                    },
                     'Mgate': function() {
                         return {
                         'mgate_url': $('#mgate_url').val(),
@@ -225,6 +221,13 @@
                             'epusdt_url': $('#epusdt_url').val(),
                             'epusdt_private_key': $('#epusdt_private_key').val()
                         };
+                    },
+                    'TokenPay': function() {
+                        return {
+                            'tokenpay_url': $('#tokenpay_url').val(),
+                            'tokenpay_private_key': $('#tokenpay_private_key').val(),
+                            'tokenpay_currency': $('#tokenpay_currency').val()
+                        }
                     },
                     'PayPal': function() {
                         return {
@@ -310,10 +313,6 @@
                                 'pid': 'epay_pid',
                                 'key': 'epay_key',
                             },
-                            'tronapipay': {
-                                'public_key': 'tronapipay_public_key',
-                                'private_key': 'tronapipay_private_key',
-                            },
                             'mgate': {
                                 'url': 'mgate_url',
                                 'id': 'mgate_id',
@@ -327,6 +326,11 @@
                             'epusdt': {
                                 'url': 'epusdt_url',
                                 'private_key': 'epusdt_private_key',
+                            },
+                            'tokenpay': {
+                                'url': 'tokenpay_url',
+                                'private_key': 'tokenpay_private_key',
+                                'currency': 'tokenpay_currency'
                             },
                             'paypal': {
                                 'client_id': 'paypal_client_id',
@@ -388,8 +392,6 @@
                     '#epay_url',
                     '#epay_pid',
                     '#epay_key',
-                    '#tronapipay_public_key',
-                    '#tronapipay_private_key',
                     '#mgate_url',
                     '#mgate_id',
                     '#mgate_secret',
@@ -398,6 +400,9 @@
                     '#alipayf2f_public_key',
                     '#epusdt_url',
                     '#epusdt_private_key',
+                    '#tokenpay_url',
+                    '#tokenpay_private_key',
+                    '#tokenpay_currency',
                     '#paypal_client_id',
                     '#paypal_secret',
                     '#vmqpay_url',
@@ -412,6 +417,6 @@
                 submitButton.setAttribute('onclick', 'zeroAdminPayment("create")');
                 console.log('success');
             });
-    </script>
+        </script>
     </body>
 </html>
