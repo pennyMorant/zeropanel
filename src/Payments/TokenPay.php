@@ -52,8 +52,9 @@ class TokenPay
         ];
     }
 
-    public function notify($params)
+    public function notify(ServerRequest $request)
     {
+        $params = $request->getParsedBody();
         $sign = $params['Signature'];
         unset($params['Signature']);
         ksort($params);
