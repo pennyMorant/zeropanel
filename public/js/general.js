@@ -5,7 +5,7 @@ function countdown(date, dom) {
     let timerInterval = null;
 
     function updateTimer() {
-        const endDate = new Date(date);
+        const endDate = new Date(date.replace(/-/g, '/'));
         const now = new Date().getTime();
         const distance = endDate.getTime() - now;
         if (distance <= 0) {
@@ -23,6 +23,33 @@ function countdown(date, dom) {
     updateTimer();
     // 开启计时器
     timerInterval = setInterval(updateTimer, 1000);
+}
+
+// get client system
+function getOperatingSystem() {
+    var userAgent = window.navigator.userAgent,
+        platform = window.navigator.platform,
+        macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+        windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+        os = null;
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+        if (/iPad/.test(userAgent) && 'ontouchend' in document) {
+            os = 'iPadOS';
+        } else {
+            os = 'Mac OS';
+        }
+    } else if (/iPhone/.test(userAgent) && !window.MSStream) {
+        os = 'iOS';
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+        os = 'Windows';
+    } else if (/Android/.test(userAgent)) {
+        os = 'Android';
+    } else if (!os && /Linux/.test(platform)) {
+        os = 'Linux';
+    }
+
+    return os;
 }
 
 //get cookie
