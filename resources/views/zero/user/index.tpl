@@ -61,7 +61,9 @@
 															</span>
 														</div>
 														<div class="text-end">
-															<i class="bi bi-database-add fs-2hx fw-bold text-warning" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="KTUsersCreateOrder(3, '', '')"></i>
+															<a class="btn btn-sm hover-scale btn-icon" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="KTUsersCreateOrder(3, '', '')">
+																<i class="bi bi-database-add fs-2hx fw-bold text-warning hover-scale"></i>
+															</a>
 														</div>
 													</div>
 													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-6">
@@ -110,7 +112,9 @@
 															</span>
 														</div>
 														<div class="text-end">														
-														<i class="bi bi-plus-circle fs-2hx fw-bold text-info" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal"></i>															
+															<a class="btn btn-sm hover-scale btn-icon" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal">
+																<i class="bi bi-plus-circle fs-2hx fw-bold text-info"></i>
+															</a>															
 														</div>
 													</div>
 												</div>
