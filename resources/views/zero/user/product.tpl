@@ -190,7 +190,7 @@
 							<h1 class="mb-3">{$trans->t('configure product')}</h1>
 						</div>
 						<div class="d-flex flex-column">
-							<div class="row mt-10">
+							<div class="row mt-10 g-5">
 								<div class="col-lg-7">
 									<div class="tab-content rounded h-100 bg-light p-10">
 										<div class="tab-pane fade show active">
@@ -203,8 +203,8 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-5 mt-5">
-									<div class="card card-dashed" id="zero_modal_configure_coupon_html">
+								<div class="col-lg-5">
+									<div class="card card-dashed mb-5" id="zero_modal_configure_coupon_html">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<input class="form-control me-3" placeholder={$trans->t('promo code')} type="text" id="zero_coupon_code">
@@ -216,7 +216,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="card card-dashed card-flush mt-5">
+									<div class="card card-dashed card-flush mb-5">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<span class="fw-semibold text-gray-00 fs-4 flex-grow-1 pe-3" id="zero_modal_configure_product_name"></span>
@@ -229,30 +229,30 @@
 											</div>
 										</div>
 									</div>
-									<div class="card card-dashed card-flush mt-5">
+									<div class="card card-dashed card-flush">
 										<div class="card-body">
-											<div class="d-flex align-items-center">
-												<ul class="nav nav-pills nav-fill">
-													<li class="nav-item mb-3" id="zero_modal_configure_product_month_price">
+											
+												<ul class="nav nav-pills d-flex flex-column flex-sm-row justify-content-center" role="tablist">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_month_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_quarter_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_quarter_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_half_year_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_half_year_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_year_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_year_price">
 														
 													</li>
-													<li class="nav-item mb-3" id="zero_modal_configure_product_two_year_price">
+													<li class="nav-item d-flex flex-column" id="zero_modal_configure_product_two_year_price">
 														
 													</li>
 												</ul>
-											</div>
+											
 										</div>
 									</div>
 								</div>
