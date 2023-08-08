@@ -79,7 +79,9 @@
             stateSave: true,
             columnDefs: [
                 { width: '5%', targets: 0 },
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_commission['total_column'] as $key_commission => $value_commission}

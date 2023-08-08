@@ -12,7 +12,8 @@ order: [[ 0, 'desc' ]],
 stateSave: true,
 columnDefs: [
     { className: 'text-end', targets: -1 },
-    { orderable: false, targets: [-1] }
+    { orderable: false, targets: '_all' },
+    { orderable: true, targets: 0}
 ],
 columns: [
 {foreach $table_config['total_column'] as $key => $value}

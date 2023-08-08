@@ -309,7 +309,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_ban_record['total_column'] as $key => $value}
@@ -334,7 +336,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_detect_record['total_column'] as $key => $value}

@@ -115,7 +115,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_alive['total_column'] as $key_alive => $value_alive}
@@ -139,7 +141,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_signin['total_column'] as $key_signin => $value_signin}
@@ -163,7 +167,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_subscribe['total_column'] as $key_subscribe => $value_subscribe}
@@ -187,7 +193,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_traffic['total_column'] as $key_traffic => $value_traffic}
