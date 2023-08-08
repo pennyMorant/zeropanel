@@ -295,11 +295,16 @@
                     <div class="modal-body">
                         <label class="col-form-label fw-bold" for="add_credit_amount">{$trans->t('amount')}:</label>		
                         <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount" type="number" />
-                            </div>
+							<div class="input-group" data-kt-dialer="true" data-kt-dialer-min="1"data-kt-dialer-max="50000"data-kt-dialer-step="5">
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="decrease">
+									<i class="ki-duotone ki-minus fs-2"></i>
+								</button>
+								<input type="text" class="form-control"  placeholder="{$trans->t('amount')}" value="5" data-kt-dialer-control="input" id="add_credit_amount"/>
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="increase">
+									<i class="ki-duotone ki-plus fs-2"></i>
+								</button>
+							</div>
                         </div>
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>

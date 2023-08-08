@@ -472,16 +472,21 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
+                        <h4 class="modal-title">{$trans->t('add credit')}</h4>
                     </div>
                     <div class="modal-body">
                         <label class="col-form-label fw-bolder" for="add_credit_amount">{$trans->t('amount')}:</label>		
                         <div class="form-group">
-                            <div class="input-group">
-                                <input type="number" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
-                            </div>
+							<div class="input-group" data-kt-dialer="true" data-kt-dialer-min="1"data-kt-dialer-max="50000"data-kt-dialer-step="5">
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="decrease">
+									<i class="ki-duotone ki-minus fs-2"></i>
+								</button>
+								<input type="text" class="form-control"  placeholder="{$trans->t('amount')}" value="5" data-kt-dialer-control="input" id="add_credit_amount"/>
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="increase">
+									<i class="ki-duotone ki-plus fs-2"></i>
+								</button>
+							</div>
                         </div>
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
