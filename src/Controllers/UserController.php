@@ -212,7 +212,6 @@ class UserController extends BaseController
     
     public function record(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
         $this->view()
             ->display('user/record.tpl');
         return $response;
@@ -220,7 +219,6 @@ class UserController extends BaseController
     
     public function ban(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
         $this->view()
             ->display('user/ban.tpl');
         return $response;

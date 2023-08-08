@@ -31,7 +31,8 @@
             };
 
             toastr.warning('<span class=fw-bold fs-5>请验证邮箱</span> <button type="button" class="btn btn-light-primary btn-sm fw-bold" id="zero_user_verify_email">验证</button>');
-            $('#zero_user_verify_email').click(function() {
+            $('#zero_user_verify_email').on('click', function() {
+                getLoad();
                 $.ajax({
                     type: 'POST',
                     url: '/user/verify/email/send',

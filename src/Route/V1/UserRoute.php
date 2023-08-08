@@ -27,25 +27,27 @@ return function (App $app) {
         $group->post('/order/pay_order',                OrderController::class . ':processOrder');
         $group->post('/verify_coupon',                  OrderController::class . ':verifyCoupon');
 
+        // node
         $group->get('/node',                            NodeController::class . ':nodeIndex');
+        $group->get('/nodeinfo/{id}',                   ZeroController::class . ':nodeInfo');
 
+        // product
         $group->get('/product',                         ProductController::class . ':productIndex');
         $group->post('/product/getinfo',                ProductController::class . ':getProductInfo');
 
+        // ticket
         $group->get('/ticket',                          TicketController::class . ':ticketIndex');
         $group->post('/ticket/create',                  TicketController::class . ':createTicket');
         $group->get('/ticket/view/{id}',                TicketController::class . ':ticketViewIndex');
         $group->put('/ticket/update',                   TicketController::class . ':updateTicket');
         
+        // update profile
         $group->post('/update_profile/{type}',          UserController::class . ':updateProfile');
-        $group->post('/mail',                           UserController::class . ':updateMail');
         $group->post('/enable_notify',                  UserController::class . ':enableNotify');
-        $group->get('/trafficlog',                      UserController::class . ':trafficLog');
         $group->post('/kill',                           UserController::class . ':handleKill');
         $group->get('/logout',                          UserController::class . ':logout');
-        $group->any('/verify/email/{action}',           UserController::class . ':verifyEmail');
         
-        $group->get('/nodeinfo/{id}',                   ZeroController::class . ':nodeInfo');
+        // table
         $group->post('/ajax_data/table/{name}',          ZeroController::class . ':ajaxDatatable');
         $group->post('/ajax_data/chart/{name}',          ZeroController::class . ':ajaxDataChart');
         $group->delete('/ajax_data/delete',             ZeroController::class . ':ajaxDatatableDelete');
@@ -59,4 +61,6 @@ return function (App $app) {
         $group->post('/agent/withdraw_account_setting',     Agent::class . ':withdrawAccountSettings');
         $group->post('/agent_data/process/{name}',          Agent::class . ':ajaxDatatableProcess');
     })->add(new Auth());
+
+    $app->map(['GET', 'POST'], '/verify/email/{action}',           UserController::class . ':verifyEmail');
 };
