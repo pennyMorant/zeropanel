@@ -261,7 +261,7 @@ class UserController extends BaseController
                     return $response->withHeader('Location', '/user/dashboard');
                 }
                 $token_str = $request->getQueryParam('token');
-                $token = Token::where('token', $token_str)->where('type', 3)->where('expired_at', '>', time())->first();
+                $token = Token::where('token', $token_str)->where('type', 3)->where('expired_at', '>', time())->orderBy('expired_at', 'desc')->first();
                 if (is_null($token)) {
                     $this->view()
                         ->assign('verification_result', 'false')
