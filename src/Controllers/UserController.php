@@ -235,12 +235,12 @@ class UserController extends BaseController
     public function verifyEmail(ServerRequest $request, Response $response, array $args)
     {
         $action = $args['action'];
-        $user   = $this->user;
-        if ($user->verified == 1) {
-            return $response->withHeader('Location', '/user/dashboard');
-        }
         switch ($action) {
-            case 'send':            
+            case 'send':    
+                $user   = $this->user;
+                if ($user->verified == 1) {
+                    return $response->withHeader('Location', '/user/dashboard');
+                }        
                 $token   = Token::createToken($user, 64, 3);
                 $subject = Setting::obtain('website_name') . '邮箱验证';
                 $url     = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
@@ -268,6 +268,7 @@ class UserController extends BaseController
                         ->display('user/verify.tpl');
                     return $response;
                 }
+                $user = User::find($token->user_id);
                 $user->verified = 1;
                 $user->save();
                 $this->view()

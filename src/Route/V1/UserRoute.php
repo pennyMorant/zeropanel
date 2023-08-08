@@ -62,5 +62,5 @@ return function (App $app) {
         $group->post('/agent_data/process/{name}',          Agent::class . ':ajaxDatatableProcess');
     })->add(new Auth());
 
-    $app->map(['GET', 'POST'], '/verify/email/{action}',           UserController::class . ':verifyEmail');
+    $app->map(['GET', 'POST'], '/user/verify/email/{action}',           UserController::class . ':verifyEmail');
 };
