@@ -237,10 +237,7 @@ class UserController extends BaseController
         $action = $args['action'];
         switch ($action) {
             case 'send':    
-                $user   = $this->user;
-                if ($user->verified == 1) {
-                    return $response->withHeader('Location', '/user/dashboard');
-                }        
+                $user   = $this->user;       
                 $token   = Token::createToken($user, 64, 3);
                 $subject = Setting::obtain('website_name') . '邮箱验证';
                 $url     = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
@@ -260,6 +257,9 @@ class UserController extends BaseController
                 ]);
                 break;
             case 'check':
+                if ($this->user && $this->user->verified == 1) {
+                    return $response->withHeader('Location', '/user/dashboard');
+                }
                 $token_str = $request->getQueryParam('token');
                 $token = Token::where('token', $token_str)->where('type', 3)->where('expired_at', '>', time())->first();
                 if (is_null($token)) {
@@ -272,8 +272,8 @@ class UserController extends BaseController
                 $user->verified = 1;
                 $user->save();
                 $this->view()
-                        ->assign('verification_result', 'true')
-                        ->display('user/verify.tpl');
+                    ->assign('verification_result', 'true')
+                    ->display('user/verify.tpl');
                 return $response;
                 break;
         }
