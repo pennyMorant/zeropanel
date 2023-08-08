@@ -136,12 +136,14 @@ class ProductController extends AdminController
                 'sales'  => $rowData->cumulativeSales(),
                 'status' => $rowData->status(),
                 'renew'  => $rowData->renew(),
-                'action' => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                'action' => <<<EOT
+                                <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" href = "product/update/'.$rowData->id.'">编辑</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'product\', '.$rowData->id.')">删除</a></li>
+                                    <li><a class = "dropdown-item" href = "product/update/{$rowData->id}">编辑</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('product', {$rowData->id})">删除</a></li>
                                     </ul>
-                                </div>',
+                                </div>
+                            EOT,
             ];
         })->toArray();
 

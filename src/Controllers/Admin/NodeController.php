@@ -17,7 +17,7 @@ class NodeController extends AdminController
         $table_config['total_column'] = [
             
             'id'                      => 'ID',
-            'online'                  => 'Online',
+            'online'                  => 'Online<i class="bi bi-question-circle ms-1" data-bs-toggle="tooltip" title="红色表示离线, 绿色表示在线"></i>',
             'name'                    => '节点名称',
             'online_user'             => '在线人数',           
             'type'                    => '类型',
@@ -170,12 +170,14 @@ class NodeController extends AdminController
                 'node_class'      => $rowData->node_class,
                 'node_speedlimit' => $rowData->node_speedlimit == 0 ? '无限制' : $rowData->node_speedlimit,
                 'status'          => $rowData->status(),
-                'action'          => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" href = "node/update/'.$rowData->id.'">编辑</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'node\', '.$rowData->id.')">删除</a></li>
-                                    </ul>
-                                </div>',
+                'action'          => <<<EOT
+                                        <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                            <ul    class = "dropdown-menu">
+                                            <li><a class = "dropdown-item" href = "node/update/{$rowData->id}">编辑</a></li>
+                                            <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('node', {$rowData->id})">删除</a></li>
+                                            </ul>
+                                        </div>
+                                    EOT,
             ];
         })->toArray();
 

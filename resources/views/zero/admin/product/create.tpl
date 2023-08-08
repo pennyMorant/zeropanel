@@ -109,7 +109,7 @@
                                             <div class="card-title">商品介绍</div>
                                         </div>
                                         <div class="card-body">
-                                            <textarea class="form-control" data-kt-autosize="true" id="custom_content"></textarea>
+                                            <textarea class="form-control scroll h-350px" id="custom_content"></textarea>
                                         </div>
                                     </div>
                                 </div>

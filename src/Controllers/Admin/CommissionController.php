@@ -64,12 +64,14 @@ class CommissionController extends AdminController
                 'type'     => $rowData->type === 1 ? '提现至余额' : '提现至USDT',
                 'status'   => $rowData->status(),
                 'datetime' => date('Y-m-d H:i:s', $rowData->created_at),
-                'action'   => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                'action'   => <<<EOT
+                                <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
                                     <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission(\'mark_done\', '.$rowData->id.')">完成</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission(\'go_back\', '.$rowData->id.')">拒绝</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission('mark_done', {$rowData->id})">完成</a></li>
+                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminUpdateWithdrawCommission('go_back', {$rowData->id})">拒绝</a></li>
                                     </ul>
-                                </div>',
+                                </div>
+                            EOT,
             ];
         })->toArray();
 

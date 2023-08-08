@@ -46,7 +46,7 @@ class OrderController extends AdminController
         );
 
         $data = $query['datas']->map(function($rowData) {
-
+            $adminPath = Setting::obtain('website_admin_path');
             return [
                 'id'            => $rowData->id,
                 'user_id'       => $rowData->user_id,
@@ -56,13 +56,15 @@ class OrderController extends AdminController
                 'created_time'  => date('Y-m-d H:i:s', $rowData->created_at),
                 'order_payment' => $rowData->payment(),
                 'order_type'    => $rowData->orderType(),
-                'action'        => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul    class = "dropdown-menu">
-                                    <li><a class = "dropdown-item" type = "button" onclick = "completeOrder(' . $rowData->id . ')">标记完成</a></li>
-                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'order\', ' . $rowData->id . ')">删除</a></li>
-                                    <li><a class = "dropdown-item" href = "/'. Setting::obtain('website_admin_path') . '/order/' . $rowData->order_no . '">详细</a></li>
-                                    </ul>
-                                </div>',
+                'action'        => <<<EOT
+                                        <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                            <ul    class = "dropdown-menu">
+                                            <li><a class = "dropdown-item" type = "button" onclick = "completeOrder({$rowData->id})">标记完成</a></li>
+                                            <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('order', {$rowData->id})">删除</a></li>
+                                            <li><a class = "dropdown-item" href = "/{$adminPath}/order/{$rowData->order_no}">详细</a></li>
+                                            </ul>
+                                        </div>
+                                    EOT,
             ];
         })->toArray();
 

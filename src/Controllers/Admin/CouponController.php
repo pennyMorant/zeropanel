@@ -107,12 +107,13 @@ class CouponController extends AdminController
                 'per_use_count'          => is_null($rowData->per_use_count) ? '无限次使用' : $rowData->per_use_count,
                 'total_use_count'        => is_null($rowData->total_use_count) ? '无限次使用' : $rowData->total_use_count,
                 'total_used_count'       => $rowData->total_used_count,
-                'action'                 => '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                                <ul    class = "dropdown-menu">
-                                                
-                                                <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete(\'coupon\', ' . $rowData->id . ')">删除</a></li>
-                                                </ul>
-                                            </div>',
+                'action'                 => <<<EOT
+                                                <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                                    <ul    class = "dropdown-menu">                                                  
+                                                    <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('coupon', {$rowData->id})">删除</a></li>
+                                                    </ul>
+                                                </div>
+                                            EOT,
             ];
         })->toArray();
 

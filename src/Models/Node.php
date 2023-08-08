@@ -26,14 +26,18 @@ class Node extends Model
     {
         switch ($this->status) {
             case 0:
-                $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" onclick="updateNodeStatus('.$this->id.')" />
-                            </div>';
+                $status = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_{$this->id}" onclick="updateNodeStatus({$this->id})">
+                            </div>
+                        EOT;
                 break;
             case 1:
-                $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" checked="checked" onclick="updateNodeStatus('.$this->id.')" />
-                            </div>';
+                $status = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_{$this->id}" checked="checked" onclick="updateNodeStatus({$this->id})" />
+                            </div>
+                        EOT;
                 break;
         }
         return $status;
