@@ -108,8 +108,7 @@
                                         <div class="card-header">
                                             <div class="card-title">商品介绍</div>
                                         </div>
-                                        <div class="card-body">
-                                            <textarea class="form-control scroll h-350px" id="custom_content">{$product->custom_content}</textarea>
+                                        <div class="card-body h-250px" id="custom_content">                                           
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +120,19 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js"></script>
         <script>
+            // write value
+            $('#type').val("{$product->type}").trigger('change');
+            $('#reset').val("{$product->reset_traffic_cycle}").trigger('change');
+
+            // code editor
+            var editor = ace.edit("custom_content");
+            editor.setTheme("ace/theme/monokai");
+            editor.session.setMode("ace/mode/html");
+            editor.setValue(`{$product->custom_content}`, -1);
+
+            // function
             function zeroAdminUpdateProduct(id) {
                 $.ajax({
                     type: "PUT",
@@ -145,7 +156,7 @@
                         speed_limit: $('#speed_limit').val(),
                         ip_limit: $('#ip_limit').val(),
                         sort: $('#sort').val(),
-                        custom_content: $('#custom_content').val()
+                        custom_content: editor.getValue()
                     },
                     success: function(data){
                         if (data.ret === 1){
@@ -168,10 +179,6 @@
                     }
                 })
             }
-        </script>
-        <script>
-            $('#type').val("{$product->type}").trigger('change');
-            $('#reset').val("{$product->reset_traffic_cycle}").trigger('change');
         </script>
     </body>
 </html>
