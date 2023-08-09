@@ -10,38 +10,34 @@ use Telegram\Bot\Commands\Command;
 
 final class BindCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'bind';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '绑定账户';
+    protected string $name = 'bind';
+    protected string $description = '绑定账户';
 
     public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
-        $message = $this->getUpdate()->getMessage();
+        $response = $this->getUpdate();
+        $message = $response->getMessage();
         $text = $message->getText();
         $messageId = $message->getMessageId();
         $chatId = $message->getChat()->getId();
-        $args = explode(' ', $text);
-        $token = $args[1];
 
-        
-        if (is_null($token)) {
+        if ($text != '/bind') {
+            $args = explode(' ', $text);
+            $token = $args[1];
+        } else {      
             $this->replyWithMessage(
                 [
-                    'text' => '请输入telegram token',
+                    'text' => '请输出入绑定token, 格式: /bind token',
                     'reply_to_message_id' => $messageId,
                 ]
             );
             return;
         }
+
         $result = Token::where('token', $token)->where('type', 1)->first();
-        if ($result->expire_time < time()) {
+
+        if ($result->expired_at < time()) {
             $this->replyWithMessage(
                 [
                     'text' => '当前token已经失效，请刷新网页重新获取token',
@@ -50,7 +46,9 @@ final class BindCommand extends Command
             );
             return;
         }
+
         $user = User::where('id', $result->user_id)->first();
+        
         if (!is_null($user->telegram_id) == $chatId) {
             $this->replyWithMessage(
                 [
@@ -67,8 +65,8 @@ final class BindCommand extends Command
         // 回送信息
         $this->replyWithMessage(
             [
-                'text' => $text,
-                'chat_id' => $chatId,
+                'text'       => $text,
+                'chat_id'    => $chatId,
                 'parse_mode' => 'Markdown',
             ]
         );

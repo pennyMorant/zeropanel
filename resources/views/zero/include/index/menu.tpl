@@ -16,7 +16,7 @@
                         </div>
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="/user/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
-                                {$config['appName']}
+                                {$config['website_name']}
                             </a>
                         </div>
                         <div class="d-flex align-items-stretch justify-content-between" id="kt_app_header_wrapper">
@@ -99,12 +99,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--
                                 <div class="app-navbar-item ms-1 ms-lg-3">
                                     <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
                                         <i class="fonticon-alarm fs-2"></i>                                
                                         <span class="position-absolute top-0 start-100 translate-middle  badge badge-circle badge-danger w-15px h-15px ms-n4 mt-3">{count($anns)}</span>                              
                                     </div>
                                 </div>
+                                -->
                                 <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                                     <div class="cursor-pointer symbol symbol-circle symbol-35px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                         <img src="{$user->gravatar}" alt="gravatar" />
@@ -116,25 +118,31 @@
                                                     <img alt="gravatar" src="{$user->gravatar}" />
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a class="badge badge-light-success fw-bold fs-8">权限组:&nbsp; {$user_permission}</a>
+                                                    <a class="badge badge-light-success fw-bold fs-8">权限组:&nbsp; {$user->getPermission($user->class)}</a>
                                                     <a class="fw-semibold text-muted text-hover-primary fs-7">{$user->email}</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="separator my-2"></div>
                                         <div class="menu-item px-5" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-offset="-15px, 0">
-                                            <a href="#" class="menu-link px-5">
-                                                <span class="menu-title position-relative">Language
+                                            <a href="#" class="menu-link px-5" id="zero_user_current_language">
+                                                <span class="menu-title position-relative">{$trans->t('language')}
                                                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
                                                 <img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>
                                             </a>
                                             <div class="menu-sub menu-sub-dropdown w-175px py-4">
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link d-flex px-5 active">
-                                                    <span class="symbol symbol-20px me-4">
-                                                        <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
-                                                    </span>English</a>
-                                                </div>												
+                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('en-US')">
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+                                                        </span>{$trans->t('english')}
+                                                    </a>
+                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('zh-CN')">
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
+                                                        </span>{$trans->t('chinese')}
+                                                    </a>
+                                                </div>											
                                             </div>
                                         </div>
                                         <div class="menu-item px-5">
@@ -150,7 +158,7 @@
                     <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                         <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                             <a href="/user/dashboard" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
-                                {$config['appName']}
+                                {$config['website_name']}
                             </a>
                             <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
                                 <span class="svg-icon svg-icon-2 rotate-180">

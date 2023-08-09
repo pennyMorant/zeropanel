@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 优惠码</title>
+        <title>{$config["website_name"]} 优惠码</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -31,7 +31,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">优惠码记录</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_coupon">创建优惠码</button>
+                                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_coupon">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建优惠码
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -66,43 +68,73 @@
                             <h1 class="mb-3">创建优惠码</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_coupon_code">
                                 <span class="required">优惠码</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="优惠码" id="zero_create_coupon_code">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_coupon_dicount_rate">
                                 <span class="required">折扣比例</span>
                             </label>
-                            <input type="text" value="" class="form-control form-control-solid" placeholder="折扣比例" id="zero_create_coupon_dicount_rate">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="折扣比例" id="zero_create_coupon_dicount_rate">
+                                <span class="input-group-text">%</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_valid_time">
                                 <span class="required">有效时间</span>
                             </label>
-                            <input type="text" value="1" class="form-control form-control-solid" placeholder="有效时间" id="zero_create_coupon_valid_time">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="1" class="form-control form-control-solid" placeholder="有效时间" id="zero_create_coupon_valid_time">
+                                <span class="input-group-text">小时</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
-                                <span class="required">可用商品</span>
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_limit_product">
+                                <span class="required">指定商品</span>
                             </label>
-                            <input type="text" value="" class="form-control form-control-solid" placeholder="可用商品" id="zero_create_coupon_valid_product">
+                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product" data-control="select2" data-allow-clear="true" data-placeholder="限制指定产品使用优惠" multiple="multiple">
+                                <option></option>
+                                {foreach $products as $product}
+                                    <option value={$product->id}>{$product->name}</option>
+                                {/foreach}
+                            </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_limit_product_period">
+                                <span class="required">指定周期</span>
+                            </label>
+                            <select class="form-select form-select-solid" id="zero_create_coupon_limit_product_period" data-control="select2" data-allow-clear="true" data-placeholder="限制指定周期使用优惠" multiple="multiple">
+                                <option></option>                              
+                                <option value="30">一个月</option>
+                                <option value="90">三个月</option>
+                                <option value="180">半年</option>
+                                <option value="360">一年</option>
+                                <option value="720">两年</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_per_times">
                                 <span class="required">用户使用次数</span>
                             </label>
-                            <input type="text" value="1" class="form-control form-control-solid" placeholder="用户使用次数" id="zero_create_coupon_per_times">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="默认为无限制" id="zero_create_coupon_per_times">
+                                <span class="input-group-text">次</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_total_times">
                                 <span class="required">总使用次数</span>
                             </label>
-                            <input type="text" value="-1" class="form-control form-control-solid" placeholder="总使用次数" id="zero_create_coupon_total_times">
+                            <div class="input-group input-group-solid">
+                                <input type="text" value="" class="form-control form-control-solid" placeholder="默认为无限制" id="zero_create_coupon_total_times">
+                                <span class="input-group-text">次</span>
+                            </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_coupon_generation_method">
                                 <span class="required">生成方式</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_coupon_generation_method">
@@ -127,32 +159,36 @@
         <script>
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
-            })
+            });
         </script>
         <script>
             function zeroAdminCreateCoupon(){
                 const submitButton = document.querySelector('[data-kt-admin-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
+                const postData = {
+                    code: $('#zero_create_coupon_code').val(),
+                    discount: $('#zero_create_coupon_dicount_rate').val(),
+                    limited_product: ($('#zero_create_coupon_limit_product').val().length === 0) ? [""] : $('#zero_create_coupon_limit_product').val(),
+                    limited_product_period: ($('#zero_create_coupon_limit_product_period').val().length === 0) ? [""] : $('#zero_create_coupon_limit_product_period').val(),
+                    per_use_count: $('#zero_create_coupon_per_times').val(),
+                    total_use_count: $('#zero_create_coupon_total_times').val(),
+                    expire: $('#zero_create_coupon_valid_time').val(),
+                    generate_type: $('#zero_create_coupon_generation_method').val(),
+                };
                 $.ajax({
                     type: "POST",
                     url: "/{$config['website_admin_path']}/coupon/create",
                     dataType: "json",
-                    data: {
-                        code: $('#zero_create_coupon_code').val(),
-                        discount: $('#zero_create_coupon_dicount_rate').val(),
-                        limited_product: $('#zero_create_coupon_valid_product').val(),
-                        per_use_count: $('#zero_create_coupon_per_times').val(),
-                        total_use_count: $('#zero_create_coupon_total_times').val(),
-                        expire: $('#zero_create_coupon_valid_time').val(),
-                        generate_type: $('#zero_create_coupon_generation_method').val(),
-                    },
+                    data: postData,
                     success: function (data) {
                         if (data.ret == 1) {
                             setTimeout(function() {
                                 submitButton.removeAttribute('data-kt-indicator');
                                 submitButton.disabled = false;
-                                location.reload();
+                                getResult(data.msg, '', 'success');
+                                $('#zero_modal_create_coupon').modal('hide');
+                                table_1.ajax.reload();
                             }, 1500);
                         } else {
                             getResult(data.msg, '', 'error');

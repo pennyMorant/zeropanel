@@ -8,8 +8,8 @@ use App\Utils\Telegram;
 use App\Models\{
     Ticket,
     User,
-    Setting
 };
+use Telegram\Bot\Actions;
 use voku\helper\AntiXSS;
 
 class ReplayTicket
@@ -56,16 +56,14 @@ class ReplayTicket
      */
     public function __construct($bot, $Message, $ticketId)
     {
+        $bot->sendChatAction([
+            'chat_id' => $Message->getChat()->getId(),
+            'action'  => Actions::TYPING,
+        ]);
         $this->bot              = $bot;
-        $this->triggerUser      = [
-            'id'       => $Message->getFrom()->getId(),
-            'name'     => $Message->getFrom()->getFirstName() . ' ' . $Message->getFrom()->getLastName(),
-            'username' => $Message->getFrom()->getUsername(),
-        ];
         $AdminUser = User::where('is_admin', 1)->where('telegram_id', $Message->getFrom()->getId())->first();
         $this->User             = $AdminUser;
         $this->ChatID           = $Message->getChat()->getId();
-        $this->Callback         = $Message;
         $this->MessageID        = $Message->getMessageId();
         $this->TickedId         = $ticketId;
 
@@ -78,19 +76,30 @@ class ReplayTicket
             return;
         }
         if ($ticketId){
-            $ticket_main = Ticket::where('id', $ticketId)->first();
-            $content = $Message->getText();
-            $antiXss              = new AntiXSS();
-            $ticket               = new Ticket();
-            $ticket->title        = $antiXss->xss_clean($ticket_main->title);
-            $ticket->content      = $antiXss->xss_clean($content);
-            $ticket->rootid       = $ticket_main->id;
-            $ticket->userid       = $AdminUser->id;
-            $ticket->datetime     = time();
-            $ticket_main->status  = 1;
-            $ticket_main->save();
+            $ticket = Ticket::where('id', $ticketId)->first();
+            $user = User::where('id', $ticket->userid)->first();
+            $comment = $Message->getText();
+            $antiXss = new AntiXSS();
+
+            $content_old = json_decode($ticket->content, true);
+            $content_new = [
+                [
+                    'comment_id'      => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                    'commenter_email' => $user->email,
+                    'comment'         => $antiXss->xss_clean($comment),
+                    'datetime'        => time(),
+                ],
+            ];
+
+            $ticket->content = json_encode(array_merge($content_old, $content_new));
+            $ticket->updated_at = time();
+            $ticket->status = 1;
             $ticket->save();
-            Telegram::pushToAdmin("# {$ticketId} 的工单已回复成功", $this->ChatID);
+            $bot->sendMessage([
+                'chat_id' => $this->ChatID,
+                'text' => '回复成功',
+                'reply_to_message_id' => $this->MessageID,
+            ]);
         }
     }
 }

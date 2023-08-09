@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 佣金</title>
+        <title>{$config["website_name"]} 佣金</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -79,7 +79,9 @@
             stateSave: true,
             columnDefs: [
                 { width: '5%', targets: 0 },
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_commission['total_column'] as $key_commission => $value_commission}

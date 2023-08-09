@@ -227,7 +227,7 @@ class User extends Model
     public function onlineIPCount(): int
     {
         $total_ip = IP::selectRaw('userid, COUNT(DISTINCT ip) AS count')
-            ->where('datetime', '>=', time() - 180)
+            ->whereRaw('created_at >= UNIX_TIMESTAMP() - 180')
             ->where('userid', $this->id)
             ->groupBy('userid')
             ->first();
@@ -260,34 +260,7 @@ class User extends Model
      */
     public function getTotalIncome(): float
     {
-        $number = Order::where('user_id', $this->id)->where('order_status', 2)->where('order_payment', '!=', 'creditpay')->sum('order_total');
-        return is_null($number) ? 0.00 : round($number, 2);
-    }
-
-    /**
-     * 获取累计收入
-     *
-     * @param string $req
-     */
-    public function calIncome(string $req): float
-    {
-        switch ($req) {
-            case "yesterday":
-                $number = Order::whereDate('paid_time', '=', date('Y-m-d', strtotime('-1 days')))->sum('order_total');
-                break;
-            case "today":
-                $number = Order::whereDate('paid_time', '=', date('Y-m-d'))->sum('order_total');
-                break;
-            case "this month":
-                $number = Order::whereYear('paid_time', '=', date('Y'))->whereMonth('usedatetime', '=', date('m'))->sum('order_total');
-                break;
-            case "last month":
-                $number = Order::whereYear('paid_time', '=', date('Y'))->whereMonth('paid_time', '=', date('m', strtotime('last month')))->sum('order_total');
-                break;
-            default:
-                $number = Order::sum('order_total');
-                break;
-        }
+        $number = Order::where('user_id', $this->id)->where('order_status', 2)->sum('order_total');
         return is_null($number) ? 0.00 : round($number, 2);
     }
 
@@ -408,19 +381,19 @@ class User extends Model
     {
         $result = false;
         if ($is_queue) {
-            $new_emailqueue = new EmailQueue;
-            $new_emailqueue->to_email = $this->email;
-            $new_emailqueue->subject = $subject;
-            $new_emailqueue->template = $template;
-            $new_emailqueue->time = time();
-            $ary = array_merge(['user' => $this], $ary);
-            $new_emailqueue->array = json_encode($ary);
+            $new_emailqueue             = new EmailQueue;
+            $new_emailqueue->to_email   = $this->email;
+            $new_emailqueue->subject    = $subject;
+            $new_emailqueue->template   = $template;
+            $new_emailqueue->created_at = time();
+            $ary                        = array_merge(['user' => $this], $ary);
+            $new_emailqueue->array      = json_encode($ary);
             $new_emailqueue->save();
             return true;
         }
-        // 验证邮箱地址是否正确
+          // 验证邮箱地址是否正确
         if (Tools::isEmail($this->email)) {
-            // 发送邮件
+              // 发送邮件
             try {
                 Mail::send(
                     $this->email,
@@ -454,7 +427,7 @@ class User extends Model
         $signin           = new SigninIp();
         $signin->ip       = $ip;
         $signin->userid   = $this->id;
-        $signin->datetime = time();
+        $signin->created_at = time();
         $signin->type     = $type;
 
         return $signin->save();
@@ -462,16 +435,15 @@ class User extends Model
 
     public function enable()
     {
-        $enables = "'enable'";
         switch ($this->enable) {
             case 0:
                 $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" onclick="updateUserStatus('.$enables.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" onclick="updateUserStatus(\'enable\', '.$this->id.')" />
                             </div>';
                 break;
             case 1:
                 $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" checked="checked" onclick="updateUserStatus('.$enables.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" checked="checked" onclick="updateUserStatus(\'enable\', '.$this->id.')" />
                             </div>';
                 break;
         }
@@ -480,16 +452,15 @@ class User extends Model
 
     public function is_admin()
     {
-        $is_admins = "'is_admin'";
         switch ($this->is_admin) {
             case 0:
                 $is_admin = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" onclick="updateUserStatus('.$is_admins.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" onclick="updateUserStatus(\'is_admin\', '.$this->id.')" />
                             </div>';
                 break;
             case 1:
                 $is_admin = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" checked="checked" onclick="updateUserStatus('.$is_admins.', '.$this->id.')" />
+                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" checked="checked" onclick="updateUserStatus(\'is_admin\', '.$this->id.')" />
                             </div>';
                 break;
         }
@@ -517,5 +488,15 @@ class User extends Model
     {
         $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $this->email . '|' . $current_timestamp);
         return $uuid;
+    }
+
+    public function getPermission($class)
+    {
+        if (Setting::obtain('enable_permission_group') == true) {
+            $permission_group = json_decode(Setting::obtain('permission_group_detail'), true);
+        }
+        $permission = isset($permission_group) ? $permission_group[$class] : 'LV-'.$class;
+
+        return $permission;
     }
 }

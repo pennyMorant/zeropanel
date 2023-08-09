@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>{$config["appName"]} Ticket </title>
+	<title>{$config["website_name"]} Ticket </title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -34,14 +34,16 @@
 												</div>
 											</div>
 											<div class="card-toolbar">
-												<button class="btn btn-primary fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">{$trans->t('create ticket')}</button>
+												<button class="btn btn-primary fw-bolder" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
+												<i class="bi bi-cloud-plus fs-2"></i>{$trans->t('create ticket')}
+												</button>
 											</div>
 										</div>
 										<div class="card-body pt-0">
 											<!-- begin datatable -->
 											<table class="table align-middle table-striped table-row-bordered gy-5 gs-7" id="zero_ticket_table">
 												<thead>
-													<tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">                                                       
+													<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">                                                       
 														<th>ID</th>
 														<th>{$trans->t('type')}</th>
 														<th>{$trans->t('subject')}</th>
@@ -62,7 +64,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>
@@ -93,13 +95,13 @@
 							<h1 class="mb-3">{$trans->t('create ticket')}</h1>
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_title">
 								<span class="required">{$trans->t('subject')}</span>
 							</label>
 							<input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_type">
 								<span class="required">工单类型</span>
 							</label>
 							<select id="zero_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
@@ -110,7 +112,7 @@
 							</select>
 						</div>
 						<div class="d-flex flex-column mb-8">
-							<label class="fs-6 fw-semibold mb-2">
+							<label class="fs-6 fw-semibold mb-2" for="zero_modal_create_ticket_ckeditor_classic">
 								<span class="required">{$trans->t('details')}</span>
 							</label>
 							<textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>

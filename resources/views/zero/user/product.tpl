@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} Product</title>
+        <title>{$config["website_name"]} Product</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -44,7 +44,6 @@
 														<div class="row g-10">                                               
 															{if $count[$key] != '0'}
 																{foreach $products as $product}
-																	{assign var="product_permission" value=$permission_group[$product->class]|default: "unknown"}
 																	{if $product->type == $key}
 																		<div class="col-xl-4">
 																			<div class="d-flex h-100 align-items-center">
@@ -87,7 +86,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{if {$product->ip_limit} === '0' }{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}&nbsp;{$trans->t('online ip')}</span></span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{if empty($product->ip_limit)}{$trans->t('unlimited')}{else}{$product->ip_limit}{/if}&nbsp;{$trans->t('online ip')}</span></span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -96,7 +95,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if {$product->speed_limit} == '0' }<span class="badge badge-success fw-bold fs-6">{$trans->t('unlimited')}</span>{else}{$product->speed_limit} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{if empty($product->speed_limit)}<span class="badge badge-success fw-bold fs-6">{$trans->t('unlimited')}</span>{else}{$product->speed_limit} Mbps{/if}&nbsp;{$trans->t('bandwidth')}</span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -114,7 +113,7 @@
 																									</span>
 																								</div>
 																								<div class="d-flex align-items-center mb-5">
-																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$product_permission}&nbsp;{$trans->t('access permission')}</span></span>
+																									<span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3"><span class="badge badge-success fw-bold fs-6">{$user->getPermission($product->class)}&nbsp;{$trans->t('access permission')}</span></span>
 																									<span class="svg-icon svg-icon-1 svg-icon-success">
 																										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 																											<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor" />
@@ -135,10 +134,15 @@
 																							{$product->custom_content}
 																						{/if}
 																					</div>
-																					{if $product->stock != 0 && $product->stock - $product->sales == 0}
+																					{if isset($product->stock) && $product->stock - $product->realTimeSales() <= 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
-																						<button class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id}, '{$currency_unit}')">{$trans->t('purchase')}</button>
+																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">
+																							<span class="indicator-label">{$trans->t('purchase')}</span>			
+																							<span class="indicator-progress">{$trans->t('please wait')}
+																							<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+																						</button>
+																						
 																					{/if}
 																				</div>
 																			</div>
@@ -159,7 +163,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>
@@ -167,10 +171,8 @@
                 </div>
             </div>
         </div>
-        {include file='include/global/scripts.tpl'}
-		{include file='include/index/news.tpl'}
 
-		<div class="modal fade" id="zero_modal_configure_product" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+		<div class="modal fade" id="zero_modal_configure_product" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="modal-content rounded">
 					<div class="modal-header justify-content-end border-0 pb-0">
@@ -188,7 +190,7 @@
 							<h1 class="mb-3">{$trans->t('configure product')}</h1>
 						</div>
 						<div class="d-flex flex-column">
-							<div class="row mt-10">
+							<div class="row mt-10 g-5">
 								<div class="col-lg-7">
 									<div class="tab-content rounded h-100 bg-light p-10">
 										<div class="tab-pane fade show active">
@@ -201,16 +203,20 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-5 mt-5">
-									<div class="card card-dashed" id="zero_modal_configure_coupon_html">
+								<div class="col-lg-5">
+									<div class="card card-dashed mb-5" id="zero_modal_configure_coupon_html">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<input class="form-control me-3" placeholder={$trans->t('promo code')} type="text" id="zero_coupon_code">
-												<button id="zero_modal_configure_coupon" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">{$trans->t('verify')}</button>
+												<button id="zero_modal_configure_coupon" type="submit" data-kt-users-action="verify-coupon" class="btn btn-light fw-bold flex-shrink-0" onclick="KTUserVerifyCoupon()">
+													<span class="indicator-label">{$trans->t('verify')}</span>			
+													<span class="indicator-progress">{$trans->t('please wait')}
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
 											</div>
 										</div>
 									</div>
-									<div class="card card-dashed card-flush mt-5">
+									<div class="card card-dashed card-flush mb-5">
 										<div class="card-body">
 											<div class="d-flex align-items-center">
 												<span class="fw-semibold text-gray-00 fs-4 flex-grow-1 pe-3" id="zero_modal_configure_product_name"></span>
@@ -223,27 +229,30 @@
 											</div>
 										</div>
 									</div>
-									<div class="card card-dashed card-flush mt-5">
+									<div class="card card-dashed card-flush">
 										<div class="card-body">
-											<div class="d-flex align-items-center">
-												<ul class="nav nav-pills nav-fill">
-													<li class="nav-item mb-3" id="zero_modal_configure_product_month_price">
+											
+												<ul class="nav nav-pills d-flex flex-column flex-sm-row justify-content-center" role="tablist">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_month_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_quarter_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_quarter_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_half_year_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_half_year_price">
 														
 													</li>
 													
-													<li class="nav-item mb-3" id="zero_modal_configure_product_year_price">
+													<li class="nav-item mb-3 d-flex flex-column" id="zero_modal_configure_product_year_price">
+														
+													</li>
+													<li class="nav-item d-flex flex-column" id="zero_modal_configure_product_two_year_price">
 														
 													</li>
 												</ul>
-											</div>
+											
 										</div>
 									</div>
 								</div>
@@ -261,12 +270,17 @@
 				</div>
 			</div>
 		</div>
+		{include file='include/index/news.tpl'}
+		<script>var currency_unit = "{$currency_unit}";</script>
+        {include file='include/global/scripts.tpl'}
+		
 		<script>
 			$("#zero_modal_configure_product").on('hidden.bs.modal', function () {
 				$("#zero_modal_configure_product_month_price").html('');
 				$("#zero_modal_configure_product_quarter_price").html('');
 				$("#zero_modal_configure_product_half_year_price").html('');
 				$("#zero_modal_configure_product_year_price").html('');
+				$("#zero_modal_configure_product_two_year_price").html('');
 				console.log('clean success');
 			});
 		</script>

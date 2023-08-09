@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 封禁</title>
+        <title>{$config["website_name"]} 封禁</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -108,25 +108,25 @@
                             <h1 class="mb-3">创建规则</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ban_rule_name">
                                 <span class="required">规则名称</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则名称" id="zero_create_ban_rule_name">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ban_rule_description">
                                 <span class="required">规则描述</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则描述" id="zero_create_ban_rule_description">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_ban_rule_regular_expressions">
                                 <span class="required">规则正则表达式</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="正则表达式" id="zero_create_ban_rule_regular_expressions">
                         </div>                   
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_create_ban_rule_type">
                                 <span class="required">规则类型</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_create_ban_rule_type">
@@ -168,25 +168,25 @@
                             <h1 class="mb-3">创建规则</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_update_ban_rule_name">
                                 <span class="required">规则名称</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则名称" id="zero_update_ban_rule_name">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_update_ban_rule_description">
                                 <span class="required">规则描述</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="规则描述" id="zero_update_ban_rule_description">
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_update_ban_rule_regular_expressions">
                                 <span class="required">规则正则表达式</span>
                             </label>
                             <input type="text" value="" class="form-control form-control-solid" placeholder="正则表达式" id="zero_update_ban_rule_regular_expressions">
                         </div>                   
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_update_ban_rule_type">
                                 <span class="required">规则类型</span>
                             </label>
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" id="zero_update_ban_rule_type">
@@ -309,8 +309,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { width: '5%', targets: 0 },
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_ban_record['total_column'] as $key => $value}
@@ -335,8 +336,9 @@
             order: [[ 0, 'desc' ]],
             stateSave: true,
             columnDefs: [
-                { width: '5%', targets: 0 },
-                { className: 'text-end', targets: -1 }
+                { className: 'text-end', targets: -1 },
+                { orderable: false, targets: '_all' },
+                { orderable: true, targets: 0}
             ],
             columns: [
             {foreach $table_config_detect_record['total_column'] as $key => $value}

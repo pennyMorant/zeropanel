@@ -226,6 +226,11 @@
     "subject": "主题",
     "create ticket": "创建工单",
     "reply": "回复",
+    "please verify email first": "请先验证邮箱",
+    "coupon failed": "优惠券使用失败",
+    "language": "语言",
+    "english": "英语",
+    "chinese": "中文(简体)",
     "tutorial": {
         "android": {
             "clash": {

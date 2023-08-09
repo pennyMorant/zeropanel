@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 工单</title>
+        <title>{$config["website_name"]} 工单</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -32,7 +32,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">工单列表</div>
                                             <div class="card-toolbar">
-												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">创建工单</button>
+												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_ticket">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建工单
+                                                </button>
 											</div>
                                         </div>
                                         <div class="card-body">
@@ -68,22 +70,27 @@
                             <h1 class="mb-3">创建工单</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_userid">
                                 <span class="required">用户ID</span>
                             </label>
-                            <input type="text" class="form-control form-control-solid" placeholder="用户ID" id="zero_admin_create_ticket_userid">
+                            <select class="form-select form-select-solid" id="zero_admin_create_ticket_userid" data-control="select2" data-placeholder="选择一个用户">
+                                <option></option>
+                                {foreach $allUsers as $allUser}
+                                    <option value={$allUser->id}>{$allUser->email}</option>
+                                {/foreach}
+                            </select>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_subject">
                                 <span class="required">{$trans->t('subject')}</span>
                             </label>
                             <input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_admin_create_ticket_subject">
                         </div>
                         <div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_admin_create_ticket_type">
 								<span class="required">工单类型</span>
 							</label>
-							<select id="zero_admin_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
+							<select id="zero_admin_create_ticket_type" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
 								<option value="support">支持</option>
 								<option value="account">账户</option>
 								<option value="billing">账单</option>
@@ -91,7 +98,7 @@
 							</select>
 						</div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_modal_create_ticket_ckeditor_classic">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
                             <textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>
@@ -175,6 +182,7 @@
                     }
                 });
             }
-    </script>
+        </script>
+        
     </body>
 </html>

@@ -61,86 +61,6 @@
     },
     {
         "id": null,
-        "item": "payment_gateway",
-        "value": "[]",
-        "class": "pay",
-        "is_public": 1,
-        "type": "array",
-        "default": "[]",
-        "mark": "支付网关"
-    },
-    {
-        "id": null,
-        "item": "f2f_pay_app_id",
-        "value": "",
-        "class": "f2f",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "当面付AppID"
-    },
-    {
-        "id": null,
-        "item": "f2f_pay_pid",
-        "value": "",
-        "class": "f2f",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "当面付PID"
-    },
-    {
-        "id": null,
-        "item": "f2f_pay_public_key",
-        "value": "",
-        "class": "f2f",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "当面付公钥"
-    },
-    {
-        "id": null,
-        "item": "f2f_pay_private_key",
-        "value": "",
-        "class": "f2f",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "当面付私钥"
-    },
-    {
-        "id": null,
-        "item": "f2f_pay_notify_url",
-        "value": "",
-        "class": "f2f",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "当面付自定义回调地址"
-    },
-    {
-        "id": null,
-        "item": "vmq_gateway",
-        "value": "",
-        "class": "vmqpay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "V免签网关"
-    },
-    {
-        "id": null,
-        "item": "vmq_key",
-        "value": "",
-        "class": "vmqpay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "V免签密钥"
-    },
-    {
-        "id": null,
         "item": "smtp_host",
         "value": "",
         "class": "smtp",
@@ -371,26 +291,6 @@
     },
     {
         "id": null,
-        "item": "payjs_mchid",
-        "value": "",
-        "class": "payjs",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "payjs_mchid"
-    },
-    {
-        "id": null,
-        "item": "payjs_key",
-        "value": "",
-        "class": "payjs",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "payjs_key"
-    },
-    {
-        "id": null,
         "item": "tawk_id",
         "value": "",
         "class": "live_chat",
@@ -441,118 +341,6 @@
     },
     {
         "id": null,
-        "item": "theadpay_url",
-        "value": "",
-        "class": "theadpay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "theadpay_url"
-    },
-    {
-        "id": null,
-        "item": "theadpay_mchid",
-        "value": "",
-        "class": "theadpay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "theadpay_mchid"
-    },
-    {
-        "id": null,
-        "item": "theadpay_key",
-        "value": "",
-        "class": "theadpay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "theadpay_key"
-    },
-    {
-        "id": null,
-        "item": "paytaro_app_id",
-        "value": "",
-        "class": "paytaro",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "paytaro id"
-    },
-    {
-        "id": null,
-        "item": "paytaro_app_secret",
-        "value": "",
-        "class": "paytaro",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "paytaro secret"
-    },
-    {
-        "id": null,
-        "item": "paybeaver_app_id",
-        "value": "",
-        "class": "paybeaver",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "Paybeaver id"
-    },
-    {
-        "id": null,
-        "item": "paybeaver_app_secret",
-        "value": "",
-        "class": "paybeaver",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "Paybeaver secret"
-    },
-    
-    
-    {
-        "id": null,
-        "item": "pmw_publickey",
-        "value": "",
-        "class": "pmw",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "pmw公钥"
-    },
-    {
-        "id": null,
-        "item": "pmw_privatekey",
-        "value": "",
-        "class": "pmw",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "pmw私钥"
-    },
-    {
-        "id": null,
-        "item": "pmw_widget",
-        "value": "m2_1",
-        "class": "pmw",
-        "is_public": 0,
-        "type": "string",
-        "default": "m2_1",
-        "mark": "pmw_widget"
-    },
-    {
-        "id": null,
-        "item": "pmw_height",
-        "value": "350px",
-        "class": "pmw",
-        "is_public": 0,
-        "type": "string",
-        "default": "350px",
-        "mark": "pmw_height"
-    },
-    {
-        "id": null,
         "item": "auto_backup_notify",
         "value": "0",
         "class": "backup",
@@ -570,6 +358,26 @@
         "type": "string",
         "default": "open",
         "mark": "注册模式"
+    },
+    {
+        "id": null,
+        "item": "verify_email",
+        "value": "close",
+        "class": "register",
+        "is_public": 1,
+        "type": "string",
+        "default": "close",
+        "mark": "验证邮箱"
+    },
+    {
+        "id": null,
+        "item": "limit_email_suffix",
+        "value": "['']",
+        "class": "register",
+        "is_public": 1,
+        "type": "array",
+        "default": "['']",
+        "mark": "限制邮箱后缀"
     },
     {
         "id": null,
@@ -703,96 +511,6 @@
     },
     {
         "id": null,
-        "item": "stripe_currency",
-        "value": "HKD",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "string",
-        "default": "HKD",
-        "mark": "货币代码"
-    },
-    {
-        "id": null,
-        "item": "stripe_sk",
-        "value": "stripe_sk",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "string",
-        "default": "stripe_sk",
-        "mark": "stripe_sk"
-    },
-    {
-        "id": null,
-        "item": "stripe_pk",
-        "value": "stripe_pk",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "string",
-        "default": "stripe_pk",
-        "mark": "stripe_pk"
-    },
-    {
-        "id": null,
-        "item": "stripe_webhook_key",
-        "value": "stripe_webhook_key",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "string",
-        "default": "stripe_webhook_key",
-        "mark": "web_hook密钥"
-    },
-    {
-        "id": null,
-        "item": "stripe_min_recharge",
-        "value": "10",
-        "class": "stripe",
-        "is_public": 1,
-        "type": "int",
-        "default": "10",
-        "mark": "最低充值限额"
-    },
-    {
-        "id": null,
-        "item": "stripe_card",
-        "value": "0",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "bool",
-        "default": "0",
-        "mark": "银行卡支付"
-    },
-    {
-        "id": null,
-        "item": "stripe_alipay",
-        "value": "0",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "bool",
-        "default": "0",
-        "mark": "支付宝支付"
-    },
-    {
-        "id": null,
-        "item": "stripe_wechat",
-        "value": "0",
-        "class": "stripe",
-        "is_public": 0,
-        "type": "bool",
-        "default": "0",
-        "mark": "微信支付"
-    },
-    {
-        "id": null,
-        "item": "stripe_max_recharge",
-        "value": "1000",
-        "class": "stripe",
-        "is_public": 1,
-        "type": "int",
-        "default": "1000",
-        "mark": "最高充值限额"
-    },
-    {
-        "id": null,
         "item": "enable_currency",
         "value": "0",
         "class": "currency",
@@ -894,11 +612,11 @@
     {
         "id": null,
         "item": "telegram_admin_id",
-        "value": "",
+        "value": "['']",
         "class": "telegram",
         "is_public": 0,
-        "type": "string",
-        "default": "",
+        "type": "array",
+        "default": "['']",
         "mark": "管理员ID"
     },
     {
@@ -1100,116 +818,6 @@
         "type": "string",
         "default": "",
         "mark": "订阅营销信息"
-    },
-    {
-        "id": null,
-        "item": "subscribe_clash_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "clash 默认配置"
-    },
-    {
-        "id": null,
-        "item": "subscribe_surge_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "surge 默认配置"
-    },
-    {
-        "id": null,
-        "item": "subscribe_surfboard_default_profile",
-        "value": "default",
-        "class": "subscribe",
-        "is_public": 0,
-        "type": "string",
-        "default": "default",
-        "mark": "surfboard 默认配置"
-    },
-    {
-        "id": null,
-        "item": "epay_url",
-        "value": "1000",
-        "class": "epay",
-        "is_public": 0,
-        "type": "string",
-        "default": "1000",
-        "mark": "易支付url"
-    },
-	{
-        "id": null,
-        "item": "epay_pid",
-        "value": "1000",
-        "class": "epay",
-        "is_public": 0,
-        "type": "string",
-        "default": "1000",
-        "mark": "易支付商户ID"
-    },
-	{
-        "id": null,
-        "item": "epay_key",
-        "value": "1000",
-        "class": "epay",
-        "is_public": 0,
-        "type": "string",
-        "default": "1000",
-        "mark": "易支付商户Key"
-    },
-    {
-        "id": null,
-        "item": "tronapipay_public_key",
-        "value": "",
-        "class": "tronapipay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "tronapipay public key"
-    },
-	{
-        "id": null,
-        "item": "tronapipay_private_key",
-        "value": "",
-        "class": "tronapipay",
-        "is_public": 0,
-        "type": "string",
-        "default": "",
-        "mark": "tronapipay_private_key"
-    },
-    {
-        "id": null,
-        "item": "alipay_payment",
-        "value": "none",
-        "class": "payment_gateway",
-        "is_public": 0,
-        "type": "string",
-        "default": "none",
-        "mark": "支付宝支付渠道"
-    },
-    {
-        "id": null,
-        "item": "wechatpay_payment",
-        "value": "none",
-        "class": "payment_gateway",
-        "is_public": 0,
-        "type": "string",
-        "default": "none",
-        "mark": "微信支付渠道"
-    },
-    {
-        "id": null,
-        "item": "cryptopay_payment",
-        "value": "none",
-        "class": "payment_gateway",
-        "is_public": 0,
-        "type": "string",
-        "default": "none",
-        "mark": "虚拟币支付渠道"
     },
     {
         "id": null,

@@ -23,14 +23,6 @@ class SigninIp extends Model
         return User::find($this->userid);
     }
 
-    /**
-     * 登录时间
-     */
-    public function datetime(): string
-    {
-        return date('Y-m-d H:i:s', $this->datetime);
-    }
-
 
     /**
      * 登录成功与否

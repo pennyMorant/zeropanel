@@ -26,21 +26,21 @@ PROCESS-NAME,DownloadService,DIRECT
 URL-REGEX,(.+\.|^)(360|so)\.(cn|com),DIRECT
 PROCESS-NAME,Weiyun,DIRECT
 
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/private.txt,DIRECT
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/reject.txt,REJECT
+DOMAIN-SET,{$subUrl}/rules/surge/private.txt,DIRECT
+DOMAIN-SET,{$subUrl}/rules/surge/reject.txt,REJECT
 RULE-SET,SYSTEM,DIRECT
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/icloud.txt,🍎 APPLE
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/apple.txt,🍎 APPLE
-RULE-SET,{$config['baseUrl']}/rules/surge/telegramcidr.txt,✈️ TELEGRAM
-RULE-SET,{$config['baseUrl']}/rules/surge/cncidr.txt,DIRECT
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/netflix.txt,🎞 NETFLIX
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/music.txt,🎧 MUSIC
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/video.txt,📺 VIDEO
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/socialapp.txt,🪁 SOCIAL APP
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/google.txt,🔍 GOOGLE
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/googler.txt,🔍 GOOGLE
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/youtube.txt,🎬 YOUTUBE
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/proxy.txt,🌎 PROXY,force-remote-dns
-DOMAIN-SET,{$config['baseUrl']}/rules/surge/direct.txt,DIRECT
+DOMAIN-SET,{$subUrl}/rules/surge/icloud.txt,🍎 APPLE
+DOMAIN-SET,{$subUrl}/rules/surge/apple.txt,🍎 APPLE
+RULE-SET,{$subUrl}/rules/surge/telegramcidr.txt,✈️ TELEGRAM
+RULE-SET,{$subUrl}/rules/surge/cncidr.txt,DIRECT
+DOMAIN-SET,{$subUrl}/rules/surge/netflix.txt,🎞 NETFLIX
+DOMAIN-SET,{$subUrl}/rules/surge/music.txt,🎧 MUSIC
+DOMAIN-SET,{$subUrl}/rules/surge/video.txt,📺 VIDEO
+DOMAIN-SET,{$subUrl}/rules/surge/socialapp.txt,🪁 SOCIAL APP
+DOMAIN-SET,{$subUrl}/rules/surge/google.txt,🔍 GOOGLE
+DOMAIN-SET,{$subUrl}/rules/surge/googler.txt,🔍 GOOGLE
+DOMAIN-SET,{$subUrl}/rules/surge/youtube.txt,🎬 YOUTUBE
+DOMAIN-SET,{$subUrl}/rules/surge/proxy.txt,🌎 PROXY,force-remote-dns
+DOMAIN-SET,{$subUrl}/rules/surge/direct.txt,DIRECT
 RULE-SET,LAN,DIRECT
 FINAL,🌎 PROXY,dns-failed

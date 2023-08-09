@@ -43,7 +43,7 @@ class AdminController extends UserController
         switch ($name) {
             case 'newusers':
                 // get current month 
-                $start_date = Carbon::now()->subDays(7);
+                $start_date = Carbon::now()->subDays(6);
                 $start_month_date = Carbon::parse($start_date)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
@@ -75,14 +75,13 @@ class AdminController extends UserController
                     })->values(); // 返回一个索引数组
                 break;
             case 'income':
-                $start_date = Carbon::now()->subDays(7)->startOfDay();
+                $start_date = Carbon::now()->subDays(6)->startOfDay();
                 // 获取当前日期
                 $today = Carbon::today()->endOfDay();
 
                 // 获取查询结果集合
-                $orders = Order::where('order_payment', '!=', 'creditpay')
-                    ->whereBetween('paid_time', [strtotime($start_date), strtotime($today)])
-                    ->selectRaw('DATE(FROM_UNIXTIME(paid_time)) as date, sum(order_total) as amount')
+                $orders = Order::whereBetween('paid_at', [strtotime($start_date), strtotime($today)])
+                    ->selectRaw('DATE(FROM_UNIXTIME(paid_at)) as date, SUM(order_total) as amount')
                     ->groupBy('date')->get();
 
                 if (isset($orders)) {
@@ -102,41 +101,42 @@ class AdminController extends UserController
                             // 将每一天的数据转换为一个数组并返回
                             return [
                                 'x' => strval($key),
-                                'y' => intval($value)
+                                'y' => $value,
                             ];
                         })->values(); // 返回一个索引数组
                 }
                 break;
             case 'traffic':
                 // 获取7天内的起始和结束时间戳
-                $time_a = strtotime(date('Y-m-d', $_SERVER['REQUEST_TIME']) . " -6 days");
-                $time_b = $time_a + 86400 * 8;
+                $start_date = Carbon::now()->subDays(6)->startOfDay();
+                $today = Carbon::today()->endOfDay();
                 // 查询7天内按日期分组的流量数据，并转换成GB              
-                $traffic = TrafficLog::whereBetween('datetime', [$time_a, $time_b])
-                    ->selectRaw('DATE(FROM_UNIXTIME(datetime)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
-                    ->groupBy('x')->pluck('y', 'x');
-                // 把日期和流量数据添加到数组中，并补充没有流量数据的日期
-                $dates = array_map(function ($i) {
-                    return date('Y-m-d', $_SERVER['REQUEST_TIME'] - $i * 86400);
-                }, range(6, 0));
-
-                $trafficData = array_fill_keys($dates, '0');
-                $trafficData = array_replace($trafficData, $traffic->toArray());
-
-                $datas = array_map(function ($date, $flow) {
-                    return [
-                        'x' => $date,
-                        'y' => $flow,
-                        'name' => I18n::get()->t('traffic'),
-                    ];
-                }, array_keys($trafficData), $trafficData);
+                $traffic = TrafficLog::whereBetween('created_at', [strtotime($start_date), strtotime($today)])
+                    ->selectRaw('DATE(FROM_UNIXTIME(created_at)) as x, ROUND(SUM((u) + (d)) / 1024 / 1024 / 1024, 2) as y')
+                    ->groupBy('x')->get();
+                if (isset($traffic)) {
+                    // 对结果集合按照日期进行分组和统计
+                    $datas = $traffic->mapWithKeys(function ($item) {
+                        return [$item->x => $item->y];
+                    });
+                    $datas = collect(range(0, $today->diffInDays($start_date)))
+                        ->mapWithKeys(function ($day) use ($start_date) {
+                            return [$start_date->copy()->addDays($day)->format('Y-m-d') => 0];
+                        })->merge($datas)
+                        ->map(function ($value, $key) {
+                            return [
+                                'x' => strval($key),
+                                'y' => $value,
+                            ];
+                        })->values(); // 返回一个索引数组
+                }
                 break;
             case 'user_traffic_ranking':
                 $startOfDay = Carbon::today()->startOfDay()->timestamp;
                 $endOfDay = Carbon::today()->endOfDay()->timestamp;
 
                 $user = TrafficLog::selectRaw('user_id, COALESCE(SUM(u+d), 0) as total')
-                    ->whereBetween('datetime', [$startOfDay, $endOfDay])
+                    ->whereBetween('created_at', [$startOfDay, $endOfDay])
                     ->groupBy('user_id')
                     ->orderByDesc('total')
                     ->limit(10)
@@ -145,7 +145,7 @@ class AdminController extends UserController
                 $datas = $user->map(function ($traffic, $user_id) {
                     return [
                         'y' => number_format($traffic / (1024 * 1024 * 1024), 2),
-                        'x' => "用户ID: $user_id",
+                        'x' => "ID: $user_id",
                     ];
                 })->values();
                 break;

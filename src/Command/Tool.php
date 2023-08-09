@@ -87,27 +87,27 @@ class Tool extends Command
 
         // 检查新增
         foreach ($settings as $item) {
-            $config[] = $item['item'];
+            $config[]  = $item['item'];
             $item_name = $item['item'];
-            $query = Setting::where('item', '=', $item['item'])->first();
+            $query     = Setting::where('item', '=', $item['item'])->first();
 
             if ($query === null) {
-                $new_item = new Setting();
-                $new_item->id = null;
-                $new_item->item = $item['item'];
-                $new_item->value = $item['value'];
-                $new_item->class = $item['class'];
+                $new_item            = new Setting();
+                $new_item->id        = null;
+                $new_item->item      = $item['item'];
+                $new_item->value     = $item['value'];
+                $new_item->class     = $item['class'];
                 $new_item->is_public = $item['is_public'];
-                $new_item->type = $item['type'];
-                $new_item->default = $item['default'];
-                $new_item->mark = $item['mark'];
+                $new_item->type      = $item['type'];
+                $new_item->default   = $item['default'];
+                $new_item->mark      = $item['mark'];
                 $new_item->save();
 
                 echo "添加新数据库设置：{$item_name}" . PHP_EOL;
                 $add_counter += 1;
             }
         }
-        // 检查移除
+          // 检查移除
         $db_settings = Setting::all();
         foreach ($db_settings as $db_setting) {
             if (! in_array($db_setting->item, $config)) {

@@ -9,12 +9,12 @@ use App\Models\{
     User,
     Setting,
     InviteCode,
-    Token
+    Token,
+    Knowledge
 };
 use App\Utils\{
     URL,
-    Hash,
-    Tools
+    Hash
 };
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
@@ -31,34 +31,27 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
-        $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
-
+        $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         $this->view()
-            ->assign('class_left_days', $class_left_days)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('invite_url', $invite_url)
             ->registerClass('URL', URL::class)
-            ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
+            ->assign('subInfo', $sub_url)
             ->display('user/index.tpl');
         return $response;
     }
     
     public function tutorial(ServerRequest $request, Response $response, array $args)
     {
-        $opts = $request->getQueryParams();
-        if ($opts['os'] == 'faq') {
-            return $this->view()->display('user/tutorial/faq.tpl');
-        }
-        $opts['os'] = str_replace(' ','',$opts['os']);
+        $opts           = $request->getQueryParams();
+        $opts['os']     = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
+        $knowledges = Knowledge::where('client', $opts['client'])->where('platform', $opts['os'])->get();
+        $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         if ($opts['os'] != '' && $opts['client'] != '') {
             $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
-            $class_left_days = floor((strtotime($this->user->class_expire)-time())/86400)+1;
             $this->view()
-                ->assign('subInfo', LinkController::getSubinfo($this->user, 0))
-                ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
-                ->assign('class_left_days', $class_left_days)
-                ->assign('user', $this->user)
+                ->assign('subInfo', $sub_url)
+                ->assign('knowledges', $knowledges)
                 ->registerClass('URL', URL::class)
                 ->display($url);
         }
@@ -67,14 +60,12 @@ class UserController extends BaseController
 
     public function profile(ServerRequest $request, Response $response, array $args)
     {
-        $tg_bind_token = Token::where('user_id', $this->user->id)->where('expire_time', '>', time())
+        $tg_bind_token = Token::where('user_id', $this->user->id)->where('expired_at', '>', time())
                         ->where('type', 1)->value('token');
         if (is_null($tg_bind_token)) {
             $tg_bind_token = Token::createToken($this->user, 32, 1);
         }
         $this->view()
-            ->assign('user', $this->user)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('bind_token', $tg_bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
             ->registerClass('URL', URL::class)
@@ -90,10 +81,9 @@ class UserController extends BaseController
             $code = InviteCode::where('user_id', $this->user->id)->first();
         }
         $referred_user = User::where('ref_by', $this->user->id)->count();
-        $invite_url = Setting::obtain('website_url') . '/signup?ref=' . $code->code;
+        $invite_url    = Setting::obtain('website_url') . '/signup?ref=' . $code->code;
         $this->view()
             ->assign('code', $code)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->assign('referred_user', $referred_user)
             ->assign('referral_url', $invite_url)
             ->display('user/referral.tpl');
@@ -102,7 +92,7 @@ class UserController extends BaseController
     
     public function enableNotify(ServerRequest $request, Response $response, array $args)
     {
-        $type = $request->getParam('notify_type');
+        $type = $request->getParsedBodyParam('notify_type');
        
         $user = $this->user;
         if ($type == 'telegram' && Setting::obtain('enable_telegram_bot') == false) {
@@ -127,15 +117,15 @@ class UserController extends BaseController
         $user = $this->user;
         switch ($type) {
             case 'password':
-                $current_password = $request->getParam('current_password');
-                $new_password = $request->getParam('new_password');
+                $current_password = $request->getParsedBodyParam('current_password');
+                $new_password     = $request->getParsedBodyParam('new_password');
                 try {
-                if (!Hash::checkPassword($user->password, $current_password)) {  
-                    throw new \Exception(I18n::get()->t('passwd error'));
-                }
-                $hashPassword = Hash::passwordHash($new_password);
-                $user->password = $hashPassword;
-                $user->save();
+                    if (!Hash::checkPassword($user->password, $current_password)) {  
+                        throw new \Exception(I18n::get()->t('passwd error'));
+                    }
+                    $hashPassword   = Hash::passwordHash($new_password);
+                    $user->password = $hashPassword;
+                    $user->save();
                 } catch (\Exception $e) {
                     return $response->withJson([
                         'ret' => 0,
@@ -145,8 +135,8 @@ class UserController extends BaseController
                 }
                 break;
             case 'email':
-                $newemail = $request->getParam('newemail');
-                $oldemail = $user->email;
+                $newemail  = $request->getParsedBodyParam('newemail');
+                $oldemail  = $user->email;
                 $otheruser = User::where('email', $newemail)->first();
                 try {                 
                     if (empty($newemail)) {
@@ -200,28 +190,10 @@ class UserController extends BaseController
         ]);
     }
 
-    public function getUserTrafficUsage(ServerRequest $request, Response $response, array $args)
-    {   
-        $res['unflowtraffic'] = $this->user->transfer_enable;
-        $res['traffic'] = Tools::flowAutoShow($this->user->transfer_enable);
-        $res['trafficInfo'] = array(
-            'todayUsedTraffic' => $this->user->TodayusedTraffic(),
-            'lastUsedTraffic' => $this->user->LastusedTraffic(),
-            'unUsedTraffic' => $this->user->unusedTraffic(),
-            'TodayusedTrafficPercent' => $this->user->TodayusedTrafficPercent(),
-            'LastusedTrafficPercent'  => $this->user->LastusedTrafficPercent()
-        );
-        $res['ret'] = 1;
-        return $response->withJson($res);
-    }
-
     public function handleKill(ServerRequest $request, Response $response, array $args)
     {
         $user = $this->user;
-
-        $email = $user->email;
-
-        $passwd = $request->getParam('passwd');
+        $passwd = $request->getParsedBodyParam('passwd');
         // check passwd
         $res = array();
         if (!Hash::checkPassword($user->password, $passwd)) {
@@ -240,18 +212,14 @@ class UserController extends BaseController
     
     public function record(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
         $this->view()
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/record.tpl');
         return $response;
     }
     
     public function ban(ServerRequest $request, Response $response, array $args)
     {
-        $user = $this->user;
         $this->view()
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ban.tpl');
         return $response;
     }
@@ -262,5 +230,52 @@ class UserController extends BaseController
         return $response
             ->withStatus(302)
             ->withHeader('Location', '/');
+    }
+
+    public function verifyEmail(ServerRequest $request, Response $response, array $args)
+    {
+        $action = $args['action'];
+        switch ($action) {
+            case 'send':    
+                $user   = $this->user;       
+                $token   = Token::createToken($user, 64, 3);
+                $subject = Setting::obtain('website_name') . '邮箱验证';
+                $url     = Setting::obtain('website_url') . '/user/verify/email/check?token=' . $token;
+
+                Mail::send(
+                    $user->email,
+                    $subject,
+                    'auth/verify.tpl',
+                    [
+                        'url' => $url
+                    ],
+                    []
+                );
+                return $response->withJson([
+                    'ret'   =>  1,
+                    'msg'   =>  '验证邮件发送成功'
+                ]);
+                break;
+            case 'check':
+                if ($this->user && $this->user->verified == 1) {
+                    return $response->withHeader('Location', '/user/dashboard');
+                }
+                $token_str = $request->getQueryParam('token');
+                $token = Token::where('token', $token_str)->where('type', 3)->where('expired_at', '>', time())->orderBy('expired_at', 'desc')->first();
+                if (is_null($token)) {
+                    $this->view()
+                        ->assign('verification_result', 'false')
+                        ->display('user/verify.tpl');
+                    return $response;
+                }
+                $user = User::find($token->user_id);
+                $user->verified = 1;
+                $user->save();
+                $this->view()
+                    ->assign('verification_result', 'true')
+                    ->display('user/verify.tpl');
+                return $response;
+                break;
+        }
     }
 }

@@ -12,38 +12,12 @@ class TrafficLog extends Model
 
     public function node()
     {
-        $node = Node::where('id', $this->attributes['node_id'])->first();
+        $node = Node::where('id', $this->node_id)->first();
         if (is_null($node)) {
-            self::where('id', '=', $this->attributes['id'])->delete();
+            self::where('id', '=', $this->id)->delete();
             return null;
         }
 
         return $node;
-    }
-
-    public function user()
-    {
-        $user = User::where('id', $this->attributes['user_id'])->first();
-        if (is_null($user)) {
-            self::where('id', '=', $this->attributes['id'])->delete();
-            return null;
-        }
-
-        return $user;
-    }
-
-    public function totalUsed()
-    {
-        return Tools::flowAutoShow($this->attributes['u'] + $this->attributes['d']);
-    }
-
-    public function totalUsedRaw()
-    {
-        return number_format(($this->attributes['u'] + $this->attributes['d']) / 1024, 2, '.', '');
-    }
-
-    public function logTime()
-    {
-        return Tools::toDateTime($this->attributes['datetime']);
     }
 }

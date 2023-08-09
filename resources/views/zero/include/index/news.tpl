@@ -1,3 +1,4 @@
+<!--
 <div id="kt_drawer_chat" class="bg-body" data-kt-drawer="true" data-kt-drawer-name="chat" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{ default:'300px', 'md': '500px' }" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_drawer_chat_toggle" data-kt-drawer-close="#kt_drawer_chat_close">
 	<div class="card w-100 rounded-0 border-0" id="kt_drawer_chat_messenger">
 		<div class="card-header pe-5" id="kt_drawer_chat_messenger_header">
@@ -24,7 +25,7 @@
 					<div class="card card-bordered mb-2">
 						<div class="card-body">
 							<p class="fs-5 fw-semibold text-gray-800">{$ann->content}</p>
-							<p class="fs-6 text-muted">{substr($ann->date, 0 , 10)}</p>
+							<p class="fs-6 text-muted">{date('Y-m-d', $ann->updated_at)}</p>
 						</div>
 					</div>
 				{/foreach}
@@ -32,3 +33,4 @@
 		</div>
 	</div>
 </div>
+-->

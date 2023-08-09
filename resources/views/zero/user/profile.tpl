@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>{$config["appName"]} Profile</title>
+	<title>{$config["website_name"]} Profile</title>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -34,13 +34,13 @@
                                                         <div class="symbol symbol-100px symbol-circle mb-7">
                                                             <img src="{$user->gravatar}" alt="image">
                                                         </div>
-                                                        <a class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">{$user->email}</a>
+                                                        <a class="fs-3 text-gray-800 text-hover-primary fw-bolder mb-3">{$user->email}</a>
                                                         <div class="mb-9">
-                                                            <div class="badge badge-lg badge-light-primary d-inline">权限组:&nbsp; {$user_permission}</div>
+                                                            <div class="badge badge-lg badge-light-primary d-inline">权限组:&nbsp; {$user->getPermission($user->class)}</div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex flex-stack fs-4 py-3">
-                                                        <div class="fw-bold rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">{$trans->t('details')}
+                                                        <div class="fw-bolder rotate collapsible active" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="true" aria-controls="kt_user_view_details">{$trans->t('details')}
                                                             <span class="ms-2 rotate-180">
                                                                 <span class="svg-icon svg-icon-3">
                                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,13 +53,13 @@
                                                     <div class="separator"></div>
                                                     <div id="kt_user_view_details" class="collapse show" style>
                                                         <div class="pb-5 fs-6">
-                                                            <div class="fw-bold mt-5">{$trans->t('users')} ID</div>
+                                                            <div class="fw-bolder mt-5">{$trans->t('users')} ID</div>
                                                             <div class="text-gray-600">ID-{$user->id}</div>
-                                                            <div class="fw-bold mt-5">{$trans->t('email')}</div>
+                                                            <div class="fw-bolder mt-5">{$trans->t('email')}</div>
                                                             <div class="text-gray-600">
                                                                 <a class="text-gray-600 text-hover-primary">{$user->email}</a>
                                                             </div>
-                                                            <div class="fw-bold mt-5">{$trans->t('last signin date')}</div>
+                                                            <div class="fw-bolder mt-5">{$trans->t('last signin date')}</div>
                                                             <div class="text-gray-600">{if $user->last_signin_time == null}{$trans->t('no record')}{else}{$user->last_signin_time}{/if}</div>
                                                         </div>
                                                     </div>                                                   
@@ -68,7 +68,7 @@
                                             <div class="card mb-5 mb-xl-8">
                                                 <div class="card-header border-0">
                                                     <div class="card-title">
-                                                        <h3 class="fw-bold m-0">{$trans->t('notification')}</h3>
+                                                        <h3 class="fw-bolder m-0">{$trans->t('notification')}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="card-body pt-2">
@@ -77,7 +77,7 @@
                                                             <div class="d-flex">
                                                                 <i class="bi bi-envelope text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
-                                                                    <a class="fs-5 text-dark text-hover-primary fw-bold">{$trans->t('email')}</a>
+                                                                    <a class="fs-5 text-dark text-hover-primary fw-bolder">{$trans->t('email')}</a>
                                                                     <div class="fs-6 fw-semibold text-muted">{$trans->t('email notification')}</div>
                                                                 </div>
                                                             </div>
@@ -92,7 +92,7 @@
                                                             <div class="d-flex">
                                                                 <i class="bi bi-telegram text-primary fs-3hx me-6"></i>
                                                                 <div class="d-flex flex-column">
-                                                                    <a class="fs-5 text-dark text-hover-primary fw-bold">Telegram</a>
+                                                                    <a class="fs-5 text-dark text-hover-primary fw-bolder">Telegram</a>
                                                                     <div class="fs-6 fw-semibold text-muted">{$trans->t('telegram notification')}</div>
                                                                 </div>
                                                             </div>
@@ -116,7 +116,7 @@
                                                 <div class="card card-flush mb-5">
                                                     <div class="card-header pt-5">
                                                         <div class="card-title d-flex flex-column">
-                                                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2" id="wallet_total">{$user->commission + $user->money}$</span>
+                                                            <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2" id="wallet_total">{$user->commission + $user->money}$</span>
                                                             <span class="text-gray-400 pt-1 fw-semibold fs-6">{$trans->t('wallet')}</span>
                                                         </div>
                                                         <div class="card-toolbar">
@@ -134,7 +134,7 @@
                                                             </button>
                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                                                                 <div class="menu-item px-3">
-                                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">{$trans->t('action')}</div>
+                                                                    <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">{$trans->t('action')}</div>
                                                                 </div>
                                                                 <div class="separator mb-3 opacity-75"></div>
                                                                 <div class="menu-item px-3">
@@ -160,13 +160,13 @@
 																<div class="d-flex flex-column content-justify-center flex-grow-1">
 																	<div class="d-flex fs-6 fw-semibold align-items-center">
 																		<div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">{$trans->t('credit')}</div>
+																		<div class="fs-6 fw-bolder text-gray-400 flex-shrink-0">{$trans->t('credit')}</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_balance">{trim($user->money)}</div>
 																	</div>
 																	<div class="d-flex fs-6 fw-semibold align-items-center my-1">
 																		<div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
-																		<div class="fs-6 fw-bold text-gray-400 flex-shrink-0">{$trans->t('commission')}</div>
+																		<div class="fs-6 fw-bolder text-gray-400 flex-shrink-0">{$trans->t('commission')}</div>
 																		<div class="separator separator-dashed min-w-10px flex-grow-1 mx-2"></div>
 																		<div class="ms-auto fw-bolder text-gray-700 text-end" id="user_commission">{trim($user->commission)}</div>
 																	</div>
@@ -295,7 +295,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>
@@ -327,7 +327,7 @@
                                 </div>
                             </div>
                             <div class="fv-row mb-7">
-                                <label class="fs-6 fw-semibold form-label mb-2">
+                                <label class="fs-6 fw-semibold form-label mb-2" for="profile_email">
                                     <span class="required">{$trans->t('email')}</span>
                                 </label>
                                 <input class="form-control form-control-solid" placeholder="" name="profile_email" value="" id="profile_email" />
@@ -355,12 +355,12 @@
                     <div class="modal-body scrolly-y mx-5 mx-xl-15 my-7">
                         <form id="zero_modal_user_update_password_form" class="form" action="#">
                             <div class="fv-row mb-10">
-                                <label class="required form-label fs-6 mb-2">Current Password</label>
+                                <label class="required form-label fs-6 mb-2" for="current_password">Current Password</label>
                                 <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="current_password" name="current_password" autocomplete="off" />
                             </div>
                             <div class="mb-10 fv-row" data-kt-password-meter="true">
                                 <div class="mb-1">
-                                    <label class="form-label fw-semibold fs-6 mb-2">New Password</label>
+                                    <label class="form-label fw-semibold fs-6 mb-2" for="new_password">New Password</label>
                                     <div class="position-relative mb-3">
                                         <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="new_password" name="new_password" autocomplete="off" />
                                         <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
@@ -378,7 +378,7 @@
                                 <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
                             </div>
                             <div class="fv-row mb-10">
-                                <label class="form-label fw-semibold fs-6 mb-2">Confirm New Password</label>
+                                <label class="form-label fw-semibold fs-6 mb-2" for="confirm_password">Confirm New Password</label>
                                 <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="confirm_password" name="confirm_password" autocomplete="off" />
                             </div>
                             <div class="text-center pt-15">
@@ -404,15 +404,15 @@
                     <div class="modal-body">
                         <form>
                             <div class="mb-3">
-                                <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('type')}:</label>
+                                <label class="col-form-label fw-bold" for="withdraw_method">{$trans->t('type')}:</label>
                                 <select class="form-select" id="withdraw_method" data-style="btn-primary">	
-                                    <option value="USDT" data-kt-select2-image="/tether.svg">USDT</option>
+                                    <option value="USDT" data-kt-select2-image="/theme/zero/assets/media/payment_logo/tether.svg">USDT</option>
                                 </select>
                             </div>
                         </form>
                         <form>
                             <div class="mb-3">
-                                <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('account')}:</label>						
+                                <label class="col-form-label fw-bold" for="withdraw_account_value">{$trans->t('account')}:</label>						
                                 <input type="text" class="form-control" value="{$user->withdraw_account}" id="withdraw_account_value"/>
                             </div>
                         </form>
@@ -432,12 +432,12 @@
                         <h4 class="modal-title">{$trans->t('commission withdrawal')}</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>
+                        <label class="col-form-label fw-bolder" for="withdraw_commission_amount">{$trans->t('amount')}:</label>
                         <form class="mb-3">
                             <input type="number" class="form-control" placeholder="{$trans->t('amount')}" id="withdraw_commission_amount"/>
                         </form>
-                        <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('withdrawal method')}:</label>
-                        <ul class="nav nav-pills row nav-primary mb-3" role="tablist" id="withdraw_type">
+                        <span class="fw-bolder">{$trans->t('withdrawal method')}:</span>
+                        <ul class="nav nav-pills row nav-primary mb-3 mt-3" role="tablist" id="withdraw_type">
                             <li class="nav-item d-flex col flex-grow-1 flex-shrink-0 mr-3 mb-3 mb-lg-0">
                                 <a class="btn btn-outline btn-outline-dashed btn-active-light-primary text-start d-flex flex-grow-1 flex-column align-items-center active" data-bs-toggle="pill" data-type="1">
                                     <span class="py-2 w-auto">
@@ -472,16 +472,21 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content shadow-lg">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
+                        <h4 class="modal-title">{$trans->t('add credit')}</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="col-form-label fw-bold" for="recipient-name">{$trans->t('amount')}:</label>		
+                        <label class="col-form-label fw-bolder" for="add_credit_amount">{$trans->t('amount')}:</label>		
                         <div class="form-group">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="{$trans->t('amount')}" id="add_credit_amount">
-                            </div>
+							<div class="input-group" data-kt-dialer="true" data-kt-dialer-min="1"data-kt-dialer-max="50000"data-kt-dialer-step="5">
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="decrease">
+									<i class="ki-duotone ki-minus fs-2"></i>
+								</button>
+								<input type="text" class="form-control"  placeholder="{$trans->t('amount')}" value="5" data-kt-dialer-control="input" id="add_credit_amount"/>
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="increase">
+									<i class="ki-duotone ki-plus fs-2"></i>
+								</button>
+							</div>
                         </div>
-                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
@@ -495,6 +500,7 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
+        <script src="/js/profile.min.js"></script>
         {include file='include/index/news.tpl'}
         <script>
             var optionFormatCommission = function(item) {

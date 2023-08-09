@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Utils\{Tools, URL};
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class Node extends Model
 {
@@ -13,8 +14,8 @@ class Node extends Model
     protected $casts = [
         'node_speedlimit' => 'float',
         'traffic_rate'    => 'float',
-        'node_type'            => 'int',
-        'status'            => 'bool',
+        'node_type'       => 'int',
+        'status'          => 'bool',
         'node_heartbeat'  => 'int',
     ];
 
@@ -25,14 +26,18 @@ class Node extends Model
     {
         switch ($this->status) {
             case 0:
-                $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" onclick="updateNodeStatus('.$this->id.')" />
-                            </div>';
+                $status = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_{$this->id}" onclick="updateNodeStatus({$this->id})">
+                            </div>
+                        EOT;
                 break;
             case 1:
-                $status = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="node_status_'.$this->id.'" checked="checked" onclick="updateNodeStatus('.$this->id.')" />
-                            </div>';
+                $status = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="node_status_{$this->id}" checked="checked" onclick="updateNodeStatus({$this->id})" />
+                            </div>
+                        EOT;
                 break;
         }
         return $status;
@@ -50,55 +55,19 @@ class Node extends Model
             case 2:
                 $type = 'VMESS';
                 break;
-            case 5:
-                $type = 'Shadowsocks - V2Ray-Plugin&Obfs';
-                break;
             case 4:
                 $type = 'TROJAN';
                 break;
             case 3:
                 $type = 'VLESS';
                 break;
+            case 5:
+                $type = 'Hysteria';
+                break;
             default:
                 $type = '系统保留';
         }
         return $type;
-    }
-    
-    public function getLastNodeInfoLog()
-    {
-        $log = NodeInfoLog::where('node_id', $this->id)->orderBy('id', 'desc')->first();
-        if (is_null($log)) {
-            return null;
-        }
-        return $log;
-    }
-
-    public function getNodeUptime()
-    {
-        $log = $this->getLastNodeInfoLog();
-        if (is_null($log)) {
-            return '暂无数据';
-        }
-        return Tools::secondsToTime((int) $log->uptime);
-    }
-
-    public function getNodeUpRate()
-    {
-        $log = NodeOnlineLog::where('node_id', $this->id)->where('log_time', '>=', time() - 86400)->count();
-        return $log / 1440;
-    }
-
-    public function getNodeLoad()
-    {
-        $log = NodeInfoLog::where('node_id', $this->id)->orderBy('id', 'desc')->whereRaw('`log_time`%1800<60')->limit(48)->get();
-        return $log;
-    }
-
-    public function getNodeAlive()
-    {
-        $log = NodeOnlineLog::where('node_id', $this->id)->orderBy('id', 'desc')->whereRaw('`log_time`%1800<60')->limit(48)->get();
-        return $log;
     }
 
      /**
@@ -106,24 +75,11 @@ class Node extends Model
      */
     public function getNodeOnlineUserCount(): int
     {
-        $log = NodeOnlineLog::where('node_id', $this->id)->where('log_time', '>', time() - 300)->orderBy('id', 'desc')->first();
+        $log = NodeOnlineLog::where('node_id', $this->id)->where('created_at', '>', time() - 300)->orderBy('id', 'desc')->first();
         if (is_null($log)) {
             return 0;
         }
         return $log->online_user;
-    }
-
-    public function getTrafficFromLogs()
-    {
-        $id = $this->attributes['id'];
-
-        $traffic = TrafficLog::where('node_id', $id)->sum('u') + TrafficLog::where('node_id', $id)->sum('d');
-
-        if ($traffic == 0) {
-            return '暂无数据';
-        }
-
-        return Tools::flowAutoShow($traffic);
     }
     
     /**
@@ -135,22 +91,6 @@ class Node extends Model
             return false;
         }
         return $this->node_heartbeat > time() - 300;
-    }
-
-    /**
-     * 节点流量已耗尽
-     */
-    public function isNodeTrafficOut(): bool
-    {
-        return !($this->node_traffic_limit == 0 || $this->node_traffic < $this->node_traffic_limit);
-    }
-
-    /**
-     * 节点是可用的，即流量未耗尽并且在线
-     */
-    public function isNodeAccessable(): bool
-    {
-        return $this->isNodeTrafficOut() == false && $this->isNodeOnline() == true;
     }
 
     /**
@@ -175,31 +115,22 @@ class Node extends Model
     }
 
     /**
-     * 获取节点 IP
-     */
-    public function getNodeIp(): string
-    {
-        $node_ip_str   = $this->node_ip;
-        $node_ip_array = explode(',', $node_ip_str);
-        return $node_ip_array[0];
-    }
-
-
-    /**
      * 获取 SS 节点
      */
     public function getShadowsocksConfig(User $user, $custom_config, bool $emoji = false): array
     {
-        $custom_configs = json_decode($custom_config, true);
-        $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
-        $config['type']     = 'shadowsocks';
-        $config['passwd']   = $user->passwd;
-        $config['server_psk']   =   $custom_configs['server_psk'] ?? '';
-        $config['method']   = $custom_configs['mu_encryption'];
-        $config['address']  = $this->server;
-        $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
-        $config['class']    = $this->node_class;
-
+        $config = [];
+        if ($this->node_type == 1) {
+        $custom_configs       = json_decode($custom_config, true);
+        $config['remark']     = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
+        $config['type']       = 'shadowsocks';
+        $config['passwd']     = $user->passwd;
+        $config['server_psk'] = $custom_configs['server_psk'] ?? '';
+        $config['method']     = $custom_configs['mu_encryption'];
+        $config['address']    = $this->server;
+        $config['port']       = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
+        $config['class']      = $this->node_class;
+        }
         return $config;
     }
 
@@ -208,24 +139,27 @@ class Node extends Model
      */
     public function getVmessConfig(User $user, $custom_config, bool $emoji = false): array
     {
-        $custom_configs = json_decode($custom_config, true);
-        $config['v']      = '2';      
-        $config['type']   = 'vmess';
-        $config['remark'] = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
-        $config['uuid']     = $user->uuid;
-        $config['class']  = $this->node_class;        
-        $config['address'] = $this->server;
-        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
-        $config['aid'] = $custom_configs['alter_id'];
-        $config['net'] = $custom_configs['network'];
-        $config['security'] = $custom_configs['security'] ?? '';
-        $config['flow'] = $custom_configs['flow'] ?? '';
-        $config['path'] = $custom_configs['path'] ?? '';
-        $config['host'] = $custom_configs['host'] ?? '';
-        $config['sni'] = $custom_configs['host'] ?? '';
-        $config['headertype'] = $custom_configs['header']['type'] ?? '';
+        $config = [];
+        if ($this->node_type == 2) {
+        $custom_configs        = json_decode($custom_config, true);
+        $config['v']           = '2';
+        $config['type']        = 'vmess';
+        $config['remark']      = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
+        $config['uuid']        = $user->uuid;
+        $config['class']       = $this->node_class;
+        $config['address']     = $this->server;
+        $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['aid']         = $custom_configs['alter_id'] ?? 0;
+        $config['net']         = $custom_configs['network'];
+        $config['security']    = $custom_configs['security'] ?? 'none';
+        $config['flow']        = $custom_configs['flow'] ?? '';
+        $config['path']        = $custom_configs['path'] ?? '';
+        $config['host']        = $custom_configs['host'] ?? '';
+        $config['sni']         = $custom_configs['host'] ?? '';
+        $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        }
         return $config;
     }
 
@@ -234,21 +168,21 @@ class Node extends Model
      */
     public function getVlessConfig(User $user, $custom_config, bool $emoji = false): array
     {
-        $custom_configs = json_decode($custom_config, true);    
-        $config['type']   = 'vless';
-        $config['remark'] = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
-        $config['uuid']     = $user->uuid;
-        $config['class']  = $this->node_class;        
-        $config['address'] = $this->server;
-        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
-        $config['aid'] = $custom_configs['alter_id'];
-        $config['net'] = $custom_configs['network'];      
-        $config['security'] = $custom_configs['security'] ?? '';
-        $config['flow'] = $custom_configs['flow'] ?? '';
-        $config['path'] = $custom_configs['path'] ?? '';
-        $config['host'] = $custom_configs['host'] ?? '';
-        $config['sni'] = $custom_configs['host'] ?? '';
-        $config['headertype'] = $custom_configs['header']['type'] ?? '';
+        $custom_configs        = json_decode($custom_config, true);
+        $config['type']        = 'vless';
+        $config['remark']      = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
+        $config['uuid']        = $user->uuid;
+        $config['class']       = $this->node_class;
+        $config['address']     = $this->server;
+        $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['aid']         = $custom_configs['alter_id'];
+        $config['net']         = $custom_configs['network'];
+        $config['security']    = $custom_configs['security'] ?? '';
+        $config['flow']        = $custom_configs['flow'] ?? '';
+        $config['path']        = $custom_configs['path'] ?? '';
+        $config['host']        = $custom_configs['host'] ?? '';
+        $config['sni']         = $custom_configs['host'] ?? '';
+        $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
         return $config;
@@ -259,17 +193,17 @@ class Node extends Model
      */
     public function getTrojanConfig(User $user, $custom_config,  bool $emoji = false): array
     {
-        $custom_configs = json_decode($custom_config, true);
+        $custom_configs     = json_decode($custom_config, true);
         $config['remark']   = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
         $config['type']     = 'trojan';
-        $config['uuid']   = $user->uuid;
-        $config['address'] = $this->server;
-        $config['port'] = $custom_configs['offset_port_user'] ?? $custom_configs['trojan_port'];
-        $config['sni'] = $custom_configs['host'] ?? '';       
+        $config['uuid']     = $user->uuid;
+        $config['address']  = $this->server;
+        $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['trojan_port'];
+        $config['sni']      = $custom_configs['host'] ?? '';
         $config['security'] = $custom_configs['security'] ?? 'tls';
-        $config['flow'] = $custom_configs['flow'] ?? '';
+        $config['flow']     = $custom_configs['flow'] ?? '';
         if (isset($config['grpc']) == 1) {
-            $config['net'] = 'grpc';
+            $config['net']         = 'grpc';
             $config['servicename'] = $custom_configs['servicename'] ?? '';
         } else {
             $config['net'] = 'tcp';
@@ -278,29 +212,48 @@ class Node extends Model
         return $config;
     }
 
+    public function getHysteriaConfig(User $user, $custom_config, bool $emoji = false): array
+    {
+        $custom_configs      = json_decode($custom_config, true);
+        $config['type']      = 'hysteria';
+        $config['remark']    = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
+        $config['obfsParam'] = $custom_configs['obfs_param'] ?? '';
+        $config['address']   = $this->server;
+        $config['port']      = $custom_configs['offset_port_user'] ?? $custom_configs['hysteria_port'];
+        $config['protocol']  = $custom_configs['protocol'] ?? 'udp';
+        $config['peer']      = $custom_configs['peer'] ?? '';
+        $config['upmbps']    = $custom_configs['upmbps'] ?? '10';
+        $config['downmbps']  = $custom_configs['downmbps'] ?? '10';
+        $config['alpn']      = $custom_configs['alpn'] ?? '';
+        $config['obfs']      = $custom_configs['obfs'] ?? '';
+        $config['auth']      = $user->passwd;
+
+        return $config;
+    }
+
     public function getNodeFlag($country)
     {
         $country_emoji = [
-            'united-states' =>  '🇺🇸',
-            'canada'   =>  '🇨🇦',
-            'mexico'    =>  '🇲🇽',
-            'argentina' =>  '🇦🇷',
-            'brazil'    =>  '🇧🇷',
-            'united-kingdom'    =>  '🇬🇧',
-            'france'    =>  '🇫🇷',
-            'germany'   =>  '🇩🇪',
-            'ireland'   =>  '🇮🇪',
-            'turkey'    =>  '🇹🇷',
-            'russia'    =>  '🇷🇺',
-            'hong-kong' =>  '🇭🇰',
-            'japan'     =>  '🇯🇵',
-            'singapore' =>  '🇸🇬',
-            'taiwan'    =>  '🇹🇼',
-            'south-korea'   =>  '🇰🇷',
-            'australia' =>  '🇦🇺',
-            'thailand'  =>  '🇹🇭',
-            'philippines'   =>  '🇵🇭',
-            'malaysia'  =>  '🇲🇾',
+            'united-states'  => '🇺🇸',
+            'canada'         => '🇨🇦',
+            'mexico'         => '🇲🇽',
+            'argentina'      => '🇦🇷',
+            'brazil'         => '🇧🇷',
+            'united-kingdom' => '🇬🇧',
+            'france'         => '🇫🇷',
+            'germany'        => '🇩🇪',
+            'ireland'        => '🇮🇪',
+            'turkey'         => '🇹🇷',
+            'russia'         => '🇷🇺',
+            'hong-kong'      => '🇭🇰',
+            'japan'          => '🇯🇵',
+            'singapore'      => '🇸🇬',
+            'taiwan'         => '🇹🇼',
+            'south-korea'    => '🇰🇷',
+            'australia'      => '🇦🇺',
+            'thailand'       => '🇹🇭',
+            'philippines'    => '🇵🇭',
+            'malaysia'       => '🇲🇾',
         ];
         return $country_emoji[$country];
     }
@@ -314,8 +267,11 @@ class Node extends Model
         ];
         $method_old = [
             'aes-128-gcm',
+            'aes-192-gcm',
             'aes-256-gcm',
             'chacha20-poly1305',
+            'chacha20-ietf-poly1305',
+            'xchacha20-ietf-poly1305',
         ];
 
         $support = in_array($method, $method_2022) ? false : (in_array($method, $method_old) ?? true);

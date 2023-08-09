@@ -3,44 +3,36 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
-use App\Models\{
-    Setting
-};
+use App\Models\Setting;
+use App\Models\User;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
-use App\Services\{
-    Mail
-};
+use App\Services\Mail;
 use Exception;
 
 class SettingController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $config = [];
         $settings = Setting::get(['item', 'value', 'type']);
         
         foreach ($settings as $setting)
         {
-        	if ($setting->type === 'bool') {
-                $config[$setting->item] = (bool) $setting->value;
-            } else if ($setting->type == 'array') {
-                $config[$setting->item] = $setting->value;
-            } else {
-                $config[$setting->item] = (string) $setting->value;
-            }
+            $config[$setting->item] = $setting->value;
         }
-
+        $adminUsers = User::where('is_admin', 1)->where('telegram_id', '!=', '')->get();
         $this->view()
             ->registerClass('Setting', Setting::class)
             ->assign('settings', $config)
-            ->display('admin/setting.tpl');
+            ->assign('adminUsers', $adminUsers)
+            ->display('admin/setting/setting.tpl');
         return $response;
     }
 
     public function save(ServerRequest $request, Response $response, array $args): Response
     {
-        $class = $request->getParam('class');
+        $class = $request->getParsedBodyParam('class');
 
         switch ($class) {
             case 'website':
@@ -60,86 +52,6 @@ class SettingController extends AdminController
                     'permission_group_detail'
                 ];
                 break;         
-            // 支付
-            case 'payment_gateway':
-                $list = [
-                    'alipay_payment', 
-                    'wechatpay_payment', 
-                    'cryptopay_payment'
-                ];
-                break;
-            case 'f2f_pay':
-                $list = [
-                    'f2f_pay_app_id', 
-                    'f2f_pay_pid', 
-                    'f2f_pay_public_key', 
-                    'f2f_pay_private_key', 
-                    'f2f_pay_notify_url'
-                ];
-                break;
-            case 'vmqpay':
-                $list = [
-                    'vmq_gateway', 
-                    'vmq_key'
-                ];
-                break;
-            case 'payjs_pay':
-                $list = [
-                    'payjs_mchid', 
-                    'payjs_key'
-                ];
-                break;
-            case 'theadpay':
-                $list = [
-                    'theadpay_url', 
-                    'theadpay_mchid', 
-                    'theadpay_key'
-                ];
-                break;
-            case 'paytaro':
-                $list = [
-                    'paytaro_app_id', 
-                    'paytaro_app_secret'
-                ];
-                break;
-            case 'paybeaver':
-                $list = [
-                    'paybeaver_app_id', 
-                    'paybeaver_app_secret'
-                ];
-                break;
-            case 'tronapipay':
-                $list = [
-                    'tronapipay_public_key', 
-                    'tronapipay_private_key'
-                ];
-                break;
-            case 'paymentwall':
-                $list = [
-                    'pmw_publickey', 
-                    'pmw_privatekey', 
-                    'pmw_widget', 
-                    'pmw_height'
-                ];
-                break;
-            case 'stripe':
-                $list = [
-                    'stripe_card', 
-                    'stripe_currency', 
-                    'stripe_pk', 
-                    'stripe_sk', 
-                    'stripe_webhook_key', 
-                    'stripe_min_recharge', 
-                    'stripe_max_recharge'
-                ];
-                break;
-            case 'epay':
-                $list = [
-                    'epay_url', 
-                    'epay_pid', 
-                    'epay_key'
-                ];
-                break;
             // 邮件
             case 'mail':
                 $list = [
@@ -213,7 +125,9 @@ class SettingController extends AdminController
                     'signup_default_class', 
                     'signup_default_class_time', 
                     'signup_default_ip_limit', 
-                    'signup_default_speed_limit'
+                    'signup_default_speed_limit',
+                    'verify_email',
+                    'limit_email_suffix',
                 ];
                 break;
             // 邀请设置
@@ -288,10 +202,7 @@ class SettingController extends AdminController
                     'enable_subscribe_extend', 
                     'enable_subscribe_log', 
                     'subscribe_log_keep_time', 
-                    'subscribe_diy_message', 
-                    'subscribe_clash_default_profile', 
-                    'subscribe_surge_default_profile', 
-                    'subscribe_surfboard_default_profile'
+                    'subscribe_diy_message'
                 ];
                 break;
         }
@@ -300,10 +211,14 @@ class SettingController extends AdminController
         {
             $setting = Setting::where('item', '=', $item)->first();
 
-            if ($setting->type == 'array') {               
-                $setting->value = json_encode($request->getParam($item));
+            if ($setting->type == 'array') {     
+                if (array_filter($request->getParsedBodyParam($item))) {          
+                    $setting->value = json_encode($request->getParsedBodyParam($item));
+                } else {
+                    $setting->value = '[]';
+                }
             } else {
-                $setting->value = $request->getParam($item);
+                $setting->value = $request->getParsedBodyParam($item);
             }
             if(!$setting->save()) {
                 return $response->withJson([
@@ -324,15 +239,15 @@ class SettingController extends AdminController
      * @param Response  $response
      * @param array     $args
      */
-    public function test(ServerRequest $request, Response $response, array $args)
+    public function test(ServerRequest $request, Response $response, array $args): Response
     {
-        $to = $request->getParam('recipient');
+        $to = $request->getParsedBodyParam('email_address');
 
         try {
             Mail::send(
                 $to,
                 '测试邮件',
-                'news/welcome.tpl',
+                'auth/test.tpl',
                 [],
                 []
             );

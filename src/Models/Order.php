@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Pkly\I18Next\I18n;
-use App\Services\Payment;
+use App\Models\Payment;
 
 class Order extends Model
 {
@@ -27,24 +27,8 @@ class Order extends Model
     }
 
     public function payment() {
-        switch ($this->order_payment) {
-            case 'creditpay':
-                $payment = '<i class="bi bi-cash-coin fs-2hx text-success"></i>';
-                break;
-            case 'alipay':
-                $payment = '<i class="bi bi-alipay fs-2hx text-primary"></i>';
-                break;
-            case 'wechatpay':
-                $payment = '<i class="bi bi-wechat fs-2hx text-success"></i>';
-                break;
-            case 'cryptopay':
-                $payment = '<i class="bi bi-currency-bitcoin fs-2hx text-warning"></i>';
-                break;
-            default:
-                $payment = '<i class="bi bi-question-circle fs-2hx text-danger"></i>';
-                break;
-        }
-        return $payment;
+        $payment = Payment::find($this->payment_id);
+        return $payment->name ?? '未选择';
     }
 
     public function orderType() {
@@ -55,10 +39,6 @@ class Order extends Model
             4   =>  '升级产品',
         ];
         return $order_type[$this->order_type];
-    }
-
-    public function finshOrder($order_no) {
-        Payment::executeAction($order_no);
     }
 }
 

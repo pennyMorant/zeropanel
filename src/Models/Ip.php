@@ -25,30 +25,11 @@ class Ip extends Model
     {
         return Node::find($this->nodeid);
     }
-
-    /**
-     * 节点名
-     */
-    public function node_name(): string
-    {
-        if (is_null($this->node())) {
-            return '节点已不存在';
-        }
-        return $this->node()->name;
-    }
-
-    /**
-     * 时间
-     */
-    public function datetime(): string
-    {
-        return date('Y-m-d H:i:s', $this->datetime);
-    }
     
     public function getUserAliveIpCount()
     {
         $total_ip = IP::selectRaw('userid, COUNT(DISTINCT ip) AS count')
-            ->whereRaw('datetime >= UNIX_TIMESTAMP() - 180')
+            ->whereRaw('created_at >= UNIX_TIMESTAMP() - 180')
             ->groupBy('userid')
             ->get()
             ->pluck('count', 'userid')

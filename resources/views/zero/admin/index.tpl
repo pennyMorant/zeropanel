@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 仪表盘</title>
+        <title>{$config["website_name"]} 仪表盘</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -33,7 +33,7 @@
 												<div class="card-header border-0">
 													<div class="card-title d-flex flex-column">
                                                         <div class="d-flex align-items-center">
-                                                            <span class="text-dark fs-2hx fw-bold me-2" data-kt-countup="true" data-kt-countup-value={$income_this_month} data-kt-countup-prefix="$">0</span>
+                                                            <span class="text-dark fs-2hx fw-bold me-2" data-kt-countup="true" data-kt-countup-value={$income_this_month} data-kt-countup-decimal-places="2" data-kt-countup-prefix="$">0</span>
                                                         
                                                             <span class="badge badge-light-success fs-base" data-bs-toggle="tooltip" title="比上月增长百分比">                                                                                               
                                                                 <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
@@ -167,8 +167,6 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
-                    tickAmount: 6,
                 },
                 tooltip: {
                     x: {
@@ -243,8 +241,6 @@
                 },
                 xaxis: {
                     type: 'datetime',
-                    min: new Date(getDay(7)).getTime(),
-                    tickAmount: 6,
                 },
                 tooltip: {
                     x: {
@@ -272,7 +268,7 @@
                 data: {},
                 success: function(data) {
                     zeroAdminTrafficChart.updateSeries([{
-                        name: data[0].name,
+                        name: '流量',
                         data: data
                     }])
                 }
@@ -316,7 +312,8 @@
                     y: {
                         formatter: function (val) {
                             return val + "GB"
-                        }
+                        },
+                        name: '流量'
                     },
                     
                 },

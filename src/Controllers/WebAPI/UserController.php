@@ -85,12 +85,11 @@ class UserController extends BaseController
 
     public function addTraffic(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
 
-        $data = $request->getParam('data');
+        $data = $request->getParsedBodyParam('data');
         $this_time_total_bandwidth = 0;
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
@@ -128,14 +127,14 @@ class UserController extends BaseController
                 }
 
                 // log
-                $traffic = new TrafficLog();
-                $traffic->user_id = $user_id;
-                $traffic->u = $u;
-                $traffic->d = $d;
-                $traffic->node_id = $node_id;
-                $traffic->rate = $node->traffic_rate;
-                $traffic->traffic = Tools::flowAutoShow(($u + $d) * $node->traffic_rate);
-                $traffic->datetime = time();
+                $traffic           = new TrafficLog();
+                $traffic->user_id  = $user_id;
+                $traffic->u        = $u;
+                $traffic->d        = $d;
+                $traffic->node_id  = $node_id;
+                $traffic->rate     = $node->traffic_rate;
+                $traffic->traffic  = Tools::flowAutoShow(($u + $d) * $node->traffic_rate);
+                $traffic->created_at = time();
                 $traffic->save();
             }
         }
@@ -143,10 +142,10 @@ class UserController extends BaseController
         $node->node_traffic += $this_time_total_bandwidth;
         $node->save();
 
-        $online_log = new NodeOnlineLog();
-        $online_log->node_id = $node_id;
+        $online_log              = new NodeOnlineLog();
+        $online_log->node_id     = $node_id;
         $online_log->online_user = count($data);
-        $online_log->log_time = time();
+        $online_log->created_at  = time();
         $online_log->save();
 
         return $response->withJson([
@@ -157,11 +156,9 @@ class UserController extends BaseController
 
     public function addAliveIp(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
-
-        $data = $request->getParam('data');
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $data = $request->getParsedBodyParam('data');
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
@@ -182,7 +179,7 @@ class UserController extends BaseController
                 $ip_log->userid = $userid;
                 $ip_log->nodeid = $node_id;
                 $ip_log->ip = $ip;
-                $ip_log->datetime = time();
+                $ip_log->created_at = time();
                 $ip_log->save();
             }
         }
@@ -195,11 +192,9 @@ class UserController extends BaseController
 
     public function addDetectLog(ServerRequest $request, Response $response, array $args)
     {
-        $params = $request->getQueryParams();
-
-        $data = $request->getParam('data');
-        $node_id = $params['node_id'];
-        if ($node_id == '0') {
+        $data = $request->getParsedBodyParam('data');
+        $node_id = $request->getQueryParams()['node_id'] ?? null;
+        if (is_null($node_id)) {
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
@@ -217,11 +212,11 @@ class UserController extends BaseController
                 $user_id = $log['user_id'];
 
                 // log
-                $detect_log = new DetectLog();
-                $detect_log->user_id = $user_id;
-                $detect_log->list_id = $list_id;
-                $detect_log->node_id = $node_id;
-                $detect_log->datetime = time();
+                $detect_log             = new DetectLog();
+                $detect_log->user_id    = $user_id;
+                $detect_log->list_id    = $list_id;
+                $detect_log->node_id    = $node_id;
+                $detect_log->created_at = time();
                 $detect_log->save();
             }
         }

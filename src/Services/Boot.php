@@ -6,8 +6,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Boot
 {
-    
-
     public static function bootDb()
     {
         // Init Eloquent ORM Connection

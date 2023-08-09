@@ -23,7 +23,7 @@ class PasswordController extends BaseController
 
     public function handleReset(ServerRequest $request, Response $response, array $args)
     {
-        $email = strtolower($request->getParam('email'));
+        $email = strtolower($request->getParsedBodyParam('email'));
         $user  = User::where('email', $email)->first();
         if (is_null($user)) {
             return $response->withJson([
@@ -31,9 +31,9 @@ class PasswordController extends BaseController
                 'msg' => I18n::get()->t('email does not exist')
             ]);
         }
-        $token = Token::createToken($user, 64, 3);
+        $token   = Token::createToken($user, 64, 3);
         $subject = Setting::obtain('website_name') . '重置密码';
-        $url = Setting::obtain('website_url') . '/password/reset?token=' . $token;
+        $url     = Setting::obtain('website_url') . '/password/token?token=' . $token;
 
         Mail::send(
             $user->email,
@@ -52,23 +52,23 @@ class PasswordController extends BaseController
 
     public function tokenIndex(ServerRequest $request, Response $response, array $args)
     {
-        $token = Token::where('token', $request->getParam('token'))->where('expire_time', '>', time())->first();
+        $token = Token::where('token', $request->getQueryParam('token'))->where('expired_at', '>', time())->first();
         if (is_null($token)) return $response->withStatus(302)->withHeader('Location', '/password/reset');
 
         $this->view()
-        ->assign('token', $request->getParam('token'))
-        ->display('password/token.tpl');
+            ->assign('token', $request->getQueryParam('token'))
+            ->display('password/token.tpl');
         return $response;
     }
 
     public function handleToken(ServerRequest $request, Response $response, array $args)
     {
-        $tokenStr = $request->getParam('token');
-        $password = $request->getParam('password');
-        $repassword = $request->getParam('repassword');
+        $tokenStr   = $request->getParsedBodyParam('token');
+        $password   = $request->getParsedBodyParam('password');
+        $repassword = $request->getParsedBodyParam('repassword');
 
         // check token
-        $token = Token::where('token', $tokenStr)->where('expire_time', '>', time())->first();
+        $token = Token::where('token', $tokenStr)->where('expired_at', '>', time())->first();
         if (is_null($token)) {
             return $response->withJson([
                 'ret' => 0,
@@ -96,7 +96,7 @@ class PasswordController extends BaseController
             $rs['msg'] = I18n::get()->t('success');
 
             // 禁止链接多次使用
-            $token->expire_time = time();
+            $token->expired_at = time();
             $token->save();
         }
 

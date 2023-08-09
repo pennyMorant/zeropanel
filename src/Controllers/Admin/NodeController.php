@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\AdminController;
 use App\Models\Node;
-use App\Models\Setting;
 use App\Utils\{
     Tools,
 };
@@ -13,12 +12,12 @@ use Slim\Http\ServerRequest;
 
 class NodeController extends AdminController
 {
-    public function index(ServerRequest $request, Response $response, array $args)
+    public function index(ServerRequest $request, Response $response, array $args): Response
     {
         $table_config['total_column'] = [
             
             'id'                      => 'ID',
-            'online'                  => 'Online',
+            'online'                  => 'Online<i class="bi bi-question-circle ms-1" data-bs-toggle="tooltip" title="红色表示离线, 绿色表示在线"></i>',
             'name'                    => '节点名称',
             'online_user'             => '在线人数',           
             'type'                    => '类型',
@@ -36,7 +35,7 @@ class NodeController extends AdminController
         return $response;
     }
 
-    public function createNodeIndex(ServerRequest $request, Response $response, array $args)
+    public function createNodeIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $this->view()->display('admin/node/create.tpl');
         return $response;
@@ -45,25 +44,26 @@ class NodeController extends AdminController
     public function createNode(ServerRequest $request, Response $response, array $args): Response
     {
         $node                   = new Node();
-        $node->name             = $request->getParam('name');
-        $node->server           = trim($request->getParam('server'));
-        $node->traffic_rate     = $request->getParam('traffic_rate');
+        $postData               = $request->getParsedBody();
+        $node->name             = $postData['name'];
+        $node->server           = trim($postData['server']);
+        $node->traffic_rate     = $postData['traffic_rate'] ?: 1;
         $node->status           = 0;
-        $node->node_group       = $request->getParam('node_group');
-        $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->node_flag        = $request->getParam('node_flag');
-        $node->node_type        = $request->getParam('node_type');
+        $node->node_group       = $postData['node_group'] ?: 0;
+        $node->node_speedlimit  = $postData['node_speedlimit'] ?: 0;
+        $node->node_flag        = $postData['node_flag'];
+        $node->node_type        = $postData['node_type'];
 
-        if (!is_null($request->getParam('custom_config'))) {
-            $node->custom_config = json_encode($request->getParam('custom_config'));
+        if (!is_null($postData['custom_config'])) {
+            $node->custom_config = json_encode($postData['custom_config']);
         } else {
             $node->custom_config = '{}';
         }
         
-        $req_node_ip = trim($request->getParam('node_ip'));
+        $req_node_ip = trim($postData['node_ip']);
         $success = true;
         
-        if (Tools::isIP($req_node_ip)) {
+        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
             $success = $node->changeNodeIp($node->server);
@@ -76,10 +76,10 @@ class NodeController extends AdminController
             ]);
         }
         
-        $node->node_class                       = $request->getParam('node_class');
-        $node->node_sort                        = $request->getParam('node_sort');
-        $node->node_traffic_limit               = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
-        $node->node_traffic_limit_reset_date    = $request->getParam('node_traffic_limit_reset_date');
+        $node->node_class                       = $postData['node_class'] ?: 0;
+        $node->node_sort                        = $postData['node_sort'] ?: 0;
+        $node->node_traffic_limit               = $postData['node_traffic_limit'] * 1024 * 1024 * 1024;
+        $node->node_traffic_limit_reset_date    = $postData['node_traffic_limit_reset_date'];
         $node->save();
 
         return $response->withJson([
@@ -88,7 +88,7 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function updateNodeIndex(ServerRequest $request, Response $response, array $args)
+    public function updateNodeIndex(ServerRequest $request, Response $response, array $args): Response
     {
         $id = $args['id'];
         $node = Node::find($id);
@@ -100,41 +100,41 @@ class NodeController extends AdminController
 
     public function updateNode(ServerRequest $request, Response $response, array $args): Response
     {
-        $id                     = $request->getParam('id');
+        $putData = $request->getParsedBody();
+        $id                     = $putData['id'];
         $node                   = Node::find($id);
-        $node->name             = $request->getParam('name');
-        $node->node_group       = $request->getParam('node_group');
-        $node->server           = trim($request->getParam('server'));
-        $node->traffic_rate     = $request->getParam('traffic_rate');
-        $node->node_speedlimit  = $request->getParam('node_speedlimit');
-        $node->node_type        = $request->getParam('node_type');
+        $node->name             = $putData['name'];
+        $node->node_group       = $putData['node_group'] ?: 0;
+        $node->server           = trim($putData['server']);
+        $node->traffic_rate     = $putData['traffic_rate'] ?: 1;
+        $node->node_speedlimit  = $putData['node_speedlimit'] ?: 0;
+        $node->node_type        = $putData['node_type'];
 
-        if (!is_null($request->getParam('custom_config'))) {
-            $node->custom_config = json_encode($request->getParam('custom_config'));
+        if (!is_null($putData['custom_config'])) {
+            $node->custom_config = json_encode($putData['custom_config']);
         } else {
             $node->custom_config = '{}';
         }
         
-        $req_node_ip = trim($request->getParam('node_ip'));
+        $req_node_ip = trim($putData['node_ip']);
 
         $success = true;
-        $server_list = explode(';', $node->server);
-        if (Tools::isIP($req_node_ip)) {
+        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
             $success = $node->changeNodeIp($req_node_ip);
         } else {
-            $success = $node->changeNodeIp($server_list[0]);
+            $success = $node->changeNodeIp($node->server);
         }
-        if (! $success) {
+        if (!$success) {
             return $response->withJson([
                 'ret' => 0,
                 'msg' => '更新节点IP失败，请检查您输入的节点地址是否正确！',
             ]);
         }
-        $node->node_flag                        = $request->getParam('node_flag');
-        $node->node_class                       = $request->getParam('node_class');
-        $node->node_sort                        = $request->getParam('node_sort');
-        $node->node_traffic_limit               = $request->getParam('node_traffic_limit') * 1024 * 1024 * 1024;
-        $node->node_traffic_limit_reset_date    = $request->getParam('node_traffic_limit_reset_date');
+        $node->node_flag                        = $putData['node_flag'];
+        $node->node_class                       = $putData['node_class'] ?: 0;
+        $node->node_sort                        = $putData['node_sort'] ?: 0;
+        $node->node_traffic_limit               = $putData['node_traffic_limit'] * 1024 * 1024 * 1024;
+        $node->node_traffic_limit_reset_date    = $putData['node_traffic_limit_reset_date'];
 
         $node->save();
 
@@ -160,28 +160,29 @@ class NodeController extends AdminController
         );
 
         $data = $query['datas']->map(function($rowData) {
-            $type = "'node'";
             return [
-                'id'    => $rowData->id,
-                'online'    => $rowData->online == 1 ? '<span class="badge badge-circle badge-success badge-sm"></span>' : '<span class="badge badge-circle badge-danger badge-sm"></span>',
-                'name'  =>  $rowData->name,
-                'online_user'    =>  $rowData->getNodeOnlineUserCount(),
-                'type'  =>  $rowData->nodeType(),
-                'node_ip'   =>  $rowData->node_ip,
-                'node_class'    =>  $rowData->node_class,
-                'node_speedlimit'   =>  $rowData->node_speedlimit == 0 ? '无限制' : $rowData->node_speedlimit,
-                'status'    =>  $rowData->status(),
-                'action'    =>  '<div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="node/update/'.$rowData->id.'">编辑</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('.$type.', '.$rowData->id.')">删除</a></li>
-                                    </ul>
-                                </div>',
+                'id'              => $rowData->id,
+                'online'          => $rowData->online == 1 ? '<span class="badge badge-circle badge-success w-15px h-15px"></span>' : '<span class="badge badge-circle badge-danger w-15px h-15px"></span>',
+                'name'            => $rowData->name,
+                'online_user'     => $rowData->getNodeOnlineUserCount(),
+                'type'            => $rowData->nodeType(),
+                'node_ip'         => $rowData->node_ip,
+                'node_class'      => $rowData->node_class,
+                'node_speedlimit' => $rowData->node_speedlimit == 0 ? '无限制' : $rowData->node_speedlimit,
+                'status'          => $rowData->status(),
+                'action'          => <<<EOT
+                                        <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
+                                            <ul    class = "dropdown-menu">
+                                            <li><a class = "dropdown-item" href = "node/update/{$rowData->id}">编辑</a></li>
+                                            <li><a class = "dropdown-item" type = "button" onclick = "zeroAdminDelete('node', {$rowData->id})">删除</a></li>
+                                            </ul>
+                                        </div>
+                                    EOT,
             ];
         })->toArray();
 
         return $response->withJson([
-            'draw'            => $request->getParam('draw'),
+            'draw'            => $request->getParsedBodyParam('draw'),
             'recordsTotal'    => Node::count(),
             'recordsFiltered' => $query['count'],
             'data'            => $data,
@@ -190,8 +191,8 @@ class NodeController extends AdminController
 
     public function updateNodeStatus(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
-        $status = $request->getParam('status');
+        $id = $request->getParsedBodyParam('id');
+        $status = $request->getParsedBodyParam('status');
         $node = Node::find($id);
         $node->status = $status;
         $node->save();
@@ -201,9 +202,9 @@ class NodeController extends AdminController
         ]);
     }
 
-    public function deleteNode(ServerRequest $request, Response $response, array $args)
+    public function deleteNode(ServerRequest $request, Response $response, array $args): Response
     {
-        $id = $request->getParam('id');
+        $id = $request->getParsedBodyParam('id');
         $node = Node::find($id);
         $node->delete();
         return $response->withJson([

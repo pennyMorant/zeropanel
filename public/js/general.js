@@ -5,7 +5,7 @@ function countdown(date, dom) {
     let timerInterval = null;
 
     function updateTimer() {
-        const endDate = new Date(date);
+        const endDate = new Date(date.replace(/-/g, '/'));
         const now = new Date().getTime();
         const distance = endDate.getTime() - now;
         if (distance <= 0) {
@@ -23,6 +23,44 @@ function countdown(date, dom) {
     updateTimer();
     // 开启计时器
     timerInterval = setInterval(updateTimer, 1000);
+}
+
+// get client system
+function getOperatingSystem() {
+    var userAgent = window.navigator.userAgent,
+        platform = window.navigator.platform,
+        macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+        windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+        os = null;
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+        if (/iPad/.test(userAgent) && 'ontouchend' in document) {
+            os = 'iPadOS';
+        } else {
+            os = 'Mac OS';
+        }
+    } else if (/iPhone/.test(userAgent) && !window.MSStream) {
+        os = 'iOS';
+    } else if (windowsPlatforms.indexOf(platform) !== -1) {
+        os = 'Windows';
+    } else if (/Android/.test(userAgent)) {
+        os = 'Android';
+    } else if (!os && /Linux/.test(platform)) {
+        os = 'Linux';
+    }
+
+    return os;
+}
+
+//get cookie
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+    }
+    return "";
 }
 
 //clipboard
@@ -44,9 +82,20 @@ function getResult(titles, texts, icons) {
         }
     });
 }
+
 $(document).ready(function (){
-    $("a.menu-link[href='"+window.location.pathname+"']").addClass('active');
+    // 获取当前 URL 路径
+    var path = window.location.pathname;
+
+    // 使用 split() 切割路径字符串
+    var parts = path.split('/');
+
+    // 访问最后一个元素
+    var target2 = parts[2];
+    var target1 = parts[1];
+    $(`a.menu-link[href='/${target1}/${target2}']`).addClass('active');
 });
+
 //get load
 function getLoad() {
     Swal.fire({
@@ -64,470 +113,156 @@ function getLoad() {
     });
 }
 
-// update email
-var KTUsersUpdateEmail = function () {
-    // Shared variables
-    const element = document.getElementById('zero_modal_user_update_email');
-    const form = element.querySelector('#zero_modal_user_update_email_form');
-    const modal = new bootstrap.Modal(element);
-
-    // Init add schedule modal
-    var initUpdateEmail = () => {
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'profile_email': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Email address is required'
-                            },
-                            emailAddress: {
-                                message: '邮箱格式不正确'
-                            }
-                        }
-                    },
-                },
-
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
-
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', function (e) {
-            // Prevent default button action
-            e.preventDefault();
-
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        // Show loading indication
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable button to avoid multiple click 
-                        submitButton.disabled = true;
-
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        setTimeout(function () {
-
-                            // Show popup confirmation 
-                            $.ajax({
-                                type: "POST",
-                                url: "/user/update_profile/email",
-                                dataType: "json",
-                                data: {
-                                    newemail: $("#profile_email").val()
-                                },
-                                success: function(data) {
-                                    if(data.ret === 1) {
-                                        Swal.fire({
-                                            text: data.msg,
-                                            icon: "success",
-                                            buttonsStyling: false,
-                                            confirmButtonText: "Ok",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary"
-                                            }
-                                        }).then(function (result) {
-                                            if (result.isConfirmed) {
-                                                location.reload();
-                                            }
-                                        });
-                                    } else {
-                                        getResult(data.msg, '', 'error');
-                                        // Remove loading indication
-                                        submitButton.removeAttribute('data-kt-indicator');
-
-                                        // Enable button
-                                        submitButton.disabled = false;
-                                    }
-                                }
-                            });
-                        }, 2000);
-                    }
-                });
-            }
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            initUpdateEmail();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersUpdateEmail.init();
-});
-
-// update password
-var KTUsersUpdatePassword = function () {
-    // Shared variables
-    const element = document.getElementById('zero_modal_user_update_password');
-    const form = element.querySelector('#zero_modal_user_update_password_form');
-    const modal = new bootstrap.Modal(element);
-
-    // Init add schedule modal
-    var initUpdatePassword = () => {
-
-        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
-            form,
-            {
-                fields: {
-                    'current_password': {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入当前密码'
-                            }
-                        }
-                    },
-                    'password': {
-                        validators: {
-                            notEmpty: {
-                                message: '请输入新密码'
-                            },
-                            callback: {
-                                message: '请输入有效的密码',
-                                callback: function (input) {
-                                    if (input.value.length > 0) {
-                                        return validatePassword();
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    'confirm_password': {
-                        validators: {
-                            notEmpty: {
-                                message: '请确认新密码'
-                            },
-                            identical: {
-                                compare: function () {
-                                    return form.querySelector('[name="new_password"]').value;
-                                },
-                                message: '新密码两次输入不一致'
-                            }
-                        }
-                    },
-                },
-
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: '.fv-row',
-                        eleInvalidClass: '',
-                        eleValidClass: ''
-                    })
-                }
-            }
-        );
-
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
-
-                    if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        submitButton.disabled = true;
-
-                        setTimeout(function () {
-                            
-                            $.ajax({
-                                type: "POST",
-                                url: "/user/update_profile/password",
-                                dataType: "json",
-                                data: {
-                                    current_password: $("#current_password").val(),
-                                    new_password: $("#new_password").val()
-                                },
-                                success: function(data) {
-                                    if(data.ret === 1) {
-                                        Swal.fire({
-                                            text: data.msg,
-                                            icon: "success",
-                                            buttonsStyling: false,
-                                            confirmButtonText: "Ok, got it!",
-                                            customClass: {
-                                                confirmButton: "btn btn-primary"
-                                            }
-                                        }).then(function (result) {
-                                            if (result.isConfirmed) {
-                                                modal.hide();
-                                                location.reload();
-                                            }
-                                        });
-                                    } else {
-                                        getResult(data.msg, '', 'error');
-                                        submitButton.removeAttribute('data-kt-indicator');
-                                        submitButton.disabled = false;
-                                    }
-                                }
-                            });
-
-                            //form.submit(); // Submit form
-                        }, 2000);
-                    }
-                });
-            }
-        });
-    }
-
-    return {
-        // Public functions
-        init: function () {
-            initUpdatePassword();
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersUpdatePassword.init();
-});
-
-// enable notify 
-function KTUsersEnableNotify(type) {
-    if (document.getElementById('notify_email').checked) {
-        var types = type;
-    }else if (document.getElementById('notify_telegram').checked) {
-        var types = type;
-    }
-    $.ajax({
-        type: "POST",
-        url: "/user/enable_notify",
-        dataType: "json",
-        data: {
-            notify_type: types
-        },
-        success: function(data) {}
-    });
-}
-
-//reset ss connet passwd
-function KTUsersResetPasswd() {
-    $.ajax({
-        type: "POST",
-        url: "/user/update_profile/passwd",
-        dataType: "json",
-        data: {},
-        success: function(data) {
-            if(data.ret === 1) {
-                Swal.fire({
-                    text: data.msg,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            } else {
-                getResult(data.msg, '', 'error');
-            }
-        }
-    });
-}
-
-// reset uuid
-function KTUsersResetUUID() {
-    $.ajax({
-        type: "POST",
-        url: "/user/update_profile/uuid",
-        dataType: "json",
-        data: {},
-        success: function(data) {
-            if(data.ret === 1) {
-                Swal.fire({
-                    text: data.msg,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            } else {
-                getResult(data.msg, '', 'error');
-            }
-        }
-    });
-}
-
-// reset sub link
-function KTUsersResetSubLink() {
-    $.ajax({
-        type: "POST",
-        url: "/user/update_profile/sub_token",
-        dataType: "json",
-        data: {},
-        success: function(data) {
-            if(data.ret === 1) {
-                Swal.fire({
-                    text: data.msg,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    customClass: {
-                        confirmButton: "btn btn-primary"
-                    }
-                }).then(function (result) {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            } else {
-                getResult(data.msg, '', 'error');
-            }
-        }
-    });
-}
-
 // show configure product modal 
-function kTUserConfigureProductModal(id, currency) {
-    function getProductData() {
-        return new Promise(function(resolve, reject) {
-            $.ajax({
-                type: "POST",
-                url: "/user/product/getinfo",
-                dataType: "json",
-                data: {
-                    id
-                },
-                success: function(data){
-                    resolve(data);
-                }
-            });
-        })
-    }
-    getProductData().then(function(data) {
-        const product_info = data;
-        const html = $('#zero_product_'+id).html();
-        const name = product_info.name;
-        const month_price = product_info.month_price;
-        const quarter_price = product_info.quarter_price;
-        const half_year_price = product_info.half_year_price;
-        const year_price = product_info.year_price;
-        const two_year_price = product_info.two_year_price;
-        const onetime_price = product_info.onetime_price;
-        const submitButton = document.querySelector('[data-kt-users-action="submit"]');
-        if (product_info.type == 1) {
-            const all_prices = {
-                month_price: {
-                  label: i18next.t('monthly fee'),
-                  value: month_price
-                },
-                quarter_price: {
-                  label: i18next.t('quarterly fee'),
-                  value: quarter_price
-                },
-                half_year_price: {
-                  label: i18next.t('semi annua fee'),
-                  value: half_year_price
-                },
-                year_price: {
-                  label: i18next.t('annual fee'),
-                  value: year_price
-                },
-                two_year_price: {
-                    label: i18next.t('biennial fee'),
-                    value: two_year_price
-                }
-              };
-              
-              Object.entries(all_prices).forEach(([key, { label, value }]) => {
-                if (value) {
-                  $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
-                  $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value}", ${id}, "${key}", "${currency}")`);
-                  if (key === 'month_price') {
-                    $('#zero_modal_configure_product_' + key + ' a').addClass('active');
-                  }
-                }
-              });
+function kTUserConfigureProductModal(id) {
+    const checkOutButton = document.querySelector(`[data-kt-users-action="check-out-${id}"]`);
+    checkOutButton.setAttribute('data-kt-indicator', 'on');
+    checkOutButton.disabled = true;
+    setTimeout(function() {
+        function getProductData() {
+            return new Promise(function(resolve, reject) {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/product/getinfo",
+                    dataType: "json",
+                    data: {
+                        id
+                    },
+                    success: function(data){
+                        resolve(data);
+                    }
+                });
+            })
         }
-        var modalInnerHtml = $('#zero_modal_configure_product_inner_html');
-        var modalName = $('#zero_modal_configure_product_name');
-        var modalPrice = $('#zero_modal_configure_product_price');
-        var modalTotal = $('#zero_modal_configure_product_total');
-        var modalCoupon = $('#zero_modal_configure_coupon');
-        var modalCouponHtml = $('#zero_modal_configure_coupon_html');
+        getProductData().then(function(data) {
+            const product_info    = data;
+            const html            = $('#zero_product_'+id).html();
+            const name            = product_info.name;
+            const month_price     = product_info.month_price;
+            const quarter_price   = product_info.quarter_price;
+            const half_year_price = product_info.half_year_price;
+            const year_price      = product_info.year_price;
+            const two_year_price  = product_info.two_year_price;
+            const onetime_price   = product_info.onetime_price;
+            var   modalInnerHtml  = $('#zero_modal_configure_product_inner_html');
+            var   modalName       = $('#zero_modal_configure_product_name');
+            var   modalPrice      = $('#zero_modal_configure_product_price');
+            var   modalTotal      = $('#zero_modal_configure_product_total');
+            var   modalCoupon     = $('#zero_modal_configure_coupon');
+            var   modalCouponHtml = $('#zero_modal_configure_coupon_html');
+            const submitButton    = document.querySelector('[data-kt-users-action="submit"]');
+            if (product_info.type == 1) {
+                const all_prices = {
+                    month_price: {
+                    label: i18next.t('monthly fee'),
+                    value: parseFloat(month_price)
+                    },
+                    quarter_price: {
+                    label: i18next.t('quarterly fee'),
+                    value: parseFloat(quarter_price)
+                    },
+                    half_year_price: {
+                    label: i18next.t('semi annua fee'),
+                    value: parseFloat(half_year_price)
+                    },
+                    year_price: {
+                    label: i18next.t('annual fee'),
+                    value: parseFloat(year_price)
+                    },
+                    two_year_price: {
+                        label: i18next.t('biennial fee'),
+                        value: parseFloat(two_year_price)
+                    },
+                    onetime_price: {
+                        label: i18next.t('onetime fee'),
+                        value: parseFloat(onetime_price)
+                    }
+                };
 
-        modalInnerHtml.html(html);
-        product_info.type == 3 ? modalCouponHtml.hide() : false;
-        const product_final_price = product_info.type == 1 ? month_price : onetime_price; // 判断不同类型商品的价格
-        modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + i18next.t('monthly fee') : name);
-        modalPrice.html(product_final_price + currency);
-        modalTotal.html(product_final_price + currency);
-        modalCoupon.attr('onclick', 'KTUserVerifyCoupon('+id+')');
-        submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +product_final_price+ '", ' +id+ ')');
+                console.log(all_prices);
+                const prices = [
+                    all_prices.month_price,
+                    all_prices.quarter_price,
+                    all_prices.half_year_price,
+                    all_prices.year_price,
+                    all_prices.two_year_price,
+                    all_prices.onetime_price
+                ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
+                minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
+                
+                console.log(minPrice);
+                
+                Object.entries(all_prices).forEach(([key, { label, value }]) => {
+                    if (value) {
+                    $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
+                    $('#zero_modal_configure_product_' + key).attr('onclick', `KTUsersChangePlan("${value.toFixed(2)}", ${id}, "${key}")`);
+                    if (value == minPrice.value) {
+                        $(`#zero_modal_configure_product_${key} a`).addClass('active');
+                    }
+                    }
+                });
+                modalCoupon.attr('onclick', `KTUserVerifyCoupon("${minPrice.value.toFixed(2)}", ${id})`);      
+            }
 
-        $("#zero_modal_configure_product").modal("show");
-    });
+            modalInnerHtml.html(html);
+            product_info.type == 3 ? modalCouponHtml.hide() : false;
+            const product_final_price = (product_info.type == 1 ? minPrice.value.toFixed(2) : onetime_price); // 判断不同类型商品的价格
+            modalName.html(product_info.type == 1 ? name + '&nbsp;X&nbsp;' + minPrice.label : name);
+            modalPrice.html(`${product_final_price}&nbsp;${currency_unit}`);
+            modalTotal.html(`${product_final_price}&nbsp;${currency_unit}`);
+            submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${product_final_price}", ${id})`);
+            $("#zero_modal_configure_product").modal("show");
+            checkOutButton.removeAttribute('data-kt-indicator');
+            checkOutButton.disabled = false;
+        });
+    }, 2000)
     
 }
 
-function KTUsersChangePlan(price, id, type, currency) {
+function KTUsersChangePlan(price, id, type) {
     const productPlanMap = {
         'month_price': i18next.t('monthly fee'),
         'quarter_price': i18next.t('quarterly fee'),
         'half_year_price': i18next.t('semi annua fee'),
-        'year_price':i18next.t('annual fee')
+        'year_price': i18next.t('annual fee'),
+        'two_year_price': i18next.t('biennial fee')
         };
     const name = $('#zero_product_name_'+id).html();
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
+    const modalCoupon = $('#zero_modal_configure_coupon');
+    modalCoupon.attr('onclick', `KTUserVerifyCoupon("${price}", ${id})`);
     $('#zero_modal_configure_product_name').html(`${name} X ${productPlanMap[type]}`);
-    $('#zero_modal_configure_product_price').html(`${price}${currency}`);
-    $('#zero_modal_configure_product_total').html(`${price}${currency}`);
-    submitButton.setAttribute('onclick', 'KTUsersCreateOrder('+1+', "' +price+ '", ' +id+ ')');
+    $('#zero_modal_configure_product_price').html(`${price}&nbsp;${currency_unit}`);
+    $('#zero_modal_configure_product_total').html(`${price}&nbsp;${currency_unit}`);
+    submitButton.setAttribute('onclick', `KTUsersCreateOrder(${1}, "${price}", ${id})`);
 }
 
 // verify coupon
-function KTUserVerifyCoupon(product_id) {
-    $.ajax({
-        type: "POST",
-        url: "/user/verify_coupon",
-        dataType: "json",
-        data: {
-            coupon_code: $("#zero_coupon_code").val(),
-            product_id
-        },
-        success: function (data) {
-            if (data.ret == 1) {
-                document.getElementById('zero_modal_configure_product_total').innerHTML = data.total + 'USD';
-            } else {
-                getResult(data.msg, '', 'error');
+function KTUserVerifyCoupon(product_price, product_id) {
+    const submitButton = document.querySelector('[data-kt-users-action="verify-coupon"]');
+    submitButton.setAttribute('data-kt-indicator', 'on');
+    submitButton.disabled = true;
+    setTimeout(function() {
+        $.ajax({
+            type: "POST",
+            url: "/user/verify_coupon",
+            dataType: "json",
+            data: {
+                coupon_code: $("#zero_coupon_code").val(),
+                product_price,
+                product_id
+            },
+            success: function (data) {
+                if (data.ret == 1) {
+                    $('#zero_modal_configure_product_total').html(`${data.total}&nbsp;${currency_unit}`);
+                } else {
+                    getResult(data.msg, '', 'error');
+                }
+                submitButton.removeAttribute('data-kt-indicator');
+                submitButton.disabled = false;
             }
-        }
-    })
+        });
+    }, 2000)
 }
 // create order
 function KTUsersCreateOrder(type, price, product_id) {
@@ -535,11 +270,11 @@ function KTUsersCreateOrder(type, price, product_id) {
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
     switch (type) {
-        case 1:
+        case 1: //产品新购
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
-                    url: "/user/order/create_order/"+type,
+                    url: `/user/order/create_order/${type}`,
                     dataType: "json",
                     data: {
                         product_id: product_id,
@@ -548,7 +283,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_id);
+                            $(location).attr('href', `/user/order/${data.order_no}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -558,7 +293,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                 });
             }, 2000)
             break;
-        case 2:
+        case 2:  // 充值账户
             setTimeout(function () {
                 $.ajax({
                     type: "POST",
@@ -569,7 +304,7 @@ function KTUsersCreateOrder(type, price, product_id) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_id);
+                            $(location).attr('href', `/user/order/${data.order_no}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -578,7 +313,24 @@ function KTUsersCreateOrder(type, price, product_id) {
                     }
                 });
             }, 2000)
-            break; 
+            break;
+        case 3: // 产品续费
+            $.ajax({
+                type: "POST",
+                url: "/user/order/create_order/"+type,
+                dataType: "json",
+                data: {},
+                success: function(data){
+                    if (data.ret == 1) {
+                        $(location).attr('href', `/user/order/${data.order_no}`);
+                    } else {
+                        getResult(data.msg, '', 'error');
+                    }
+                }
+            });
+            break;
+        default:
+            getResult('请求错误', '', 'error');
     }
 }
 
@@ -587,7 +339,7 @@ function KTUsersPayOrder(order_no) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
-    let paymentMethod = $("#payment_method a.active").attr("data-name");
+    let payment_id = $("#payment_method a.active").attr("data-payment-id");
     let orderNo = order_no;
     
     setTimeout(() => {
@@ -595,7 +347,7 @@ function KTUsersPayOrder(order_no) {
             type: "POST",
             url: "/user/order/pay_order",
             dataType: "json",
-            data: {method: paymentMethod, order_no: orderNo},
+            data: {payment_id, order_no: orderNo},
             success: function (data) {
                 if (data.ret == 1) {
                     $(location).attr('href', data.url);
@@ -643,7 +395,7 @@ function KTUsersTicket(type, id, status) {
                     },
                     success: function (data) {
                         if (data.ret == 1) {
-                            $(location).attr('href', '/user/ticket/view/'+data.id);
+                            $(location).attr('href', `/user/ticket/view/${data.id}`);
                         } else {
                             getResult(data.msg, '', 'error');
                             submitButton.removeAttribute('data-kt-indicator');
@@ -694,7 +446,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
 			success: function(data) {
 				if (data.ret == 1){
                     const info = data.info;
-                    const qrcodeHtml = '<div class="pb-3" align="center" id="qrcode' + nodeid + '"></div>';
+                    const qrcodeHtml = `<div class="pb-3" align="center" id="qrcode_${nodeid}"></div>`;
                     var content = data.url;
                     switch (data.type) {
                         case 2:                           
@@ -774,13 +526,36 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                             $("#zero_modal_shadowsocks_node_info_qrcode").html(qrcodeHtml);
                             $("#zero_modal_shadowsocks_node_info").modal('show');
                             break;
+                        case 5:
+                            const selectors_hysteria = {
+                                '#zero_modal_hysteria_node_info_remark': 'remark',
+                                '#zero_modal_hysteria_node_info_address': 'address',
+                                '#zero_modal_hysteria_node_info_port': 'port',
+                                '#zero_modal_hysteria_node_info_obfsParam': 'obfsParam',
+                                '#zero_modal_hysteria_node_info_protocol': 'protocol',
+                                '#zero_modal_hysteria_node_info_obfs': 'obfs',
+                                '#zero_modal_hysteria_node_info_alpn': 'alpn',
+                                '#zero_modal_hysteria_node_info_upspeed': 'upmbps',
+                                '#zero_modal_hysteria_node_info_downspeed': 'downmbps',
+                                '#zero_modal_hysteria_node_info_peer': 'peer',
+                            }
+
+                            for (let selector in selectors_hysteria) {
+                                $(selector).html(info[selectors_hysteria[selector]]);
+                            }
+                            $("#zero_modal_hysteria_node_info_qrcode").html(qrcodeHtml);
+                            $("#zero_modal_hysteria_node_info").modal('show');
+                            break;
+                        default:
+                            0;
                     }
-                    $("#qrcode"  + nodeid).qrcode({
+                    $("#qrcode_"  + nodeid).qrcode({
                         width: 200,
                         height: 200,
                         render: "canvas",
                         text: content
                     });
+                    
                     Swal.close();
 				} else {                   
 					getResult(data.msg, "", "error");
@@ -820,17 +595,18 @@ function oneclickImport(client, subLink) {
    
     quanx_config = {
         "server_remote": [
-            subLink + ', tag=' + webName
+            `${subLink}, tag=${webName}`
         ]
     }
     var sublink = {
-      surfboard: "surfboard:///install-config?url=" + encodeURIComponent(subLink),
-      quantumult: "quantumult://configuration?server=" + btoa(subLink).replace(/=/g, '') + "&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw",
-      shadowrocket: "shadowrocket://add/sub://" + btoa(subLink),
-      surge4: "surge4:///install-config?url=" + encodeURIComponent(subLink),
-      clash: "clash://install-config?url=" + encodeURIComponent(subLink),
-      sagernet: "sn://subscription?url=" + encodeURIComponent(subLink),
-      quantumultx: "quantumult-x:///add-resource?remote-resource=" + encodeURIComponent(JSON.stringify(quanx_config)),
+      surfboard: `surfboard:///install-config?url=${encodeURIComponent(subLink)}`,
+      quantumult: `quantumult://configuration?server=${btoa(subLink).replace(/=/g, '')}&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw`,
+      shadowrocket: `shadowrocket://add/sub://${btoa(subLink)}`,
+      surge4: `surge4:///install-config?url=${encodeURIComponent(subLink)}`,
+      clash: `clash://install-config?url=${encodeURIComponent(subLink)}`,
+      sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
+      quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
+      v2rayng: `v2rayng://install-config?url=${encodeURIComponent(subLink)}`,
     }
 
     Swal.fire({
@@ -847,4 +623,3 @@ function oneclickImport(client, subLink) {
         }
     });
 }
-

@@ -16,7 +16,7 @@
 					</div>
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 						<a href="/{$config['website_admin_path']}/dashboard" class="d-lg-none fs-1 text-dark fw-bolder">
-							{$config['appName']}
+							{$config['website_name']}
 						</a>
 					</div>
 					<div class="d-flex align-items-stretch justify-content-between" id="kt_app_header_wrapper">
@@ -144,7 +144,7 @@
 				<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{ default: true, lg: false }" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
 					<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 						<a href="dashboard" class="fs-1 fw-bolder text-white app-sidebar-logo-default">
-							{$config['appName']}
+							{$config['website_name']}
 						</a>
 						<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
 							<span class="svg-icon svg-icon-2 rotate-180">
@@ -184,6 +184,18 @@
 											</span>
 										</span>
 										<span class="menu-title">系统设置</span>
+									</a>
+								</div>
+								<div class="menu-item menu-accordion">
+									<a class="menu-link" href="/{$config['website_admin_path']}/payment">
+										<span class="menu-icon">
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stripe" viewBox="0 0 16 16">
+													<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm6.226 5.385c-.584 0-.937.164-.937.593 0 .468.607.674 1.36.93 1.228.415 2.844.963 2.851 2.993C11.5 11.868 9.924 13 7.63 13a7.662 7.662 0 0 1-3.009-.626V9.758c.926.506 2.095.88 3.01.88.617 0 1.058-.165 1.058-.671 0-.518-.658-.755-1.453-1.041C6.026 8.49 4.5 7.94 4.5 6.11 4.5 4.165 5.988 3 8.226 3a7.29 7.29 0 0 1 2.734.505v2.583c-.838-.45-1.896-.703-2.734-.703Z"/>
+												</svg>
+											</span>
+										</span>
+										<span class="menu-title">支付设置</span>
 									</a>
 								</div>
 								<div class="menu-item menu-accordion">
@@ -312,6 +324,16 @@
 											</svg>
 										</span>
 										<span class="menu-title">优惠码</span>
+									</a>
+								</div>
+								<div class="menu-item menu-accordion">
+									<a class="menu-link" href="/{$config['website_admin_path']}/knowledge">
+										<span class="menu-icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+											<path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z"/>
+										</svg>
+										</span>
+										<span class="menu-title">知识库</span>
 									</a>
 								</div>
 							</div>

@@ -21,13 +21,13 @@ class NodeController extends BaseController
             $node = Node::where('node_ip', $_SERVER['REMOTE_ADDR'])->first();
             $node_id = $node->id;
         }
-        $load = $request->getParam('load');
-        $uptime = $request->getParam('uptime');
-        $log = new NodeInfoLog();
-        $log->node_id = $node_id;
-        $log->load = $load;
-        $log->uptime = $uptime;
-        $log->log_time = time();
+        $load            = $request->getParsedBodyParam('load');
+        $uptime          = $request->getParsedBodyParam('uptime');
+        $log             = new NodeInfoLog();
+        $log->node_id    = $node_id;
+        $log->load       = $load;
+        $log->uptime     = $uptime;
+        $log->created_at = time();
         if (!$log->save()) {
             return $response->withJson([
                 'ret' => 0,
@@ -58,15 +58,15 @@ class NodeController extends BaseController
         $node_server = $node->server;
 
         $data = [
-            'node_group' => $node->node_group,
-            'node_class' => $node->node_class,
+            'node_group'      => $node->node_group,
+            'node_class'      => $node->node_class,
             'node_speedlimit' => $node->node_speedlimit,
-            'traffic_rate' => $node->traffic_rate,
-            'sort' => $node->node_type,
-            'server' => $node_server,
-            'custom_config' => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
-            'type' => 'SSPanel-UIM',
-            'version' => '2023-3-1'
+            'traffic_rate'    => $node->traffic_rate,
+            'sort'            => $node->node_type,
+            'server'          => $node_server,
+            'custom_config'   => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
+            'type'            => 'SSPanel-UIM',
+            'version'         => '2023-3-1'
         ];
 
         return $response->withJson([

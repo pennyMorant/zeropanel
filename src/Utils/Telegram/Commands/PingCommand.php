@@ -11,30 +11,23 @@ use Telegram\Bot\Commands\Command;
  */
 final class PingCommand extends Command
 {
-    /**
-     * @var string Command Name
-     */
-    protected $name = 'ping';
-
-    /**
-     * @var string Command Description
-     */
-    protected $description = '获取我的唯一ID';
+    protected string $name = 'ping';
+    protected string $description = '获取我的唯一ID';
 
     public function handle()
     {
-        $update = $this->getUpdate();
-        $message = $update->getMessage();
-
-        // 消息会话 ID
-        $chatId = $message->getChat()->getId();
         // 发送 '输入中' 会话状态
         $this->replyWithChatAction(['action' => Actions::TYPING]);
+
+        $update = $this->getUpdate();
+        $message = $update->getMessage();
+        // 消息会话 ID
+        $chatId = $message->getChat()->getId();
 
         // 回送信息
         $this->replyWithMessage(
             [
-                'text'  =>  '您的 ID 是: ' . $chatId,
+                'text'    => '您的 ID 是: ' . $chatId,
                 'chat_id' => $chatId,
             ]
         );

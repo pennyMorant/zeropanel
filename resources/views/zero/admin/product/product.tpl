@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 产品</title>
+        <title>{$config["website_name"]} 产品</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -32,7 +32,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">产品列表</div>
                                             <div class="card-toolbar">
-                                                <a class="btn btn-primary btn-sm fw-bold" href="product/create">创建产品</a>
+                                                <a class="btn btn-primary btn-sm fw-bold" href="product/create">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建产品
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -54,18 +56,42 @@
             })
         </script>
         <script>
-            function updateProductStatus(id) {
-                var status = $("#product_status_"+id).prop("checked") ? 1 : 0;
-                $.ajax({
-                    type: "PUT",
-                    url: "/{$config['website_admin_path']}/product/update/status",
-                    dataType: "JSON",
-                    data: {
-                        status,
-                        id,
-                    },
-                    success: function(data){}
-                });
+            function updateProductStatus(method, type, id) {
+                switch (method) {
+                    case 'status':
+                        $.ajax({
+                            type: "PUT",
+                            url: "/{$config['website_admin_path']}/product/update/status",
+                            dataType: "JSON",
+                            data: {
+                                type,
+                                id,
+                                method
+                            },
+                            success: function(data){
+                                table_1.ajax.reload();
+                            }
+                        });
+                        break;
+                    case 'renew':
+                        $.ajax({
+                            type: "PUT",
+                            url: "/{$config['website_admin_path']}/product/update/status",
+                            dataType: "JSON",
+                            data: {
+                                type,
+                                id,
+                                method
+                            },
+                            success: function(data){
+                                table_1.ajax.reload();
+                            }
+                        });
+                        break;
+                    default:
+                        getresult('请求错误', '', 'error');
+                        break;
+                }
             }
         </script>
     </body>

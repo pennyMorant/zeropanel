@@ -21,13 +21,14 @@ var KTDatatablesOrderSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/order",
+                type: "POST"
             },
             
             columns: [
                 { data: 'order_total' },
                 { data: 'order_status' },
                 { data: 'order_type' },
-                { data: 'created_time' },
+                { data: 'created_at' },
                 { data: 'action' },
             ],
             
@@ -75,6 +76,7 @@ var KTDatatablesTicketSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/ticket",
+                type: "POST"
             },
             
             columns: [
@@ -82,8 +84,8 @@ var KTDatatablesTicketSide = function () {
                 { data: 'type'},
                 { data: 'title' },
                 { data: 'status' },
-                { data: 'datetime' },
-                { data: 'last_updated'},
+                { data: 'created_at' },
+                { data: 'updated_at'},
                 { data: 'action'},
             ],
             columnDefs: [
@@ -131,12 +133,13 @@ var KTDatatablesSigninLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/loginlog",
+                type: "POST"
             },
             
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -181,12 +184,13 @@ var KTDatatablesUsedLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/uselog",
+                type: "POST"
             },
             
             columns: [
                 { data: 'ip' },
                 { data: 'location' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -231,13 +235,14 @@ var KTDatatablesSubscribeLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/sublog",
+                type: "POST"
             },
             
             columns: [
                 { data: 'subscribe_type' },
                 { data: 'request_ip' },
                 { data: 'location'},
-                { data: 'request_time' },
+                { data: 'created_at' },
             ],
             columnDefs: [
                 {
@@ -289,12 +294,13 @@ var KTDatatablesTrafficLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/trafficlog",
+                type: "POST"
             },
             
             columns: [
                 { data: 'node_name' },
                 { data: 'traffic' },
-                { data: 'datetime' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [
@@ -339,6 +345,7 @@ var KTDatatablesBanRuleSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/ban_rule",
+                type: "POST"
             },
             columns: [
                 { data: 'name' },
@@ -387,11 +394,12 @@ var KTDatatablesUserBanedLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/user_baned_log",
+                type: "POST"
             },
             columns: [
                 { data: 'node_name' },
                 { data: 'rule_name' },
-                { data: 'datetime'},
+                { data: 'created_at'},
             ],
 
             columnDefs: [
@@ -436,12 +444,13 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             },
             ajax: {
                 url: "/user/ajax_data/table/get_commission_log",
+                type: "POST"
             },
             
             columns: [
-                { data: 'total' },
-                { data: 'ref_get' },
-                { data: 'datetime' },
+                { data: 'order_amount' },
+                { data: 'get_amount' },
+                { data: 'created_at' },
             ],
 
             columnDefs: [

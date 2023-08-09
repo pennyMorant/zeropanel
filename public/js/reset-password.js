@@ -56,9 +56,9 @@ var KTAuthResetPassword = function () {
                                             confirmButton: "btn btn-primary"
                                         }
                                     });
-                                    e.removeAttribute("data-kt-indicator");
-                                    e.disabled = !1;
                                 }
+                                e.removeAttribute("data-kt-indicator");
+                                e.disabled = !1;
                             }
                         })
                     }), 2000)) : Swal.fire({

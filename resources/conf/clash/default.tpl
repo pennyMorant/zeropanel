@@ -1,23 +1,23 @@
-  - RULE-SET,applications,DIRECT
+
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
   - DOMAIN-SUFFIX,smtp,DIRECT
   - DOMAIN-KEYWORD,aria2,DIRECT
-  - RULE-SET,private,DIRECT
-  - RULE-SET,reject,REJECT
-  - RULE-SET,telegramcidr,✈️TELEGRAM
-  - RULE-SET,youtube,🖥YOUTUBE
-  - RULE-SET,netflix,📺NETFLIX
-  - RULE-SET,icloud,📱APPLE
-  - RULE-SET,apple,📱APPLE
-  - RULE-SET,music,🎸MUSIC
-  - RULE-SET,googler,💡GOOGLE
-  - RULE-SET,google,💡GOOGLE
-  - RULE-SET,socialapp,📡SOCIAL APP
-  - RULE-SET,video,🚡VIDEO
-  - RULE-SET,proxy,🎯PROXY
-  - RULE-SET,direct,DIRECT
-  - RULE-SET,cncidr,DIRECT,no-resolve
+  - GEOSITE,category-ads-all,REJECT
+  - GEOSITE,telegram,✈️TELEGRAM
+  - GEOSITE,youtube,🖥YOUTUBE
+  - GEOSITE,netflix,📺NETFLIX
+  - GEOSITE,spotify,🎸SPOTIFY
+  - GEOSITE,google,💡GOOGLE
+  - GEOSITE,twitter,📡TWITTER
+  - GEOSITE,geolocation-!cn,🎯PROXY
+  - GEOIP,private,DIRECT
+  - GEOIP,telegram,✈️TELEGRAM
+  - GEOIP,twitter,📡TWITTER
+  - GEOIP,google,💡GOOGLE
+  - GEOIP,netflix,📺NETFLIX
   - GEOIP,LAN,DIRECT
+  - GEOSITE,CN,DIRECT
   - GEOIP,CN,DIRECT
+  - GEOIP,!CN,🎯PROXY
   - MATCH,🛺OTHERS

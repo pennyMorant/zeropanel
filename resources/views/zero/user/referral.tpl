@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-		<title>{$config["appName"]} Refrral</title>
+		<title>{$config["website_name"]} Refrral</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -39,7 +39,7 @@
 										<div class="col-xl-6">
 											<div class="card card-flush mb-9">
 												<div class="card-body">
-													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$config['rebate_ratio'] * 100}%</p>
+													<p class="text-gray-800 text-center fs-2hx fw-bolder">{$config['rebate_ratio']}%</p>
 													<p class="text-gray-400 text-center">{$trans->t('commission ratio')}</p>
 												</div>
 											</div>
@@ -72,7 +72,7 @@
                         <div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
                             <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                                 <div class="text-dark-75 order-2 order-md-1">
-                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+                                    &copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
                                 </div>
                             </div>
                         </div>

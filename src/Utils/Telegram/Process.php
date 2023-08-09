@@ -5,7 +5,7 @@ namespace App\Utils\Telegram;
 
 use Telegram\Bot\Api;
 use App\Models\Setting;
-use Telegram\Bot\Exceptions\TelegramResponseException;
+use App\Utils\Telegram\Callbacks\ReplayTicket;
 
 final class Process
 {
@@ -22,11 +22,18 @@ final class Process
             ]
         );
         $update = $bot->commandsHandler(true);
-        $Message = $update->getMessage();
-   
-        if (!is_null($Message->getReplyToMessage())) {
-            if (preg_match("/[#](.*)/", $Message->getReplyToMessage()->getText(), $match)) {
-                new Callbacks\ReplayTicket($bot, $Message, $match[1]);
+        // 处理用户发送的消息
+        
+        $update_2 = $bot->getWebhookUpdate();
+        $message = $update_2->getMessage();
+        if ($message->getReplyToMessage() != null) {
+            // 如果用户发送了一条文本消息，我们就直接回复这条消息
+            
+            $chat_id = $update_2->getMessage()->getChat()->getId();
+            $reply = $message->getReplyToMessage()->getText();
+            
+            if (preg_match('/#(\d+)/', $reply, $matches)) {
+                new ReplayTicket($bot, $message, $matches[1]);
             }
         }
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 创建节点</title>
+        <title>{$config["website_name"]} 创建节点</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -31,9 +31,11 @@
                                 <div id="kt_app_content_container" class="app-container container-xxl">
                                     <div class="card mb-5">
                                         <div class="card-header card-flush">
-                                            <div class="card-title fw-bold">节点配置</div>
+                                            <div class="card-title fw-bolder">节点配置</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">创建节点</button>
+                                                <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建节点
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -44,15 +46,15 @@
                                         <div class="col-xxl-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <label class="form-label required">节点名称</label>
+                                                    <label class="form-label required" for="name">节点名称</label>
                                                     <input class="form-control mb-5" id="name" name="name" type="text" placeholder="节点名称" value="">
-                                                    <label class="form-label required">节点地址</label>
+                                                    <label class="form-label required" for="server">节点地址</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="填写域名,节点IP会自动设置解析的IP" id="server" name="server" type="text" placeholder="节点地址" value="">
-                                                    <label class="form-label required">节点IP</label>
+                                                    <label class="form-label required" for="node_ip">节点IP</label>
                                                     <input class="form-control mb-5" id="node_ip" name="node_ip" type="text" placeholder="节点IP" value="">
-                                                    <label class="form-label">流量比例</label>
+                                                    <label class="form-label" for="traffic_rate">流量比例</label>
                                                     <input class="form-control mb-5" id="traffic_rate" name="traffic_rate" type="text" placeholder="流量比例" value="1">
-                                                    <label class="form-label required">节点旗帜</label>
+                                                    <label class="form-label required" for="node_flag">节点旗帜</label>
                                                     <select class="form-select mb-5" id="node_flag">
                                                         <option value="united-states" data-kt-select2-country="/theme/zero/assets/media/flags/united-states.svg">美国</option>
                                                         <option value="united-kingdom" data-kt-select2-country="/theme/zero/assets/media/flags/united-kingdom.svg">英国</option>
@@ -74,12 +76,13 @@
                                                         <option value="philippines" data-kt-select2-country="/theme/zero/assets/media/flags/philippines.svg">菲律宾</option>
                                                         <option value="malaysia" data-kt-select2-country="/theme/zero/assets/media/flags/malaysia.svg">马来西亚</option>
                                                     </select>
-                                                    <label class="form-label required">节点类型</label>
+                                                    <label class="form-label required" for="node_type">节点类型</label>
                                                     <select class="form-select mb-5" id="node_type" data-control="select2" data-hide-search="true">
                                                         <option value="1">Shadowsocks</option>
                                                         <option value="2">VMESS</option>
-                                                        <option value="4">TROJAN</option>
                                                         <option value="3">VLESS</option>
+                                                        <option value="4">TROJAN</option>
+                                                        <option value="5">Hysteria</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -87,18 +90,24 @@
                                         <div class="col-xxl-6">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <label class="form-label">节点等级</label>
+                                                    <label class="form-label" for="node_class">节点等级</label>
                                                     <input class="form-control mb-5" id="node_class" name="node_class" type="number" placeholder="节点等级" value="0">
-                                                    <label class="form-label">节点群组</label>
+                                                    <label class="form-label" for="node_group">节点群组</label>
                                                     <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不分组" id="node_group" name="node_group" type="number" placeholder="节点群组" value="0">
-                                                    <label class="form-label">流量上限(GB)</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_traffic_limit" name="node_traffic_limit" type="text" value="0" placeholder="流量上限">
-                                                    <label class="form-label">流量上限清空日</label>
+                                                    <label class="form-label" for="node_traffic_limit">流量上限</label>
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_traffic_limit" name="node_traffic_limit" type="text" value="0" placeholder="流量上限">
+                                                        <span class="input-group-text">GB</span>
+                                                    </div>
+                                                    <label class="form-label" for="node_traffic_limit_reset_date">流量上限清空日</label>
                                                     <input class="form-control mb-5" id="node_traffic_limit_reset_date" name="node_traffic_limit_reset_date" type="text" value="1" placeholder="流量上限清空日">
-                                                    <label class="form-label">节点速度</label>
-                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="0" placeholder="节点速度">
-                                                    <label class="form-label required">节点排序</label>
-                                                    <input class="form-control" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
+                                                    <label class="form-label" for="node_speedlimit">节点速度</label>
+                                                    <div class="input-group mb-5">
+                                                        <input class="form-control" data-bs-toggle="tooltip" title="0为不限制" id="node_speedlimit" name="node_speedlimit" type="text" value="0" placeholder="节点速度">
+                                                        <span class="input-group-text">Mbps</span>
+                                                    </div>
+                                                    <label class="form-label required" for="node_sort">节点排序</label>
+                                                    <input class="form-control mb-5" data-bs-toggle="tooltip" title="数值越大,越靠前" id="node_sort" name="node_sort" type="text" value="0" placeholder="节点排序">
                                                 </div>
                                             </div>  
                                         </div>

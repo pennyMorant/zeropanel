@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} Dashboard</title>
+        <title>{$config["website_name"]} Dashboard</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -27,19 +27,18 @@
                         <div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
                                 <div id="kt_app_content_container" class="app-container container-xxl">
-									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+									<div class="row g-5 g-xl-10 mb-xl-10 mb-5">
 										<div class="col-xxl-6">
-											<div class="card card-flush h-md-100">
+											<div class="card card-flush">
 												<div class="card-header border-0">
-													<div class="card-title text-dark fs-3 fw-bolder">{$trans->t('product details')}</div>
-													{if $user->class >= 1}
-														<div class="card-toolbar">
-															<button class="btn btn-light-primary btn-sm" onclick="zeroUserRenewalProduct()">续费</button>
-														</div>
-													{/if}
+													<div class="card-title fs-3 fw-bolder">{$trans->t('product details')}</div>																										
+													<div class="card-toolbar">
+														<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_info"><i class="bi bi-file-earmark-arrow-down"></i>一键订阅</button>
+														<button class="btn btn-primary btn-sm d-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#zero_canvas_show_subscribe_info"><i class="bi bi-file-earmark-arrow-down"></i>一键订阅</button>
+													</div>												
 												</div>     
 												<div class="card-body pt-0">
-													<div class="d-flex align-items-center mb-9 bg-light-warning rounded p-5">
+													<div class="d-flex align-items-center mb-6 bg-light-warning rounded p-5">
 														<span class="svg-icon svg-icon-warning svg-icon-1 me-5">
 															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
 																<path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
@@ -49,21 +48,25 @@
 														</span>
 														<div class="d-flex flex-column flex-grow-1 mr-2">
 															<a class="fs-lg fw-bolder text-gray-800 mb-1">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
+																{if $user->class >= 1}
 																	<span class="counter">{$trans->t('time')}:&nbsp;<span id="user_class_expired_time"></span></span>
-																{else if $user->class_expire != "1989-06-04 00:05:00" && $user->class <= 0}
+																{else if $user->class <= 0}
 																	<span class="counter">{$trans->t('time')}:&nbsp;{$trans->t('no product')}</span>
-																{else}<span class="counter">No product</span>
 																{/if}
 															</a>					   
 															<span class="text-muted fw-semibold d-block">
-																{if $user->class_expire != "1989-06-04 00:05:00" && $user->class >= 1}
-																	{$trans->t('expired date')}:&nbsp;{$user->class_expire}
+																{if $user->class >= 1}
+																	{$trans->t('expired date')}:&nbsp;{substr($user->class_expire, 0, 10)}
 																{/if}
 															</span>
 														</div>
+														<div class="text-end">
+															<a class="btn btn-sm hover-scale btn-icon" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="续费" onclick="KTUsersCreateOrder(3, '', '')">
+																<i class="bi bi-database-add fs-2hx fw-bold text-warning hover-scale"></i>
+															</a>
+														</div>
 													</div>
-													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-9">
+													<div class="d-flex align-items-center bg-light-success rounded p-5 mb-6">
 														<span class="svg-icon svg-icon-success svg-icon-1 me-5">
 															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-soundwave" viewBox="0 0 16 16">
 																<path fill-rule="evenodd" d="M8.5 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5zm-2 2a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zm-6 1.5A.5.5 0 0 1 5 6v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm-10 1A.5.5 0 0 1 3 7v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5zm12 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V7a.5.5 0 0 1 .5-.5z"/>
@@ -78,7 +81,7 @@
 															</span>
 														</div>
 													</div>
-													<div class="d-flex align-items-center bg-light-danger rounded p-5 mb-9">
+													<div class="d-flex align-items-center bg-light-danger rounded p-5 mb-6">
 														<span class="svg-icon svg-icon-danger svg-icon-1 me-5">
 															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
 																<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
@@ -94,7 +97,7 @@
 															</span>
 														</div>
 													</div>
-													<div class="d-flex align-items-center bg-light-info rounded p-5 mb-5">
+													<div class="d-flex align-items-center bg-light-info rounded p-5">
 														<span class="svg-icon svg-icon-info svg-icon-1 me-5">
 															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
 																<path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
@@ -108,117 +111,53 @@
 																{$trans->t('commission')}:&nbsp;{$user->commission} $
 															</span>
 														</div>
+														<div class="text-end">														
+															<a class="btn btn-sm hover-scale btn-icon" type="button" data-bs-toggle="modal" data-bs-target="#zero_user_add_credit_modal">
+																<i class="bi bi-plus-circle fs-2hx fw-bold text-info"></i>
+															</a>															
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="col-xxl-6">
-											<div class="card card-flush mb-5">
-												<div class="card-header pt-5">
-													<div class="card-title  fw-bold text-dark fs-3">{$trans->t('traffic details')}</div>
-												</div>
-												<div class="card-body d-flex flex-column pt-0">
-													<div id="zero_user_traffic_chart" data-kt-chart-color="success" style="height: 150px; min-height: 130px;"></div>
-												</div>
-											</div>
-											<div class="card card-flush">
-												<div class="card-header border-0">
-													<div class="card-title text-dark fw-bolder fs-3">														
-														{$trans->t('subscription url')}
+											<div class="card card-flush mb-3">
+												<div class="card-header">
+													<div class="card-title  fw-bolder fs-3">{$trans->t('traffic details')}</div>
+													<div class="card-toolbar">
+														<span class="badge badge-light-primary badge fs-4 fw-semibold">速率:{if $user->node_speedlimit == 0}{$trans->t('unlimited')}{else}{$user->node_speedlimit}Mbps{/if}</span>
 													</div>
 												</div>
-												<div class="card-body pt-0">
-													<div class="row">
-														<div class="col">
-															<!-- Clash订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-clash dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-clash text-white"></i>&nbsp;&nbsp;{$trans->t('clash')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['clash']}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('clash', '{$subInfo['clash']}')">{$trans->t('import')}</a></li>
-																</ul>
+												<div class="card-body d-flex flex-column pt-0">
+													<div id="zero_user_traffic_chart" data-kt-chart-color="success" style="height: 100px; min-height: 100px;"></div>
+												</div>
+											</div>
+											<div class="card card-flush h-250px">
+												<div class="card-body d-flex flex-column">
+													<div id="kt_carousel_3_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
+														<div class="d-flex align-items-center justify-content-between flex-wrap">
+															<span class="fs-3 fw-bolder">最近公告</span>
+															<ol class="p-0 m-0 carousel-indicators carousel-indicators-bullet carousel-indicators-active-primary">
+																<li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="0" class="ms-1 active"></li>
+																<li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="1" class="ms-1"></li>
+																<li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="2" class="ms-1"></li>
+															</ol>
+														</div>
+														<div class="carousel-inner pt-2 scroll h-150px" id="zero_show_ann">
+														{foreach $anns as $ann}
+															<div class="carousel-item {if $ann@iteration == 1}active{/if}">
+																{$ann->content}
 															</div>
-															<!-- Surge订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surge dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surge text-white"></i>&nbsp;&nbsp;{$trans->t('surge')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surge"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surge4', '{$subInfo["surge"]}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															<!-- ss订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard copy-text" data-clipboard-text="{$subInfo["ss"]}"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;SS&nbsp;&nbsp;</button>
-															</div>
-															<!-- V2Ray订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-v2ray copy-text" data-clipboard-text="{$subInfo["v2rayn"]}"><i class="zero-v2rayng text-white"></i>{$trans->t('v2rayn')}</button>
-															</div>
-															<!-- Shadowrocket订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-shadowrocket dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-shadowrocket text-white"></i>{$trans->t('shadowrocket')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['shadowrocket']}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('shadowrocket', '{$subInfo['shadowrocket']}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															<!-- Quantumult订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-quantumult dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-quantumult text-white"></i>{$trans->t('quan')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo['quantumult']}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('quantumult', '{$subInfo['quantumult']}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															<!-- QuantumultX订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button class="btn btn-pill btn-quantumultx dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																	<i class="zero-quantumultx text-white"></i>
-																	{$trans->t('quanx')}
-																</button>
-																<ul class="dropdown-menu">
-																	<li>
-																		<a class="dropdown-item copy-text" type="button" data-clipboard-text="{$subInfo['quantumultx']}">{$trans->t('copy')}</a>
-																	</li>
-																	<li>
-																		<hr class="dropdown-divider">
-																	</li>
-																	<li>
-																		<a class="dropdown-item" type="button" onclick="oneclickImport('quantumultx', '{$subInfo['quantumultx']}')">{$trans->t('import')}</a>
-																	</li>
-																</ul>
-															</div>
-															<!-- Surfboard订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-surfboard dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-surfboard text-white"></i>{$trans->t('surfboard')}</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["surfboard"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('surfboard', '{$subInfo['surfboard']}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
-															<!-- AnXray订阅 -->
-															<div class="btn-group mb-3 mr-3">
-																<button type="button" class="btn btn-pill btn-kitsunebi dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="zero-ssr text-white"></i>&nbsp;&nbsp;{$trans->t('sagernet')}&nbsp;&nbsp;</button>
-																<ul class="dropdown-menu">
-																	<li><a class="dropdown-item copy-text" href="Javascript:;" data-clipboard-text="{$subInfo["anxray"]}">{$trans->t('copy')}</a></li>
-																	<li><hr class="dropdown-divider"></li>
-																	<li><a class="dropdown-item" href="Javascript:;" onclick="oneclickImport('sagernet', '{$subInfo['anxray']}')">{$trans->t('import')}</a></li>
-																</ul>
-															</div>
+														{/foreach}
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>                                   
 									</div>
-									<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+									<div class="row g-5 g-xl-10 mb-xl-10">
 										<div class="col-xxl-8">
-										<div class="card card-flush">
+											<div class="card card-flush">
 												<div class="card-header">
 													<div class="card-title">
 														<div class="fw-bolder text-dark fs-h3">
@@ -318,7 +257,7 @@
                                                                 <span class="fs-h4 fw-bold me-2 d-block lh-1 pb-2 opacity-75">{$trans->t('ref.gift')}</span>
                                                                 <span class="fs-h2 fw-bolder">{$trans->t('ref.referral')}</span>
                                                             </div>                                                                                              
-                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['appName']}{$config['rebate_ratio'] * 100}%</span>                                               
+                                                            <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['website_name']}{$config['rebate_ratio']}%</span>                                               
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
                                                                 <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
@@ -338,7 +277,7 @@
 						<div class="app_footer py-4 d-flex flex-lg-column" id="kt_app_footer">
 							<div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
 								<div class="text-dark-75 order-2 order-md-1">
-									&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["appName"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
+									&copy;<script>document.write(new Date().getFullYear());</script>,&nbsp;<a>{$config["website_name"]},&nbsp;Inc.&nbsp;All rights reserved.</a>
 								</div>
 							</div>
                     	</div>
@@ -346,28 +285,100 @@
                 </div>
             </div>
         </div>
+		<!-- add credit modal -->
+		<div class="modal fade" id="zero_user_add_credit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content shadow-lg">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle">{$trans->t('add credit')}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="col-form-label fw-bold" for="add_credit_amount">{$trans->t('amount')}:</label>		
+                        <div class="form-group">
+							<div class="input-group" data-kt-dialer="true" data-kt-dialer-min="1"data-kt-dialer-max="50000"data-kt-dialer-step="5">
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="decrease">
+									<i class="ki-duotone ki-minus fs-2"></i>
+								</button>
+								<input type="text" class="form-control"  placeholder="{$trans->t('amount')}" value="5" data-kt-dialer-control="input" id="add_credit_amount"/>
+								<button class="btn btn-icon btn-outline btn-active-color-primary" type="button" data-kt-dialer-control="increase">
+									<i class="ki-duotone ki-plus fs-2"></i>
+								</button>
+							</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$trans->t('discard')}</button>
+                        <button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersCreateOrder(2, '', '')">
+                            <span class="indicator-label">{$trans->t('submit')}</span>			
+                            <span class="indicator-progress">{$trans->t('please wait')}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- subscribe modal -->
+		<div class="modal fade" id="zero_modal_show_subscribe_info" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-sm">
+				<div class="modal-content shadow-lg">
+					<div class="modal-body">
+						<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 copy-text hover-scale" data-clipboard-text="{$subInfo}">复制订阅地址</a>
+						<a class="btn btn-outline btn-active-light-primary d-flex flex-column hover-scale mb-1" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_qrcode">扫描二维码</a>
+						<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=clash')">导入订阅Clash</a>
+						<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=meta')">导入订阅Clash Meta</a>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="zero_modal_show_subscribe_qrcode" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-sm">
+				<div class="modal-content shadow-lg">
+					<div class="modal-body">
+						<div class="mb-3 text-center" id="zero_subscribe_qrcode">
+						</div>
+						<div class="fs-5 text-center text-dark">请用支持的客户端扫码订阅</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- mobile subscribe -->
+		<div class="offcanvas offcanvas-bottom" tabindex="-1" id="zero_canvas_show_subscribe_info">
+			<div class="offcanvas-body">
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 copy-text hover-scale" data-clipboard-text="{$subInfo}">复制订阅地址</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column hover-scale mb-1" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_qrcode">扫描二维码</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('shadowrocket', '{$subInfo}&flag=shadowrocket')">导入订阅Shadowrocket</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surfboard', '{$subInfo}&flag=surfboard')">导入订阅Surfboard</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('sagernet', '{$subInfo}')">导入订阅SagerNet</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('quantumultx', '{$subInfo}')">导入订阅QuantumultX</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surge4', '{$subInfo}')">导入订阅Surge</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=clash')">导入订阅Clash</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=meta')">导入订阅Clash Meta</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('v2rayng', '{$subInfo}&flag=v2rayng')">导入订阅V2rayNG</a>
+			</div>
+		</div>
 		{include file='include/global/scripts.tpl'}
 		{include file='include/index/news.tpl'}
-		<script>countdown('{$user->class_expire}', 'user_class_expired_time')</script>
-		<script>var webName = "{$config['appName']}";</script>
+		<script src="/js/qrcode.min.js"></script>		
 		<script>
-			function zeroUserRenewalProduct() {
-				$.ajax({
-					type: "POST",
-					url: "/user/product/renewal",
-					dataType: "json",
-					data: {},
-					success: function(data){
-						if (data.ret == 1) {
-                            $(location).attr('href', '/user/order/' + data.order_no);
-                        } else {
-                            getResult(data.msg, '', 'error');
-                            //submitButton.removeAttribute('data-kt-indicator');
-                            //submitButton.disabled = false;
-                        }
-					}
-				})
-			}
-		</script>									
+			{if strtotime($user->class_expire) > time()}
+				countdown('{$user->class_expire}', 'user_class_expired_time')
+			{/if}
+			$("#zero_subscribe_qrcode").qrcode({
+				width: 200,
+				height: 200,
+				render: "canvas",
+				text: "{$subInfo}"
+			});
+
+			$(window).on('resize load', function() {
+				const isNarrowScreen = window.screen.width < 500;
+				const targetCanvas = $('[data-bs-target="#zero_canvas_show_subscribe_info"]');
+				const targetModal = $('[data-bs-target="#zero_modal_show_subscribe_info"]');
+			
+				targetCanvas.toggleClass('d-none', !isNarrowScreen);
+				targetModal.toggleClass('d-none', isNarrowScreen);
+			});
+		</script>					
 	</body>
 </html>

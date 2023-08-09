@@ -2,7 +2,7 @@
 <html lang="en" >
     <head>
         <meta charset="utf-8"/>
-        <title>发生错误 &mdash; {$config["appName"]}</title>
+        <title>发生错误 &mdash; {$config["website_name"]}</title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <link href="/theme/zero/css/fonts.css?family=Poppins:300,400,500,600,700" rel="stylesheet" />

@@ -6,7 +6,6 @@ use App\Controllers\UserController;
 use App\Models\{
     Ticket,
     Setting,
-    Ann
 };
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
@@ -19,33 +18,16 @@ class TicketController extends UserController
 {
     public function ticketIndex(ServerRequest $request, Response $response, array $args)
     {
-        $tickets = Ticket::where('userid', $this->user->id)->orderBy('datetime', 'desc')->get();
-        /*
-        foreach ($tickets as $ticket) {
-            $ticket->status = Tools::getTicketStatus($ticket);
-            $ticket->type = Tools::getTicketType($ticket);
-            $ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
-        }*/
-
-        if ($request->getParam('json') === 1) {
-            return $response->withJson([
-                'ret' => 1,
-                'tickets' => $tickets,
-            ]);
-        }
-
         $this->view()
-            ->assign('tickets', $tickets)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/ticket.tpl');
         return $response;
     }
 
     public function createTicket(ServerRequest $request, Response $response, array $args)
     {
-        $title = $request->getParam('title');
-        $comment = $request->getParam('comment');
-        $type = $request->getParam('type');
+        $title   = $request->getParsedBodyParam('title');
+        $comment = $request->getParsedBodyParam('comment');
+        $type    = $request->getParsedBodyParam('type');
         if ($title === '' || $comment === '') {
             return $response->withJson([
                 'ret' => 0,
@@ -64,23 +46,30 @@ class TicketController extends UserController
             ],
         ];
 
-        $ticket = new Ticket();
-        $ticket->title = $antiXss->xss_clean($title);
-        $ticket->content = json_encode($content);
-        $ticket->userid = $this->user->id;
-        $ticket->datetime = time();
-        $ticket->status = 1;
-        $ticket->type = $antiXss->xss_clean($type);
+        $ticket           = new Ticket();
+        $ticket->title    = $antiXss->xss_clean($title);
+        $ticket->content  = json_encode($content);
+        $ticket->userid   = $this->user->id;
+        $ticket->created_at = time();
+        $ticket->updated_at = time();
+        $ticket->status   = 1;
+        $ticket->type     = $antiXss->xss_clean($type);
         $ticket->save();
 
-        if (Setting::obtain('enable_push_ticket_message') == true) {
+        if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
-            $messageText = '用户开启新工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $title . PHP_EOL . '内容：' . $converter->convert($comment);
+            $messageText = sprintf(
+                "有工单需要处理 #%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                $ticket->id,
+                $ticket->userid,
+                $ticket->type,
+                $converter->convert($comment)
+            );
             $keyBoard = [
                 [
                     [
                         'text' => '回复工单 #',
-                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket' 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/view/' . $ticket->id  
                     ]
                 ]
             ];
@@ -98,8 +87,8 @@ class TicketController extends UserController
 
     public function updateTicket(ServerRequest $request, Response $response, array $args)
     {
-        $id = $request->getParam('id');
-        $comment = $request->getParam('comment');
+        $id      = $request->getParsedBodyParam('id');
+        $comment = $request->getParsedBodyParam('comment');
 
         if ($comment === '') {
             return $response->withJson([
@@ -119,31 +108,38 @@ class TicketController extends UserController
         $content_old = json_decode($ticket->content, true);
         $content_new = [
             [
-                'comment_id' => $content_old[count($content_old) - 1]['comment_id'] + 1,
+                'comment_id'      => $content_old[count($content_old) - 1]['comment_id'] + 1,
                 'commenter_email' => $this->user->email,
-                'comment' => $antiXss->xss_clean($comment),
-                'datetime' => time(),
+                'comment'         => $antiXss->xss_clean($comment),
+                'datetime'        => time(),
             ],
         ];
 
         $ticket->content = json_encode(array_merge($content_old, $content_new));
+        $ticket->updated_at = time();
         $ticket->status = 1;
         $ticket->save();
-
-        if (Setting::obtain('enable_push_ticket_message') == true) {
+        if (Setting::obtain('enable_push_ticket_message')) {
             $converter = new HtmlConverter();
-            $messageText = '用户回复工单' . PHP_EOL . '------------------------------' . PHP_EOL . '用户ID:' . $this->user->id . PHP_EOL . '标题：' . $ticket->title . PHP_EOL . '内容：' . $converter->convert($comment);
+            $messageText = sprintf(
+                "有工单需要处理 #%s\n———————————————\n用户ID:%s\n工单类型:%s\n工单内容:%s",
+                $ticket->id,
+                $ticket->userid,
+                $ticket->type,
+                $converter->convert($comment)
+            );
             $keyBoard = [
                 [
                     [
                         'text' => '回复工单 #' . $id,
-                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/update/' . $id 
+                        'url' => Setting::obtain('website_url') . '/' . Setting::obtain('website_admin_path') . '/ticket/view/' . $id 
                     ]
                 ]
             ];
+            
             Telegram::pushToAdmin($messageText, $keyBoard);
+            
         }
-
         return $response->withJson(
             [
                 'ret' => 1,
@@ -154,28 +150,13 @@ class TicketController extends UserController
 
     public function ticketViewIndex(ServerRequest $request, Response $response, array $args)
     {
-        $id = $args['id'];
-        $ticket = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
+        $id       = $args['id'];
+        $ticket   = Ticket::where('id', '=', $id)->where('userid', $this->user->id)->first();
         $comments = json_decode($ticket->content, true);
-
-        //$ticket->status = Tools::getTicketStatus($ticket);
-        //$ticket->type = Tools::getTicketType($ticket);
-        //$ticket->datetime = Tools::toDateTime((int) $ticket->datetime);
-
-        if (is_null($ticket)) {
-            if ($request->getParam('json') === 1) {
-                return $response->withJson([
-                    'ret' => 0,
-                    'msg' => '无访问权限',
-                ]);
-            }
-            return $response->withStatus(302)->withHeader('Location', '/user/ticket');
-        }
 
         $this->view()
             ->assign('ticket', $ticket)
             ->assign('comments', $comments)
-            ->assign('anns', Ann::where('date', '>=', date('Y-m-d H:i:s', time() - 7 * 86400))->orderBy('date', 'desc')->get())
             ->display('user/ticket/view.tpl');
         return $response;  
     }

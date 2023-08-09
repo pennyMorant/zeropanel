@@ -7,20 +7,13 @@ class Coupon extends Model
     protected $connection = 'default';
     protected $table = 'coupon';
 
-    public function order($product_id)
+    public function getLimitedProductPeriod()
     {
-        if ($this->attributes['limited_product'] == '') {
-            return true;
+        $product_period = json_decode($this->limited_product_period, true);
+        $period_string = [];
+        foreach ($product_period as $value) {
+            $period_string[] = $value;
         }
-
-        $product_array = explode(',', $this->attributes['limited_product']);
-
-        foreach ($product_array as $product) {
-            if ($product == $product_id) {
-                return true;
-            }
-        }
-
-        return false;
+        return $period_string;
     }
 }

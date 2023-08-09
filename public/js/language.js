@@ -14,6 +14,7 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'semi annua fee': 'Semi-annua Fee',
             'annual fee': 'Annua Fee',
             'biennial fee': 'Biennial Fee',
+            'onetime fee': 'Onetime Fee',
             'insufficient permissions': 'Insufficient permissions',
             'confirm importing subscription link': 'Confirm importing subscription link?',
             'the value is not a valid email address': 'The value is not a valid email address',
@@ -26,7 +27,8 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'day': 'Day',
             'minute': 'Minute',
             'hour': 'Hour',
-            'second': "Second"
+            'second': "Second",
+            'language': "Language"
           }
         },
         zh: {
@@ -37,6 +39,7 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'semi annua fee': '半年付',
             'annual fee': '年付',
             'biennial fee': '两年付',
+            'onetime fee': '一次性付',
             'insufficient permissions': '权限不足',
             'confirm importing subscription link': '确定导入订阅链接？',
             'the value is not a valid email address': '该值不是有效的电子邮件地址',
@@ -49,8 +52,31 @@ i18next.use(i18nextBrowserLanguageDetector).init({
             'day': '天',
             'minute': '分钟',
             'hour': '小时',
-            'second': "秒"
+            'second': "秒",
+            'language': "语言"
           }
         }
       }
   });
+
+
+var lngHtml = {
+  en: '<span class="menu-title position-relative">Language<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>',
+  zh: '<span class="menu-title position-relative">语言<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">中文(简体)<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/china.svg" alt="" /></span></span>',
+}
+if (getCookie('i18next') == 'zh-CN') {
+  var browserLanguage = lngHtml.zh;
+} else if (getCookie('i18next') == 'en-US') {
+  var browserLanguage = lngHtml.en;
+} else {
+  if (navigator.language == 'zh-CN') {
+    var browserLanguage = lngHtml.zh;
+  } else {
+    var browserLanguage = lngHtml.en;
+  }
+}
+document.getElementById('zero_user_current_language').innerHTML = browserLanguage;
+function changeCurrentLanguage(lng) {
+  document.cookie = "i18next=" + lng;
+  location.reload();
+}

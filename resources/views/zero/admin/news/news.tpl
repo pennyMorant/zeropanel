@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["appName"]} 公告</title>
+        <title>{$config["website_name"]} 公告</title>
         <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
@@ -9,7 +9,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no,email=no" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#3B5598" />
+
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
         <meta http-equiv="pragma" content="no-cache">
@@ -32,7 +32,9 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">公告列表</div>
                                             <div class="card-toolbar">
-												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_news">创建公告</button>
+												<button class="btn btn-primary fw-bold btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#zero_modal_create_news">
+                                                <i class="bi bi-cloud-plus fs-3"></i>创建公告
+                                                </button>
 											</div>
                                         </div>
                                         <div class="card-body">
@@ -67,7 +69,7 @@
                             <h1 class="mb-3">创建公告</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_modal_create_news_ckeditor_classic">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
                             <textarea id="zero_modal_create_news_ckeditor_classic" name="zero_modal_create_news_ckeditor_classic"></textarea>
@@ -127,7 +129,17 @@
         <script>
             var create_news_editors;
             ClassicEditor
-                .create(document.getElementById('zero_modal_create_news_ckeditor_classic'))
+                .create(document.getElementById('zero_modal_create_news_ckeditor_classic'), {
+                    toolbar: [
+                        'heading', 
+                        '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+                        '|',
+                        'outdent', 'indent',
+                        '|',
+                        'undo', 'redo'
+                    ]
+                })
                 .then(editor => {
                     create_news_editors = editor;
                 })
@@ -138,7 +150,17 @@
         <script>
             var update_news_editors;
             ClassicEditor
-                .create(document.getElementById('zero_modal_update_news_ckeditor_classic'))
+                .create(document.getElementById('zero_modal_update_news_ckeditor_classic'), {
+                    toolbar: [
+                        'heading', 
+                        '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+                        '|',
+                        'outdent', 'indent',
+                        '|',
+                        'undo', 'redo'
+                    ]
+                })
                 .then(editor => {
                     update_news_editors = editor;
                 })
