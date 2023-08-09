@@ -33,12 +33,12 @@
                                             <div class="card-title text-dark fs-3 fw-bolder">节点列表</div>
                                             <div class="card-toolbar">
                                                 <div class="d-flex align-items-center position-relative me-2 my-2">
-                                                    <span class="svg-icon svg-icon-1 position-absolute ms-6"> 
+                                                    <span class="svg-icon svg-icon-1 position-absolute ms-3"> 
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                                         </svg>
                                                     </span>
-                                                    <input type="text" data-kt-admin-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers"/>
+                                                    <input type="text" data-kt-admin-table-filter="search" class="form-control form-control-solid w-150px ps-15" placeholder="搜索"/>
                                                 </div>
                                                 <a class="btn btn-primary btn-sm fw-bold" href="node/create">
                                                 <i class="bi bi-cloud-plus fs-3"></i>创建节点
