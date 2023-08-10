@@ -49,7 +49,7 @@ class SingBox
             'method'          => $server['method'],
             'password'        => $server['passwd'],
             'server'          => $server['address'],
-            'server_port'     => $server['port'],
+            'server_port'     => (int)$server['port'],
             'type'            => 'shadowsocks',
         ];
         return $node_info;
