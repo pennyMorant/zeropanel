@@ -127,8 +127,15 @@
   ],
   "route": {
     "auto_detect_interface": true,
+    "override_android_vpn": true,
     "final": "Proxy",
     "rules": [
+      {
+        "geosite": [
+          "category-ads-all"
+        ],
+        "outbound": "ADs"
+      },
       {
         "geoip": [
           "telegram"
@@ -166,10 +173,13 @@
         "outbound": "Proxy"
       },
       {
-        "geosite": [
-          "category-ads-all"
+        "geoip": [
+          "cn"
         ],
-        "outbound": "ADs"
+        "geosite": [
+          "geolocation-cn"
+        ],
+        "outbound": "direct"
       },
       {
         "port": [
