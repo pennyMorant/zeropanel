@@ -45,17 +45,99 @@ class SingBox
         return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
-    public function buildShadowsocks($server)
+    public static function buildShadowsocks($server)
     {
+        $passwd = Node::getShadowsocksSupportMethod($server['method']) ? $server['passwd'] : "{$server['server_psk']}:{$server['passwd']}";
         $node_info = [
             'domain_strategy' => '',
             'tag'             => $server['remark'],
             'method'          => $server['method'],
-            'password'        => $server['passwd'],
+            'password'        => $passwd,
             'server'          => $server['address'],
             'server_port'     => (int)$server['port'],
             'type'            => 'shadowsocks',
         ];
+        return $node_info;
+    }
+
+    public static function buildVmess($server)
+    {
+        $node_info = [
+            'domain_strategy'      => '',
+            'tag'                  => $server['remark'],
+            'server'               => $server['address'],
+            'server_port'          => (int)$server['port'],
+            'uuid'                 => $server['uuid'],
+            'type'                 => 'vmess',
+            'security'             => 'auto',
+            'alter_id'             => 0,
+            'global_padding'       => false,
+            'authenticated_length' => true,
+            'packet_encoding'      => '',
+            'multiplex'            => [
+                'enabled'     => false,
+                'protocol'    => 'smux',
+                'max_streams' => 32,
+            ],
+        ];
+        if ($server['security'] == 'tls') {
+            $tls = [
+                'tls' => [
+                    'enabled'     => true ,
+                    'server_name' => $server['host'],
+                    'insecure'    => true ,
+                    'utls'        => [
+                        'enabled'     => false,
+                        'fingerprint' => 'chrome',
+                    ]
+                ]
+            ];
+            $position = array_search('authenticated_length', array_keys($node_info)) + 1;
+
+            $node_info = array_slice($node_info, 0, $position, true) + $tls + array_slice($node_info, $position, null, true);
+        }
+        if ($server['net'] == 'ws') {
+            $ws = [
+                'transport' => [
+                    'type'    => 'ws',
+                    'path'    => $server['path'],
+                    'headers' => [
+                        'Host' => $server['host'],
+                    ]
+                ]
+            ];
+            $position = array_search('packet_encoding', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $ws + array_slice($node_info, $position, null, true);
+        }
+
+        return $node_info;
+    }
+
+    public static function buildTrojan($server)
+    {
+        $node_info = [
+            'domain_strategy' => '',
+            'tag'             => $server['remark'],
+            'server'          => $server['address'],
+            'server_port'     => (int)$server['port'],
+            'password'        => $server['uuid'],
+            'type'            => 'trojan',
+            'tls'             => [
+                'enabled' => true,
+                'server_name' => $server['sni'],
+                'insecure' => true,
+                'utls' => [
+                    'enabled' => true,
+                    'fingerprint' => 'chrome',
+                ],
+            ],
+            'multiplex' => [
+                'enabled' => false,
+                'protocol' => 'smux',
+                'max_streams' => 32,
+            ],
+        ];
+
         return $node_info;
     }
 }
