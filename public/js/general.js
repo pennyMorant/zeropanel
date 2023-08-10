@@ -607,6 +607,7 @@ function oneclickImport(client, subLink) {
       sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
       quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
       v2rayng: `v2rayng://install-config?url=${encodeURIComponent(subLink)}`,
+      singbox: `sing-box://import-remote-profile?url=${encodeURIComponent(subLink)}#${encodeURIComponent(webName)}`,
     }
 
     Swal.fire({

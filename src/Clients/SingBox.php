@@ -8,7 +8,7 @@ use Sentry\Util\JSON;
 
 class SingBox
 {
-    public $flag = 'singbox';
+    public $flag = 'sing-box';
     private $user;
     private $servers;
 

@@ -347,6 +347,7 @@
 			<div class="offcanvas-body">
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 copy-text hover-scale" data-clipboard-text="{$subInfo}">复制订阅地址</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column hover-scale mb-1" data-bs-toggle="modal" data-bs-target="#zero_modal_show_subscribe_qrcode">扫描二维码</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('singbox', '{$subInfo}&flag=sing-box')">导入订阅V2rayNG</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('shadowrocket', '{$subInfo}&flag=shadowrocket')">导入订阅Shadowrocket</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surfboard', '{$subInfo}&flag=surfboard')">导入订阅Surfboard</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('sagernet', '{$subInfo}')">导入订阅SagerNet</a>
