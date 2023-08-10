@@ -94,7 +94,7 @@
       "tag": "Auto",
       "type": "urltest",
       "outbounds": [
-        "proxies"
+        
       ],
       "url": "https://detectportal.firefox.com/success.txt",
       "interval": "60s",
@@ -169,7 +169,7 @@
         "geosite": [
           "category-ads-all"
         ],
-        "outbound": "Option ADs"
+        "outbound": "ADs"
       },
       {
         "port": [
@@ -191,7 +191,7 @@
         "ip_cidr": [
           "8.8.8.8"
         ],
-        "outbound": "Internet"
+        "outbound": "Proxy"
       },
       {
         "inbound": [

@@ -36,7 +36,11 @@ class SingBox
                 array_push($proxies, $server['remark']);
             }
         }
-        $json['outbounds'][0]['outbounds'] = array_merge($json['outbounds'][0]['outbounds'], $proxies);
+        
+        for ($i = 0; $i < min(5,count($json['outbounds'])); $i++) {
+            $json['outbounds'][$i]['outbounds'] = array_merge($json['outbounds'][$i]['outbounds'] ?? [], $proxies);
+        }
+        //$json['outbounds'][0]['outbounds'] = array_merge($json['outbounds'][0]['outbounds'], $proxies);
         array_splice($json['outbounds'], 6 + 1, 0, $proxy);
         return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
