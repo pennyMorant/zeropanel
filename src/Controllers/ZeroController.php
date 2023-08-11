@@ -359,7 +359,6 @@ class ZeroController extends BaseController
 
                 $data = $query['datas']->map(function($rowData) {
                     return [
-                        'subscribe_type' => $rowData->subscribe_type,
                         'request_ip'     => $rowData->request_ip,
                         'location'       => Tools::getIPLocation($rowData->request_ip),
                         'created_at'     => date('Y-m-d H:i:s', $rowData->created_at),

@@ -86,7 +86,6 @@
                                             <table class="table align-middle table-striped table-row-bordered text-nowrap gy-5 gs-7" id="zero_subscribe_log_table">
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">  
-                                                        <th>{$trans->t('type')}</th>
                                                         <th>IP</th>
                                                         <th>{$trans->t('address')}</th>
                                                         <th>{$trans->t('date')}</th>

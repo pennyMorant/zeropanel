@@ -33,10 +33,8 @@ var KTDatatablesOrderSide = function () {
             ],
             
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -89,10 +87,8 @@ var KTDatatablesTicketSide = function () {
                 { data: 'action'},
             ],
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
             
         });
@@ -143,10 +139,8 @@ var KTDatatablesSigninLogSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -194,10 +188,8 @@ var KTDatatablesUsedLogSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -226,7 +218,7 @@ var KTDatatablesSubscribeLogSide = function () {
             serverSide: true,
             scrollX: true,
             scrollCollapse: true,
-            order: [[3, 'desc']],
+            order: [[2, 'desc']],
             stateSave: true,
             select: {
                 style: 'multi',
@@ -239,24 +231,13 @@ var KTDatatablesSubscribeLogSide = function () {
             },
             
             columns: [
-                { data: 'subscribe_type' },
                 { data: 'request_ip' },
                 { data: 'location'},
                 { data: 'created_at' },
             ],
             columnDefs: [
-                {
-                    targets: 2,
-                    orderable: false,
-                },
-                {
-                    targets: 3,
-                    orderable: false
-                },
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }       
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }   
             ],
         });
 
@@ -304,10 +285,8 @@ var KTDatatablesTrafficLogSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -353,10 +332,8 @@ var KTDatatablesBanRuleSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -403,10 +380,8 @@ var KTDatatablesUserBanedLogSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
@@ -454,10 +429,8 @@ var KTDatatablesUserGetCommissionLogSide = function () {
             ],
 
             columnDefs: [
-                { 
-                    targets: -1, 
-                    className: 'text-end'
-                }
+                { targets: -1, className: 'text-end' },
+                { orderable: false, targets: '_all' }
             ],
         });
 
