@@ -41,7 +41,7 @@
   },
   "experimental": {
     "clash_api": {
-      "cache_file": "../cache/clash.db",
+      "cache_file": "",
       "external_controller": "127.0.0.1:9090",
       "external_ui": "../files/yacd",
       "store_selected": true
