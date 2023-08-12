@@ -22,7 +22,7 @@ class V2rayN
         $user = $this->user;
         $servers = $this->servers;
         $uri = '';
-        
+
         foreach ($servers as $server) {
             $buildMethod = 'build' . ucfirst($server['type']);
             if (method_exists($this, $buildMethod)) {
@@ -35,8 +35,8 @@ class V2rayN
     public static function buildShadowsocks($server)
     {
         $ip_type = Tools::isIP($server['address']);
-        $address = ($ip_type === 'v6' ? '[%s]' : '%s');              
-        if (Node::getShadowsocksSupportMethod($server['method'])) {                   
+        $address = ($ip_type === 'v6' ? '[%s]' : '%s');
+        if (Node::getShadowsocksSupportMethod($server['method'])) {
             $url = sprintf(
                 "ss://%s@{$address}:%d#%s\n",
                 base64_encode($server['method'] . ':' . $server['passwd']),
@@ -83,10 +83,13 @@ class V2rayN
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $url = sprintf(
-            "vless://%s@{$address}:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
+            "vless://%s@{$address}:%d?encryption=none&pbk=%s&sid=%s&fp=%s&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
             $server['uuid'],
             $server['address'],
             $server['port'],
+            $server['pbk'],
+            $server['sid'],
+            $server['fp'],
             $server['host'],
             $server['path'],
             $server['flow'],
@@ -98,7 +101,7 @@ class V2rayN
             rawurlencode($server['remark'])
         );
         return $url;
-        
+
     }
 
     public static function buildTrojan($server)

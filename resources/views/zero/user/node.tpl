@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>{$config["website_name"]} Node</title>
-        
+
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />
@@ -22,7 +22,7 @@
         <link href="/favicon.png" rel="shortcut icon">
         <link href="/apple-touch-icon.png" rel="apple-touch-icon">
     </head>
-    {include file ='include/index/menu.tpl'}                
+    {include file ='include/index/menu.tpl'}
 					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 						<div class="d-flex flex-column flex-column-fluid mt-10">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -37,17 +37,17 @@
                                                         {/foreach}
                                                     </div>
                                                 {else}
-                                                    <span class="fw-bold fs-3 text-center">对不起，系统中没有任何节点</span>     
+                                                    <span class="fw-bold fs-3 text-center">对不起，系统中没有任何节点</span>
                                                 {/if}
 												<div class="tab-content">
                                                     {foreach $class as $grade}
 													<div class="tab-pane fade show {if $grade['node_class'] == $min_node_class}active show{/if}" id="node_show_{$grade['node_class']}">
 														<div class="row g-10">
-                                                            {foreach $servers as $server} 
-                                                            {if $server->node_class == $grade['node_class']}                     
+                                                            {foreach $servers as $server}
+                                                            {if $server->node_class == $grade['node_class']}
 															<div class="col-xl-4">
 																<div class="d-flex h-100 align-items-center flex-wrap" type="button" onclick="KTUsersShowNodeInfo({$server->id}, {$user->class}, {$server->node_class})">
-																	<div class="w-100 rounded-3 bg-light bg-opacity-75 px-10 py-5 d-flex flex-wrap">                                                      
+																	<div class="w-100 rounded-3 bg-light bg-opacity-75 px-10 py-5 d-flex flex-wrap">
                                                                         <div class="d-flex flex-column flex-grow-1">
                                                                             <img alt="image" class="rounded-circle" width="35"
                                                                                 src="/theme/zero/assets/media/flags/{$server->node_flag}.svg">
@@ -55,7 +55,7 @@
                                                                         <div class="fw-bold fs-5">
                                                                             {$server->name}
                                                                         </div>
-                                                                        
+
 																	</div>
 																</div>
 															</div>
@@ -65,7 +65,7 @@
 													</div>
                                                     {/foreach}
 												</div>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -103,10 +103,10 @@
                         </nav>
                         <div class="tab-content m-0 p-0">
                             <div class="tab-pane fade active show" id="zero_modal_tab_vmess_qrcode">
-                                
+
                                     <div class="text-center pt-10" id="zero_modal_vmess_node_info_qrcode">
                                     </div>
-                                
+
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_vmess_config">
 								<div class="pt-10 pl-10 ms-10 text-start fs-4">
@@ -151,10 +151,10 @@
                         </nav>
                         <div class="tab-content m-0 p-0">
                             <div class="tab-pane fade active show" id="zero_modal_tab_vless_qrcode">
-                                
+
                                     <div class="text-center pt-10" id="zero_modal_vless_node_info_qrcode">
                                     </div>
-                                
+
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_vless_config">
 								<div class="pt-10 pl-10 ms-10 text-start fs-4">
@@ -170,6 +170,9 @@
                                     <p>{$trans->t('security')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_security"></span></p>
                                     <p>{$trans->t('flow')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_flow"></span></p>
                                     <p>{$trans->t('sni')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_sni"></span></p>
+                                    <p>{$trans->t('public_key')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_pbk"></span></p>
+                                    <p>{$trans->t('short_id')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_sid"></span></p>
+                                    <p>{$trans->t('fingerprint')}: <span class="badge badge-secondary badge-lg" id="zero_modal_vless_node_info_fp"></span></p>
                                 </div>
                             </div>
                         </div>
@@ -200,10 +203,10 @@
                         </nav>
                         <div class="tab-content m-0 p-0">
                             <div class="tab-pane fade active show" id="zero_modal_tab_shadowsocks_qrcode">
-                                
+
                                     <div class="text-center pt-10" id="zero_modal_shadowsocks_node_info_qrcode">
                                     </div>
-                                
+
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_shadowsocks_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
@@ -243,10 +246,10 @@
                         </nav>
                         <div class="tab-content m-0 p-0">
                             <div class="tab-pane fade active show" id="zero_modal_tab_trojan_qrcode">
-                                
+
                                     <div class="text-center pt-10" id="zero_modal_trojan_node_info_qrcode">
                                     </div>
-                                
+
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_trojan_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
@@ -286,10 +289,10 @@
                         </nav>
                         <div class="tab-content m-0 p-0">
                             <div class="tab-pane fade active show" id="zero_modal_tab_hysteria_qrcode">
-                                
+
                                 <div class="text-center pt-10" id="zero_modal_hysteria_node_info_qrcode">
                                 </div>
-                                
+
                             </div>
                             <div class="tab-pane fade show" id="zero_modal_tab_hysteria_config">
                                 <div class="pt-10 pl-10 ms-10 text-start fs-4">
@@ -318,6 +321,5 @@
         <script src="/js/qrcode.min.js"></script>
     </body>
 </html>
-                                            
-                                                            
-                                                                    
+
+
