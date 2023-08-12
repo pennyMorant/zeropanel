@@ -85,6 +85,13 @@
       ]
     },
     {
+      "tag": "Youtube",
+      "type": "selector",
+      "outbounds": [
+        "Proxy"
+      ]
+    },
+    {
       "tag": "Twitter",
       "type": "selector",
       "outbounds": [
@@ -155,6 +162,12 @@
           ],
           "outbound": "Twitter"
       },
+      {
+        "geosite": [
+          "youtube"
+        ],
+        "outbound": "Youtube"
+    },
       {
           "geoip": [
             "google"

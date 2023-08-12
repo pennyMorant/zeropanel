@@ -37,7 +37,7 @@ class SingBox
             }
         }
         
-        for ($i = 0; $i < min(5,count($json['outbounds'])); $i++) {
+        for ($i = 0; $i < min(6,count($json['outbounds'])); $i++) {
             $json['outbounds'][$i]['outbounds'] = array_merge($json['outbounds'][$i]['outbounds'] ?? [], $proxies);
         }
         //$json['outbounds'][0]['outbounds'] = array_merge($json['outbounds'][0]['outbounds'], $proxies);
