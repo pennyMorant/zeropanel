@@ -175,7 +175,7 @@ class Node extends Model
         $config['class']       = $this->node_class;
         $config['address']     = $this->server;
         $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
-        $config['aid']         = $custom_configs['alter_id'];
+        $config['aid']         = 0;
         $config['net']         = $custom_configs['network'];
         $config['security']    = $custom_configs['security'] ?? '';
         $config['flow']        = $custom_configs['flow'] ?? '';
@@ -184,7 +184,8 @@ class Node extends Model
         $config['sni']         = $custom_configs['host'] ?? '';
         $config['pbk']         = $custom_configs['public_key'] ?? '';
         $config['sid']         = $custom_configs['short_id'] ?? '';
-        $config['fp']         = $custom_configs['fingerprint'] ?? '';
+        $config['fp']          = $custom_configs['fingerprint'] ?? '';
+        $config['servername']  = $custom_configs['server_name'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
