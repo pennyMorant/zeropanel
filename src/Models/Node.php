@@ -81,7 +81,7 @@ class Node extends Model
         }
         return $log->online_user;
     }
-    
+
     /**
      * 节点是在线的
      */
@@ -182,6 +182,9 @@ class Node extends Model
         $config['path']        = $custom_configs['path'] ?? '';
         $config['host']        = $custom_configs['host'] ?? '';
         $config['sni']         = $custom_configs['host'] ?? '';
+        $config['pbk']         = $custom_configs['public_key'] ?? '';
+        $config['sid']         = $custom_configs['short_id'] ?? '';
+        $config['fp']         = $custom_configs['fingerprint'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
@@ -208,7 +211,7 @@ class Node extends Model
         } else {
             $config['net'] = 'tcp';
         }
-        
+
         return $config;
     }
 

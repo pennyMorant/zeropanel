@@ -18,7 +18,7 @@ function countdown(date, dom) {
             const countdown = `${days}${i18next.t('day')} ${hours}:${minutes}:${seconds}`;
             document.getElementById(dom).innerHTML = countdown;
         }
-    } 
+    }
     // 初始状态
     updateTimer();
     // 开启计时器
@@ -69,7 +69,7 @@ clipboard.on('success', function(e) {
     getResult(i18next.t('copy success'), "", "success");
 });
 
-// get result 
+// get result
 function getResult(titles, texts, icons) {
     Swal.fire({
         title: titles,
@@ -113,7 +113,7 @@ function getLoad() {
     });
 }
 
-// show configure product modal 
+// show configure product modal
 function kTUserConfigureProductModal(id) {
     const checkOutButton = document.querySelector(`[data-kt-users-action="check-out-${id}"]`);
     checkOutButton.setAttribute('data-kt-indicator', 'on');
@@ -189,9 +189,9 @@ function kTUserConfigureProductModal(id) {
                     all_prices.onetime_price
                 ].filter(v => v.value !== null && typeof v.value !== 'undefined' && !isNaN(v.value));
                 minPrice = prices.length > 0 ? prices.reduce((acc, curr) => curr.value < acc.value ? curr : acc, prices[0]) : null;
-                
+
                 console.log(minPrice);
-                
+
                 Object.entries(all_prices).forEach(([key, { label, value }]) => {
                     if (value) {
                     $('#zero_modal_configure_product_' + key).html(`<a class="btn btn-outline btn-active-light-primary" data-bs-toggle="pill">${label}</a>`);
@@ -201,7 +201,7 @@ function kTUserConfigureProductModal(id) {
                     }
                     }
                 });
-                modalCoupon.attr('onclick', `KTUserVerifyCoupon("${minPrice.value.toFixed(2)}", ${id})`);      
+                modalCoupon.attr('onclick', `KTUserVerifyCoupon("${minPrice.value.toFixed(2)}", ${id})`);
             }
 
             modalInnerHtml.html(html);
@@ -216,7 +216,7 @@ function kTUserConfigureProductModal(id) {
             checkOutButton.disabled = false;
         });
     }, 2000)
-    
+
 }
 
 function KTUsersChangePlan(price, id, type) {
@@ -341,7 +341,7 @@ function KTUsersPayOrder(order_no) {
     submitButton.disabled = true;
     let payment_id = $("#payment_method a.active").attr("data-payment-id");
     let orderNo = order_no;
-    
+
     setTimeout(() => {
         $.ajax({
             type: "POST",
@@ -372,7 +372,7 @@ function KTUsersPayOrder(order_no) {
                 }
             }
         });
-    }, 2000)  
+    }, 2000)
 }
 
 // ticket
@@ -431,7 +431,7 @@ function KTUsersTicket(type, id, status) {
     }
 }
 
-// show node 
+// show node
 function KTUsersShowNodeInfo(id, userclass, nodeclass) {
     nodeid = id;
     usersclass = userclass;
@@ -449,7 +449,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                     const qrcodeHtml = `<div class="pb-3" align="center" id="qrcode_${nodeid}"></div>`;
                     var content = data.url;
                     switch (data.type) {
-                        case 2:                           
+                        case 2:
                             // 循环设置HTML内容
                             const selectors_vmess = {
                                 '#zero_modal_vmess_node_info_remark': 'remark',
@@ -460,21 +460,21 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_vmess_node_info_net': 'net',
                                 '#zero_modal_vmess_node_info_path': 'path',
                                 '#zero_modal_vmess_node_info_host': 'host',
-                                '#zero_modal_vmess_node_info_servicename': 'servicename', 
+                                '#zero_modal_vmess_node_info_servicename': 'servicename',
                                 '#zero_modal_vmess_node_info_type': 'type',
                                 '#zero_modal_vmess_node_info_security': 'security'
                             }
-                            
+
                             for (let selector in selectors_vmess) {
                                 $(selector).html(info[selectors_vmess[selector]]);
                               }
                             // 生成QRCode
-                            $('#zero_modal_vmess_node_info_qrcode').html(qrcodeHtml);                           
-                            $("#zero_modal_vmess_node_info").modal('show'); 
+                            $('#zero_modal_vmess_node_info_qrcode').html(qrcodeHtml);
+                            $("#zero_modal_vmess_node_info").modal('show');
                             break;
                         case 4:
                             const selectors_trojan = {
-                                '#zero_modal_trojan_node_info_remark': 'remark', 
+                                '#zero_modal_trojan_node_info_remark': 'remark',
                                 '#zero_modal_trojan_node_info_address': 'address',
                                 '#zero_modal_trojan_node_info_port': 'port',
                                 '#zero_modal_trojan_node_info_uuid': 'uuid',
@@ -482,7 +482,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_trojan_node_info_security': 'security',
                                 '#zero_modal_trojan_node_info_flow': 'flow',
                             };
-                            
+
                             for (let selector in selectors_trojan) {
                                 $(selector).html(info[selectors_trojan[selector]]);
                               }
@@ -503,8 +503,11 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                                 '#zero_modal_vless_node_info_security': 'security',
                                 '#zero_modal_vless_node_info_flow': 'flow',
                                 '#zero_modal_vless_node_info_sni': 'sni',
+                                '#zero_modal_vless_node_info_pbk': 'pbk',
+                                '#zero_modal_vless_node_info_sid': 'sid',
+                                '#zero_modal_vless_node_info_fp':'fp',
                               }
-                              
+
                             for (let selector in selectors_vless) {
                             $(selector).html(info[selectors_vless[selector]]);
                             }
@@ -555,9 +558,9 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
                         render: "canvas",
                         text: content
                     });
-                    
+
                     Swal.close();
-				} else {                   
+				} else {
 					getResult(data.msg, "", "error");
 				}
 			}
@@ -567,7 +570,7 @@ function KTUsersShowNodeInfo(id, userclass, nodeclass) {
     }
 }
 
-// withdraw 
+// withdraw
 function KTUsersWithdrawCommission(type){
     switch (type) {
         case 1:
@@ -592,7 +595,7 @@ function KTUsersWithdrawCommission(type){
 
 //import sub url
 function oneclickImport(client, subLink) {
-   
+
     quanx_config = {
         "server_remote": [
             `${subLink}, tag=${webName}`
