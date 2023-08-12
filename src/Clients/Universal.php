@@ -83,7 +83,7 @@ class Universal
         $ip_type = Tools::isIP($server['address']);
         $address = ($ip_type === 'v6' ? '[%s]' : '%s');
         $url = sprintf(
-            "vless://%s@{$address}:%d?encryption=auto&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
+            "vless://%s@{$address}:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s\n",
             $server['uuid'],
             $server['address'],
             $server['port'],

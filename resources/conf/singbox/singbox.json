@@ -1,0 +1,232 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "rules": [
+      {
+        "domain_suffix": [
+          ".arpa.",
+          ".arpa"
+        ],
+        "server": "dns-block"
+      }
+    ],
+    "servers": [
+      {
+        "address": "https://8.8.8.8/dns-query",
+        "address_resolver": "dns-direct",
+        "strategy": "prefer_ipv6",
+        "tag": "dns-remote"
+      },
+      {
+        "address": "https://223.5.5.5/dns-query",
+        "address_resolver": "dns-local",
+        "detour": "direct",
+        "strategy": "prefer_ipv6",
+        "tag": "dns-direct"
+      },
+      {
+        "address": "local",
+        "detour": "direct",
+        "tag": "dns-local"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "dns-block"
+      }
+    ]
+  },
+  "experimental": {
+    "clash_api": {
+      "cache_file": "",
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "../files/yacd",
+      "store_selected": true
+    }
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "mtu": 1358,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "gvisor",
+      "endpoint_independent_nat": true,
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "Proxy",
+      "type": "selector",
+      "outbounds": [
+        "Auto"
+      ]
+    },
+    {
+      "tag": "Telegram",
+      "type": "selector",
+      "outbounds": [
+        "Proxy"
+      ]
+    },
+    {
+      "tag": "Google",
+      "type": "selector",
+      "outbounds": [
+        "Proxy"
+      ]
+    },
+    {
+      "tag": "Twitter",
+      "type": "selector",
+      "outbounds": [
+        "Proxy"
+      ]
+    },
+    {
+      "tag": "Auto",
+      "type": "urltest",
+      "outbounds": [
+        
+      ],
+      "url": "https://detectportal.firefox.com/success.txt",
+      "interval": "60s",
+      "tolerance": 0
+    },
+    {
+      "tag": "ADs",
+      "type": "selector",
+      "outbounds": [
+        "block",
+        "Proxy"
+      ]
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "bypass",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "override_android_vpn": true,
+    "final": "Proxy",
+    "rules": [
+      {
+        "geosite": [
+          "category-ads-all"
+        ],
+        "outbound": "ADs"
+      },
+      {
+        "geoip": [
+          "telegram"
+        ],
+        "geosite": [
+          "telegram"
+        ],
+        "outbound": "Telegram"
+      },
+      {
+          "geoip": [
+            "twitter"
+          ],
+          "geosite": [
+            "twitter"
+          ],
+          "outbound": "Twitter"
+      },
+      {
+          "geoip": [
+            "google"
+          ],
+          "geosite": [
+            "google"
+          ],
+          "outbound": "Google"
+      },
+      {
+        "geoip": [
+          "!cn"
+        ],
+        "geosite": [
+          "geolocation-!cn"
+        ],
+        "outbound": "Proxy"
+      },
+      {
+        "geoip": [
+          "cn"
+        ],
+        "geosite": [
+          "geolocation-cn"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "port": [
+          3478,
+          4244,
+          5222,
+          5223,
+          5242,
+          45395,
+          50318,
+          59234
+        ],
+        "geoip": [
+          "facebook"
+        ],
+        "outbound": "bypass"
+      },
+      {
+        "ip_cidr": [
+          "8.8.8.8"
+        ],
+        "outbound": "Proxy"
+      },
+      {
+        "inbound": [
+          "dns-in"
+        ],
+        "outbound": "dns-out"
+      },
+      {
+        "outbound": "dns-out",
+        "port": [
+          53
+        ]
+      },
+      {
+        "ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ],
+        "outbound": "block",
+        "source_ip_cidr": [
+          "224.0.0.0/3",
+          "ff00::/8"
+        ]
+      }
+    ]
+  }
+}

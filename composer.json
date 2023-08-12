@@ -22,7 +22,7 @@
         "slim/http": "*",
         "guzzlehttp/guzzle": "*",
         "guzzlehttp/psr7": "*",
-        "smarty/smarty": "dev-master",
+        "smarty/smarty": "*",
         "symfony/yaml": "6.1.*@dev",
         "voku/anti-xss": "*",
         "zeuxisoo/slim-whoops": "0.7.*",

@@ -19,8 +19,7 @@
         <link href="/theme/zero/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
         <link href="/theme/zero/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
         <link href="/theme/zero/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-        <link href="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
-        <script src="https://cdn.jsdelivr.net/npm/jsoneditor/dist/jsoneditor.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css" rel="stylesheet" type="text/css">
         <link href="/favicon.png" rel="shortcut icon">
         <link href="/apple-touch-icon.png" rel="apple-touch-icon">
     </head>
@@ -121,6 +120,7 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
         <script>
             const container = document.getElementById('custom_config');
             var options = {
