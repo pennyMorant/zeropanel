@@ -603,14 +603,13 @@ function oneclickImport(client, subLink) {
     }
     var sublink = {
       surfboard: `surfboard:///install-config?url=${encodeURIComponent(subLink)}`,
-      quantumult: `quantumult://configuration?server=${btoa(subLink).replace(/=/g, '')}&filter=YUhSMGNITTZMeTl0ZVM1dmMyOWxZMjh1ZUhsNkwzSjFiR1Z6TDNGMVlXNTBkVzExYkhRdVkyOXVaZw`,
       shadowrocket: `shadowrocket://add/sub://${btoa(subLink)}`,
       surge4: `surge4:///install-config?url=${encodeURIComponent(subLink)}`,
       clash: `clash://install-config?url=${encodeURIComponent(subLink)}`,
       sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
       quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
       v2rayng: `v2rayng://install-config?url=${encodeURIComponent(subLink)}`,
-      singbox: `sing-box://import-remote-profile?url=${encodeURI(subLink)}#${encodeURI(webName)}`,
+      singbox: `sing-box://import-remote-profile?url=${encodeURIComponent(subLink)}`,
     }
 
     Swal.fire({
