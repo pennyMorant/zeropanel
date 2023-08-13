@@ -53,13 +53,13 @@ class Node extends Model
                 $type = 'Shadowsocks';
                 break;
             case 2:
-                $type = 'VMESS';
+                $type = 'Vmess';
                 break;
             case 4:
-                $type = 'TROJAN';
+                $type = 'Trojan';
                 break;
             case 3:
-                $type = 'VLESS';
+                $type = 'Vless';
                 break;
             case 5:
                 $type = 'Hysteria';

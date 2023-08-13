@@ -62,7 +62,7 @@ class NodeController extends BaseController
             'node_class'      => $node->node_class,
             'node_speedlimit' => $node->node_speedlimit,
             'traffic_rate'    => $node->traffic_rate,
-            'sort'            => $node->node_type,
+            'node_type'       => $node->nodeType(),
             'server'          => $node_server,
             'custom_config'   => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
         ];
