@@ -70,7 +70,7 @@ class URL
         $node_config = $node->getVlessConfig($user, $node->custom_config, $emoji);
 
         $url= sprintf(
-            'vmess://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
+            'vless://%s@%s:%d?encryption=none&host=%s&path=%s&flow=%s&security=%s&sni=%s&serviceName=%s&headerType=%s&type=%s#%s',
             $node_config['uuid'],
             $node_config['address'],
             $node_config['port'],
