@@ -65,8 +65,6 @@ class NodeController extends BaseController
             'sort'            => $node->node_type,
             'server'          => $node_server,
             'custom_config'   => json_decode($node->custom_config, true, JSON_UNESCAPED_SLASHES),
-            'type'            => 'SSPanel-UIM',
-            'version'         => '2023-3-1'
         ];
 
         return $response->withJson([
