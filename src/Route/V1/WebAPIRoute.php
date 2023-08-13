@@ -9,7 +9,7 @@ use App\Controllers\WebAPI\UserController;
 use App\Controllers\WebAPI\FuncController;
 
 return function (App $app) {
-    $app->group('/mod_mu', function (Group $group) {
+    $app->group('/api/v1/server', function (Group $group) {
         $group->get('/nodes/{id}/info',      NodeController::class . ':getInfo');
         $group->get('/users',                UserController::class . ':index');
         $group->post('/users/traffic',       UserController::class . ':addTraffic');
