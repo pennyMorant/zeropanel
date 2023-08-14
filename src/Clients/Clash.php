@@ -101,7 +101,7 @@ class Clash
 
     public static function buildVmess($server)
     {
-        $ws = $server['net'] == 'ws' ? 'ws' : '';
+        //$ws = $server['net'] == 'ws' ? 'ws' : '';
         $tls = $server['security'] == 'tls' ? true : false;
         $node_info = [
             'name'             => $server['remark'],
@@ -113,7 +113,7 @@ class Clash
             'cipher'           => 'auto',
             'udp'              => true,
             'servername'       => $server['host'],
-            'network'          => $ws,
+            'network'          => $server['net'],
             'tls'              => $tls,
             'skip-cert-verify' => true,
             'ws-opts'          => [

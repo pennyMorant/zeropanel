@@ -93,7 +93,6 @@ class ClashMeta
 
     public static function buildVmess($server)
     {
-        $ws = $server['net'] == 'ws' ? 'ws' : '';
         $tls = $server['security'] == 'tls' ? true : false;
         $node_info = [
             'name'             => $server['remark'],
@@ -105,7 +104,7 @@ class ClashMeta
             'cipher'           => 'auto',
             'udp'              => true,
             'servername'       => $server['host'],
-            'network'          => $ws,
+            'network'          => $server['net'],
             'tls'              => $tls,
             'skip-cert-verify' => true,
             'ws-opts'          => [
@@ -117,6 +116,32 @@ class ClashMeta
             'grpc-opts' =>  [
                 'grpc-service-name' => $server['servicename'],
             ]
+        ];
+
+        return $node_info;
+    }
+
+    public static function buildVless($server)
+    {
+        $node_info = [
+            'name'  => $server['remark'],
+            'type'  => 'vless',
+            'server'    => $server['address'],
+            'port'  => $server['port'],
+            'uuid'  => $server['uuid'],
+            'network' => $server['net'],
+            'tls'   => true,
+            'udp'   => true,
+            'flow'  => $server['flow'],
+            'servername'    => $server['host'],
+            'grpc-opts' => [
+                'grpc-service-name' => $server['servicename'],
+            ],
+            'reality-opts'  => [
+                'public-key'    => $server['pbk'],
+                'short-id'  =>  $server['sid'],
+            ],
+            'client-fingerprint'    =>  $server['fp'],
         ];
 
         return $node_info;
@@ -136,6 +161,8 @@ class ClashMeta
 
         return $node_info;
     }
+
+    //public static function buildHysteria($server)
 
     private function isMatch($exp, $str)
     {
