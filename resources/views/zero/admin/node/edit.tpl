@@ -156,7 +156,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-content">
+                        <div class="tab-content" id="zero_modal_use_selected_template">
                             <div class="tab-pane fade show active" id="ss" role="tabpanel">
                                 <pre>
 {
@@ -239,6 +239,12 @@
             };
             const editor = new JSONEditor(container, options);
             editor.set({$node->custom_config})
+
+            $('#zero_modal_use_selected_template').on('click', function(){
+                const template = $('#zero_modal_node_template_content div.active pre').html();
+                const jsonObj = JSON.parse(template);
+                editor.set(jsonObj);
+            })
         </script>
         <script>
             function zeroAdminUpdateNode(id) {
