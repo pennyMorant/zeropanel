@@ -32,6 +32,7 @@
                                         <div class="card-header card-flush">
                                             <div class="card-title fw-bolder">节点配置</div>
                                             <div class="card-toolbar">
+                                                <button class="btn btn-sm btn-primary fw-bold me-3" data-bs-toggle="modal" data-bs-target="#zero_modal_node_config_template">配置模板</button>
                                                 <button class="btn btn-sm btn-primary fw-bold" onclick="zeroAdminCreateNode()">
                                                 <i class="bi bi-cloud-plus fs-3"></i>创建节点
                                                 </button>
@@ -115,6 +116,111 @@
                             </div>
                         </div>
                         {include file='admin/footer.tpl'}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+        <div class="modal fade" id="zero_modal_node_config_template" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded">
+                    <div class="modal-header justify-content-end border-0 pb-0">
+                    </div>
+                    <div class="modal-body scroll-y pt-0 pb-5 px-5">
+                        <div class="mb-5 text-center">
+                            <h1 class="mb-3">配置模板</h1>
+                        </div>
+                        <div class="mb-5 hover-scroll-x">
+                            <div class="d-grid">
+                                <ul class="nav nav-tabs flex-nowrap text-nowrap" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0 active" id="ss_tab" data-bs-toggle="tab" data-bs-target="#ss">SS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#vmess_tcp">vmess+tcp</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#vmess_ws">vmess+ws</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#vmess_tcp_tls">vmess+tcp+tls</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#vless_tcp_reality">vless+tcp+reality</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#trojan">trojan</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="ss" role="tabpanel">
+                                <pre>
+{
+    "mu_encryption": "aes-256-gcm",
+    "offset_port_user": "30011",
+    "offset_port_node": "30011"
+}
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="vmess_tcp" role="tabpanel">
+                                <pre>
+{
+    "offset_port_user": "20022",
+    "offset_port_node": "20022",
+    "network": "tcp"
+}                              
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="vmess_ws" role="tabpanel">
+                                <pre>
+{
+    "offset_port_user": "20022",
+    "offset_port_node": "20022",
+    "network": "ws",
+    "host": "microsoft.com",
+    "path": "/ufdsl900"
+}                             
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="vmess_tcp_tls" role="tabpanel">
+                                <pre>
+{
+    "offset_port_user": "443",
+    "offset_port_node": "443",
+    "network": "tcp",
+    "security": "tls",
+    "host": "bing.com"
+}                           
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="vless_tcp_reality" role="tabpanel">
+                                <pre>
+{
+    "offset_port_user": "20022",
+    "offset_port_node": "20022",
+    "network": "tcp",
+    "fingerprint": "chrome",
+    "public_key": "p7F0X8cKdzexJuVxh4Pv5_VhUwOk-Y6YqFjpsalGvBc",
+    "security": "reality",
+    "host": "bing.com",
+    "flow": "xtls-rprx-vision"
+}                         
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="trojan" role="tabpanel">
+                                <pre>
+{
+    "offset_port_user": "443",
+    "offset_port_node": "443",
+    "host": "bing.com",
+    "security": "tls"
+}                           
+                                </pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
