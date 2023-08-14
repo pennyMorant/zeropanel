@@ -185,7 +185,6 @@ class Node extends Model
         $config['pbk']         = $custom_configs['public_key'] ?? '';
         $config['sid']         = $custom_configs['short_id'] ?? '';
         $config['fp']          = $custom_configs['fingerprint'] ?? '';
-        $config['servername']  = $custom_configs['server_name'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';

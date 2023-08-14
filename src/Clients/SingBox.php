@@ -110,6 +110,87 @@ class SingBox
             $node_info = array_slice($node_info, 0, $position, true) + $ws + array_slice($node_info, $position, null, true);
         }
 
+        if ($server['net'] == 'grpc') {
+            $grpc = [
+                'type'  => 'grpc',
+                'service_name' => $server['servicename'],
+                'idle_timeout' => '15s',
+                'ping_timeout' => '15s',
+                'permit_without_stream' => false,
+            ];
+            $position = array_search('packet_encoding', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
+        }
+
+        return $node_info;
+    }
+
+    public static function buildVless($server)
+    {
+        $node_info = [
+            'domain_strategy'      => '',
+            'tag'                  => $server['remark'],
+            'server'               => $server['address'],
+            'server_port'          => (int)$server['port'],
+            'uuid'                 => $server['uuid'],
+            'type'                 => 'vless',
+            'flow'                 => $server['flow'],       
+            'packet_encoding'      => 'xudp',
+            'multiplex'            => [
+                'enabled'     => false,
+                'protocol'    => 'smux',
+                'max_streams' => 32,
+            ],
+        ];
+        if ($server['security'] == 'reality') {
+            $tls = [
+                'tls' => [
+                    'enabled'     => true ,
+                    'server_name' => $server['host'],
+                    'insecure'    => true ,
+                    'utls'        => [
+                        'enabled'     => true,
+                        'fingerprint' => $server['fp'],
+                    ],
+                    'reality' => [
+                        'enabled' => true,
+                        'public_key' => $server['pbk'],
+                        'short_id' => $server['sid'],
+                    ]
+                    
+                ]
+            ];
+            $position = array_search('flow', array_keys($node_info)) + 1;
+
+            $node_info = array_slice($node_info, 0, $position, true) + $tls + array_slice($node_info, $position, null, true);
+        }
+
+        if ($server['net'] == 'ws') {
+            $ws = [
+                'transport' => [
+                    'type'    => 'ws',
+                    'path'    => $server['path'],
+                    'headers' => [
+                        'Host' => $server['host'],
+                    ]
+                ]
+            ];
+            $position = array_search('packet_encoding', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $ws + array_slice($node_info, $position, null, true);
+        }
+
+        if ($server['net'] == 'grpc') {
+            $grpc = [
+                'type'  => 'grpc',
+                'service_name' => $server['servicename'],
+                'idle_timeout' => '15s',
+                'ping_timeout' => '15s',
+                'permit_without_stream' => false,
+            ];
+            $position = array_search('packet_encoding', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
+        }
+
         return $node_info;
     }
 
@@ -127,7 +208,7 @@ class SingBox
                 'server_name' => $server['sni'],
                 'insecure' => true,
                 'utls' => [
-                    'enabled' => true,
+                    'enabled' => false,
                     'fingerprint' => 'chrome',
                 ],
             ],
@@ -137,6 +218,32 @@ class SingBox
                 'max_streams' => 32,
             ],
         ];
+
+        if ($server['net'] == 'grpc') {
+            $grpc = [
+                'type'  => 'grpc',
+                'service_name' => $server['servicename'],
+                'idle_timeout' => '15s',
+                'ping_timeout' => '15s',
+                'permit_without_stream' => false,
+            ];
+            $position = array_search('tls', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
+        }
+
+        if ($server['net'] == 'ws') {
+            $ws = [
+                'transport' => [
+                    'type'    => 'ws',
+                    'path'    => $server['path'],
+                    'headers' => [
+                        'Host' => $server['host'],
+                    ]
+                ]
+            ];
+            $position = array_search('tls', array_keys($node_info)) + 1;
+            $node_info = array_slice($node_info, 0, $position, true) + $ws + array_slice($node_info, $position, null, true);
+        }
 
         return $node_info;
     }
