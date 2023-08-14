@@ -205,12 +205,7 @@ class Node extends Model
         $config['sni']      = $custom_configs['host'] ?? '';
         $config['security'] = $custom_configs['security'] ?? 'tls';
         $config['flow']     = $custom_configs['flow'] ?? '';
-        if (isset($config['grpc']) == 1) {
-            $config['net']         = 'grpc';
-            $config['servicename'] = $custom_configs['servicename'] ?? '';
-        } else {
-            $config['net'] = 'tcp';
-        }
+        $config['net']      = $custom_configs['network'] ?? '';
 
         return $config;
     }

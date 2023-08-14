@@ -125,10 +125,11 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content rounded">
                     <div class="modal-header justify-content-end border-0 pb-0">
+                        <a class="btn btn-sm btn-light-primary" id="zero_modal_use_selected_template">使用此模板</a>
                     </div>
                     <div class="modal-body scroll-y pt-0 pb-5 px-5">
                         <div class="mb-5 text-center">
-                            <h1 class="mb-3">配置模板</h1>
+                            <h3 class="mb-3">配置模板</h3>
                         </div>
                         <div class="mb-5 hover-scroll-x">
                             <div class="d-grid">
@@ -155,7 +156,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-content">
+                        <div class="tab-content" id="zero_modal_node_template_content">
                             <div class="tab-pane fade show active" id="ss" role="tabpanel">
                                 <pre>
 {
@@ -236,7 +237,13 @@
                     console.log('Mode switched from', oldMode, 'to', newMode)
                 }
             };
-            const editor = new JSONEditor(container, options);
+            var editor = new JSONEditor(container, options);
+            
+            $('#zero_modal_use_selected_template').on('click', function(){
+                const template = $('#zero_modal_node_template_content div.active pre').html();
+                const jsonObj = JSON.parse(template);
+                editor.set(jsonObj);
+            })
         </script>
         <script>
             function zeroAdminCreateNode() {
