@@ -157,7 +157,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-content" id="zero_modal_use_selected_template">
+                        <div class="tab-content" id="zero_modal_node_template_content">
                             <div class="tab-pane fade show active" id="ss" role="tabpanel">
                                 <pre>
 {
