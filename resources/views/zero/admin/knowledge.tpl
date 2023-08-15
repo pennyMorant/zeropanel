@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>{$config["website_name"]} 知识库</title>
-        <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
+        
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />

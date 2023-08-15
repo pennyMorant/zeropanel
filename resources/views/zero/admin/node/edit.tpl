@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <title>{$config["website_name"]} 编辑节点</title>
-        <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
+        
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />
@@ -238,14 +238,14 @@
                     console.log('Mode switched from', oldMode, 'to', newMode)
                 }
             };
-            const editor = new JSONEditor(container, options);
+            var editor = new JSONEditor(container, options);
             editor.set({$node->custom_config})
 
             $('#zero_modal_use_selected_template').on('click', function(){
                 const template = $('#zero_modal_node_template_content div.active pre').html();
                 const jsonObj = JSON.parse(template);
                 editor.set(jsonObj);
-            })
+            });
         </script>
         <script>
             function zeroAdminUpdateNode(id) {

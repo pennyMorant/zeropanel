@@ -2,7 +2,7 @@
 <html lang="en">
     <head><base href="../../../"/>
 	<title>{$config["website_name"]} 代理中心</title>
-        <link href="/theme/zero/assets/css/zero.css" rel="stylesheet" type="text/css"/>
+        
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />
         <meta name="description" content="Updates and statistics" />
