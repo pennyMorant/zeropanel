@@ -126,6 +126,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content rounded">
                     <div class="modal-header justify-content-end border-0 pb-0">
+                        <a class="btn btn-sm btn-light-primary" id="zero_modal_use_selected_template">使用此模板</a>
                     </div>
                     <div class="modal-body scroll-y pt-0 pb-5 px-5">
                         <div class="mb-5 text-center">
