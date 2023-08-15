@@ -112,11 +112,13 @@ class SingBox
 
         if ($server['net'] == 'grpc') {
             $grpc = [
-                'type'  => 'grpc',
-                'service_name' => $server['servicename'],
-                'idle_timeout' => '15s',
-                'ping_timeout' => '15s',
-                'permit_without_stream' => false,
+                'transport' => [
+                    'type'  => 'grpc',
+                    'service_name' => $server['servicename'],
+                    'idle_timeout' => '15s',
+                    'ping_timeout' => '15s',
+                    'permit_without_stream' => false,
+                ]
             ];
             $position = array_search('packet_encoding', array_keys($node_info)) + 1;
             $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
@@ -181,11 +183,13 @@ class SingBox
 
         if ($server['net'] == 'grpc') {
             $grpc = [
-                'type'  => 'grpc',
-                'service_name' => $server['servicename'],
-                'idle_timeout' => '15s',
-                'ping_timeout' => '15s',
-                'permit_without_stream' => false,
+                'transport' => [
+                    'type'  => 'grpc',
+                    'service_name' => $server['servicename'],
+                    'idle_timeout' => '15s',
+                    'ping_timeout' => '15s',
+                    'permit_without_stream' => false,
+                ]
             ];
             $position = array_search('packet_encoding', array_keys($node_info)) + 1;
             $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
@@ -221,11 +225,13 @@ class SingBox
 
         if ($server['net'] == 'grpc') {
             $grpc = [
-                'type'  => 'grpc',
-                'service_name' => $server['servicename'],
-                'idle_timeout' => '15s',
-                'ping_timeout' => '15s',
-                'permit_without_stream' => false,
+                'transport' => [
+                    'type'  => 'grpc',
+                    'service_name' => $server['servicename'],
+                    'idle_timeout' => '15s',
+                    'ping_timeout' => '15s',
+                    'permit_without_stream' => false,
+                ]
             ];
             $position = array_search('tls', array_keys($node_info)) + 1;
             $node_info = array_slice($node_info, 0, $position, true) + $grpc + array_slice($node_info, $position, null, true);
