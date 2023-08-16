@@ -106,7 +106,7 @@ class ClashMeta
             'servername'       => $server['host'],
             'network'          => $server['net'],
             'tls'              => $tls,
-            'skip-cert-verify' => true,
+            'skip-cert-verify' => $server['insecure'],
             'ws-opts'          => [
                 'path'    => $server['path'],
                 'headers' => [
@@ -156,7 +156,8 @@ class ClashMeta
             'port'     => $server['port'],
             'password' => $server['uuid'],
             'sni'      => $server['sni'],
-            'udp'      => true
+            'udp'      => true,
+            'skip-cert-verify' => $server['insecure'],
         ];
 
         return $node_info;

@@ -115,7 +115,7 @@ class Clash
             'servername'       => $server['host'],
             'network'          => $server['net'],
             'tls'              => $tls,
-            'skip-cert-verify' => true,
+            'skip-cert-verify' => $server['insecure'],
             'ws-opts'          => [
                 'path'    => $server['path'],
                 'headers' => [

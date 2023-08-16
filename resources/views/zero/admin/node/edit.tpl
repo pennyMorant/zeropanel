@@ -161,7 +161,7 @@
                             <div class="tab-pane fade show active" id="ss" role="tabpanel">
                                 <pre>
 {
-    "mu_encryption": "aes-256-gcm",
+    "ss_encryption": "aes-256-gcm",
     "offset_port_user": "30011",
     "offset_port_node": "30011"
 }
@@ -233,8 +233,10 @@
 {
     "offset_port_user": "443",
     "offset_port_node": "443",
+    "network": "tcp",
     "host": "bing.com",
-    "security": "tls"
+    "security": "tls",
+    "insecure": "true"
 }                           
                                 </pre>
                             </div>

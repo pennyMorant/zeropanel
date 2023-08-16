@@ -126,9 +126,9 @@ class Node extends Model
         $config['type']       = 'shadowsocks';
         $config['passwd']     = $user->passwd;
         $config['server_psk'] = $custom_configs['server_psk'] ?? '';
-        $config['method']     = $custom_configs['mu_encryption'];
+        $config['method']     = $custom_configs['ss_encryption'];
         $config['address']    = $this->server;
-        $config['port']       = $custom_configs['offset_port_user'] ?? $custom_configs['mu_port'];
+        $config['port']       = $custom_configs['offset_port_user'];
         $config['class']      = $this->node_class;
         }
         return $config;
@@ -148,7 +148,7 @@ class Node extends Model
         $config['uuid']        = $user->uuid;
         $config['class']       = $this->node_class;
         $config['address']     = $this->server;
-        $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['port']        = $custom_configs['offset_port_user'];
         $config['aid']         = $custom_configs['alter_id'] ?? 0;
         $config['net']         = $custom_configs['network'];
         $config['security']    = $custom_configs['security'] ?? 'none';
@@ -157,8 +157,8 @@ class Node extends Model
         $config['host']        = $custom_configs['host'] ?? '';
         $config['sni']         = $custom_configs['host'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
-        $config['servicename'] = $custom_configs['servicename'] ?? '';
-        $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        $config['servicename'] = $custom_configs['service_name'] ?? '';
+        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
         }
         return $config;
     }
@@ -174,20 +174,21 @@ class Node extends Model
         $config['uuid']        = $user->uuid;
         $config['class']       = $this->node_class;
         $config['address']     = $this->server;
-        $config['port']        = $custom_configs['offset_port_user'] ?? $custom_configs['v2_port'];
+        $config['port']        = $custom_configs['offset_port_user'];
         $config['aid']         = 0;
         $config['net']         = $custom_configs['network'];
         $config['security']    = $custom_configs['security'] ?? '';
         $config['flow']        = $custom_configs['reality_config']['flow'] ?? '';
         $config['path']        = $custom_configs['path'] ?? '';
-        $config['host']        = $custom_configs['host'] ?? '';
+        $config['host']        = $custom_configs['host'] ?? $custom_configs['reality_config']['server_names'][array_rand($custom_configs['reality_config']['server_names'])] ?? '';
         $config['sni']         = $custom_configs['host'] ?? '';
         $config['pbk']         = $custom_configs['reality_config']['public_key'] ?? '';
-        $config['sid']         = $custom_configs[array_rand($custom_configs['reality_config']['short_ids'])] ?? '';
+        $config['sid']         = $custom_configs['reality_config']['short_ids'][array_rand($custom_configs['reality_config']['short_ids'])] ?? '';
+        //$config['servername']  = $custom_configs['reality_config']['servernames'][array_rand($custom_configs['reality_config']['servernames'])] ?? '';
         $config['fp']          = $custom_configs['reality_config']['fingerprint'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
-        $config['servicename'] = $custom_configs['servicename'] ?? '';
-        $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';
+        $config['servicename'] = $custom_configs['service_name'] ?? '';
+        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
         return $config;
     }
 
@@ -201,11 +202,12 @@ class Node extends Model
         $config['type']     = 'trojan';
         $config['uuid']     = $user->uuid;
         $config['address']  = $this->server;
-        $config['port']     = $custom_configs['offset_port_user'] ?? $custom_configs['trojan_port'];
+        $config['port']     = $custom_configs['offset_port_user'];
         $config['sni']      = $custom_configs['host'] ?? '';
         $config['security'] = $custom_configs['security'] ?? 'tls';
         $config['flow']     = $custom_configs['flow'] ?? '';
         $config['net']      = $custom_configs['network'] ?? '';
+        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
 
         return $config;
     }
@@ -217,7 +219,7 @@ class Node extends Model
         $config['remark']    = $emoji ? $this->getNodeFlag($this->node_flag) . $this->name : $this->name;
         $config['obfsParam'] = $custom_configs['obfs_param'] ?? '';
         $config['address']   = $this->server;
-        $config['port']      = $custom_configs['offset_port_user'] ?? $custom_configs['hysteria_port'];
+        $config['port']      = $custom_configs['offset_port_user'];
         $config['protocol']  = $custom_configs['protocol'] ?? 'udp';
         $config['peer']      = $custom_configs['peer'] ?? '';
         $config['upmbps']    = $custom_configs['upmbps'] ?? '10';
