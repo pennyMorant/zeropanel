@@ -207,7 +207,7 @@
     "security": "reality",
     "reality_config": {
         "show": "false",
-        "dest": "www.dl.google.com:443",
+        "dest": "dl.google.com:443",
         "proxy_protocol_ver": "0",
         "min_client_ver": "",
         "max_client_ver": "",
