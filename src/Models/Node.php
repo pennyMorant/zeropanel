@@ -178,13 +178,13 @@ class Node extends Model
         $config['aid']         = 0;
         $config['net']         = $custom_configs['network'];
         $config['security']    = $custom_configs['security'] ?? '';
-        $config['flow']        = $custom_configs['flow'] ?? '';
+        $config['flow']        = $custom_configs['reality_config']['flow'] ?? '';
         $config['path']        = $custom_configs['path'] ?? '';
         $config['host']        = $custom_configs['host'] ?? '';
         $config['sni']         = $custom_configs['host'] ?? '';
-        $config['pbk']         = $custom_configs['public_key'] ?? '';
-        $config['sid']         = $custom_configs['short_id'] ?? '';
-        $config['fp']          = $custom_configs['fingerprint'] ?? '';
+        $config['pbk']         = $custom_configs['reality_config']['public_key'] ?? '';
+        $config['sid']         = $custom_configs[array_rand($custom_configs['reality_config']['short_ids'])] ?? '';
+        $config['fp']          = $custom_configs['reality_config']['fingerprint'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['servicename'] ?? '';
         $config['verify_cert'] = $custom_configs['verify_cert'] ?? 'true';

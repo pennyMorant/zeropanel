@@ -204,11 +204,27 @@
     "offset_port_user": "20022",
     "offset_port_node": "20022",
     "network": "tcp",
-    "fingerprint": "chrome",
-    "public_key": "p7F0X8cKdzexJuVxh4Pv5_VhUwOk-Y6YqFjpsalGvBc",
     "security": "reality",
-    "host": "bing.com",
-    "flow": "xtls-rprx-vision"
+    "reality_config": {
+        "show": "false",
+        "dest": "www.dl.google.com:443",
+        "proxy_protocol_ver": "0",
+        "min_client_ver": "",
+        "max_client_ver": "",
+        "max_time_diff": "0",
+        "short_ids": [
+        "",
+        "0123456789abcdef"
+        ],
+        "fingerprint": "chrome",
+        "public_key": "p7F0X8cKdzexJuVxh4Pv5_VhUwOk-Y6YqFjpsalGvBc",
+        "private_key": "",
+        "server_names": [
+        "bing.com",
+        "dl.google.com"
+        ],
+        "flow": "xtls-rprx-vision"
+    }
 }                         
                                 </pre>
                             </div>
