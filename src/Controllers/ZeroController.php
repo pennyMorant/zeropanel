@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Clients\Universal;
 use App\Models\{
     Ip, 
     Node,
@@ -18,7 +19,6 @@ use App\Models\{
     Withdraw
 };
 use App\Utils\{
-    URL, 
     Tools,
     Telegram
 };
@@ -182,7 +182,7 @@ class ZeroController extends BaseController
                     'ret'  => 1,
                     'type' => 1,
                     'info' => $info,
-                    'url'  => URL::getShadowsocksURL($user, $node, $emoji)
+                    'url'  => Universal::buildShadowsocks($info),
                 ];
                 break;
             case '2':
@@ -191,7 +191,7 @@ class ZeroController extends BaseController
                     'ret'  => 1,
                     'type' => 2,
                     'info' => $info,
-                    'url'  => URL::getVmessURL($user, $node, $emoji),
+                    'url'  => Universal::buildVmess($info),
                 ];
                 break;
             case '3': 
@@ -200,7 +200,7 @@ class ZeroController extends BaseController
                     'ret'  => 1,
                     'type' => 3,
                     'info' => $info,
-                    'url'  => URL::getVlessURL($user, $node, $emoji),
+                    'url'  => Universal::buildVless($info),
                 ];
                 break;
             case '4': 
@@ -209,7 +209,7 @@ class ZeroController extends BaseController
                     'ret'  => 1,
                     'type' => 4,
                     'info' => $info,
-                    'url'  => URL::getTrojanURL($user, $node, $emoji),
+                    'url'  => Universal::buildTrojan($info),
                 ];
                 break;
             case '5':
@@ -218,7 +218,7 @@ class ZeroController extends BaseController
                     'ret'  => 1,
                     'type' => 5,
                     'info' => $info,
-                    'url'  => URL::getHysteriaURL($user, $node, $emoji),
+                    'url'  => Universal::buildHysteria($info),
                 ];
                 break;
             default: 

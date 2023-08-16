@@ -3,15 +3,7 @@
 namespace App\Controllers\User;
 
 use App\Controllers\UserController;
-use App\Models\{
-    Node,
-    User,
-    Ann,
-    Setting
-};
-use App\Utils\{
-    URL,
-};
+use App\Models\Node;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
 
@@ -46,7 +38,6 @@ class NodeController extends UserController
             ->assign('class', $class)
             ->assign('servers', $servers)
             ->assign('min_node_class', $min_node_class)
-            ->registerClass('URL', URL::class)
             ->display('user/node.tpl');
         return $response;
     }

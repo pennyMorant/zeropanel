@@ -5,17 +5,13 @@ namespace App\Controllers;
 use App\Services\Auth;
 use App\Services\Mail;
 use App\Models\{
-    Ann,
     User,
     Setting,
     InviteCode,
     Token,
     Knowledge
 };
-use App\Utils\{
-    URL,
-    Hash
-};
+use App\Utils\Hash;
 use voku\helper\AntiXSS;
 use Slim\Http\Response;
 use Slim\Http\ServerRequest;
@@ -34,7 +30,6 @@ class UserController extends BaseController
         $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         $this->view()
             ->assign('invite_url', $invite_url)
-            ->registerClass('URL', URL::class)
             ->assign('subInfo', $sub_url)
             ->display('user/index.tpl');
         return $response;
@@ -52,7 +47,6 @@ class UserController extends BaseController
             $this->view()
                 ->assign('subInfo', $sub_url)
                 ->assign('knowledges', $knowledges)
-                ->registerClass('URL', URL::class)
                 ->display($url);
         }
         return $response;
@@ -68,7 +62,6 @@ class UserController extends BaseController
         $this->view()
             ->assign('bind_token', $tg_bind_token)
             ->assign('telegram_bot_id', Setting::obtain('telegram_bot_id'))
-            ->registerClass('URL', URL::class)
             ->display('user/profile.tpl');
         return $response;
     }
