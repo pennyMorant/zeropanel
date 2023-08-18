@@ -37,32 +37,66 @@ class ProductController extends AdminController
 
     public function createProduct(ServerRequest $request, Response $response, array $args): Response
     {
-        $postdata                     = $request->getParsedBody();
-        $product                      = new Product();
-        $product->name                = $postdata['name'];
-        $product->month_price         = $postdata['month_price']     == '' ? NULL : $postdata['month_price'];
-        $product->quarter_price       = $postdata['quarter_price']   == '' ? NULL : $postdata['quarter_price'];
-        $product->half_year_price     = $postdata['half_year_price'] == '' ? NULL : $postdata['half_year_price'];
-        $product->year_price          = $postdata['year_price']      == '' ? NULL : $postdata['year_price'];
-        $product->two_year_price      = $postdata['two_year_price']  == '' ? NULL : $postdata['two_year_price'];
-        $product->onetime_price       = $postdata['onetime_price']   == '' ? NULL : $postdata['onetime_price'];
-        $product->custom_content      = $postdata['custom_content']  == '' ? NULL : $postdata['custom_content'];
-        $product->type                = $postdata['type'];
-        $product->sort                = $postdata['sort'] ?: 0;
-        $product->traffic             = $postdata['traffic'];
-        $product->user_group          = $postdata['group'] ?: 0;
-        $product->class               = $postdata['class'] ?: 0;
-        $product->reset_traffic_cycle = $postdata['reset'];
-        $product->speed_limit         = $postdata['speed_limit'] == '' ? NULL : $postdata['speed_limit'];
-        $product->ip_limit            = $postdata['ip_limit'] == '' ? NULL : $postdata['ip_limit'];
-        $product->stock               = $postdata['stock'] == '' ? NULL : $postdata['stock'];
-        $product->status              = 0;
-        if (!$product->save()) {
+        $productData                     = $request->getParsedBody();
+        try {
+            if (empty($productData['name'])) {
+                throw new \Exception('产品名称不能为空');
+            }
+            if (empty($productData['type'])) {
+                throw new \Exception('产品类型不能为空');
+            }
+            if (empty($productData['sort']) && $productData['sort'] != 0) {
+                throw new \Exception('产品排序不能为空');
+            }
+            if (empty($productData['traffic']) && $productData['traffic'] != 0) {
+                throw new \Exception('产品流量不能为空');
+            }
+            if (empty($productData['group']) && $productData['group'] != 0) {
+                throw new \Exception('产品分组不能为空');
+            }
+            if (empty($productData['class']) && $productData['class'] != 0) {
+                throw new \Exception('产品等级不能为空');
+            }
+            if (empty($productData['reset']) && $productData['reset'] != 0) {
+                throw new \Exception('产品重置周期不能为空');
+            }
+            if (
+                $productData['month_price'] == '' &&
+                $productData['quarter_price'] == '' &&
+                $productData['half_year_price'] == '' &&
+                $productData['year_price'] == '' &&
+                $productData['two_year_price'] == '' &&
+                $productData['onetime_price'] == ''
+                ) {
+                throw new \Exception('产品价格不能为空');
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '添加失败'
+                'msg' => $e->getMessage(),
             ]);
         }
+        $product                      = new Product();
+        $product->name                = $productData['name'];
+        $product->month_price         = $productData['month_price']     == '' ? NULL : $productData['month_price'];
+        $product->quarter_price       = $productData['quarter_price']   == '' ? NULL : $productData['quarter_price'];
+        $product->half_year_price     = $productData['half_year_price'] == '' ? NULL : $productData['half_year_price'];
+        $product->year_price          = $productData['year_price']      == '' ? NULL : $productData['year_price'];
+        $product->two_year_price      = $productData['two_year_price']  == '' ? NULL : $productData['two_year_price'];
+        $product->onetime_price       = $productData['onetime_price']   == '' ? NULL : $productData['onetime_price'];
+        $product->custom_content      = $productData['custom_content']  == '' ? NULL : $productData['custom_content'];
+        $product->type                = $productData['type'];
+        $product->sort                = $productData['sort'];
+        $product->traffic             = $productData['traffic'];
+        $product->user_group          = $productData['group'];
+        $product->class               = $productData['class'];
+        $product->reset_traffic_cycle = $productData['reset'];
+        $product->speed_limit         = $productData['speed_limit'] == '' ? NULL : $productData['speed_limit'];
+        $product->ip_limit            = $productData['ip_limit'] == '' ? NULL : $productData['ip_limit'];
+        $product->stock               = $productData['stock'] == '' ? NULL : $productData['stock'];
+        $product->status              = 0;
+        $product->save();
+        
         return $response->withJson([
             'ret' => 1,
             'msg' => '添加成功'
@@ -81,33 +115,70 @@ class ProductController extends AdminController
 
     public function updateProduct(ServerRequest $request, Response $response, array $args): Response
     {
-        $putdata = $request->getParsedBody();
-        $id      = $putdata['id'];
-        $product = Product::find($id);
-
-        $product->name                = $putdata['name'];
-        $product->month_price         = $putdata['month_price']     == '' ? NULL : $putdata['month_price'];
-        $product->quarter_price       = $putdata['quarter_price']   == '' ? NULL : $putdata['quarter_price'];
-        $product->half_year_price     = $putdata['half_year_price'] == '' ? NULL : $putdata['half_year_price'];
-        $product->year_price          = $putdata['year_price']      == '' ? NULL : $putdata['year_price'];
-        $product->two_year_price      = $putdata['two_year_price']  == '' ? NULL : $putdata['two_year_price'];
-        $product->onetime_price       = $putdata['onetime_price']   == '' ? NULL : $putdata['onetime_price'];
-        $product->custom_content      = $putdata['custom_content']  == '' ? NULL : $putdata['custom_content'];
-        $product->type                = $putdata['type'];
-        $product->sort                = $putdata['sort'] ?: 0;
-        $product->traffic             = $putdata['traffic'];
-        $product->user_group          = $putdata['group'] ?: 0;
-        $product->class               = $putdata['class'] ?: 0;
-        $product->reset_traffic_cycle = $putdata['reset'];
-        $product->speed_limit         = $putdata['speed_limit'] == '' ? NULL : $putdata['speed_limit'];
-        $product->ip_limit            = $putdata['ip_limit'] == '' ? NULL : $putdata['ip_limit'];
-        $product->stock               = $putdata['stock'] == '' ? NULL : $putdata['stock'];
-        if (!$product->save()) {
+        $productData = $request->getParsedBody();
+        try {
+            if (empty($productData['id'])) {
+                throw new \Exception('无效产品');
+            }
+            if (empty($productData['name'])) {
+                throw new \Exception('产品名称不能为空');
+            }
+            if (empty($productData['type'])) {
+                throw new \Exception('产品类型不能为空');
+            }
+            if (empty($productData['sort']) && $productData['sort'] != 0) {
+                throw new \Exception('产品排序不能为空');
+            }
+            if (empty($productData['traffic']) && $productData['traffic'] != 0) {
+                throw new \Exception('产品流量不能为空');
+            }
+            if (empty($productData['group']) && $productData['group'] != 0) {
+                throw new \Exception('产品分组不能为空');
+            }
+            if (empty($productData['class']) && $productData['class'] != 0) {
+                throw new \Exception('产品等级不能为空');
+            }
+            if (empty($productData['reset']) && $productData['reset'] != 0) {
+                throw new \Exception('产品重置周期不能为空');
+            }
+            if (
+                $productData['month_price'] == '' &&
+                $productData['quarter_price'] == '' &&
+                $productData['half_year_price'] == '' &&
+                $productData['year_price'] == '' &&
+                $productData['two_year_price'] == '' &&
+                $productData['onetime_price'] == ''
+                ) {
+                throw new \Exception('产品价格不能为空');
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '保存失败'
+                'msg' => $e->getMessage(),
             ]);
         }
+
+        $id                           = $productData['id'];
+        $product                      = Product::find($id);
+        $product->name                = $productData['name'];
+        $product->month_price         = $productData['month_price']     == '' ? NULL : $productData['month_price'];
+        $product->quarter_price       = $productData['quarter_price']   == '' ? NULL : $productData['quarter_price'];
+        $product->half_year_price     = $productData['half_year_price'] == '' ? NULL : $productData['half_year_price'];
+        $product->year_price          = $productData['year_price']      == '' ? NULL : $productData['year_price'];
+        $product->two_year_price      = $productData['two_year_price']  == '' ? NULL : $productData['two_year_price'];
+        $product->onetime_price       = $productData['onetime_price']   == '' ? NULL : $productData['onetime_price'];
+        $product->custom_content      = $productData['custom_content']  == '' ? NULL : $productData['custom_content'];
+        $product->type                = $productData['type'];
+        $product->sort                = $productData['sort'];
+        $product->traffic             = $productData['traffic'];
+        $product->user_group          = $productData['group'];
+        $product->class               = $productData['class'];
+        $product->reset_traffic_cycle = $productData['reset'];
+        $product->speed_limit         = $productData['speed_limit']     == '' ? NULL : $productData['speed_limit'];
+        $product->ip_limit            = $productData['ip_limit']        == '' ? NULL : $productData['ip_limit'];
+        $product->stock               = $productData['stock']           == '' ? NULL : $productData['stock'];
+        $product->save();
+
         return $response->withJson([
             'ret' => 1,
             'msg' => '保存成功'
