@@ -156,17 +156,6 @@ class Job extends Command
             }
         }
         echo '节点掉线检测结束' . PHP_EOL;
-        //更新节点 IP，每分钟
-        echo '更新节点IP开始' . PHP_EOL;
-        $nodes = Node::get();
-        foreach ($nodes as $node) {
-            $server = $node->server;
-            if (!Tools::isIP($server) && $node->changeNodeIp($server)) {
-                $node->save();
-            }
-        }
-        echo '更新节点IP结束' . PHP_EOL;
-
         echo 'Success ' . date('Y-m-d H:i:s', time()) . PHP_EOL;
     }
 

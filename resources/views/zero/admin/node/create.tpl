@@ -282,7 +282,7 @@
                         node_traffic_limit_reset_date: $('#node_traffic_limit_reset_date').val(),
                         node_speedlimit: $('#node_speedlimit').val(),
                         node_sort: $('#node_sort').val(),
-                        custom_config: editor.get(),
+                        custom_config: Object.keys(editor.get()).length <= 0 ? '' : editor.get(),
                     },
                     success: function(data){
                         if(data.ret === 1) {

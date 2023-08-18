@@ -94,27 +94,6 @@ class Node extends Model
     }
 
     /**
-     * 更新节点 IP
-     */
-    public function changeNodeIp(string $server_name): bool
-    {
-        $result = dns_get_record($server_name, DNS_A + DNS_AAAA);
-        $dns = [];
-        if (count($result) > 0) {
-            $dns = $result[0];
-        }
-        if (array_key_exists('ip', $dns)) {
-            $ip = $dns['ip'];
-        } elseif (array_key_exists('ipv6', $dns)) {
-            $ip = $dns['ipv6'];
-        } else {
-            $ip = $server_name;
-        }
-        $this->node_ip = $ip;
-        return true;
-    }
-
-    /**
      * 获取 SS 节点
      */
     public function getShadowsocksConfig(User $user, $custom_config, bool $emoji = false): array

@@ -43,43 +43,64 @@ class NodeController extends AdminController
 
     public function createNode(ServerRequest $request, Response $response, array $args): Response
     {
-        $node                   = new Node();
-        $postData               = $request->getParsedBody();
-        $node->name             = $postData['name'];
-        $node->server           = trim($postData['server']);
-        $node->traffic_rate     = $postData['traffic_rate'] ?: 1;
-        $node->status           = 0;
-        $node->node_group       = $postData['node_group'] ?: 0;
-        $node->node_speedlimit  = $postData['node_speedlimit'] ?: 0;
-        $node->node_flag        = $postData['node_flag'];
-        $node->node_type        = $postData['node_type'];
+        $nodeData               = $request->getParsedBody();
 
-        if (!is_null($postData['custom_config'])) {
-            $node->custom_config = json_encode($postData['custom_config']);
-        } else {
-            $node->custom_config = '{}';
-        }
-        
-        $req_node_ip = trim($postData['node_ip']);
-        $success = true;
-        
-        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
-            $success = $node->changeNodeIp($req_node_ip);
-        } else {
-            $success = $node->changeNodeIp($node->server);
-        }
-
-        if (!$success) {
+        try {
+            if (is_null($nodeData['custom_config']) || empty($nodeData['custom_config'])) {
+                throw new \Exception('节点配置不能为空');
+            }
+            if (empty($nodeData['name'])) {
+                throw new \Exception('节点名称不能为空');
+            }
+            if (empty($nodeData['server'])) {
+                throw new \Exception('节点地址不能为空');
+            }
+            if (empty($nodeData['traffic_rate'])) {
+                throw new \Exception('节点流量消耗倍率不能为空');
+            }
+            if (empty($nodeData['node_group']) && $nodeData['node_group'] != 0) {
+                throw new \Exception('节点分组不能为空');
+            }
+            if (empty($nodeData['node_speedlimit']) && $nodeData['node_speedlimit'] != 0) {
+                throw new \Exception('节点端口速度不能为空');
+            }
+            if (empty($nodeData['node_flag'])) {
+                throw new \Exception('节点国家旗帜不能为空');
+            }
+            if (empty($nodeData['node_type'])) {
+                throw new \Exception('节点类型不能为空');
+            }
+            if (empty($nodeData['node_class']) && $nodeData['node_class'] != 0) {
+                throw new \Exception('节点等级不能为空');
+            }
+            if (empty($nodeData['node_traffic_limit']) && $nodeData['node_traffic_limit'] != 0) {
+                throw new \Exception('节点流量消耗上限不能为空');
+            }
+            if (empty($nodeData['node_traffic_limit_reset_date'])) {
+                throw new \Exception('节点流量消耗上限重置时间不能为空');
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '获取节点IP失败，请检查您输入的节点地址是否正确！',
+                'msg' => $e->getMessage(),
             ]);
         }
-        
-        $node->node_class                       = $postData['node_class'] ?: 0;
-        $node->node_sort                        = $postData['node_sort'] ?: 0;
-        $node->node_traffic_limit               = $postData['node_traffic_limit'] * 1024 * 1024 * 1024;
-        $node->node_traffic_limit_reset_date    = $postData['node_traffic_limit_reset_date'];
+
+        $node                                = new Node();
+        $node->name                          = $nodeData['name'];
+        $node->server                        = trim($nodeData['server']);
+        $node->node_ip                       = $nodeData['node_ip'];
+        $node->traffic_rate                  = $nodeData['traffic_rate'];
+        $node->status                        = 0;
+        $node->node_group                    = $nodeData['node_group'];
+        $node->node_speedlimit               = $nodeData['node_speedlimit'];
+        $node->node_flag                     = $nodeData['node_flag'];
+        $node->node_type                     = $nodeData['node_type'];
+        $node->custom_config                 = json_encode($nodeData['custom_config']);
+        $node->node_class                    = $nodeData['node_class'];
+        $node->node_sort                     = $nodeData['node_sort'];
+        $node->node_traffic_limit            = $nodeData['node_traffic_limit'] * 1024 * 1024 * 1024;
+        $node->node_traffic_limit_reset_date = $nodeData['node_traffic_limit_reset_date'];
         $node->save();
 
         return $response->withJson([
@@ -100,42 +121,65 @@ class NodeController extends AdminController
 
     public function updateNode(ServerRequest $request, Response $response, array $args): Response
     {
-        $putData = $request->getParsedBody();
-        $id                     = $putData['id'];
-        $node                   = Node::find($id);
-        $node->name             = $putData['name'];
-        $node->node_group       = $putData['node_group'] ?: 0;
-        $node->server           = trim($putData['server']);
-        $node->traffic_rate     = $putData['traffic_rate'] ?: 1;
-        $node->node_speedlimit  = $putData['node_speedlimit'] ?: 0;
-        $node->node_type        = $putData['node_type'];
-
-        if (!is_null($putData['custom_config'])) {
-            $node->custom_config = json_encode($putData['custom_config']);
-        } else {
-            $node->custom_config = '{}';
-        }
-        
-        $req_node_ip = trim($putData['node_ip']);
-
-        $success = true;
-        if (Tools::isIP($req_node_ip) === 'v4' || Tools::isIP($req_node_ip) === 'v6') {
-            $success = $node->changeNodeIp($req_node_ip);
-        } else {
-            $success = $node->changeNodeIp($node->server);
-        }
-        if (!$success) {
+        $nodeData = $request->getParsedBody();
+        try {
+            if (empty($nodeData['id'])) {
+                throw new \Exception('无效节点');
+            }
+            if (is_null($nodeData['custom_config']) || empty($nodeData['custom_config'])) {
+                throw new \Exception('节点配置不能为空');
+            }
+            if (empty($nodeData['name'])) {
+                throw new \Exception('节点名称不能为空');
+            }
+            if (empty($nodeData['server'])) {
+                throw new \Exception('节点地址不能为空');
+            }
+            if (empty($nodeData['traffic_rate'])) {
+                throw new \Exception('节点流量消耗倍率不能为空');
+            }
+            if (empty($nodeData['node_group']) && $nodeData['node_group'] != 0) {
+                throw new \Exception('节点分组不能为空');
+            }
+            if (empty($nodeData['node_speedlimit']) && $nodeData['node_speedlimit'] != 0) {
+                throw new \Exception('节点端口速度不能为空');
+            }
+            if (empty($nodeData['node_flag'])) {
+                throw new \Exception('节点国家旗帜不能为空');
+            }
+            if (empty($nodeData['node_type'])) {
+                throw new \Exception('节点类型不能为空');
+            }
+            if (empty($nodeData['node_class']) && $nodeData['node_class'] != 0) {
+                throw new \Exception('节点等级不能为空');
+            }
+            if (empty($nodeData['node_traffic_limit']) && $nodeData['node_traffic_limit'] != 0) {
+                throw new \Exception('节点流量消耗上限不能为空');
+            }
+            if (empty($nodeData['node_traffic_limit_reset_date'])) {
+                throw new \Exception('节点流量消耗上限重置时间不能为空');
+            }
+        } catch (\Exception $e) {
             return $response->withJson([
                 'ret' => 0,
-                'msg' => '更新节点IP失败，请检查您输入的节点地址是否正确！',
+                'msg' => $e->getMessage(),
             ]);
         }
-        $node->node_flag                        = $putData['node_flag'];
-        $node->node_class                       = $putData['node_class'] ?: 0;
-        $node->node_sort                        = $putData['node_sort'] ?: 0;
-        $node->node_traffic_limit               = $putData['node_traffic_limit'] * 1024 * 1024 * 1024;
-        $node->node_traffic_limit_reset_date    = $putData['node_traffic_limit_reset_date'];
 
+        $id                                  = $nodeData['id'];
+        $node                                = Node::find($id);
+        $node->name                          = $nodeData['name'];
+        $node->node_group                    = $nodeData['node_group'];
+        $node->server                        = trim($nodeData['server']);
+        $node->traffic_rate                  = $nodeData['traffic_rate'];
+        $node->node_speedlimit               = $nodeData['node_speedlimit'];
+        $node->node_type                     = $nodeData['node_type'];
+        $node->custom_config                 = json_encode($nodeData['custom_config']);
+        $node->node_flag                     = $nodeData['node_flag'];
+        $node->node_class                    = $nodeData['node_class'];
+        $node->node_sort                     = $nodeData['node_sort'];
+        $node->node_traffic_limit            = $nodeData['node_traffic_limit'] * 1024 * 1024 * 1024;
+        $node->node_traffic_limit_reset_date = $nodeData['node_traffic_limit_reset_date'];
         $node->save();
 
         return $response->withJson([
