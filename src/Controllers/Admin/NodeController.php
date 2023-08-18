@@ -55,13 +55,13 @@ class NodeController extends AdminController
             if (empty($nodeData['server'])) {
                 throw new \Exception('节点地址不能为空');
             }
-            if ($nodeData['traffic_rate'] != '' && $nodeData['traffic_rate'] <= 0 && !is_int($nodeData['traffic_rate'])) {
+            if ($nodeData['traffic_rate'] != '' || $nodeData['traffic_rate'] <= 0 || !is_int($nodeData['traffic_rate'])) {
                 throw new \Exception('节点流量消耗倍率不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_group'] != '' && $nodeData['node_group'] < 0 && !is_int($nodeData['node_group'])) {
+            if ($nodeData['node_group'] != '' || $nodeData['node_group'] < 0 || !is_int($nodeData['node_group'])) {
                 throw new \Exception('节点分组不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_speedlimit'] != '' && $nodeData['node_speedlimit'] < 0 && !is_int($nodeData['node_speedlimit'])) {
+            if ($nodeData['node_speedlimit'] != '' || $nodeData['node_speedlimit'] < 0 || !is_int($nodeData['node_speedlimit'])) {
                 throw new \Exception('节点端口速度不能为空, 且不能为负数和非整数');
             }
             if (empty($nodeData['node_flag'])) {
@@ -70,13 +70,13 @@ class NodeController extends AdminController
             if (empty($nodeData['node_type'])) {
                 throw new \Exception('节点类型不能为空');
             }
-            if ($nodeData['node_class'] != '' && $nodeData['node_class'] < 0 && !is_int($nodeData['node_class'])) {
+            if ($nodeData['node_class'] != '' || $nodeData['node_class'] < 0 || !is_int($nodeData['node_class'])) {
                 throw new \Exception('节点等级不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_traffic_limit'] != '' && $nodeData['node_traffic_limit'] < 0 && !is_int($nodeData['node_traffic_limit'])) {
+            if ($nodeData['node_traffic_limit'] != '' || $nodeData['node_traffic_limit'] < 0 || !is_int($nodeData['node_traffic_limit'])) {
                 throw new \Exception('节点流量消耗上限不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_traffic_limit_reset_date'] != '' && $nodeData['node_traffic_limit_reset_date'] < 0 && !is_int($nodeData['node_traffic_limit_reset_date'])) {
+            if ($nodeData['node_traffic_limit_reset_date'] != '' || $nodeData['node_traffic_limit_reset_date'] < 0 || !is_int($nodeData['node_traffic_limit_reset_date'])) {
                 throw new \Exception('节点流量消耗上限重置时间不能为空, 且不能为负数和非整数');
             }
         } catch (\Exception $e) {
@@ -135,13 +135,13 @@ class NodeController extends AdminController
             if (empty($nodeData['server'])) {
                 throw new \Exception('节点地址不能为空');
             }
-            if ($nodeData['traffic_rate'] != '' && $nodeData['traffic_rate'] <= 0 && !is_int($nodeData['traffic_rate'])) {
+            if ($nodeData['traffic_rate'] != '' || $nodeData['traffic_rate'] <= 0 || !is_int($nodeData['traffic_rate'])) {
                 throw new \Exception('节点流量消耗倍率不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_group'] != '' && $nodeData['node_group'] < 0 && !is_int($nodeData['node_group'])) {
+            if ($nodeData['node_group'] != '' || $nodeData['node_group'] < 0 || !is_int($nodeData['node_group'])) {
                 throw new \Exception('节点分组不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_speedlimit'] != '' && $nodeData['node_speedlimit'] < 0 && !is_int($nodeData['node_speedlimit'])) {
+            if ($nodeData['node_speedlimit'] != '' || $nodeData['node_speedlimit'] < 0 || !is_int($nodeData['node_speedlimit'])) {
                 throw new \Exception('节点端口速度不能为空, 且不能为负数和非整数');
             }
             if (empty($nodeData['node_flag'])) {
@@ -150,13 +150,13 @@ class NodeController extends AdminController
             if (empty($nodeData['node_type'])) {
                 throw new \Exception('节点类型不能为空');
             }
-            if ($nodeData['node_class'] != '' && $nodeData['node_class'] < 0 && !is_int($nodeData['node_class'])) {
+            if ($nodeData['node_class'] != '' || $nodeData['node_class'] < 0 || !is_int($nodeData['node_class'])) {
                 throw new \Exception('节点等级不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_traffic_limit'] != '' && $nodeData['node_traffic_limit'] < 0 && !is_int($nodeData['node_traffic_limit'])) {
+            if ($nodeData['node_traffic_limit'] != '' || $nodeData['node_traffic_limit'] < 0 || !is_int($nodeData['node_traffic_limit'])) {
                 throw new \Exception('节点流量消耗上限不能为空, 且不能为负数和非整数');
             }
-            if ($nodeData['node_traffic_limit_reset_date'] != '' && $nodeData['node_traffic_limit_reset_date'] < 0 && !is_int($nodeData['node_traffic_limit_reset_date'])) {
+            if ($nodeData['node_traffic_limit_reset_date'] != '' || $nodeData['node_traffic_limit_reset_date'] < 0 || !is_int($nodeData['node_traffic_limit_reset_date'])) {
                 throw new \Exception('节点流量消耗上限重置时间不能为空, 且不能为负数和非整数');
             }
         } catch (\Exception $e) {
