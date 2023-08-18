@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2023-07-28 16:18:00
--- 服务器版本： 10.11.4-MariaDB-1:10.11.4+maria~deb11
--- PHP 版本： 8.2.8
+-- 生成日期： 2023-08-18 19:44:21
+-- 服务器版本： 11.0.2-MariaDB
+-- PHP 版本： 8.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -194,7 +194,7 @@ CREATE TABLE `node` (
   `node_type` int(11) NOT NULL COMMENT '节点类型:1SS,2VMESS,3VLESS,4TROJAN,5SS-PLUGINS',
   `traffic_rate` float NOT NULL DEFAULT 1 COMMENT '流量倍率',
   `node_class` int(11) NOT NULL DEFAULT 0 COMMENT '节点等级',
-  `node_speedlimit` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '速度限制',
+  `node_speedlimit` int(11) NOT NULL DEFAULT 0 COMMENT '速度0为不限制',
   `node_sort` int(11) NOT NULL DEFAULT 0 COMMENT '节点排序',
   `node_iplimit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP限制',
   `node_traffic` bigint(20) NOT NULL DEFAULT 0 COMMENT '节点流量',
@@ -304,13 +304,13 @@ CREATE TABLE `product` (
   `user_group` int(11) NOT NULL DEFAULT 0 COMMENT '用户群组',
   `class` int(11) NOT NULL DEFAULT 0 COMMENT '产品等级',
   `reset_traffic_cycle` int(11) NOT NULL DEFAULT 1 COMMENT '流量重置周期[0-一次性, 1-订单日重置, 2-每月一号重置]',
-  `speed_limit` int(11) DEFAULT NULL COMMENT '速度限制',
-  `ip_limit` int(11) DEFAULT NULL COMMENT 'IP限制',
+  `speed_limit` int(11) NOT NULL COMMENT '速度0为不限制',
+  `ip_limit` int(11) NOT NULL DEFAULT 0 COMMENT 'IP0为不限制',
   `type` int(11) NOT NULL DEFAULT 1 COMMENT '产品类型, 1-周期,2-按流量,3-其他商品',
   `sort` int(11) NOT NULL DEFAULT 0 COMMENT '产品排序',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '产品状态 1上架0下架',
   `renew` tinyint(4) NOT NULL DEFAULT 1 COMMENT '开启续费',
-  `stock` int(11) DEFAULT NULL COMMENT '库存',
+  `stock` int(11) NOT NULL DEFAULT 0 COMMENT '库存0为不限制',
   `sales` int(11) NOT NULL DEFAULT 0 COMMENT '销量',
   `custom_content` longtext DEFAULT NULL COMMENT '自定义商品介绍内容'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -342,7 +342,7 @@ CREATE TABLE `ticket` (
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '‘’' COMMENT '工单内容',
   `userid` int(11) NOT NULL COMMENT '用户ID',
   `created_at` int(11) NOT NULL COMMENT '创建时间',
-  `updated_at` int(11) NOT NULL COMMENT '更新时间',
+  `updated_at` int(11) NOT NULL COMMENT '最后更新时间',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态0关闭1活跃'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -391,6 +391,21 @@ CREATE TABLE `user` (
   `withdraw_account` varchar(50) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT '账户是否被验证',
   `subscription_token` varchar(20) NOT NULL COMMENT '订阅token'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `user_access`
+--
+
+CREATE TABLE `user_access` (
+  `id` bigint(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `node_id` int(11) NOT NULL,
+  `type` char(10) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `created_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -594,6 +609,12 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `uuid` (`uuid`) USING BTREE;
 
 --
+-- 表的索引 `user_access`
+--
+ALTER TABLE `user_access`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 表的索引 `user_invite_code`
 --
 ALTER TABLE `user_invite_code`
@@ -741,6 +762,12 @@ ALTER TABLE `ticket`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用表AUTO_INCREMENT `user_access`
+--
+ALTER TABLE `user_access`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- 使用表AUTO_INCREMENT `user_invite_code`
