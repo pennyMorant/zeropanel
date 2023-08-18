@@ -134,7 +134,7 @@
 																							{$product->custom_content}
 																						{/if}
 																					</div>
-																					{if isset($product->stock) && $product->stock - $product->realTimeSales() <= 0}
+																					{if $product->stock > 0 && $product->stock - $product->realTimeSales() <= 0}
 																						<button class="btn btn-sm fw-bold btn-primary" disabled>{$trans->t('sold')}</button>
 																					{else}
 																						<button class="btn btn-sm fw-bold btn-primary" type="submit" data-kt-users-action="check-out-{$product->id}" data-bs-toggle="modal" onclick="kTUserConfigureProductModal({$product->id})">

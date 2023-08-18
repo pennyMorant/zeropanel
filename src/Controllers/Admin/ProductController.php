@@ -48,17 +48,26 @@ class ProductController extends AdminController
             if (empty($productData['sort']) && $productData['sort'] != 0) {
                 throw new \Exception('产品排序不能为空');
             }
-            if (empty($productData['traffic']) && $productData['traffic'] != 0) {
-                throw new \Exception('产品流量不能为空');
+            if ($productData['traffic'] != '' && $productData['traffic'] < 0 && !is_int($productData['traffic'])) {
+                throw new \Exception('产品流量不能为空, 且不能为负数和非整数');
             }
-            if (empty($productData['group']) && $productData['group'] != 0) {
-                throw new \Exception('产品分组不能为空');
+            if ($productData['group'] != '' && $productData['group'] < 0 && !is_int($productData['group'])) {
+                throw new \Exception('产品分组不能为空, 且不能为负数和非整数');
             }
-            if (empty($productData['class']) && $productData['class'] != 0) {
-                throw new \Exception('产品等级不能为空');
+            if ($productData['class'] != '' && $productData['class'] < 0 && !is_int($productData['class'])) {
+                throw new \Exception('产品等级不能为空, 且不能为负数和非整数');
             }
             if (empty($productData['reset']) && $productData['reset'] != 0) {
                 throw new \Exception('产品重置周期不能为空');
+            }
+            if ($productData->speed_limit < 0 && $productData->speed_limit != '' && !is_int($productData->speed_limit)) {
+                throw new \Exception('产品速度不能为空, 且不能为负数和非整数');
+            }
+            if ($productData->ip_limit < 0 && $productData->ip_limit != '' && !is_int($productData->ip_limit)) {
+                throw new \Exception('产品IP不能为空, 且不能为负数和非整数');
+            }
+            if ($productData->stock < 0 && $productData->stock != '' && !is_int($productData->stock)) {
+                throw new \Exception('产品速度不能为空, 且不能为负数和非整数');
             }
             if (
                 $productData['month_price'] == '' &&
@@ -91,9 +100,9 @@ class ProductController extends AdminController
         $product->user_group          = $productData['group'];
         $product->class               = $productData['class'];
         $product->reset_traffic_cycle = $productData['reset'];
-        $product->speed_limit         = $productData['speed_limit'] == '' ? NULL : $productData['speed_limit'];
-        $product->ip_limit            = $productData['ip_limit'] == '' ? NULL : $productData['ip_limit'];
-        $product->stock               = $productData['stock'] == '' ? NULL : $productData['stock'];
+        $product->speed_limit         = $productData['speed_limit'];
+        $product->ip_limit            = $productData['ip_limit'];
+        $product->stock               = $productData['stock'];
         $product->status              = 0;
         $product->save();
         
@@ -129,17 +138,26 @@ class ProductController extends AdminController
             if (empty($productData['sort']) && $productData['sort'] != 0) {
                 throw new \Exception('产品排序不能为空');
             }
-            if (empty($productData['traffic']) && $productData['traffic'] != 0) {
-                throw new \Exception('产品流量不能为空');
+            if ($productData['traffic'] != '' && $productData['traffic'] < 0 && !is_int($productData['traffic'])) {
+                throw new \Exception('产品流量不能为空, 且不能为负数和非整数');
             }
-            if (empty($productData['group']) && $productData['group'] != 0) {
-                throw new \Exception('产品分组不能为空');
+            if ($productData['group'] != '' && $productData['group'] < 0 && !is_int($productData['group'])) {
+                throw new \Exception('产品分组不能为空, 且不能为负数和非整数');
             }
-            if (empty($productData['class']) && $productData['class'] != 0) {
-                throw new \Exception('产品等级不能为空');
+            if ($productData['class'] != '' && $productData['class'] < 0 && !is_int($productData['class'])) {
+                throw new \Exception('产品等级不能为空, 且不能为负数和非整数');
             }
             if (empty($productData['reset']) && $productData['reset'] != 0) {
                 throw new \Exception('产品重置周期不能为空');
+            }
+            if ($productData->speed_limit < 0 && $productData->speed_limit != '' && !is_int($productData->speed_limit)) {
+                throw new \Exception('产品速度不能为空, 且不能为负数和非整数');
+            }
+            if ($productData->ip_limit < 0 && $productData->ip_limit != '' && !is_int($productData->ip_limit)) {
+                throw new \Exception('产品IP不能为空, 且不能为负数和非整数');
+            }
+            if ($productData->stock < 0 && $productData->stock != '' && !is_int($productData->stock)) {
+                throw new \Exception('产品速度不能为空, 且不能为负数和非整数');
             }
             if (
                 $productData['month_price'] == '' &&
@@ -174,9 +192,9 @@ class ProductController extends AdminController
         $product->user_group          = $productData['group'];
         $product->class               = $productData['class'];
         $product->reset_traffic_cycle = $productData['reset'];
-        $product->speed_limit         = $productData['speed_limit']     == '' ? NULL : $productData['speed_limit'];
-        $product->ip_limit            = $productData['ip_limit']        == '' ? NULL : $productData['ip_limit'];
-        $product->stock               = $productData['stock']           == '' ? NULL : $productData['stock'];
+        $product->speed_limit         = $productData['speed_limit'];
+        $product->ip_limit            = $productData['ip_limit'];
+        $product->stock               = $productData['stock'];
         $product->save();
 
         return $response->withJson([

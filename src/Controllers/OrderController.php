@@ -83,7 +83,7 @@ class OrderController extends BaseController
                     if (!$product->productPeriod($product_price)) {
                         throw new \Exception(I18n::get()->t('error request'));
                     }
-                    if (!is_null($product->stock) && $product->stock - $product->realTimeSales() <= 0) {
+                    if (($product->stock > 0) && $product->stock - $product->realTimeSales() <= 0) {
                         throw new \Exception(I18n::get()->t('sold'));
                     }
                     if ($user->product_id == $product->id) {                      
