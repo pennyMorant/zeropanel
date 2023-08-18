@@ -108,8 +108,7 @@
                                         <div class="card-header">
                                             <div class="card-title">商品介绍</div>
                                         </div>
-                                        <div class="card-body h-250px" id="custom_content">                                           
-                                        </div>
+                                        <div class="card-body h-250px" id="custom_content"></div>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +127,8 @@
 
             // code editor
             var editor = ace.edit("custom_content");
-            editor.setTheme("ace/theme/monokai");
+            const aceTheme = themeMode == 'light' ? 'github' : 'monokai';
+            editor.setTheme("ace/theme/"+aceTheme);
             editor.session.setMode("ace/mode/html");
             editor.setValue(`{$product->custom_content}`, -1);
 

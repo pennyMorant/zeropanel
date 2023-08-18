@@ -108,9 +108,7 @@
                                         <div class="card-header">
                                             <div class="card-title">商品介绍</div>
                                         </div>
-                                        <div class="card-body h-250px" id="custom_content">
-                                            
-                                        </div>
+                                        <div class="card-body h-250px" id="custom_content"></div>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +119,7 @@
             </div>
         </div>
         {include file='admin/script.tpl'}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js"></script>
         <script>
             function zeroAdminCreateProduct() {
                 $.ajax({
@@ -169,7 +167,8 @@
                 })
             }
             var editor = ace.edit("custom_content");
-            editor.setTheme("ace/theme/monokai");
+            const aceTheme = themeMode == 'light' ? 'github' : 'monokai';
+            editor.setTheme("ace/theme/"+aceTheme);
             editor.session.setMode("ace/mode/html");
         </script>
     </body>
