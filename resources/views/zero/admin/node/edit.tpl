@@ -260,6 +260,7 @@
         </div>
         {include file='admin/script.tpl'}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
+        <script src="/js/sodium.js" async></script>
         <script>
             function generateX25519Keys() {
                 const privateKey = sodium.crypto_box_keypair().privateKey;
