@@ -262,17 +262,38 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
         <script src="/js/sodium.js" async></script>
         <script>
-            function generateX25519Keys() {
-                const privateKey = sodium.crypto_box_keypair().privateKey;
-                const publicKey = sodium.crypto_box_keypair().publicKey;
+            function executeX25519(inputBase64) {
+    
+                let privateKey;
+                let publicKey;
 
+                // Decode privateKey from base64 if provided
+                if (inputBase64) {
+                    privateKey = sodium.from_base64(inputBase64, sodium.base64_variants.URLSAFE_NO_PADDING);
+                    if (privateKey.length !== sodium.crypto_scalarmult_SCALARBYTES) {
+                        console.error("Invalid length of private key.");
+                        return;
+                    }
+                } else {
+                    // Generate random privateKey if not provided
+                    privateKey = sodium.randombytes_buf(sodium.crypto_scalarmult_SCALARBYTES);
+
+                    // Adjust bytes according to the X25519 protocol
+                    privateKey[0] &= 248;
+                    privateKey[31] &= 127;
+                    privateKey[31] |= 64;
+                }
+
+                // Compute the publicKey
+                publicKey = sodium.crypto_scalarmult_base(privateKey);
+
+                // Output base64 encoded privateKey and publicKey
                 const privateKeyBase64 = sodium.to_base64(privateKey, sodium.base64_variants.URLSAFE_NO_PADDING);
                 const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.URLSAFE_NO_PADDING);
                 const keys = {
-                    'public_key': publicKeyBase64,
-                    'private_key': privateKeyBase64
+                    'private_key': privateKeyBase64,
+                    'public_key': publicKeyBase64
                 }
-                console.log(keys);
                 return keys;
             }
             function generateBase64Random() {
@@ -297,8 +318,9 @@
                 const jsonObj = JSON.parse(template);
                 
                 if ('reality_config' in jsonObj) {
-                    jsonObj['reality_config'].private_key = generateX25519Keys().private_key;
-                    jsonObj['reality_config'].public_key = generateX25519Keys().public_key;
+                    const keys = executeX25519();
+                    jsonObj['reality_config'].private_key = keys.private_key;
+                    jsonObj['reality_config'].public_key = keys.public_key;
                 }
                 if ('server_psk' in jsonObj) {
                     jsonObj.server_psk = generateBase64Random();
