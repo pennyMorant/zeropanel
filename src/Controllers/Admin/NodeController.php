@@ -171,6 +171,7 @@ class NodeController extends AdminController
         $node->name                          = $nodeData['name'];
         $node->node_group                    = $nodeData['node_group'];
         $node->server                        = trim($nodeData['server']);
+        $node->node_ip                       = $nodeData['node_ip'];
         $node->traffic_rate                  = $nodeData['traffic_rate'];
         $node->node_speedlimit               = $nodeData['node_speedlimit'];
         $node->node_type                     = $nodeData['node_type'];
