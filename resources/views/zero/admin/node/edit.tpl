@@ -230,7 +230,7 @@
         "0123456789abcdef"
         ],
         "fingerprint": "chrome",
-        "public_key": "p7F0X8cKdzexJuVxh4Pv5_VhUwOk-Y6YqFjpsalGvBc",
+        "public_key": "",
         "private_key": "",
         "server_names": [
         "bing.com",
