@@ -139,6 +139,9 @@ class OrderController extends BaseController
                     if ($amount <= 0) {
                         throw new \Exception(I18n::get()->t('amount should be greater than zero'));
                     }
+                    if ((string)(int)$amount != $amount) {
+                        throw new \Exception(I18n::get()->t('amount should be integer'));
+                    }
                     $order                 = new Order();
                     $order->order_no       = self::createOrderNo();
                     $order->user_id        = $user->id;

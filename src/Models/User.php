@@ -467,7 +467,7 @@ class User extends Model
         return $is_admin;
     }
 
-    public function createSubToken($length = 16)
+    public function createSubToken($length = 32)
     { 
         for ($i = 0; $i < 10; $i++) {
             $token = bin2hex(openssl_random_pseudo_bytes($length / 2));
