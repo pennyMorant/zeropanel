@@ -139,6 +139,9 @@
                                         <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0 active" id="ss_tab" data-bs-toggle="tab" data-bs-target="#ss">SS</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#ss_2022">SS-2022</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link btn btn-active-light btn-color-gray-600 btn-active-color-primary rounded-bottom-0" data-bs-toggle="tab" data-bs-target="#vmess_tcp">vmess+tcp</a>
                                     </li>
                                     <li class="nav-item">
@@ -162,6 +165,16 @@
                                 <pre>
 {
     "ss_encryption": "aes-256-gcm",
+    "offset_port_user": "30011",
+    "offset_port_node": "30011"
+}
+                                </pre>
+                            </div>
+                            <div class="tab-pane fade" id="ss_2022" role="tabpanel">
+                                <pre>
+{
+    "ss_encryption": "2022-blake3-aes-256-gcm",
+    "server_psk": "",
     "offset_port_user": "30011",
     "offset_port_node": "30011"
 }
@@ -248,6 +261,25 @@
         {include file='admin/script.tpl'}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
         <script>
+            function generateX25519Keys() {
+                const privateKey = sodium.crypto_box_keypair().privateKey;
+                const publicKey = sodium.crypto_box_keypair().publicKey;
+
+                const privateKeyBase64 = sodium.to_base64(privateKey, sodium.base64_variants.URLSAFE_NO_PADDING);
+                const publicKeyBase64 = sodium.to_base64(publicKey, sodium.base64_variants.URLSAFE_NO_PADDING);
+                const keys = {
+                    'public_key': publicKeyBase64,
+                    'private_key': privateKeyBase64
+                }
+                console.log(keys);
+                return keys;
+            }
+            function generateBase64Random() {
+                const randomValues = new Uint8Array(32);
+                window.crypto.getRandomValues(randomValues);
+                const base64String = btoa(String.fromCharCode(...randomValues));
+                return base64String;
+            }
             const container = document.getElementById('custom_config');
             var options = {
                 mode: 'text',
@@ -262,6 +294,14 @@
             $('#zero_modal_use_selected_template').on('click', function(){
                 const template = $('#zero_modal_node_template_content div.active pre').html();
                 const jsonObj = JSON.parse(template);
+                
+                if ('reality_config' in jsonObj) {
+                    jsonObj['reality_config'].private_key = generateX25519Keys().private_key;
+                    jsonObj['reality_config'].public_key = generateX25519Keys().public_key;
+                }
+                if ('server_psk' in jsonObj) {
+                    jsonObj.server_psk = generateBase64Random();
+                }
                 editor.set(jsonObj);
             });
         </script>
