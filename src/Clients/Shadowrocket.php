@@ -4,6 +4,7 @@ namespace App\Clients;
 
 use App\Models\Node;
 use App\Utils\Tools;
+use App\Models\Setting;
 
 class Shadowrocket
 {
@@ -27,7 +28,8 @@ class Shadowrocket
         $download = round($user->d / (1024*1024*1024), 2);
         $totalTraffic = round($user->transfer_enable / (1024*1024*1024), 2);
         $expiredDate = $user->class_expire;
-        $uri .= "STATUS=🚀↑:{$upload}GB,↓:{$download}GB,TOT:{$totalTraffic}GB💡Expires:{$expiredDate}\r\n";
+        $webName = Setting::obtain('website_name');
+        $uri .= "STATUS=🚀↑:{$upload}GB,↓:{$download}GB,TOT:{$totalTraffic}GB💡Expires:{$expiredDate}\r\nREMARKS={$webName}\r\n";
 
         foreach ($servers as $server) {
             $buildMethod = 'build' . ucfirst($server['type']);

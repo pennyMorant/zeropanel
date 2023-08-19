@@ -43,12 +43,24 @@ class NodeService
             $expire_date = substr($user->class_expire, 0, 10);
             $extend_node_1 = [
                 'remark' => "剩余流量:{$remaining_traffic}",
+                'address' => Setting::obtain('website_url'),
+                'port'  => 10000
             ];
             $extend_node_2 = [
                 'remark' => "到期时间:{$expire_date}",
+                'address' => Setting::obtain('website_url'),
+                'port'  => 10000
             ];
             array_unshift($servers, array_merge($servers[0], $extend_node_1));
             array_unshift($servers, array_merge($servers[0], $extend_node_2));
+        }
+        if (Setting::obtain('subscribe_diy_message')) {
+            $extend_node_3 = [
+                'remark' => Setting::obtain('subscribe_diy_message'),
+                'address' => Setting::obtain('website_url'),
+                'port'  => 10000
+            ];
+            array_unshift($servers, array_merge($servers[0], $extend_node_3));
         }
         return $servers;
     }
