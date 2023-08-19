@@ -390,7 +390,7 @@ CREATE TABLE `user` (
   `commission` decimal(12,2) NOT NULL DEFAULT 0.00 COMMENT '返利金额',
   `withdraw_account` varchar(50) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT 0 COMMENT '账户是否被验证',
-  `subscription_token` varchar(20) NOT NULL COMMENT '订阅token'
+  `subscription_token` varchar(36) NOT NULL COMMENT '订阅token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
