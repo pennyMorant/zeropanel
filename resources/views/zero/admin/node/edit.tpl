@@ -302,6 +302,22 @@
                 const base64String = btoa(String.fromCharCode(...randomValues));
                 return base64String;
             }
+            function generateRandomHex() {
+                let chars = '0123456789abcdef';
+                let result = '';
+                for (let i = 0; i < 16; i++) {
+                    let randomIndex = Math.floor(Math.random() * chars.length);
+                    result += chars[randomIndex];
+                }
+                return result;
+            }
+            function generate5ShortIDs() {
+                let shortids = [];
+                for (let i = 0; i < 5; i++) {
+                    shortids.push(generateRandomHex());
+                }
+                return shortids;
+            }
             const container = document.getElementById('custom_config');
             var options = {
                 mode: 'text',
@@ -321,6 +337,7 @@
                     const keys = executeX25519();
                     jsonObj['reality_config'].private_key = keys.private_key;
                     jsonObj['reality_config'].public_key = keys.public_key;
+                    jsonObj['reality_config']['short_ids'].push(...generate5ShortIDs());
                 }
                 if ('server_psk' in jsonObj) {
                     jsonObj.server_psk = generateBase64Random();
