@@ -160,7 +160,7 @@ class Node extends Model
         $config['flow']        = $custom_configs['reality_config']['flow'] ?? '';
         $config['path']        = $custom_configs['path'] ?? '';
         $config['host']        = $custom_configs['host'] ?? $custom_configs['reality_config']['server_names'][array_rand($custom_configs['reality_config']['server_names'])] ?? '';
-        $config['sni']         = $custom_configs['host'] ?? '';
+        $config['sni']         = $custom_configs['host'] ?? $config['host'];
         $config['pbk']         = $custom_configs['reality_config']['public_key'] ?? '';
         $config['sid']         = $custom_configs['reality_config']['short_ids'][array_rand($custom_configs['reality_config']['short_ids'])] ?? '';
         //$config['servername']  = $custom_configs['reality_config']['servernames'][array_rand($custom_configs['reality_config']['servernames'])] ?? '';
