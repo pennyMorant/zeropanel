@@ -175,9 +175,9 @@ class UserController extends AdminController
                 }
             },
         );
-              
+        
         $data = $query['datas']->map(function($rowData) {
-            $type = "'user'";
+            $subInfo = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$rowData->subscription_token}";
             return [
                 'id'           => $rowData->id,
                 'email'        => $rowData->email,
@@ -193,6 +193,7 @@ class UserController extends AdminController
                                         <li><a class="dropdown-item" href="user/update/{$rowData->id}">编辑</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('user', {$rowData->id})">删除</a></li>
                                         <li><a class="dropdown-item" type="button" onclick="zeroModalAdminCreateOrderForUser({$rowData->id})">分配订单</a></li>
+                                        <li><a class="dropdown-item copy-text" type="button" data-clipboard-text="{$subInfo}">复制订阅</a></li>
                                         </ul>
                                     </div>
                                 EOT,

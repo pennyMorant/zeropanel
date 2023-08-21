@@ -51,6 +51,12 @@ $(document).ready(function (){
     var target1 = parts[1];
     $("a.menu-link[href='/"+target1+"/"+target2+"']").addClass('active');
 });
+
+//clipboard
+var clipboard = new ClipboardJS('.copy-text');
+clipboard.on('success', function(e) {
+    getResult("复制成功", "", "success");
+});
 </script>
 <script>
     function zeroAdminDelete(type, id){
