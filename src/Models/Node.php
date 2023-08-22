@@ -186,7 +186,7 @@ class Node extends Model
         $config['security'] = $custom_configs['security'] ?? 'tls';
         $config['flow']     = $custom_configs['flow'] ?? '';
         $config['net']      = $custom_configs['network'] ?? '';
-        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
+        $config['insecure'] = $custom_configs['insecure'] ?? 'true';
 
         return $config;
     }

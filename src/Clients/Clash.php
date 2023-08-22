@@ -139,7 +139,8 @@ class Clash
             'port'     => $server['port'],
             'password' => $server['uuid'],
             'sni'      => $server['sni'],
-            'udp'      => true
+            'udp'      => true,
+            'skip-cert-verify' => $server['insecure']
         ];
 
         return $node_info;
