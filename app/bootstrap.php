@@ -6,7 +6,6 @@ define('BASE_PATH', __DIR__ . '/..');
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/.config.php';
-require __DIR__ . '/../config/.zeroconfig.php';
 require __DIR__ . '/../app/i18next.php';
 
 use App\Services\Boot;

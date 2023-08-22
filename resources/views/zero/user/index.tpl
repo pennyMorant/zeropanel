@@ -129,7 +129,7 @@
 													</div>
 												</div>
 												<div class="card-body d-flex flex-column pt-0">
-													<div id="zero_user_traffic_chart" data-kt-chart-color="success" style="height: 100px; min-height: 100px;"></div>
+													<div id="zero_user_traffic_chart" data-kt-chart-color="primary" style="height: 100px; min-height: 100px;"></div>
 												</div>
 											</div>
 											<div class="card card-flush h-250px">
@@ -157,7 +157,7 @@
 									</div>
 									<div class="row g-5 g-xl-10 mb-xl-10">
 										<div class="col-xxl-8">
-											<div class="card card-flush">
+											<div class="card card-flush h-350px">
 												<div class="card-header">
 													<div class="card-title">
 														<div class="fw-bolder text-dark fs-h3">
@@ -168,82 +168,74 @@
 													<div class="card-toolbar">
 														<ul class="nav">
 															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary active fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_1_1">Android</a>
+																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary active fw-bold px-4 me-1" data-bs-toggle="tab" href="#zero_user_doc_tab_android">Android</a>
 															</li>
 															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_2_2">IOS</a>
+																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#zero_user_doc_tab_ios">IOS</a>
 															</li>
 															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#kt_tab_pane_3_3">MACOS</a>
+																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4 me-1" data-bs-toggle="tab" href="#zero_user_doc_tab_macos">MACOS</a>
 															</li>
 															<li class="nav-item">
-																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4" data-bs-toggle="tab" href="#kt_tab_pane_4_4">Windows</a>
+																<a class="nav-link btn btn-sm btn-color-muted btn-active btn-active-light-primary fw-bold px-4" data-bs-toggle="tab" href="#zero_user_doc_tab_windows">Windows</a>
 															</li>
 														</ul>
 													</div>
 												</div>
-												<div class="card-body pt-0">
+												<div class="card-body pt-0 scroll">
 													<div class="tab-content mt-5">
-													<div class="tab-pane fade show active" id="kt_tab_pane_1_1">
-														{foreach $zeroconfig['client_android'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
+														<div class="tab-pane fade show active" id="zero_user_doc_tab_android">
+															{foreach $androidClients as $an}
+															<div class="d-flex align-items-center flex-wrap mb-8">
+																<div class="symbol symbol-30px symbol-md-40px symbol-light me-5">	
+																	<div class="symbol-label" style="background-image:url(/theme/zero/assets/media/app_logo/{$an->client}.png)"></div>
+																</div>
+																<div class="d-flex flex-column flex-grow-1 me-2">
+																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($an->client)}</a>
+																</div>
+																<a href="/user/tutorial?os=android&client={$an->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
-															<div class="d-flex flex-column flex-grow-1 me-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+															{/foreach}
 														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_2_2" role="tabpanel" aria-labelledby="kt_tab_pane_2_2">
-														{foreach $zeroconfig['client_ios'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
+														<div class="tab-pane fade" id="zero_user_doc_tab_ios" role="tabpanel" aria-labelledby="zero_user_doc_tab_ios">
+															{foreach $iosClients as $ios}
+															<div class="d-flex align-items-center flex-wrap mb-8">
+																<div class="symbol symbol-30px symbol-md-40px symbol-light me-5">
+																	<div class="symbol-label" style="background-image:url(/theme/zero/assets/media/app_logo/{$ios->client}.png)"></div>
+																</div>
+																<div class="d-flex flex-column flex-grow-1 mr-2">
+																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($ios->client)}</a>
+																</div>
+																<a href="/user/tutorial?os=ios&client={$ios->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+															{/foreach}
 														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_3_3" role="tabpanel" aria-labelledby="kt_tab_pane_3_3">
-														{foreach $zeroconfig['client_macos'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
+														<div class="tab-pane fade" id="zero_user_doc_tab_macos" role="tabpanel" aria-labelledby="zero_user_doc_tab_macos">
+															{foreach $macosClients as $mac}
+															<div class="d-flex align-items-center flex-wrap mb-8">
+																<div class="symbol symbol-30px symbol-md-40px symbol-light me-5">
+																	<div class="symbol-label" style="background-image:url(/theme/zero/assets/media/app_logo/{$mac->client}.png)"></div>
+																</div>
+																<div class="d-flex flex-column flex-grow-1 mr-2">
+																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($mac->client)}</a>
+																</div>
+																<a href="/user/tutorial?os=ios&client={$mac->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+															{/foreach}
 														</div>
-														{/foreach}
-													</div>
-													<div class="tab-pane fade" id="kt_tab_pane_4_4" role="tabpanel" aria-labelledby="kt_tab_pane_4_4">
-														{foreach $zeroconfig['client_windows'] as $c_w}
-														<div class="d-flex align-items-center flex-wrap mb-8">
-															<div class="symbol symbol-40px symbol-light me-5">
-																<span class="symbol-label">
-																	<img src="{$c_w['img']}" class="h-50 align-self-center" alt="">
-																</span>
+														<div class="tab-pane fade" id="zero_user_doc_tab_windows" role="tabpanel" aria-labelledby="zero_user_doc_tab_windows">
+															{foreach $windowsClients as $win}
+															<div class="d-flex align-items-center flex-wrap mb-8">
+																<div class="symbol symbol-40px symbol-light me-5">
+																	<div class="symbol-label" style="background-image:url(/theme/zero/assets/media/app_logo/{$win->client}.png)"></div>
+																</div>
+																<div class="d-flex flex-column flex-grow-1 mr-2">
+																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($win->client)}</a>
+																</div>
+																<a href="/user/tutorial?os=ios&client={$win->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
-															<div class="d-flex flex-column flex-grow-1 mr-2">
-																<a  class="fw-bold text-gray-800 fs-h5 mb-1">{$c_w['name']}</a>
-															</div>
-															<a href="{$c_w['url']}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+															{/foreach}
 														</div>
-														{/foreach}
-													</div>
 													</div>
 												</div>
 											</div>
@@ -260,7 +252,7 @@
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 1')|replace:'ZeroBoard':$config['website_name']}{$config['rebate_ratio']}%</span>                                               
                                                             <span class="fw-bold text-white fs-h6 mb-8 d-block opacity-75">{$trans->t('ref.content 2')}</span>                                                                                          
                                                             <div class="d-flex flex-column flex-sm-row">
-                                                                <a href="JavaScript:;" class="btn btn-success flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
+                                                                <a type="button" class="btn btn-primary flex-shrink-0 mr-2 fw-bold copy-text" data-clipboard-text="{$invite_url}">{$trans->t('ref.copy')}</a>
                                                             </div>                                                
                                                         </div>                                                                                        
                                                         <div class="col-5 pt-10">                                               

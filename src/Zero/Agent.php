@@ -9,9 +9,6 @@ use App\Models\{
     Withdraw,
     Setting
 };
-use App\Services\{
-    ZeroConfig
-};
 use App\Utils\{
     GA,
     Hash,

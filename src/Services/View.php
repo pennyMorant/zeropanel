@@ -31,7 +31,6 @@ class View
         // add config
 
         $smarty->assign('config', Setting::getPublicConfig());
-        $smarty->assign('zeroconfig', ZeroConfig::getPublicSetting());
         $smarty->assign('trans', I18n::get());
         $smarty->assign('user', $user);
         $smarty->assign('anns', Ann::orderBy('created_at', 'desc')->limit(3)->get());

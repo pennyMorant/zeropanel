@@ -28,9 +28,17 @@ class UserController extends BaseController
         }
         $invite_url = Setting::obtain('website_url') . '/auth/signup?code=' . $code->code;
         $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
+        $androidClients = Knowledge::where('platform', 'android')->get();
+        $iosClients = Knowledge::where('platform', 'ios')->get();
+        $windowsClients = Knowledge::where('platform', 'windows')->get();
+        $macosClients = Knowledge::where('platform', 'macos')->get();
         $this->view()
             ->assign('invite_url', $invite_url)
             ->assign('subInfo', $sub_url)
+            ->assign('androidClients', $androidClients)
+            ->assign('iosClients', $iosClients)
+            ->assign('windowsClients', $windowsClients)
+            ->assign('macosClients', $macosClients)
             ->display('user/index.tpl');
         return $response;
     }

@@ -83,7 +83,8 @@
                             <label class="form-label fw-bold" for="zero_admin_create_knowledge_client">客户端</label>
                             <select class="form-select mb-5" id="zero_admin_create_knowledge_client" value="" data-control="select2" data-hide-search="true" data-placeholder="选择客户端">
                                 <option></option>
-                                <option value="clash">Clash</option>>
+                                <option value="clash">Clash</option>
+                                <option value="singbox">SingBox</option>
                                 <option value="surge">Surge</option>
                                 <option value="sagernet">Sagernet</option>
                                 <option value="shadowrocket">Shadowrocket</option>
@@ -91,6 +92,7 @@
                                 <option value="v2rayn">V2rayN</option>
                                 <option value="qv2ray">Qv2ray</option>
                                 <option value="netch">Netch</option>
+                                <option value="stash">Stash</option>
                             </select>                         
                             <div id="zero_admin_create_knowledge_editor" class="d-flex flex-column">
                             </div>
