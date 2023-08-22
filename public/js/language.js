@@ -61,8 +61,12 @@ i18next.use(i18nextBrowserLanguageDetector).init({
 
 
 var lngHtml = {
-  en: '<span class="menu-title position-relative">Language<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>',
-  zh: '<span class="menu-title position-relative">语言<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">中文(简体)<img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/china.svg" alt="" /></span></span>',
+  en: `<span class="symbol symbol-20px">
+        <img class="w-20px h-20px rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+      </span>`,
+  zh: `<span class="symbol symbol-20px">
+        <img class="w-20px h-20px rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
+      </span>`,
 }
 if (getCookie('i18next') == 'zh-CN') {
   var browserLanguage = lngHtml.zh;

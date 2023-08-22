@@ -26,7 +26,7 @@
                             </div>
                             <div class="app-navbar flex-shrink-0">
                                 <div class="app-navbar-item ms-1 ms-lg-3">
-                                    <a href="#" class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    <a type="button" class="btn btn-icon btn-active-light-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                         <span class="svg-icon theme-light-show svg-icon-2">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.9905 5.62598C10.7293 5.62574 9.49646 5.9995 8.44775 6.69997C7.39903 7.40045 6.58159 8.39619 6.09881 9.56126C5.61603 10.7263 5.48958 12.0084 5.73547 13.2453C5.98135 14.4823 6.58852 15.6185 7.48019 16.5104C8.37186 17.4022 9.50798 18.0096 10.7449 18.2557C11.9818 18.5019 13.2639 18.3757 14.429 17.8931C15.5942 17.4106 16.5901 16.5933 17.2908 15.5448C17.9915 14.4962 18.3655 13.2634 18.3655 12.0023C18.3637 10.3119 17.6916 8.69129 16.4964 7.49593C15.3013 6.30056 13.6808 5.62806 11.9905 5.62598Z" fill="currentColor" />
@@ -102,19 +102,40 @@
                                 <!--
                                 <div class="app-navbar-item ms-1 ms-lg-3">
                                     <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
-                                        <i class="fonticon-alarm fs-2"></i>                                
+                                        <i class="fonticon-alarm"></i>                                
                                         <span class="position-absolute top-0 start-100 translate-middle  badge badge-circle badge-danger w-15px h-15px ms-n4 mt-3">{count($anns)}</span>                              
                                     </div>
                                 </div>
                                 -->
+                                <div class="app-navbar-item ms-1 ms-lg-3">
+                                    <a type="button" class="btn btn-icon btn-active-light-primary w-35px h-35px w-md-40px h-md-40px" id="zero_user_current_language" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">                                
+                                        <span class="symbol symbol-20px">
+                                            <img class="w-20px h-20px rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+                                        </span>
+                                    </a>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-muted menu-active-bg menu-state-color fw-semibold py-4 fs-base w-175px" data-kt-menu="true" data-kt-element="theme-mode-menu">
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link d-flex px-5 btn btn-active-light-primary" onclick="changeCurrentLanguage('en-US')">
+                                                <span class="symbol symbol-20px me-4">
+                                                    <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
+                                                </span>{$trans->t('english')}
+                                            </a>
+                                            <a href="#" class="menu-link d-flex px-5 btn btn-active-light-primary" onclick="changeCurrentLanguage('zh-CN')">
+                                                <span class="symbol symbol-20px me-4">
+                                                    <img class="rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
+                                                </span>{$trans->t('chinese')}
+                                            </a>
+                                        </div>											
+                                    </div>
+                                </div>
                                 <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
-                                    <div class="cursor-pointer symbol symbol-circle symbol-35px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                                        <img src="{$user->gravatar}" alt="gravatar" />
+                                    <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                        <img src="{$user->gravatar}" alt="" />
                                     </div>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
                                         <div class="menu-item px-3">
                                             <div class="menu-content d-flex align-items-center px-3">
-                                                <div class="symbol symbol-circle symbol-50px me-5">
+                                                <div class="symbol symbol-50px me-5">
                                                     <img alt="gravatar" src="{$user->gravatar}" />
                                                 </div>
                                                 <div class="d-flex flex-column">
@@ -124,27 +145,6 @@
                                             </div>
                                         </div>
                                         <div class="separator my-2"></div>
-                                        <div class="menu-item px-5" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-offset="-15px, 0">
-                                            <a href="#" class="menu-link px-5" id="zero_user_current_language">
-                                                <span class="menu-title position-relative">{$trans->t('language')}
-                                                <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-                                                <img class="w-15px h-15px rounded-1 ms-2" src="/theme/zero/assets/media/flags/united-states.svg" alt="" /></span></span>
-                                            </a>
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('en-US')">
-                                                        <span class="symbol symbol-20px me-4">
-                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
-                                                        </span>{$trans->t('english')}
-                                                    </a>
-                                                    <a href="#" class="menu-link d-flex px-5" onclick="changeCurrentLanguage('zh-CN')">
-                                                        <span class="symbol symbol-20px me-4">
-                                                            <img class="rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
-                                                        </span>{$trans->t('chinese')}
-                                                    </a>
-                                                </div>											
-                                            </div>
-                                        </div>
                                         <div class="menu-item px-5">
                                             <a href="/user/logout" class="menu-link px-5 fw-bold">{$trans->t('signout')}</a>
                                         </div>
