@@ -137,7 +137,7 @@ class Node extends Model
         $config['sni']         = $custom_configs['host'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['service_name'] ?? '';
-        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
+        $config['insecure']    = $custom_configs['insecure'] ?? true;
         }
         return $config;
     }
@@ -167,7 +167,7 @@ class Node extends Model
         $config['fp']          = $custom_configs['reality_config']['fingerprint'] ?? '';
         $config['headertype']  = $custom_configs['header']['type'] ?? '';
         $config['servicename'] = $custom_configs['service_name'] ?? '';
-        $config['insecure']    = $custom_configs['insecure'] ?? 'true';
+        $config['insecure']    = $custom_configs['insecure'] ?? true;
         return $config;
     }
 
@@ -186,7 +186,7 @@ class Node extends Model
         $config['security'] = $custom_configs['security'] ?? 'tls';
         $config['flow']     = $custom_configs['flow'] ?? '';
         $config['net']      = $custom_configs['network'] ?? '';
-        $config['insecure'] = $custom_configs['insecure'] ?? 'true';
+        $config['insecure'] = $custom_configs['insecure'] ?? true;
 
         return $config;
     }

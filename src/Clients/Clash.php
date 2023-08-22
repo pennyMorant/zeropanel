@@ -115,7 +115,7 @@ class Clash
             'servername'       => $server['host'],
             'network'          => $server['net'],
             'tls'              => $tls,
-            'skip-cert-verify' => $server['insecure'],
+            'skip-cert-verify' => (bool)$server['insecure'],
             'ws-opts'          => [
                 'path'    => $server['path'],
                 'headers' => [
@@ -140,7 +140,7 @@ class Clash
             'password' => $server['uuid'],
             'sni'      => $server['sni'],
             'udp'      => true,
-            'skip-cert-verify' => $server['insecure']
+            'skip-cert-verify' => (bool)$server['insecure']
         ];
 
         return $node_info;
