@@ -233,39 +233,5 @@
     "coupon failed": "优惠券使用失败",
     "language": "语言",
     "english": "英语",
-    "chinese": "中文(简体)",
-    "tutorial": {
-        "android": {
-            "clash": {
-                "text_0": "Clash for Android 使用教程",
-                "text_1": "0. 简介",
-                "text_2": "是一款用 Go语言 开发的支持 Linux/MacOS/Windows/Android 等多平台的代理工具，支持 ss/v2ray（不支持 ssr），支持规则分流（类似于 Surge 的配置）。",
-                "text_3": "由于客户端长期更新中可能出现界面或功能与教程不符，我们建议您把本教程仅作为参考，具体需要根据自己使用过程中熟悉了解。",
-                "text_4": "1. 下载客户端",
-                "text_5": "下载 Clash 客户端",
-                "text_6": "下载客户端并进行安装, 启动客户端并进行下面操作",
-                "text_7": "2. 设置订阅地址",
-                "text_8": "Clash 订阅配置",
-                "text_9": "复制 Clash 订阅",
-                "text_10": "一键导入 Clash 订阅",
-                "text_11": "点击上方按钮一键导入节点配置到Clash，文件名填入<code> 任意名称即可 </code>，然后点击右上角的<code> √ </code> 完成导入。再次打开软件，进入 <code> 配置文件 </code> 选中刚刚导入的节点配置。",
-                "text_12": "3. 开启代理并选择节点",
-                "text_13": "点击 <code> 已停止 </code> 按钮将状态切换至<code> 运行中 </code>，点击<code> 控制面板 </code>按钮进入节点配置界面，根据规则设置节点即可。"
-            },
-            "surfboard": {
-                "text_0": "Surfboard 使用教程",
-                "text_1": "0. 简介",
-                "text_2": "是一款采用 Surge 规则 开发的 Android 客户端",
-                "text_3": "由于客户端长期更新中可能出现界面或功能与教程不符，我们建议您把本教程仅作为参考，具体需要根据自己使用过程中熟悉了解。",
-                "text_4": "1. 下载客户端",
-                "text_5": "下载 Surfboard 客户端",
-                "text_6": "下载客户端并进行安装, 启动客户端并进行下面操作",
-                "text_7": "2. 设置订阅地址",
-                "text_8": "Surfboard 订阅配置",
-                "text_9": "复制 Surfboard 订阅",
-                "text_10": "一键导入 Surfoard 订阅",
-                "text_11": "点击上方按钮一键导入节点配置到Surfboard。手机将自动打开 Surfboard , 且自动下载订阅配置。等待数秒后，完成下载。根据规则设置节点即可"
-            }
-        }
-    }
+    "chinese": "中文(简体)"
 }
