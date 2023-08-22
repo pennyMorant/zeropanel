@@ -60,27 +60,20 @@ i18next.use(i18nextBrowserLanguageDetector).init({
   });
 
 
-var lngHtml = {
-  en: `<span class="symbol symbol-20px">
-        <img class="w-20px h-20px rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
-      </span>`,
-  zh: `<span class="symbol symbol-20px">
-        <img class="w-20px h-20px rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
-      </span>`,
-}
 if (getCookie('i18next') == 'zh-CN') {
-  var browserLanguage = lngHtml.zh;
+  $(`[onclick="changeCurrentLanguage('zh-CN')"]`).addClass('active');
 } else if (getCookie('i18next') == 'en-US') {
-  var browserLanguage = lngHtml.en;
+  $(`[onclick="changeCurrentLanguage('en-US')"]`).addClass('active');
 } else {
   if (navigator.language == 'zh-CN') {
-    var browserLanguage = lngHtml.zh;
+    $(`[onclick="changeCurrentLanguage('zh-CN')"]`).addClass('active');
   } else {
-    var browserLanguage = lngHtml.en;
+    $(`[onclick="changeCurrentLanguage('en-US')"]`).addClass('active');
   }
 }
-document.getElementById('zero_user_current_language').innerHTML = browserLanguage;
+
 function changeCurrentLanguage(lng) {
   document.cookie = "i18next=" + lng;
+  //$(`[onclick="changeCurrentLanguage(${lng})"]`).addClass('active');
   location.reload();
 }

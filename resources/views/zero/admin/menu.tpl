@@ -51,7 +51,7 @@
 								</a>
 								<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-muted menu-active-bg menu-state-color fw-semibold py-4 fs-base w-175px" data-kt-menu="true" data-kt-element="theme-mode-menu">
 									<div class="menu-item px-3 my-0">
-										<a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="light">
+										<a href="#" class="menu-link px-3 py-2 btn btn-active-light-primary" data-kt-element="mode" data-kt-value="light">
 											<span class="menu-icon" data-kt-element="icon">
 												<span class="svg-icon svg-icon-3">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +71,7 @@
 										</a>
 									</div>
 									<div class="menu-item px-3 my-0">
-										<a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="dark">
+										<a href="#" class="menu-link px-3 py-2 btn btn-active-light-primary" data-kt-element="mode" data-kt-value="dark">
 											<span class="menu-icon" data-kt-element="icon">
 												<span class="svg-icon svg-icon-3">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +86,7 @@
 										</a>
 									</div>
 									<div class="menu-item px-3 my-0">
-										<a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="system">
+										<a href="#" class="menu-link px-3 py-2 btn btn-active-light-primary" data-kt-element="mode" data-kt-value="system">
 											<span class="menu-icon" data-kt-element="icon">
 												<span class="svg-icon svg-icon-3">
 													<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
