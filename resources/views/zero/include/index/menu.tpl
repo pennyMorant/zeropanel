@@ -112,18 +112,20 @@
                                         <i class="bi bi-translate fs-2"></i>
                                     </a>
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-muted menu-active-bg menu-state-color fw-semibold py-4 fs-base w-175px" data-kt-menu="true" data-kt-element="theme-mode-menu">
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link d-flex px-5 btn btn-active-light-primary" onclick="changeCurrentLanguage('en-US')">
+                                        <div class="menu-item px-3 my-0">
+                                            <a href="#" class="menu-link px-3 py-2 btn btn-active-light-primary" onclick="changeCurrentLanguage('en-US')">
                                                 <span class="symbol symbol-20px me-4">
                                                     <img class="rounded-1" src="/theme/zero/assets/media/flags/united-states.svg" alt="" />
                                                 </span>{$trans->t('english')}
                                             </a>
-                                            <a href="#" class="menu-link d-flex px-5 btn btn-active-light-primary" onclick="changeCurrentLanguage('zh-CN')">
+                                        </div>	
+                                        <div class="menu-item px-3 my-0">
+                                            <a href="#" class="menu-link px-3 py-2 btn btn-active-light-primary" onclick="changeCurrentLanguage('zh-CN')">
                                                 <span class="symbol symbol-20px me-4">
                                                     <img class="rounded-1" src="/theme/zero/assets/media/flags/china.svg" alt="" />
                                                 </span>{$trans->t('chinese')}
                                             </a>
-                                        </div>											
+                                        </div>										
                                     </div>
                                 </div>
                                 <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
