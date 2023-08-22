@@ -110,7 +110,6 @@ return function (SlimApp $app) {
             $user->delete('/delete',              UserController::class . ':deleteUser');
             $user->post('/ajax',                  UserController::class . ':ajax');
             $user->post('/create',                UserController::class . ':createNewUser');
-            $user->post('/buy',                   UserController::class . ':buy');
             $user->put('/update/status/{type}',   UserController::class . ':updateUserStatus');
         });
 

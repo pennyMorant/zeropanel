@@ -189,11 +189,12 @@ class UserController extends AdminController
                 'enable'       => $rowData->enable(),
                 'action'       => <<<EOT
                                     <div class="btn-group dropstart"><a class="btn btn-light-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false">操作</a>
-                                        <ul    class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="user/update/{$rowData->id}">编辑</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('user', {$rowData->id})">删除</a></li>
-                                        <li><a class="dropdown-item" type="button" onclick="zeroModalAdminCreateOrderForUser({$rowData->id})">分配订单</a></li>
-                                        <li><a class="dropdown-item copy-text" type="button" data-clipboard-text="{$subInfo}">复制订阅</a></li>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="user/update/{$rowData->id}">编辑</a></li>
+                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminDelete('user', {$rowData->id})">删除</a></li>
+                                            <li><a class="dropdown-item" type="button" onclick="zeroModalAdminCreateOrderForUser({$rowData->id})">分配订单</a></li>
+                                            <li><a class="dropdown-item copy-text" type="button" data-clipboard-text="{$subInfo}">复制订阅</a></li>
+                                            <li><a class="dropdown-item" type="button" onclick="zeroAdminUpdateUserStatus('reset_sub', {$rowData->id})">重置订阅和UUID</a></li>
                                         </ul>
                                     </div>
                                 EOT,
@@ -221,7 +222,12 @@ class UserController extends AdminController
                 break;
             case 'is_admin':
                 $user->is_admin = $is_admin;
-                break;  
+                break;
+            case 'reset_sub':
+                $user->subscription_token = $user->createSubToken();
+                $user->uuid = $user->createUUID(time());
+                $user->passwd = $user->createShadowsocksPasswd();
+                break;
         }
         $user->save();
         return $response->withJson([

@@ -178,7 +178,7 @@
             })
         </script>
         <script>
-            function updateUserStatus(type, id){
+            function zeroAdminUpdateUserStatus(type, id){
                 switch (type){
                     case 'enable':
                         var enable = $("#user_enable_"+id).prop("checked") ? 1 : 0;
@@ -206,6 +206,19 @@
                             success: function(data){}
                         });
                         break;
+                    case 'reset_sub':
+                        $.ajax({
+                            type: "PUT",
+                            url: "/{$config['website_admin_path']}/user/update/status/reset_sub",
+                            dataType: "JSON",
+                            data:{
+                                id
+                            },
+                            success: function(data) {
+                                getResult('成功', '', 'success');
+                                
+                            }
+                        });
                 }
             }
         </script>

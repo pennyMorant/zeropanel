@@ -437,14 +437,18 @@ class User extends Model
     {
         switch ($this->enable) {
             case 0:
-                $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" onclick="updateUserStatus(\'enable\', '.$this->id.')" />
-                            </div>';
+                $enable = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_{$this->id}" onclick="zeroAdminUpdateUserStatus('enable', {$this->id})" />
+                            </div>
+                            EOT;
                 break;
             case 1:
-                $enable = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_enable_'.$this->id.'" checked="checked" onclick="updateUserStatus(\'enable\', '.$this->id.')" />
-                            </div>';
+                $enable = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="user_enable_{$this->id}" checked="checked" onclick="zeroAdminUpdateUserStatus('enable', {$this->id})" />
+                            </div>
+                            EOT;
                 break;
         }
         return $enable;
@@ -454,14 +458,18 @@ class User extends Model
     {
         switch ($this->is_admin) {
             case 0:
-                $is_admin = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" onclick="updateUserStatus(\'is_admin\', '.$this->id.')" />
-                            </div>';
+                $is_admin = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_{$this->id}" onclick="zeroAdminUpdateUserStatus('is_admin', {$this->id})" />
+                            </div>
+                            EOT;
                 break;
             case 1:
-                $is_admin = '<div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_'.$this->id.'" checked="checked" onclick="updateUserStatus(\'is_admin\', '.$this->id.')" />
-                            </div>';
+                $is_admin = <<<EOT
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="user_is_admin_{$this->id}" checked="checked" onclick="zeroAdminUpdateUserStatus('is_admin', {$this->id})" />
+                            </div>
+                            EOT;
                 break;
         }
         return $is_admin;
