@@ -29,29 +29,20 @@
                                     <div class="card">
                                         <div class="card-body">
 											<div class="mb-9">
-												<div class="accordion" id="zero_accordion_ticket">
-													<div class="accordion-item">
-														<div class="accordion-header" id="zero_accordion_ticket_header">
-															<button class="accordion-button fs-4 fw-semibold" type="button"  data-bs-toggle="collapse" data-bs-target="#zero_accordion_ticket_body" aria-expanded="true" aria-controls="zero_accordion_ticket_body">
-																{$trans->t('reply')}
-															</button>
-														</div>
-														<div class="accordion-collapse collapse show" id="zero_accordion_ticket_body" aria-labelledby="zero_accordion_ticket_header" data-bs-parent="#zero_accordion_ticket">
-															<div class="accordion-body">
-																<textarea id="zero_reply_ckeditor_classic" name="zero_reply_ckeditor_classic">
-																</textarea>
-																<div class="d-flex align-items-center mt-5">
-																	<button class="btn btn-primary" type="submit" data-kt-users-action="submit" onclick="KTUsersTicket('reply_ticket', {$ticket->id}, 1)">
-																		<span class="indicator-label">{$trans->t('submit')}</span>
-																		<span class="indicator-progress">{$trans->t('please wait')}
-																		<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-																	</button>
-																</div>
-															</div>
-															
-														</div>
-													</div>
-												</div>
+                                                <form class="rounded border mt-10">
+                                                    <div class="d-block">
+                                                        <div id="zero_user_ticket_editor" class="border-0 h-250px px-3"></div>
+                                                    </div>
+                                                    <div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+                                                        <div class="d-flex align-items-center me-3">
+                                                            <button class="btn btn-primary fs-bold px-6" data-kt-users-action="submit" onclick="KTUsersTicket('reply_ticket', {$ticket->id}, 1)">
+                                                                <span class="indicator-label">{$trans->t('submit')}</span>
+                                                                <span class="indicator-progress">{$trans->t('please wait')}
+                                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
 											</div>
 												
 										{foreach $comments as $comment}
@@ -94,19 +85,19 @@
             </div>
         </div>
         {include file='include/global/scripts.tpl'}
-		<script src="/js/ckeditor.js"></script>
-<script>
-var editors;
-ClassicEditor
-    .create(document.getElementById('zero_reply_ckeditor_classic'), {
-        toolbar: [ 'heading', 'bold', 'italic', 'link', 'undo', 'redo']
-    })
-    .then(editor => {
-        editors = editor;
-    })
-    .catch(error => {
-        console.error(error);
-    });
-</script>
+		<script>
+			var quill = new Quill("#zero_user_ticket_editor", {
+				modules: {
+					toolbar: [
+						[{
+							header: [1, 2, !1]
+						}],
+						["bold", "italic", "underline"],
+					]
+				},
+				placeholder: "",
+				theme: "snow"
+   			});
+		</script>
     </body>
 </html>

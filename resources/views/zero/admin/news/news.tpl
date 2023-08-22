@@ -69,10 +69,10 @@
                             <h1 class="mb-3">创建公告</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2" for="zero_modal_create_news_ckeditor_classic">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_admin_news_create_editor">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
-                            <textarea id="zero_modal_create_news_ckeditor_classic" name="zero_modal_create_news_ckeditor_classic"></textarea>
+                            <div id="zero_admin_news_create_editor" class="h-250px scroll"></div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
@@ -107,10 +107,10 @@
                             <h1 class="mb-3">更新公告</h1>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-semibold mb-2">
+                            <label class="fs-6 fw-semibold mb-2" for="zero_admin_news_update_editor">
                                 <span class="required">{$trans->t('details')}</span>
                             </label>
-                            <textarea id="zero_modal_update_news_ckeditor_classic" name="zero_modal_update_news_ckeditor_classic"></textarea>
+                            <div id="zero_admin_news_update_editor" class="h-250px scroll"></div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
@@ -127,46 +127,36 @@
         {include file='admin/script.tpl'}
         <script src="/js/ckeditor.js"></script>
         <script>
-            var create_news_editors;
-            ClassicEditor
-                .create(document.getElementById('zero_modal_create_news_ckeditor_classic'), {
-                    toolbar: [
-                        'heading', 
-                        '|',
-                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
-                        '|',
-                        'outdent', 'indent',
-                        '|',
-                        'undo', 'redo'
-                    ]
-                })
-                .then(editor => {
-                    create_news_editors = editor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        </script>
+			var createNewsEditor = new Quill("#zero_admin_news_create_editor", {
+				modules: {
+					toolbar: [
+						[{
+							header: [1, 2, !1]
+						}],
+						["bold", "italic", "underline"],
+                        ["code"],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+					]
+				},
+				placeholder: "",
+				theme: "snow"
+   			});
+		</script>
         <script>
-            var update_news_editors;
-            ClassicEditor
-                .create(document.getElementById('zero_modal_update_news_ckeditor_classic'), {
-                    toolbar: [
-                        'heading', 
-                        '|',
-                        'bold', 'italic', 'link', 'bulletedList', 'numberedList',
-                        '|',
-                        'outdent', 'indent',
-                        '|',
-                        'undo', 'redo'
-                    ]
-                })
-                .then(editor => {
-                    update_news_editors = editor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            var updateNewsEditor = new Quill("#zero_admin_news_update_editor", {
+				modules: {
+					toolbar: [
+						[{
+							header: [1, 2, !1]
+						}],
+						["bold", "italic", "underline"],
+                        ["code"],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+					]
+				},
+				placeholder: "",
+				theme: "snow"
+   			});
         </script>
         <script>
             window.addEventListener('load', () => {
@@ -178,7 +168,7 @@
                 const submitButton = document.querySelector('[data-kt-admin-create-news-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
-                var text = create_news_editors.getData();
+                var text = createNewsEditor.root.innerHTML;
                 setTimeout(function () {
                     $.ajax({
                         type: "POST",
@@ -219,7 +209,7 @@
                                 id,
                             },
                             success: function(data){
-                                update_news_editors.data.set(data.content);
+                                updateNewsEditor.clipboard.dangerouslyPasteHTML(data.content);
                                 submitButton.setAttribute('onclick', 'zeroAdminUpdateNews("update", '+data.id+')')
                                 $('#zero_modal_update_news').modal('show');
                             }
@@ -228,7 +218,7 @@
                     case 'update':
                         submitButton.setAttribute('data-kt-indicator', 'on');
                         submitButton.disabled = true;
-                        var text = update_news_editors.getData();
+                        var text = updateNewsEditor.root.innerHTML;
                         setTimeout(function () {
                             $.ajax({
                                 type: "PUT",

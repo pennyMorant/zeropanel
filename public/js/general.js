@@ -380,7 +380,7 @@ function KTUsersTicket(type, id, status) {
     const submitButton = document.querySelector('[data-kt-users-action="submit"]');
     submitButton.setAttribute('data-kt-indicator', 'on');
     submitButton.disabled = true;
-    var text = editors.getData();
+    var text = quill.root.innerHTML;
     switch (type) {
         case 'create_ticket':
             setTimeout(function () {
@@ -389,9 +389,9 @@ function KTUsersTicket(type, id, status) {
                     url: "/user/ticket/create",
                     dataType: "json",
                     data: {
-                        title: $("#zero_create_ticket_title").val(),
+                        title: $("#zero_user_create_ticket_title").val(),
                         comment: text,
-                        type: $("#zero_create_ticket_type").val()
+                        type: $("#zero_user_create_ticket_type").val()
                     },
                     success: function (data) {
                         if (data.ret == 1) {

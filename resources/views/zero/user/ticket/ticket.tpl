@@ -72,8 +72,6 @@
                 </div>
             </div>
         </div>
-        {include file='include/global/scripts.tpl'}
-		<script src="/js/ckeditor.js"></script>
 		<!-- create ticket modal -->
 		<div class="modal fade" id="zero_modal_create_ticket" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog modal-xl modal-dialog-centered">
@@ -94,54 +92,52 @@
 						<div class="mb-13 text-center">
 							<h1 class="mb-3">{$trans->t('create ticket')}</h1>
 						</div>
-						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_title">
-								<span class="required">{$trans->t('subject')}</span>
-							</label>
-							<input type="text" class="form-control form-control-solid" placeholder="{$trans->t('subject')}" id="zero_create_ticket_title">
-						</div>
-						<div class="d-flex flex-column mb-8">
-							<label class="d-flex align-items-center fs-6 fw-semibold mb-2" for="zero_create_ticket_type">
-								<span class="required">工单类型</span>
-							</label>
-							<select id="zero_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true">
-								<option value="support">支持</option>
-								<option value="account">账户</option>
-								<option value="billing">账单</option>
-								<option value="sales">销售</option>
-							</select>
-						</div>
-						<div class="d-flex flex-column mb-8">
-							<label class="fs-6 fw-semibold mb-2" for="zero_modal_create_ticket_ckeditor_classic">
-								<span class="required">{$trans->t('details')}</span>
-							</label>
-							<textarea id="zero_modal_create_ticket_ckeditor_classic" name="zero_modal_create_ticket_ckeditor_classic"></textarea>
-						</div>
-						<div class="d-flex flex-center flex-row-fluid pt-12">
-							<button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
-							<button type="submit" class="btn btn-primary" data-kt-users-action="submit" onclick="KTUsersTicket('create_ticket')">
-								<span class="indicator-label">{$trans->t('submit')}</span>
-								<span class="indicator-progress">{$trans->t('please wait')}
-								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-							</button>
-						</div>
+						<form class="rounded border mt-10">
+							<div class="d-block">
+								<div class="border-bottom">
+									<select id="zero_user_create_ticket_type" class="form-select" data-control="select2" data-hide-search="true" data-placeholder="工单类型">
+										<option></option>
+										<option value="support">支持</option>
+										<option value="account">账户</option>
+										<option value="billing">账单</option>
+										<option value="sales">销售</option>
+									</select>
+								</div>															
+								<div class="border-bottom">
+									<input class="form-control border-0 px-8 min-h-45px" id="zero_user_create_ticket_title" placeholder="{$trans->t('subject')}" />
+								</div>
+								<div id="zero_user_ticket_editor" class="border-0 h-250px px-3"></div>
+							</div>
+							<div class="d-flex flex-stack flex-wrap gap-2 py-5 ps-8 pe-5 border-top">
+								<div class="d-flex align-items-center me-3">
+									<button class="btn btn-primary fs-bold px-6" data-kt-users-action="submit" onclick="KTUsersTicket('create_ticket')">
+										<span class="indicator-label">{$trans->t('submit')}</span>
+										<span class="indicator-progress">{$trans->t('please wait')}
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+									</button>
+								</div>
+							</div>
+						</form>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		{include file='include/global/scripts.tpl'}
+		<script>
+			var quill = new Quill("#zero_user_ticket_editor", {
+				modules: {
+					toolbar: [
+						[{
+							header: [1, 2, !1]
+						}],
+						["bold", "italic", "underline"],
+					]
+				},
+				placeholder: "",
+				theme: "snow"
+   			});
+		</script>
 
-<script>
-var editors;
-ClassicEditor
-    .create(document.getElementById('zero_modal_create_ticket_ckeditor_classic'), {
-		toolbar: [ 'heading', 'bold', 'italic', 'link', 'undo', 'redo']
-	})
-    .then(editor => {
-        editors = editor;
-    })
-    .catch(error => {
-        console.error(error);
-    });
-</script>
     </body>
 </html>
