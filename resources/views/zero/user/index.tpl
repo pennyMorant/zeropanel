@@ -219,7 +219,7 @@
 																<div class="d-flex flex-column flex-grow-1 mr-2">
 																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($mac->client)}</a>
 																</div>
-																<a href="/user/tutorial?os=ios&client={$mac->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+																<a href="/user/tutorial?os=macos&client={$mac->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
 															{/foreach}
 														</div>
@@ -232,7 +232,7 @@
 																<div class="d-flex flex-column flex-grow-1 mr-2">
 																	<a  class="fw-bold text-gray-800 fs-h5 mb-1">{ucfirst($win->client)}</a>
 																</div>
-																<a href="/user/tutorial?os=ios&client={$win->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
+																<a href="/user/tutorial?os=windows&client={$win->client}" class="badge badge-light-primary my-lg-0 my-2  fw-bolde fs-5">{$trans->t('view')}</a>
 															</div>
 															{/foreach}
 														</div>
