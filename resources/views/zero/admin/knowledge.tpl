@@ -79,9 +79,10 @@
                                 <option value="android">Android</option>
                                 <option value="ios">IOS</option>
                                 <option value="macos">MACOS</option>
+                                <option value="others">Others</option>
                             </select>
-                            <label class="form-label fw-bold" for="zero_admin_knowledge_client">客户端</label>
-                            <select class="form-select mb-5" id="zero_admin_knowledge_client" value="" data-control="select2" data-hide-search="true" data-placeholder="选择客户端">
+                            <label class="form-label fw-bold" for="zero_admin_knowledge_client">客户端<i class="bi bi-question-octagon mx-3" data-bs-toggle="tooltip" title="当选项中没有你需要的选择时，你可以直接在搜索框输入你需要的值。请注意，输入的值必须是全部小写，且不包含任何特殊符合"></i></label>
+                            <select class="form-select mb-5" id="zero_admin_knowledge_client" value="" data-control="select2" data-hide-search="false" data-dropdown-parent="#zero_admin_modal_knowledge" data-placeholder="选择客户端" data-tags="true">
                                 <option></option>
                                 <option value="clash">Clash</option>
                                 <option value="singbox">SingBox</option>
@@ -111,7 +112,6 @@
         </div>
 
         {include file='admin/script.tpl'}
-        <script src="/js/ckeditor.js"></script>
         <script>
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}

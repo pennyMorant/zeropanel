@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{$config["website_name"]} Sagernet</title>
+        <title>{$config["website_name"]}</title>
         
         <meta charset="UTF-8" />
         <meta name="renderer" content="webkit" />

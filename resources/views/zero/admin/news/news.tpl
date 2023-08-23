@@ -124,8 +124,6 @@
                 </div>
             </div>
         </div>
-        {include file='admin/script.tpl'}
-        <script src="/js/ckeditor.js"></script>
         <script>
 			var createNewsEditor = new Quill("#zero_admin_news_create_editor", {
 				modules: {

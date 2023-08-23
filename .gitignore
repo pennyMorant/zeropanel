@@ -19,12 +19,12 @@ config/.config.php
 config/.config.php.bak
 config/appprofile.php
 config/ClientDownloadVersion.json
-
-public/ssr-download/
 public/clients/
-
-
-
+resources/vies/zero/user/knowledge/android/*
+resources/vies/zero/user/knowledge/ios/*
+resources/vies/zero/user/knowledge/macos/*
+resources/vies/zero/user/knowledge/windows/*
+resources/vies/zero/user/knowledge/others/*
 storage/framework/smarty/cache/*
 storage/framework/smarty/compile/*
 storage/framework/views/*

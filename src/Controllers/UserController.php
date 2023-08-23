@@ -48,6 +48,11 @@ class UserController extends BaseController
         $opts           = $request->getQueryParams();
         $opts['os']     = str_replace(' ','',$opts['os']);
         $opts['client'] = str_replace(' ','',$opts['client']);
+        $dir = dirname(__DIR__, 2)."/resources/views/zero/user/knowledge/{$opts['os']}/{$opts['client']}.tpl";
+        if (!file_exists($dir)) {
+            $template = file_get_contents(dirname(__DIR__, 2)."/resources/views/zero/user/knowledge/template.tpl");
+            file_put_contents($dir, $template);
+        }
         $knowledges = Knowledge::where('client', $opts['client'])->where('platform', $opts['os'])->get();
         $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         if ($opts['os'] != '' && $opts['client'] != '') {
