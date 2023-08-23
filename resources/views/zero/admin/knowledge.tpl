@@ -95,8 +95,7 @@
                                 <option value="netch">Netch</option>
                                 <option value="stash">Stash</option>
                             </select>                         
-                            <div id="zero_admin_knowledge_editor" class="h-250px scroll">
-                            </div>
+                            <div id="zero_admin_knowledge_editor" class="h-250px scroll"></div>
                         </div>
                         <div class="d-flex flex-center flex-row-fluid pt-12">
                             <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal">{$trans->t('discard')}</button>
