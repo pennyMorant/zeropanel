@@ -43,7 +43,7 @@ class UserController extends BaseController
         return $response;
     }
     
-    public function tutorial(ServerRequest $request, Response $response, array $args)
+    public function knowledge(ServerRequest $request, Response $response, array $args)
     {
         $opts           = $request->getQueryParams();
         $opts['os']     = str_replace(' ','',$opts['os']);

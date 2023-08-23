@@ -15,7 +15,7 @@ use App\Zero\Agent;
 return function (App $app) {
     $app->group('/user', function (Group $group) {
         $group->get('/dashboard',                       UserController::class . ':index');
-        $group->get('/tutorial',                        UserController::class . ':tutorial');
+        $group->get('/knowledge',                       UserController::class . ':knowledge');
         $group->get('/referral',                        UserController::class . ':referral');
         $group->get('/profile',                         UserController::class . ':profile');
         $group->get('/record',                          UserController::class . ':record');
