@@ -112,32 +112,22 @@
         </div>
 
         {include file='admin/script.tpl'}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.6/ace.js"></script>
         <script>
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
             });
 
-            var knowledgeEditor = new Quill("#zero_admin_knowledge_editor", {
-                modules: {
-                    toolbar: [
-                        [{
-                            header: [1, 2, !1]
-                        }],
-                        ["bold", "italic", "underline"],
-                        ["code"],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ]
-                },
-                placeholder: "",
-                theme: "snow"
-            });
-        </script>
-        <script>
+            var editor = ace.edit("zero_admin_knowledge_editor");
+            const aceTheme = themeMode == 'light' ? 'github' : 'monokai';
+            editor.setTheme("ace/theme/"+aceTheme);
+            editor.session.setMode("ace/mode/html");
+
             function zeroAdminKnowledge(type, id) {
                 const submitButton = document.querySelector('[data-kt-admin-knowledge-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
                 submitButton.disabled = true;
-                const content = knowledgeEditor.root.innerHTML;
+                const content = editor.getValue();
                 $.ajax({
                     type: 'POST',
                     url: '/{$config['website_admin_path']}/knowledge/'+type,
@@ -146,7 +136,7 @@
                         title: $('#zero_admin_knowledge_title').val(),
                         platform: $('#zero_admin_knowledge_platform').val(),
                         client: $('#zero_admin_knowledge_client').val(),
-                        content,
+                        content: content,
                         id
                     },
                     success: function(data){
@@ -177,21 +167,19 @@
                     success: function(data) {
                         $('#zero_admin_knowledge_title').val(data.title),
                         $('#zero_admin_knowledge_platform').val(data.platform).trigger('change');
-                        $('#zero_admin_knowledge_client').val(data.client).trigger('change');
-                        knowledgeEditor.clipboard.dangerouslyPasteHTML(data.content);
+                        $('#zero_admin_knowledge_client').val(data.client).trigger('change');                      
+                        editor.setValue(data.content, -1);
                         submitButton.setAttribute('onclick', 'zeroAdminKnowledge("update", '+id+')')
                         $('#zero_admin_modal_knowledge').modal('show');
                     }
-                })
+                });
             }
-        </script>
-        <script>
             $('#zero_admin_modal_knowledge').on('hidden.bs.modal', function () {
                 const submitButton = document.querySelector('[data-kt-admin-knowledge-action="submit"]');
                 $('#zero_admin_knowledge_title').val('');
                 $('#zero_admin_knowledge_platform').val('').trigger('change');
                 $('#zero_admin_knowledge_client').val('').trigger('change');
-                knowledgeEditor.clipboard.dangerouslyPasteHTML('');
+                editor.setValue('', -1);
                 submitButton.setAttribute('onclick', 'zeroAdminKnowledge("create")');
                 console.log('success')
             });
