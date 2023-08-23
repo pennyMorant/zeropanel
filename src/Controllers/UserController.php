@@ -56,7 +56,7 @@ class UserController extends BaseController
         $knowledges = Knowledge::where('client', $opts['client'])->where('platform', $opts['os'])->get();
         $sub_url = Setting::obtain('subscribe_address_url') . "/api/v1/client/subscribe?token={$this->user->subscription_token}";
         if ($opts['os'] != '' && $opts['client'] != '') {
-            $url = 'user/tutorial/'.$opts['os'].'/'.$opts['client'].'.tpl';
+            $url = 'user/knowledge/'.$opts['os'].'/'.$opts['client'].'.tpl';
             $this->view()
                 ->assign('subInfo', $sub_url)
                 ->assign('knowledges', $knowledges)
