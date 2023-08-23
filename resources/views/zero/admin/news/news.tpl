@@ -124,6 +124,7 @@
                 </div>
             </div>
         </div>
+        {include file='admin/script.tpl'}
         <script>
 			var createNewsEditor = new Quill("#zero_admin_news_create_editor", {
 				modules: {
@@ -139,8 +140,7 @@
 				placeholder: "",
 				theme: "snow"
    			});
-		</script>
-        <script>
+
             var updateNewsEditor = new Quill("#zero_admin_news_update_editor", {
 				modules: {
 					toolbar: [
@@ -155,13 +155,11 @@
 				placeholder: "",
 				theme: "snow"
    			});
-        </script>
-        <script>
+
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
-            })
-        </script>
-        <script>
+            });
+
             function zeroAdminCreateNews(){
                 const submitButton = document.querySelector('[data-kt-admin-create-news-action="submit"]');
                 submitButton.setAttribute('data-kt-indicator', 'on');
@@ -193,8 +191,7 @@
                     });
                 }, 2000);
             }
-        </script>
-        <script>
+
             function zeroAdminUpdateNews(type, id){
                 const submitButton = document.querySelector('[data-kt-admin-update-news-action="submit"]');
                 switch (type){
@@ -244,6 +241,6 @@
                         break;
                 }
             }
-        </script>
+		</script>
     </body>
 </html>

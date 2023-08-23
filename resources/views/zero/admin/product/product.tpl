@@ -54,8 +54,6 @@
             window.addEventListener('load', () => {
                 {include file='table/js_2.tpl'}
             })
-        </script>
-        <script>
             function updateProductStatus(method, type, id) {
                 switch (method) {
                     case 'status':
