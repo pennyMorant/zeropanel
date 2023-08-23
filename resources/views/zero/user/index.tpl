@@ -342,9 +342,9 @@
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('singbox', '{$subInfo}&flag=sing-box')">导入订阅SingBox</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('shadowrocket', '{$subInfo}&flag=shadowrocket')">导入订阅Shadowrocket</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surfboard', '{$subInfo}&flag=surfboard')">导入订阅Surfboard</a>
-				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('sagernet', '{$subInfo}')">导入订阅SagerNet</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('sagernet', '{$subInfo}&flag=sagernet')">导入订阅SagerNet</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('quantumultx', '{$subInfo}')">导入订阅QuantumultX</a>
-				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surge4', '{$subInfo}')">导入订阅Surge</a>
+				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('surge', '{$subInfo}&flag=surge')">导入订阅Surge</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=clash')">导入订阅Clash</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('clash', '{$subInfo}&flag=meta')">导入订阅Clash Meta</a>
 				<a class="btn btn-outline btn-active-light-primary d-flex flex-column mb-1 hover-scale" onclick="oneclickImport('v2rayng', '{$subInfo}&flag=v2rayng')">导入订阅V2rayNG</a>

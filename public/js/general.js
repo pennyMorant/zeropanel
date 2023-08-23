@@ -604,7 +604,7 @@ function oneclickImport(client, subLink) {
     var sublink = {
       surfboard: `surfboard:///install-config?url=${encodeURIComponent(subLink)}`,
       shadowrocket: `shadowrocket://add/sub://${btoa(subLink)}`,
-      surge4: `surge4:///install-config?url=${encodeURIComponent(subLink)}`,
+      surge: `surge:///install-config?url=${encodeURIComponent(subLink)}`,
       clash: `clash://install-config?url=${encodeURIComponent(subLink)}`,
       sagernet: `sn://subscription?url=${encodeURIComponent(subLink)}`,
       quantumultx: `quantumult-x:///add-resource?remote-resource=${encodeURIComponent(JSON.stringify(quanx_config))}`,
