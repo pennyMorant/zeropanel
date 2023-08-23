@@ -20,11 +20,11 @@ config/.config.php.bak
 config/appprofile.php
 config/ClientDownloadVersion.json
 public/clients/
-resources/vies/zero/user/knowledge/android/*
-resources/vies/zero/user/knowledge/ios/*
-resources/vies/zero/user/knowledge/macos/*
-resources/vies/zero/user/knowledge/windows/*
-resources/vies/zero/user/knowledge/others/*
+!resources/views/zero/user/knowledge/android/.keep
+!resources/views/zero/user/knowledge/ios/.keep
+!resources/views/zero/user/knowledge/macos/.keep
+!resources/views/zero/user/knowledge/windows/.keep
+!resources/views/zero/user/knowledge/others/.keep
 storage/framework/smarty/cache/*
 storage/framework/smarty/compile/*
 storage/framework/views/*
