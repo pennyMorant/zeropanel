@@ -31,7 +31,7 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">知识库</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-primary fs-bold" data-bs-toggle="modal" data-bs-target="#zero_admin_modal_knowledge">
+                                                <button class="btn btn-primary btn-sm fs-bold" data-bs-toggle="modal" data-bs-target="#zero_admin_modal_knowledge">
                                                     <i class="bi bi-plus-lg fs-2"></i>添加知识
                                                 </button>
                                             </div>

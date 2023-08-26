@@ -31,7 +31,7 @@
                                         <div class="card-header">
                                             <div class="card-title text-dark fs-3 fw-bolder">支付配置</div>
                                             <div class="card-toolbar">
-                                                <button class="btn btn-primary fs-bold" data-bs-toggle="modal" data-bs-target="#zero_modal_create_payment">
+                                                <button class="btn btn-primary btn-sm fs-bold" data-bs-toggle="modal" data-bs-target="#zero_modal_create_payment">
                                                     <i class="bi bi-plus-lg fs-2"></i>添加支付方式
                                                 </button>
                                             </div>
