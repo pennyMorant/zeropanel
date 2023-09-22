@@ -130,7 +130,7 @@ class CommissionController extends AdminController
                 'userid'        => $rowData->userid,
                 'invite_userid' => $rowData->invite_userid,
                 'get_amount'    => $rowData->ref_get,
-                'datetime'      => $rowData->date('Y-m-d H:i:s', $rowData->created_at),
+                'datetime'      => date('Y-m-d H:i:s', $rowData->created_at),
             ];
         })->toArray();
 
